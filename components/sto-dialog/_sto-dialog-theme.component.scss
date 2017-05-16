@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+.ui-dialog {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.ui-dialog .ui-dialog-titlebar {
+  padding: 1em;
+  border-bottom: 1px solid #e5e5e5;
+}
+.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+  margin: 0;
+  float: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
+  color: #767b7f;
+  border: 0 none;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  padding: 0;
+}
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon:hover {
+  color: #2d353c;
+}
+.ui-dialog .ui-dialog-content {
+  padding: 1em;
+}
+.ui-dialog .ui-dialog-buttonpane {
+  padding: 0.375em 0.75em;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.ui-dialog.ui-confirm-dialog .ui-dialog-content > span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em;
+  margin: 0;
+}

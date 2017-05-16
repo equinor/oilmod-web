@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+
+.ui-breadcrumb {
+  background-color: #ffffff;
+  padding: 0.375em 0.75em;
+}
+.ui-breadcrumb ul li {
+  float: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+.ui-breadcrumb ul li .ui-menuitem-link {
+  color: #0275d8;
+  margin: 0;
+  position: relative;
+  top: 0;
+}
+.ui-breadcrumb ul li.ui-breadcrumb-chevron {
+  font-size: 1em;
+  margin: 0.25em 0.375em 0 0.375em;
+  color: #767b7f;
+}
+.ui-breadcrumb ul li.ui-breadcrumb-chevron.fa-chevron-right:before {
+  content: "/";
+  font-size: 1.375em;
+  font-weight: 700;
+}
+.ui-breadcrumb ul li:first-child {
+  font-size: 1.2em;
+}
+.ui-breadcrumb ul li:first-child a.ui-icon-home {
+  color: #767b7f;
+  margin: 0;
+}

@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+
+.ui-lightbox {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.ui-lightbox .ui-lightbox-caption {
+  padding: 0.375em 0.75em;
+}
+.ui-lightbox .ui-lightbox-caption .ui-lightbox-caption-text {
+  color: #2d353c;
+  margin: 0;
+}
+.ui-lightbox .ui-lightbox-caption .ui-lightbox-close {
+  padding: 0;
+  color: #2d353c;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+.ui-lightbox .ui-lightbox-caption .ui-lightbox-close:hover {
+  color: #0275d8;
+}
+.ui-lightbox .ui-lightbox-content-wrapper {
+  overflow: hidden;
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left {
+  background: none !important;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-indent: 0px !important;
+  text-align: center;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-size: 1.5em;
+  margin-left: 0.25em;
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left:before {
+  content: "";
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left:hover {
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left span {
+  display: none;
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right {
+  background: none !important;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-indent: 0px !important;
+  text-align: center;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-size: 1.5em;
+  margin-right: 0.25em;
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right:before {
+  content: "";
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right:hover {
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right span {
+  display: none;
+}
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-content.ui-lightbox-loading + a {
+  display: none;
+}

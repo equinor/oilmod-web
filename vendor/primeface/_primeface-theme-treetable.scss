@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+
+.ui-treetable .ui-treetable-header {
+  padding: .75em 1.25em;
+  background-color: #f5f5f5;
+}
+.ui-treetable .ui-treetable-footer {
+  padding: .75em 1.25em;
+  background-color: #f5f5f5;
+}
+.ui-treetable .ui-paginator {
+  padding: 0.375em 0.75em;
+}
+.ui-treetable thead th {
+  background-color: #ffffff;
+  padding: .75em;
+  border-color: #c7c7c7;
+  color: #373a3c;
+}
+.ui-treetable thead th.ui-state-active {
+  border-color: #0267bf;
+  background-color: #0275d8;
+  color: #ffffff;
+}
+.ui-treetable tfoot td {
+  background-color: #ffffff;
+  padding: .75em;
+  border-color: #e6e6e6;
+}
+.ui-treetable .ui-treetable-data tr:not(.ui-state-highlight):hover {
+  background-color: #e3e3e3;
+}
+.ui-treetable .ui-treetable-row.ui-state-highlight .ui-chkbox-icon {
+  color: #555555;
+  margin: 0;
+}
+.ui-treetable .ui-treetable-row.ui-state-highlight .ui-treetable-toggler {
+  color: #ffffff;
+}
+.ui-treetable .ui-treetable-row.ui-treetable-row-selectable:not(.ui-state-highlight):hover {
+  background-color: #e3e3e3;
+}
+.ui-treetable .ui-treetable-data tr.ui-state-highlight {
+  border-color: #0267bf;
+}
+.ui-treetable .ui-treetable-data tr td .ui-treetable-toggler {
+  font-size: 3em;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+}
+.ui-treetable .ui-treetable-data tr td .ui-chkbox {
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+}
+.ui-treetable ttd{
+  padding: .75em;
+}
+.ui-treetable .ui-treetable-data tr td .ui-chkbox .ui-chkbox-icon {
+  color: #0275d8;
+  left: 0px;
+}
+.ui-treetable .ui-treetable-scrollable-header,
+.ui-treetable .ui-treetable-scrollable-footer {
+  background-color: #f0f3f5;
+}
+.ui-treetable .ui-treetable-scrollable-header .ui-treetable-scrollable-header-box td,
+.ui-treetable .ui-treetable-scrollable-footer .ui-treetable-scrollable-header-box td {
+  color: #373a3c;
+}
+.ui-treetable .ui-treetable-scrollable-body::-webkit-scrollbar {
+  background-color: #f0f3f5;
+}
