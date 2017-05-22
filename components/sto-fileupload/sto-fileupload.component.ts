@@ -22,5 +22,5 @@ export class StoFileUploadComponent extends FileUpload {
   exports: [StoFileUploadComponent],
   declarations: [StoFileUploadComponent]
 })
-export class StoFileuploadModule {
+export class StoFileUploadModule {
 }
