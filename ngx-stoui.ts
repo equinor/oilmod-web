@@ -7,3 +7,4 @@ export * from './components/sto-fileupload/sto-fileupload.component';
 export * from './components/sto-growl/sto-growl.component';
 export * from './components/sto-tabmenu/sto-tabmenu.component';
 export * from './components/sto-tabview/sto-tabview.component';
+export * from './components/sto-confirmdialog/sto-confirmdialog.component';
