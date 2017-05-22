@@ -46,29 +46,29 @@ import {Subscription}   from 'rxjs/Subscription';
     providers: [DomHandler]
 })
 export class ConfirmDialog implements AfterViewInit,OnDestroy {
-    
+
     @Input() header: string;
-    
+
     @Input() icon: string;
-    
+
     @Input() message: string;
-    
+
     @Input() acceptIcon: string = 'fa-check';
-    
+
     @Input() acceptLabel: string = 'Yes';
-    
+
     @Input() acceptVisible: boolean = true;
 
     @Input() rejectIcon: string = 'fa-close';
-    
+
     @Input() rejectLabel: string = 'No';
-    
+
     @Input() rejectVisible: boolean = true;
-        
+
     @Input() width: any;
 
     @Input() height: any;
-    
+
     @Input() closeOnEscape: boolean = true;
 
     @Input() rtl: boolean;
@@ -76,31 +76,31 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
     @Input() closable: boolean = true;
 
     @Input() responsive: boolean = true;
-    
+
     @Input() appendTo: any;
-    
+
     @Input() key: string;
-        
+
     @ContentChild(Footer) footer;
-    
+
     confirmation: Confirmation;
-        
+
     _visible: boolean;
-    
+
     documentEscapeListener: any;
-    
+
     documentResponsiveListener: any;
-    
+
     mask: any;
-        
+
     contentContainer: any;
-    
+
     positionInitialized: boolean;
-    
+
     subscription: Subscription;
-            
-    constructor(public el: ElementRef, public domHandler: DomHandler, 
-            public renderer: Renderer, private confirmationService: ConfirmationService) {
+
+    constructor(public el: ElementRef, public domHandler: DomHandler,
+            public renderer: Renderer, protected confirmationService: ConfirmationService) {
         this.subscription = confirmationService.requireConfirmation$.subscribe(confirmation => {
             if(confirmation.key === this.key) {
                 this.confirmation = confirmation;
@@ -109,12 +109,12 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
                 this.header = this.confirmation.header||this.header;
                 this.rejectVisible = this.confirmation.rejectVisible == null ? this.rejectVisible : this.confirmation.rejectVisible;
                 this.acceptVisible = this.confirmation.acceptVisible == null ? this.acceptVisible : this.confirmation.acceptVisible;
-                
+
                 if(this.confirmation.accept) {
                     this.confirmation.acceptEvent = new EventEmitter();
                     this.confirmation.acceptEvent.subscribe(this.confirmation.accept);
                 }
-                
+
                 if(this.confirmation.reject) {
                     this.confirmation.rejectEvent = new EventEmitter();
                     this.confirmation.rejectEvent.subscribe(this.confirmation.reject);
@@ -122,40 +122,40 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
 
                 this.visible = true;
             }
-        });         
+        });
     }
-    
+
     @Input() get visible(): boolean {
         return this._visible;
     }
 
     set visible(val:boolean) {
         this._visible = val;
-        
-        if(this._visible) {            
+
+        if(this._visible) {
             if(!this.positionInitialized) {
                 this.center();
                 this.positionInitialized = true;
             }
-            
+
             this.el.nativeElement.children[0].style.zIndex = ++DomHandler.zindex;
-        } 
-        
+        }
+
         if(this._visible)
             this.enableModality();
         else
             this.disableModality();
     }
-    
+
     ngAfterViewInit() {
         this.contentContainer = this.domHandler.findSingle(this.el.nativeElement, '.ui-dialog-content');
-        
+
         if(this.responsive) {
             this.documentResponsiveListener = this.renderer.listenGlobal('window', 'resize', (event) => {
                 this.center();
             });
         }
-        
+
         if(this.closeOnEscape && this.closable) {
             this.documentEscapeListener = this.renderer.listenGlobal('document', 'keydown', (event) => {
                 if(event.which == 27) {
@@ -165,7 +165,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
                 }
             });
         }
-        
+
         if(this.appendTo) {
             if(this.appendTo === 'body')
                 document.body.appendChild(this.el.nativeElement);
@@ -173,7 +173,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
                 this.domHandler.appendChild(this.el.nativeElement, this.appendTo);
         }
     }
-        
+
     center() {
         let container = this.el.nativeElement.children[0];
         let elementWidth = this.domHandler.getOuterWidth(container);
@@ -193,7 +193,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
         container.style.left = x + 'px';
         container.style.top = y + 'px';
     }
-    
+
     enableModality() {
         if(!this.mask) {
             this.mask = document.createElement('div');
@@ -202,58 +202,58 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
             document.body.appendChild(this.mask);
         }
     }
-    
+
     disableModality() {
         if(this.mask) {
             document.body.removeChild(this.mask);
             this.mask = null;
         }
     }
-    
+
     hide(event?:Event) {
         this.visible = false;
-        
+
         if(event) {
             event.preventDefault();
         }
     }
-    
+
     moveOnTop() {
         this.el.nativeElement.children[0].style.zIndex = ++DomHandler.zindex;
     }
-                
+
     ngOnDestroy() {
         this.disableModality();
-                        
+
         if(this.documentResponsiveListener) {
             this.documentResponsiveListener();
         }
-        
+
         if(this.documentEscapeListener) {
             this.documentEscapeListener();
         }
-        
+
         if(this.appendTo && this.appendTo === 'body') {
             document.body.removeChild(this.el.nativeElement);
         }
-        
+
         this.subscription.unsubscribe();
     }
-    
+
     accept() {
         if(this.confirmation.acceptEvent) {
             this.confirmation.acceptEvent.emit();
         }
-        
+
         this.hide();
         this.confirmation = null;
     }
-    
+
     reject() {
         if(this.confirmation.rejectEvent) {
             this.confirmation.rejectEvent.emit();
         }
-        
+
         this.hide();
         this.confirmation = null;
     }
