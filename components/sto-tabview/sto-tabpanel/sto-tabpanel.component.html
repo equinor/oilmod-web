@@ -1,0 +1,4 @@
+<div class="ui-tabview-panel ui-widget-content" [style.display]="selected ? 'block' : 'none'"
+     role="tabpanel" [attr.aria-hidden]="!selected" *ngIf="closed ? false : (lazy ? selected : true)">
+    <ng-content></ng-content>
+</div>
