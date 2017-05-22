@@ -14,7 +14,7 @@
     <ng-content select="p-footer"></ng-content>
   </div>
   <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="!footer">
-    <button type="button" stoButton [icon]="rejectIcon" [label]="rejectLabel" (click)="reject()" *ngIf="rejectVisible"></button>
-    <button type="button" stoButton [icon]="acceptIcon" [label]="acceptLabel" (click)="accept()" *ngIf="acceptVisible"></button>
+    <button type="button" stoButton [label]="rejectLabel" (click)="reject()" *ngIf="rejectVisible"></button>
+    <button type="button" stoButton [label]="acceptLabel" (click)="accept()" *ngIf="acceptVisible"></button>
   </div>
 </div>

@@ -9,7 +9,7 @@ import { ConfirmDialog } from '../../vendor/primeface/components/confirmdialog/c
 import { ConfirmationService } from '../../vendor/primeface/components/common/api';
 
 @Component({
-  selector: 'sto-confirmdialog',
+  selector: 'sto-confirmDialog',
   templateUrl: './sto-confirmdialog.component.html',
   animations: [
     trigger('dialogState', [
@@ -34,8 +34,8 @@ export class StoConfirmDialog extends ConfirmDialog {
 
 @NgModule({
   imports: [CommonModule,StoButtonModule],
-  exports: [ConfirmDialog,StoButtonModule,SharedModule],
-  declarations: [ConfirmDialog]
+  exports: [StoConfirmDialog,StoButtonModule,SharedModule],
+  declarations: [StoConfirmDialog]
 })
 export class StoConfirmDialogModule { }
 
