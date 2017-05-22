@@ -8,7 +8,7 @@
 							[ngClass]="{'fa-chevron-circle-down':dt.isRowGroupExpanded(rowData), 'fa-chevron-circle-right': !dt.isRowGroupExpanded(rowData)}"></span>
 			</a>
 			<span class="ui-rowgroup-header-name">
-                        <p-templateLoader [template]="dt.rowGroupHeaderTemplate" [data]="rowData"></p-templateLoader>
+                        <sto-templateLoader [template]="dt.rowGroupHeaderTemplate" [data]="rowData"></sto-templateLoader>
                     </span>
 		</td>
 	</tr>
@@ -29,8 +29,8 @@
 				<span class="ui-cell-data"
 					  *ngIf="!col.bodyTemplate && !col.expander && !col.selectionMode">{{dt.resolveFieldData(rowData, col.field)}}</span>
 				<span class="ui-cell-data" *ngIf="col.bodyTemplate">
-                            <p-columnBodyTemplateLoader [column]="col" [rowData]="rowData"
-														[rowIndex]="rowIndex + dt.first"></p-columnBodyTemplateLoader>
+                            <sto-columnBodyTemplateLoader [column]="col" [rowData]="rowData"
+														[rowIndex]="rowIndex + dt.first"></sto-columnBodyTemplateLoader>
                         </span>
 				<div class="ui-cell-editor" *ngIf="col.editable">
 					<input *ngIf="!col.editorTemplate" type="text" [(ngModel)]="rowData[col.field]"
@@ -39,8 +39,8 @@
 						   class="ui-inputtext ui-widget ui-state-default ui-corner-all"/>
 					<a *ngIf="col.editorTemplate" class="ui-cell-editor-proxy-focus" href="#"
 					   (focus)="dt.onCustomEditorFocusPrev($event, colIndex)"></a>
-					<p-columnEditorTemplateLoader *ngIf="col.editorTemplate" [column]="col" [rowData]="rowData"
-												  [rowIndex]="rowIndex"></p-columnEditorTemplateLoader>
+					<sto-columnEditorTemplateLoader *ngIf="col.editorTemplate" [column]="col" [rowData]="rowData"
+												  [rowIndex]="rowIndex"></sto-columnEditorTemplateLoader>
 					<a *ngIf="col.editorTemplate" class="ui-cell-editor-proxy-focus" href="#"
 					   (focus)="dt.onCustomEditorFocusNext($event, colIndex)"></a>
 				</div>
@@ -59,8 +59,8 @@
 	</tr>
 	<tr class="ui-widget-header"
 		*ngIf="dt.rowGroupFooterTemplate && dt.rowGroupMode=='subheader' && ((rowIndex === dt.dataToRender.length - 1)||(dt.resolveFieldData(rowData,dt.groupField) !== dt.resolveFieldData(dt.dataToRender[rowIndex + 1],dt.groupField))) && (!dt.expandableRowGroups || dt.isRowGroupExpanded(rowData))">
-		<p-templateLoader class="ui-helper-hidden" [data]="rowData"
-						  [template]="dt.rowGroupFooterTemplate"></p-templateLoader>
+		<sto-templateLoader class="ui-helper-hidden" [data]="rowData"
+						  [template]="dt.rowGroupFooterTemplate"></sto-templateLoader>
 	</tr>
 	<tr *ngIf="dt.expandableRows && dt.isRowExpanded(rowData)">
 		<td [attr.colspan]="dt.visibleColumns().length">

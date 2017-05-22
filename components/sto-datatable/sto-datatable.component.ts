@@ -13,6 +13,7 @@ import { StoColumnFooters } from './sto-datatable-footer/sto-datatable-footer.co
 import { StoScrollableView } from './sto-scrollable-view/sto-scrollable-view.component';
 import { StoRowExpansionLoader } from 'ngx-stoui/components/sto-datatable/sto-row-expansion-loader/sto-row-expansion-loader.component';
 import { StoDTCheckbox } from './sto-dt-checkbox/sto-dt-checkbox.component';
+import { StoSharedModule } from '../sto-shared/sto-shared';
 
 
 @Component({
@@ -30,9 +31,10 @@ export class StoDatatableComponent extends DataTable {
   }
 }
 @NgModule({
-  imports: [DataTableModule, CommonModule, SharedModule, PaginatorModule, FormsModule],
+  imports: [DataTableModule, CommonModule, SharedModule, PaginatorModule, FormsModule, StoSharedModule],
   exports: [
     SharedModule,
+    StoSharedModule,
     StoDatatableComponent,
     StoDTRadioButton,
     StoDTCheckbox,

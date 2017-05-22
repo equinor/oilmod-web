@@ -10,7 +10,7 @@
                  [ngStyle]="{'display': inline ? 'inline-block' : (overlayVisible ? 'block' : 'none')}" (click)="onDatePickerClick($event)" [@overlayState]="inline ? 'visible' : (overlayVisible ? 'visible' : 'hidden')">
 
                 <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all" *ngIf="!timeOnly && (overlayVisible || inline)">
-                    <ng-content select="p-header"></ng-content>
+                    <ng-content select="sto-header"></ng-content>
                     <a class="ui-datepicker-prev ui-corner-all" href="#" (click)="$event.preventDefault(); moveYear('-')">
                         <span class="fa fa-angle-left"></span>
                     </a>
@@ -33,6 +33,6 @@
                     </tr>
                     </tbody>
                 </table>
-                <ng-content select="p-footer"></ng-content>
+                <ng-content select="sto-header"></ng-content>
             </div>
         </span>

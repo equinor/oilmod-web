@@ -12,7 +12,7 @@
                     (mousedown)="dt.initColumnResize($event)"></span>
     <span class="ui-column-title" *ngIf="!col.selectionMode&&!col.headerTemplate">{{col.header}}</span>
     <span class="ui-column-title" *ngIf="col.headerTemplate">
-                    <p-columnHeaderTemplateLoader [column]="col"></p-columnHeaderTemplateLoader>
+                    <sto-columnHeaderTemplateLoader [column]="col"></sto-columnHeaderTemplateLoader>
                 </span>
     <span class="ui-sortable-column-icon fa fa-fw fa-sort" *ngIf="col.sortable"
           [ngClass]="{'fa-sort-desc': (dt.getSortOrder(col) == -1),'fa-sort-asc': (dt.getSortOrder(col) == 1)}"></span>
@@ -22,7 +22,7 @@
            [value]="dt.filters[col.field] ? dt.filters[col.field].value : ''"
            (click)="dt.onFilterInputClick($event)"
            (keyup)="dt.onFilterKeyup($event.target.value, col.field, col.filterMatchMode)"/>
-    <p-columnFilterTemplateLoader [column]="col" *ngIf="col.filterTemplate"></p-columnFilterTemplateLoader>
+    <sto-columnFilterTemplateLoader [column]="col" *ngIf="col.filterTemplate"></sto-columnFilterTemplateLoader>
     <sto-dtCheckbox *ngIf="col.selectionMode=='multiple'" (onChange)="dt.toggleRowsWithCheckbox($event)"
                     [checked]="dt.allSelected" [disabled]="dt.isEmpty()"></sto-dtCheckbox>
   </th>

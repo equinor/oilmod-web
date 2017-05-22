@@ -4,7 +4,7 @@
     [ngClass]="{'ui-state-default':true}" [style.display]="col.hidden ? 'none' : 'table-cell'">
     <span class="ui-column-footer" *ngIf="!col.footerTemplate">{{col.footer}}</span>
     <span class="ui-column-footer" *ngIf="col.footerTemplate">
-                <p-columnFooterTemplateLoader [column]="col"></p-columnFooterTemplateLoader>
+                <sto-columnFooterTemplateLoader [column]="col"></sto-columnFooterTemplateLoader>
             </span>
 </td>
 `

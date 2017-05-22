@@ -2,11 +2,11 @@ import { Component, ElementRef, NgModule, Renderer } from '@angular/core';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { StoButtonModule } from '../sto-button/sto-button.component';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';
 import { ConfirmDialog } from '../../vendor/primeface/components/confirmdialog/confirmdialog';
 import { ConfirmationService } from '../../vendor/primeface/components/common/api';
+import { StoSharedModule } from 'ngx-stoui/components/sto-shared/sto-shared';
 
 @Component({
   selector: 'sto-confirmDialog',
@@ -33,9 +33,10 @@ export class StoConfirmDialog extends ConfirmDialog {
 }
 
 @NgModule({
-  imports: [CommonModule,StoButtonModule],
-  exports: [StoConfirmDialog,StoButtonModule,SharedModule],
+  imports: [CommonModule, StoButtonModule],
+  exports: [StoConfirmDialog, StoButtonModule, SharedModule, StoSharedModule],
   declarations: [StoConfirmDialog]
 })
-export class StoConfirmDialogModule { }
+export class StoConfirmDialogModule {
+}
 

@@ -5,7 +5,7 @@
     <i class="fa fa-circle-o-notch fa-spin fa-2x"></i>
   </div>
   <div class="ui-datatable-header ui-widget-header" *ngIf="header">
-    <ng-content select="p-header"></ng-content>
+    <ng-content select="sto-header"></ng-content>
   </div>
   <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
                (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='bottom' || paginatorPosition =='both'"></p-paginator>
@@ -40,7 +40,7 @@
   <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
                (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></p-paginator>
   <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">
-    <ng-content select="p-footer"></ng-content>
+    <ng-content select="sto-header"></ng-content>
   </div>
 
   <div class="ui-column-resizer-helper ui-state-highlight" style="display:none"></div>

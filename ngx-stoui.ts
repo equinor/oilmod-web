@@ -9,3 +9,4 @@ export * from './components/sto-tabmenu/sto-tabmenu.component';
 export * from './components/sto-tabview/sto-tabview.component';
 export * from './components/sto-confirmdialog/sto-confirmdialog.component';
 export * from './vendor/primeface/components/common/api';
+export * from './components/sto-shared/sto-shared';
