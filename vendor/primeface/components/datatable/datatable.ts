@@ -2112,7 +2112,7 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
 
 @NgModule({
     imports: [CommonModule,SharedModule,PaginatorModule,FormsModule],
-    exports: [DataTable,SharedModule],
+    exports: [DataTable, SharedModule, DTRadioButton,DTCheckbox,ColumnHeaders,ColumnFooters,TableBody,ScrollableView,RowExpansionLoader],
     declarations: [DataTable,DTRadioButton,DTCheckbox,ColumnHeaders,ColumnFooters,TableBody,ScrollableView,RowExpansionLoader]
 })
 export class DataTableModule { }

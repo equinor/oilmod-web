@@ -22,8 +22,8 @@ export const CALENDAR_VALIDATOR: any = {
 
 @Component({
   selector: 'sto-calendar',
-  templateUrl: './sto-calendar.component.html',
-  styleUrls: ['./sto-calendar.component.scss'],
+  templateUrl: 'sto-calendar.component.html',
+  styleUrls: ['sto-calendar.component.scss'],
   animations: [
     trigger('overlayState', [
       state('hidden', style({
