@@ -12,3 +12,5 @@ export * from './vendor/primeface/components/common/api';
 export * from './components/sto-shared/sto-shared';
 export * from './components/sto-tooltip/sto-tooltip.directive';
 export * from './components/sto-treetable/sto-treetable.component';
+export * from './components/sto-autocomplete/sto-autocomplete.component';
+

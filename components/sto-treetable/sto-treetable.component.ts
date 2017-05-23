@@ -11,13 +11,12 @@ import { StoUITreeRow } from './treetable-row/sto-treetable-row';
 
 @Component({
     selector: 'sto-treeTable',
+    styleUrls: ['sto-treetable.component.scss'],
     templateUrl : 'sto-treetable.component.html'
 })
 export class StoTreeTableComponent extends TreeTable {
     @ContentChild(StoHeader) header: StoHeader;
-
     @ContentChild(StoFooter) footer: StoFooter;
-
     @ContentChildren(StoColumn) columns: QueryList<StoColumn>;
 
 }
