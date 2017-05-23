@@ -20,7 +20,7 @@ import {
   TemplateLoader,
   TemplateWrapper
 } from '../../vendor/primeface/components/common/shared';
-import { ColumnFooterTemplateLoader, HeaderColumnGroup } from '../../../../primeng/primeng';
+import { ColumnFooterTemplateLoader, HeaderColumnGroup } from '../../vendor/primeface/components/common/shared';
 
 @Component({
   selector: 'sto-header',
