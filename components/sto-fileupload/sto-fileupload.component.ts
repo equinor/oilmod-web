@@ -4,7 +4,7 @@ import { FileUpload } from '../../vendor/primeface/components/fileupload/fileupl
 import { MessagesModule } from '../../vendor/primeface/components/messages/messages';
 import { ProgressBarModule } from '../../vendor/primeface/components/progressbar/progressbar';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';
-import { StoButtonModule } from '../sto-button/sto-button.component';
+import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { StoSharedModule } from '../sto-shared/sto-shared';
 
 @Component({

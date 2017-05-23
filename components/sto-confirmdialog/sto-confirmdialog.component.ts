@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgModule, Renderer } from '@angular/core';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
-import { StoButtonModule } from '../sto-button/sto-button.component';
+import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';

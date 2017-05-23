@@ -5,7 +5,7 @@ import { ButtonModule } from '../../vendor/primeface/components/button/button';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { StoButtonModule } from '../sto-button/sto-button.component';
+import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const CALENDAR_VALUE_ACCESSOR: any = {

@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Component, ElementRef, NgModule, Renderer, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
+  NgModule,
+  QueryList,
+  Renderer,
+  ViewEncapsulation
+} from '@angular/core';
 import { DataTable, DataTableModule } from '../../vendor/primeface/components/datatable/datatable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
@@ -13,7 +23,13 @@ import { StoColumnFooters } from './sto-datatable-footer/sto-datatable-footer.co
 import { StoScrollableView } from './sto-scrollable-view/sto-scrollable-view.component';
 import { StoRowExpansionLoader } from 'ngx-stoui/components/sto-datatable/sto-row-expansion-loader/sto-row-expansion-loader.component';
 import { StoDTCheckbox } from './sto-dt-checkbox/sto-dt-checkbox.component';
-import { StoSharedModule } from '../sto-shared/sto-shared';
+import {
+  StoColumn,
+  StoFooterColumnGroup,
+  StoHeaderColumnGroup,
+  StoSharedModule,
+  StoTemplate
+} from '../sto-shared/sto-shared';
 
 
 @Component({
@@ -29,6 +45,12 @@ export class StoDatatableComponent extends DataTable {
               public renderer: Renderer, public changeDetector: ChangeDetectorRef, public objectUtils: ObjectUtils) {
     super(el, domHandler, renderer, changeDetector, objectUtils);
   }
+
+  @ContentChildren(StoTemplate) templates: QueryList<StoTemplate>;
+  @ContentChildren(StoColumn) cols: QueryList<StoColumn>;
+  @ContentChild(StoHeaderColumnGroup) headerColumnGroup: StoHeaderColumnGroup;
+  @ContentChild(StoFooterColumnGroup) footerColumnGroup: StoFooterColumnGroup;
+
 }
 @NgModule({
   imports: [DataTableModule, CommonModule, SharedModule, PaginatorModule, FormsModule, StoSharedModule],

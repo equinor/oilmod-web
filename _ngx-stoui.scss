@@ -1,6 +1,12 @@
 @import "vendor/bootstrap/_bootstrap";
 @import "vendor/primeface/_primeface";
 @import "vendor/primeface/_primeface-theme";
+
+//DIRECTIVES
+@import "components/sto-button/sto-button.directive";
+@import "components/sto-tooltip/sto-tooltip.directive";
+
+
 @import "basics/sto-basics";
 
 
