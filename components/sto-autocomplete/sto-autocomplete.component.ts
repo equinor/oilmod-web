@@ -9,16 +9,14 @@ import {
     Renderer
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AutoComplete, AutoCompleteModule } from 'ngx-stoui/vendor/primeface/components/autocomplete/autocomplete';
 import { StoSharedModule, StoTemplate } from '../sto-shared/sto-shared';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { DomHandler } from 'ngx-stoui/vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
-import { InputTextModule } from '../../vendor/primeface/components/inputtext/inputtext';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';
+import { StoInputTextModule } from '../sto-inputtext/sto-inputtext.directive';
 
 export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -45,7 +43,7 @@ export class StoAutoCompleteComponent extends AutoComplete {
 }
 
 @NgModule({
-    imports: [CommonModule, InputTextModule, StoButtonModule, StoSharedModule, SharedModule, AutoCompleteModule],
+    imports: [CommonModule, StoInputTextModule, StoButtonModule, StoSharedModule, SharedModule, AutoCompleteModule],
     exports: [StoAutoCompleteComponent, StoSharedModule],
     declarations: [StoAutoCompleteComponent]
 })

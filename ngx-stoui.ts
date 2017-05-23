@@ -13,4 +13,7 @@ export * from './components/sto-shared/sto-shared';
 export * from './components/sto-tooltip/sto-tooltip.directive';
 export * from './components/sto-treetable/sto-treetable.component';
 export * from './components/sto-autocomplete/sto-autocomplete.component';
-
+export * from './components/sto-inputtext/sto-inputtext.directive';
+export * from './components/sto-menubar/sto-menubar.component';
+export * from './components/sto-menu/sto-menu.component';
+export * from './components/sto-checkbox/sto-checkbox.component';
