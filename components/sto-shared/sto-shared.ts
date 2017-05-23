@@ -18,9 +18,10 @@ import {
   FooterColumnGroup,
   Row,
   TemplateLoader,
-  TemplateWrapper
+  TemplateWrapper,
+  ColumnFooterTemplateLoader,
+  HeaderColumnGroup
 } from '../../vendor/primeface/components/common/shared';
-import { ColumnFooterTemplateLoader, HeaderColumnGroup } from '../../vendor/primeface/components/common/shared';
 
 @Component({
   selector: 'sto-header',
