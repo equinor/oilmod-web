@@ -26,10 +26,7 @@ import { StoSharedModule } from 'ngx-stoui/components/sto-shared/sto-shared';
   providers: [DomHandler]
 })
 export class StoConfirmDialog extends ConfirmDialog {
-  constructor(public el: ElementRef, public domHandler: DomHandler,
-              public renderer: Renderer, protected confirmationService: ConfirmationService) {
-    super(el, domHandler, renderer, confirmationService);
-  }
+
 }
 
 @NgModule({

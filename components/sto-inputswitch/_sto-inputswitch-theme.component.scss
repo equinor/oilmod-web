@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+
+.ui-inputswitch {
+	background-color: #0275d8;
+	text-transform: uppercase;
+}
+.ui-inputswitch .ui-inputswitch-handle {
+	background-color: #ffffff;
+	border: 1px solid transparent;
+	box-sizing: border-box;
+}
+.ui-inputswitch .ui-inputswitch-handle.ui-state-focus {
+	-webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+.ui-inputswitch .ui-inputswitch-on,
+.ui-inputswitch .ui-inputswitch-off {
+	color: #fff;
+}
+.ui-inputswitch .ui-inputswitch-on span,
+.ui-inputswitch .ui-inputswitch-off span {
+	margin-right: 0.2em;
+	position: relative;
+	top: -0.1em;
+	font-weight: 700;
+}

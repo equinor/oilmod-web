@@ -1,8 +1,9 @@
 import {NgModule,Component,ElementRef,AfterViewInit,OnDestroy,Input,Output,Renderer,HostListener,EventEmitter,ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
-import {MenuItem} from '../common/api';
+
 import {RouterModule} from '@angular/router';
+import { MenuItem } from '../common/api';
 
 @Component({
     selector: 'p-menu',

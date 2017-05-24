@@ -100,7 +100,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
     subscription: Subscription;
 
     constructor(public el: ElementRef, public domHandler: DomHandler,
-            public renderer: Renderer, protected confirmationService: ConfirmationService) {
+            public renderer: Renderer, private confirmationService: ConfirmationService) {
         this.subscription = confirmationService.requireConfirmation$.subscribe(confirmation => {
             if(confirmation.key === this.key) {
                 this.confirmation = confirmation;

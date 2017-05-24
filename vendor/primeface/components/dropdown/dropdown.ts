@@ -164,7 +164,7 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
     
     public selectedOptionUpdated: boolean;
         
-    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, private cd: ChangeDetectorRef, public objectUtils: ObjectUtils) {}
+    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, protected cd: ChangeDetectorRef, public objectUtils: ObjectUtils) {}
     
     ngAfterContentInit() {
         this.templates.forEach((item) => {

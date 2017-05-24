@@ -1,4 +1,4 @@
-import { Component, ContentChildren, NgModule, QueryList } from '@angular/core';
+import { Component, ContentChildren, NgModule, QueryList, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabView, TabViewModule } from '../../vendor/primeface/components/tabview/tabview';
 import { StoTabViewNav } from './sto-tabview-nav/sto-tabview-nav.component';
@@ -8,6 +8,7 @@ import { StoTabPanel } from 'ngx-stoui/components/sto-tabview/sto-tabpanel/sto-t
     selector: 'sto-tabView',
     styleUrls: ['sto-tabview.component.scss'],
     templateUrl: 'sto-tabview.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class StoTabView extends TabView {
     @ContentChildren(StoTabPanel) tabPanels: QueryList<StoTabPanel>;

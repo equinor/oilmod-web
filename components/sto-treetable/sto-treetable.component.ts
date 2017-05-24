@@ -1,18 +1,14 @@
-import {
-    Component, ContentChild, EventEmitter, forwardRef, Inject, Input, NgModule, OnInit,
-    Output, ContentChildren, QueryList
-} from '@angular/core';
+import { Component, ContentChild, ContentChildren, NgModule, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoSharedModule, StoFooter, StoHeader, StoColumn } from '../sto-shared/sto-shared';
+import { StoColumn, StoFooter, StoHeader, StoSharedModule } from '../sto-shared/sto-shared';
 import { TreeTable, TreeTableModule } from '../../vendor/primeface/components/treetable/treetable';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';
-import { TreeNode } from '../../vendor/primeface/components/common/api';
 import { StoUITreeRow } from './treetable-row/sto-treetable-row';
 
 @Component({
     selector: 'sto-treeTable',
     styleUrls: ['sto-treetable.component.scss'],
-    templateUrl : 'sto-treetable.component.html'
+    templateUrl: 'sto-treetable.component.html'
 })
 export class StoTreeTableComponent extends TreeTable {
     @ContentChild(StoHeader) header: StoHeader;

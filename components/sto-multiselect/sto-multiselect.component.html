@@ -1,0 +1,48 @@
+<div #container [ngClass]="{'ui-multiselect ui-widget ui-state-default ui-corner-all':true,'ui-state-focus':focus,'ui-state-disabled': disabled}" [ngStyle]="style" [class]="styleClass"
+    (click)="onMouseclick($event,in)">
+    <div class="ui-helper-hidden-accessible">
+        <input #in type="text" readonly="readonly" [attr.id]="inputId" (focus)="onFocus($event)" (blur)="onInputBlur($event)" [disabled]="disabled" [attr.tabindex]="tabindex">
+    </div>
+    <div class="ui-multiselect-label-container" [title]="valuesAsString">
+        <label class="ui-multiselect-label ui-corner-all">{{valuesAsString}}</label>
+    </div>
+    <div [ngClass]="{'ui-multiselect-trigger ui-state-default ui-corner-right':true}">
+        <span class="fa fa-fw fa-caret-down ui-c"></span>
+    </div>
+    <div #panel class="ui-multiselect-panel ui-widget ui-widget-content ui-corner-all ui-shadow" [style.display]="overlayVisible ? 'block' : 'none'" (click)="panelClick=true">
+        <div class="ui-widget-header ui-corner-all ui-multiselect-header ui-helper-clearfix">
+            <div class="ui-chkbox ui-widget">
+                <div class="ui-helper-hidden-accessible">
+                    <input #cb type="checkbox" readonly="readonly" [checked]="isAllChecked()">
+                </div>
+                <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" [ngClass]="{'ui-state-active':isAllChecked()}" (click)="toggleAll($event,cb)">
+                    <span class="ui-chkbox-icon ui-c" [ngClass]="{'fa fa-check':isAllChecked()}"></span>
+                </div>
+            </div>
+            <div class="ui-multiselect-filter-container">
+                <input type="text" role="textbox" (input)="onFilter($event)"
+                            class="ui-inputtext ui-widget ui-state-default ui-corner-all">
+                <span class="fa fa-fw fa-search"></span>
+            </div>
+            <a class="ui-multiselect-close ui-corner-all" href="#" (click)="close($event)">
+                <span class="fa fa-close"></span>
+            </a>
+        </div>
+        <div class="ui-multiselect-items-wrapper">
+            <ul class="ui-multiselect-items ui-multiselect-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" [style.max-height]="scrollHeight||'auto'">
+                <li *ngFor="let option of options" class="ui-multiselect-item ui-corner-all" (click)="onItemClick($event,option.value)"
+                    [style.display]="isItemVisible(option) ? 'block' : 'none'" [ngClass]="{'ui-state-highlight':isSelected(option.value)}">
+                    <div class="ui-chkbox ui-widget">
+                        <div class="ui-helper-hidden-accessible">
+                            <input type="checkbox" readonly="readonly" [checked]="isSelected(option.value)">
+                        </div>
+                        <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" [ngClass]="{'ui-state-active':isSelected(option.value)}">
+                            <span class="ui-chkbox-icon ui-c" [ngClass]="{'fa fa-check':isSelected(option.value)}"></span>
+                        </div>
+                    </div>
+                    <label>{{option.label}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

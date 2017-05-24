@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+.ui-dropdown {
+    border: 1px solid #d6d6d6;
+}
+.ui-dropdown:not(.ui-state-disabled):hover {
+    background-color: #d9d9d9;
+    border-color: #cccccc;
+}
+.ui-dropdown .ui-dropdown-label {
+    background: #ffffff;
+}
+.ui-dropdown .ui-dropdown-trigger {
+    background-color: #ffffff;
+}
+.ui-dropdown .ui-dropdown-trigger .fa {
+    color: #55595c;
+    margin-top: .65em;
+}
+.ui-dropdown:not(.ui-state-disabled):hover .ui-dropdown-trigger,
+.ui-dropdown.ui-state-focus .ui-dropdown-trigger,
+.ui-dropdown.ui-state-focus .ui-dropdown-label,
+.ui-dropdown:not(.ui-state-disabled):hover .ui-dropdown-label {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-border-top-left-radius: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-bottom-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #d9d9d9;
+}
+.ui-dropdown.ui-state-focus .ui-dropdown-label.ui-inputtext {
+    border: 0 none;
+}
+.ui-dropdown-panel .ui-dropdown-filter-container {
+    padding: 0.375em 0.75em;
+}
+.ui-dropdown-panel .ui-dropdown-filter-container .ui-dropdown-filter {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 1.250em;
+}
+.ui-dropdown-panel .ui-dropdown-filter-container .fa {
+    top: 1.05em;
+    right: 1.25em;
+}
+.ui-dropdown-panel .ui-dropdown-items {
+    padding: 0;
+}
+.ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item {
+    padding: 0.375em 0.75em;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+.ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item:not(.ui-state-highlight):hover {
+    background-color: #f4f3f4;
+    color: #373a3c;
+}
+.ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item.ui-state-highlight {
+    background-color: #0275d8;
+    color: #ffffff;
+}
+.ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item > td {
+    padding: 0.375em 0.75em;
+}
+.ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group {
+    padding: 0.375em 0.75em;
+    background-color: #e6e6e6;
+}
