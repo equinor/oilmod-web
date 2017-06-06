@@ -1,6 +1,7 @@
 <ng-template ngFor let-col [ngForOf]="columns" let-lastCol="last">
   <th #headerCell [ngStyle]="col.style" [class]="col.styleClass"
       [style.display]="col.hidden ? 'none' : 'table-cell'" (click)="dt.sort($event,col)"
+      style="text-align: left"
       [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
       [ngClass]="{'ui-state-default ui-unselectable-text':true, 'ui-sortable-column': col.sortable, 'ui-state-active': dt.isSorted(col), 'ui-resizable-column': dt.resizableColumns, 'ui-selection-column':col.selectionMode}"
       (dragstart)="dt.onColumnDragStart($event)" (dragover)="dt.onColumnDragover($event)"
