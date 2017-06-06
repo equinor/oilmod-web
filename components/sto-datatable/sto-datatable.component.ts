@@ -28,7 +28,9 @@ import {
   StoFooterColumnGroup,
   StoHeaderColumnGroup,
   StoSharedModule,
-  StoTemplate
+  StoTemplate,
+  StoHeader,
+  StoFooter
 } from '../sto-shared/sto-shared';
 
 
@@ -50,6 +52,8 @@ export class StoDatatableComponent extends DataTable {
   @ContentChildren(StoColumn) cols: QueryList<StoColumn>;
   @ContentChild(StoHeaderColumnGroup) headerColumnGroup: StoHeaderColumnGroup;
   @ContentChild(StoFooterColumnGroup) footerColumnGroup: StoFooterColumnGroup;
+  @ContentChild(StoHeader) header;
+  @ContentChild(StoFooter) footer;
 
 }
 @NgModule({
