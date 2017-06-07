@@ -1,1 +1,35 @@
+@import "sto-typography/sto-typography";
 @import "sto-table/sto-table";
+
+$filter-spacing: 1rem;
+$filter-min-width: $filter-spacing*12;
+
+.sto-filter-form{
+  @extend .form-inline;
+  @extend .well;
+  @extend .bg-white;
+  @extend .well-sm;
+  margin: 0rem;
+  box-shadow: none;
+  border-radius: 0;
+  border-color: #c7c7c7;
+
+}
+
+.sto-filter-group{
+  @extend .form-group;
+  margin-right: $filter-spacing;
+
+  &__dateinput{
+    @extend .input-group;
+  }
+  &__input, &__select {
+    @extend .form-control;
+    min-width: $filter-min-width;
+  }
+
+  &__label{
+    margin-right: $filter-spacing / 2;
+    font-weight: normal;
+  }
+}
