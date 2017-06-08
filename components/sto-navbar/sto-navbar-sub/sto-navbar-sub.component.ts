@@ -44,7 +44,8 @@ export class StoNavbarSubComponent extends MenubarSub {
     }
 
     onItemClick(event, item, menuitem: MenuItem) {
-        if (this.root) {
+     
+        if (this.root && !menuitem.url) {
             event.preventDefault();
             this.activeItem = item;
             let nextElement = item.children[0].nextElementSibling;
