@@ -1,0 +1,14 @@
+<header class="sto-navbar" style="margin-top: 100px">
+
+
+        <a class="sto-navbar__logo" href="/">
+            <img alt="" src="./assets/images/statoil_sm.png">
+        </a>
+
+
+            <nav [ngClass]="{'sto-navmenu':true}"
+                 [class]="styleClass" [ngStyle]="style">
+                <sto-navbarSub [item]="model" root="root"></sto-navbarSub>
+            </nav>
+
+</header>

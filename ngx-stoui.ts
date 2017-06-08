@@ -32,4 +32,5 @@ export * from './components/sto-togglebutton/sto-togglebutton.component';
 export * from './components/sto-selectbutton/sto-selectbutton.component';
 export * from './components/sto-spinner/sto-spinner.component';
 export * from './components/sto-messages/sto-messages.component';
+export * from './components/sto-navbar/sto-navbar.component'
 export * from './vendor/primeface/components/common/api';
