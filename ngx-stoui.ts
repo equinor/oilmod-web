@@ -32,5 +32,8 @@ export * from './components/sto-togglebutton/sto-togglebutton.component';
 export * from './components/sto-selectbutton/sto-selectbutton.component';
 export * from './components/sto-spinner/sto-spinner.component';
 export * from './components/sto-messages/sto-messages.component';
+export * from './components/sto-navbar/sto-navbar.component'
+export {ConfirmationService, TreeDragDropService} from './vendor/primeface/components/common/api';
+export * from './components/sto-shared/sto-api';
 export * from './components/sto-panel/sto-panel.component';
 export * from './vendor/primeface/components/common/api';

@@ -4,7 +4,7 @@
   <div class="ui-datatable-loading-content" *ngIf="loading">
     <i class="fa fa-circle-o-notch fa-spin fa-2x"></i>
   </div>
-  <div class="ui-datatable-header ui-widget-header" *ngIf="header">
+  <div class="ui-datatable-header ui-widget-header clearfix" *ngIf="header">
     <ng-content select="sto-header"></ng-content>
   </div>
   <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
