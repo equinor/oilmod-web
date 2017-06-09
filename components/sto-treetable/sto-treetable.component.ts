@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, NgModule, QueryList } from '@angular/core';
+import { Component, ContentChild, ContentChildren, NgModule, QueryList, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoColumn, StoFooter, StoHeader, StoSharedModule } from '../sto-shared/sto-shared';
 import { TreeTable, TreeTableModule } from '../../vendor/primeface/components/treetable/treetable';
@@ -8,7 +8,8 @@ import { StoUITreeRow } from './treetable-row/sto-treetable-row';
 @Component({
     selector: 'sto-treeTable',
     styleUrls: ['sto-treetable.component.scss'],
-    templateUrl: 'sto-treetable.component.html'
+    templateUrl: 'sto-treetable.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class StoTreeTableComponent extends TreeTable {
     @ContentChild(StoHeader) header: StoHeader;
