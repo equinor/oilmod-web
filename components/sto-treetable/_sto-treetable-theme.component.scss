@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@import "../sto-checkbox/sto-checkbox-core.component";
+@import "../sto-checkbox/sto-checkbox-theme.component";
 
 .ui-treetable .ui-treetable-header {
   padding: .75em 1.25em;
@@ -72,4 +74,12 @@
 }
 .ui-treetable .ui-treetable-scrollable-body::-webkit-scrollbar {
   background-color: #f0f3f5;
+}
+
+
+.ui-treetable .ui-chkbox .ui-chkbox-box{
+  color: black;
+}
+.ui-treetable .ui-state-highlight .ui-treetable-toggler{
+  color: white;
 }
