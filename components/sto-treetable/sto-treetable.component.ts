@@ -14,6 +14,7 @@ import { StoUITreeRow } from './treetable-row/sto-treetable-row';
 export class StoTreeTableComponent extends TreeTable {
 
     @Input() canSelectChildren = true;
+    @Input() disableSelectKey: string;
 
     @ContentChild(StoHeader) header: StoHeader;
     @ContentChild(StoFooter) footer: StoFooter;
