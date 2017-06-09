@@ -1,5 +1,8 @@
 ## Changelog
 
+####1.0.0-ALPHA.11
+* Create canSelectChildren attribute for treetable
+
 ####1.0.0-ALPHA.3
 * Initial version of StoPanel ([PrimeNG Reference](http://primefaces.org/primeng/#/panel))
 
