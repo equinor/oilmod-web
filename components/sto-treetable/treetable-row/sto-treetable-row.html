@@ -9,7 +9,16 @@
             <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
                     <span class="ui-chkbox-icon ui-c fa"
                           [ngClass]="{'fa-check':isSelected(),'fa-minus':node.partialSelected}"></span></div></div
-        ><span *ngIf="!col.template">{{resolveFieldData(node.data,col.field)}}</span>
+        >
+
+        <div class="ui-chkbox ui-treetable-checkbox"
+             *ngIf="isSelectDisabled() && i==0">
+            <div style="visibility: hidden" class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                <i class="ui-chkbox-icon ui-c fa fa-check"></i>
+            </div>
+        </div>
+
+        <span *ngIf="!col.template">{{resolveFieldData(node.data,col.field)}}</span>
         <sto-columnBodyTemplateLoader [column]="col" [rowData]="node" *ngIf="col.template"></sto-columnBodyTemplateLoader>
     </td>
 </div>
