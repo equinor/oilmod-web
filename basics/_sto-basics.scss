@@ -33,3 +33,9 @@ $filter-min-width: $filter-spacing*12;
     font-weight: normal;
   }
 }
+
+
+
+.ui-state-disabled *, .ui-widget:disabled * {
+  cursor: no-drop !important;
+}
