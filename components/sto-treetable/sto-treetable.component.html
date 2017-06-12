@@ -25,7 +25,7 @@
 				</td>
 			</tr>
 			</tfoot>
-			<tbody stoTreeRow *ngFor="let node of value" [node]="node" [level]="0" [labelExpand]="labelExpand" [labelCollapse]="labelCollapse"></tbody>
+			<tbody stoTreeRow [canSelectChildren]="canSelectChildren" [disableSelectKey]="disableSelectKey" *ngFor="let node of value" [node]="node" [level]="0" [labelExpand]="labelExpand" [labelCollapse]="labelCollapse"></tbody>
 		</table>
 	</div>
 	<div class="ui-treetable-footer ui-widget-header" *ngIf="footer">

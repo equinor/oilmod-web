@@ -1,2 +1,26 @@
 @import 'sto-datatable-core.component';
 @import 'sto-datatable-theme.component';
+
+
+
+.sto-datatable{
+  &__title{
+    font-size: 14px !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__header{
+    font-weight: bold;
+  }
+
+  &__footer__heading{
+    text-align: left !important;
+  }
+
+  &__button-col {
+    width: 50px;
+
+    text-align: center;
+  }
+}

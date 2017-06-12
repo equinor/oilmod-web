@@ -35,3 +35,4 @@ export * from './components/sto-messages/sto-messages.component';
 export * from './components/sto-navbar/sto-navbar.component'
 export {ConfirmationService, TreeDragDropService} from './vendor/primeface/components/common/api';
 export * from './components/sto-shared/sto-api';
+export * from './components/sto-panel/sto-panel.component';

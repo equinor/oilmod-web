@@ -1,0 +1,20 @@
+%sto__btn {
+  @extend .btn;
+  @extend .btn-default;
+}
+
+.sto__edit-btn {
+  @extend %sto__btn;
+  &__icon{
+    @extend .fa;
+    @extend .fa-pencil;
+  }
+}
+
+.sto__remove-btn {
+  @extend %sto__btn;
+  &__icon{
+    @extend .fa;
+    @extend .fa-trash;
+  }
+}
