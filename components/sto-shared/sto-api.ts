@@ -42,7 +42,7 @@ export interface MenuItem {
 export interface Message {
     severity?: string;
     summary?: string;
-    detail?: string;
+    detail?: string | string[];
 }
 
 export interface SelectItem {
