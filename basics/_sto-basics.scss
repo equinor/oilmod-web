@@ -5,5 +5,6 @@
 $filter-spacing: 1rem;
 $filter-min-width: $filter-spacing*12;
 
-
-
+.ui-state-disabled *, .ui-widget:disabled * {
+  cursor: no-drop !important;
+}
