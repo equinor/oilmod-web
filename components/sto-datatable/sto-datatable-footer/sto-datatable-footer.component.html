@@ -1,4 +1,3 @@
-`
 <td *ngFor="let col of columns" [ngStyle]="col.style" [class]="col.styleClass"
     [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
     [ngClass]="{'ui-state-default':true}" [style.display]="col.hidden ? 'none' : 'table-cell'">
@@ -7,4 +6,3 @@
                 <sto-columnFooterTemplateLoader [column]="col"></sto-columnFooterTemplateLoader>
             </span>
 </td>
-`
