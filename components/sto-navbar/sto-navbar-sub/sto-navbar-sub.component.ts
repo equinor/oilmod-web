@@ -6,7 +6,10 @@ import { MenuItem } from 'ngx-stoui/ngx-stoui';
 @Component({
     selector: 'sto-navbarSub',
     templateUrl: 'sto-navbar-sub.component.html',
-    providers: [DomHandler]
+    providers: [DomHandler],
+    host: {
+        '(document:click)': 'onClick($event)',
+    },
 })
 export class StoNavbarSubComponent extends MenubarSub {
 
@@ -15,6 +18,15 @@ export class StoNavbarSubComponent extends MenubarSub {
     constructor(public domHandler: DomHandler, private eref: ElementRef) {
 
         super(domHandler);
+    }
+
+    onClick(event) {
+        if(this.root){
+            if (!this.eref.nativeElement.contains(event.target)){
+                this.activeItem = null;
+                this.isOpen = false;
+            }
+        }
     }
 
     listClick(event) {
