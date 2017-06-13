@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 
-  .ui-datatable .ui-datatable-header,
+.ui-datatable .ui-datatable-header,
 .ui-datatable .ui-datatable-footer {
-  padding: .75em 1.25em;
+  padding: .75em;
   background-color: #f5f5f5;
 }
 .ui-datatable .ui-editable-column.ui-cell-editing .ui-cell-editor {
@@ -94,10 +94,8 @@
 }
 
 
-.sto-datatable__title{
-  font-size: 2rem;
-  float: left;
+//
+.ui-column-title{
+  font-weight: 500;
 }
-.sto-datatable__button-row{
-  float: right;
-}
+

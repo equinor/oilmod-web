@@ -1,13 +1,15 @@
+@import "~ngx-stoui/mixins";
+@import "~ngx-stoui/variables";
 @import 'sto-datatable-core.component';
 @import 'sto-datatable-theme.component';
 
 
-
 .sto-datatable{
   &__title{
-    font-size: 14px !important;
+    font-size: 14px;
     margin-top: 10px;
     margin-bottom: 10px;
+    float: left;
   }
 
   &__header{
@@ -18,9 +20,66 @@
     text-align: left !important;
   }
 
-  &__button-col {
+  &__btnCol, &__btn-col {
     width: 50px;
-
     text-align: center;
   }
+  &__button-row, &__btnRow{
+    float: right;
+  }
+
+}
+
+
+
+
+
+@mixin sto-btn-with-icon() {
+  padding: 4px;
+  border-radius: 50px;
+  line-height: 1;
+  font-size: 12px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.sto-datatable__editBtn {
+  @include sto-btn();
+  @include sto-btn-with-icon();
+  > i{
+    @include fa-icon();
+    &:before { content: $fa-var-pencil; }
+  }
+}
+
+.sto-datatable__removeBtn {
+ @include sto-btn();
+ @include sto-btn-with-icon();
+  > i{
+    @include fa-icon();
+    &:before { content: $fa-var-trash; }
+  }
+}
+
+.sto-datatable__upBtn {
+  @include sto-btn();
+  @include sto-btn-with-icon();
+  > i{
+    @include fa-icon();
+    &:before { content: $fa-var-chevron-up }
+  }
+}
+.sto-datatable__downBtn {
+  @include sto-btn();
+  @include sto-btn-with-icon();
+  > i {
+    @include fa-icon();
+    &:before { content: $fa-var-chevron-down }
+  }
+}
+
+
+.sto-btn-icon { //DEPRECATED
+  @include sto-btn();
+  @include sto-btn-with-icon();
 }
