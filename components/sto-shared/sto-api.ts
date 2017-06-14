@@ -1,4 +1,4 @@
-import {EventEmitter,Injectable} from '@angular/core';
+﻿import {EventEmitter,Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 
@@ -37,6 +37,7 @@ export interface MenuItem {
     visible?: boolean;
     target?: string;
     hasDivider? : boolean;
+    queryParams : any;
 }
 
 export interface Message {
