@@ -37,7 +37,7 @@ export interface MenuItem {
     visible?: boolean;
     target?: string;
     hasDivider? : boolean;
-    queryParams : any;
+    queryParams? : any;
 }
 
 export interface Message {
