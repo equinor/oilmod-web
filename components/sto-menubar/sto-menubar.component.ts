@@ -10,6 +10,7 @@ import { StoMenubarSubComponent } from './sto-menubar-sto/sto-menubar-sub.compon
 @Component({
     selector: 'sto-menubar',
     templateUrl: 'sto-menubar.component.html',
+    styleUrls : ['sto-menubar.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [DomHandler]
 })
