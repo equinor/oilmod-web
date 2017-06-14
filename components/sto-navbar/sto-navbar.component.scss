@@ -1,4 +1,6 @@
-@import '~ngx-stoui/vendor/primeface/primeface';
+@import '~ngx-stoui/vendor/primeface/mixins';
+@import '../sto-menu/sto-menu.component';
+@import '../sto-menubar/sto-menubar.component';
 
 $navbar-bg-color: #1F252C;
 $navbar-text-color: #fff;
@@ -20,22 +22,25 @@ $navbar-text-color: #fff;
   }
 }
 
+
 .sto-navmenu {
+  @extend .ui-menubar;
+  @extend .ui-menu;
+
+  @include ui-widget();
+  @include ui-helper-clearfix();
   float: left;
   padding: .25em;
   position: relative;
-  @extend .ui-menubar;
-  @extend .ui-menu;
-  @extend .ui-widget;
-  @extend .ui-helper-clearfix;
+  background-color: transparent;
 
 }
 
 .sto-navlist {
   @extend .ui-menu-list;
-  @extend .ui-widget-content;
-  @extend .ui-helper-clearfix;
   @extend .ui-menu-child;
+  @include ui-helper-clearfix();
+
   margin: 0;
   padding: 0;
   background-color: $navbar-bg-color;
