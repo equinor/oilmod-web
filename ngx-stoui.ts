@@ -37,3 +37,4 @@ export {ConfirmationService, TreeDragDropService} from './vendor/primeface/compo
 export * from './components/sto-shared/sto-api';
 export * from './components/sto-panel/sto-panel.component';
 export * from './components/sto-chart/sto-chart.component';
+export * from './components/sto-overlaypanel/sto-overlaypanel.component';

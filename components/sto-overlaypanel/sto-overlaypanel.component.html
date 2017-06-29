@@ -1,0 +1,9 @@
+<div [ngClass]="'ui-overlaypanel ui-widget ui-widget-content ui-corner-all ui-shadow'" [ngStyle]="style" [class]="styleClass"
+	 [style.display]="visible ? 'block' : 'none'" (click)="onPanelClick()">
+	<div class="ui-overlaypanel-content">
+		<ng-content></ng-content>
+	</div>
+	<a href="#" *ngIf="showCloseIcon" class="ui-overlaypanel-close ui-state-default" (click)="onCloseClick($event)">
+		<span class="fa fa-fw fa-close"></span>
+	</a>
+</div>
