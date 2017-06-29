@@ -5,5 +5,7 @@
         <nav [ngClass]="{'sto-navmenu':true}"
              [class]="styleClass" [ngStyle]="style">
             <sto-navbarSub [item]="model" root="root"></sto-navbarSub>
+	
         </nav>
+     	<ng-content></ng-content>  	
 </header>
