@@ -3,7 +3,7 @@ import {
   Component,
   ContentChild,
   ContentChildren,
-  ElementRef,
+  ElementRef, Input,
   NgModule,
   QueryList,
   Renderer,
@@ -48,12 +48,24 @@ export class StoDatatableComponent extends DataTable {
     super(el, domHandler, renderer, changeDetector, objectUtils);
   }
 
+  @Input() cellStyleClass: Function;
   @ContentChildren(StoTemplate) templates: QueryList<StoTemplate>;
   @ContentChildren(StoColumn) cols: QueryList<StoColumn>;
   @ContentChild(StoHeaderColumnGroup) headerColumnGroup: StoHeaderColumnGroup;
   @ContentChild(StoFooterColumnGroup) footerColumnGroup: StoFooterColumnGroup;
   @ContentChild(StoHeader) header;
   @ContentChild(StoFooter) footer;
+
+  public getCellStyleClass(rowData: any, field: string, existingStyle) {
+    let styleClass: string = existingStyle;
+    if(this.cellStyleClass) {
+      let cellClass = ' ' + this.cellStyleClass.call(this, rowData, field);
+      if(cellClass) {
+        styleClass += cellClass;
+      }
+    }
+    return styleClass;
+  }
 
 }
 @NgModule({
