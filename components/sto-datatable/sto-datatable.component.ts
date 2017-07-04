@@ -3,8 +3,8 @@ import {
   Component,
   ContentChild,
   ContentChildren,
-  ElementRef, Input,
-  NgModule,
+  ElementRef, EventEmitter, Input,
+  NgModule, Output,
   QueryList,
   Renderer,
   ViewEncapsulation
@@ -65,6 +65,18 @@ export class StoDatatableComponent extends DataTable {
       }
     }
     return styleClass;
+  }
+  
+  @Output() onCellClick = new EventEmitter<any>();
+
+  handleCellClick(cell: any, column, rowData: any) {
+    if (this.editable) {
+      this.switchCellToEditMode(cell, column, rowData);
+    } else {
+      this.onCellClick.emit({
+        row: rowData, cell, column
+      })
+    }
   }
 
 }
