@@ -17,7 +17,7 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
     providers: [CHECKBOX_VALUE_ACCESSOR]
 })
 export class StoCheckboxComponent extends Checkbox {
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(protected cd: ChangeDetectorRef) {
         super(cd);
     }
 }

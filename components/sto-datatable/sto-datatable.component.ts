@@ -23,7 +23,7 @@ import { StoDTRadioButton } from './sto-dt-radiobox/sto-dt-radiobox.component';
 import { StoTableBody } from './sto-datatable-tbody/sto-datatable-tbody.component';
 import { StoColumnFooters } from './sto-datatable-footer/sto-datatable-footer.component';
 import { StoScrollableView } from './sto-scrollable-view/sto-scrollable-view.component';
-import { StoRowExpansionLoader } from 'ngx-stoui/components/sto-datatable/sto-row-expansion-loader/sto-row-expansion-loader.component';
+import { StoRowExpansionLoader } from '../../components/sto-datatable/sto-row-expansion-loader/sto-row-expansion-loader.component';
 import { StoDTCheckbox } from './sto-dt-checkbox/sto-dt-checkbox.component';
 import {
   StoColumn,

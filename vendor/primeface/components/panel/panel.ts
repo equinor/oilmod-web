@@ -24,7 +24,7 @@ export class Panel implements BlockableUI {
         
     public animating: boolean;
     
-    constructor(private el: ElementRef) {}
+    constructor(protected el: ElementRef) {}
     
     toggle(event) {
         if(this.animating) {

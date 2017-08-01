@@ -2,7 +2,7 @@
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 
-export {DomHandler} from 'ngx-stoui/vendor/primeface/components/dom/domhandler';
+export {DomHandler} from '../../vendor/primeface/components/dom/domhandler';
 
 export interface SortMeta {
     field: string;

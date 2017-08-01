@@ -2,7 +2,7 @@ import { Component, ContentChildren, forwardRef, NgModule, QueryList } from '@an
 import { CommonModule } from '@angular/common';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomHandler } from 'ngx-stoui/vendor/primeface/components/dom/domhandler';
+import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
 import { Listbox } from '../../vendor/primeface/components/listbox/listbox';
 import { StoSharedModule, StoTemplate } from '../sto-shared/sto-shared';

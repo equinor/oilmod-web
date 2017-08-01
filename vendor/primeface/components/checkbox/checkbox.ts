@@ -36,7 +36,7 @@ export class Checkbox implements ControlValueAccessor {
     
     checked: boolean = false;
 
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(protected cd: ChangeDetectorRef) {}
 
     onClick(event,checkbox,focus:boolean) {
         event.preventDefault();

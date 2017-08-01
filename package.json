@@ -1,5 +1,20 @@
 {
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
-  "version": "1.0.0-ALPHA.34"
+  "version": "1.0.0-ALPHA.34",
+  "peerDependencies": {
+    "@angular/common": "^4.3.0",
+    "@angular/core": "^4.3.0",
+    "@angular/animations": "^4.3.0",
+    "@angular/router": "^4.3.0",
+    "@angular/forms": "^4.3.0",
+    "rxjs": "^5.3.0",
+    "@angular/platform-browser": "^4.3.2",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/compiler": "^4.3.0",
+    "@angular/compiler-cli": "^4.3.0",
+    "typescript": "^2.0.0"
+  }
 }

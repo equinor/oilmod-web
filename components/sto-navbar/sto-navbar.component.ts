@@ -1,8 +1,8 @@
 import { Component, ElementRef, NgModule, Renderer, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Menubar } from 'ngx-stoui/vendor/primeface/components/menubar/menubar';
-import { DomHandler } from 'ngx-stoui/vendor/primeface/components/dom/domhandler';
+import { Menubar } from '../../vendor/primeface/components/menubar/menubar';
+import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { StoNavbarSubComponent } from './sto-navbar-sub/sto-navbar-sub.component';
 
 

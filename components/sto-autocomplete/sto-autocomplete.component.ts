@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AutoComplete, AutoCompleteModule } from 'ngx-stoui/vendor/primeface/components/autocomplete/autocomplete';
+import { AutoComplete, AutoCompleteModule } from '../../vendor/primeface/components/autocomplete/autocomplete';
 import { StoSharedModule, StoTemplate } from '../sto-shared/sto-shared';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
-import { DomHandler } from 'ngx-stoui/vendor/primeface/components/dom/domhandler';
+import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';
 import { StoInputTextModule } from '../sto-inputtext/sto-inputtext.directive';

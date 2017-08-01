@@ -20,7 +20,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class StoPanelComponent extends Panel {
-  constructor(private el: ElementRef) {
+  constructor(protected el: ElementRef) {
     super(el);
   }
 }

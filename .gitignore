@@ -1,2 +1,4 @@
 node_modules
+old_node_modules
 .idea
+dist

@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, NgModule, Renderer, ViewEncapsulat
 import { CommonModule } from '@angular/common';
 
 import { RouterModule } from '@angular/router';
-import { Menu } from 'ngx-stoui/vendor/primeface/components/menu/menu';
+import { Menu } from '../../vendor/primeface/components/menu/menu';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 
 @Component({
