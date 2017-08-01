@@ -1,18 +1,6 @@
 import {NgModule,Directive,ElementRef,HostListener,Input,OnInit,DoCheck} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-@Directive({
-    selector: '[pInputTextarea]',
-    host: {
-        '[class.ui-inputtext]': 'true',
-        '[class.ui-corner-all]': 'true',
-        '[class.ui-state-default]': 'true',
-        '[class.ui-widget]': 'true',
-        '[class.ui-state-filled]': 'filled',
-        '[attr.rows]': 'rows',
-        '[attr.cols]': 'cols'
-    }
-})
 export class InputTextarea implements OnInit,DoCheck {
     
     @Input() autoResize: boolean;
@@ -81,9 +69,4 @@ export class InputTextarea implements OnInit,DoCheck {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [InputTextarea],
-    declarations: [InputTextarea]
-})
 export class InputTextareaModule { }

@@ -8,20 +8,6 @@ export const RATING_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-rating',
-    template: `
-        <div class="ui-rating" [ngClass]="{'ui-state-disabled': disabled}">
-            <a href="#" *ngIf="cancel" (click)="clear($event)">
-                <span class="fa fa-ban"></span>
-            </a>
-            <a href="#" *ngFor="let star of starsArray;let i=index" (click)="rate($event,i)">
-                <span class="fa" [ngClass]="{'fa-star-o': (!value || i >= value), 'fa-star':(i < value)}"></span>
-            </a>
-        </div>
-    `,
-    providers: [RATING_VALUE_ACCESSOR]
-})
 export class Rating implements ControlValueAccessor {
 
     @Input() disabled: boolean;
@@ -91,9 +77,4 @@ export class Rating implements ControlValueAccessor {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Rating],
-    declarations: [Rating]
-})
 export class RatingModule { }

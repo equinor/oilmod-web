@@ -37,18 +37,6 @@ export const INPUTMASK_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-inputMask',
-    template: `<input #input pInputText [attr.id]="inputId" [attr.type]="type" [attr.name]="name" [ngStyle]="style" [ngClass]="styleClass" [attr.placeholder]="placeholder"
-        [attr.size]="size" [attr.maxlength]="maxlength" [attr.tabindex]="tabindex" [disabled]="disabled" [readonly]="readonly"
-        (focus)="onFocus($event)" (blur)="onInputBlur($event)" (keydown)="onKeyDown($event)" (keypress)="onKeyPress($event)"
-        (input)="onInput($event)" (paste)="handleInputChange($event)">`,
-    host: {
-        '[class.ui-inputwrapper-filled]': 'filled',
-        '[class.ui-inputwrapper-focus]': 'focus'
-    },
-    providers: [INPUTMASK_VALUE_ACCESSOR,DomHandler]
-})
 export class InputMask implements OnInit,OnDestroy,ControlValueAccessor {
 
     @Input() mask: string;
@@ -582,9 +570,4 @@ export class InputMask implements OnInit,OnDestroy,ControlValueAccessor {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,InputTextModule],
-    exports: [InputMask],
-    declarations: [InputMask]
-})
 export class InputMaskModule { }

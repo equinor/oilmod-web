@@ -15,40 +15,6 @@ import { CommonModule } from '@angular/common';
 import { TreeNode } from '../common/api';
 import { Column, Footer, Header, SharedModule } from '../common/shared';
 
-@Component({
-    selector: '[pTreeRow]',
-    template: `
-		<div class="ui-treetable-row"
-			 [ngClass]="{'ui-state-highlight':isSelected(),'ui-treetable-row-selectable':treeTable.selectionMode && node.selectable !== false}">
-			<td *ngFor="let col of treeTable.columns; let i=index" [ngStyle]="col.style" [class]="col.styleClass"
-				(click)="onRowClick($event)" (touchend)="onRowTouchEnd()" (contextmenu)="onRowRightClick($event)">
-				<a href="#" *ngIf="i==0" class="ui-treetable-toggler fa fa-fw ui-c"
-				   [ngClass]="{'fa-caret-down':node.expanded,'fa-caret-right':!node.expanded}"
-				   [ngStyle]="{'margin-left':level*16 + 'px','visibility': isLeaf() ? 'hidden' : 'visible'}"
-				   (click)="toggle($event)"
-				   [title]="node.expanded ? labelCollapse : labelExpand">
-				</a>
-				<div class="ui-chkbox ui-treetable-checkbox" *ngIf="treeTable.selectionMode == 'checkbox' && i==0">
-					<div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
-                    <span class="ui-chkbox-icon ui-c fa"
-						  [ngClass]="{'fa-check':isSelected(),'fa-minus':node.partialSelected}"></span></div>
-				</div
-				>
-				<span *ngIf="!col.template">{{resolveFieldData(node.data, col.field)}}</span>
-				<p-columnBodyTemplateLoader [column]="col" [rowData]="node"
-											*ngIf="col.template"></p-columnBodyTemplateLoader>
-			</td>
-		</div>
-		<div *ngIf="node.children && node.expanded" class="ui-treetable-row" style="display:table-row">
-			<td [attr.colspan]="treeTable.columns.length" class="ui-treetable-child-table-container">
-				<table>
-					<tbody pTreeRow *ngFor="let childNode of node.children" [node]="childNode" [level]="level+1"
-						   [labelExpand]="labelExpand" [labelCollapse]="labelCollapse" [parentNode]="node"></tbody>
-				</table>
-			</td>
-		</div>
-    `
-})
 export class UITreeRow implements OnInit {
 
     @Input() node: TreeNode;
@@ -120,47 +86,6 @@ export class UITreeRow implements OnInit {
     }
 }
 
-@Component({
-    selector: 'p-treeTable',
-    template: `
-		<div [ngClass]="'ui-treetable ui-widget'" [ngStyle]="style" [class]="styleClass">
-			<div class="ui-treetable-header ui-widget-header" *ngIf="header">
-				<ng-content select="p-header"></ng-content>
-			</div>
-			<div class="ui-treetable-tablewrapper">
-				<table class="ui-widget-content">
-					<thead>
-					<tr class="ui-state-default">
-						<th #headerCell *ngFor="let col of columns" [ngStyle]="col.style" [class]="col.styleClass"
-							[ngClass]="'ui-state-default ui-unselectable-text'">
-							<span class="ui-column-title" *ngIf="!col.headerTemplate">{{col.header}}</span>
-							<span class="ui-column-title" *ngIf="col.headerTemplate">
-                                    <p-columnHeaderTemplateLoader [column]="col"></p-columnHeaderTemplateLoader>
-                                </span>
-						</th>
-					</tr>
-					</thead>
-					<tfoot *ngIf="hasFooter()">
-					<tr>
-						<td *ngFor="let col of columns" [ngStyle]="col.style" [class]="col.styleClass"
-							[ngClass]="{'ui-state-default':true}">
-							<span class="ui-column-footer" *ngIf="!col.footerTemplate">{{col.footer}}</span>
-							<span class="ui-column-footer" *ngIf="col.footerTemplate">
-                                    <p-columnFooterTemplateLoader [column]="col"></p-columnFooterTemplateLoader>
-                                </span>
-						</td>
-					</tr>
-					</tfoot>
-					<tbody pTreeRow *ngFor="let node of value" [node]="node" [level]="0" [labelExpand]="labelExpand"
-						   [labelCollapse]="labelCollapse"></tbody>
-				</table>
-			</div>
-			<div class="ui-treetable-footer ui-widget-header" *ngIf="footer">
-				<ng-content select="p-footer"></ng-content>
-			</div>
-		</div>
-    `
-})
 export class TreeTable {
 
     @Input() value: TreeNode[];
@@ -424,10 +349,5 @@ export class TreeTable {
     }
 }
 
-@NgModule({
-    imports: [CommonModule, SharedModule],
-    exports: [TreeTable, SharedModule],
-    declarations: [TreeTable, UITreeRow]
-})
 export class TreeTableModule {
 }

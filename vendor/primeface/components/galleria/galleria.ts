@@ -2,36 +2,6 @@ import {NgModule,Component,ElementRef,AfterViewChecked,AfterViewInit,OnDestroy,I
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Component({
-    selector: 'p-galleria',
-    template: `
-        <div [ngClass]="{'ui-galleria ui-widget ui-widget-content ui-corner-all':true}" [ngStyle]="style" [class]="styleClass" [style.width.px]="panelWidth">
-            <ul class="ui-galleria-panel-wrapper" [style.width.px]="panelWidth" [style.height.px]="panelHeight">
-                <li *ngFor="let image of images;let i=index" class="ui-galleria-panel" [ngClass]="{'ui-helper-hidden':i!=activeIndex}"
-                    [style.width.px]="panelWidth" [style.height.px]="panelHeight" (click)="clickImage($event,image,i)">
-                    <img class="ui-panel-images" [src]="image.source" [alt]="image.alt" [title]="image.title"/>
-                </li>
-            </ul>
-            <div [ngClass]="{'ui-galleria-filmstrip-wrapper':true}" *ngIf="showFilmstrip">
-                <ul class="ui-galleria-filmstrip" style="transition:left 1s" [style.left.px]="stripLeft">
-                    <li #frame *ngFor="let image of images;let i=index" [ngClass]="{'ui-galleria-frame-active':i==activeIndex}" class="ui-galleria-frame" (click)="frameClick(frame)"
-                        [style.width.px]="frameWidth" [style.height.px]="frameHeight" [style.transition]="'opacity 0.75s ease'">
-                        <div class="ui-galleria-frame-content">
-                            <img [src]="image.source" [alt]="image.alt" [title]="image.title" class="ui-galleria-frame-image"
-                                [style.width.px]="frameWidth" [style.height.px]="frameHeight">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="ui-galleria-nav-prev fa fa-fw fa-chevron-circle-left" (click)="clickNavLeft()" [style.bottom.px]="frameHeight/2" *ngIf="activeIndex !== 0"></div>
-            <div class="ui-galleria-nav-next fa fa-fw fa-chevron-circle-right" (click)="clickNavRight()" [style.bottom.px]="frameHeight/2"></div>
-            <div class="ui-galleria-caption" *ngIf="showCaption&&images" style="display:block">
-                <h4>{{images[activeIndex]?.title}}</h4><p>{{images[activeIndex]?.alt}}</p>
-            </div>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
         
     @Input() style: any;
@@ -234,9 +204,4 @@ export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
 
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Galleria],
-    declarations: [Galleria]
-})
 export class GalleriaModule { }

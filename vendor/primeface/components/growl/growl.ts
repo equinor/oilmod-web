@@ -3,29 +3,6 @@ import {CommonModule} from '@angular/common';
 import {Message} from '../common/api';
 import {DomHandler} from '../dom/domhandler';
 
-@Component({
-    selector: 'p-growl',
-    template: `
-        <div #container [ngClass]="'ui-growl ui-widget'" [style.zIndex]="zIndex" [ngStyle]="style" [class]="styleClass">
-            <div #msgel *ngFor="let msg of value;let i = index" class="ui-growl-item-container ui-state-highlight ui-corner-all ui-shadow" aria-live="polite"
-                [ngClass]="{'ui-growl-message-info':msg.severity == 'info','ui-growl-message-warn':msg.severity == 'warn',
-                    'ui-growl-message-error':msg.severity == 'error','ui-growl-message-success':msg.severity == 'success'}">
-                <div class="ui-growl-item">
-                     <div class="ui-growl-icon-close fa fa-close" (click)="remove(i,msgel)"></div>
-                     <span class="ui-growl-image fa fa-2x"
-                        [ngClass]="{'fa-info-circle':msg.severity == 'info','fa-exclamation-circle':msg.severity == 'warn',
-                                'fa-close':msg.severity == 'error','fa-check':msg.severity == 'success'}"></span>
-                     <div class="ui-growl-message">
-                        <span class="ui-growl-title">{{msg.summary}}</span>
-                        <p [innerHTML]="msg.detail"></p>
-                     </div>
-                     <div style="clear: both;"></div>
-                </div>
-            </div>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class Growl implements AfterViewInit,OnDestroy {
 
     @Input() sticky: boolean = false;
@@ -110,9 +87,4 @@ export class Growl implements AfterViewInit,OnDestroy {
 
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Growl],
-    declarations: [Growl]
-})
 export class GrowlModule { }

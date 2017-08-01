@@ -3,15 +3,6 @@ import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 import {BlockableUI} from '../common/api';
 
-@Component({
-    selector: 'p-blockUI',
-    template: `
-        <div #mask class="ui-blockui ui-widget-overlay" [ngClass]="{'ui-blockui-document':!target}" [ngStyle]="{display: blocked ? 'block' : 'none'}">
-            <ng-content></ng-content>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class BlockUI implements AfterViewInit,OnDestroy {
 
     @Input() target: any;
@@ -66,9 +57,4 @@ export class BlockUI implements AfterViewInit,OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [BlockUI],
-    declarations: [BlockUI]
-})
 export class BlockUIModule { }

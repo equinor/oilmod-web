@@ -1,36 +1,6 @@
 import {NgModule,Component,ElementRef,Input,Output,SimpleChange,EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-@Component({
-    selector: 'p-paginator',
-    template: `
-        <div [class]="styleClass" [ngStyle]="style" [ngClass]="'ui-paginator ui-widget ui-widget-header ui-unselectable-text'">
-            <a href="#" class="ui-paginator-first ui-paginator-element ui-state-default ui-corner-all"
-                    (click)="changePageToFirst($event)" [ngClass]="{'ui-state-disabled':isFirstPage()}" [tabindex]="isFirstPage() ? -1 : null">
-                <span class="fa fa-step-backward"></span>
-            </a>
-            <a href="#" class="ui-paginator-prev ui-paginator-element ui-state-default ui-corner-all"
-                    (click)="changePageToPrev($event)" [ngClass]="{'ui-state-disabled':isFirstPage()}" [tabindex]="isFirstPage() ? -1 : null">
-                <span class="fa fa-backward"></span>
-            </a>
-            <span class="ui-paginator-pages">
-                <a href="#" *ngFor="let pageLink of pageLinks" class="ui-paginator-page ui-paginator-element ui-state-default ui-corner-all"
-                    (click)="changePage(pageLink - 1, $event)" [ngClass]="{'ui-state-active': (pageLink-1 == getPage())}">{{pageLink}}</a>
-            </span>
-            <a href="#" class="ui-paginator-next ui-paginator-element ui-state-default ui-corner-all"
-                    (click)="changePageToNext($event)" [ngClass]="{'ui-state-disabled':isLastPage()}" [tabindex]="isLastPage() ? -1 : null">
-                <span class="fa fa-forward"></span>
-            </a>
-            <a href="#" class="ui-paginator-last ui-paginator-element ui-state-default ui-corner-all"
-                    (click)="changePageToLast($event)" [ngClass]="{'ui-state-disabled':isLastPage()}" [tabindex]="isLastPage() ? -1 : null">
-                <span class="fa fa-step-forward"></span>
-            </a>
-            <select class="ui-paginator-rpp-options ui-widget ui-state-default" *ngIf="rowsPerPageOptions" (change)="onRppChange($event)">
-                <option *ngFor="let opt of rowsPerPageOptions" [value]="opt" [selected]="rows == opt">{{opt}}</option>
-            </select>
-        </div>
-    `
-})
 export class Paginator {
 
     @Input() pageLinkSize: number = 5;
@@ -163,9 +133,4 @@ export class Paginator {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Paginator],
-    declarations: [Paginator]
-})
 export class PaginatorModule { }

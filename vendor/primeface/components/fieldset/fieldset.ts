@@ -4,36 +4,6 @@ import {CommonModule} from '@angular/common';
 import {SharedModule} from '../common/shared';
 import {BlockableUI} from '../common/api';
 
-@Component({
-    selector: 'p-fieldset',
-    template: `
-        <fieldset [ngClass]="{'ui-fieldset ui-widget ui-widget-content ui-corner-all': true, 'ui-fieldset-toggleable': toggleable}" [ngStyle]="style" [class]="styleClass">
-            <legend class="ui-fieldset-legend ui-corner-all ui-state-default ui-unselectable-text" (click)="toggle($event)">
-                <span *ngIf="toggleable" class="ui-fieldset-toggler fa fa-w" [ngClass]="{'fa-minus': !collapsed,'fa-plus':collapsed}"></span>
-                {{legend}}
-                <ng-content select="p-header"></ng-content>
-            </legend>
-            <div class="ui-fieldset-content-wrapper" [@fieldsetContent]="collapsed ? 'hidden' : 'visible'" 
-                        [ngClass]="{'ui-fieldset-content-wrapper-overflown': collapsed||animating}">
-                <div class="ui-fieldset-content">
-                    <ng-content></ng-content>
-                </div>
-            </div>
-        </fieldset>
-    `,
-    animations: [
-        trigger('fieldsetContent', [
-            state('hidden', style({
-                height: '0px'
-            })),
-            state('visible', style({
-                height: '*'
-            })),
-            transition('visible => hidden', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
-            transition('hidden => visible', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
-        ])
-    ]
-})
 export class Fieldset implements BlockableUI {
 
     @Input() legend: string;
@@ -87,9 +57,4 @@ export class Fieldset implements BlockableUI {
 
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Fieldset,SharedModule],
-    declarations: [Fieldset]
-})
 export class FieldsetModule { }

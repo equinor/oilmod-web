@@ -5,34 +5,6 @@ import {MenuItem} from '../common/api';
 import {Location} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
-@Component({
-    selector: 'p-slideMenuSub',
-    template: `
-        <ul [ngClass]="{'ui-helper-reset ui-menu-rootlist':root, 'ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-child':!root}" class="ui-menu-list"
-            [style.width.px]="menuWidth" [style.left.px]="root ? slideMenu.left : slideMenu.menuWidth" 
-            [style.transitionProperty]="root ? 'left' : 'none'" [style.transitionDuration]="effectDuration + 'ms'" [style.transitionTimingFunction]="easing">
-            <ng-template ngFor let-child [ngForOf]="(root ? item : item.items)">
-                <li #listitem [ngClass]="{'ui-menuitem ui-widget ui-corner-all':true,'ui-menu-parent':child.items,'ui-slidemenuitem-active':listitem==activeItem}">
-                    <a *ngIf="!item.routerLink" [href]="child.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="child.target"
-                        [ngClass]="{'ui-menuitem-link-parent':child.items,'ui-state-disabled':child.disabled}" 
-                        (click)="itemClick($event, child, listitem)">
-                        <span class="ui-submenu-icon fa fa-fw fa-caret-right" *ngIf="child.items"></span>
-                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>
-                        <span class="ui-menuitem-text">{{child.label}}</span>
-                    </a>
-                    <a *ngIf="item.routerLink" [routerLink]="item.routerLink" [routerLinkActive]="'ui-state-active'" [href]="child.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="child.target"
-                        [ngClass]="{'ui-menuitem-link-parent':child.items,'ui-state-disabled':child.disabled}" 
-                        (click)="itemClick($event, child, listitem)">
-                        <span class="ui-submenu-icon fa fa-fw fa-caret-right" *ngIf="child.items"></span>
-                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>
-                        <span class="ui-menuitem-text">{{child.label}}</span>
-                    </a>
-                    <p-slideMenuSub class="ui-submenu" [item]="child" [menuWidth]="menuWidth" *ngIf="child.items"></p-slideMenuSub>
-                </li>
-            </ng-template>
-        </ul>
-    `
-})
 export class SlideMenuSub implements OnDestroy {
 
     @Input() item: MenuItem;
@@ -86,23 +58,6 @@ export class SlideMenuSub implements OnDestroy {
     }
 }
 
-@Component({
-    selector: 'p-slideMenu',
-    template: `
-        <div #container [ngClass]="{'ui-menu ui-slidemenu ui-widget ui-widget-content ui-corner-all':true,'ui-menu-dynamic ui-shadow':popup}" 
-            [class]="styleClass" [ngStyle]="style" (click)="onClick($event)">
-            <div class="ui-slidemenu-wrapper" [style.height.px]="viewportHeight">
-                <div #slideMenuContent class="ui-slidemenu-content">
-                    <p-slideMenuSub [item]="model" root="root" [menuWidth]="menuWidth" [effectDuration]="effectDuration" [easing]="easing"></p-slideMenuSub>
-                </div>
-                <div #backward class="ui-slidemenu-backward ui-widget-header ui-corner-all" [style.display]="left ? 'block' : 'none'" (click)="goBack()">
-                    <span class="fa fa-fw fa-caret-left"></span><span>{{backLabel}}</span>
-                </div>
-            </div>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class SlideMenu implements AfterViewInit,OnDestroy {
 
     @Input() model: MenuItem[];
@@ -213,9 +168,4 @@ export class SlideMenu implements AfterViewInit,OnDestroy {
 
 }
 
-@NgModule({
-    imports: [CommonModule,RouterModule],
-    exports: [SlideMenu,RouterModule],
-    declarations: [SlideMenu,SlideMenuSub]
-})
 export class SlideMenuModule { }

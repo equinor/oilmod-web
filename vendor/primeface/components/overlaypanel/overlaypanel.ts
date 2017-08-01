@@ -2,21 +2,6 @@ import {NgModule,Component,Input,Output,OnInit,AfterViewInit,OnDestroy,EventEmit
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Component({
-    selector: 'p-overlayPanel',
-    template: `
-        <div [ngClass]="'ui-overlaypanel ui-widget ui-widget-content ui-corner-all ui-shadow'" [ngStyle]="style" [class]="styleClass"
-            [style.display]="visible ? 'block' : 'none'" (click)="onPanelClick()">
-            <div class="ui-overlaypanel-content">
-                <ng-content></ng-content>
-            </div>
-            <a href="#" *ngIf="showCloseIcon" class="ui-overlaypanel-close ui-state-default" (click)="onCloseClick($event)">
-                <span class="fa fa-fw fa-close"></span>
-            </a>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class OverlayPanel implements OnInit,AfterViewInit,OnDestroy {
 
     @Input() dismissable: boolean = true;
@@ -150,9 +135,4 @@ export class OverlayPanel implements OnInit,AfterViewInit,OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [OverlayPanel],
-    declarations: [OverlayPanel]
-})
 export class OverlayPanelModule { }

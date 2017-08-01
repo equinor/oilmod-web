@@ -5,47 +5,6 @@ import {DomHandler} from '../dom/domhandler';
 import {RouterModule} from '@angular/router';
 import { MenuItem } from '../common/api';
 
-@Component({
-    selector: 'p-menu',
-    template: `
-        <div #container [ngClass]="{'ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix':true,'ui-menu-dynamic ui-shadow':popup}" 
-            [class]="styleClass" [ngStyle]="style" (click)="preventDocumentDefault=true">
-            <ul class="ui-menu-list ui-helper-reset">
-                <ng-template ngFor let-submenu [ngForOf]="model" *ngIf="hasSubMenu()">
-                    <li class="ui-widget-header ui-corner-all"><h3>{{submenu.label}}</h3></li>
-                    <li *ngFor="let item of submenu.items" class="ui-menuitem ui-widget ui-corner-all">
-                        <a *ngIf="!item.routerLink" [href]="item.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="item.target"
-                            [ngClass]="{'ui-state-disabled':item.disabled}" (click)="itemClick($event, item)">
-                            <span class="ui-menuitem-icon fa fa-fw" *ngIf="item.icon" [ngClass]="item.icon"></span>
-                            <span class="ui-menuitem-text">{{item.label}}</span>
-                        </a>
-                        <a *ngIf="item.routerLink" [routerLink]="item.routerLink" [routerLinkActive]="'ui-state-active'" class="ui-menuitem-link ui-corner-all" [attr.target]="item.target"
-                            [ngClass]="{'ui-state-disabled':item.disabled}" (click)="itemClick($event, item)">
-                            <span class="ui-menuitem-icon fa fa-fw" *ngIf="item.icon" [ngClass]="item.icon"></span>
-                            <span class="ui-menuitem-text">{{item.label}}</span>
-                        </a>
-                    </li>
-                </ng-template>
-                <ng-template ngFor let-item [ngForOf]="model" *ngIf="!hasSubMenu()">
-                    <li class="ui-menuitem ui-widget ui-corner-all">
-                        <a *ngIf="!item.routerLink" [href]="item.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="item.target"
-                            [ngClass]="{'ui-state-disabled':item.disabled}" (click)="itemClick($event, item)">
-                            <span class="ui-menuitem-icon fa fa-fw" *ngIf="item.icon" [ngClass]="item.icon"></span>
-                            <span class="ui-menuitem-text">{{item.label}}</span>
-                        </a>
-                        <a *ngIf="item.routerLink" [routerLink]="item.routerLink" [routerLinkActive]="'ui-state-active'" class="ui-menuitem-link ui-corner-all" [attr.target]="item.target"
-                            [ngClass]="{'ui-state-disabled':item.disabled}" (click)="itemClick($event, item)">
-                            <span class="ui-menuitem-icon fa fa-fw" *ngIf="item.icon" [ngClass]="item.icon"></span>
-                            <span class="ui-menuitem-text">{{item.label}}</span>
-                        </a>
-                    </li>
-                </ng-template>
-            </ul>
-        </div>
-    `,
-    providers: [DomHandler],
-    host: {'(window:resize)': 'onResize($event)'}
-})
 export class Menu implements AfterViewInit,OnDestroy {
 
     @Input() model: MenuItem[];
@@ -187,9 +146,4 @@ export class Menu implements AfterViewInit,OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,RouterModule],
-    exports: [Menu,RouterModule],
-    declarations: [Menu]
-})
 export class MenuModule { }

@@ -5,33 +5,6 @@ import {MenuItem} from '../common/api';
 import {Location} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
-@Component({
-    selector: 'p-contextMenuSub',
-    template: `
-        <ul [ngClass]="{'ui-helper-reset':root, 'ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow':!root}" class="ui-menu-list"
-            (click)="listClick($event)">
-            <ng-template ngFor let-child [ngForOf]="(root ? item : item.items)">
-                <li #item [ngClass]="{'ui-menuitem ui-widget ui-corner-all':true,'ui-menu-parent':child.items,'ui-menuitem-active':item==activeItem}"
-                    (mouseenter)="onItemMouseEnter($event,item,child)" (mouseleave)="onItemMouseLeave($event,item)">
-                    <a *ngIf="!child.routerLink" [href]="child.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="child.target"
-                        [ngClass]="{'ui-state-disabled':child.disabled}" (click)="itemClick($event, child)">
-                        <span class="ui-submenu-icon fa fa-fw fa-caret-right" *ngIf="child.items"></span>
-                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>
-                        <span class="ui-menuitem-text">{{child.label}}</span>
-                    </a>
-                    <a *ngIf="child.routerLink" [routerLink]="child.routerLink" [routerLinkActive]="'ui-state-active'" class="ui-menuitem-link ui-corner-all" [attr.target]="child.target"
-                        [ngClass]="{'ui-state-disabled':child.disabled}" (click)="itemClick($event, child)">
-                        <span class="ui-submenu-icon fa fa-fw fa-caret-right" *ngIf="child.items"></span>
-                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>
-                        <span class="ui-menuitem-text">{{child.label}}</span>
-                    </a>
-                    <p-contextMenuSub class="ui-submenu" [item]="child" *ngIf="child.items"></p-contextMenuSub>
-                </li>
-            </ng-template>
-        </ul>
-    `,
-    providers: [DomHandler]
-})
 export class ContextMenuSub {
 
     @Input() item: MenuItem;
@@ -117,16 +90,6 @@ export class ContextMenuSub {
     }
 }
 
-@Component({
-    selector: 'p-contextMenu',
-    template: `
-        <div #container [ngClass]="'ui-contextmenu ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-dynamic ui-shadow'" 
-            [class]="styleClass" [ngStyle]="style" [style.display]="visible ? 'block' : 'none'">
-            <p-contextMenuSub [item]="model" root="root"></p-contextMenuSub>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class ContextMenu implements AfterViewInit,OnDestroy {
 
     @Input() model: MenuItem[];
@@ -270,9 +233,4 @@ export class ContextMenu implements AfterViewInit,OnDestroy {
 
 }
 
-@NgModule({
-    imports: [CommonModule,RouterModule],
-    exports: [ContextMenu,RouterModule],
-    declarations: [ContextMenu,ContextMenuSub]
-})
 export class ContextMenuModule { }

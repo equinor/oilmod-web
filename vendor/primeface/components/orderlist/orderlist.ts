@@ -4,32 +4,6 @@ import {ButtonModule} from '../button/button';
 import {SharedModule,PrimeTemplate} from '../common/shared';
 import {DomHandler} from '../dom/domhandler';
 
-@Component({
-    selector: 'p-orderList',
-    template: `
-        <div [ngClass]="{'ui-orderlist ui-grid ui-widget':true,'ui-grid-responsive':responsive}" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-grid-row">
-                <div class="ui-orderlist-controls ui-grid-col-2">
-                    <button type="button" pButton icon="fa-angle-up" (click)="moveUp($event,listelement)"></button>
-                    <button type="button" pButton icon="fa-angle-double-up" (click)="moveTop($event,listelement)"></button>
-                    <button type="button" pButton icon="fa-angle-down" (click)="moveDown($event,listelement)"></button>
-                    <button type="button" pButton icon="fa-angle-double-down" (click)="moveBottom($event,listelement)"></button>
-                </div>
-                <div class="ui-grid-col-10">
-                    <div class="ui-orderlist-caption ui-widget-header ui-corner-top" *ngIf="header">{{header}}</div>
-                    <ul #listelement class="ui-widget-content ui-orderlist-list ui-corner-bottom" [ngStyle]="listStyle">
-                        <li *ngFor="let item of value" class="ui-orderlist-item"
-                            [ngClass]="{'ui-state-highlight':isSelected(item)}" 
-                            (click)="onItemClick($event,item)" (touchend)="onItemTouchEnd($event)">
-                            <ng-template [pTemplateWrapper]="itemTemplate" [item]="item"></ng-template>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class OrderList implements AfterViewChecked,AfterContentInit {
 
     @Input() value: any[];
@@ -236,9 +210,4 @@ export class OrderList implements AfterViewChecked,AfterContentInit {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,ButtonModule,SharedModule],
-    exports: [OrderList,SharedModule],
-    declarations: [OrderList]
-})
 export class OrderListModule { }

@@ -3,27 +3,6 @@ import {CommonModule} from '@angular/common';
 import {Header,Footer,PrimeTemplate,SharedModule} from '../common/shared';
 import {DomHandler} from '../dom/domhandler';
 
-@Component({
-    selector: 'p-dataScroller',
-    template: `
-    <div [ngClass]="{'ui-datascroller ui-widget': true, 'ui-datascroller-inline': inline}" [ngStyle]="style" [class]="styleClass">
-        <div class="ui-datascroller-header ui-widget-header ui-corner-top" *ngIf="header">
-            <ng-content select="p-header"></ng-content>
-        </div>
-        <div #content class="ui-datascroller-content ui-widget-content" [ngStyle]="{'max-height': scrollHeight}">
-            <ul class="ui-datascroller-list">
-                <li *ngFor="let item of dataToRender">
-                    <ng-template [pTemplateWrapper]="itemTemplate" [item]="item"></ng-template>
-                </li>
-            </ul>
-        </div>
-        <div class="ui-datascroller-footer ui-widget-header ui-corner-bottom" *ngIf="footer">
-            <ng-content select="p-footer"></ng-content>
-        </div>
-    </div>
-    `,
-    providers: [DomHandler]
-})
 export class DataScroller implements AfterViewInit,OnDestroy {
 
     @Input() rows: number;
@@ -191,10 +170,5 @@ export class DataScroller implements AfterViewInit,OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,SharedModule],
-    exports: [DataScroller,SharedModule],
-    declarations: [DataScroller]
-})
 export class DataScrollerModule { }
 

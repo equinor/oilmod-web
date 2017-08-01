@@ -5,33 +5,6 @@ import {MenuItem} from '../common/api';
 import {Location} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
-@Component({
-    selector: 'p-menubarSub',
-    template: `
-        <ul [ngClass]="{'ui-menubar-root-list ui-helper-clearfix':root, 'ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow':!root}" class="ui-menu-list"
-            (click)="listClick($event)">
-            <ng-template ngFor let-child [ngForOf]="(root ? item : item.items)">
-                <li #item [ngClass]="{'ui-menuitem ui-widget ui-corner-all':true,'ui-menu-parent':child.items,'ui-menuitem-active':item==activeItem}"
-                    (mouseenter)="onItemMouseEnter($event,item,child)" (mouseleave)="onItemMouseLeave($event,item)">
-                    <a *ngIf="!child.routerLink" [href]="child.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="child.target"
-                        [ngClass]="{'ui-state-disabled':child.disabled}" (click)="itemClick($event, child)">
-                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>
-                        <span class="ui-menuitem-text">{{child.label}}</span>
-                        <span class="ui-submenu-icon fa fa-fw" *ngIf="child.items" [ngClass]="{'fa-caret-down':root,'fa-caret-right':!root}"></span>
-                    </a>
-                    <a *ngIf="child.routerLink" [routerLink]="child.routerLink" [routerLinkActive]="'ui-state-active'" class="ui-menuitem-link ui-corner-all" [attr.target]="child.target"
-                        [ngClass]="{'ui-state-disabled':child.disabled}" (click)="itemClick($event, child)">
-                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>
-                        <span class="ui-menuitem-text">{{child.label}}</span>
-                        <span class="ui-submenu-icon fa fa-fw" *ngIf="child.items" [ngClass]="{'fa-caret-down':root,'fa-caret-right':!root}"></span>
-                    </a>
-                    <p-menubarSub class="ui-submenu" [item]="child" *ngIf="child.items"></p-menubarSub>
-                </li>
-            </ng-template>
-        </ul>
-    `,
-    providers: [DomHandler]
-})
 export class MenubarSub {
 
     @Input() item: MenuItem;
@@ -99,16 +72,6 @@ export class MenubarSub {
 
 }
 
-@Component({
-    selector: 'p-menubar',
-    template: `
-        <div [ngClass]="{'ui-menubar ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix':true}" 
-            [class]="styleClass" [ngStyle]="style">
-            <p-menubarSub [item]="model" root="root"></p-menubarSub>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class Menubar implements OnDestroy {
 
     @Input() model: MenuItem[];
@@ -141,9 +104,4 @@ export class Menubar implements OnDestroy {
 
 }
 
-@NgModule({
-    imports: [CommonModule,RouterModule],
-    exports: [Menubar,RouterModule],
-    declarations: [Menubar,MenubarSub]
-})
 export class MenubarModule { }

@@ -1,4 +1,4 @@
-import { Directive, NgModule } from '@angular/core';
+import { Directive, NgModule, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputText } from '../../vendor/primeface/components/inputtext/inputtext';
 
@@ -13,8 +13,9 @@ import { InputText } from '../../vendor/primeface/components/inputtext/inputtext
     }
 })
 export class StoInputTextDirective extends InputText {
-
-
+    constructor(public el: ElementRef) {
+        super(el);
+    }
 }
 
 @NgModule({

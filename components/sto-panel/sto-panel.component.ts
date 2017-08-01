@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Panel } from '../../vendor/primeface/components/panel/panel';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -20,6 +20,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class StoPanelComponent extends Panel {
+  constructor(private el: ElementRef) {
+    super(el);
+  }
 }
 
 @NgModule({

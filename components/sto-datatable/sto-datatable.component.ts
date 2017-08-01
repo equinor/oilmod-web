@@ -3,18 +3,20 @@ import {
   Component,
   ContentChild,
   ContentChildren,
-  ElementRef, EventEmitter, Input,
-  NgModule, Output,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgModule,
+  Output,
   QueryList,
   Renderer,
   ViewEncapsulation
 } from '@angular/core';
-import { DataTable, DataTableModule } from '../../vendor/primeface/components/datatable/datatable';
+import { DataTable } from '../../vendor/primeface/components/datatable/datatable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
 import { SharedModule } from '../../vendor/primeface/components/common/shared';
 import { CommonModule } from '@angular/common';
-import { PaginatorModule } from '../../vendor/primeface/components/paginator/paginator';
 import { FormsModule } from '@angular/forms';
 import { StoColumnHeadersComponent } from './sto-datatable-header/sto-datatable-header.component';
 import { StoDTRadioButton } from './sto-dt-radiobox/sto-dt-radiobox.component';
@@ -25,13 +27,14 @@ import { StoRowExpansionLoader } from 'ngx-stoui/components/sto-datatable/sto-ro
 import { StoDTCheckbox } from './sto-dt-checkbox/sto-dt-checkbox.component';
 import {
   StoColumn,
+  StoFooter,
   StoFooterColumnGroup,
+  StoHeader,
   StoHeaderColumnGroup,
   StoSharedModule,
-  StoTemplate,
-  StoHeader,
-  StoFooter
+  StoTemplate
 } from '../sto-shared/sto-shared';
+import { StoPaginatorModule } from '../sto-paginator/sto-paginator.component';
 
 
 @Component({
@@ -58,15 +61,15 @@ export class StoDatatableComponent extends DataTable {
 
   public getCellStyleClass(rowData: any, field: string, existingStyle) {
     let styleClass: string = existingStyle;
-    if(this.cellStyleClass) {
+    if (this.cellStyleClass) {
       let cellClass = ' ' + this.cellStyleClass.call(this, rowData, field);
-      if(cellClass) {
+      if (cellClass) {
         styleClass += cellClass;
       }
     }
     return styleClass;
   }
-  
+
   @Output() onCellClick = new EventEmitter<any>();
 
   handleCellClick(cell: any, column, rowData: any) {
@@ -75,13 +78,13 @@ export class StoDatatableComponent extends DataTable {
     } else {
       this.onCellClick.emit({
         row: rowData, cell, column
-      })
+      });
     }
   }
 
 }
 @NgModule({
-  imports: [DataTableModule, CommonModule, SharedModule, PaginatorModule, FormsModule, StoSharedModule],
+  imports: [CommonModule, SharedModule, StoPaginatorModule, FormsModule, StoSharedModule],
   exports: [
     SharedModule,
     StoSharedModule,

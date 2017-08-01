@@ -2,10 +2,6 @@ import {NgModule,Directive,ElementRef,AfterViewInit,OnDestroy,HostBinding,HostLi
 import {DomHandler} from '../dom/domhandler';
 import {CommonModule} from '@angular/common';
 
-@Directive({
-    selector: '[pButton]',
-    providers: [DomHandler]
-})
 export class Button implements AfterViewInit, OnDestroy {
 
     @Input() iconPos: string = 'left';
@@ -90,9 +86,4 @@ export class Button implements AfterViewInit, OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Button],
-    declarations: [Button]
-})
 export class ButtonModule { }

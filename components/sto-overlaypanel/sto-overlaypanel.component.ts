@@ -1,5 +1,5 @@
 // OverlayPanelModule
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, Renderer, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayPanel } from '../../vendor/primeface/components/overlaypanel/overlaypanel';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
@@ -12,6 +12,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   providers: [DomHandler]
 })
 export class StoOverlayPanelComponent extends OverlayPanel {
+  constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer) {
+    super(el, domHandler, renderer);
+  }
+
 }
 
 @NgModule({

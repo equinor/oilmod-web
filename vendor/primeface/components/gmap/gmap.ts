@@ -3,10 +3,6 @@ import {CommonModule} from '@angular/common';
 
 declare var google: any;
 
-@Component({
-    selector: 'p-gmap',
-    template: `<div [ngStyle]="style" [class]="styleClass"></div>`
-})
 export class GMap implements AfterViewInit,DoCheck {
 
     @Input() style: any;
@@ -135,9 +131,4 @@ export class GMap implements AfterViewInit,DoCheck {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [GMap],
-    declarations: [GMap]
-})
 export class GMapModule { }

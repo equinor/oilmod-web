@@ -3,14 +3,6 @@ import {CommonModule} from '@angular/common';
 
 declare var Chart: any;
 
-@Component({
-    selector: 'p-chart',
-    template: `
-        <div>
-            <canvas [attr.width]="width" [attr.height]="height" (click)="onCanvasClick($event)"></canvas>
-        </div>
-    `
-})
 export class UIChart implements AfterViewInit, OnDestroy {
 
     @Input() type: string;
@@ -99,9 +91,4 @@ export class UIChart implements AfterViewInit, OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [UIChart],
-    declarations: [UIChart]
-})
 export class ChartModule { }

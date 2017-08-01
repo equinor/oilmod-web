@@ -7,8 +7,8 @@
   <div class="ui-datatable-header ui-widget-header clearfix" *ngIf="header">
     <ng-content select="sto-header"></ng-content>
   </div>
-  <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
-               (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='bottom' || paginatorPosition =='both'"></p-paginator>
+  <sto-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
+               (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='bottom' || paginatorPosition =='both'"></sto-paginator>
   <div class="ui-datatable-tablewrapper" *ngIf="!scrollable">
     <table [class]="tableStyleClass" [ngStyle]="tableStyle">
       <thead class="ui-datatable-thead">
@@ -29,18 +29,18 @@
 
   <ng-template [ngIf]="scrollable">
     <div class="ui-datatable-scrollable-wrapper ui-helper-clearfix" [ngClass]="{'max-height':scrollHeight}">
-      <div *ngIf="frozenColumns" [pScrollableView]="frozenColumns" frozen="true"
+      <div *ngIf="frozenColumns" [stoScrollableView]="frozenColumns" frozen="true"
            [ngStyle]="{'width':this.frozenWidth}" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
-      <div [pScrollableView]="scrollableColumns" [ngStyle]="{'width':this.unfrozenWidth, 'left': this.frozenWidth}"
+      <div [stoScrollableView]="scrollableColumns" [ngStyle]="{'width':this.unfrozenWidth, 'left': this.frozenWidth}"
            class="ui-datatable-scrollable-view" [virtualScroll]="virtualScroll" (onVirtualScroll)="onVirtualScroll($event)"
            [ngClass]="{'ui-datatable-unfrozen-view': frozenColumns}"></div>
     </div>
   </ng-template>
 
-  <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
-               (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></p-paginator>
+  <sto-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
+               (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></sto-paginator>
   <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">
-    <ng-content select="sto-header"></ng-content>
+    <ng-content select="sto-footer"></ng-content>
   </div>
 
   <div class="ui-column-resizer-helper ui-state-highlight" style="display:none"></div>

@@ -7,45 +7,6 @@ import {ProgressBarModule} from '../progressbar/progressbar';
 import {Message} from '../common/api';
 import {PrimeTemplate,SharedModule} from '../common/shared';
 
-@Component({
-    selector: 'p-fileUpload',
-    template: `
-        <div [ngClass]="'ui-fileupload ui-widget'" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-fileupload-buttonbar ui-widget-header ui-corner-top">
-                <button type="button" [label]="chooseLabel" icon="fa-plus" pButton class="ui-fileupload-choose" (click)="onChooseClick($event, fileinput)" [disabled]="disabled"> 
-                    <input #fileinput type="file" (change)="onFileSelect($event)" [multiple]="multiple" [accept]="accept" [disabled]="disabled">
-                </button>
-
-                <button *ngIf="!auto" type="button" [label]="uploadLabel" icon="fa-upload" pButton (click)="upload()" [disabled]="!hasFiles()"></button>
-                <button *ngIf="!auto" type="button" [label]="cancelLabel" icon="fa-close" pButton (click)="clear()" [disabled]="!hasFiles()"></button>
-            
-                <p-templateLoader [template]="toolbarTemplate"></p-templateLoader>
-            </div>
-            <div [ngClass]="{'ui-fileupload-content ui-widget-content ui-corner-bottom':true,'ui-fileupload-highlight':dragHighlight}" 
-                (dragenter)="onDragEnter($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
-                <p-progressBar [value]="progress" [showValue]="false" *ngIf="hasFiles()"></p-progressBar>
-                
-                <p-messages [value]="msgs"></p-messages>
-                
-                <div class="ui-fileupload-files" *ngIf="hasFiles()">
-                    <div *ngIf="!fileTemplate">
-                        <div class="ui-fileupload-row" *ngFor="let file of files; let i = index;">
-                            <div><img [src]="file.objectURL" *ngIf="isImage(file)" [width]="previewWidth" /></div>
-                            <div>{{file.name}}</div>
-                            <div>{{formatSize(file.size)}}</div>
-                            <div><button type="button" icon="fa-close" pButton (click)="remove(i)"></button></div>
-                        </div>
-                    </div>
-                    <div *ngIf="fileTemplate">
-                        <ng-template ngFor [ngForOf]="files" [ngForTemplate]="fileTemplate"></ng-template>
-                    </div>
-                </div>
-                
-                <p-templateLoader [template]="contentTemplate"></p-templateLoader>
-            </div>
-        </div>
-    `
-})
 export class FileUpload implements OnInit,AfterContentInit {
     
     @Input() name: string;
@@ -324,9 +285,4 @@ export class FileUpload implements OnInit,AfterContentInit {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,SharedModule,ButtonModule,ProgressBarModule,MessagesModule],
-    exports: [FileUpload,SharedModule,ButtonModule,ProgressBarModule,MessagesModule],
-    declarations: [FileUpload]
-})
 export class FileUploadModule { }

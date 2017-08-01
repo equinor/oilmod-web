@@ -2,13 +2,6 @@ import {NgModule,Directive,ElementRef,HostListener,Input,Output,EventEmitter} fr
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Directive({
-    selector: '[pDraggable]',
-    host: {
-        '[draggable]': 'true'
-    },
-    providers: [DomHandler]
-})
 export class Draggable {
     
     @Input('pDraggable') scope: string;
@@ -71,10 +64,6 @@ export class Draggable {
     
 }
 
-@Directive({
-    selector: '[pDroppable]',
-    providers: [DomHandler]
-})
 export class Droppable {
     
     @Input('pDroppable') scope: string|string[];
@@ -139,9 +128,4 @@ export class Droppable {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Draggable,Droppable],
-    declarations: [Draggable,Droppable]
-})
 export class DragDropModule { }

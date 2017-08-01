@@ -8,10 +8,6 @@ import {PrimeTemplate} from '../common/shared';
 import {TreeDragDropService} from '../common/api';
 import {Subscription}   from 'rxjs/Subscription';
 
-@Component({
-    selector: 'p-treeNodeTemplateLoader',
-    template: ``
-})
 export class TreeNodeTemplateLoader implements OnInit, OnDestroy {
         
     @Input() node: any;
@@ -33,79 +29,6 @@ export class TreeNodeTemplateLoader implements OnInit, OnDestroy {
     }
 }
 
-@Component({
-    selector: 'p-treeNode',
-    template: `
-        <ng-template [ngIf]="node">
-            <li *ngIf="tree.droppableNodes" class="ui-treenode-droppoint" [ngClass]="{'ui-treenode-droppoint-active ui-state-highlight':draghoverPrev}"
-            (drop)="onDropPoint($event,-1)" (dragover)="onDropPointDragOver($event)" (dragenter)="onDropPointDragEnter($event,-1)" (dragleave)="onDropPointDragLeave($event)"></li>
-            <li class="ui-treenode {{node.styleClass}}" *ngIf="!tree.horizontal" [ngClass]="{'ui-treenode-leaf': isLeaf()}">
-                <div class="ui-treenode-content" (click)="onNodeClick($event)" (contextmenu)="onNodeRightClick($event)" (touchend)="onNodeTouchEnd()"
-                    (drop)="onDropNode($event)" (dragover)="onDropNodeDragOver($event)" (dragenter)="onDropNodeDragEnter($event)" (dragleave)="onDropNodeDragLeave($event)"
-                    [ngClass]="{'ui-treenode-selectable':tree.selectionMode && node.selectable !== false,'ui-treenode-dragover':draghoverNode}" [draggable]="tree.draggableNodes" (dragstart)="onDragStart($event)" (dragend)="onDragStop($event)">
-                    <span class="ui-tree-toggler  fa fa-fw" [ngClass]="{'fa-caret-right':!node.expanded,'fa-caret-down':node.expanded}"
-                            (click)="toggle($event)"></span
-                    ><div class="ui-chkbox" *ngIf="tree.selectionMode == 'checkbox'"><div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
-                        <span class="ui-chkbox-icon ui-c fa" 
-                            [ngClass]="{'fa-check':isSelected(),'fa-minus':node.partialSelected}"></span></div></div
-                    ><span [class]="getIcon()" *ngIf="node.icon||node.expandedIcon||node.collapsedIcon"></span
-                    ><span class="ui-treenode-label ui-corner-all" 
-                        [ngClass]="{'ui-state-highlight':isSelected()}">
-                            <span *ngIf="!tree.getTemplateForNode(node)">{{node.label}}</span>
-                            <span *ngIf="tree.getTemplateForNode(node)">
-                                <p-treeNodeTemplateLoader [node]="node" [template]="tree.getTemplateForNode(node)"></p-treeNodeTemplateLoader>
-                            </span>
-                    </span>
-                </div>
-                <ul class="ui-treenode-children" style="display: none;" *ngIf="node.children && node.expanded" [style.display]="node.expanded ? 'block' : 'none'">
-                    <p-treeNode *ngFor="let childNode of node.children;let firstChild=first;let lastChild=last; let index=index" [node]="childNode" [parentNode]="node"
-                        [firstChild]="firstChild" [lastChild]="lastChild" [index]="index"></p-treeNode>
-                </ul>
-            </li>
-            <li *ngIf="tree.droppableNodes&&lastChild" class="ui-treenode-droppoint" [ngClass]="{'ui-treenode-droppoint-active ui-state-highlight':draghoverNext}"
-            (drop)="onDropPoint($event,1)" (dragover)="onDropPointDragOver($event)" (dragenter)="onDropPointDragEnter($event,1)" (dragleave)="onDropPointDragLeave($event)"></li>
-            <table *ngIf="tree.horizontal">
-                <tbody>
-                    <tr>
-                        <td class="ui-treenode-connector" *ngIf="!root">
-                            <table class="ui-treenode-connector-table">
-                                <tbody>
-                                    <tr>
-                                        <td [ngClass]="{'ui-treenode-connector-line':!firstChild}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td [ngClass]="{'ui-treenode-connector-line':!lastChild}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td class="ui-treenode" [ngClass]="{'ui-treenode-collapsed':!node.expanded}">
-                            <div class="ui-treenode-content ui-state-default ui-corner-all" 
-                                [ngClass]="{'ui-treenode-selectable':tree.selectionMode,'ui-state-highlight':isSelected()}" (click)="onNodeClick($event)" (contextmenu)="onNodeRightClick($event)"
-                                (touchend)="onNodeTouchEnd()">
-                                <span class="ui-tree-toggler fa fa-fw" [ngClass]="{'fa-plus':!node.expanded,'fa-minus':node.expanded}" *ngIf="!isLeaf()"
-                                        (click)="toggle($event)"></span
-                                ><span [class]="getIcon()" *ngIf="node.icon||node.expandedIcon||node.collapsedIcon"></span
-                                ><span class="ui-treenode-label ui-corner-all">
-                                        <span *ngIf="!tree.getTemplateForNode(node)">{{node.label}}</span>
-                                        <span *ngIf="tree.getTemplateForNode(node)">
-                                            <p-treeNodeTemplateLoader [node]="node" [template]="tree.getTemplateForNode(node)"></p-treeNodeTemplateLoader>
-                                        </span>
-                                </span>
-                            </div>
-                        </td>
-                        <td class="ui-treenode-children-container" *ngIf="node.children && node.expanded" [style.display]="node.expanded ? 'table-cell' : 'none'">
-                            <div class="ui-treenode-children">
-                                <p-treeNode *ngFor="let childNode of node.children;let firstChild=first;let lastChild=last;" [node]="childNode" 
-                                        [firstChild]="firstChild" [lastChild]="lastChild"></p-treeNode>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </ng-template>
-    `
-})
 export class UITreeNode implements OnInit {
 
     static ICON_CLASS: string = 'ui-treenode-icon fa fa-fw';
@@ -304,23 +227,6 @@ export class UITreeNode implements OnInit {
     }
 }
 
-@Component({
-    selector: 'p-tree',
-    template: `
-        <div [ngClass]="{'ui-tree ui-widget ui-widget-content ui-corner-all':true,'ui-tree-selectable':selectionMode,'ui-treenode-dragover':dragHover}" [ngStyle]="style" [class]="styleClass" *ngIf="!horizontal"
-            (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)">
-            <ul class="ui-tree-container">
-                <p-treeNode *ngFor="let node of value;let firstChild=first;let lastChild=last; let index=index" [node]="node" 
-                [firstChild]="firstChild" [lastChild]="lastChild" [index]="index"></p-treeNode>
-            </ul>
-        </div>
-        <div [ngClass]="{'ui-tree ui-tree-horizontal ui-widget ui-widget-content ui-corner-all':true,'ui-tree-selectable':selectionMode}"  [ngStyle]="style" [class]="styleClass" *ngIf="horizontal">
-            <table *ngIf="value&&value[0]">
-                <p-treeNode [node]="value[0]" [root]="true"></p-treeNode>
-            </table>
-        </div>
-    `
-})
 export class Tree implements OnInit,AfterContentInit,OnDestroy {
 
     @Input() value: TreeNode[];
@@ -762,9 +668,5 @@ export class Tree implements OnInit,AfterContentInit,OnDestroy {
         }
     }
 }
-@NgModule({
-    imports: [CommonModule],
-    exports: [Tree,SharedModule],
-    declarations: [Tree,UITreeNode,TreeNodeTemplateLoader]
-})
+
 export class TreeModule { }

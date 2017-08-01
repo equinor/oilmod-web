@@ -11,21 +11,6 @@ import {ObjectUtils} from '../utils/ObjectUtils';
 import {Subscription} from 'rxjs/Subscription';
 import {BlockableUI} from '../common/api';
 
-@Component({
-    selector: 'p-dtRadioButton',
-    template: `
-        <div class="ui-radiobutton ui-widget">
-            <div class="ui-helper-hidden-accessible">
-                <input type="radio" [checked]="checked">
-            </div>
-            <div class="ui-radiobutton-box ui-widget ui-radiobutton-relative ui-state-default" (click)="handleClick($event)"
-                        (mouseenter)="hover=true" (mouseleave)="hover=false"
-                        [ngClass]="{'ui-state-hover':hover,'ui-state-active':checked}">
-                <span class="ui-radiobutton-icon" [ngClass]="{'fa fa-circle':checked}"></span>
-            </div>
-        </div>
-    `
-})
 export class DTRadioButton {
     
     @Input() checked: boolean;
@@ -39,21 +24,6 @@ export class DTRadioButton {
     }
 }
 
-@Component({
-    selector: 'p-dtCheckbox',
-    template: `
-        <div class="ui-chkbox ui-widget">
-            <div class="ui-helper-hidden-accessible">
-                <input type="checkbox" [checked]="checked">
-            </div>
-            <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" (click)="handleClick($event)"
-                        (mouseover)="hover=true" (mouseout)="hover=false" 
-                        [ngClass]="{'ui-state-hover':hover&&!disabled,'ui-state-active':checked&&!disabled,'ui-state-disabled':disabled}">
-                <span class="ui-chkbox-icon ui-c" [ngClass]="{'fa fa-check':checked}"></span>
-            </div>
-        </div>
-    `
-})
 export class DTCheckbox {
     
     @Input() checked: boolean;
@@ -71,10 +41,6 @@ export class DTCheckbox {
     }
 }
 
-@Component({
-    selector: 'p-rowExpansionLoader',
-    template: ``
-})
 export class RowExpansionLoader {
         
     @Input() template: TemplateRef<any>;
@@ -90,29 +56,6 @@ export class RowExpansionLoader {
     }
 }
 
-@Component({
-    selector: '[pColumnHeaders]',
-    template: `
-        <ng-template ngFor let-col [ngForOf]="columns" let-lastCol="last">
-            <th #headerCell [ngStyle]="col.style" [class]="col.styleClass" [style.display]="col.hidden ? 'none' : 'table-cell'" (click)="dt.sort($event,col)" [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
-                [ngClass]="{'ui-state-default ui-unselectable-text':true, 'ui-sortable-column': col.sortable, 'ui-state-active': dt.isSorted(col), 'ui-resizable-column': dt.resizableColumns, 'ui-selection-column':col.selectionMode}" 
-                (dragstart)="dt.onColumnDragStart($event)" (dragover)="dt.onColumnDragover($event)" (dragleave)="dt.onColumnDragleave($event)" (drop)="dt.onColumnDrop($event)" (mousedown)="dt.onHeaderMousedown($event,headerCell)"
-                [attr.tabindex]="col.sortable ? tabindex : null" (keydown)="dt.onHeaderKeydown($event,col)">
-                <span class="ui-column-resizer" *ngIf="dt.resizableColumns && ((dt.columnResizeMode == 'fit' && !lastCol) || dt.columnResizeMode == 'expand')" (mousedown)="dt.initColumnResize($event)"></span>
-                <span class="ui-column-title" *ngIf="!col.selectionMode&&!col.headerTemplate">{{col.header}}</span>
-                <span class="ui-column-title" *ngIf="col.headerTemplate">
-                    <p-columnHeaderTemplateLoader [column]="col"></p-columnHeaderTemplateLoader>
-                </span>
-                <span class="ui-sortable-column-icon fa fa-fw fa-sort" *ngIf="col.sortable"
-                     [ngClass]="{'fa-sort-desc': (dt.getSortOrder(col) == -1),'fa-sort-asc': (dt.getSortOrder(col) == 1)}"></span>
-                <input [attr.type]="col.filterType" class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" [attr.placeholder]="col.filterPlaceholder" *ngIf="col.filter&&!col.filterTemplate" [value]="dt.filters[col.field] ? dt.filters[col.field].value : ''" 
-                    (click)="dt.onFilterInputClick($event)" (keyup)="dt.onFilterKeyup($event.target.value, col.field, col.filterMatchMode)"/>
-                <p-columnFilterTemplateLoader [column]="col" *ngIf="col.filterTemplate"></p-columnFilterTemplateLoader>
-                <p-dtCheckbox *ngIf="col.selectionMode=='multiple'" (onChange)="dt.toggleRowsWithCheckbox($event)" [checked]="dt.allSelected" [disabled]="dt.isEmpty()"></p-dtCheckbox>
-            </th>
-        </ng-template>
-    `
-})
 export class ColumnHeaders {
         
     constructor(@Inject(forwardRef(() => DataTable)) public dt:DataTable) {}
@@ -120,19 +63,6 @@ export class ColumnHeaders {
     @Input("pColumnHeaders") columns: Column[];
 }
 
-@Component({
-    selector: '[pColumnFooters]',
-    template: `
-        <td *ngFor="let col of columns" [ngStyle]="col.style" [class]="col.styleClass"
-            [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
-            [ngClass]="{'ui-state-default':true}" [style.display]="col.hidden ? 'none' : 'table-cell'">
-            <span class="ui-column-footer" *ngIf="!col.footerTemplate">{{col.footer}}</span>
-            <span class="ui-column-footer" *ngIf="col.footerTemplate">
-                <p-columnFooterTemplateLoader [column]="col"></p-columnFooterTemplateLoader>
-            </span>
-        </td>
-    `
-})
 export class ColumnFooters {
         
     constructor(@Inject(forwardRef(() => DataTable)) public dt:DataTable) {}
@@ -140,66 +70,6 @@ export class ColumnFooters {
     @Input("pColumnFooters") columns: Column[];
 }
 
-@Component({
-    selector: '[pTableBody]',
-    template: `
-        <ng-template ngFor let-rowData [ngForOf]="dt.dataToRender" let-even="even" let-odd="odd" let-rowIndex="index">
-            <tr #rowGroupElement class="ui-widget-header ui-rowgroup-header" 
-                *ngIf="dt.rowGroupMode=='subheader' && (rowIndex === 0||(dt.resolveFieldData(rowData,dt.groupField) !== dt.resolveFieldData(dt.dataToRender[rowIndex - 1], dt.groupField)))"
-                (click)="dt.onRowGroupClick($event)" [ngStyle]="{'cursor': dt.sortableRowGroup ? 'pointer' : 'auto'}">
-                <td [attr.colspan]="columns.length">
-                    <a href="#" *ngIf="dt.expandableRowGroups" (click)="dt.toggleRowGroup($event,rowData)">
-                        <span class="fa fa-fw" [ngClass]="{'fa-chevron-circle-down':dt.isRowGroupExpanded(rowData), 'fa-chevron-circle-right': !dt.isRowGroupExpanded(rowData)}"></span>
-                    </a>
-                    <span class="ui-rowgroup-header-name">
-                        <p-templateLoader [template]="dt.rowGroupHeaderTemplate" [data]="rowData"></p-templateLoader>
-                    </span>
-                </td>
-            </tr>
-            <tr #rowElement *ngIf="!dt.expandableRowGroups||dt.isRowGroupExpanded(rowData)" [class]="dt.getRowStyleClass(rowData,rowIndex)"
-                    (click)="dt.handleRowClick($event, rowData)" (dblclick)="dt.rowDblclick($event,rowData)" (contextmenu)="dt.onRowRightClick($event,rowData)" (touchend)="dt.handleRowTouchEnd($event)"
-                    [ngClass]="{'ui-datatable-even':even&&dt.rowGroupMode!='rowspan','ui-datatable-odd':odd&&dt.rowGroupMode!='rowspan','ui-state-highlight': dt.isSelected(rowData)}">
-                <ng-template ngFor let-col [ngForOf]="columns" let-colIndex="index">
-                    <td #cell *ngIf="!dt.rowGroupMode || (dt.rowGroupMode == 'subheader') ||
-                        (dt.rowGroupMode=='rowspan' && ((dt.sortField==col.field && dt.rowGroupMetadata[dt.resolveFieldData(rowData,dt.sortField)].index == rowIndex) || (dt.sortField!=col.field)))"
-                        [ngStyle]="col.style" [class]="col.styleClass" [style.display]="col.hidden ? 'none' : 'table-cell'"
-                        [ngClass]="{'ui-editable-column':col.editable,'ui-selection-column':col.selectionMode}" (click)="dt.switchCellToEditMode(cell,col,rowData)"
-                        [attr.rowspan]="(dt.rowGroupMode=='rowspan' && dt.sortField == col.field && dt.rowGroupMetadata[dt.resolveFieldData(rowData,dt.sortField)].index == rowIndex) ? dt.rowGroupMetadata[dt.resolveFieldData(rowData,dt.sortField)].size : null">
-                        <span class="ui-column-title" *ngIf="dt.responsive">{{col.header}}</span>
-                        <span class="ui-cell-data" *ngIf="!col.bodyTemplate && !col.expander && !col.selectionMode">{{dt.resolveFieldData(rowData,col.field)}}</span>
-                        <span class="ui-cell-data" *ngIf="col.bodyTemplate">
-                            <p-columnBodyTemplateLoader [column]="col" [rowData]="rowData" [rowIndex]="rowIndex + dt.first"></p-columnBodyTemplateLoader>
-                        </span>
-                        <div class="ui-cell-editor" *ngIf="col.editable">
-                            <input *ngIf="!col.editorTemplate" type="text" [(ngModel)]="rowData[col.field]" required="true"
-                                (keydown)="dt.onCellEditorKeydown($event, col, rowData, rowIndex)" class="ui-inputtext ui-widget ui-state-default ui-corner-all"/>
-                            <a *ngIf="col.editorTemplate" class="ui-cell-editor-proxy-focus" href="#" (focus)="dt.onCustomEditorFocusPrev($event, colIndex)"></a>
-                            <p-columnEditorTemplateLoader *ngIf="col.editorTemplate" [column]="col" [rowData]="rowData" [rowIndex]="rowIndex"></p-columnEditorTemplateLoader>
-                            <a *ngIf="col.editorTemplate" class="ui-cell-editor-proxy-focus" href="#" (focus)="dt.onCustomEditorFocusNext($event, colIndex)"></a>
-                        </div>
-                        <a href="#" *ngIf="col.expander" (click)="dt.toggleRow(rowData,$event)">
-                            <span class="ui-row-toggler fa fa-fw ui-c" [ngClass]="{'fa-chevron-circle-down':dt.isRowExpanded(rowData), 'fa-chevron-circle-right': !dt.isRowExpanded(rowData)}"></span>
-                        </a>
-                        <p-dtRadioButton *ngIf="col.selectionMode=='single'" (onClick)="dt.selectRowWithRadio($event, rowData)" [checked]="dt.isSelected(rowData)"></p-dtRadioButton>
-                        <p-dtCheckbox *ngIf="col.selectionMode=='multiple'" (onChange)="dt.toggleRowWithCheckbox($event,rowData)" [checked]="dt.isSelected(rowData)"></p-dtCheckbox>
-                    </td>
-                </ng-template>
-            </tr>
-            <tr class="ui-widget-header" *ngIf="dt.rowGroupFooterTemplate && dt.rowGroupMode=='subheader' && ((rowIndex === dt.dataToRender.length - 1)||(dt.resolveFieldData(rowData,dt.groupField) !== dt.resolveFieldData(dt.dataToRender[rowIndex + 1],dt.groupField))) && (!dt.expandableRowGroups || dt.isRowGroupExpanded(rowData))">
-                <p-templateLoader class="ui-helper-hidden" [data]="rowData" [template]="dt.rowGroupFooterTemplate"></p-templateLoader>
-            </tr>
-            <tr *ngIf="dt.expandableRows && dt.isRowExpanded(rowData)">
-                <td [attr.colspan]="dt.visibleColumns().length">
-                    <p-rowExpansionLoader [rowData]="rowData" [template]="dt.rowExpansionTemplate"></p-rowExpansionLoader>
-                </td>
-            </tr>
-        </ng-template>
-
-        <tr *ngIf="dt.isEmpty()" class="ui-widget-content">
-            <td [attr.colspan]="dt.visibleColumns().length" class="ui-datatable-emptymessage">{{dt.emptyMessage}}</td>
-        </tr>
-    `
-})
 export class TableBody {
         
     constructor(@Inject(forwardRef(() => DataTable)) public dt:DataTable) {}
@@ -211,45 +81,6 @@ export class TableBody {
     }
 }
 
-@Component({
-    selector: '[pScrollableView]',
-    template: `
-        <div #scrollHeader class="ui-widget-header ui-datatable-scrollable-header" [ngStyle]="{'width': width}">
-            <div #scrollHeaderBox  class="ui-datatable-scrollable-header-box">
-                <table [class]="dt.tableStyleClass" [ngStyle]="dt.tableStyle">
-                    <thead class="ui-datatable-thead">
-                        <tr *ngIf="!dt.headerColumnGroup" class="ui-state-default" [pColumnHeaders]="columns"></tr>
-                        <ng-template [ngIf]="dt.headerColumnGroup">
-                            <tr *ngFor="let headerRow of dt.headerColumnGroup.rows" class="ui-state-default" [pColumnHeaders]="headerRow.columns"></tr>
-                        </ng-template>
-                    </thead>
-                </table>
-            </div>
-        </div>
-        <div #scrollBody class="ui-datatable-scrollable-body" [ngStyle]="{'width': width,'max-height':dt.scrollHeight}">
-            <div #scrollTableWrapper style="position:relative" [ngStyle]="{'height':virtualTableHeight}">
-                <table #scrollTable [class]="dt.tableStyleClass" [ngStyle]="dt.tableStyle" [ngClass]="{'ui-datatable-virtual-table':virtualScroll}" style="top:0px">
-                    <colgroup class="ui-datatable-scrollable-colgroup">
-                        <col *ngFor="let col of dt.visibleColumns()" />
-                    </colgroup>
-                    <tbody [ngClass]="{'ui-datatable-data ui-widget-content': true, 'ui-datatable-hoverable-rows': (dt.rowHover||dt.selectionMode)}" [pTableBody]="columns"></tbody>
-                </table>
-            </div>
-        </div>
-        <div #scrollFooter class="ui-widget-header ui-datatable-scrollable-footer" [ngStyle]="{'width': width}" *ngIf="dt.hasFooter()">
-            <div #scrollFooterBox  class="ui-datatable-scrollable-footer-box">
-                <table [class]="dt.tableStyleClass" [ngStyle]="dt.tableStyle">
-                    <tfoot class="ui-datatable-tfoot">
-                        <tr *ngIf="!footerColumnGroup" [pColumnFooters]="columns" class="ui-state-default"></tr>
-                        <ng-template [ngIf]="footerColumnGroup">
-                            <tr *ngFor="let footerRow of footerColumnGroup.rows" [pColumnFooters]="footerRow.columns"></tr>
-                        </ng-template>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-    `
-})
 export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy {
         
     constructor(@Inject(forwardRef(() => DataTable)) public dt:DataTable, public domHandler: DomHandler, public el: ElementRef, public renderer: Renderer) {}
@@ -414,61 +245,6 @@ export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy 
     }
 }
 
-@Component({
-    selector: 'p-dataTable',
-    template: `
-        <div [ngStyle]="style" [class]="styleClass" [style.width]="containerWidth"
-            [ngClass]="{'ui-datatable ui-widget':true,'ui-datatable-reflow':responsive,'ui-datatable-stacked':stacked,'ui-datatable-resizable':resizableColumns,'ui-datatable-scrollable':scrollable}">
-            <div class="ui-datatable-loading ui-widget-overlay" *ngIf="loading"></div>
-            <div class="ui-datatable-loading-content" *ngIf="loading">
-                <i class="fa fa-circle-o-notch fa-spin fa-2x"></i>
-            </div>
-            <div class="ui-datatable-header ui-widget-header" *ngIf="header">
-                <ng-content select="p-header"></ng-content>
-            </div>
-            <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
-                (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='bottom' || paginatorPosition =='both'"></p-paginator>
-            <div class="ui-datatable-tablewrapper" *ngIf="!scrollable">
-                <table [class]="tableStyleClass" [ngStyle]="tableStyle">
-                    <thead class="ui-datatable-thead">
-                        <tr *ngIf="!headerColumnGroup" class="ui-state-default" [pColumnHeaders]="columns"></tr>
-                        <ng-template [ngIf]="headerColumnGroup">
-                            <tr *ngFor="let headerRow of headerColumnGroup.rows" class="ui-state-default" [pColumnHeaders]="headerRow.columns"></tr>
-                        </ng-template>
-                    </thead>
-                    <tfoot *ngIf="hasFooter()" class="ui-datatable-tfoot">
-                        <tr *ngIf="!footerColumnGroup" class="ui-state-default" [pColumnFooters]="columns"></tr>
-                        <ng-template [ngIf]="footerColumnGroup">
-                            <tr *ngFor="let footerRow of footerColumnGroup.rows" class="ui-state-default" [pColumnFooters]="footerRow.columns"></tr>
-                        </ng-template>
-                    </tfoot>
-                    <tbody [ngClass]="{'ui-datatable-data ui-widget-content': true, 'ui-datatable-hoverable-rows': (rowHover||selectionMode)}" [pTableBody]="columns"></tbody>
-                </table>
-            </div>
-            
-            <ng-template [ngIf]="scrollable">
-                <div class="ui-datatable-scrollable-wrapper ui-helper-clearfix" [ngClass]="{'max-height':scrollHeight}">
-                    <div *ngIf="frozenColumns" [pScrollableView]="frozenColumns" frozen="true" 
-                        [ngStyle]="{'width':this.frozenWidth}" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
-                    <div [pScrollableView]="scrollableColumns" [ngStyle]="{'width':this.unfrozenWidth, 'left': this.frozenWidth}"
-                        class="ui-datatable-scrollable-view" [virtualScroll]="virtualScroll" (onVirtualScroll)="onVirtualScroll($event)"
-                        [ngClass]="{'ui-datatable-unfrozen-view': frozenColumns}"></div>
-                </div>
-            </ng-template>
-            
-            <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
-                (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></p-paginator>
-            <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">
-                <ng-content select="p-footer"></ng-content>
-            </div>
-            
-            <div class="ui-column-resizer-helper ui-state-highlight" style="display:none"></div>
-            <span class="fa fa-arrow-down ui-datatable-reorder-indicator-up" style="position: absolute; display: none;"></span>
-            <span class="fa fa-arrow-up ui-datatable-reorder-indicator-down" style="position: absolute; display: none;"></span>
-        </div>
-    `,
-    providers: [DomHandler,ObjectUtils]
-})
 export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentInit,OnInit,OnDestroy,BlockableUI {
 
     @Input() paginator: boolean;
@@ -2110,9 +1886,4 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     }
 }
 
-@NgModule({
-    imports: [CommonModule,SharedModule,PaginatorModule,FormsModule],
-    exports: [DataTable, SharedModule, DTRadioButton,DTCheckbox,ColumnHeaders,ColumnFooters,TableBody,ScrollableView,RowExpansionLoader],
-    declarations: [DataTable,DTRadioButton,DTCheckbox,ColumnHeaders,ColumnFooters,TableBody,ScrollableView,RowExpansionLoader]
-})
 export class DataTableModule { }

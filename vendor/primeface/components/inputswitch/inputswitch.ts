@@ -9,26 +9,6 @@ export const INPUTSWITCH_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-inputSwitch',
-    template: `
-        <div [ngClass]="{'ui-inputswitch ui-widget ui-widget-content ui-corner-all': true,
-            'ui-state-disabled': disabled,'ui-inputswitch-checked':checked}" (click)="toggle($event, in)"
-            [ngStyle]="style" [class]="styleClass">
-            <div class="ui-inputswitch-off">
-                <span class="ui-inputswitch-offlabel">{{offLabel}}</span>
-            </div>
-            <div class="ui-inputswitch-on">
-                <span class="ui-inputswitch-onlabel">{{onLabel}}</span>
-            </div>
-            <div [ngClass]="{'ui-inputswitch-handle ui-state-default':true, 'ui-state-focus':focused}"></div>
-            <div class="ui-helper-hidden-accessible">
-                <input #in type="checkbox" [attr.id]="inputId" (focus)="onFocus($event)" (blur)="onBlur($event)" readonly="readonly" [attr.tabindex]="tabindex"/>
-            </div>
-        </div>
-    `,
-    providers: [INPUTSWITCH_VALUE_ACCESSOR,DomHandler]
-})
 export class InputSwitch implements ControlValueAccessor,AfterViewInit,AfterViewChecked {
 
     @Input() onLabel: string = 'On';
@@ -192,9 +172,4 @@ export class InputSwitch implements ControlValueAccessor,AfterViewInit,AfterView
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [InputSwitch],
-    declarations: [InputSwitch]
-})
 export class InputSwitchModule { }

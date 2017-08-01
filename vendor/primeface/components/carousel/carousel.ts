@@ -3,39 +3,6 @@ import {DomHandler} from '../dom/domhandler';
 import {SharedModule,PrimeTemplate} from '../common/shared';
 import {CommonModule} from '@angular/common';
 
-@Component({
-    selector: 'p-carousel',
-    template: `
-        <div [ngClass]="{'ui-carousel ui-widget ui-widget-content ui-corner-all':true}" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-carousel-header ui-widget-header ui-corner-all">
-                <span class="ui-carousel-header-title">{{headerText}}</span>
-                <span class="ui-carousel-button ui-carousel-next-button fa fa-arrow-circle-right" (click)="onNextNav()" 
-                        [ngClass]="{'ui-state-disabled':(page === (totalPages-1)) && !circular}"></span>
-                <span class="ui-carousel-button ui-carousel-prev-button fa fa-arrow-circle-left" (click)="onPrevNav()" 
-                        [ngClass]="{'ui-state-disabled':(page === 0 && !circular)}"></span>
-                <div *ngIf="displayPageLinks" class="ui-carousel-page-links">
-                    <a href="#" (click)="setPageWithLink($event,i)" class="ui-carousel-page-link fa fa-circle-o" *ngFor="let links of anchorPageLinks;let i=index" [ngClass]="{'fa-dot-circle-o':page===i}"></a>
-                </div>
-                <select *ngIf="displayPageDropdown" class="ui-carousel-dropdown ui-widget ui-state-default ui-corner-left" [value]="page" (change)="onDropdownChange($event.target.value)">
-                    <option *ngFor="let option of selectDropdownOptions" [value]="option" [selected]="value == option">{{option+1}}</option>
-                </select>
-                <select *ngIf="responsive" class="ui-carousel-mobiledropdown ui-widget ui-state-default ui-corner-left" [value]="page" (change)="onDropdownChange($event.target.value)"
-                    [style.display]="shrinked ? 'block' : 'none'">
-                    <option *ngFor="let option of mobileDropdownOptions" [value]="option" [selected]="value == option">{{option+1}}</option>
-                </select>
-            </div>
-            <div class="ui-carousel-viewport">
-                <ul class="ui-carousel-items" [style.left.px]="left" [style.transitionProperty]="'left'" 
-                            [style.transitionDuration]="effectDuration" [style.transitionTimingFunction]="easing">
-                    <li *ngFor="let item of value" class="ui-carousel-item ui-widget-content ui-corner-all">
-                        <ng-template [pTemplateWrapper]="itemTemplate" [item]="item"></ng-template>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class Carousel implements OnInit,AfterViewChecked,AfterViewInit,OnDestroy{
     
     @Input() numVisible: number = 3;
@@ -325,9 +292,4 @@ export class Carousel implements OnInit,AfterViewChecked,AfterViewInit,OnDestroy
     }
 }
 
-@NgModule({
-    imports: [CommonModule,SharedModule],
-    exports: [Carousel,SharedModule],
-    declarations: [Carousel]
-})
 export class CarouselModule { }

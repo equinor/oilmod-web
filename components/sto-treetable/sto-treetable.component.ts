@@ -23,7 +23,7 @@ export class StoTreeTableComponent extends TreeTable {
 }
 
 @NgModule({
-    imports: [CommonModule, StoSharedModule, SharedModule, TreeTableModule],
+    imports: [CommonModule, StoSharedModule, SharedModule],
     exports: [StoSharedModule, SharedModule, StoTreeTableComponent, StoUITreeRow],
     declarations: [StoTreeTableComponent, StoUITreeRow]
 })

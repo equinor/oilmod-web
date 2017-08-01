@@ -5,52 +5,6 @@ import {MenuItem} from '../common/api';
 import {Location} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
-@Component({
-    selector: 'p-megaMenu',
-    template: `
-        <div [class]="styleClass" [ngStyle]="style"
-            [ngClass]="{'ui-menu ui-menubar ui-megamenu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix':true,'ui-megamenu-vertical': orientation == 'vertical'}">
-            <ul class="ui-menu-list ui-helper-reset ui-menubar-root-list">
-                <ng-template ngFor let-category [ngForOf]="model">
-                    <li #item [ngClass]="{'ui-menuitem ui-widget ui-corner-all':true,'ui-menu-parent':category.items,'ui-menuitem-active':item==activeItem}"
-                        (mouseenter)="onItemMouseEnter($event, item, category)" (mouseleave)="onItemMouseLeave($event, item)">
-                        <a class="ui-menuitem-link ui-corner-all ui-submenu-link" [ngClass]="{'ui-state-disabled':category.disabled}">
-                            <span class="ui-menuitem-icon fa fa-fw" [ngClass]="category.icon"></span>
-                            <span class="ui-menuitem-text">{{category.label}}</span>
-                            <span class="ui-submenu-icon fa fa-fw" [ngClass]="{'fa-caret-down':orientation=='horizontal','fa-caret-right':orientation=='vertical'}"></span>
-                        </a>
-                        <div class="ui-megamenu-panel ui-widget-content ui-menu-list ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow">
-                            <div class="ui-g">
-                                <ng-template ngFor let-column [ngForOf]="category.items">
-                                    <div [class]="getColumnClass(category)">
-                                        <ng-template ngFor let-submenu [ngForOf]="column">
-                                            <ul class="ui-menu-list ui-helper-reset">
-                                                <li class="ui-widget-header ui-corner-all"><h3>{{submenu.label}}</h3></li>
-                                                <li *ngFor="let item of submenu.items" class="ui-menuitem ui-widget ui-corner-all">
-                                                    <a *ngIf="!item.routerLink" [href]="item.url||'#'" class="ui-menuitem-link ui-corner-all" [attr.target]="item.target"
-                                                        [ngClass]="{'ui-state-disabled':item.disabled}" (click)="itemClick($event, item)">
-                                                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="item.icon" [ngClass]="item.icon"></span>
-                                                        <span class="ui-menuitem-text">{{item.label}}</span>
-                                                    </a>
-                                                    <a *ngIf="item.routerLink" [routerLink]="item.routerLink" [routerLinkActive]="'ui-state-active'" class="ui-menuitem-link ui-corner-all" [attr.target]="item.target"
-                                                        [ngClass]="{'ui-state-disabled':item.disabled}" (click)="itemClick($event, item)">
-                                                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="item.icon" [ngClass]="item.icon"></span>
-                                                        <span class="ui-menuitem-text">{{item.label}}</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </ng-template>
-                                    </div>
-                                </ng-template>
-                            </div>
-                        </div>
-                    </li>
-                </ng-template>
-            </ul>
-        </div>
-    `,
-    providers: [DomHandler]
-})
 export class MegaMenu implements OnDestroy {
 
     @Input() model: MenuItem[];
@@ -164,9 +118,4 @@ export class MegaMenu implements OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,RouterModule],
-    exports: [MegaMenu,RouterModule],
-    declarations: [MegaMenu]
-})
 export class MegaMenuModule { }

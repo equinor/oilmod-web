@@ -8,23 +8,6 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-checkbox',
-    template: `
-        <div class="ui-chkbox ui-widget">
-            <div class="ui-helper-hidden-accessible">
-                <input #cb type="checkbox" [attr.id]="inputId" [name]="name" [value]="value" [checked]="checked" (focus)="onFocus($event)" (blur)="onBlur($event)"
-                [ngClass]="{'ui-state-focus':focused}" (change)="handleChange($event)" [disabled]="disabled" [attr.tabindex]="tabindex">
-            </div>
-            <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" (click)="onClick($event,cb,true)"
-                        [ngClass]="{'ui-state-active':checked,'ui-state-disabled':disabled,'ui-state-focus':focused}">
-                <span class="ui-chkbox-icon ui-c" [ngClass]="{'fa fa-check':checked}"></span>
-            </div>
-        </div>
-        <label class="ui-chkbox-label" (click)="onClick($event,cb,true)" *ngIf="label">{{label}}</label>
-    `,
-    providers: [CHECKBOX_VALUE_ACCESSOR]
-})
 export class Checkbox implements ControlValueAccessor {
 
     @Input() value: any;
@@ -134,9 +117,4 @@ export class Checkbox implements ControlValueAccessor {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Checkbox],
-    declarations: [Checkbox]
-})
 export class CheckboxModule { }

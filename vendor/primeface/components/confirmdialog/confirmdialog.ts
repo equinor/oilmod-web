@@ -7,44 +7,6 @@ import {ButtonModule} from '../button/button';
 import {ConfirmationService,Confirmation} from '../common/api';
 import {Subscription}   from 'rxjs/Subscription';
 
-@Component({
-    selector: 'p-confirmDialog',
-    template: `
-        <div [ngClass]="{'ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all ui-shadow':true,'ui-dialog-rtl':rtl}" 
-            [style.display]="visible ? 'block' : 'none'" [style.width.px]="width" [style.height.px]="height" (mousedown)="moveOnTop()" [@dialogState]="visible ? 'visible' : 'hidden'">
-            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
-                <span class="ui-dialog-title" *ngIf="header">{{header}}</span>
-                <a *ngIf="closable"  [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="#" role="button" (click)="hide($event)">
-                    <span class="fa fa-fw fa-close"></span>
-                </a>
-            </div>
-            <div class="ui-dialog-content ui-widget-content">
-                <i [class]="icon"></i>
-                <span class="ui-confirmdialog-message" [innerHTML]="message"></span>
-            </div>
-            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="footer">
-                <ng-content select="p-footer"></ng-content>
-            </div>
-            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="!footer">
-                <button type="button" pButton [icon]="rejectIcon" [label]="rejectLabel" (click)="reject()" *ngIf="rejectVisible"></button>
-                <button type="button" pButton [icon]="acceptIcon" [label]="acceptLabel" (click)="accept()" *ngIf="acceptVisible"></button>
-            </div>
-        </div>
-    `,
-    animations: [
-        trigger('dialogState', [
-            state('hidden', style({
-                opacity: 0
-            })),
-            state('visible', style({
-                opacity: 1
-            })),
-            transition('visible => hidden', animate('400ms ease-in')),
-            transition('hidden => visible', animate('400ms ease-out'))
-        ])
-    ],
-    providers: [DomHandler]
-})
 export class ConfirmDialog implements AfterViewInit,OnDestroy {
 
     @Input() header: string;
@@ -259,9 +221,4 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,ButtonModule],
-    exports: [ConfirmDialog,ButtonModule,SharedModule],
-    declarations: [ConfirmDialog]
-})
 export class ConfirmDialogModule { }

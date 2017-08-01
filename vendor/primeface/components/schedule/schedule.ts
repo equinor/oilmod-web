@@ -3,10 +3,6 @@ import {CommonModule} from '@angular/common';
 
 declare var jQuery: any;
 
-@Component({
-    selector: 'p-schedule',
-    template: '<div [ngStyle]="style" [class]="styleClass"></div>'
-})
 export class Schedule implements DoCheck,OnDestroy,OnInit,OnChanges,AfterViewChecked {
     
     @Input() events: any[];
@@ -371,9 +367,4 @@ export class Schedule implements DoCheck,OnDestroy,OnInit,OnChanges,AfterViewChe
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Schedule],
-    declarations: [Schedule]
-})
 export class ScheduleModule { }

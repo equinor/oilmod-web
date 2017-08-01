@@ -3,12 +3,6 @@ import {NgModule,Directive,ElementRef,AfterViewInit,OnDestroy,Input,TemplateRef,
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Directive({
-    selector: '[pDefer]',
-    host: {
-    },
-    providers: [DomHandler]
-})
 export class DeferredLoader implements AfterViewInit,OnDestroy {
         
     @Output() onLoad: EventEmitter<any> = new EventEmitter();
@@ -58,9 +52,4 @@ export class DeferredLoader implements AfterViewInit,OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [DeferredLoader],
-    declarations: [DeferredLoader]
-})
 export class DeferModule { }

@@ -8,24 +8,6 @@ export const RADIO_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-radioButton',
-    template: `
-        <div class="ui-radiobutton ui-widget">
-            <div class="ui-helper-hidden-accessible">
-                <input #rb type="radio" [attr.id]="inputId" [attr.name]="name" [attr.value]="value" [attr.tabindex]="tabindex" 
-                    [checked]="checked" (change)="onChange($event)" (focus)="onFocus($event)" (blur)="onBlur($event)">
-            </div>
-            <div (click)="handleClick()"
-                [ngClass]="{'ui-radiobutton-box ui-widget ui-state-default':true,
-                'ui-state-active':rb.checked,'ui-state-disabled':disabled,'ui-state-focus':focused}">
-                <span class="ui-radiobutton-icon" [ngClass]="{'fa fa-circle':rb.checked}"></span>
-            </div>
-        </div>
-        <label class="ui-radiobutton-label" (click)="select()" *ngIf="label">{{label}}</label>
-    `,
-    providers: [RADIO_VALUE_ACCESSOR]
-})
 export class RadioButton implements ControlValueAccessor,AfterViewInit {
 
     @Input() value: any;
@@ -111,9 +93,4 @@ export class RadioButton implements ControlValueAccessor,AfterViewInit {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [RadioButton],
-    declarations: [RadioButton]
-})
 export class RadioButtonModule { }

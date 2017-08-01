@@ -1,6 +1,3 @@
-import {Injectable} from '@angular/core';
-
-@Injectable()
 export class ObjectUtils {
     
     public equals(obj1: any, obj2: any, field?: string): boolean {

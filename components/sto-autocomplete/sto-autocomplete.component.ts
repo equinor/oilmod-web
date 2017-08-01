@@ -43,7 +43,7 @@ export class StoAutoCompleteComponent extends AutoComplete {
 }
 
 @NgModule({
-    imports: [CommonModule, StoInputTextModule, StoButtonModule, StoSharedModule, SharedModule, AutoCompleteModule],
+    imports: [CommonModule, StoInputTextModule, StoButtonModule, StoSharedModule, SharedModule],
     exports: [StoAutoCompleteComponent, StoSharedModule],
     declarations: [StoAutoCompleteComponent]
 })

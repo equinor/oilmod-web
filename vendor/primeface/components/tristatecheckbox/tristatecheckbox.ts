@@ -8,21 +8,6 @@ export const TRISTATECHECKBOX_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-triStateCheckbox',
-    template: `
-        <div class="ui-chkbox ui-tristatechkbox ui-widget">
-            <div class="ui-helper-hidden-accessible">
-                <input #input type="text" [attr.id]="inputId" [name]="name" [attr.tabindex]="tabindex" readonly [disabled]="disabled" (keyup)="onKeyup($event)" (keydown)="onKeydown($event)" (focus)="onFocus()" (blur)="onBlur()">
-            </div>
-            <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" (click)="onClick($event,input)"
-                [ngClass]="{'ui-state-active':value!=null,'ui-state-disabled':disabled,'ui-state-focus':focus}">
-                <span class="ui-chkbox-icon fa ui-c" [ngClass]="{'fa-check':value==true,'fa-close':value==false}"></span>
-            </div>
-        </div>
-    `,
-    providers: [TRISTATECHECKBOX_VALUE_ACCESSOR]
-})
 export class TriStateCheckbox implements ControlValueAccessor  {
     
     constructor(private cd: ChangeDetectorRef) {}
@@ -108,9 +93,4 @@ export class TriStateCheckbox implements ControlValueAccessor  {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [TriStateCheckbox],
-    declarations: [TriStateCheckbox]
-})
 export class TriStateCheckboxModule { }

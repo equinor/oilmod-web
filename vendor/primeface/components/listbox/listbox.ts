@@ -12,44 +12,6 @@ export const LISTBOX_VALUE_ACCESSOR: any = {
     multi: true
 };
 
-@Component({
-    selector: 'p-listbox',
-    template: `
-        <div [ngClass]="{'ui-listbox ui-inputtext ui-widget ui-widget-content ui-corner-all':true,'ui-state-disabled':disabled}" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-widget-header ui-corner-all ui-listbox-header ui-helper-clearfix" *ngIf="(checkbox && multiple) || filter">
-                <div class="ui-chkbox ui-widget" *ngIf="checkbox && multiple">
-                    <div class="ui-helper-hidden-accessible">
-                        <input #cb type="checkbox" readonly="readonly" [checked]="isAllChecked()">
-                    </div>
-                    <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" [ngClass]="{'ui-state-active':isAllChecked()}" (click)="toggleAll($event,cb)">
-                        <span class="ui-chkbox-icon ui-c" [ngClass]="{'fa fa-check':isAllChecked()}"></span>
-                    </div>
-                </div>
-                <div class="ui-listbox-filter-container" *ngIf="filter">
-                    <input type="text" role="textbox" (input)="onFilter($event)" class="ui-inputtext ui-widget ui-state-default ui-corner-all" [disabled]="disabled">
-                    <span class="fa fa-search"></span>
-                </div>
-            </div>
-            <ul class="ui-listbox-list">
-                <li *ngFor="let option of options" [style.display]="isItemVisible(option) ? 'block' : 'none'"
-                    [ngClass]="{'ui-listbox-item ui-corner-all':true,'ui-state-highlight':isSelected(option)}"
-                    (click)="onOptionClick($event,option)" (dblclick)="onDoubleClick($event,option)" (touchend)="onOptionTouchEnd($event,option)">
-                    <div class="ui-chkbox ui-widget" *ngIf="checkbox && multiple" (click)="onCheckboxClick($event,option)">
-                        <div class="ui-helper-hidden-accessible">
-                            <input type="checkbox" [checked]="isSelected(option)" [disabled]="disabled">
-                        </div>
-                        <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" [ngClass]="{'ui-state-active':isSelected(option)}">
-                            <span class="ui-chkbox-icon ui-c" [ngClass]="{'fa fa-check':isSelected(option)}"></span>
-                        </div>
-                    </div>
-                    <span *ngIf="!itemTemplate">{{option.label}}</span>
-                    <ng-template *ngIf="itemTemplate" [pTemplateWrapper]="itemTemplate" [item]="option"></ng-template>
-                </li>
-            </ul>
-        </div>
-    `,
-    providers: [DomHandler,ObjectUtils,LISTBOX_VALUE_ACCESSOR]
-})
 export class Listbox implements AfterContentInit,ControlValueAccessor {
 
     @Input() options: SelectItem[];
@@ -357,9 +319,4 @@ export class Listbox implements AfterContentInit,ControlValueAccessor {
     }
 }
 
-@NgModule({
-    imports: [CommonModule, SharedModule],
-    exports: [Listbox, SharedModule],
-    declarations: [Listbox]
-})
 export class ListboxModule { }

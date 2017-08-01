@@ -9,24 +9,6 @@ export const SLIDER_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-@Component({
-    selector: 'p-slider',
-    template: `
-        <div [ngStyle]="style" [class]="styleClass" [ngClass]="{'ui-slider ui-widget ui-widget-content ui-corner-all':true,'ui-state-disabled':disabled,
-            'ui-slider-horizontal':orientation == 'horizontal','ui-slider-vertical':orientation == 'vertical','ui-slider-animate':animate}"
-            (click)="onBarClick($event)">
-            <span *ngIf="!range" class="ui-slider-handle ui-state-default ui-corner-all" (mousedown)="onMouseDown($event)" [style.transition]="dragging ? 'none': null"
-                [ngStyle]="{'left': orientation == 'horizontal' ? handleValue + '%' : null,'bottom': orientation == 'vertical' ? handleValue + '%' : null}"></span>
-            <span *ngIf="range" class="ui-slider-range ui-widget-header ui-corner-all" [ngStyle]="{'left':handleValues[0] + '%',width: (handleValues[1] - handleValues[0] + '%')}"></span>
-            <span *ngIf="orientation=='vertical'" class="ui-slider-range ui-slider-range-min ui-widget-header ui-corner-all" [ngStyle]="{'height': handleValue + '%'}"></span>
-            <span *ngIf="range" (mousedown)="onMouseDown($event,0)" [style.transition]="dragging ? 'none': null" class="ui-slider-handle ui-state-default ui-corner-all" 
-                [ngStyle]="{'left':handleValues[0] + '%'}" [ngClass]="{'ui-slider-handle-active':handleIndex==0}"></span>
-            <span *ngIf="range" (mousedown)="onMouseDown($event,1)" [style.transition]="dragging ? 'none': null" class="ui-slider-handle ui-state-default ui-corner-all" 
-                [ngStyle]="{'left':handleValues[1] + '%'}" [ngClass]="{'ui-slider-handle-active':handleIndex==1}"></span>
-        </div>
-    `,
-    providers: [SLIDER_VALUE_ACCESSOR,DomHandler]
-})
 export class Slider implements AfterViewInit,OnDestroy,ControlValueAccessor {
 
     @Input() animate: boolean;
@@ -276,9 +258,4 @@ export class Slider implements AfterViewInit,OnDestroy,ControlValueAccessor {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Slider],
-    declarations: [Slider]
-})
 export class SliderModule { }

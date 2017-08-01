@@ -1,10 +1,6 @@
 import {NgModule,AfterViewInit,Component,EventEmitter,Input,NgZone,OnDestroy,Output,ViewChild, ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-@Component({
-    selector: 'p-captcha',
-    template: `<div #target></div>`
-})
 export class Captcha implements AfterViewInit {
 
     @Input() siteKey: string = null;
@@ -82,9 +78,4 @@ export class Captcha implements AfterViewInit {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Captcha],
-    declarations: [Captcha]
-})
 export class CaptchaModule { }

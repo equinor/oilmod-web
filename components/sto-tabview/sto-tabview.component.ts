@@ -1,4 +1,4 @@
-import { Component, ContentChildren, NgModule, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, NgModule, QueryList, ViewEncapsulation, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabView, TabViewModule } from '../../vendor/primeface/components/tabview/tabview';
 import { StoTabViewNav } from './sto-tabview-nav/sto-tabview-nav.component';
@@ -12,11 +12,14 @@ import { StoTabPanel } from 'ngx-stoui/components/sto-tabview/sto-tabpanel/sto-t
 })
 export class StoTabView extends TabView {
     @ContentChildren(StoTabPanel) tabPanels: QueryList<StoTabPanel>;
+    constructor(public el: ElementRef) {
+        super(el);
+    }
 }
 
 
 @NgModule({
-    imports: [CommonModule, TabViewModule],
+    imports: [CommonModule],
     exports: [StoTabView, StoTabPanel, StoTabViewNav],
     declarations: [StoTabView, StoTabPanel, StoTabViewNav]
 })

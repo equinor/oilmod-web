@@ -4,29 +4,6 @@ import {Header,Footer,PrimeTemplate,SharedModule} from '../common/shared';
 import {PaginatorModule} from '../paginator/paginator';
 import {BlockableUI} from '../common/api';
 
-@Component({
-    selector: 'p-dataGrid',
-    template: `
-        <div [ngClass]="'ui-datagrid ui-widget'" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-datagrid-header ui-widget-header ui-corner-top" *ngIf="header">
-                <ng-content select="p-header"></ng-content>
-            </div>
-            <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
-                (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='bottom' || paginatorPosition =='both'"></p-paginator>
-            <div class="ui-datagrid-content ui-widget-content">
-                <div class="ui-g">
-                    <ng-template ngFor [ngForOf]="dataToRender" [ngForTemplate]="itemTemplate"></ng-template>
-                    <div *ngIf="isEmpty()" class="ui-widget-content ui-g-12">{{emptyMessage}}</div>
-                </div>
-            </div>
-            <p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
-                (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></p-paginator>
-            <div class="ui-datagrid-footer ui-widget-header ui-corner-top" *ngIf="footer">
-                <ng-content select="p-footer"></ng-content>
-            </div>
-        </div>
-    `
-})
 export class DataGrid implements AfterViewInit,AfterContentInit,BlockableUI {
 
     @Input() paginator: boolean;
@@ -171,9 +148,4 @@ export class DataGrid implements AfterViewInit,AfterContentInit,BlockableUI {
     }
 }
 
-@NgModule({
-    imports: [CommonModule,SharedModule,PaginatorModule],
-    exports: [DataGrid,SharedModule],
-    declarations: [DataGrid]
-})
 export class DataGridModule { }

@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class DomHandler {
 
     public static zindex: number = 1000;

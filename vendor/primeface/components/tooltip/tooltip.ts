@@ -2,12 +2,6 @@ import {NgModule,Directive,ElementRef,OnDestroy,HostBinding,HostListener,Input} 
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Directive({
-    selector: '[pTooltip]',
-    host: {
-    },
-    providers: [DomHandler]
-})
 export class Tooltip implements OnDestroy {
 
     @Input('pTooltip') text: string;
@@ -152,9 +146,4 @@ export class Tooltip implements OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Tooltip],
-    declarations: [Tooltip]
-})
 export class TooltipModule { }

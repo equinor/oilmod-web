@@ -1,4 +1,4 @@
-import { Component, forwardRef, NgModule } from '@angular/core';
+import { Component, forwardRef, NgModule, ElementRef, Renderer } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -18,7 +18,9 @@ export const SLIDER_VALUE_ACCESSOR: any = {
     providers: [SLIDER_VALUE_ACCESSOR, DomHandler]
 })
 export class StoSliderComponent extends Slider {
-
+    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer) {
+        super(el, domHandler, renderer);
+    }
 }
 
 @NgModule({

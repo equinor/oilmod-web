@@ -2,17 +2,6 @@ import {NgModule,Directive,ElementRef,HostListener,Input,AfterViewInit,OnDestroy
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Directive({
-    selector: '[pPassword]',
-    host: {
-        '[class.ui-inputtext]': 'true',
-        '[class.ui-corner-all]': 'true',
-        '[class.ui-state-default]': 'true',
-        '[class.ui-widget]': 'true',
-        '[class.ui-state-filled]': 'filled'
-    },
-    providers: [DomHandler]
-})
 export class Password implements AfterViewInit,OnDestroy,DoCheck {
 
     @Input() promptLabel: string = 'Please enter a password';
@@ -155,9 +144,4 @@ export class Password implements AfterViewInit,OnDestroy,DoCheck {
     }
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Password],
-    declarations: [Password]
-})
 export class PasswordModule { }

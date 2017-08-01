@@ -1,0 +1,75 @@
+
+.ui-paginator {
+  background-color: #ffffff;
+  padding: 0;
+  box-sizing: border-box;
+}
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last {
+  color: #0275d8;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+  min-height: 0.875em;
+  min-width: 2em;
+  padding: 0.5em 0.5em;
+  vertical-align: top;
+}
+.ui-paginator .ui-paginator-first:hover,
+.ui-paginator .ui-paginator-prev:hover,
+.ui-paginator .ui-paginator-next:hover,
+.ui-paginator .ui-paginator-last:hover {
+  background-color: #f4f3f4;
+}
+.ui-paginator .ui-paginator-first:before,
+.ui-paginator .ui-paginator-prev:before,
+.ui-paginator .ui-paginator-next:before,
+.ui-paginator .ui-paginator-last:before {
+  position: relative;
+  top: 0.063em;
+}
+.ui-paginator .ui-paginator-first {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.ui-paginator .ui-paginator-prev {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.ui-paginator .ui-paginator-next {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.ui-paginator .ui-paginator-last {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.ui-paginator .ui-paginator-pages {
+  padding: 0;
+}
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+  padding: 0.5em 0.625em;
+  min-width: 2em;
+  color: #0275d8;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+  border-radius: 0;
+}
+.ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  color: #ffffff;
+}
+.ui-paginator .ui-paginator-pages .ui-paginator-page:hover {
+  background-color: #f4f3f4;
+}
+.ui-paginator .ui-paginator-pages .ui-paginator-page:hover.ui-state-active {
+  background-color: #0275d8;
+}

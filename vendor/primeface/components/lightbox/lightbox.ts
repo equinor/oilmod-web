@@ -2,39 +2,7 @@ import {NgModule,Component,ElementRef,Input,Output,Renderer,AfterViewInit,OnDest
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
-@Component({
-    selector: 'p-lightbox',
-    template: `
-        <div [ngStyle]="style" [class]="styleClass" *ngIf="(type == 'image')">
-            <a *ngFor="let image of images; let i = index;" [href]="image.source" (click)="onImageClick($event,image,i,content)">
-                <img [src]="image.thumbnail" [title]="image.title" [alt]="image.alt">
-            </a>
-        </div>
-        <span [ngStyle]="style" [class]="styleClass" *ngIf="(type == 'content')" (click)="onLinkClick($event,content)">
-            <ng-content select="a"></ng-content>
-        </span>
-        <div class="ui-lightbox ui-widget ui-helper-hidden ui-corner-all ui-shadow" [style.display]="visible ? 'block' : 'none'" [style.zIndex]="zindex"
-            [style.transitionProperty]="'all'" [style.transitionDuration]="effectDuration" [style.transitionTimingFunction]="easing" (click)="preventDocumentClickListener=true">
-           <div class="ui-lightbox-content-wrapper">
-              <a class="ui-state-default ui-lightbox-nav-left ui-corner-right" [style.zIndex]="zindex + 1" (click)="prev(img)"
-                [ngClass]="{'ui-helper-hidden':!leftVisible}"><span class="fa fa-fw fa-caret-left"></span></a>
-              <div #content class="ui-lightbox-content ui-corner-all" #content [ngClass]="{'ui-lightbox-loading': loading}" 
-                [style.transitionProperty]="'width,height'" [style.transitionDuration]="effectDuration" [style.transitionTimingFunction]="easing">
-                <img #img [src]="currentImage ? currentImage.source||'' : ''" (load)="onImageLoad($event,content)" style="display:none">
-                <ng-content></ng-content>
-              </div>
-              <a class="ui-state-default ui-lightbox-nav-right ui-corner-left ui-helper-hidden" [style.zIndex]="zindex + 1" (click)="next(img)"
-                [ngClass]="{'ui-helper-hidden':!rightVisible}"><span class="fa fa-fw fa-caret-right"></span></a>
-           </div>
-           <div class="ui-lightbox-caption ui-widget-header" [style.display]="captionText ? 'block' : 'none'">
-              <span class="ui-lightbox-caption-text">{{captionText}}</span><a class="ui-lightbox-close ui-corner-all" href="#" (click)="hide($event)"><span class="fa fa-fw fa-close"></span></a>
-              <div style="clear:both"></div>
-           </div>
-        </div>
-    `,
-    providers: [DomHandler]
-})
-export class Lightbox implements AfterViewInit,OnDestroy{ 
+export class Lightbox implements AfterViewInit,OnDestroy{
 
     @Input() images: any[];
     
@@ -221,9 +189,4 @@ export class Lightbox implements AfterViewInit,OnDestroy{
         
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Lightbox],
-    declarations: [Lightbox]
-})
 export class LightboxModule { }

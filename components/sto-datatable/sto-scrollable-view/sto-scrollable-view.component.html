@@ -2,10 +2,10 @@
 	<div #scrollHeaderBox class="ui-datatable-scrollable-header-box">
 		<table [class]="dt.tableStyleClass" [ngStyle]="dt.tableStyle">
 			<thead class="ui-datatable-thead">
-			<tr *ngIf="!dt.headerColumnGroup" class="ui-state-default" [pColumnHeaders]="columns"></tr>
+			<tr *ngIf="!dt.headerColumnGroup" class="ui-state-default" [stoColumnHeaders]="columns"></tr>
 			<ng-template [ngIf]="dt.headerColumnGroup">
 				<tr *ngFor="let headerRow of dt.headerColumnGroup.rows" class="ui-state-default"
-					[pColumnHeaders]="headerRow.columns"></tr>
+					[stoColumnHeaders]="headerRow.columns"></tr>
 			</ng-template>
 			</thead>
 		</table>
@@ -19,7 +19,7 @@
 				<col *ngFor="let col of dt.visibleColumns()"/>
 			</colgroup>
 			<tbody [ngClass]="{'ui-datatable-data ui-widget-content': true, 'ui-datatable-hoverable-rows': (dt.rowHover||dt.selectionMode)}"
-				   [pTableBody]="columns"></tbody>
+				   [stoTableBody]="columns"></tbody>
 		</table>
 	</div>
 </div>
@@ -28,9 +28,9 @@
 	<div #scrollFooterBox class="ui-datatable-scrollable-footer-box">
 		<table [class]="dt.tableStyleClass" [ngStyle]="dt.tableStyle">
 			<tfoot class="ui-datatable-tfoot">
-			<tr *ngIf="!footerColumnGroup" [pColumnFooters]="columns" class="ui-state-default"></tr>
+			<tr *ngIf="!footerColumnGroup" [stoColumnFooters]="columns" class="ui-state-default"></tr>
 			<ng-template [ngIf]="footerColumnGroup">
-				<tr *ngFor="let footerRow of footerColumnGroup.rows" [pColumnFooters]="footerRow.columns"></tr>
+				<tr *ngFor="let footerRow of footerColumnGroup.rows" [stoColumnFooters]="footerRow.columns"></tr>
 			</ng-template>
 			</tfoot>
 		</table>

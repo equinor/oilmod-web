@@ -2,31 +2,6 @@ import {NgModule,Component,ElementRef,Input,Output,EventEmitter,HostListener,Aft
 import {CommonModule} from '@angular/common';
 import {BlockableUI} from '../common/api';
 
-@Component({
-    selector: '[p-tabViewNav]',
-    host:{
-        '[class.ui-tabview-nav]': 'true',
-        '[class.ui-helper-reset]': 'true',
-        '[class.ui-helper-clearfix]': 'true',
-        '[class.ui-widget-header]': 'true',
-        '[class.ui-corner-all]': 'true'
-    },
-    template: `
-        <ng-template ngFor let-tab [ngForOf]="tabs">
-            <li [class]="getDefaultHeaderClass(tab)" [ngStyle]="tab.headerStyle" role="tab"
-                [ngClass]="{'ui-tabview-selected ui-state-active': tab.selected, 'ui-state-disabled': tab.disabled}"
-                (click)="clickTab($event,tab)" *ngIf="!tab.closed"
-                [attr.aria-expanded]="tab.selected" [attr.aria-selected]="tab.selected">
-                <a href="#">
-                    <span class="ui-tabview-left-icon fa" [ngClass]="tab.leftIcon" *ngIf="tab.leftIcon"></span>
-                    <span class="ui-tabview-title">{{tab.header}}</span>
-                    <span class="ui-tabview-right-icon fa" [ngClass]="tab.rightIcon" *ngIf="tab.rightIcon"></span>
-                </a>
-                <span *ngIf="tab.closable" class="ui-tabview-close fa fa-close" (click)="clickClose($event,tab)"></span>
-            </li>
-        </ng-template>
-    `,
-})
 export class TabViewNav {
     
     @Input() tabs: TabPanel[];
@@ -60,15 +35,6 @@ export class TabViewNav {
     }
 }
 
-@Component({
-    selector: 'p-tabPanel',
-    template: `
-        <div class="ui-tabview-panel ui-widget-content" [style.display]="selected ? 'block' : 'none'" 
-            role="tabpanel" [attr.aria-hidden]="!selected" *ngIf="closed ? false : (lazy ? selected : true)">
-            <ng-content></ng-content>
-        </div>
-    `
-})
 export class TabPanel {
 
     @Input() header: string;
@@ -92,20 +58,6 @@ export class TabPanel {
     public lazy: boolean;
 }
 
-@Component({
-    selector: 'p-tabView',
-    template: `
-        <div [ngClass]="'ui-tabview ui-widget ui-widget-content ui-corner-all ui-tabview-' + orientation" [ngStyle]="style" [class]="styleClass">
-            <ul p-tabViewNav role="tablist" *ngIf="orientation!='bottom'" [tabs]="tabs" [orientation]="orientation" 
-                (onTabClick)="open($event.originalEvent, $event.tab)" (onTabCloseClick)="close($event.originalEvent, $event.tab)"></ul>
-            <div class="ui-tabview-panels">
-                <ng-content></ng-content>
-            </div>
-            <ul p-tabViewNav role="tablist" *ngIf="orientation=='bottom'" [tabs]="tabs" [orientation]="orientation"
-                (onTabClick)="open($event.originalEvent, $event.tab)" (onTabCloseClick)="close($event.originalEvent, $event.tab)"></ul>
-        </div>
-    `,
-})
 export class TabView implements AfterContentInit,BlockableUI {
 
     @Input() orientation: string = 'top';
@@ -246,10 +198,4 @@ export class TabView implements AfterContentInit,BlockableUI {
     }
 }
 
-
-@NgModule({
-    imports: [CommonModule],
-    exports: [TabView,TabPanel,TabViewNav],
-    declarations: [TabView,TabPanel,TabViewNav]
-})
 export class TabViewModule { }
