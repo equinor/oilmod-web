@@ -3,6 +3,7 @@ import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Dialog } from '../../vendor/primeface/components/dialog/dialog';
+import { StoSharedModule } from '../sto-shared/sto-shared';
 
 @Component({
   selector: 'sto-dialog',
@@ -30,8 +31,8 @@ export class StoDialogComponent extends Dialog {
 }
 
 @NgModule({
-  imports: [CommonModule],
-  exports: [StoDialogComponent],
+  imports: [CommonModule, StoSharedModule],
+  exports: [StoDialogComponent, StoSharedModule],
   declarations: [StoDialogComponent]
 })
 export class StoDialogModule {
