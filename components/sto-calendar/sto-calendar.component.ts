@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, forwardRef, NgModule, Renderer } from '@angular/core';
 import { Calendar } from '../../vendor/primeface/components/calendar/calendar';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
-import { ButtonModule } from '../../vendor/primeface/components/button/button';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { animate, state, style, transition, trigger } from '@angular/animations';

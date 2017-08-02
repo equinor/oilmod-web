@@ -15,7 +15,6 @@ import {
 import { DataTable } from '../../vendor/primeface/components/datatable/datatable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
-import { SharedModule } from '../../vendor/primeface/components/common/shared';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StoColumnHeadersComponent } from './sto-datatable-header/sto-datatable-header.component';
@@ -84,9 +83,8 @@ export class StoDatatableComponent extends DataTable {
 
 }
 @NgModule({
-  imports: [CommonModule, SharedModule, StoPaginatorModule, FormsModule, StoSharedModule],
+  imports: [CommonModule, StoPaginatorModule, FormsModule, StoSharedModule],
   exports: [
-    SharedModule,
     StoSharedModule,
     StoDatatableComponent,
     StoDTRadioButton,
