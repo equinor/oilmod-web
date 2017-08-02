@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input } from '@angular/core';
 import { DomHandler } from '../../../vendor/primeface/components/dom/domhandler';
 import { MenubarSub } from '../../../vendor/primeface/components/menubar/menubar';
-import { MenuItem } from '../../../ngx-stoui';
+import { MenuItem } from '../../sto-shared/sto-api';
 
 @Component({
     selector: 'sto-navbarSub',

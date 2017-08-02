@@ -2,23 +2,10 @@ import {NgModule,EventEmitter,Directive,ViewContainerRef,Input,Output,ContentChi
 import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 
-@Component({
-    selector: 'p-header',
-    template: '<ng-content></ng-content>'
-})
 export class Header {}
 
-@Component({
-    selector: 'p-footer',
-    template: '<ng-content></ng-content>'
-})
 export class Footer {}
 
-@Directive({
-    selector: '[pTemplate]',
-    host: {
-    }
-})
 export class PrimeTemplate {
     
     @Input() type: string;
@@ -38,9 +25,6 @@ export class PrimeTemplate {
     }
 }
 
-@Directive({
-    selector: '[pTemplateWrapper]'
-})
 export class TemplateWrapper implements OnInit, OnDestroy {
     
     @Input() item: any;
@@ -65,10 +49,6 @@ export class TemplateWrapper implements OnInit, OnDestroy {
 	}
 }
 
-@Component({
-    selector: 'p-column',
-    template: ``
-})
 export class Column implements AfterContentInit{
     @Input() field: string;
     @Input() sortField: string;
@@ -129,38 +109,22 @@ export class Column implements AfterContentInit{
     }
 }
 
-@Component({
-    selector: 'p-row',
-    template: ``
-})
 export class Row {
     
     @ContentChildren(Column) columns: QueryList<Column>;
     
 }
 
-@Component({
-    selector: 'p-headerColumnGroup',
-    template: ``
-})
 export class HeaderColumnGroup {
         
     @ContentChildren(Row) rows: QueryList<any>;
 }
 
-@Component({
-    selector: 'p-footerColumnGroup',
-    template: ``
-})
 export class FooterColumnGroup {
         
     @ContentChildren(Row) rows: QueryList<any>;
 }
 
-@Component({
-    selector: 'p-columnBodyTemplateLoader',
-    template: ``
-})
 export class ColumnBodyTemplateLoader implements OnInit, OnDestroy {
         
     @Input() column: any;
@@ -186,10 +150,6 @@ export class ColumnBodyTemplateLoader implements OnInit, OnDestroy {
 	}
 }
 
-@Component({
-    selector: 'p-columnHeaderTemplateLoader',
-    template: ``
-})
 export class ColumnHeaderTemplateLoader implements OnInit, OnDestroy {
         
     @Input() column: any;
@@ -209,10 +169,6 @@ export class ColumnHeaderTemplateLoader implements OnInit, OnDestroy {
 	}
 }
 
-@Component({
-    selector: 'p-columnFooterTemplateLoader',
-    template: ``
-})
 export class ColumnFooterTemplateLoader implements OnInit, OnDestroy {
         
     @Input() column: any;
@@ -232,10 +188,6 @@ export class ColumnFooterTemplateLoader implements OnInit, OnDestroy {
 	}
 }
 
-@Component({
-    selector: 'p-columnFilterTemplateLoader',
-    template: ``
-})
 export class ColumnFilterTemplateLoader implements OnInit, OnDestroy {
         
     @Input() column: any;
@@ -255,10 +207,6 @@ export class ColumnFilterTemplateLoader implements OnInit, OnDestroy {
 	}
 }
 
-@Component({
-    selector: 'p-columnEditorTemplateLoader',
-    template: ``
-})
 export class ColumnEditorTemplateLoader implements OnInit, OnDestroy {
             
     @Input() column: any;
@@ -284,10 +232,6 @@ export class ColumnEditorTemplateLoader implements OnInit, OnDestroy {
 	}
 }
 
-@Component({
-    selector: 'p-templateLoader',
-    template: ``
-})
 export class TemplateLoader implements OnInit, OnDestroy {
         
     @Input() template: TemplateRef<any>;
@@ -311,9 +255,4 @@ export class TemplateLoader implements OnInit, OnDestroy {
 	}
 }
 
-@NgModule({
-    imports: [CommonModule],
-    exports: [Header,Footer,Column,TemplateWrapper,ColumnHeaderTemplateLoader,ColumnBodyTemplateLoader,ColumnFooterTemplateLoader,ColumnFilterTemplateLoader,PrimeTemplate,TemplateLoader,Row,HeaderColumnGroup,FooterColumnGroup,ColumnEditorTemplateLoader],
-    declarations: [Header,Footer,Column,TemplateWrapper,ColumnHeaderTemplateLoader,ColumnBodyTemplateLoader,ColumnFooterTemplateLoader,ColumnFilterTemplateLoader,PrimeTemplate,TemplateLoader,Row,HeaderColumnGroup,FooterColumnGroup,ColumnEditorTemplateLoader]
-})
 export class SharedModule { }

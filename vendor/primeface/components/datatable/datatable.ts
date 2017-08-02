@@ -1,15 +1,34 @@
-import {NgModule,Component,ElementRef,AfterContentInit,AfterViewInit,AfterViewChecked,OnInit,OnDestroy,Input,ViewContainerRef,ViewChild,
-        Output,SimpleChange,EventEmitter,ContentChild,ContentChildren,Renderer,QueryList,TemplateRef,ChangeDetectorRef,Inject,forwardRef} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms'
-import {SharedModule} from '../common/shared';
-import {PaginatorModule} from '../paginator/paginator';
-import {Column,Header,Footer,HeaderColumnGroup,FooterColumnGroup,PrimeTemplate} from '../common/shared';
-import {LazyLoadEvent,FilterMetadata,SortMeta} from '../common/api';
-import {DomHandler} from '../dom/domhandler';
-import {ObjectUtils} from '../utils/ObjectUtils';
-import {Subscription} from 'rxjs/Subscription';
-import {BlockableUI} from '../common/api';
+import {
+    AfterContentInit,
+    AfterViewChecked,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Inject,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    Renderer,
+    SimpleChange,
+    TemplateRef,
+    ViewChild,
+    ViewContainerRef
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Column, Footer, FooterColumnGroup, Header, HeaderColumnGroup, PrimeTemplate } from '../common/shared';
+import { BlockableUI, FilterMetadata, LazyLoadEvent, SortMeta } from '../common/api';
+import { DomHandler } from '../dom/domhandler';
+import { ObjectUtils } from '../utils/ObjectUtils';
+import { Subscription } from 'rxjs/Subscription';
 
 export class DTRadioButton {
     
@@ -25,17 +44,17 @@ export class DTRadioButton {
 }
 
 export class DTCheckbox {
-    
+
     @Input() checked: boolean;
-    
+
     @Input() disabled: boolean;
 
     @Output() onChange: EventEmitter<any> = new EventEmitter();
-    
+
     public hover: boolean;
-    
+
     handleClick(event) {
-        if(!this.disabled) {
+        if (!this.disabled) {
             this.onChange.emit({originalEvent: event, checked: !this.checked});
         }
     }
@@ -83,9 +102,9 @@ export class TableBody {
 
 export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy {
         
-    constructor(@Inject(forwardRef(() => DataTable)) public dt:DataTable, public domHandler: DomHandler, public el: ElementRef, public renderer: Renderer) {}
+    constructor(public dt:DataTable, public domHandler: DomHandler, public el: ElementRef, public renderer: Renderer) {}
     
-    @Input("pScrollableView") columns: Column[];
+    @Input("stoScrollableView") columns: Column[];
     
     @ViewChild('scrollHeader') scrollHeaderViewChild: ElementRef;
     

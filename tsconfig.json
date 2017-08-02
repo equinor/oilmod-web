@@ -4,20 +4,20 @@
     "module": "es2015",
     "sourceMap": true,
     "moduleResolution": "node",
+    "typeRoots": [ "./node_modules/@types" ],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
     "outDir": "./dist",
     "lib": ["es2015", "dom"]
   },
-  "include": [
-    "components/**/*",
-    "ngx-stoui.ts"
-  ],
+  "files": ["index.ts"],
   "exclude": [
     "vendor"
   ],
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true
+    "skipTemplateCodegen": true,
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true
   }
 }
