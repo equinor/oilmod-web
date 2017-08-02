@@ -7,3 +7,4 @@ xcopy vendor\primeface dist\vendor\primeface /i
 COPY _mixins.scss dist\
 COPY _ngx-stoui.scss dist\
 COPY _variables.scss dist\
+COPY package.json dist\

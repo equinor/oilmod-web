@@ -59,6 +59,9 @@ export class StoTemplate {
   selector: '[stoTemplateWrapper]'
 })
 export class StoTemplateWrapper extends TemplateWrapper {
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 
   @Input('stoTemplateWrapper') templateRef: TemplateRef<any>;
 
@@ -107,7 +110,9 @@ export class StoFooterColumnGroup extends FooterColumnGroup {
   template: ``
 })
 export class StoColumnBodyTemplateLoader extends ColumnBodyTemplateLoader {
-
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 }
 
 @Component({
@@ -115,6 +120,9 @@ export class StoColumnBodyTemplateLoader extends ColumnBodyTemplateLoader {
   template: ``
 })
 export class StoColumnHeaderTemplateLoader extends ColumnHeaderTemplateLoader {
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 }
 
 @Component({
@@ -122,7 +130,9 @@ export class StoColumnHeaderTemplateLoader extends ColumnHeaderTemplateLoader {
   template: ``
 })
 export class StoColumnFooterTemplateLoader extends ColumnFooterTemplateLoader {
-
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 }
 
 @Component({
@@ -130,6 +140,9 @@ export class StoColumnFooterTemplateLoader extends ColumnFooterTemplateLoader {
   template: ``
 })
 export class StoColumnFilterTemplateLoader extends ColumnFilterTemplateLoader {
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 }
 
 @Component({
@@ -137,7 +150,9 @@ export class StoColumnFilterTemplateLoader extends ColumnFilterTemplateLoader {
   template: ``
 })
 export class StoColumnEditorTemplateLoader extends ColumnEditorTemplateLoader {
-
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 }
 
 @Component({
@@ -145,7 +160,9 @@ export class StoColumnEditorTemplateLoader extends ColumnEditorTemplateLoader {
   template: ``
 })
 export class StoTemplateLoader extends TemplateLoader {
-
+  constructor(public viewContainer: ViewContainerRef) {
+    super(viewContainer);
+  }
 }
 
 @NgModule({
