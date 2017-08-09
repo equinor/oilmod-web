@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, forwardRef, NgModule, Renderer } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, forwardRef, NgModule, Renderer, Input } from '@angular/core';
 import { Calendar } from '../../vendor/primeface/components/calendar/calendar';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { CommonModule } from '@angular/common';
@@ -38,6 +38,9 @@ export const CALENDAR_VALIDATOR: any = {
   providers: [DomHandler, CALENDAR_VALUE_ACCESSOR, CALENDAR_VALIDATOR]
 })
 export class StoCalendarComponent extends Calendar {
+
+  @Input() dateFormat: string = 'yy-M-dd';
+
 
   constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef) {
     super(el, domHandler, renderer, cd);
