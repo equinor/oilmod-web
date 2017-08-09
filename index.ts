@@ -38,3 +38,5 @@ export * from './components/sto-shared/sto-api';
 export * from './components/sto-panel/sto-panel.component';
 export * from './components/sto-chart/sto-chart.component';
 export * from './components/sto-overlaypanel/sto-overlaypanel.component';
+export * from './components/sto-codehighlighter/sto-codehighlighter';
+export * from './components/sto-contextmenu/sto-contextmenu.component';

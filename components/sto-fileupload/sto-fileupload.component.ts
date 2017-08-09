@@ -5,6 +5,7 @@ import { StoMessagesModule } from '../sto-messages/sto-messages.component';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { StoSharedModule } from '../sto-shared/sto-shared';
 import { StoProgressBarModule } from '../sto-progressbar/sto-progressbar.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'sto-fileUpload',
@@ -12,6 +13,11 @@ import { StoProgressBarModule } from '../sto-progressbar/sto-progressbar.compone
   styleUrls: ['./sto-fileupload.component.scss']
 })
 export class StoFileUploadComponent extends FileUpload {
+
+  constructor(protected sanitizer: DomSanitizer){
+    super(sanitizer);
+  }
+
   upload() {
 
     if (!this.multiple && this.files.length > 1) {

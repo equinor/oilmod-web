@@ -15,6 +15,9 @@ export const TRISTATECHECKBOX_VALUE_ACCESSOR: any = {
   providers: [TRISTATECHECKBOX_VALUE_ACCESSOR]
 })
 export class StoTriStateCheckboxComponent extends TriStateCheckbox {
+  constructor(protected cd: ChangeDetectorRef) {
+    super(cd);
+  }
 }
 
 @NgModule({

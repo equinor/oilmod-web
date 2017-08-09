@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
-import { Directive, Input, NgModule } from '@angular/core';
+import { Directive, ElementRef, Input, NgModule } from '@angular/core';
 import { Tooltip } from '../../vendor/primeface/components/tooltip/tooltip';
 
 
@@ -10,6 +10,9 @@ import { Tooltip } from '../../vendor/primeface/components/tooltip/tooltip';
     providers: [DomHandler]
 })
 export class StoTooltipDirective extends Tooltip {
+    constructor(public el: ElementRef, public domHandler: DomHandler) {
+        super(el, domHandler);
+    }
 
     @Input('stoTooltip') text: string;
 }

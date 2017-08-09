@@ -25,7 +25,7 @@
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  OTHER DEALINGS IN THE SOFTWARE.
  */
-import { Component, forwardRef, NgModule } from '@angular/core';
+import { Component, ElementRef, forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
@@ -48,6 +48,9 @@ export const INPUTMASK_VALUE_ACCESSOR: any = {
     providers: [INPUTMASK_VALUE_ACCESSOR, DomHandler]
 })
 export class StoInputMaskComponent extends InputMask {
+    constructor(public el: ElementRef, public domHandler: DomHandler) {
+        super(el, domHandler);
+    }
 }
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgModule } from '@angular/core';
+import { Component, ElementRef, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Growl } from '../../vendor/primeface/components/growl/growl';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
@@ -10,6 +10,9 @@ import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
   providers: [DomHandler]
 })
 export class StoGrowlComponent extends Growl {
+
+  @Input('sticky') autoDismiss: boolean;
+
   constructor(public el: ElementRef, public domHandler: DomHandler) {
     super(el, domHandler);
   }

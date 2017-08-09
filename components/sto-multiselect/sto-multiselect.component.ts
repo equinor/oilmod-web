@@ -1,4 +1,4 @@
-import { Component, forwardRef, NgModule } from '@angular/core';
+import { Component, ElementRef, forwardRef, IterableDiffers, NgModule, Renderer } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MultiSelect } from '../../vendor/primeface/components/multiselect/multiselect';
@@ -18,7 +18,9 @@ export const MULTISELECT_VALUE_ACCESSOR: any = {
     providers: [DomHandler, ObjectUtils, MULTISELECT_VALUE_ACCESSOR]
 })
 export class StoMultiSelectComponent extends MultiSelect {
-
+    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, differs: IterableDiffers, public objectUtils: ObjectUtils) {
+        super(el, domHandler, renderer, differs, objectUtils);
+    }
 }
 
 @NgModule({

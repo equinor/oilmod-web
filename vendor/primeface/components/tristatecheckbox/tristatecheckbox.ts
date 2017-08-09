@@ -10,7 +10,7 @@ export const TRISTATECHECKBOX_VALUE_ACCESSOR: any = {
 
 export class TriStateCheckbox implements ControlValueAccessor  {
     
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(protected cd: ChangeDetectorRef) {}
 
     @Input() disabled: boolean;
     

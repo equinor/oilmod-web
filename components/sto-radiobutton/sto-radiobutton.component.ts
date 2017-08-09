@@ -1,4 +1,4 @@
-import { Component, forwardRef, NgModule } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { RadioButton } from '../../vendor/primeface/components/radiobutton/radiobutton';
@@ -16,6 +16,9 @@ export const RADIO_VALUE_ACCESSOR: any = {
     providers: [RADIO_VALUE_ACCESSOR]
 })
 export class StoRadioButtonComponent extends RadioButton {
+    constructor(protected cd: ChangeDetectorRef) {
+        super(cd);
+    }
 }
 
 @NgModule({

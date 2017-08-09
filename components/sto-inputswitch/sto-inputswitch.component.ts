@@ -1,4 +1,4 @@
-import { Component, forwardRef, NgModule } from '@angular/core';
+import { Component, ElementRef, forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
@@ -17,6 +17,9 @@ export const INPUTSWITCH_VALUE_ACCESSOR: any = {
     providers: [INPUTSWITCH_VALUE_ACCESSOR, DomHandler]
 })
 export class StoInputSwitchComponent extends InputSwitch {
+    constructor(public el: ElementRef, public domHandler: DomHandler) {
+        super(el, domHandler);
+    }
 }
 
 @NgModule({

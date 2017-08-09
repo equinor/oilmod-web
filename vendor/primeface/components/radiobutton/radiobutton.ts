@@ -36,7 +36,7 @@ export class RadioButton implements ControlValueAccessor,AfterViewInit {
         
     public focused: boolean;
 
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(protected cd: ChangeDetectorRef) {}
     
     ngAfterViewInit() {
         this.input = <HTMLInputElement> this.inputViewChild.nativeElement;

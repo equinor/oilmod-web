@@ -16,6 +16,7 @@ import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
 import { StoInputTextModule } from '../sto-inputtext/sto-inputtext.directive';
+import { StoGrowlModule } from '../sto-growl/sto-growl.component';
 
 export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -42,8 +43,8 @@ export class StoAutoCompleteComponent extends AutoComplete {
 }
 
 @NgModule({
-  imports: [CommonModule, StoInputTextModule, StoButtonModule, StoSharedModule],
-  exports: [StoAutoCompleteComponent, StoSharedModule],
+  imports: [CommonModule, StoGrowlModule, StoInputTextModule, StoButtonModule, StoSharedModule],
+  exports: [StoAutoCompleteComponent],
   declarations: [StoAutoCompleteComponent]
 })
 export class StoAutoCompleteModule {

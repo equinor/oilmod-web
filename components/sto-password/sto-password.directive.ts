@@ -1,4 +1,4 @@
-import { Directive, NgModule } from '@angular/core';
+import { Directive, NgModule, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { Password } from '../../vendor/primeface/components/password/password';
@@ -15,6 +15,10 @@ import { Password } from '../../vendor/primeface/components/password/password';
     providers: [DomHandler]
 })
 export class StoPasswordDirective extends Password{
+    constructor(public el: ElementRef, public domHandler: DomHandler) {
+        super(el, domHandler);
+    }
+
 }
 
 @NgModule({

@@ -71,7 +71,7 @@ export class FileUpload implements OnInit,AfterContentInit {
     
     public toolbarTemplate: TemplateRef<any>; 
         
-    constructor(private sanitizer: DomSanitizer){}
+    constructor(protected sanitizer: DomSanitizer){}
     
     ngOnInit() {
         this.files = [];

@@ -1,4 +1,4 @@
-import { Directive, NgModule } from '@angular/core';
+import { Directive, ElementRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputTextarea } from '../../vendor/primeface/components/inputtextarea/inputtextarea';
 
@@ -15,8 +15,9 @@ import { InputTextarea } from '../../vendor/primeface/components/inputtextarea/i
     }
 })
 export class StoInputTextareaDirective extends InputTextarea {
-
-
+    constructor(public el: ElementRef) {
+        super(el);
+    }
 }
 
 @NgModule({

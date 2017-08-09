@@ -1,4 +1,4 @@
-import { Component, ContentChildren, forwardRef, NgModule, QueryList } from '@angular/core';
+import { Component, ContentChildren, ElementRef, forwardRef, NgModule, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -21,6 +21,10 @@ export const LISTBOX_VALUE_ACCESSOR: any = {
 })
 export class StoListboxComponent extends Listbox {
     @ContentChildren(StoTemplate) templates: QueryList<any>;
+    constructor(public el: ElementRef, public domHandler: DomHandler, public objectUtils: ObjectUtils) {
+        super(el, domHandler, objectUtils);
+    }
+
 }
 
 @NgModule({

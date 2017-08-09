@@ -8,7 +8,7 @@ import { DomHandler } from '../../../vendor/primeface/components/dom/domhandler'
 })
 export class StoScrollableView extends ScrollableView {
 
-  @Input() stoScrollableView: any;
+  @Input('stoScrollableView') columns : any;
 
   constructor(@Inject(forwardRef(() => StoDatatableComponent))
               public dt: StoDatatableComponent,
