@@ -3,7 +3,7 @@
   "description": "UI Library for Statoil (Angular 4+)",
   "main": "./bundles/ngx-stoui.umd.js",
   "typings": "index.d.ts",
-  "version": "1.0.0-ALPHA.35",
+  "version": "1.0.0-ALPHA.37",
   "peerDependencies": {
     "@angular/animations": "^4.3.0",
     "@angular/common": "^4.3.0",
