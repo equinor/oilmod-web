@@ -3,7 +3,7 @@
 	<input #inputfield type="text" [attr.id]="inputId" [attr.required]="required" [value]="inputFieldValue"
 		   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 		   [readonly]="true" [ngStyle]="inputStyle" [class]="inputStyleClass" [placeholder]="placeholder||''"
-		   [disabled]="disabled" [attr.tabindex]="tabindex"
+		   [disabled]="disabled"
 		   [ngClass]="'ui-inputtext ui-widget ui-state-default ui-corner-all'">
 	<button type="button" [icon]="icon" stoButton *ngIf="showIcon" (click)="onButtonClick($event,inputfield)"
 			[ngClass]="{'ui-datepicker-trigger':true,'ui-state-disabled':disabled}" [disabled]="disabled"></button>
