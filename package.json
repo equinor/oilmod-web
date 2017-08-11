@@ -19,20 +19,20 @@
   "devDependencies": {
     "@angular/animations": "^4.3.0",
     "@angular/common": "^4.3.0",
-    "@ngtools/webpack": "^1.5.5",
-    "ngc-webpack": "^3.1.1",
     "@angular/compiler": "^4.3.0",
     "@angular/compiler-cli": "^4.3.0",
     "@angular/core": "^4.3.0",
     "@angular/forms": "^4.3.0",
     "@angular/platform-browser": "^4.3.2",
     "@angular/router": "^4.3.0",
+    "@ngtools/webpack": "^1.5.5",
     "@types/node": "^8.0.17",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.2.2",
     "css-loader": "^0.28.4",
     "css-raw-loader": "^0.1.2",
     "extract-text-webpack-plugin": "2.1.2",
+    "ngc-webpack": "^3.1.1",
     "node-sass": "^4.5.3",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.1",
@@ -44,5 +44,8 @@
     "webpack-angular-externals": "^1.0.2",
     "webpack-rxjs-externals": "^1.0.0",
     "zone.js": "^0.8.4"
+  },
+  "dependencies": {
+    "moment": "^2.18.1"
   }
 }

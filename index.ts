@@ -40,3 +40,4 @@ export * from './components/sto-chart/sto-chart.component';
 export * from './components/sto-overlaypanel/sto-overlaypanel.component';
 export * from './components/sto-codehighlighter/sto-codehighlighter';
 export * from './components/sto-contextmenu/sto-contextmenu.component';
+export * from './components/sto-daterange/sto-daterange.module';

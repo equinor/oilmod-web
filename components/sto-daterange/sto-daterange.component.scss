@@ -1,0 +1,28 @@
+.ui-daterange {
+  min-width: calc(17em * 4);
+  padding: .2em;
+  position: absolute;
+}
+
+.ui-daterange-wrapper {
+  width: 19em;
+  display: block;
+  position: relative;
+}
+
+.btn-group .btn {
+  margin-left: -2px;
+}
+
+.ui-daterange-wrapper button.ui-datepicker-trigger {
+  height: 100%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  position: absolute;
+  width: 2em;
+  border-left: 0 none;
+}
+
+input.ui-inputtext {
+  width: calc(100% - 2em);
+}
