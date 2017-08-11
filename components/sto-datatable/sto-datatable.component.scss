@@ -78,6 +78,14 @@
   }
 }
 
+.sto-datatable__copyBtn {
+  @include sto-btn();
+  @include sto-btn-with-icon();
+  > i{
+    @include fa-icon();
+    &:before { content: $fa-var-copy; }
+  }
+}
 
 .sto-btn-icon { //DEPRECATED
   @include sto-btn();
