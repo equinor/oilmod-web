@@ -19,6 +19,15 @@ export const CALENDAR_VALIDATOR: any = {
   multi: true
 };
 
+export interface LocaleSettings {
+  firstDayOfWeek?: number;
+  dayNames: string[];
+  dayNamesShort: string[];
+  dayNamesMin: string[];
+  monthNames: string[];
+  monthNamesShort: string[];
+}
+
 @Component({
   selector: 'sto-calendar',
   templateUrl: 'sto-calendar.component.html',
@@ -40,6 +49,26 @@ export const CALENDAR_VALIDATOR: any = {
 export class StoCalendarComponent extends Calendar {
 
   @Input() dateFormat: string = 'yy-M-dd';
+
+
+  _locale: LocaleSettings = {
+    firstDayOfWeek: 1,
+    dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
+    monthNames: [ "January","February","March","April","May","June","July","August","September","October","November","December" ],
+    monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
+  };
+
+  writeValue(value: any) : void {
+    this.value = typeof value === 'string' ? new Date(value) : value;
+    if(this.value && typeof this.value === 'string') {
+      this.value = this.parseValueFromString(this.value);
+    }
+
+    this.updateInputfield();
+    this.updateUI();
+  }
 
 
   constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef) {
