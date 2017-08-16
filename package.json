@@ -2,7 +2,7 @@
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
   "main": "./bundles/ngx-stoui.umd.js",
-  "version": "1.0.0-ALPHA.38",
+  "version": "1.0.0-ALPHA.39",
   "scripts": {
     "build": "rimraf dist && webpack && ngc && copy-static.bat",
     "postversion": "node postbump.js"
