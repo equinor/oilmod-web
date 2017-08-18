@@ -1,0 +1,28 @@
+.ui-splitbutton.ui-buttonset .ui-button {
+  color: #ffffff;
+  background-color: #0275d8;
+  border: 1px solid transparent;
+}
+.ui-splitbutton.ui-buttonset .ui-button.ui-splitbutton-menubutton {
+  -moz-border-radius-topright: 0.25em;
+  -webkit-border-top-right-radius: 0.25em;
+  border-top-right-radius: 0.25em;
+  -moz-border-radius-bottomright: 0.25em;
+  -webkit-border-bottom-right-radius: 0.25em;
+  border-bottom-right-radius: 0.25em;
+}
+.ui-splitbutton.ui-buttonset .ui-button.ui-splitbutton-menubutton .fa {
+  margin-left: -.65em;
+}
+.ui-splitbutton.ui-buttonset .ui-button:hover {
+  background-color: #0267bf;
+  color: #ffffff;
+}
+.ui-splitbutton.ui-buttonset .ui-button.ui-state-focus {
+  background-color: #0267bf;
+  color: #ffffff;
+}
+.ui-splitbutton.ui-buttonset .ui-button.ui-state-active {
+  background-color: #025aa5;
+  color: #ffffff;
+}
