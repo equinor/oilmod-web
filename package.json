@@ -1,6 +1,8 @@
 {
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
+  "es2015": "./index.js",
+  "module": "./index.js",
   "main": "./bundles/ngx-stoui.umd.js",
   "version": "1.0.0-ALPHA.39",
   "scripts": {
