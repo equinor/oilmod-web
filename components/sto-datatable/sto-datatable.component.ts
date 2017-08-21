@@ -5,6 +5,8 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  forwardRef,
+  Inject,
   Input,
   NgModule,
   Output,
@@ -12,17 +14,13 @@ import {
   Renderer,
   ViewEncapsulation
 } from '@angular/core';
-import { DataTable } from '../../vendor/primeface/components/datatable/datatable';
+import { DataTable, ScrollableView } from '../../vendor/primeface/components/datatable/datatable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { ObjectUtils } from '../../vendor/primeface/components/utils/ObjectUtils';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { StoColumnHeadersComponent } from './sto-datatable-header/sto-datatable-header.component';
 import { StoDTRadioButton } from './sto-dt-radiobox/sto-dt-radiobox.component';
-import { StoTableBody } from './sto-datatable-tbody/sto-datatable-tbody.component';
-import { StoColumnFooters } from './sto-datatable-footer/sto-datatable-footer.component';
-import { StoScrollableView } from './sto-scrollable-view/sto-scrollable-view.component';
-import { StoRowExpansionLoader } from '../../components/sto-datatable/sto-row-expansion-loader/sto-row-expansion-loader.component';
+import { StoRowExpansionLoader } from './sto-row-expansion-loader/sto-row-expansion-loader.component';
 import { StoDTCheckbox } from './sto-dt-checkbox/sto-dt-checkbox.component';
 import {
   StoColumn,
@@ -34,19 +32,20 @@ import {
   StoTemplate
 } from '../sto-shared/sto-shared';
 import { StoPaginatorModule } from '../sto-paginator/sto-paginator.component';
+import { Column } from '../../vendor/primeface/components/common/shared';
 
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'sto-datatable',
   templateUrl: 'sto-datatable.component.html',
-  styleUrls: ['sto-datatable.component.scss'],
-  providers: [DomHandler, ObjectUtils]
+  styleUrls: [ 'sto-datatable.component.scss' ],
+  providers: [ DomHandler, ObjectUtils ]
 })
 export class StoDatatableComponent extends DataTable {
 
-  constructor(public el: ElementRef, public domHandler: DomHandler,
-              public renderer: Renderer, public changeDetector: ChangeDetectorRef, public objectUtils: ObjectUtils) {
+  constructor( public el: ElementRef, public domHandler: DomHandler,
+               public renderer: Renderer, public changeDetector: ChangeDetectorRef, public objectUtils: ObjectUtils ) {
     super(el, domHandler, renderer, changeDetector, objectUtils);
   }
 
@@ -58,7 +57,7 @@ export class StoDatatableComponent extends DataTable {
   @ContentChild(StoHeader) header;
   @ContentChild(StoFooter) footer;
 
-  public getCellStyleClass(rowData: any, field: string, existingStyle) {
+  public getCellStyleClass( rowData: any, field: string, existingStyle ) {
     let styleClass: string = existingStyle;
     if (this.cellStyleClass) {
       let cellClass = ' ' + this.cellStyleClass.call(this, rowData, field);
@@ -71,7 +70,7 @@ export class StoDatatableComponent extends DataTable {
 
   @Output() onCellClick = new EventEmitter<any>();
 
-  handleCellClick(cell: any, column, rowData: any) {
+  handleCellClick( cell: any, column, rowData: any ) {
     if (this.editable) {
       this.switchCellToEditMode(cell, column, rowData);
     } else {
@@ -82,15 +81,73 @@ export class StoDatatableComponent extends DataTable {
   }
 
 }
+
+@Component({
+  selector: '[stoColumnHeaders]',
+  templateUrl: './sto-datatable-header/sto-datatable-header.component.html'
+})
+export class StoColumnHeadersComponent {
+  constructor( @Inject(forwardRef(() => StoDatatableComponent)) public dt: StoDatatableComponent ) {
+  }
+
+  @Input('stoColumnHeaders') columns: Column[];
+}
+
+@Component({
+  selector: '[stoColumnFooters]',
+  templateUrl: 'sto-datatable-footer/sto-datatable-footer.component.html'
+})
+export class StoColumnFootersComponent {
+  @Input('stoColumnFooters') columns: Column[];
+
+  constructor( @Inject(forwardRef(() => StoDatatableComponent)) public dt: StoDatatableComponent ) {
+  }
+}
+
+@Component({
+  selector: '[stoScrollableView]',
+  templateUrl: 'sto-scrollable-view/sto-scrollable-view.component.html'
+})
+export class StoScrollableView extends ScrollableView {
+
+  @Input('stoScrollableView') columns: any;
+
+  constructor( @Inject(forwardRef(() => StoDatatableComponent))
+               public dt: StoDatatableComponent,
+               public domHandler: DomHandler,
+               public el: ElementRef,
+               public renderer: Renderer ) {
+    super(dt, domHandler, el, renderer);
+  }
+}
+
+
+@Component({
+  selector: '[stoTableBody]',
+  templateUrl: './sto-datatable-tbody/sto-datatable-tbody.component.html'
+})
+export class StoTableBody {
+
+  constructor( @Inject(forwardRef(() => StoDatatableComponent)) public dt: StoDatatableComponent ) {
+  }
+
+  @Input('stoTableBody') columns: Column[];
+
+  visibleColumns() {
+    return this.columns ? this.columns.filter(c => !c.hidden) : [];
+  }
+}
+
+
 @NgModule({
-  imports: [CommonModule, StoPaginatorModule, FormsModule, StoSharedModule],
+  imports: [ CommonModule, StoPaginatorModule, FormsModule, StoSharedModule ],
   exports: [
     StoSharedModule,
     StoDatatableComponent,
     StoDTRadioButton,
     StoDTCheckbox,
     StoColumnHeadersComponent,
-    StoColumnFooters,
+    StoColumnFootersComponent,
     StoTableBody,
     StoScrollableView,
     StoRowExpansionLoader
@@ -100,10 +157,10 @@ export class StoDatatableComponent extends DataTable {
     StoDTRadioButton,
     StoDTCheckbox,
     StoColumnHeadersComponent,
-    StoColumnFooters,
+    StoColumnFootersComponent,
     StoTableBody,
     StoScrollableView,
-    StoRowExpansionLoader]
+    StoRowExpansionLoader ]
 })
 export class StoDataTableModule {
 }

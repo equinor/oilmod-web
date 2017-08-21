@@ -6,6 +6,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { ConfirmDialog } from '../../vendor/primeface/components/confirmdialog/confirmdialog';
 import { ConfirmationService } from '../../vendor/primeface/components/common/api';
 import { StoSharedModule } from '../sto-shared/sto-shared';
+export { ConfirmationService } from '../../vendor/primeface/components/common/api';
+
 
 @Component({
   selector: 'sto-confirmDialog',

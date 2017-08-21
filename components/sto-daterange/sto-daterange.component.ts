@@ -15,12 +15,15 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Valida
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/operator/debounceTime';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
-import * as moment from 'moment';
+import {
+  addMonths, addWeeks, endOfMonth, endOfWeek, format, startOfMonth, startOfWeek, subMonths,
+  subWeeks
+} from 'date-fns';
 
 @Component({
   selector: 'sto-daterange',
   templateUrl: './sto-daterange.component.html',
-  styleUrls: ['./sto-daterange.component.scss'],
+  styleUrls: [ './sto-daterange.component.scss' ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -80,7 +83,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   private documentClickListener: any;
 
-  public showOverlay(inputfield) {
+  public showOverlay( inputfield ) {
     this.overlayVisible = true;
     this.overlayShown = true;
     this.overlay.style.zIndex = String(++DomHandler.zindex);
@@ -97,7 +100,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public onSubmit() {
     this.overlayVisible = false;
     this.closeOverlay = true;
-    let {start, end} = this.form.value;
+    let { start, end } = this.form.value;
     if (start && end) {
       this.updateInputfield(this.form.value);
       this.propagateChange(this.form.value);
@@ -106,31 +109,36 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   public tenWeeks() {
     const values = {
-      start: moment().subtract(2, 'weeks').toDate(),
-      end: moment().add(8, 'weeks').toDate()
+      start: subWeeks(new Date(), 2),
+      end: addWeeks(new Date(), 8)
     };
     this.form.setValue(values);
     this.onSubmit();
   }
 
-  public periodPicker(unit: 'week'|'month', when: string): void {
+  public periodPicker( unit: 'week' | 'month', when: string ): void {
+    const week = unit === 'week';
+    const addFn = unit === 'week' ? addWeeks : addMonths;
+    const subFn = unit === 'week' ? subWeeks : subMonths;
+    const startFn = unit === 'week' ? startOfWeek : startOfMonth;
+    const endFn = unit === 'week' ? endOfWeek : endOfMonth;
     switch (when) {
       case '-':
         this.form.setValue({
-          start: moment().subtract(1, unit).startOf(unit).toDate(),
-          end: moment().subtract(1, unit).endOf(unit).toDate()
+          start: week ? startOfWeek(subFn(new Date(), 1), { weekStartsOn: 1 }) : startOfMonth(subFn(new Date(), 1)),
+          end: week ? endOfWeek(subFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(subFn(new Date(), 1))
         });
         break;
       case '+':
         this.form.setValue({
-          start: moment().add(1, unit).startOf(unit).toDate(),
-          end: moment().add(1, unit).endOf(unit).toDate()
+          start: week ? startOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : startOfMonth(addFn(new Date(), 1)),
+          end: week ? endOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(addFn(new Date(), 1))
         });
         break;
       default:
         this.form.setValue({
-          start: moment().startOf(unit).toDate(),
-          end: moment().endOf(unit).toDate()
+          start: week ? startOfWeek(new Date(), { weekStartsOn: 1 }) : startOfMonth(new Date()),
+          end: week ? endOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(addFn(new Date(), 1))
         });
         break;
     }
@@ -142,7 +150,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
    */
   public bindDocumentClickListener() {
     if (!this.documentClickListener) {
-      this.documentClickListener = this.renderer.listenGlobal('document', 'click', (event) => {
+      this.documentClickListener = this.renderer.listenGlobal('document', 'click', ( event ) => {
 
         // Don't close if inside the date range picker
         for (const el of event.path) {
@@ -163,13 +171,13 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  onInputFocus(inputfield, event) {
+  onInputFocus( inputfield, event ) {
     this.focus = true;
     this.showOverlay(inputfield);
     this.onFocus.emit(event);
   }
 
-  onButtonClick(event, inputfield) {
+  onButtonClick( event, inputfield ) {
     this.closeOverlay = false;
 
     if (!this.overlay.offsetParent) {
@@ -181,16 +189,16 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  onInputBlur(event) {
+  onInputBlur( event ) {
     this.focus = false;
     this.onBlur.emit(event);
     // this.onModelTouched();
   }
 
-  private updateInputfield(values) {
+  private updateInputfield( values ) {
     if (values) {
-      const start = moment(values.start).format('YYYY-MMM-DD');
-      const end = moment(values.end).format('YYYY-MMM-DD');
+      const start = format(values.start, 'YYYY-MM-DD');
+      const end = format(values.end, 'YYYY-MM-DD');
       this.inputFieldValue = `${start} - ${end}`;
     }
     else {
@@ -198,18 +206,18 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  private propagateChange = (_: any) => {
+  private propagateChange = ( _: any ) => {
   };
 
-  writeValue(value: any): void {
+  writeValue( value: any ): void {
     if (value && typeof value !== 'undefined') {
       if (value.hasOwnProperty('start') && value.hasOwnProperty('end') && Object.keys(value).length === 2) {
         let newValues = {};
         for (let key in value) {
-          if (value[key] instanceof Date) {
-            newValues[key] = value[key];
-          } else if (moment(value[key]).isValid()) {
-            newValues[key] = moment(value[key]).toDate();
+          if (value[ key ] instanceof Date) {
+            newValues[ key ] = value[ key ];
+          } else if (!isNaN(new Date(value[key]).getTime())) {
+            newValues[key] = new Date(value[key]);
           }
         }
         this.form.setValue(newValues);
@@ -218,14 +226,14 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange( fn: any ): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched( fn: any ): void {
   }
 
-  constructor(private fb: FormBuilder, public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef) {
+  constructor( private fb: FormBuilder, public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef ) {
   }
 
   ngAfterViewInit() {
@@ -243,8 +251,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   ngOnInit() {
     this.form = this.fb.group({
-      start: [null, Validators.required],
-      end: [null, Validators.required]
+      start: [ null, Validators.required ],
+      end: [ null, Validators.required ]
     });
 
   }
