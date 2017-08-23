@@ -40,6 +40,7 @@
     "extract-text-webpack-plugin": "2.1.2",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
+    "gulp-copy": "^1.0.1",
     "gulp-inline-ng2-template": "^4.0.0",
     "gulp-ngc": "^0.3.2",
     "gulp-typescript": "^3.2.1",

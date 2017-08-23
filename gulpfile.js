@@ -10,6 +10,7 @@ const runSequence = require('run-sequence');
 const del = require('del');
 const rollup = require('rollup-stream');
 const source = require('vinyl-source-stream');
+const gulpCopy = require('gulp-copy');
 
 const globals = {
   'rxjs/Observable': 'Rx',
@@ -25,6 +26,13 @@ const globals = {
   '@angular/common': 'ng.common',
   'moment': 'moment'
 };
+
+const copyFiles = [
+  './_variables.scss',
+  './_mixins.scss',
+  './vendor/bootstrap/**/_variables.scss',
+  './vendor/font-awesome/scss/_variables.scss'
+];
 
 gulp.task('inline', function() {
   return gulp.src('components/**/*.ts')
@@ -49,6 +57,15 @@ gulp.task('clean', function() {
   return del(['dist', 'build', 'index-esm.ts']);
 });
 
+gulp.task('copy', function() {
+  return gulp.src(copyFiles)
+    .pipe(gulp.dest(function(file) {
+      var destination = file.base.replace('ngx-stoui', 'ngx-stoui\\dist');
+      console.log(destination);
+      return destination;
+    }));
+});
+
 gulp.task('clean-temp', function() {
   return del(['build', 'index-esm.ts']);
 });
@@ -62,6 +79,7 @@ gulp.task('default', ['clean'], function(cb) {
     'inline',
     'index',
     'compile',
+    'copy',
 //    'bundle', // No need for a bundle atm
     'sass',
     'clean-temp',
