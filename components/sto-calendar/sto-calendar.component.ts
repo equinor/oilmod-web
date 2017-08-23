@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { isValid } from 'date-fns';
 
 export const CALENDAR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -48,7 +49,7 @@ export interface LocaleSettings {
 export class StoCalendarComponent extends Calendar {
 
   @Input() dateFormat: string = 'yy-M-dd';
-
+  @Input() selectOtherMonths = true;
 
   _locale: LocaleSettings = {
     firstDayOfWeek: 1,
@@ -60,7 +61,8 @@ export class StoCalendarComponent extends Calendar {
   };
 
   writeValue(value: any) : void {
-    this.value = typeof value === 'string' ? new Date(value) : value;
+    let tempValue = typeof value === 'string' ? new Date(value) : value;
+    this.value = isValid(tempValue) ? tempValue : null;
     if(this.value && typeof this.value === 'string') {
       this.value = this.parseValueFromString(this.value);
     }
