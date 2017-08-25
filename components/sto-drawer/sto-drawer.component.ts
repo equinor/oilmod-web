@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, NgModule, OnInit, Output, Renderer2 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger, AnimationMetadata } from '@angular/animations';
 
 @Component({
@@ -87,13 +88,13 @@ export class StoDrawerComponent implements OnInit {
       this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
         let doNothing = false;
         for (let el of event.path) {
-          if (el.tagName && el.tagName.toLowerCase().match('sidebar')) {
+          if (el.tagName && el.tagName.toLowerCase().match(/drawer$/i)) {
             doNothing = true;
             break;
           }
         }
         if (!doNothing && this.open) {
-          this.open = false;
+          this.closeDrawer();
         }
       });
     }
@@ -117,7 +118,7 @@ export class StoDrawerComponent implements OnInit {
 export class StoDrawerWrapperComponent {}
 
 @NgModule({
-  imports: [],
+  imports: [CommonModule],
   exports: [StoDrawerComponent, StoDrawerWrapperComponent],
   declarations: [StoDrawerComponent, StoDrawerWrapperComponent]
 })
