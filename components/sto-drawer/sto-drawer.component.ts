@@ -9,7 +9,7 @@ import { animate, state, style, transition, trigger, AnimationMetadata } from '@
   animations: [
     trigger('slideInOut', [
         state('in', style({
-          transform: 'translate3d(0, 0, 0)',
+          transform: 'translate3d(0%, 0, 0)',
           visibility: 'visible',
         })),
         state('outleft', style({
