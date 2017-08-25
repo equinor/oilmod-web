@@ -1,0 +1,18 @@
+<div [@slideInOut]="open ? 'in': 'out' + position"
+	 [ngClass]="position"
+	 [style.width]="width"
+	 [style.top]="padding"
+	 [style.zIndex]="header ? 30 : 10"
+	 class="sidebar">
+	<div *ngIf="header" class="sidebar__header">
+		<h3>{{ header }}</h3>
+		<span style="flex: 1 1 auto"></span>
+		<i class="fa fa-external-link fa-fw"></i>
+		<button type="button" (click)="toggle(); onToggle.emit(true)">
+			<i class="fa fa-times fa-fw"></i>
+		</button>
+	</div>
+	<div class="sidebar__content">
+		<ng-content></ng-content>
+	</div>
+</div>
