@@ -61,10 +61,12 @@ export class StoCalendarComponent extends Calendar {
   };
 
   writeValue(value: any) : void {
-    let tempValue = typeof value === 'string' ? new Date(value) : value;
-    this.value = isValid(tempValue) ? tempValue : null;
-    if(this.value && typeof this.value === 'string') {
-      this.value = this.parseValueFromString(this.value);
+    if (value) {
+      let tempValue = typeof value === 'string' ? new Date(value) : value;
+      this.value = isValid(tempValue) ? tempValue : null;
+      if(this.value && typeof this.value === 'string') {
+        this.value = this.parseValueFromString(this.value);
+      }
     }
 
     this.updateInputfield();
