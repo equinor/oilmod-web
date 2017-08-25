@@ -4,6 +4,7 @@
   "es2015": "./index-esm.js",
   "module": "./index-esm.js",
   "main": "./index-esm.js",
+  "typings": "./index-esm.d.ts",
   "version": "1.0.0-ALPHA.42",
   "scripts": {
     "build": "rimraf dist && webpack && ngc && copy-static.bat",
