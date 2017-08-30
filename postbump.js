@@ -6,6 +6,10 @@ fs.readFile('./package.json', (err, data) => {
   }
   const package = JSON.parse(data);
   let newPackage = {
+    "es2015": "./index-esm.js",
+    "module": "./index-esm.js",
+    "main": "./index-esm.js",
+    "typings": "./index-esm.d.ts",
     "devDependencies": {},
     "dependencies": { 'date-fns': '^1.28.5' }
   };
