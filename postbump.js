@@ -10,8 +10,7 @@ fs.readFile('./package.json', (err, data) => {
     "module": "./index-esm.js",
     "main": "./index-esm.js",
     "typings": "./index-esm.d.ts",
-    "devDependencies": {},
-    "dependencies": { 'date-fns': '^1.28.5' }
+    "devDependencies": {}
   };
   newPackage = Object.assign({}, package, newPackage);
   fs.writeFile('./dist/package.json', JSON.stringify(newPackage), 'utf8', err => {
