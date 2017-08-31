@@ -23,7 +23,7 @@
   a {
     color: $subtle-color;
     display: block;
-    padding: .375em;
+    padding: .375em .375em 0 0;
     &:hover {
       background-color: $content-bg-color-highlight;
     }
@@ -32,7 +32,6 @@
     span.sto-breadcrumb-chevron {
       color: $subtle-color;
       font-size: 1em;
-      margin: .1em .45em;
     }
   }
 }
