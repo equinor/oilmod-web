@@ -67,14 +67,18 @@ export class StoDrawerComponent implements OnInit {
     }
   }
 
-  public closeDrawer() {
+  public closeDrawer(emit = true) {
     this.open = false;
-    this.onClose.emit();
+    if (emit) {
+      this.onClose.emit();
+    }
   }
 
-  public openDrawer() {
+  public openDrawer(emit = true) {
     this.open = true;
-    this.onOpen.emit();
+    if (emit) {
+      this.onOpen.emit();
+    }
   }
 
   private documentClickListener;
