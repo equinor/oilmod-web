@@ -1,0 +1,38 @@
+@import "../../variables";
+
+* {
+  height: 100%;
+}
+
+.sto-breadcrumb {
+  background-color: transparent;
+  ul {
+    margin: 0;
+    padding-left: 0;
+  }
+  li {
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle;
+    &.sto-breadcrumb-home {
+      a {
+        padding-left: 1em;
+      }
+    }
+  }
+  a {
+    color: $subtle-color;
+    display: block;
+    padding: .375em;
+    &:hover {
+      background-color: $content-bg-color-highlight;
+    }
+    position: relative;
+    text-decoration: none;
+    span.sto-breadcrumb-chevron {
+      color: $subtle-color;
+      font-size: 1em;
+      margin: .1em .45em;
+    }
+  }
+}
