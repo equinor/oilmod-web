@@ -58,12 +58,14 @@ export class StoDrawerComponent implements OnInit {
 
   private _open;
 
-  public toggle() {
-    this.onToggle.emit(!this.open);
+  public toggle(emit = true) {
+    if (emit) {
+      this.onToggle.emit(!this.open);
+    }
     if (!this.open) {
-      this.openDrawer();
+      this.openDrawer(emit);
     } else {
-      this.closeDrawer();
+      this.closeDrawer(emit);
     }
   }
 

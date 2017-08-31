@@ -1,5 +1,9 @@
 @import "mixins";
 
+ul.ui-menu-list {
+  background-color: white;
+}
+
 .ui-widget * {
   @include ui-widget();
 }
@@ -14,6 +18,11 @@
 }
 .ui-helper-clearfix {
   @include ui-helper-clearfix();
+}
+
+.ui-widget-content {
+  background-color: #ffffff;
+  border: 1px solid #c7c7c7;
 }
 
 .ui-g {
