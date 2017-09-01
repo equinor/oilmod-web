@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, forwardRef, NgModule, Renderer, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgModule, Renderer } from '@angular/core';
 import { Calendar } from '../../vendor/primeface/components/calendar/calendar';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { isValid } from 'date-fns';
+import { format, getTime, isValid } from 'date-fns';
 
 export const CALENDAR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -51,20 +51,40 @@ export class StoCalendarComponent extends Calendar {
   @Input() dateFormat: string = 'yy-M-dd';
   @Input() selectOtherMonths = true;
 
+  @Input()
+  get minDate(): Date {
+    return this._minDate;
+  }
+
+  set minDate(date: Date) {
+    this._minDate = typeof date === 'string' ? new Date(getTime(date)) : date;
+    this.createMonth(this.currentMonth, this.currentYear);
+  }
+
+  @Input()
+  get maxDate(): Date {
+    return this._maxDate;
+  }
+
+  set maxDate(date: Date) {
+    this._maxDate = typeof date === 'string' ? new Date(getTime(date)) : date;
+    this.createMonth(this.currentMonth, this.currentYear);
+  }
+
   _locale: LocaleSettings = {
     firstDayOfWeek: 1,
-    dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
-    monthNames: [ "January","February","March","April","May","June","July","August","September","October","November","December" ],
-    monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
+    dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   };
 
-  writeValue(value: any) : void {
+  writeValue(value: any): void {
     if (value) {
-      let tempValue = typeof value === 'string' ? new Date(value) : value;
+      let tempValue = typeof value === 'string' ? new Date(getTime(value)) : value;
       this.value = isValid(tempValue) ? tempValue : null;
-      if(this.value && typeof this.value === 'string') {
+      if (this.value && typeof this.value === 'string') {
         this.value = this.parseValueFromString(this.value);
       }
     }
@@ -72,7 +92,6 @@ export class StoCalendarComponent extends Calendar {
     this.updateInputfield();
     this.updateUI();
   }
-
 
   constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef) {
     super(el, domHandler, renderer, cd);
