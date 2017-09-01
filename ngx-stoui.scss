@@ -1,9 +1,15 @@
 
 @import "variables";
 @import "mixins";
-@import "vendor/bootstrap/_bootstrap";
-@import "vendor/primeface/_primeface";
-@import "vendor/primeface/_primeface-theme";
+@import "vendor/bootstrap/scaffolding";
+@import "vendor/bootstrap/normalize";
+@import "vendor/bootstrap/grid";
+@import "vendor/bootstrap/forms";
+@import "vendor/primeface/_new_primeface";
+
+//@import "vendor/primeface/_primeface";
+//@import "vendor/bootstrap/_bootstrap";
+//@import "vendor/primeface/_primeface-theme";
 
 @import "components/sto-button/sto-button.directive";
 @import "components/sto-tooltip/sto-tooltip.directive";
@@ -11,6 +17,5 @@
 @import "components/sto-inputtextarea/sto-inputtextarea.directive";
 @import "components/sto-password/sto-password.directive";
 
-@import "basics/sto-basics";
-@import "components/sto-filter/sto-filter";
-
+//@import "basics/sto-basics";
+//@import "components/sto-filter/sto-filter";

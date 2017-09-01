@@ -1,9 +1,5 @@
 @import "mixins";
 
-ul.ui-menu-list {
-  background-color: white;
-}
-
 .ui-widget * {
   @include ui-widget();
 }
