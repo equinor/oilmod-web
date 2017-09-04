@@ -5,11 +5,17 @@
 	 [style.zIndex]="header ? 60 : 10"
 	 class="sidebar">
 	<div *ngIf="header" class="sidebar__header">
-		<h3>{{ header }}</h3>
+		<h3>
+			<i [class]="'fa ' + headerIcon" *ngIf="headerIcon"></i>
+			{{ header }}
+		</h3>
 		<span style="flex: 1 1 auto"></span>
-		<i class="fa fa-external-link fa-fw"></i>
-		<button type="button" (click)="toggle(); onToggle.emit(true)">
-			<i class="fa fa-times fa-fw"></i>
+		<button (click)="$event.preventDefault()"
+				class="ui-button-secondary"
+				stoButton icon="fa-external-link"></button>
+		<button stoButton icon="fa-times" type="button"
+				class="ui-button-secondary"
+				(click)="toggle(); onToggle.emit(true)">
 		</button>
 	</div>
 	<div class="sidebar__content">

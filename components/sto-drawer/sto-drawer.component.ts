@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, NgModule, OnInit, Output, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger, AnimationMetadata } from '@angular/animations';
+import { StoButtonModule } from '../sto-button/sto-button.directive';
 
 @Component({
   selector: 'sto-drawer',
@@ -27,6 +28,7 @@ import { animate, state, style, transition, trigger, AnimationMetadata } from '@
 })
 export class StoDrawerComponent implements OnInit {
   @Input() header: string;
+  @Input() headerIcon: string;
   @Input() width = '25vw';
   @Input() padding = '0px';
   @Input() position: 'left' | 'right';
@@ -124,7 +126,7 @@ export class StoDrawerComponent implements OnInit {
 export class StoDrawerWrapperComponent {}
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, StoButtonModule],
   exports: [StoDrawerComponent, StoDrawerWrapperComponent],
   declarations: [StoDrawerComponent, StoDrawerWrapperComponent]
 })
