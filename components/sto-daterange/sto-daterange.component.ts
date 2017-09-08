@@ -7,6 +7,7 @@ import {
   forwardRef,
   Input,
   OnInit,
+  OnDestroy,
   Output,
   Renderer,
   ViewChild
@@ -45,7 +46,7 @@ import {
     ])
   ]
 })
-export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
   @Input() showIcon: boolean = true;
   @Input() icon: string = 'fa-calendar';
@@ -67,8 +68,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   @Output() onBlur: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('datepicker') overlayViewChild: ElementRef;
-
-  @ViewChild('inputfield') inputfieldViewChild: ElementRef;
+  private initValues;
 
   public form: FormGroup;
 
@@ -94,7 +94,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public onCancel() {
     this.overlayVisible = false;
     this.closeOverlay = true;
-    this.form.reset();
+    this.form.setValue(this.initValues, { emitEvent: false });
   }
 
   public onSubmit() {
@@ -138,7 +138,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
       default:
         this.form.setValue({
           start: week ? startOfWeek(new Date(), { weekStartsOn: 1 }) : startOfMonth(new Date()),
-          end: week ? endOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(addFn(new Date(), 1))
+          end: week ? endOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(new Date())
         });
         break;
     }
@@ -220,6 +220,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
             newValues[key] = new Date(value[key]);
           }
         }
+        this.initValues = newValues;
         this.form.setValue(newValues);
         this.updateInputfield(newValues);
       }
@@ -234,6 +235,12 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   constructor( private fb: FormBuilder, public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef ) {
+  }
+
+  ngOnDestroy() {
+      if(this.documentClickListener) {
+        this.documentClickListener();
+      }
   }
 
   ngAfterViewInit() {

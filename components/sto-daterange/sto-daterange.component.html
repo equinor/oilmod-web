@@ -7,6 +7,7 @@
 		   [ngClass]="'ui-inputtext ui-widget ui-state-default ui-corner-all'">
 	<button type="button" [icon]="icon" stoButton *ngIf="showIcon" (click)="onButtonClick($event,inputfield)"
 			[ngClass]="{'ui-datepicker-trigger':true,'ui-state-disabled':disabled}" [disabled]="disabled"></button>
+
 	<div class="ui-g ui-daterange ui-shadow ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" #datepicker
 		 [class.ui-state-disabled]="disabled"
 		 [ngStyle]="{'display': overlayVisible ? 'block' : 'none'}"
