@@ -1,0 +1,187 @@
+@import "_ngx-datatable-core";
+
+.ngx-datatable.scroll-vertical {
+  height: 60vh;
+}
+
+body {
+  font-family: "Roboto";
+  font-weight: 400;
+}
+//colors
+$orange: orange;
+$red: red;
+$yellow-light: #FFFFCC;
+$green-light: #D4DDD3;
+
+$dark-gray: #F1F2F3;
+$med-gray: #F9FAFB;
+$gray-light: #EFEFEF;
+
+//colors: datatable
+$warning-color: $orange;
+$error-color: $red;
+$tentative-color: $gray-light;
+$planned-color: $yellow-light;
+$actual-color: $green-light;
+
+//Base
+$space: 3px;
+$font-size: 14px;
+$font-weight-normal: 400;
+
+$border-color-light: #CCCCCC;
+$border-color-strong: #333;
+
+$datatable-cell-color: #000;
+$datatable-background-color: #FEFEFE;
+
+$datatable-font-size: $font-size;
+$datatable-header-background: $dark-gray;
+$datatable-header-vertical-padding: $space * 3;
+$datatable-header-horizontal-padding: $space * 4;
+
+$datatable-vertical-padding: $space * 2;
+$datatable-horizontal-padding: $space * 4;
+
+.ngx-datatable.stoui {
+  background: #FFF;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+  font-size: $font-size;
+  .datatable-header {
+
+    background-color: $dark-gray;
+    border: 1px solid $border-color-light;
+    .datatable-header-cell {
+      padding: $datatable-header-vertical-padding $datatable-horizontal-padding;
+    }
+  }
+
+  .datatable-body {
+    .datatable-row-detail {
+      background: #f5f5f5;
+      padding: 10px;
+    }
+
+    .datatable-group-header {
+      background: $datatable-header-background;
+      border-bottom: solid 1px $border-color-light;
+      border-top: solid 1px $border-color-light;
+    }
+
+    .datatable-body-row {
+
+      &.planned, &.tentative {
+        font-style: italic;
+      }
+
+      .datatable-body-cell {
+        border-bottom: 1px solid $border-color-light;
+        padding: $datatable-vertical-padding $datatable-horizontal-padding;
+        vertical-align: top;
+        border-top: 0;
+        color: $datatable-cell-color;
+        transition: width 0.3s ease;
+        font-size: $font-size;
+        font-weight: $font-weight-normal;
+
+        // cell active class
+        // &.active {
+        //  background: #0829e0
+        // }
+      }
+      &.today-seperator {
+        .datatable-body-cell{
+          border-bottom: 3px solid #0A6666;
+        }
+      }
+
+      .datatable-body-group-cell {
+        text-align: left;
+        padding: $datatable-vertical-padding $datatable-horizontal-padding;
+        vertical-align: top;
+        border-top: 0;
+        color: $datatable-cell-color;
+        transition: width 0.3s ease;
+        font-size: $font-size;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+  }
+
+  .datatable-header {
+
+    .datatable-header-column-group {
+      border-bottom: 1px solid $border-color-light;
+      .datatable-header-cell {
+        font-weight: bold;
+      }
+    }
+
+    .datatable-header-cell {
+      small{
+        font-size: 10px;
+      }
+    }
+
+    .datatable-row-left {
+      background-color: $datatable-header-background;
+      border-right: 1px solid $border-color-strong;
+    }
+
+    .datatable-row-right {
+      background-color: $datatable-header-background;
+    }
+  }
+
+  .datatable-body {
+
+    .datatable-row-left {
+      background-color: $datatable-background-color;
+      border-left: 1px solid $border-color-light;
+      border-right: 1px solid $border-color-strong;
+    }
+    .datatable-row-center {
+
+    }
+    .datatable-row-right {
+      background-color: $datatable-background-color;
+    }
+    .datatable-footer-summary-row{
+      .datatable-row{
+        &-left, &-center, &-right{
+          background-color: $med-gray;
+          border-top: 1px solid $border-color-strong;
+        }
+      }
+    }
+  }
+
+  .icon {
+    text-align: center;
+  }
+  .warning{
+    color: $warning-color;
+  }
+  .error{
+    color: $error-color;
+  }
+
+  .status {
+    text-align: center;
+    &.planned {
+      background-color: $planned-color;
+    }
+    &.actual {
+      background-color: $actual-color;
+    }
+    &.tentative {
+      background-color: $tentative-color;
+    }
+
+  }
+
+
+
+}
