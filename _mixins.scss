@@ -48,6 +48,12 @@
   }
 }
 
+@mixin sto-shadows($h, $v) {
+  -webkit-box-shadow: $h $v 2px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: $h $v 2px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: $h $v 2px 0 rgba(0, 0, 0, 0.3);
+}
+
 @mixin sto-btn() {
   @include bootstrap-btn();
   @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
