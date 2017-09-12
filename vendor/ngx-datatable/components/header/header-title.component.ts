@@ -28,9 +28,7 @@ import { SelectionType, SortType, TableColumn } from '../../types';
 				  [ngTemplateOutlet]="column.headerTemplate"
 				  [ngTemplateOutletContext]="cellContext">
 		  </ng-template>
-		  <span
-				  (click)="onSort()"
-				  [class]="sortClass">
+		  <span>
       </span>
 	  </div>
   `,

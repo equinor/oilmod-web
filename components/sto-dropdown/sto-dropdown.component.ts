@@ -35,7 +35,7 @@ export const DROPDOWN_VALUE_ACCESSOR: any = {
             state('visible', style({
                 opacity: 1
             })),
-            transition('visible <=> hidden', animate('400ms ease'))
+            // transition('visible <=> hidden', animate('400ms ease')) // Disabled for now. Choppy
         ])
     ],
     providers: [DomHandler, ObjectUtils, DROPDOWN_VALUE_ACCESSOR]
