@@ -91,8 +91,11 @@ $datatable-horizontal-padding: $space-4x;
 
     .datatable-header-column-group {
       border-bottom: 1px solid $border-color-light;
+
+
       .datatable-header-cell {
         font-weight: bold;
+        border-left: 1px solid $border-color-light;
       }
     }
 
@@ -157,6 +160,10 @@ $datatable-horizontal-padding: $space-4x;
       background-color: $tentative-color;
     }
 
+  }
+
+  .group-seperator{
+    border-left: solid 1px $border-color-light;
   }
 
 
