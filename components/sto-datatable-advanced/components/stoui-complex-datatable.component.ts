@@ -126,7 +126,6 @@ export class StoComplexDatatableComponent extends DatatableComponent {
       let summaryColumn = summaryColumns[ii];
       if (columns) {
         if (summaryColumn.props) {
-          console.log(summaryColumn);
           summaryColumn.columns = columns.filter(column => summaryColumn.props.indexOf(column.prop) > -1);
         }
         else {
