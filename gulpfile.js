@@ -31,7 +31,8 @@ const copyFiles = [
   './_variables.scss',
   './_mixins.scss',
   './vendor/bootstrap/**/_variables.scss',
-  './vendor/font-awesome/scss/_variables.scss'
+  './vendor/font-awesome/scss/_variables.scss',
+  './style/**/*.scss'
 ];
 
 gulp.task('inline', function() {
