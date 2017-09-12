@@ -168,14 +168,14 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.recalculateDims();
     this.recalculateColumns();
     if (this._internalSummaryColumns) {
-      this.setSummaryRowCellWidth(this._internalSummaryColumns);
-      this.recalculateColumns(this._internalSummaryColumns);
+
+      this.linkColumns(this._internalSummaryColumns, this._internalColumns);
+
     }
 
   }
 
   onColumnResize({column, newValue}: any): void {
-
     super.onColumnResize({column, newValue});
     this.resizeSummaryColumns(column, newValue);
 

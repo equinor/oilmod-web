@@ -118,21 +118,24 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
   }
 
   getRowSummaryStyle() {
-
+		console.log('getRowSummaryStyle');
 
     let summaryHeight = 36;
     let scroll = 0;
 
-    let style = {};
+    let style = {
+    	position: 'fixed'
+		};
 
     const height = parseInt(this.bodyHeight, 0);
     const width = parseInt(this.bodyWidth, 0);
-    let colWidth = this.columns.map(c => c.width).reduce((r, s) => r + s, 0);
-
+    let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
+		console.log(height);
     if (colWidth > width) {
       scroll = 17;
     }
-    translateXY(style, 0, (height - scroll - summaryHeight) + this.offsetY);
+    translateXY(style, 0, height - summaryHeight - scroll);
+
     return style;
   }
 
