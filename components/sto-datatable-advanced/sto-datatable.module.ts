@@ -3,35 +3,32 @@ import { CommonModule } from '@angular/common';
 import 'rxjs/add/observable/fromEvent';
 
 import {
-  DatatableComponent,
+  DataTableBodyCellComponent,
+  DataTableBodyRowComponent,
+  DataTableColumnCellDirective,
   DataTableColumnDirective,
-  DataTableHeaderComponent,
-  DataTableBodyComponent,
+  DataTableColumnHeaderDirective,
   DataTableFooterComponent,
+  DatatableFooterDirective,
+  DataTableFooterTemplateDirective,
+  DatatableGroupHeaderDirective,
+  DatatableGroupHeaderTemplateDirective,
   DataTableHeaderCellComponent,
   DataTableHeaderTitleComponent,
   DataTablePagerComponent,
-  DataTableBodyRowComponent,  
-  DataTableRowWrapperComponent,
-  ProgressBarComponent,
-  DataTableBodyCellComponent,
   DatatableRowDetailDirective,
-  DatatableGroupHeaderDirective,
-  DataTableSelectionComponent,
-  DataTableColumnHeaderDirective,
-  DataTableColumnCellDirective,
   DatatableRowDetailTemplateDirective,
-  DataTableFooterTemplateDirective,
-  DatatableFooterDirective,
-  DatatableGroupHeaderTemplateDirective
+  DataTableRowWrapperComponent,
+  DataTableSelectionComponent,
+  ProgressBarComponent
 } from '../../vendor/ngx-datatable/components';
 
 import {
-  VisibilityDirective,
+  DraggableDirective,
   LongPressDirective,
-  ResizeableDirective,
   OrderableDirective,
-  DraggableDirective
+  ResizeableDirective,
+  VisibilityDirective
 } from '../../vendor/ngx-datatable/directives';
 
 import { ScrollbarHelper } from '../../vendor/ngx-datatable/services';
@@ -66,7 +63,7 @@ import { StoDataTableColumnGroupDirective } from './components/columns/sto-colum
     StoDataTableBodyComponent,
     DataTableFooterComponent,
     DataTablePagerComponent,
-    ProgressBarComponent,    
+    ProgressBarComponent,
     DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
     DataTableFixedRowWrapperComponent,
@@ -95,4 +92,5 @@ import { StoDataTableColumnGroupDirective } from './components/columns/sto-colum
     DatatableGroupHeaderTemplateDirective
   ]
 })
-export class NgxDatatableModule { }
+export class NgxDatatableModule {
+}
