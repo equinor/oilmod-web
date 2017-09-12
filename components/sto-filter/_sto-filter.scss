@@ -1,3 +1,6 @@
+$filter-spacing: 1rem;
+$filter-min-width: $filter-spacing*12;
+
 .sto-filter-form{
   @extend .form-inline;
   @extend .well;

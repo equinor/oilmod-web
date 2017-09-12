@@ -44,3 +44,4 @@ export * from './components/sto-daterange/sto-daterange.module';
 export * from './components/sto-splitbutton/sto-splitbutton.component';
 export * from './components/sto-drawer/sto-drawer.component';
 export * from './components/sto-breadcrumbs/sto-breadcrumbs.component';
+export * from './components/sto-datatable-advanced/sto-datatable.module';

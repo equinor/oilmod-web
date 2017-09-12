@@ -1,56 +1,32 @@
 @import "_ngx-datatable-core";
 
-.ngx-datatable.scroll-vertical {
-  height: 60vh;
-}
-
-body {
-  font-family: "Roboto";
-  font-weight: 400;
-}
-//colors
-$orange: orange;
-$red: red;
-$yellow-light: #FFFFCC;
-$green-light: #D4DDD3;
-
-$dark-gray: #F1F2F3;
-$med-gray: #F9FAFB;
-$gray-light: #EFEFEF;
-
 //colors: datatable
-$warning-color: $orange;
-$error-color: $red;
+$warning-color: $orange-medium;
+$error-color: $red-medium;
 $tentative-color: $gray-light;
 $planned-color: $yellow-light;
 $actual-color: $green-light;
+$day-color : $green-dark;
 
-//Base
-$space: 3px;
-$font-size: 14px;
-$font-weight-normal: 400;
+$border-color-light: $gray-medium;
+$border-color-dark: $gray-dark;
 
-$border-color-light: #CCCCCC;
-$border-color-strong: #333;
-
-$datatable-cell-color: #000;
-$datatable-background-color: #FEFEFE;
-
+$datatable-cell-color: $gray-dark;
+$datatable-background-color: $white-light;
 $datatable-font-size: $font-size;
-$datatable-header-background: $dark-gray;
-$datatable-header-vertical-padding: $space * 3;
-$datatable-header-horizontal-padding: $space * 4;
-
-$datatable-vertical-padding: $space * 2;
-$datatable-horizontal-padding: $space * 4;
+$datatable-header-background: $gray-light;
+$datatable-header-vertical-padding: $space-3x;
+$datatable-header-horizontal-padding: $space-4x;
+$datatable-vertical-padding: $space-2x;
+$datatable-horizontal-padding: $space-4x;
 
 .ngx-datatable.stoui {
-  background: #FFF;
+  background: $datatable-background-color;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
   font-size: $font-size;
   .datatable-header {
 
-    background-color: $dark-gray;
+    background-color: $datatable-header-background;
     border: 1px solid $border-color-light;
     .datatable-header-cell {
       padding: $datatable-header-vertical-padding $datatable-horizontal-padding;
@@ -92,7 +68,8 @@ $datatable-horizontal-padding: $space * 4;
       }
       &.today-seperator {
         .datatable-body-cell{
-          border-bottom: 3px solid #0A6666;
+          border-bottom: 3px solid $green-dark;
+
         }
       }
 
@@ -127,7 +104,7 @@ $datatable-horizontal-padding: $space * 4;
 
     .datatable-row-left {
       background-color: $datatable-header-background;
-      border-right: 1px solid $border-color-strong;
+      border-right: 1px solid $border-color-dark;
     }
 
     .datatable-row-right {
@@ -140,7 +117,7 @@ $datatable-horizontal-padding: $space * 4;
     .datatable-row-left {
       background-color: $datatable-background-color;
       border-left: 1px solid $border-color-light;
-      border-right: 1px solid $border-color-strong;
+      border-right: 1px solid $border-color-dark;
     }
     .datatable-row-center {
 
@@ -151,8 +128,8 @@ $datatable-horizontal-padding: $space * 4;
     .datatable-footer-summary-row{
       .datatable-row{
         &-left, &-center, &-right{
-          background-color: $med-gray;
-          border-top: 1px solid $border-color-strong;
+          background-color: $datatable-header-background;
+          border-top: 1px solid $border-color-dark;
         }
       }
     }

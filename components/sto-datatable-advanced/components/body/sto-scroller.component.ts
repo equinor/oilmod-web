@@ -12,7 +12,7 @@ import { ScrollerComponent } from '../../../../vendor/ngx-datatable/components/b
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StoScrollerComponent extends ScrollerComponent {
-  @Input() offset = 0; //TODO FIX
+  @Input() offset = 36; //TODO FIX
 
   @Input() set scrollHeight(val: number) {
     this._scrollHeight = val + this.offset;
