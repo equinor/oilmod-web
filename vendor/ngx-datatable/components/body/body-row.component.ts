@@ -129,6 +129,11 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   stylesByGroup(group: string) {
+   let isSummary = false; //TODO FOR DEMO 13.09.2017 only. Move body-row to sto-body-fixed-row!
+    if(this.element.classList.contains('datatable-footer-summary-row')){
+      isSummary = true;
+   }
+
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
@@ -136,15 +141,23 @@ export class DataTableBodyRowComponent implements DoCheck {
       width: `${widths[group]}px`
     };
 
-    if (group === 'left') {
-      translateXY(styles, offsetX, 0);
-    } else if (group === 'right') {
-      const bodyWidth = parseInt(this.innerWidth + '', 0);
-      const totalDiff = widths.total - bodyWidth;
-      const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
-      translateXY(styles, offset, 0);
+    if(isSummary){
+      if (group !== 'left') {
+        translateXY(styles, offsetX*-1, 0);
+      }
     }
+    else{
+      if (group === 'left') {
+        translateXY(styles, offsetX, 0);
+      } else if (group === 'right') {
+        const bodyWidth = parseInt(this.innerWidth + '', 0);
+        const totalDiff = widths.total - bodyWidth;
+        const offsetDiff = totalDiff - offsetX;
+        const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
+        translateXY(styles, offset, 0);
+      }
+    }
+
 
     return styles;
   }
