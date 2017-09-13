@@ -146,7 +146,7 @@ Theme
   color: $text-color;
 }
 
-.ui-menu .ui-menu-list .ui-menuitem.ui-menuitem-active > .ui-menuitem-link {
+.ui-menuitem-active {
   background-color: $content-bg-color;
   color: $text-color;
 }
