@@ -47,7 +47,7 @@ gulp.task('inline', function() {
 gulp.task('index', function(cb) {
   const dir = path.join(__dirname, 'build');
   glob('**/*.ts', { cwd: dir}, function(err, files) {
-    let indexContents = files.map(file => `export * from './build/${file.replace('.ts', '')}'`);
+    let indexContents = files.filter(file => !file.match(/index\.ts$/)).map(file => `export * from './build/${file.replace('.ts', '')}'`);
     fs.writeFile('index-esm.ts', indexContents.join('\n'), err => {
       cb(err);
     });
