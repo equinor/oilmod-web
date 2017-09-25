@@ -64,6 +64,7 @@ export class StoFileUploadComponent extends FileUpload {
       }
     };
 
+    console.log(this.url);
     xhr.open('POST', this.url, true);
 
     this.onBeforeSend.emit({

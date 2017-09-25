@@ -3,8 +3,6 @@ $filter-min-width: $filter-spacing*12;
 
 .sto-filter-form{
   @extend .form-inline;
-  @extend .well;
-  @extend .well-sm;
   margin: 0rem;
   box-shadow: none;
   border-radius: 0;

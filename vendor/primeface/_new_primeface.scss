@@ -364,3 +364,18 @@
 .ui-g-nopad {
   padding: 0;
 }
+
+.modal-dialog {
+  width: 600px;
+}
+
+.clearfix {
+  clear: both;
+  &::before, &::after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
