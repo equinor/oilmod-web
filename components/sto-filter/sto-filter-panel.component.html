@@ -4,7 +4,7 @@
       <ng-content select="sto-filter-title"></ng-content>
     </md-panel-title>
     <ng-content select="sto-filter-table-actions"></ng-content>
-    <sto-filter-actions-bar (toggle)="toggle()">
+    <sto-filter-actions-bar *ngIf="expandable" [expandable]="expandable"(toggle)="toggle()">
        <ng-content select="sto-filter-actions"></ng-content>
     </sto-filter-actions-bar>
   </md-expansion-panel-header>

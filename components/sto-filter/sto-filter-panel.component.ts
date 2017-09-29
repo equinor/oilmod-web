@@ -1,4 +1,4 @@
-import { Component, Output, Directive, EventEmitter, ViewEncapsulation, OnInit} from '@angular/core';
+import { Component,Input, Output, Directive, EventEmitter, ViewEncapsulation, OnInit} from '@angular/core';
 
 
 @Component({
@@ -9,15 +9,18 @@ import { Component, Output, Directive, EventEmitter, ViewEncapsulation, OnInit} 
   encapsulation: ViewEncapsulation.None
 })
 export class StoFilterPanelComponent implements OnInit{
-  public expanded = true;
+  @Input() expandable : boolean;
+  public expanded : boolean;
 
   public toggle(){
     this.expanded = !this.expanded;
   }
 
-  ngOnInit(){}
-
-
+  ngOnInit(){
+    if(this.expandable){
+      this.expanded = true;
+    }
+  }
 }
 
 /**
@@ -50,11 +53,12 @@ export class StoFilterActions {}
     class: 'sto-filter-actions'
   },
   template: `
-	    <ng-content></ng-content>  
-      <md-icon (click)="toggle.emit()">filter_list</md-icon>
+	    <ng-content></ng-content>
+      <md-icon *ngIf="expandable" (click)="toggle.emit()">filter_list</md-icon>
   `
 })
 export class StoFilterActionsBar {
-    @Output() toggle = new EventEmitter<void>();
+  @Input() expandable: boolean;
+  @Output() toggle = new EventEmitter<void>();
 }
 
