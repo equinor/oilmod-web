@@ -1,0 +1,60 @@
+@import '../../variables';
+
+.sto-filter{
+  box-shadow: none !important;
+  border: solid 1px #ededed;
+
+  .mat-expansion-panel-header{
+    @include mat-elevation(4);
+    padding: 0 $space-4x;
+    background-color: #ededed;
+    cursor: default;
+
+    &.mat-expanded{
+      &:focus, &:hover{
+        background-color: #ededed;
+      }
+    }
+    font-size: 18px;
+    line-height: 24px;
+
+    &-title{
+      align-items: center;
+    }
+  }
+  .mat-expansion-panel-content{
+
+  }
+  .mat-expansion-panel-body{
+    padding:  $space-8x $space-4x  ;
+  }
+
+  .mat-expansion-panel-header[aria-disabled=true]{
+    color: inherit;
+  }
+}
+
+.sto-filter-table-actions{
+  border-right: solid 1px $gray-medium;
+  padding: 0 $space-2x;
+
+}
+.sto-filter-actions{
+  padding: 0 0 0 $space-4x;
+}
+
+.sto-filter-table-actions, .sto-filter-actions {
+  display: flex;
+  align-items: center;
+  color: $gray-dark;
+  .mat-icon{
+    cursor: pointer;
+  }
+}
+
+
+.sto-filter-form{
+  .mat-select{
+    width: 100%;
+  }
+}

@@ -21,5 +21,11 @@
 
 @import "components/sto-datatable-advanced/ngx-datatable";
 
-//@import "basics/sto-basics";
-@import "components/sto-filter/sto-filter";
+
+@import "components/sto-filter/sto-filter-panel.component";
+
+.sto-datatable-wrapper{
+  background-color: white;
+
+  @include mat-elevation(3);
+}

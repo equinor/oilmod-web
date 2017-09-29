@@ -1,0 +1,15 @@
+<md-expansion-panel [disabled]="true" [expanded]="expanded" [hideToggle]="true" [ngClass]="{'sto-filter' : true}">
+  <md-expansion-panel-header  [expandedHeight]="'42px'" [collapsedHeight]="'42px'" >
+    <md-panel-title>
+      <ng-content select="sto-filter-title"></ng-content>
+    </md-panel-title>
+    <ng-content select="sto-filter-table-actions"></ng-content>
+    <sto-filter-actions-bar (toggle)="toggle()">
+       <ng-content select="sto-filter-actions"></ng-content>
+    </sto-filter-actions-bar>
+  </md-expansion-panel-header>
+  <div fxLayout="row" fxLayoutGap="16px" class="sto-filter-form">
+    <ng-content></ng-content>
+  </div>
+</md-expansion-panel>
+
