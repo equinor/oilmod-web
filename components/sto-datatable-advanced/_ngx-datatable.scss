@@ -185,3 +185,30 @@ $content-height: 20px;
     }
   }
 }
+
+
+
+
+.datatable-body-cell-label{
+  .mat-select{
+    padding:0;
+
+    font-size: $font-size;
+  }
+  .mat-select-value{
+    height: $content-height;
+  }
+  .mat-select-trigger{
+    font-size: $font-size;
+    height: $content-height;
+  }
+
+
+}
+
+.datatable-header{
+
+  .mat-input-infix{
+    padding: 0;
+  }
+}

@@ -7,7 +7,8 @@ import {
   Input,
   KeyValueDiffers,
   QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ViewChild
 } from '@angular/core';
 
 import { translateTemplates } from '../../../vendor/ngx-datatable/utils';
@@ -16,6 +17,7 @@ import { StoDataTableColumnGroupDirective } from './columns/sto-column-title.dir
 import { DatatableComponent } from '../../../vendor/ngx-datatable/components/datatable.component';
 import { ScrollbarHelper } from '../../../vendor/ngx-datatable/services/scrollbar-helper.service';
 import { columnTotalWidth } from '../../../vendor/ngx-datatable/utils/column';
+import { StoDataTableBodyComponent } from './body/sto-body.component'
 
 @Component({
   selector: 'sto-complex-datatable',
@@ -111,6 +113,8 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   _internalSummaryRowData: any;
   _internalColumnGroups: ColumnGroup[];
   _columnGroups: ColumnGroup[];
+
+  @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
 
   @Input() set summaryRow(val: any) {
     if (val) {
