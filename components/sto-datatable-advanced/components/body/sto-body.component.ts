@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { translateXY } from '../../../../vendor/ngx-datatable/utils';
 import { DataTableBodyComponent } from '../../../../vendor/ngx-datatable/components/body/body.component';
 import { TableColumn } from '../../../../vendor/ngx-datatable/types/table-column.type';
 import { setColumnDefaults } from '../../../../vendor/ngx-datatable/utils/column-helper';
-
+import { StoScrollerComponent } from './sto-scroller.component';
 
 @Component({
   selector: 'sto-complex-body',
@@ -106,7 +106,7 @@ import { setColumnDefaults } from '../../../../vendor/ngx-datatable/utils/column
 export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
   _summaryRow: any;
-
+	@ViewChild(StoScrollerComponent) scroller: StoScrollerComponent;
 
   /**
    * Creates an instance of DataTableBodyComponent.
