@@ -5,7 +5,6 @@ import { Component,Input, Output, Directive, EventEmitter, ViewEncapsulation, On
   styleUrls: ['sto-filter-panel.component.scss'],
   selector: 'sto-filter-panel',
   templateUrl: './sto-filter-panel.component.html',
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
 export class StoFilterPanelComponent implements OnInit{

@@ -32,6 +32,7 @@ const copyFiles = [
   './_mixins.scss',
   './vendor/bootstrap/**/_variables.scss',
   './vendor/font-awesome/scss/_variables.scss',
+  './vendor/_material_angular_variables.scss',
   './style/**/*.scss'
 ];
 
