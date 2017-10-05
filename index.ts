@@ -48,3 +48,5 @@ export * from './components/sto-datatable-advanced/sto-datatable.module';
 
 export * from './components/sto-filter/sto-filter-panel.module';
 export * from './components/sto-layout/sto-layout.module';
+
+export * from './components/datepicker/index';
