@@ -1,51 +1,54 @@
 <span [ngClass]="{'ui-daterange-wrapper': true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style"
 	  [class]="styleClass">
-	<input #inputfield type="text" [attr.id]="inputId" [attr.required]="required" [value]="inputFieldValue"
-		   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
-		   [readonly]="true" [ngStyle]="inputStyle" [class]="inputStyleClass" [placeholder]="placeholder||''"
-		   [disabled]="disabled"
-		   [ngClass]="'ui-inputtext ui-widget ui-state-default ui-corner-all'">
-	<button type="button" [icon]="icon" stoButton *ngIf="showIcon" (click)="onButtonClick($event,inputfield)"
-			[ngClass]="{'ui-datepicker-trigger':true,'ui-state-disabled':disabled}" [disabled]="disabled"></button>
+	<md-form-field floatPlaceholder="never" [class]="inputStyleClass">
+		<input #inputfield mdInput type="text" [required]="required" [value]="inputFieldValue"
+			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
+			   [readonly]="true" [placeholder]="placeholder||''">
+	</md-form-field>
 
 	<div class="ui-g ui-daterange ui-shadow ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" #datepicker
 		 [class.ui-state-disabled]="disabled"
 		 [ngStyle]="{'display': overlayVisible ? 'block' : 'none'}"
-		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'"
-	>
+		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'">
 			<div class="ui-g-8">
 				<form [formGroup]="form">
 					<div class="ui-g-6">
-						<sto-calendar formControlName="start" [inline]="true"></sto-calendar>
+						<div style="width: 17em">
+							<sto-inline-calendar formControlName="start"></sto-inline-calendar>
+						</div>
 					</div>
 					<div class="ui-g-6">
-						<sto-calendar formControlName="end" [inline]="true"></sto-calendar>
+						<div style="width: 17em">
+							<sto-inline-calendar formControlName="end"></sto-inline-calendar>
+						</div>
 					</div>
 				</form>
 			</div>
 			<div class="ui-g-4">
 				<div class="ui-g-12">
-					<button (click)="tenWeeks()" stoButton label="Previous 2w - Next 8w"></button>
+					<button (click)="tenWeeks()"
+							md-raised-button>Previous 2w - Next 8w</button>
 				</div>
 				<div class="ui-g-12">
 					<em>Week:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (week)">
-						<button (click)="periodPicker('week', '-')" class="btn" stoButton label="Prev"></button>
-						<button (click)="periodPicker('week', '')" class="btn" stoButton label="This"></button>
-						<button (click)="periodPicker('week', '+')" class="btn" stoButton label="Next"></button>
+						<button (click)="periodPicker('week', '-')" md-raised-button>Prev</button>
+						<button (click)="periodPicker('week', '')" md-raised-button>This</button>
+						<button (click)="periodPicker('week', '+')" md-raised-button>Next</button>
 					</div>
 				</div>
 				<div class="ui-g-12">
 					<em>Month:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (month)">
-						<button (click)="periodPicker('month', '-')" class="btn" stoButton label="Prev"></button>
-						<button (click)="periodPicker('month', '')" class="btn" stoButton label="This"></button>
-						<button (click)="periodPicker('month', '+')" class="btn" stoButton label="Next"></button>
+						<button (click)="periodPicker('month', '-')" md-raised-button>Prev</button>
+						<button (click)="periodPicker('month', '')" md-raised-button>This</button>
+						<button (click)="periodPicker('month', '+')" md-raised-button>Next</button>
 					</div>
 				</div>
 				<div class="ui-g-12">
-					<button [disabled]="form.invalid" stoButton (click)="onSubmit()" label="Submit"></button>
-					<button stoButton (click)="onCancel()" label="Cancel"></button>
+					<button [disabled]="form.invalid" md-raised-button
+							color="primary" (click)="onSubmit()">Submit</button>
+					<button md-raised-button color="warn" (click)="onCancel()">Cancel</button>
 				</div>
 			</div>
 	</div>
