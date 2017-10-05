@@ -19,18 +19,26 @@
         padding-left: 1em;
       }
     }
+    &[role="menuitem"] {
+      margin-right: .375em;
+      margin-left: .1em;
+    }
   }
   a {
     color: $subtle-color;
     display: block;
     padding: .375em .375em 0 0;
+    width: calc(100% + 12px);
     &:hover {
       background-color: $content-bg-color-highlight;
     }
     position: relative;
     text-decoration: none;
-    span.sto-breadcrumb-chevron {
-      color: $subtle-color;
+    span {
+      md-icon {
+        position: absolute;
+        top: .375em;
+      }
     }
   }
 }
