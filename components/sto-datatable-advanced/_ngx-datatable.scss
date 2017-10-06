@@ -190,9 +190,8 @@ $content-height: 20px;
 
 
 .datatable-body-cell-label{
-  .mat-select{
+  .mat-select, .mat-input{
     padding:0;
-
     font-size: $font-size;
   }
   .mat-select-value{
@@ -202,6 +201,11 @@ $content-height: 20px;
     font-size: $font-size;
     height: $content-height;
   }
+  .mat-form-field-infix{
+    padding: 0.25em;
+    border-top: 0;
+  }
+
 
 
 }
