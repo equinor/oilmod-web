@@ -120,7 +120,7 @@ export class MatDatepickerInput<D> implements AfterContentInit, ControlValueAcce
     let oldDate = this.value;
     this._value = value;
     this._renderer.setProperty(this._elementRef.nativeElement, 'value',
-        value ? format(value as any, 'MMM YYYY') : '');
+        value ? format(value as any, 'MMM YYYY') : ''); //DIRTY!
     if (!this._dateAdapter.sameDate(oldDate, value)) {
       this._valueChange.emit(value);
     }

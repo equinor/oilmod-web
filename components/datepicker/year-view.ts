@@ -99,12 +99,8 @@ export class MatYearView<D> implements AfterContentInit {
 
   /** Handles when a new month is selected. */
   _monthSelected(month: number) {
-    let daysInMonth = this._dateAdapter.getNumDaysInMonth(
-        this._dateAdapter.createDate(this._dateAdapter.getYear(this.activeDate), month, 1));
-
-    this.selectedChange.emit(this._dateAdapter.createDate(
-        this._dateAdapter.getYear(this.activeDate), month,
-        Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth)));
+     this.selectedChange.emit(this._dateAdapter.createDate(
+        this._dateAdapter.getYear(this.activeDate), month, 1));
 
     this._userSelection.emit();
   }

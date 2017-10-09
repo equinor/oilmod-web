@@ -118,7 +118,7 @@ export class MatDatepickerContent<D> implements AfterContentInit {
 /** Component responsible for managing the datepicker popup/dialog. */
 @Component({
   moduleId: module.id,
-  selector: 'md-datepicker',
+  selector: 'md-monthpicker',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -136,7 +136,7 @@ export class MatDatepicker<D> implements OnDestroy {
   private _startAt: D | null;
 
   /** The view that the calendar should start in. */
-  @Input() startView: 'month' | 'year' = 'month';
+  @Input() startView: 'month' | 'year' = 'year';
 
   /**
    * Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather
