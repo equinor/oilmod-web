@@ -120,6 +120,25 @@ export class StoDrawerComponent implements OnInit {
 }
 
 @Component({
+  selector: 'sto-drawer-footer',
+  template: `<div class="sto-drawer__footer">
+                <ng-content></ng-content>
+            </div>`,
+  styles: [
+    `
+      .sto-drawer__footer {
+        position: absolute;
+        bottom: 0;
+        padding: 9px;
+        width: 100%;
+        min-height: 24px;
+      }
+    `
+  ]
+})
+export class StoDrawerFooterComponent {}
+
+@Component({
   selector: 'sto-drawer-wrapper',
   templateUrl: './sto-drawer-wrapper.component.html',
   styleUrls: ['./sto-drawer-wrapper.component.scss']
@@ -128,7 +147,7 @@ export class StoDrawerWrapperComponent {}
 
 @NgModule({
   imports: [CommonModule, StoButtonModule],
-  exports: [StoDrawerComponent, StoDrawerWrapperComponent],
-  declarations: [StoDrawerComponent, StoDrawerWrapperComponent]
+  exports: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent],
+  declarations: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent]
 })
 export class StoDrawerModule {}
