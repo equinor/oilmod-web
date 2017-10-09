@@ -211,3 +211,11 @@ $mat-elevation-transition-timing-function: $mat-fast-out-slow-in-timing-function
   $easing: $mat-elevation-transition-timing-function) {
   transition: mat-elevation-transition-property-value($duration, $easing);
 }
+
+@mixin mat-fill {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
