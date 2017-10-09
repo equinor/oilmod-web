@@ -9,7 +9,7 @@ import { Component,Input, Output, Directive, EventEmitter, ViewEncapsulation, On
 })
 export class StoFilterPanelComponent implements OnInit{
   @Input() expandable : true;
-  public expanded : boolean;
+  public expanded : boolean = true;
 
   public toggle(){
     this.expanded = !this.expanded;

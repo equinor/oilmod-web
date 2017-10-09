@@ -37,7 +37,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {coerceDateProperty} from './coerce-date-property';
 import {MatDatepicker} from './datepicker';
 import {createMissingDateImplError} from './datepicker-errors';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 export const MAT_DATEPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -120,7 +120,7 @@ export class MatDatepickerInput<D> implements AfterContentInit, ControlValueAcce
     let oldDate = this.value;
     this._value = value;
     this._renderer.setProperty(this._elementRef.nativeElement, 'value',
-        value ? format(value, 'MMM YYYY') : '');
+        value ? format(value as any, 'MMM YYYY') : '');
     if (!this._dateAdapter.sameDate(oldDate, value)) {
       this._valueChange.emit(value);
     }

@@ -30,6 +30,7 @@ export class StoDrawerComponent implements OnInit {
   @Input() header: string;
   @Input() headerIcon: string;
   @Input() width = '25vw';
+  @Input() offset: string = '0';
   @Input() padding = '0px';
   @Input() position: 'left' | 'right';
   @Input() closeOnClick: boolean;
