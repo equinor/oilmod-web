@@ -1,22 +1,28 @@
 @import '../../variables';
 
+$sto-filter-border-color: #ededed;
+$sto-filter-header-bg: #ededed;
+$sto-filter-header-font-size: 18px;
+$sto-filter-header-line-height: 24px;
+$sto-filter-header-elevation: 4;
+
 .sto-filter{
   box-shadow: none !important;
-  border: solid 1px #ededed;
+  border: solid 1px $sto-filter-border-color;
 
   .mat-expansion-panel-header{
-    @include mat-elevation(4);
+    @include mat-elevation($sto-filter-header-elevation);
     padding: 0 $space-4x;
-    background-color: #ededed;
+    background-color: $sto-filter-header-bg;
     cursor: default;
 
     &.mat-expanded{
       &:focus, &:hover{
-        background-color: #ededed;
+        background-color: $sto-filter-header-bg;
       }
     }
-    font-size: 18px;
-    line-height: 24px;
+    font-size: $sto-filter-header-font-size;
+    line-height: $sto-filter-header-line-height;
 
     &-title{
       align-items: center;
@@ -55,7 +61,7 @@
 
 
 .sto-filter-form{
-  .mat-select{
+  .mat-select,.mat-form-field{
     width: 100%;
   }
 }
