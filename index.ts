@@ -1,3 +1,5 @@
+export * from './components/confirm-dialog/confirm-dialog.component';
+
 export * from './components/sto-calendar/sto-calendar.component';
 export * from './components/sto-dialog/sto-dialog.component';
 export * from './components/sto-button/sto-button.directive';

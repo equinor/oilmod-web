@@ -5,19 +5,11 @@
 	 [style.zIndex]="header ? 60 : 30"
 	 [style.right]="offset"
 	 class="sidebar">
-	<div *ngIf="header" class="sidebar__header">
-		<h3>
-			<i [class]="'fa ' + headerIcon" *ngIf="headerIcon"></i>
-			{{ header }}
-		</h3>
+	<div class="sto-drawer__header" *ngIf="header">
+		<ng-content select="sto-drawer-header">
+		</ng-content>
 		<span style="flex: 1 1 auto"></span>
-		<button (click)="$event.preventDefault()"
-				class="ui-button-secondary"
-				stoButton icon="fa-external-link"></button>
-		<button stoButton icon="fa-times" type="button"
-				class="ui-button-secondary"
-				(click)="toggle(); onToggle.emit(true)">
-		</button>
+		<ng-content select=".header__actions"></ng-content>
 	</div>
 	<div class="sidebar__content">
 		<ng-content></ng-content>

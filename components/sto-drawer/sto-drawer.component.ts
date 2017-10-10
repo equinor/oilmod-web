@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, NgModule, OnInit, Output, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { animate, state, style, transition, trigger, AnimationMetadata } from '@angular/animations';
+import { animate, AnimationMetadata, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
 
 @Component({
@@ -120,6 +120,14 @@ export class StoDrawerComponent implements OnInit {
 }
 
 @Component({
+  selector: 'sto-drawer-header',
+  template: `<ng-content></ng-content>`,
+  styleUrls: ['./sto-drawer.component.scss']
+})
+export class StoDrawerHeaderComponent {
+}
+
+@Component({
   selector: 'sto-drawer-footer',
   template: `<div class="sto-drawer__footer">
                 <ng-content></ng-content>
@@ -136,18 +144,21 @@ export class StoDrawerComponent implements OnInit {
     `
   ]
 })
-export class StoDrawerFooterComponent {}
+export class StoDrawerFooterComponent {
+}
 
 @Component({
   selector: 'sto-drawer-wrapper',
   templateUrl: './sto-drawer-wrapper.component.html',
   styleUrls: ['./sto-drawer-wrapper.component.scss']
 })
-export class StoDrawerWrapperComponent {}
+export class StoDrawerWrapperComponent {
+}
 
 @NgModule({
   imports: [CommonModule, StoButtonModule],
-  exports: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent],
-  declarations: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent]
+  exports: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent],
+  declarations: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent]
 })
-export class StoDrawerModule {}
+export class StoDrawerModule {
+}
