@@ -1,6 +1,7 @@
 import { Component, Inject, Injectable, NgModule } from '@angular/core';
 import { MD_DIALOG_DATA, MdButtonModule, MdDialog, MdDialogModule, MdDialogRef } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-confirm',
@@ -30,7 +31,7 @@ export class ConfirmService {
   constructor(private dialog: MdDialog) {
   }
 
-  confirm(message: string) {
+  confirm(message: string): Observable<any> {
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
       data: {message}
