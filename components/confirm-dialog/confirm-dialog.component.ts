@@ -6,12 +6,12 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-confirm',
   template: `
-    <h1 md-dialog-title>Confirm</h1>
+    <h1 md-dialog-title>{{ data.title }}</h1>
     <div md-dialog-content>
         <p>{{data.message}}</p>
     </div>
     <div md-dialog-actions>
-      <button md-button [md-dialog-close]="true">Ok</button>
+      <button md-button [md-dialog-close]="true">{{data.confirmText}}</button>
       <button md-button [md-dialog-close]="false">Cancel</button>
      </div>
   `
@@ -31,10 +31,10 @@ export class ConfirmService {
   constructor(private dialog: MdDialog) {
   }
 
-  confirm(message: string): Observable<any> {
+  confirm(message: string, title = 'Confirm', confirmText = 'OK'): Observable<any> {
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
-      data: {message}
+      data: {message, title, confirmText}
     });
 
     return dialogRef.afterClosed();
