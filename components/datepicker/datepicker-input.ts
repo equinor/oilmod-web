@@ -39,16 +39,16 @@ import {MatMonthPicker} from './datepicker';
 import {createMissingDateImplError} from './datepicker-errors';
 import { format } from 'date-fns';
 
-export const MAT_DATEPICKER_VALUE_ACCESSOR: any = {
+export const MAT_MONTHPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => MatDatepickerInput),
+  useExisting: forwardRef(() => MatMonthpickerInput),
   multi: true
 };
 
 
-export const MAT_DATEPICKER_VALIDATORS: any = {
+export const MAT_MONTHPICKER_VALIDATORS: any = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => MatDatepickerInput),
+  useExisting: forwardRef(() => MatMonthpickerInput),
   multi: true
 };
 
@@ -62,7 +62,7 @@ export class MatDatepickerInputEvent<D> {
   /** The new value for the target datepicker input. */
   value: D | null;
 
-  constructor(public target: MatDatepickerInput<D>, public targetElement: HTMLElement) {
+  constructor(public target: MatMonthpickerInput<D>, public targetElement: HTMLElement) {
     this.value = this.target.value;
   }
 }
@@ -70,8 +70,8 @@ export class MatDatepickerInputEvent<D> {
 
 /** Directive used to connect an input to a MatMonthPicker. */
 @Directive({
-  selector: '[mdDatepicker]',
-  providers: [MAT_DATEPICKER_VALUE_ACCESSOR, MAT_DATEPICKER_VALIDATORS],
+  selector: '[mdMonthpicker]',
+  providers: [MAT_MONTHPICKER_VALUE_ACCESSOR, MAT_MONTHPICKER_VALIDATORS],
   host: {
     '[attr.aria-haspopup]': 'true',
     '[attr.aria-owns]': '(_datepicker?.opened && _datepicker.id) || null',
@@ -83,13 +83,13 @@ export class MatDatepickerInputEvent<D> {
     '(blur)': '_onTouched()',
     '(keydown)': '_onKeydown($event)',
   },
-  exportAs: 'mdDatepickerInput',
+  exportAs: 'mdMonthpickerInput',
 })
-export class MatDatepickerInput<D> implements AfterContentInit, ControlValueAccessor, OnDestroy,
+export class MatMonthpickerInput<D> implements AfterContentInit, ControlValueAccessor, OnDestroy,
     Validator {
   /** The datepicker that this input is associated with. */
   @Input()
-  set mdDatepicker(value: MatMonthPicker<D>) {
+  set mdMonthpicker(value: MatMonthPicker<D>) {
     this.registerDatepicker(value);
   }
   _datepicker: MatMonthPicker<D>;

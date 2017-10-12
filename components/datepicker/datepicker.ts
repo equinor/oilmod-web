@@ -44,7 +44,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {MatCalendar} from './calendar';
 import {coerceDateProperty} from './coerce-date-property';
 import {createMissingDateImplError} from './datepicker-errors';
-import {MatDatepickerInput} from './datepicker-input';
+import {MatMonthpickerInput} from './datepicker-input';
 
 
 /** Used to generate a unique ID for each datepicker instance. */
@@ -206,7 +206,7 @@ export class MatMonthPicker<D> implements OnDestroy {
   private _inputSubscription = Subscription.EMPTY;
 
   /** The input element this datepicker is associated with. */
-  _datepickerInput: MatDatepickerInput<D>;
+  _datepickerInput: MatMonthpickerInput<D>;
 
   /** Emits when the datepicker is disabled. */
   _disabledChange = new Subject<boolean>();
@@ -247,7 +247,7 @@ export class MatMonthPicker<D> implements OnDestroy {
    * Register an input with this datepicker.
    * @param input The datepicker input to register with this datepicker.
    */
-  _registerInput(input: MatDatepickerInput<D>): void {
+  _registerInput(input: MatMonthpickerInput<D>): void {
     if (this._datepickerInput) {
       throw Error('An MatMonthPicker can only be associated with a single input.');
     }
