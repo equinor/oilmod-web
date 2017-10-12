@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, NgModule, OnInit, Output, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ViewEncapsulation} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { animate, AnimationMetadata, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
@@ -7,6 +7,7 @@ import { StoButtonModule } from '../sto-button/sto-button.directive';
   selector: 'sto-drawer',
   templateUrl: './sto-drawer.component.html',
   styleUrls: ['./sto-drawer.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('slideInOut', [
         state('in', style({

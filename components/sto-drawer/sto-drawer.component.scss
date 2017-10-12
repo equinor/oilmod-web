@@ -4,16 +4,41 @@
 $header-height: 2.7em;
 $footer-height: 3.8em;
 
-.sidebar__header {
-  padding: 0px 5px;
+
+.sto-drawer{
+  @include mat-elevation(4);
+  background: #fff;
+  color: #000;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  min-width: 260px;
+  z-index: 30;
+
+  &__card{
+    margin-bottom: spacer(4);
+
+    &__title{
+      border-bottom: 1 solid $gray-dark;
+
+    }
+  }
+
+  &.right {
+    left: auto;
+    right: 0;
+  }
+
+  &.left {
+    left: 0;
+    right: auto;
+  }
 }
 
-.fa {
-  margin: 0px 5px;
-}
 
-.sidebar__content {
-  padding: spacer(2) spacer(4);
+.sto-drawer__content  {
+  padding: spacer(4) spacer(4);
   overflow-y: auto;
   height: calc(100% - calc(#{$header-height} + #{$footer-height}));
   &.navigation {
@@ -24,10 +49,11 @@ $footer-height: 3.8em;
 .sto-drawer__footer {
   position: absolute;
   bottom: 0;
-  padding: 9px;
+  padding: spacer(2);
   width: 100%;
   height: $footer-height;
 }
+
 
 .sto-drawer__header {
   background-color: lightgrey;
@@ -45,27 +71,5 @@ $footer-height: 3.8em;
     border: 0;
     outline: none;
   }
-}
-
-.sidebar {
-  box-shadow: 0 8px 10px -5px rgba(0, 0, 0, .2), 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12);
-  background: #fff;
-  color: #000;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 20%;
-  min-width: 250px;
-  z-index: 30;
-}
-
-.sidebar.right {
-  left: auto;
-  right: 0;
-}
-
-.sidebar.left {
-  left: 0;
-  right: auto;
 }
 
