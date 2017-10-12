@@ -129,20 +129,7 @@ export class StoDrawerHeaderComponent {
 
 @Component({
   selector: 'sto-drawer-footer',
-  template: `<div class="sto-drawer__footer">
-                <ng-content></ng-content>
-            </div>`,
-  styles: [
-    `
-      .sto-drawer__footer {
-        position: absolute;
-        bottom: 0;
-        padding: 9px;
-        width: 100%;
-        min-height: 24px;
-      }
-    `
-  ]
+  template: `<ng-content></ng-content>`
 })
 export class StoDrawerFooterComponent {
 }

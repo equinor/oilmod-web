@@ -17,7 +17,7 @@ import {MatCalendar} from './calendar';
 import {MatCalendarBody} from './calendar-body';
 import {
   MAT_DATEPICKER_SCROLL_STRATEGY_PROVIDER,
-  MatDatepicker,
+  MatMonthPicker,
   MatDatepickerContent,
 } from './datepicker';
 import {MatDatepickerInput} from './datepicker-input';
@@ -39,7 +39,7 @@ import {MatYearView} from './year-view';
   exports: [
     MatCalendar,
     MatCalendarBody,
-    MatDatepicker,
+    MatMonthPicker,
     MatDatepickerContent,
     MatDatepickerInput,
     MatDatepickerToggle,
@@ -49,7 +49,7 @@ import {MatYearView} from './year-view';
   declarations: [
     MatCalendar,
     MatCalendarBody,
-    MatDatepicker,
+    MatMonthPicker,
     MatDatepickerContent,
     MatDatepickerInput,
     MatDatepickerToggle,

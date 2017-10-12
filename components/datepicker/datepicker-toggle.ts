@@ -16,7 +16,7 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatDatepicker} from './datepicker';
+import {MatMonthPicker} from './datepicker';
 import {MatDatepickerIntl} from './datepicker-intl';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {Subscription} from 'rxjs/Subscription';
@@ -39,7 +39,7 @@ export class MatDatepickerToggle<D> implements OnChanges, OnDestroy {
   private _stateChanges = Subscription.EMPTY;
 
   /** Datepicker instance that the button will toggle. */
-  @Input('for') datepicker: MatDatepicker<D>;
+  @Input('for') datepicker: MatMonthPicker<D>;
 
   /** Whether the toggle button is disabled. */
   @Input()
@@ -57,7 +57,7 @@ export class MatDatepickerToggle<D> implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.datepicker) {
-      const datepicker: MatDatepicker<D> = changes.datepicker.currentValue;
+      const datepicker: MatMonthPicker<D> = changes.datepicker.currentValue;
       const datepickerDisabled = datepicker ? datepicker._disabledChange : observableOf();
       const inputDisabled = datepicker && datepicker._datepickerInput ?
         datepicker._datepickerInput._disabledChange :

@@ -11,8 +11,10 @@
 		<span style="flex: 1 1 auto"></span>
 		<ng-content select=".header__actions"></ng-content>
 	</div>
-	<div class="sidebar__content">
+	<div [class.navigation]="!header" class="sidebar__content">
 		<ng-content></ng-content>
 	</div>
-	<ng-content select="sto-drawer-footer"></ng-content>
+	<div class="sto-drawer__footer">
+		<ng-content select="sto-drawer-footer"></ng-content>
+	</div>
 </div>

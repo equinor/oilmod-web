@@ -35,7 +35,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/c
 import {MatFormField} from '@angular/material/form-field';
 import {Subscription} from 'rxjs/Subscription';
 import {coerceDateProperty} from './coerce-date-property';
-import {MatDatepicker} from './datepicker';
+import {MatMonthPicker} from './datepicker';
 import {createMissingDateImplError} from './datepicker-errors';
 import { format } from 'date-fns';
 
@@ -68,7 +68,7 @@ export class MatDatepickerInputEvent<D> {
 }
 
 
-/** Directive used to connect an input to a MatDatepicker. */
+/** Directive used to connect an input to a MatMonthPicker. */
 @Directive({
   selector: '[mdDatepicker]',
   providers: [MAT_DATEPICKER_VALUE_ACCESSOR, MAT_DATEPICKER_VALIDATORS],
@@ -89,12 +89,12 @@ export class MatDatepickerInput<D> implements AfterContentInit, ControlValueAcce
     Validator {
   /** The datepicker that this input is associated with. */
   @Input()
-  set mdDatepicker(value: MatDatepicker<D>) {
+  set mdDatepicker(value: MatMonthPicker<D>) {
     this.registerDatepicker(value);
   }
-  _datepicker: MatDatepicker<D>;
+  _datepicker: MatMonthPicker<D>;
 
-  private registerDatepicker(value: MatDatepicker<D>) {
+  private registerDatepicker(value: MatMonthPicker<D>) {
     if (value) {
       this._datepicker = value;
       this._datepicker._registerInput(this);

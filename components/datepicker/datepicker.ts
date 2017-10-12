@@ -90,7 +90,7 @@ export const MAT_DATEPICKER_SCROLL_STRATEGY_PROVIDER = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatDatepickerContent<D> implements AfterContentInit {
-  datepicker: MatDatepicker<D>;
+  datepicker: MatMonthPicker<D>;
 
   @ViewChild(MatCalendar) _calendar: MatCalendar<D>;
 
@@ -124,7 +124,7 @@ export class MatDatepickerContent<D> implements AfterContentInit {
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
 })
-export class MatDatepicker<D> implements OnDestroy {
+export class MatMonthPicker<D> implements OnDestroy {
   /** The date to open the calendar to initially. */
   @Input()
   get startAt(): D | null {
@@ -249,7 +249,7 @@ export class MatDatepicker<D> implements OnDestroy {
    */
   _registerInput(input: MatDatepickerInput<D>): void {
     if (this._datepickerInput) {
-      throw Error('An MatDatepicker can only be associated with a single input.');
+      throw Error('An MatMonthPicker can only be associated with a single input.');
     }
     this._datepickerInput = input;
     this._inputSubscription =
@@ -262,7 +262,7 @@ export class MatDatepicker<D> implements OnDestroy {
       return;
     }
     if (!this._datepickerInput) {
-      throw Error('Attempted to open an MatDatepicker with no associated input.');
+      throw Error('Attempted to open an MatMonthPicker with no associated input.');
     }
     if (this._document) {
       this._focusedElementBeforeOpen = this._document.activeElement;

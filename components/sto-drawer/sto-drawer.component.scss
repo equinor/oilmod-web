@@ -1,4 +1,9 @@
 @import "../../variables";
+@import "../../style/functions";
+
+$header-height: 2.7em;
+$footer-height: 3.8em;
+
 .sidebar__header {
   padding: 0px 5px;
 }
@@ -8,9 +13,20 @@
 }
 
 .sidebar__content {
-  padding: 5px;
+  padding: spacer(2) spacer(4);
   overflow-y: auto;
-  max-height: calc(100% - 4em);
+  height: calc(100% - calc(#{$header-height} + #{$footer-height}));
+  &.navigation {
+    height: 100%;
+  }
+}
+
+.sto-drawer__footer {
+  position: absolute;
+  bottom: 0;
+  padding: 9px;
+  width: 100%;
+  height: $footer-height;
 }
 
 .sto-drawer__header {
@@ -18,7 +34,7 @@
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  height: 2.7em;
+  height: $header-height;
   flex-direction: row;
   align-items: center;
   white-space: nowrap;
