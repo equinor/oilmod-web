@@ -23,7 +23,7 @@ export class StoFilterPanelComponent implements OnInit{
 }
 
 /**
- * <md-panel-description> directive.
+ * <mat-panel-description> directive.
  *
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
@@ -53,7 +53,7 @@ export class StoFilterActions {}
   },
   template: `
 	    <ng-content></ng-content>
-      <md-icon *ngIf="expandable" (click)="toggle.emit()">filter_list</md-icon>
+      <mat-icon *ngIf="expandable" (click)="toggle.emit()">filter_list</mat-icon>
   `
 })
 export class StoFilterActionsBar {

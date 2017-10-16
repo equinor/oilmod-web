@@ -6,7 +6,7 @@ import { DomHandler } from '../sto-shared/sto-api';
 @Component({
   selector: 'sto-inline-calendar',
   template: `
-    <md-calendar [selected]="value" (selectedChange)="changeDate($event)"></md-calendar>
+    <mat-calendar [selected]="value" (selectedChange)="changeDate($event)"></mat-calendar>
   `,
   providers: [
     {

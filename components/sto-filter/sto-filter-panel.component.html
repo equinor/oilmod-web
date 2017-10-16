@@ -1,15 +1,15 @@
-<md-expansion-panel [disabled]="true" [expanded]="expanded" [hideToggle]="true" [ngClass]="{'sto-filter' : true}">
-  <md-expansion-panel-header  [expandedHeight]="'42px'" [collapsedHeight]="'42px'" >
-    <md-panel-title>
+<mat-expansion-panel [disabled]="true" [expanded]="expanded" [hideToggle]="true" [ngClass]="{'sto-filter' : true}">
+  <mat-expansion-panel-header  [expandedHeight]="'42px'" [collapsedHeight]="'42px'" >
+    <mat-panel-title>
       <ng-content select="sto-filter-title"></ng-content>
-    </md-panel-title>
+    </mat-panel-title>
     <ng-content select="sto-filter-table-actions"></ng-content>
     <sto-filter-actions-bar *ngIf="expandable" [expandable]="expandable"(toggle)="toggle()">
        <ng-content select="sto-filter-actions"></ng-content>
     </sto-filter-actions-bar>
-  </md-expansion-panel-header>
+  </mat-expansion-panel-header>
   <div class="sto-filter-form">
     <ng-content></ng-content>
   </div>
-</md-expansion-panel>
+</mat-expansion-panel>
 

@@ -1,10 +1,10 @@
 <span [ngClass]="{'ui-daterange-wrapper': true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style"
 	  [class]="styleClass">
-	<md-form-field floatPlaceholder="never" [class]="inputStyleClass">
-		<input #inputfield mdInput type="text" [required]="required" [value]="inputFieldValue"
+	<mat-form-field floatPlaceholder="never" [class]="inputStyleClass">
+		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
 			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 			   [readonly]="true" [placeholder]="placeholder||''">
-	</md-form-field>
+	</mat-form-field>
 
 	<div class="ui-g ui-daterange ui-shadow ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" #datepicker
 		 [class.ui-state-disabled]="disabled"
@@ -27,28 +27,28 @@
 			<div class="ui-g-4">
 				<div class="ui-g-12">
 					<button (click)="tenWeeks()"
-							md-raised-button>Previous 2w - Next 8w</button>
+							mat-raised-button>Previous 2w - Next 8w</button>
 				</div>
 				<div class="ui-g-12">
 					<em>Week:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (week)">
-						<button (click)="periodPicker('week', '-')" md-raised-button>Prev</button>
-						<button (click)="periodPicker('week', '')" md-raised-button>This</button>
-						<button (click)="periodPicker('week', '+')" md-raised-button>Next</button>
+						<button (click)="periodPicker('week', '-')" mat-raised-button>Prev</button>
+						<button (click)="periodPicker('week', '')" mat-raised-button>This</button>
+						<button (click)="periodPicker('week', '+')" mat-raised-button>Next</button>
 					</div>
 				</div>
 				<div class="ui-g-12">
 					<em>Month:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (month)">
-						<button (click)="periodPicker('month', '-')" md-raised-button>Prev</button>
-						<button (click)="periodPicker('month', '')" md-raised-button>This</button>
-						<button (click)="periodPicker('month', '+')" md-raised-button>Next</button>
+						<button (click)="periodPicker('month', '-')" mat-raised-button>Prev</button>
+						<button (click)="periodPicker('month', '')" mat-raised-button>This</button>
+						<button (click)="periodPicker('month', '+')" mat-raised-button>Next</button>
 					</div>
 				</div>
 				<div class="ui-g-12">
-					<button [disabled]="form.invalid" md-raised-button
+					<button [disabled]="form.invalid" mat-raised-button
 							color="primary" (click)="onSubmit()">Submit</button>
-					<button md-raised-button color="warn" (click)="onCancel()">Cancel</button>
+					<button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
 				</div>
 			</div>
 	</div>

@@ -1,25 +1,25 @@
 import { Component, Inject, Injectable, NgModule } from '@angular/core';
-import { MD_DIALOG_DATA, MdButtonModule, MdDialog, MdDialogModule, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatButtonModule, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-confirm',
   template: `
-    <h1 md-dialog-title>{{ data.title }}</h1>
-    <div md-dialog-content>
+    <h1 mat-dialog-title>{{ data.title }}</h1>
+    <div mat-dialog-content>
         <p>{{data.message}}</p>
     </div>
-    <div md-dialog-actions>
-      <button md-button [md-dialog-close]="true">{{data.confirmText}}</button>
-      <button md-button [md-dialog-close]="false">Cancel</button>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="true">{{data.confirmText}}</button>
+      <button mat-button [mat-dialog-close]="false">Cancel</button>
      </div>
   `
 })
 export class ConfirmComponent {
 
-  constructor(@Inject(MD_DIALOG_DATA) public data: any,
-              private dialogRef: MdDialogRef<ConfirmComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              private dialogRef: MatDialogRef<ConfirmComponent>) {
   }
 
 }
@@ -28,7 +28,7 @@ export class ConfirmComponent {
 @Injectable()
 export class ConfirmService {
 
-  constructor(private dialog: MdDialog) {
+  constructor(private dialog: MatDialog) {
   }
 
   confirm(message: string, title = 'Confirm', confirmText = 'OK'): Observable<any> {
@@ -49,8 +49,8 @@ export class ConfirmService {
   ],
   imports: [
     CommonModule,
-    MdDialogModule,
-    MdButtonModule
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [
     ConfirmService

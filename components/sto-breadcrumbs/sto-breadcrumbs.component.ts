@@ -2,7 +2,7 @@ import { Component, Input, NgModule } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Breadcrumb } from '../../vendor/primeface/components/breadcrumb/breadcrumb';
-import { MdIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material';
 
 @Component({
   selector: 'sto-breadcrumbs',
@@ -14,7 +14,7 @@ export class StoBreadcrumbsComponent extends Breadcrumb {
 }
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MdIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
   exports: [StoBreadcrumbsComponent],
   declarations: [StoBreadcrumbsComponent]
 })
