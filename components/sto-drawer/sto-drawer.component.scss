@@ -1,13 +1,13 @@
 @import "../../variables";
 @import "../../style/functions";
 
-$header-height: 2.7em;
-$footer-height: 3.8em;
-
+$header-height: spacer(16);
+$footer-height: spacer(16);
+$header-size: 20px;
 
 .sto-drawer{
   @include mat-elevation(4);
-  background: #fff;
+  background: $gray-lighter;
   color: #000;
   position: fixed;
   top: 0;
@@ -16,12 +16,13 @@ $footer-height: 3.8em;
   min-width: 260px;
   z-index: 30;
 
-  &__card{
+  .mat-card{
+
     margin-bottom: spacer(4);
 
-    &__title{
+    &-title{
       border-bottom: 1 solid $gray-dark;
-
+      font-size: $header-size;
     }
   }
 
@@ -56,7 +57,11 @@ $footer-height: 3.8em;
 
 
 .sto-drawer__header {
-  background-color: lightgrey;
+
+
+  @include mat-elevation(1);
+  padding: 0 spacer(2);
+  background-color: $gray-light;
   display: flex;
   box-sizing: border-box;
   width: 100%;
@@ -64,7 +69,11 @@ $footer-height: 3.8em;
   flex-direction: row;
   align-items: center;
   white-space: nowrap;
-  text-transform: capitalize;
+
+  &__title, h1,h2,h3,h4{
+    font-size: $header-size;
+  }
+
   button {
     background-color: transparent;
     color: #828282;

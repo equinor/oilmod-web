@@ -9,6 +9,11 @@
 @import "vendor/bootstrap/forms";
 @import "vendor/primeface/_new_primeface";
 
+//body
+body{
+  background-color: $gray-lighter;
+}
+
 //@import "vendor/primeface/_primeface";
 //@import "vendor/bootstrap/_bootstrap";
 //@import "vendor/primeface/_primeface-theme";
@@ -20,9 +25,9 @@
 @import "components/sto-password/sto-password.directive";
 
 @import "components/sto-datatable-advanced/ngx-datatable";
-
-
 @import "components/sto-filter/sto-filter-panel.component";
+
+
 
 .sto-datatable-wrapper{
   background-color: white;
