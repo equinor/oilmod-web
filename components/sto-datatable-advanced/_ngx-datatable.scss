@@ -138,6 +138,79 @@ $content-height: 20px;
     }
   }
 
+  .empty-row{
+    height:50px;
+    text-align: left;
+    padding: .5rem 1.2rem;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  .loading-row{
+    text-align: left;
+    padding: .5rem 1.2rem;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  .datatable-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(0,0,0,.54);
+
+    .page-count{
+      line-height: 50px;
+      height:50px;
+      padding: 0 1.2rem;
+    }
+
+    .datatable-pager {
+      margin: 0 10px;
+
+      li {
+        vertical-align: middle;
+
+        &.disabled a {
+          color:rgba(0, 0, 0, 0.26) !important;
+          background-color: transparent !important;
+        }
+
+        &.active a {
+          background-color: rgba(158,158,158,0.2);
+          font-weight: bold;
+        }
+      }
+
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0 6px;
+        border-radius: 3px;
+        margin: 6px 3px;
+        text-align: center;
+        vertical-align: top;
+        color: rgba(0,0,0,.54);
+        text-decoration: none;
+        vertical-align: bottom;
+
+        &:hover {
+          color: rgba(0,0,0,.75);
+          background-color: rgba(158,158,158,0.2);
+        }
+      }
+
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev{
+        font-size:20px;
+        line-height: 20px;
+        padding:0 3px;
+      }
+    }
+  }
 
   .icon {
     text-align: center;
