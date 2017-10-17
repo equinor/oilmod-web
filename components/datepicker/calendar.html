@@ -1,17 +1,17 @@
 <div class="mat-calendar-header">
   <div class="mat-calendar-controls">
-    <button md-button class="mat-calendar-period-button">
+    <button mat-button class="mat-calendar-period-button">
       {{_periodButtonText}}
     </button>
 
     <div class="mat-calendar-spacer"></div>
 
-    <button md-icon-button class="mat-calendar-previous-button"
+    <button mat-icon-button class="mat-calendar-previous-button"
             [disabled]="!_previousEnabled()" (click)="_previousClicked()"
             [attr.aria-label]="_prevButtonLabel">
     </button>
 
-    <button md-icon-button class="mat-calendar-next-button"
+    <button mat-icon-button class="mat-calendar-next-button"
             [disabled]="!_nextEnabled()" (click)="_nextClicked()"
             [attr.aria-label]="_nextButtonLabel">
     </button>
