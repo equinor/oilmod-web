@@ -48,11 +48,21 @@ $header-size: 20px;
 }
 
 .sto-drawer__footer {
+  @include mat-elevation(1);
   position: absolute;
   bottom: 0;
-  padding: spacer(2);
+  padding: spacer(4);
   width: 100%;
+  background-color: $gray-light;
   height: $footer-height;
+
+  button{
+    text-transform: uppercase;
+  }
+
+  &__more{
+    float: right;
+  }
 }
 
 
