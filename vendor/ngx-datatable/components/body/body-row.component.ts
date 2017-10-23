@@ -9,29 +9,6 @@ import {
 import { ScrollbarHelper } from '../../services';
 import { mouseEvent, keyboardEvent } from '../../events';
 
-@Component({
-  selector: 'datatable-body-row',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div
-      *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
-      class="datatable-row-{{colGroup.type}} datatable-row-group"
-      [ngStyle]="stylesByGroup(colGroup.type)">
-      <datatable-body-cell
-        *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
-        tabindex="-1"
-        [row]="row"
-        [group]="group"
-        [expanded]="expanded"
-        [isSelected]="isSelected"
-        [rowIndex]="rowIndex"
-        [column]="column"
-        [rowHeight]="rowHeight"
-        (activate)="onActivate($event, ii)">
-      </datatable-body-cell>
-    </div>      
-  `
-})
 export class DataTableBodyRowComponent implements DoCheck {
 
   @Input() set columns(val: any[]) {
@@ -106,9 +83,9 @@ export class DataTableBodyRowComponent implements DoCheck {
   private rowDiffer: KeyValueDiffer<{}, {}>;
 
   constructor(
-      private differs: KeyValueDiffers,
-      private scrollbarHelper: ScrollbarHelper,
-      private cd: ChangeDetectorRef, 
+      protected differs: KeyValueDiffers,
+      protected scrollbarHelper: ScrollbarHelper,
+      protected cd: ChangeDetectorRef,
       element: ElementRef) {
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();

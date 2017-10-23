@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, TemplateRef, Input } from '@angular/core';
 
 @Directive({selector: 'ngx-datatable-group'})
 export class StoDataTableColumnGroupDirective {
@@ -7,6 +7,7 @@ export class StoDataTableColumnGroupDirective {
   @Input() properties?: string[];
   @Input() frozenLeft: any;
   @Input() frozenRight: any;
+  @Input() headerTemplate?: TemplateRef<any>
   //@Input()
   //@ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
   //headerTemplate: TemplateRef<any>;

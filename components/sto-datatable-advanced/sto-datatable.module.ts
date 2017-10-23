@@ -4,7 +4,6 @@ import 'rxjs/add/observable/fromEvent';
 
 import {
   DataTableBodyCellComponent,
-  DataTableBodyRowComponent,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
@@ -38,6 +37,7 @@ import { StoDataTableBodyComponent } from './components/body/sto-body.component'
 import { StoScrollerComponent } from './components/body/sto-scroller.component';
 import { DataTableFixedRowWrapperComponent } from './components/body/sto-fixed-body-row-wrapper.component';
 import { StoDataTableColumnGroupDirective } from './components/columns/sto-column-title.directive';
+import { StoDataTableBodyRowComponent } from './components/body/sto-body-row.component';
 
 @NgModule({
   imports: [
@@ -57,6 +57,7 @@ import { StoDataTableColumnGroupDirective } from './components/columns/sto-colum
     StoComplexDatatableComponent,
     DataTableColumnDirective,
     StoDataTableColumnGroupDirective,
+    StoDataTableBodyRowComponent,
     StoComplexDataTableHeaderComponent,
     DataTableHeaderCellComponent,
     DataTableHeaderTitleComponent,
@@ -64,7 +65,6 @@ import { StoDataTableColumnGroupDirective } from './components/columns/sto-colum
     DataTableFooterComponent,
     DataTablePagerComponent,
     ProgressBarComponent,
-    DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
     DataTableFixedRowWrapperComponent,
     DatatableRowDetailDirective,

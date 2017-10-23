@@ -1,4 +1,6 @@
 export * from './components/confirm-dialog/confirm-dialog.component';
+export {StoPipesModule} from './components/sto-pipes/sto-pipes.module';
+export {StoDirectivesModule} from './components/sto-directives/sto-directives.module';
 
 export * from './components/sto-calendar/sto-calendar.component';
 export * from './components/sto-dialog/sto-dialog.component';
