@@ -22,7 +22,14 @@ import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/';
 				  <div class="datatable-header-cell" style="display: inline-block"
 					   [style.width]="columnGroup.width+'px'" *ngFor="let columnGroup of 
 				         columnGroupByPin[colGroup.type]">
-					  {{columnGroup.name}}
+					  <ng-container *ngIf="!columnGroup.headerTemplate">
+					      {{columnGroup.name}}
+            </ng-container>
+            <ng-template #headerTemplate
+              *ngIf="columnGroup.headerTemplate"
+              [ngTemplateOutletContext]="{ columnGroup: columnGroup, $implicit: columnGroup }"
+              [ngTemplateOutlet]="columnGroup.headerTemplate">
+            </ng-template>
 				  </div>
 			  </div>
 			  <datatable-header-cell
