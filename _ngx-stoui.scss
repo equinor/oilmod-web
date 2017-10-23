@@ -31,24 +31,21 @@ body{
 
 .sto-datatable-wrapper{
   background-color: white;
-
   @include mat-elevation(3);
 }
-.mat-select-placeholder{
-  font-size: $font-size;
 
-  &.mat-floating-placeholder{
-    top: -18px !important;
-  }
-}
-.mat-select-trigger{
-  height: 2.4vh !important;
-  min-height: 23px !important;
-  margin-bottom: -1px;
-}
 
 .horizontal {
   mat-form-field {
     width: 100%;
   }
+}
+
+//Mo to buttons
+.mat-button, .mat-raised-button {
+  text-transform: uppercase;
+}
+
+.sto-datatable__column__number{
+  text-align: right;
 }
