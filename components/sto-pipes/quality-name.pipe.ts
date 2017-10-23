@@ -23,7 +23,7 @@ export class QualityNamePipe implements PipeTransform {
 
 
 
-interface Quality {
+export interface Quality {
   id: string;
   version: number;
   updatedBy: string;

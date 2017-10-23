@@ -21,7 +21,7 @@ export class TankNamePipe implements PipeTransform {
 
 }
 
-interface TankPeriod {
+export interface TankPeriod {
   id: string;
   version: number;
   updatedBy?: any;
@@ -40,7 +40,7 @@ interface TankPeriod {
   qualityIds: string[];
 }
 
-interface Tank {
+export interface Tank {
   id: string;
   version: number;
   updatedBy?: any;
