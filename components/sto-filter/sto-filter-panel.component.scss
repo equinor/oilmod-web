@@ -64,4 +64,8 @@ $sto-filter-header-elevation: 4;
   .mat-select,.mat-form-field{
     width: 100%;
   }
+
+  .mat-select-trigger{
+    height: inherit;
+  }
 }

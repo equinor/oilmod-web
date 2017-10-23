@@ -93,11 +93,31 @@ export class StoDrawerComponent implements OnInit {
     [this.position]: this.open ? 0 : `-${this.width}`
   };
 
+  //Move to polyfill?
+  private eventPathPolyfill = function (element) {
+
+      var pathArr = [element];
+
+      if (element === null || element.parentElement === null) {
+        return [];
+      }
+
+      while (element.parentElement !== null) {
+        element = element.parentElement;
+        pathArr.unshift(element);
+      }
+
+      return pathArr;
+    };
+
+
   private bindDocumentClickListener() {
     if (!this.documentClickListener) {
       this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
+        let path = event.path || (event.composedPath && event.composedPath() || this.eventPathPolyfill(event.target));
+
         let doNothing = false;
-        for (let el of event.path) {
+        for (let el of path) {
           if (el.tagName && el.tagName.toLowerCase().match(/drawer$/i)) {
             doNothing = true;
             break;
@@ -130,7 +150,7 @@ export class StoDrawerHeaderComponent {
 
 @Component({
   selector: 'sto-drawer-footer',
-  template: `<ng-content></ng-content>`
+  template: `<div class="sto-drawer__footer"><ng-content></ng-content><div>`
 })
 export class StoDrawerFooterComponent {
 }

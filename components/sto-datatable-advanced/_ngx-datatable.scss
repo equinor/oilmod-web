@@ -34,7 +34,43 @@ $content-height: 20px;
 
     .datatable-header-cell {
       padding: $datatable-header-vertical-padding $datatable-horizontal-padding;
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+      small {
+        font-size: 10px;
+      }
+
+
+      .draggable::after {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        height: 60px;
+        width: 60px;
+        background: #eee;
+        border-radius: 100%;
+        opacity: 1;
+        filter: none;
+        transform: scale(0);
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      &.dragging {
+        .resize-handle {
+          border-right: none;
+        }
+      }
     }
+
+    .resize-handle {
+      border-right:solid 1px #eee;
+    }
+
     .datatable-header-column-group {
       border-bottom: 1px solid $border-color-light;
 
@@ -44,11 +80,7 @@ $content-height: 20px;
       }
     }
 
-    .datatable-header-cell {
-      small {
-        font-size: 10px;
-      }
-    }
+
 
     .datatable-row-left {
       background-color: $datatable-header-background;
@@ -346,4 +378,9 @@ $content-height: 20px;
   .mat-input-infix{
     padding: 0;
   }
+}
+
+
+.datatable-body-row.active{
+  background-color: $gray-light;
 }

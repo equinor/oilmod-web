@@ -825,9 +825,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a column resize event.
    */
   onColumnResize({column, newValue}: any): void {
+
     /* Safari/iOS 10.2 workaround */
     if (column === undefined) {
       return;
+    }
+
+    if (this.columnMode === ColumnMode.flex) {
+      this.columnMode = ColumnMode.force;
     }
 
     let idx: number;
@@ -848,7 +853,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     this.recalculateColumns(cols, idx);
     this._internalColumns = cols;
-
+  
     this.resize.emit({
       column,
       newValue

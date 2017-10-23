@@ -176,7 +176,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
 
     }
 
-  }
+}
 
   onColumnResize({column, newValue}: any): void {
     super.onColumnResize({column, newValue});
@@ -185,6 +185,9 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   }
 
   private resizeSummaryColumns(column: any, newValue: any) {
+    if(!this._internalSummaryColumns){
+      return;
+    }
     const cols = this._internalSummaryColumns.map((c, i) => {
       c = {...c};
 
