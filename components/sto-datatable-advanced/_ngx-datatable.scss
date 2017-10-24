@@ -374,13 +374,17 @@ $content-height: 20px;
 }
 
 .datatable-header{
-
   .mat-input-infix{
     padding: 0;
   }
 }
 
-
 .datatable-body-row.active{
   background-color: $gray-light;
+}
+
+.sto-datatable__column{
+  &--number{
+    text-align: right;
+  }
 }

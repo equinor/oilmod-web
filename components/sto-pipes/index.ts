@@ -1,6 +1,7 @@
 export { DateFormatPipe } from './date-format.pipe';
 export { KeysPipe } from './keys.pipe';
 export { NumberFormatPipe } from './number-format.pipe';
+export { CurrencyFormatPipe } from './currency-format.pipe';
 export { QualityNamePipe } from './quality-name.pipe';
 export { TankNamePipe } from './tank-name.pipe';
 export { TankStatePipe } from './tank-state.pipe';
