@@ -181,7 +181,14 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   onColumnResize({column, newValue}: any): void {
     super.onColumnResize({column, newValue});
     this.resizeSummaryColumns(column, newValue);
+    this.resizeColumnGroups();
+  }
 
+  private resizeColumnGroups() {
+    if (!this._internalColumnGroups) {
+      return;
+    }
+    this._internalColumnGroups = this._internalColumnGroups.map(c => c);
   }
 
   private resizeSummaryColumns(column: any, newValue: any) {
