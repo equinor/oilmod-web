@@ -387,4 +387,13 @@ $content-height: 20px;
   &--number{
     text-align: right;
   }
+  &--expandable{
+      .icon-wrapper{
+        display: inline-block;
+
+        .mat-icon{
+          margin-top: -5px;
+        }
+      }
+  }
 }

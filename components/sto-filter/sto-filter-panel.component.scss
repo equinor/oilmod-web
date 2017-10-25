@@ -33,6 +33,7 @@ $sto-filter-header-elevation: 4;
   }
   .mat-expansion-panel-body{
     padding:  $space-8x $space-4x  ;
+    margin: 0;
   }
 
   .mat-expansion-panel-header[aria-disabled=true]{
