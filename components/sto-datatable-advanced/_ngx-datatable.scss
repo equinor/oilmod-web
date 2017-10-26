@@ -125,7 +125,9 @@ $content-height: 20px;
         transition: width 0.3s ease;
         font-size: $font-size;
         font-weight: $font-weight-normal;
-
+        &.date-cell {
+          padding: 0;
+        }
         // cell active class
         // &.active {
         //  background: #0829e0
