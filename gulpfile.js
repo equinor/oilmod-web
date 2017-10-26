@@ -34,7 +34,7 @@ const copyFiles = [
   './vendor/font-awesome/scss/_variables.scss',
   './vendor/_material_angular_variables.scss',
   './style/**/*.scss',
-  './vendor/material-icons/fonts/*'
+  './vendor/material-icons/**/*'
 ];
 
 gulp.task('inline', function() {
