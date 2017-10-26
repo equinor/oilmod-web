@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NumberFormatPipe } from './number-format.pipe';
+import { CurrencyFormatPipe } from './currency-format.pipe';
 import { KeysPipe } from './keys.pipe';
 import { DateFormatPipe } from './date-format.pipe';
 import { QualityNamePipe } from './quality-name.pipe';
@@ -15,6 +16,7 @@ import { YesNoPipe } from './yes-no';
     DateFormatPipe,
     KeysPipe,
     NumberFormatPipe,
+    CurrencyFormatPipe,
     QualityNamePipe,
     TankNamePipe,
     TankStatePipe,
@@ -26,6 +28,7 @@ import { YesNoPipe } from './yes-no';
     DateFormatPipe,
     KeysPipe,
     NumberFormatPipe,
+    CurrencyFormatPipe,
     QualityNamePipe,
     TankNamePipe,
     TankStatePipe,
