@@ -83,7 +83,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 						  [offsetX]="offsetX"
 						  [row]="summaryRowData"
 						  [columns]="summaryColumns"
-						  [rowHeight]="36"
+						  rowHeight="100%"
 						  [rowClass]="getFooterRowClass"
 				  >
 				  </sto-datatable-body-row>
