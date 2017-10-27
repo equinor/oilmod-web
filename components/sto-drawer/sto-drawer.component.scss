@@ -72,6 +72,7 @@ $header-size: 20px;
   @include mat-elevation(1);
   padding: 0 spacer(2);
   background-color: $gray-light;
+  border-bottom: solid 1px $gray-medium;;
   display: flex;
   box-sizing: border-box;
   width: 100%;
@@ -79,6 +80,7 @@ $header-size: 20px;
   flex-direction: row;
   align-items: center;
   white-space: nowrap;
+
 
   &__title, h1,h2,h3,h4{
     font-size: $header-size;
