@@ -1,6 +1,6 @@
 <span [ngClass]="{'ui-daterange-wrapper': true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style"
 	  [class]="styleClass">
-	<mat-form-field floatPlaceholder="never" [class]="inputStyleClass">
+	<mat-form-field [class]="inputStyleClass">
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
 			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 			   [readonly]="true" [placeholder]="placeholder||''">
