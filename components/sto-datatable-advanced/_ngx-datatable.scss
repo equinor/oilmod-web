@@ -15,7 +15,7 @@ $border-color-dark: $gray-dark;
 $datatable-cell-color: $black-medium;
 $datatable-background-color: $white-light;
 $datatable-font-size: $font-size;
-$datatable-header-background: $gray-light;
+$datatable-header-background: $white-light;
 $datatable-header-vertical-padding: $space-2x;
 $datatable-header-horizontal-padding: $space-4x;
 $datatable-vertical-padding: $space-2x;
@@ -83,7 +83,7 @@ $content-height: 20px;
 
 
     .datatable-row-left {
-      // background-color: $datatable-header-background;
+      background-color: $datatable-header-background;
       //border-right: 1px solid $border-color-dark;
     }
 
@@ -125,7 +125,9 @@ $content-height: 20px;
         transition: width 0.3s ease;
         font-size: $font-size;
         font-weight: $font-weight-normal;
-
+        &.date-cell {
+          padding: 0;
+        }
         // cell active class
         // &.active {
         //  background: #0829e0

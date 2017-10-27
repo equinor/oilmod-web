@@ -32,6 +32,12 @@ import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/';
             </ng-template>
 				  </div>
 			  </div>
+			  <!--removed from datatable-header-cell. issues with grouping-->
+<!--					  draggable
+					  [dragModel]="column"
+					  [dragEventTarget]="dragEventTarget"
+					  [dragX]="reorderable && column.draggable && column.dragging"
+					  [dragY]="false"-->
 			  <datatable-header-cell
 					  *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
 					  resizeable
@@ -42,11 +48,6 @@ import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/';
 					  [pressEnabled]="reorderable && column.draggable"
 					  (longPressStart)="onLongPressStart($event)"
 					  (longPressEnd)="onLongPressEnd($event)"
-					  draggable
-					  [dragX]="reorderable && column.draggable && column.dragging"
-					  [dragY]="false"
-					  [dragModel]="column"
-					  [dragEventTarget]="dragEventTarget"
 					  [headerHeight]="headerHeight"
 					  [column]="column"
 					  [sortType]="sortType"
