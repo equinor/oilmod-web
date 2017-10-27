@@ -357,8 +357,12 @@ $content-height: 20px;
     height: $content-height;
   }
   .mat-form-field-infix{
-    padding: 0.25em;
-    border-top: 0;
+    margin-top: -10px;
+    padding: 0 9px 0px 0;
+
+  }
+  .mat-input-underline{
+    display: none;
   }
 
   .mat-icon-button{
