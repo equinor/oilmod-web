@@ -190,9 +190,12 @@
 .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {
   cursor: not-allowed; }
 
-input[type="checkbox"],
-input[type="radio"] {
-  display: none; }
+.ngx-datatable{
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: none; }
+
+}
 
 
 
