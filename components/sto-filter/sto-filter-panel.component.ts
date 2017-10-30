@@ -1,5 +1,4 @@
-import { ViewChild, Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { AfterViewInit } from '../../node_modules_/@angular/core/src/metadata/lifecycle_hooks';
+import { ViewChild, AfterViewInit, Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 
 @Component({

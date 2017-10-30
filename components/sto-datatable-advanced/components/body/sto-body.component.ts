@@ -44,7 +44,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 					  [rowIndex]="getRowIndex(group[i])"
 					  (rowContextmenu)="rowContextmenu.emit($event)">
 				  <sto-datatable-body-row
-						  *ngIf="!group.value"
+						  *ngIf="!groupedRows; else groupedRowsTemplate"
 						  tabindex="-1"
 						  [isSelected]="selector.getRowSelected(group)"
 						  [innerWidth]="innerWidth"
@@ -57,6 +57,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 						  [rowClass]="rowClass"
 						  (activate)="selector.onActivate($event, i)">
 				  </sto-datatable-body-row>
+				  <ng-template #groupedRowsTemplate>
 				  <sto-datatable-body-row
 						  *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
 						  tabindex="-1"
@@ -72,6 +73,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 						  [rowClass]="rowClass"
 						  (activate)="selector.onActivate($event, i)">
 				  </sto-datatable-body-row>
+				  </ng-template>
 			  </datatable-row-wrapper>
 			  <sto-datatable-fixed-row-wrapper
 					  *ngIf="summaryRowData"
