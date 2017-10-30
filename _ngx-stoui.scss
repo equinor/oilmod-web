@@ -66,3 +66,27 @@ body{
     margin-bottom: 0;
   }
 }
+
+.sto-form-field--readonly{
+  .mat-form-field-underline{
+    visibility: hidden;
+  }
+}
+
+.sto-form {
+
+  .mat-form-field {
+    margin-top: 8px;
+    height: 72px;
+  }
+  .mat-form-field-subscript-wrapper {
+    font-size: 10px;
+    margin: 6px 0;
+  }
+  .mat-form-field-infix {
+    padding: 8px 0;
+  }
+  .mat-form-field-invalid .mat-form-field-ripple{
+    height: 2px;
+  }
+}

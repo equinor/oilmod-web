@@ -84,6 +84,7 @@ $header-size: 20px;
 
   &__title, h1,h2,h3,h4{
     font-size: $header-size;
+    margin: 0;
   }
 
   button {

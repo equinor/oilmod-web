@@ -385,8 +385,14 @@ $content-height: 20px;
   }
 }
 
-.datatable-body-row.active{
-  background-color: $gray-light;
+.datatable-body-row{
+
+  &.active {
+    background-color: $gray-light;
+  }
+  &:hover {
+    background-color: $white-medium;
+  }
 }
 
 .sto-datatable__column{
