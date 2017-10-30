@@ -88,3 +88,14 @@ $sto-filter-header-elevation: 2;
     justify-content: center;
   }
 }
+
+.separator{
+  display: inline-block;
+  width: 1px;
+  background-color: $gray-medium;
+  height: 24px;
+  margin: 8px 4px;
+}
+.content-wrapper{
+  display:flex;
+}

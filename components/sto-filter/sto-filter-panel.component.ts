@@ -1,4 +1,5 @@
-import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { ViewChild, Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit } from '../../node_modules_/@angular/core/src/metadata/lifecycle_hooks';
 
 
 @Component({
@@ -7,8 +8,13 @@ import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsul
   templateUrl: './sto-filter-panel.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class StoFilterPanelComponent implements OnInit {
+export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @Input() expandable: true;
+  @ViewChild('contentWrapper') contentWrapper;
+  @ViewChild('contentWrapper2') contentWrapper2;
+
+
+  public hasSeperator = false;
   public expanded: boolean = false;
 
   public toggle() {
@@ -19,7 +25,34 @@ export class StoFilterPanelComponent implements OnInit {
     if (this.expandable) {
       this.expanded = true;
     }
+    this.needSeperator();
   }
+
+  ngAfterViewInit(){
+    this.needSeperator();
+  }
+  public needSeperator(){
+    this.hasSeperator = false;
+    if(this.contentWrapper && this.contentWrapper2) {
+      const el1 = this.contentWrapper.nativeElement;
+      const el2 = this.contentWrapper2.nativeElement;
+      if (el1.children && el2.children) {
+        if(el1.children.length > 0 && el2.children.length > 0){
+          const hasActionButtons = el1.children[0].children.length > 0;
+          const hasTableButtons = el2.children[0].children.length > 0;
+
+          this.hasSeperator = hasActionButtons && hasTableButtons
+          this.cdr.detectChanges();
+        }
+      }
+    }
+
+
+  }
+
+  constructor(private cdr: ChangeDetectorRef) {
+  }
+
 }
 
 /**
