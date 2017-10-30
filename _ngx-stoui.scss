@@ -8,6 +8,10 @@ body {
   background-color: $gray-lighter;
   margin-left: 0;
   margin-right: 0;
+
+}
+*{
+  box-sizing: border-box;
 }
 
 @import "components/sto-button/sto-button.directive";
