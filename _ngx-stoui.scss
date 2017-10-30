@@ -1,22 +1,14 @@
-
+@import "style/functions";
 @import "variables";
 @import "mixins";
-@import "vendor/bootstrap/scaffolding";
-@import "vendor/bootstrap/normalize";
-@import "vendor/bootstrap/grid";
-@import "vendor/bootstrap/tables";
-@import "vendor/bootstrap/type";
 @import "vendor/bootstrap/forms";
-@import "vendor/primeface/_new_primeface";
 
 //body
-body{
+body {
   background-color: $gray-lighter;
+  margin-left: 0;
+  margin-right: 0;
 }
-
-//@import "vendor/primeface/_primeface";
-//@import "vendor/bootstrap/_bootstrap";
-//@import "vendor/primeface/_primeface-theme";
 
 @import "components/sto-button/sto-button.directive";
 @import "components/sto-tooltip/sto-tooltip.directive";
@@ -28,13 +20,10 @@ body{
 @import "components/sto-filter/sto-filter-panel.component";
 @import "components/sto-directives/edit-mode.directive";
 
-
-
-.sto-datatable-wrapper{
+.sto-datatable-wrapper {
   background-color: white;
   @include mat-elevation(3);
 }
-
 
 .horizontal {
   mat-form-field {
@@ -47,22 +36,24 @@ body{
   text-transform: uppercase;
 }
 
-
-
 //move to sub
-.stoui-dialog .mat-dialog-container{
+.stoui-dialog .mat-dialog-container {
   padding: 0;
-  .mat-dialog-content{
+  .mat-dialog-title {
+    padding: 24px 24px 0 24px;
+    margin-bot: -4px;
+  }
+  .mat-dialog-content {
     padding: 24px;
     margin: 0;
-    p{
+    p {
       margin-bottom: 0;
     }
   }
-  .mat-dialog-actions{
+  .mat-dialog-actions {
     padding: 8px;
   }
-  .mat-dialog-actions:last-child{
+  .mat-dialog-actions:last-child {
     margin-bottom: 0;
   }
 }
@@ -89,4 +80,9 @@ body{
   .mat-form-field-invalid .mat-form-field-ripple{
     height: 2px;
   }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }

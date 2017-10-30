@@ -2,10 +2,21 @@
 @import "../../style/functions";
 
 $header-height: spacer(16);
+$large-header-height: spacer(24);
 $footer-height: spacer(16);
 $header-size: 20px;
 
-.sto-drawer{
+.large-header {
+  .sto-drawer__content {
+    height: calc(100% - calc(#{$large-header-height} + #{$footer-height})
+  }
+  .sto-drawer__header {
+    line-height: 30px;
+    height: $large-header-height;
+  }
+}
+
+.sto-drawer {
   @include mat-elevation(4);
   background: $gray-lighter;
   color: #000;
@@ -16,11 +27,11 @@ $header-size: 20px;
   min-width: 260px;
   z-index: 30;
 
-  .mat-card{
+  .mat-card {
 
     margin-bottom: spacer(4);
 
-    &-title{
+    &-title {
       border-bottom: 1 solid $gray-dark;
       font-size: $header-size;
     }
@@ -37,11 +48,10 @@ $header-size: 20px;
   }
 }
 
-
-.sto-drawer__content  {
+.sto-drawer__content {
   padding: spacer(4) spacer(4);
   overflow-y: auto;
-  height: calc(100% - calc(#{$header-height} + #{$footer-height}));
+  height: calc(100% - calc(#{$header-height} + #{$footer-height} + #{spacer(4)}));
   &.navigation {
     height: 100%;
   }
@@ -54,20 +64,18 @@ $header-size: 20px;
   padding: spacer(4);
   width: 100%;
   background-color: $gray-light;
-  height: $footer-height;
+  height: calc(#{$footer-height} - spacer(4));
 
-  button{
+  button {
     text-transform: uppercase;
   }
 
-  &__more{
+  &__more {
     float: right;
   }
 }
 
-
 .sto-drawer__header {
-
 
   @include mat-elevation(1);
   padding: 0 spacer(2);
@@ -81,8 +89,7 @@ $header-size: 20px;
   align-items: center;
   white-space: nowrap;
 
-
-  &__title, h1,h2,h3,h4{
+  &__title, h1, h2, h3, h4 {
     font-size: $header-size;
     margin: 0;
   }
