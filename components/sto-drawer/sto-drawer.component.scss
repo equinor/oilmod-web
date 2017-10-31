@@ -4,7 +4,7 @@
 $header-height: spacer(16);
 $large-header-height: spacer(24);
 $footer-height: spacer(16);
-$header-size: 20px;
+$header-size: 16px;
 
 .large-header {
   .sto-drawer__content {
@@ -17,7 +17,7 @@ $header-size: 20px;
 }
 
 .sto-drawer {
-  @include mat-elevation(4);
+  @include mat-elevation(16);
   background: $gray-lighter;
   color: #000;
   position: fixed;
@@ -28,12 +28,15 @@ $header-size: 20px;
   z-index: 30;
 
   .mat-card {
-
+   // padding: spacer(4) spacer(6) spacer(6) spacer(6);
     margin-bottom: spacer(4);
-
     &-title {
       border-bottom: 1 solid $gray-dark;
       font-size: $header-size;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
     }
   }
 
@@ -51,18 +54,21 @@ $header-size: 20px;
 .sto-drawer__content {
   padding: spacer(4) spacer(4);
   overflow-y: auto;
-  height: calc(100% - calc(#{$header-height} + #{$footer-height} + #{spacer(4)}));
+  height: calc(100% - calc(#{$header-height} + #{$footer-height}));
   &.navigation {
     height: 100%;
   }
 }
 
 .sto-drawer__footer {
-  @include mat-elevation(1);
+  @include mat-elevation(4);
   position: absolute;
+  border-top: solid 1px $gray-medium;
   bottom: 0;
+  left: 0;
   padding: spacer(4);
   width: 100%;
+
   background-color: $gray-light;
   height: calc(#{$footer-height} - spacer(4));
 
@@ -77,10 +83,10 @@ $header-size: 20px;
 
 .sto-drawer__header {
 
-  @include mat-elevation(1);
-  padding: 0 spacer(2);
+  @include mat-elevation(4);
+  padding: 0 spacer(2) 0 spacer(4);
   background-color: $gray-light;
-  border-bottom: solid 1px $gray-medium;;
+  border-bottom: solid 1px $gray-medium;
   display: flex;
   box-sizing: border-box;
   width: 100%;
@@ -91,6 +97,7 @@ $header-size: 20px;
 
   &__title, h1, h2, h3, h4 {
     font-size: $header-size;
+    margin: 0;
   }
 
   button {
