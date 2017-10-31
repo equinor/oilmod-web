@@ -18,7 +18,7 @@ $datatable-font-size: $font-size;
 $datatable-header-background: $white-light;
 $datatable-header-vertical-padding: $space-2x;
 $datatable-header-horizontal-padding: $space-4x;
-$datatable-header-font-size: 12px;
+$datatable-header-font-size: 11px;
 
 $datatable-vertical-padding: $space-2x;
 $datatable-horizontal-padding: $space-4x;
@@ -39,13 +39,12 @@ $content-height: 20px;
 
     .datatable-header-cell {
 
-      padding: $datatable-vertical-padding $datatable-horizontal-padding;
-      lineheight: 18px;
+      padding: $space-4x $space-4x $space $space-4x;
+      lineheight: 13px;
       font-weight: 400;
       color: rgba(0,0,0,.54);
-      vertical-align: middle;
+      vertical-align: baseline;
       font-size: $datatable-header-font-size;
-      font-weight: 500;
       -webkit-user-select: none; /* Safari */
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+/Edge */
@@ -446,31 +445,30 @@ $content-height: 20px;
 }
 
 .ngx-datatable.sto-datatable__inline-card {
-  font-size: 12px;
 
+  margin-right: -8px;
+  margin-left: -8px;
   .datatable-header {
+
     .datatable-header-cell{
-      padding: 6px 4px;
+
       &:first-child{
-        padding-left: 0;
+        padding-left: 8px;
       }
     }
   }
   .datatable-body {
     .datatable-body-row{
       .datatable-body-cell{
-        padding: 6px 4px;
         &:first-child{
-          padding-left: 0;
+          padding-left: 8px;
         }
-        .datatable-body-cell-label{
-          line-height: 18px;
-        }
+
       }
     }
 
   }
   .empty-row{
-    padding-left: 0;
+    padding-left:4px;
   }
 }
