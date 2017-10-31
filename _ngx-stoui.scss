@@ -26,7 +26,13 @@ body {
 
 .sto-datatable-wrapper {
   background-color: white;
-  @include mat-elevation(3);
+  border-radius: 2px;
+  @include mat-elevation(2);
+
+  .sto-panel-content{
+    border-radius: 2px;
+  }
+
 }
 
 .horizontal {
