@@ -25,10 +25,6 @@ $datatable-horizontal-padding: $space-4x;
 
 $content-height: 20px;
 
-
-
-
-
 .ngx-datatable.stoui, .ngx-datatable.sto-datatable {
   background: $datatable-background-color;
   font-size: $datatable-font-size;
@@ -37,12 +33,12 @@ $content-height: 20px;
   .datatable-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
-    .datatable-header-cell {
 
+    .datatable-header-cell {
       padding: $space-4x $space-4x $space $space-4x;
-      lineheight: 13px;
+      line-height: 13px;
       font-weight: 400;
-      color: rgba(0,0,0,.54);
+      color: rgba(0, 0, 0, .54);
       vertical-align: baseline;
       font-size: $datatable-header-font-size;
       -webkit-user-select: none; /* Safari */
@@ -87,7 +83,7 @@ $content-height: 20px;
     }
 
     .resize-handle {
-      border-right:solid 1px #eee;
+      border-right: solid 1px #eee;
     }
 
     .datatable-header-column-group {
@@ -100,6 +96,11 @@ $content-height: 20px;
     }
 
     .datatable-row-left {
+      background-color: $datatable-header-background;
+      //border-right: 1px solid $border-color-dark;
+    }
+
+    .datatable-row-center {
       background-color: $datatable-header-background;
       //border-right: 1px solid $border-color-dark;
     }
@@ -177,6 +178,10 @@ $content-height: 20px;
       // border-right: 1px solid $border-color-dark;
     }
 
+    .datatable-row-center {
+      background-color: $datatable-background-color;
+    }
+
     .datatable-row-right {
       background-color: $datatable-background-color;
     }
@@ -205,18 +210,18 @@ $content-height: 20px;
         overflow: hidden;
         width: 100%;
         height: 5px;
-        -webkit-transform: translate(0,0) scale(1,1);
-        transform: translate(0,0) scale(1,1);
-        background-color: rgb(170,209,249);
+        -webkit-transform: translate(0, 0) scale(1, 1);
+        transform: translate(0, 0) scale(1, 1);
+        background-color: rgb(170, 209, 249);
 
         .bar {
           transition: all .2s linear;
-          -webkit-animation: query .8s infinite cubic-bezier(.39,.575,.565,1);
-          animation: query .8s infinite cubic-bezier(.39,.575,.565,1);
+          -webkit-animation: query .8s infinite cubic-bezier(.39, .575, .565, 1);
+          animation: query .8s infinite cubic-bezier(.39, .575, .565, 1);
 
           transition: -webkit-transform .2s linear;
           transition: transform .2s linear;
-          background-color: rgb(16,108,200);
+          background-color: rgb(16, 108, 200);
 
           position: absolute;
           left: 0;
@@ -230,15 +235,15 @@ $content-height: 20px;
 
   }
 
-  .empty-row{
-    height:50px;
+  .empty-row {
+    height: 50px;
     text-align: left;
     padding: .5rem 1.2rem;
     vertical-align: top;
     border-top: 0;
   }
 
-  .loading-row{
+  .loading-row {
     text-align: left;
     padding: .5rem 1.2rem;
     vertical-align: top;
@@ -249,11 +254,11 @@ $content-height: 20px;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     font-size: 12px;
     font-weight: 400;
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, .54);
 
-    .page-count{
+    .page-count {
       line-height: 50px;
-      height:50px;
+      height: 50px;
       padding: 0 1.2rem;
     }
 
@@ -264,12 +269,12 @@ $content-height: 20px;
         vertical-align: middle;
 
         &.disabled a {
-          color:rgba(0, 0, 0, 0.26) !important;
+          color: rgba(0, 0, 0, 0.26) !important;
           background-color: transparent !important;
         }
 
         &.active a {
-          background-color: rgba(158,158,158,0.2);
+          background-color: rgba(158, 158, 158, 0.2);
           font-weight: bold;
         }
       }
@@ -283,29 +288,28 @@ $content-height: 20px;
         margin: 6px 3px;
         text-align: center;
         vertical-align: top;
-        color: rgba(0,0,0,.54);
+        color: rgba(0, 0, 0, .54);
         text-decoration: none;
         vertical-align: bottom;
 
         &:hover {
-          color: rgba(0,0,0,.75);
-          background-color: rgba(158,158,158,0.2);
+          color: rgba(0, 0, 0, .75);
+          background-color: rgba(158, 158, 158, 0.2);
         }
       }
 
       .datatable-icon-left,
       .datatable-icon-skip,
       .datatable-icon-right,
-      .datatable-icon-prev{
-        font-size:20px;
+      .datatable-icon-prev {
+        font-size: 20px;
         line-height: 20px;
-        padding:0 3px;
+        padding: 0 3px;
       }
     }
   }
 
-
-  .negative-number{
+  .negative-number {
     color: $error-color;
   }
 
@@ -333,13 +337,13 @@ $content-height: 20px;
 
   }
 
-  .mat-icon{
+  .mat-icon {
     color: $black-light;
     height: $content-height;
-    width:  $content-height;
+    width: $content-height;
     font-size: $content-height;
     cursor: pointer;
-    &:hover{
+    &:hover {
       color: $black-medium;
     }
 
@@ -349,44 +353,41 @@ $content-height: 20px;
     border-left: solid 1px $border-color-light;
   }
 
-  &.single-selection{
-    .datatable-body-row{
+  &.single-selection {
+    .datatable-body-row {
       cursor: pointer;
     }
   }
 }
 
-
-
-
-.datatable-body-cell-label{
+.datatable-body-cell-label {
   > span {
     display: inline-block;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .mat-select, .mat-input{
-    padding:0;
+  .mat-select, .mat-input {
+    padding: 0;
     font-size: $font-size;
   }
-  .mat-select-value{
+  .mat-select-value {
     height: $content-height;
   }
-  .mat-select-trigger{
+  .mat-select-trigger {
     font-size: $font-size;
     height: $content-height;
   }
-  .mat-form-field-infix{
+  .mat-form-field-infix {
     margin-top: -10px;
     padding: 0 9px 0px 0;
 
   }
-  .mat-input-underline{
+  .mat-input-underline {
     //display: none;
   }
 
-  .mat-icon-button{
+  .mat-icon-button {
     margin-left: -16px;
     margin-top: -18px;
     height: 36px;
@@ -394,17 +395,15 @@ $content-height: 20px;
     line-height: 36px;
   }
 
-
-
 }
 
-.datatable-header{
-  .mat-input-infix{
+.datatable-header {
+  .mat-input-infix {
     padding: 0;
   }
 }
 
-.datatable-body-row{
+.datatable-body-row {
 
   &.active {
     background-color: $gray-light;
@@ -414,28 +413,43 @@ $content-height: 20px;
   }
 }
 
-.sto-datatable__column{
-  &--number{
+.sto-datatable__column {
+  &--number {
     text-align: right;
   }
-  &--expandable{
-      .icon-wrapper{
-        display: inline-block;
+  &--expandable {
+    .icon-wrapper {
+      display: inline-block;
 
-        .mat-icon{
-          margin-top: -5px;
-        }
+      .mat-icon {
+        margin-top: -5px;
       }
+    }
   }
 }
 
-.ngx-datatable.sto-datatable__overview{
+.ngx-datatable.sto-datatable__overview {
+
+  .datatable-header-column-group {
+    line-height: 11px;
+    .mat-icon {
+      height: 13px;
+      width: 13px;
+      line-height: 13px;
+    }
+  }
+
   .datatable-header {
+    line-height: 11px;
+    height: auto;
     border-top: 1px solid $border-color-light;
     border-bottom: 1px solid $border-color-light;
     color: $black-light;
   }
+
   .datatable-header-cell {
+
+    line-height: 11px;
     padding: $datatable-header-vertical-padding $datatable-horizontal-padding;
 
     small {
@@ -449,17 +463,17 @@ $content-height: 20px;
   margin-left: -8px;
   margin-right: -8px;
   .datatable-header {
-    .datatable-header-cell{
+    .datatable-header-cell {
       padding: 6px 4px;
-      &:first-child{
+      &:first-child {
         padding-left: 8px;
       }
     }
   }
   .datatable-body {
-    .datatable-body-row{
-      .datatable-body-cell{
-        &:first-child{
+    .datatable-body-row {
+      .datatable-body-cell {
+        &:first-child {
           padding-left: 8px;
         }
 
@@ -467,7 +481,7 @@ $content-height: 20px;
     }
 
   }
-  .empty-row{
-    padding-left:4px;
+  .empty-row {
+    padding-left: 4px;
   }
 }
