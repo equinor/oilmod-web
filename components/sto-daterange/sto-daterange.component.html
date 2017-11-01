@@ -1,16 +1,14 @@
-<span [ngClass]="{'ui-daterange-wrapper': true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style"
-	  [class]="styleClass">
+<span [ngStyle]="style"
+	  class="sto-daterange-wrapper">
 	<mat-form-field [class]="inputStyleClass">
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
 			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 			   [readonly]="true" [placeholder]="placeholder||''">
 	</mat-form-field>
 
-	<div class="ui-daterange" #datepicker
-		 [class.ui-state-disabled]="disabled"
+	<div class="sto-daterange" #datepicker
 		 [ngStyle]="{'display': overlayVisible ? 'block' : 'none'}"
 		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'">
-				{{ form.value | json }}
 			<div style="width: 60%">
 				<form [formGroup]="form">
 					<div style="width: 50%; float: left;">

@@ -5,7 +5,7 @@
   margin: 1em 2em;
 }
 
-.ui-daterange {
+.sto-daterange {
   @include mat-elevation(2);
   min-width: calc(17em * 4);
   background-color: $white-light;
@@ -14,7 +14,7 @@
   position: absolute;
 }
 
-.ui-daterange-wrapper {
+.sto-daterange-wrapper {
   width: 19em;
   display: block;
 }
@@ -23,15 +23,11 @@
   margin-left: -2px;
 }
 
-.ui-daterange-wrapper button.ui-datepicker-trigger {
+.sto-daterange-wrapper button.sto-datepicker-trigger {
   height: 100%;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   position: absolute;
   width: 2em;
   border-left: 0 none;
-}
-
-input.ui-inputtext {
-  width: calc(100% - 2em);
 }
