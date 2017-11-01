@@ -1,5 +1,14 @@
+@import "../../variables";
+
+.sto-daterange__button--container {
+  width: 100%;
+  margin: 1em 2em;
+}
+
 .ui-daterange {
+  @include mat-elevation(2);
   min-width: calc(17em * 4);
+  background-color: $white-light;
   max-width: 50%;
   padding: .2em;
   position: absolute;

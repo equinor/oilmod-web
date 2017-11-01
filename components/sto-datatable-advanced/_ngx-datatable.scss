@@ -447,12 +447,13 @@ $content-height: 20px;
 
 .ngx-datatable.sto-datatable__inline-card {
   font-size: 12px;
-
+  margin-left: -8px;
+  margin-right: -8px;
   .datatable-header {
     .datatable-header-cell{
       padding: 6px 4px;
       &:first-child{
-        padding-left: 0;
+        padding-left: 8px;
       }
     }
   }
@@ -461,7 +462,7 @@ $content-height: 20px;
       .datatable-body-cell{
         padding: 6px 4px;
         &:first-child{
-          padding-left: 0;
+          padding-left: 8px;
         }
         .datatable-body-cell-label{
           line-height: 18px;
