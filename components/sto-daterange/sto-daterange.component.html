@@ -1,35 +1,34 @@
-<span [ngClass]="{'ui-daterange-wrapper': true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style"
-	  [class]="styleClass">
+<span [ngStyle]="style"
+	  class="sto-daterange-wrapper">
 	<mat-form-field [class]="inputStyleClass">
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
 			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 			   [readonly]="true" [placeholder]="placeholder||''">
 	</mat-form-field>
 
-	<div class="ui-g ui-daterange ui-shadow ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" #datepicker
-		 [class.ui-state-disabled]="disabled"
+	<div class="sto-daterange" #datepicker
 		 [ngStyle]="{'display': overlayVisible ? 'block' : 'none'}"
 		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'">
-			<div class="ui-g-8">
+			<div style="width: 60%">
 				<form [formGroup]="form">
-					<div class="ui-g-6">
+					<div style="width: 50%; float: left;">
 						<div style="width: 17em">
 							<sto-inline-calendar formControlName="start"></sto-inline-calendar>
 						</div>
 					</div>
-					<div class="ui-g-6">
+					<div style="width: 50%; float: left;">
 						<div style="width: 17em">
 							<sto-inline-calendar formControlName="end"></sto-inline-calendar>
 						</div>
 					</div>
 				</form>
 			</div>
-			<div class="ui-g-4">
-				<div class="ui-g-12">
+			<div>
+				<div class="sto-daterange__button--container">
 					<button (click)="tenWeeks()"
 							mat-raised-button>Previous 2w - Next 8w</button>
 				</div>
-				<div class="ui-g-12">
+				<div class="sto-daterange__button--container">
 					<em>Week:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (week)">
 						<button (click)="periodPicker('week', '-')" mat-raised-button>Prev</button>
@@ -37,7 +36,7 @@
 						<button (click)="periodPicker('week', '+')" mat-raised-button>Next</button>
 					</div>
 				</div>
-				<div class="ui-g-12">
+				<div class="sto-daterange__button--container">
 					<em>Month:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (month)">
 						<button (click)="periodPicker('month', '-')" mat-raised-button>Prev</button>
@@ -45,7 +44,7 @@
 						<button (click)="periodPicker('month', '+')" mat-raised-button>Next</button>
 					</div>
 				</div>
-				<div class="ui-g-12">
+				<div class="sto-daterange__button--container">
 					<button [disabled]="form.invalid" mat-raised-button
 							color="primary" (click)="onSubmit()">Submit</button>
 					<button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
