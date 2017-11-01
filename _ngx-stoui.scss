@@ -41,12 +41,18 @@ body {
   }
 }
 
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 //Mo to buttons
 .mat-button, .mat-raised-button {
   text-transform: uppercase;
 }
 
-//move to sub
+//move STO-dialog
 .stoui-dialog .mat-dialog-container {
   padding: 0;
   .mat-dialog-title {
@@ -67,13 +73,9 @@ body {
     margin-bottom: 0;
   }
 }
+//END STO-DIALOG
 
-.sto-form-field--readonly{
-  .mat-form-field-underline{
-    visibility: hidden;
-  }
-}
-
+//STO FORM
 .sto-form {
 
   .mat-form-field {
@@ -81,18 +83,28 @@ body {
     height: 72px;
   }
   .mat-form-field-subscript-wrapper {
-    font-size: 10px;
-    margin: 6px 0;
+    font-size: 11px;
+    margin: 8px 0;
   }
   .mat-form-field-infix {
-    padding: 8px 0;
+    padding: 8px 0 4px 0;
   }
   .mat-form-field-invalid .mat-form-field-ripple{
     height: 2px;
   }
 }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
+.sto-form-field--readonly{
+  .mat-form-field-underline{
+    visibility: hidden;
+  }
 }
+
+//Don't know how to overwrite this without important O_o
+.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder{
+  -webkit-transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
+  transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
+  -ms-transform: translateY(-1.28125em) scale(0.8461538461538462) !important;
+}
+
+//END STO-FORM
