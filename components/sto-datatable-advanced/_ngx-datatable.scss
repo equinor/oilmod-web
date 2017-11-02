@@ -102,7 +102,9 @@ $content-height: 20px;
     .datatable-row-right {
       background-color: $datatable-header-background;
     }
-
+    .mat-icon {
+      vertical-align: bottom;
+    }
   }
 
   .datatable-body {
@@ -332,7 +334,6 @@ $content-height: 20px;
     height: $content-height;
     width: $content-height;
     font-size: $content-height;
-    vertical-align: bottom;
     cursor: pointer;
     &:hover {
       color: $black-medium;
