@@ -5,6 +5,10 @@
 $orange-medium: orange;
 $red-medium: red;
 
+/**
+** From figma:
+** background-color: #F2F2F2;
+ */
 $yellow-light: #FFFFCC;
 
 $black-medium: rgba(0,0,0,0.8);
@@ -16,10 +20,18 @@ $white-medium: #FAFAFA;
 $gray-darker: #666666;
 $gray-dark: #828282;
 $gray-medium: #CCCCCC;
+/**
+** From figma:
+** background-color: rgba(242, 201, 76, 0.3);
+ */
 $gray-light: #E0E0E0;
 $gray-lighter: #F1F2F3;
 
 $green-dark: #0A6666;
+/**
+** From figma:
+** background-color: rgba(33, 150, 83, 0.2);
+ */
 $green-light: #D4DDD3;
 
 
@@ -29,6 +41,3 @@ $content-bg-color-highlight: $gray-medium;
 $text-color: $gray-darker;
 $header-color: $gray-darker;
 $subtle-color: $gray-dark;
-
-
-

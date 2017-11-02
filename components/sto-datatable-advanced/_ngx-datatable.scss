@@ -1,6 +1,7 @@
 @import "_ngx-datatable-core";
 @import "_ngx-datatable-material";
 
+
 //colors: datatable
 $warning-color: $orange-medium;
 $error-color: $red-medium;
@@ -317,6 +318,8 @@ $content-height: 20px;
 
   .status {
     text-align: center;
+    &.cancelled {
+    }
     &.planned {
       background-color: $planned-color;
     }
