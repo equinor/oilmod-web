@@ -19,6 +19,7 @@ export class EditModeDirective {
    * @type {EventEmitter<boolean>}
    */
   @Output() canEdit = new EventEmitter<boolean>();
+  private dontToggle: boolean;
 
   /**
    * Listen for click events on the current element
@@ -26,6 +27,7 @@ export class EditModeDirective {
    */
   @HostListener('click')
   onElementClick(event: MouseEvent) {
+    this.dontToggle = true;
     this.isEditable = true;
     this.canEdit.emit(true);
   }
@@ -37,26 +39,30 @@ export class EditModeDirective {
    */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (!this.isEditable || event.target === this.el.nativeElement) {
+    if (!this.isEditable) {
       return;
     }
     const path: Element[] = event['path'];
+    if (this.dontToggle) {
+      this.dontToggle = false;
+      return;
+    }
     /**
      * Loop over and filter out any non-ignored elements
      * If any non-ignored elements are found, do nothing - otherwise, turn off edit mode.
      * @type {boolean}
      */
-    const shouldClose = path.filter(e => e.tagName)
+    let shouldClose = path.filter(e => e.tagName)
       .filter(e => {
         return this.dontToggleElements.indexOf(e.tagName.toLowerCase()) >= 0;
       })
-      .map(e => Array.from(e.classList))
+      .map(e =>  Array.from(e.classList))
       .reduce((a, b) => [...a, ...b], [])
-      .filter(c => this.dontToggleElements.indexOf(c) >= 0)
+      .filter(c =>  this.dontToggleElements.indexOf(c) < 0)
       .length === 0;
     if (shouldClose) {
-      this.isEditable = false;
-      this.canEdit.emit(false);
+        this.isEditable = false;
+        this.canEdit.emit(false);
     }
   }
 
