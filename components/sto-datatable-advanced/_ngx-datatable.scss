@@ -433,6 +433,23 @@ $content-height: 20px;
       line-height: 13px;
     }
   }
+  .datatable-body-row {
+    .datatable-row-left {
+      background-color: $datatable-header-background;
+    }
+    .datatable-row-center {
+      background-color: $datatable-header-background;
+    }
+    &:hover {
+      .datatable-row-left {
+        background-color: $white-medium;
+      }
+      .datatable-row-center {
+        background-color: $white-medium;
+      }
+    }
+  }
+
 
   .datatable-header {
     line-height: 11px;
