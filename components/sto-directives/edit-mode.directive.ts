@@ -31,6 +31,18 @@ export class EditModeDirective {
     this.isEditable = true;
     this.canEdit.emit(true);
   }
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.keyCode === 13) {
+      this.dontToggle = true;
+      this.isEditable = true;
+      this.canEdit.emit(true);
+    } else if (event.keyCode === 27) {
+      this.dontToggle = false;
+      this.isEditable = false;
+      this.canEdit.emit(false);
+    }
+  }
 
   /**
    * Listen for global mouse clicks, and toggle edit mode off
