@@ -4,6 +4,9 @@
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
 			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 			   [readonly]="true" [placeholder]="placeholder||''">
+		<mat-icon *ngIf="showIcon"
+				  matSuffix
+				  style="cursor: default;">insert_invitation</mat-icon>
 	</mat-form-field>
 
 	<div class="sto-daterange" #datepicker
