@@ -1,19 +1,18 @@
-
+@import "style/functions";
 @import "variables";
 @import "mixins";
-@import "vendor/bootstrap/scaffolding";
-@import "vendor/bootstrap/normalize";
-@import "vendor/bootstrap/grid";
-@import "vendor/bootstrap/tables";
-@import "vendor/bootstrap/type";
 @import "vendor/bootstrap/forms";
-@import "vendor/primeface/_new_primeface";
-@import "components/sto-datatable-advanced/ngx-datatable";
-@import "components/sto-directives/edit-mode.directive";
 
-//@import "vendor/primeface/_primeface";
-//@import "vendor/bootstrap/_bootstrap";
-//@import "vendor/primeface/_primeface-theme";
+//body
+body {
+  background-color: $gray-lighter;
+  margin-left: 0;
+  margin-right: 0;
+
+}
+*{
+  box-sizing: border-box;
+}
 
 @import "components/sto-button/sto-button.directive";
 @import "components/sto-tooltip/sto-tooltip.directive";
@@ -21,9 +20,20 @@
 @import "components/sto-inputtextarea/sto-inputtextarea.directive";
 @import "components/sto-password/sto-password.directive";
 
-//@import "basics/sto-basics";
-//@import "components/sto-filter/sto-filter";
+@import "components/sto-datatable-advanced/ngx-datatable";
+@import "components/sto-filter/sto-filter-panel.component";
+@import "components/sto-directives/edit-mode.directive";
 
+.sto-datatable-wrapper {
+  background-color: white;
+  border-radius: 2px;
+  @include mat-elevation(2);
+
+  .sto-panel-content{
+    border-radius: 2px;
+  }
+
+}
 
 .horizontal {
   mat-form-field {
@@ -31,3 +41,70 @@
   }
 }
 
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+//Mo to buttons
+.mat-button, .mat-raised-button {
+  text-transform: uppercase;
+}
+
+//move STO-dialog
+.stoui-dialog .mat-dialog-container {
+  padding: 0;
+  .mat-dialog-title {
+    padding: 24px 24px 0 24px;
+    margin-bot: -4px;
+  }
+  .mat-dialog-content {
+    padding: 24px;
+    margin: 0;
+    p {
+      margin-bottom: 0;
+    }
+  }
+  .mat-dialog-actions {
+    padding: 8px;
+  }
+  .mat-dialog-actions:last-child {
+    margin-bottom: 0;
+  }
+}
+//END STO-DIALOG
+
+//STO FORM
+.sto-form {
+
+  .mat-form-field {
+    margin-top: 8px;
+    height: 72px;
+  }
+  .mat-form-field-subscript-wrapper {
+    font-size: 11px;
+    margin: 8px 0;
+  }
+  .mat-form-field-infix {
+    padding: 8px 0 4px 0;
+  }
+  .mat-form-field-invalid .mat-form-field-ripple{
+    height: 2px;
+  }
+}
+
+.sto-form-field--readonly{
+  .mat-form-field-underline{
+    visibility: hidden;
+  }
+}
+
+//Don't know how to overwrite this without important O_o
+.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder{
+  -webkit-transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
+  transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
+  -ms-transform: translateY(-1.28125em) scale(0.8461538461538462) !important;
+}
+
+//END STO-FORM

@@ -1,7 +1,11 @@
 @import "style/functions";
 @import "variables";
 @import "mixins";
-@import "vendor/bootstrap/forms";
+//@import "vendor/bootstrap/forms";
+
+label {
+  max-width: 100%;
+}
 
 //body
 body {

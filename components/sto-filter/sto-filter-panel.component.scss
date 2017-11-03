@@ -78,27 +78,29 @@ $sto-filter-header-elevation: 2;
   border-radius: 2px;
 }
 
-.mat-button-toggle-standalone{
-  width: 32px;
-  height: 32px;
 
-  .mat-button-toggle-label{
-    margin: 0;
+
+  .mat-button-toggle-standalone{
+      width: 32px;
+    height: 32px;
+
+    .mat-button-toggle-label{
+      margin: 0;
+    }
+    .mat-button-toggle-label-content{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
-  .mat-button-toggle-label-content{
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
 
 .separator{
   display: inline-block;
   width: 1px;
   background-color: $gray-medium;
   height: 24px;
-  margin: 8px 4px;
+  margin: spacer(2) spacer(1);
 }
 .content-wrapper{
   display:flex;

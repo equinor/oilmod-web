@@ -2,7 +2,6 @@ import { ViewChild, AfterViewInit, Component, Directive, EventEmitter, Input, On
 
 
 @Component({
-  styleUrls: ['sto-filter-panel.component.scss'],
   selector: 'sto-filter-panel',
   templateUrl: './sto-filter-panel.component.html',
   encapsulation: ViewEncapsulation.None
@@ -89,7 +88,7 @@ export class StoFilterActions {
 
   template: `
 	  <ng-content></ng-content>
-	  <mat-button-toggle *ngIf="expandable" style="box-shadow:none" [checked]="true" (change)="onChange($event)" 
+	  <mat-button-toggle class="icon" *ngIf="expandable" style="box-shadow:none" [checked]="true" (change)="onChange($event)" 
                       (click)="toggle.emit()">
 		  <mat-icon>filter_list</mat-icon>
 	  </mat-button-toggle>
