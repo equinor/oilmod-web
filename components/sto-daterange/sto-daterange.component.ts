@@ -210,7 +210,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     if (values) {
       const start = format(values.start, 'MMM DD, YYYY');
       const end = format(values.end, 'MMM DD, YYYY');
-      this.inputFieldValue = `${start} - ${end}`;
+      this.inputFieldValue = `${start} — ${end}`;
     }
     else {
       this.inputFieldValue = '';
