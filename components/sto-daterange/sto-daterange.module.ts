@@ -9,7 +9,7 @@ import { StoInlineCalendarComponent } from './sto-inline-calendar';
 
 @NgModule({
   imports: [CommonModule, StoCalendarModule, ReactiveFormsModule, StoButtonModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule
+    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule,
     MatDatepickerModule, MatNativeDateModule],
   exports: [StoDaterangeComponent],
   declarations: [StoDaterangeComponent, StoInlineCalendarComponent]
