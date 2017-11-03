@@ -429,6 +429,20 @@ $content-height: 20px;
 
 .ngx-datatable.sto-datatable__overview {
 
+  .datatable-footer-summary-row {
+    :hover {
+      background-color: $datatable-background-color;
+      cursor: default;
+    }
+    background-color: $datatable-background-color;
+    .datatable-body-cell {
+      background-color: $datatable-background-color;
+    }
+    .datatable-body-cell-label, span {
+      cursor: text;
+    }
+  }
+
   .datatable-header-column-group {
     line-height: 11px;
     .mat-icon {
