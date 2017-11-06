@@ -30,7 +30,6 @@ export class EditModeDirective {
     this.dontToggle = true;
     this.isEditable = true;
     this.canEdit.emit(true);
-    console.log(event.target['tagName']);
     const el = event.target['tagName'].toLowerCase();
     if (el !== 'input' && el !== 'mat-select') {
       this.focusFirstField();
