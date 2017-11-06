@@ -10,7 +10,9 @@ export class TankStatePipe implements PipeTransform {
       console.error('Missing Input');
       return 'Error';
     }
-    const tankState = tankStates.find(t => t.tankId === tankId);
+    const tankState = tankStates
+      .filter(x => !!(x))
+      .find(t => t.tankId === tankId);
     if (tankState) {
       return tankState[key];
     }

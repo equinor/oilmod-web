@@ -8,11 +8,15 @@ export class NumberFormatPipe implements PipeTransform {
     if (!value) {
       return null;
     }
+    if ((typeof value === 'string' && value.match(/null$/))) {
+      return null;
+    }
     if (typeof value === 'string') {
-      value = parseFloat(value);
-      if (isNaN(value)) {
-        return '';
+      const newValue = parseFloat(value);
+      if (isNaN(newValue)) {
+        return 'ERROR: Not a number';
       }
+      value = newValue;
     }
     if (abs) {
       value = Math.abs(value);
