@@ -504,7 +504,7 @@ $content-height: 20px;
     .datatable-body-row {
       .datatable-body-cell {
         &:first-child {
-          padding-left: 8px;
+          padding-left: 8px !important;
         }
 
       }

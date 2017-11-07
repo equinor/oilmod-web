@@ -4,7 +4,7 @@
 $header-height: spacer(16);
 $large-header-height: spacer(24);
 $footer-height: spacer(16);
-$header-size: 16px;
+$header-size: 20px;
 
 .large-header {
   .sto-drawer__content {
@@ -97,6 +97,7 @@ $header-size: 16px;
 
   &__title, h1, h2, h3, h4 {
     font-size: $header-size;
+    font-weight: 500;
     margin: 0;
   }
 

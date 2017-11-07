@@ -93,14 +93,14 @@ export class EditModeDirective {
       const selects = Array.from(self.getElementsByTagName('mat-select'));
       const allInputs = [...inputs, ...selects, ...textAreas]
         .filter((el: HTMLInputElement) => !(el.readOnly))
-        .sort((a, b) => {
+        .sort((a: any, b: any) => {
         if (a === b) {
           return 0;
         } else if (a.compareDocumentPosition(b) & 2) {
           return 1;
         }
         return -1;
-      });
+      }) as any[];
       if (allInputs[0]) {
         allInputs[0].focus();
       }

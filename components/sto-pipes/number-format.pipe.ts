@@ -8,13 +8,13 @@ export class NumberFormatPipe implements PipeTransform {
     if (!value) {
       return null;
     }
-    if ((typeof value === 'string' && value.match(/null$/))) {
-      return null;
-    }
+    // if (typeof value === 'string' && value.match(/null$/)) {
+    //   return null;
+    // }
     if (typeof value === 'string') {
       const newValue = parseFloat(value);
       if (isNaN(newValue)) {
-        return 'ERROR: Not a number';
+        return null;
       }
       value = newValue;
     }
