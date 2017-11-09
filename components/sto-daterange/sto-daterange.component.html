@@ -29,29 +29,29 @@
 			</div>
 			<div>
 				<div class="sto-daterange__button--container">
-					<button (click)="tenWeeks()"
+					<button type="button" (click)="tenWeeks()"
 							mat-raised-button>Previous 2w - Next 8w</button>
 				</div>
 				<div class="sto-daterange__button--container">
 					<em>Week:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (week)">
-						<button (click)="periodPicker('week', '-')" mat-raised-button>Prev</button>
-						<button (click)="periodPicker('week', '')" mat-raised-button>This</button>
-						<button (click)="periodPicker('week', '+')" mat-raised-button>Next</button>
+						<button type="button" (click)="periodPicker('week', '-')" mat-raised-button>Prev</button>
+						<button type="button" (click)="periodPicker('week', '')" mat-raised-button>This</button>
+						<button type="button" (click)="periodPicker('week', '+')" mat-raised-button>Next</button>
 					</div>
 				</div>
 				<div class="sto-daterange__button--container">
 					<em>Month:</em> <br>
 					<div class="btn-group" role="group" aria-label="Select period (month)">
-						<button (click)="periodPicker('month', '-')" mat-raised-button>Prev</button>
-						<button (click)="periodPicker('month', '')" mat-raised-button>This</button>
-						<button (click)="periodPicker('month', '+')" mat-raised-button>Next</button>
+						<button type="button" (click)="periodPicker('month', '-')" mat-raised-button>Prev</button>
+						<button type="button" (click)="periodPicker('month', '')" mat-raised-button>This</button>
+						<button type="button" (click)="periodPicker('month', '+')" mat-raised-button>Next</button>
 					</div>
 				</div>
 				<div class="sto-daterange__button--container">
-					<button [disabled]="form.invalid" mat-raised-button
+					<button type="button" [disabled]="form.invalid" mat-raised-button
 							color="primary" (click)="onSubmit()">Submit</button>
-					<button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+					<button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
 				</div>
 			</div>
 	</div>
