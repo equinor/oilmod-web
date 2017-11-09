@@ -5,6 +5,14 @@
   margin: 1em 2em;
 }
 
+.mat-input-suffix {
+  font-size: inherit;
+  mat-icon {
+    font-size: inherit;
+  }
+}
+
+
 .sto-daterange {
   @include mat-elevation(2);
   min-width: calc(17em * 4);

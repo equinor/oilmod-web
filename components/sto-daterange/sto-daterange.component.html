@@ -2,8 +2,9 @@
 	  class="sto-daterange-wrapper">
 	<mat-form-field [class]="inputStyleClass">
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
+			   (keydown)="$event.preventDefault()"
 			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
-			   [readonly]="true" [placeholder]="placeholder||''">
+			   [placeholder]="placeholder||''">
 		<mat-icon *ngIf="showIcon"
 				  matSuffix
 				  style="cursor: default;">date_range</mat-icon>
