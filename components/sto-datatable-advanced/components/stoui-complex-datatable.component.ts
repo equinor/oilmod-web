@@ -170,10 +170,9 @@ export class StoComplexDatatableComponent extends DatatableComponent {
 
     this.recalculateDims();
     this.recalculateColumns();
+    this.resizeColumnGroups();
     if (this._internalSummaryColumns) {
-
       this.linkColumns(this._internalSummaryColumns, this._internalColumns);
-
     }
 
 }
