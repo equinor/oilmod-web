@@ -5,12 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NumberFormatPipe implements PipeTransform {
   transform(value: number, unit: string = '', abs?: boolean, appendDecimals = true): string {
-    if (!value) {
+    if (value !== 0 && !value) {
       return null;
     }
-    // if (typeof value === 'string' && value.match(/null$/)) {
-    //   return null;
-    // }
     if (typeof value === 'string') {
       const newValue = parseFloat(value);
       if (isNaN(newValue)) {
