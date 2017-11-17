@@ -14,12 +14,13 @@
 
 
 .sto-daterange {
-  @include mat-elevation(2);
+  @include mat-elevation(8);
   min-width: calc(17em * 4);
   background-color: $white-light;
   max-width: 50%;
   padding: .2em;
   position: absolute;
+  margin-top: -1.3em;
 }
 
 .sto-daterange-wrapper {

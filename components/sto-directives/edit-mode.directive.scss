@@ -2,6 +2,11 @@
 
 .mat-card {
   &.can-edit {
+    &:not(.is-highlighted) {
+      * {
+        cursor: pointer;
+      }
+    }
     &.is-highlighted {
       @include mat-elevation(8);
     }

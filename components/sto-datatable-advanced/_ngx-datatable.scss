@@ -348,6 +348,10 @@ $content-height: 20px;
     border-left: solid 1px $border-color-light;
   }
 
+  .right-group-seperator {
+    border-right: solid 1px $border-color-light;
+  }
+
   &.single-selection {
     .datatable-body-row {
       cursor: pointer;
@@ -428,8 +432,13 @@ $content-height: 20px;
 }
 
 .ngx-datatable.sto-datatable__overview {
-
+  .datatable-header-inner .datatable-row-left .datatable-header-column-group .datatable-header-cell {
+    border-right: 1px solid $border-color-light;
+  }
   .datatable-footer-summary-row {
+    .datatable-row-group.datatable-row-left .datatable-body-cell {
+      border-right: 1px solid $border-color-light;
+    }
     :hover {
       background-color: $datatable-background-color;
       cursor: default;

@@ -17,12 +17,12 @@
 				<form [formGroup]="form">
 					<div style="width: 50%; float: left;">
 						<div style="width: 17em">
-							<sto-inline-calendar formControlName="start"></sto-inline-calendar>
+							<sto-inline-calendar [maxDate]="form.value.end" formControlName="start"></sto-inline-calendar>
 						</div>
 					</div>
 					<div style="width: 50%; float: left;">
 						<div style="width: 17em">
-							<sto-inline-calendar formControlName="end"></sto-inline-calendar>
+							<sto-inline-calendar [minDate]="form.value.start" formControlName="end"></sto-inline-calendar>
 						</div>
 					</div>
 				</form>

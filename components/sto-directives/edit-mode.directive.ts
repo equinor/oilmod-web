@@ -14,6 +14,7 @@ export class EditModeDirective {
    * @type {Array}
    */
   @Input() dontToggleElements: string[] = [];
+  @Input() disabled: boolean;
   /**
    * Emits a boolean value, telling the parent if edit mode is on or off
    * @type {EventEmitter<boolean>}
@@ -27,16 +28,26 @@ export class EditModeDirective {
    */
   @HostListener('click', ['$event'])
   onElementClick(event: MouseEvent) {
+    const classList = Array.from(this.el.nativeElement.classList);
+    if (classList.indexOf('can-edit') < 0) {
+      return;
+    }
     this.dontToggle = true;
+    const isEditable = this.isEditable;
     this.isEditable = true;
     this.canEdit.emit(true);
     const el = event.target['tagName'].toLowerCase();
-    if (el !== 'input' && el !== 'mat-select') {
+    if (!isEditable) {
       this.focusFirstField();
     }
   }
+
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
+    const classList = Array.from(this.el.nativeElement.classList);
+    if (classList.indexOf('can-edit') < 0) {
+      return;
+    }
     if (event.keyCode === 13) {
       this.dontToggle = true;
       this.isEditable = true;
@@ -75,13 +86,13 @@ export class EditModeDirective {
       }).length === 0;
     if (shouldClose) {
       shouldClose = path.filter(e => e.tagName)
-        .map(e =>  Array.from(e.classList))
+        .map(e => Array.from(e.classList))
         .reduce((a, b) => [...a, ...b], [])
         .filter(c => this.dontToggleElements.indexOf(c) >= 0).length === 0;
     }
     if (shouldClose) {
-        this.isEditable = false;
-        this.canEdit.emit(false);
+      this.isEditable = false;
+      this.canEdit.emit(false);
     }
   }
 
@@ -94,15 +105,32 @@ export class EditModeDirective {
       const allInputs = [...inputs, ...selects, ...textAreas]
         .filter((el: HTMLInputElement) => !(el.readOnly))
         .sort((a: any, b: any) => {
-        if (a === b) {
-          return 0;
-        } else if (a.compareDocumentPosition(b) & 2) {
-          return 1;
-        }
-        return -1;
-      }) as any[];
-      if (allInputs[0]) {
-        allInputs[0].focus();
+          if (a === b) {
+            return 0;
+          } else if (a.compareDocumentPosition(b) & 2) {
+            return 1;
+          }
+          return -1;
+        }) as any[];
+      const inp: HTMLInputElement = allInputs[0];
+      if (inp) {
+        let tick = 0;
+        inp.scrollIntoView({ behavior: 'smooth' });
+        const interval = setInterval(() => {
+          tick += 1;
+          const rect = inp.getBoundingClientRect();
+          if (
+            rect.top >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+          ) {
+            inp.focus();
+            clearInterval(interval);
+          }
+          if (tick >= 100) {
+            inp.focus();
+            clearInterval(interval);
+          }
+        }, 25);
       }
     }, 0);
   }
