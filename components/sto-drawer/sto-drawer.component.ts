@@ -24,7 +24,7 @@ import { StoButtonModule } from '../sto-button/sto-button.directive';
         })),
         transition('in <=> *', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
       ]
-    )
+)
   ]
 })
 export class StoDrawerComponent implements OnInit {
@@ -40,6 +40,7 @@ export class StoDrawerComponent implements OnInit {
   @Output() onToggle = new EventEmitter<boolean>();
   @Output() onClose = new EventEmitter();
   @Output() onOpen = new EventEmitter();
+  @Output() onOpened = new EventEmitter();
 
   @Input()
   get open() {
