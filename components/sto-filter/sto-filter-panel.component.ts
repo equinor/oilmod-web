@@ -10,6 +10,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @Input() expandable: true;
   @ViewChild('contentWrapper') contentWrapper;
   @ViewChild('contentWrapper2') contentWrapper2;
+  @Output() toggled = new EventEmitter();
 
 
   public hasSeperator = false;
@@ -17,6 +18,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
 
   public toggle() {
     this.expanded = !this.expanded;
+    this.toggled.emit(this.expanded);
   }
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class StoFilterActions {
 
   template: `
 	  <ng-content></ng-content>
-	  <mat-button-toggle class="icon" *ngIf="expandable" style="box-shadow:none" [checked]="true" (change)="onChange($event)" 
+	  <mat-button-toggle class="icon" *ngIf="expandable" style="box-shadow:none" [checked]="true" (change)="onChange($event)"
                       (click)="toggle.emit()">
 		  <mat-icon>filter_list</mat-icon>
 	  </mat-button-toggle>
@@ -107,7 +109,7 @@ export class StoFilterActionsBar {
     return this._expanded;
   }
   onChange($event){
-    console.log($event);
+    // console.log($event);
   }
 
   @Output() toggle = new EventEmitter<void>();

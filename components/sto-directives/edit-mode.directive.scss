@@ -2,11 +2,16 @@
 
 .mat-card {
   &.can-edit {
+    &:not(.is-highlighted) {
+      * {
+        cursor: pointer;
+      }
+    }
     &.is-highlighted {
-      @include mat-elevation(4);
+      @include mat-elevation(8);
     }
     &:hover {
-      @include mat-elevation(4);
+      @include mat-elevation(8);
       .is-editable-button {
         visibility: visible;
       }
