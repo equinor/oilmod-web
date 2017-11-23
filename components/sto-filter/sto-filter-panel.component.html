@@ -3,10 +3,10 @@
     <mat-panel-title>
       <ng-content select="sto-filter-title"></ng-content>
     </mat-panel-title>
-    <span class="content-wrapper" #contentWrapper>
+    <span class="content-wrapper" #tableActions>
     <ng-content select="sto-filter-table-actions">
 
-   </ng-content>
+   	</ng-content>
 
     </span>
 
@@ -14,7 +14,7 @@
              *ngIf="hasSeperator"
        >
        </span>
-    <span class="content-wrapper" #contentWrapper2>
+    <span class="content-wrapper" #filterActions>
     <sto-filter-actions-bar #contentWrapper2 *ngIf="expandable" [expanded]="expanded" [expandable]="expandable" (toggle)="toggle()">
 
        <ng-content select="sto-filter-actions"></ng-content>
@@ -22,7 +22,7 @@
     </sto-filter-actions-bar>
     </span>
   </mat-expansion-panel-header>
-  <div class="sto-filter-form">
+  <div class="sto-filter-form" #filterForm>
     <ng-content></ng-content>
   </div>
 </mat-expansion-panel>

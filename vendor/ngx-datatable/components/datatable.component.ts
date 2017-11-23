@@ -700,6 +700,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    */
   recalculateDims(): void {
+    console.log('Recalcing dims')
     const dims = this.element.getBoundingClientRect();
     this.innerWidth = Math.floor(dims.width);
 
@@ -721,7 +722,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Recalculates the pages after a update.
    */
   recalculatePages(): void {
+    console.log('recalculatePages')
     this.pageSize = this.calcPageSize();
+    console.log('calcRowCount')
     this.rowCount = this.calcRowCount();
   }
 

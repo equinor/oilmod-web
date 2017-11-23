@@ -8,7 +8,8 @@ import {
   KeyValueDiffers,
   QueryList,
   ViewEncapsulation,
-  ViewChild
+  ViewChild,
+  HostBinding
 } from '@angular/core';
 
 import { translateTemplates } from '../../../vendor/ngx-datatable/utils';
@@ -115,6 +116,33 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   _columnGroups: ColumnGroup[];
 
   @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
+
+  @HostBinding('style.height') _height;
+  @Input() set height(value){
+    this._height = value;
+
+
+    if (this.scrollbarV) {
+      let height = parseInt(value, 10);
+      if (this.headerHeight) {
+        height = height - this.headerHeight;
+      }
+      if (this.footerHeight) {
+        height = height - this.footerHeight;
+      }
+      this.bodyHeight = height;
+    }
+
+    this.recalculatePages();
+
+  };
+
+
+
+
+
+  //data-bind to the host element's style property
+  @HostBinding('style.backgroundColor') color = 'white';//default color
 
   @Input() set summaryRow(val: any) {
     if (val) {
