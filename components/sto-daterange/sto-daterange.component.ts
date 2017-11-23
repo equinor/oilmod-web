@@ -15,6 +15,8 @@ import {
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import {
