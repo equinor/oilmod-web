@@ -7,9 +7,11 @@ import { DomHandler } from '../sto-shared/sto-api';
   selector: 'sto-inline-calendar',
   template: `
     <mat-calendar [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
+    style="max-width: 216px;"
     *ngIf="hackToShowCorrectMonth"
     [selected]="value" (selectedChange)="changeDate($event)"></mat-calendar>
     <mat-calendar [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
+    style="max-width: 216px;"
     *ngIf="!hackToShowCorrectMonth"
     [selected]="value" (selectedChange)="changeDate($event)"></mat-calendar>
     <span style="display: none">{{ hackToShowCorrectMonth }}</span>

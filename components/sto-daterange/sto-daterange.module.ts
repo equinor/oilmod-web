@@ -14,6 +14,7 @@ import {
   NativeDateAdapter
 } from '@angular/material';
 import { StoInlineCalendarComponent } from './sto-inline-calendar';
+import { StoPipesModule } from '../sto-pipes/sto-pipes.module';
 
 export class StoDateAdapter extends NativeDateAdapter {
   getFirstDayOfWeek(): number {
@@ -23,7 +24,7 @@ export class StoDateAdapter extends NativeDateAdapter {
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, MatSelectModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule,
+    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, StoPipesModule,
     MatDatepickerModule, MatNativeDateModule],
   exports: [StoDaterangeComponent],
   declarations: [StoDaterangeComponent, StoInlineCalendarComponent],

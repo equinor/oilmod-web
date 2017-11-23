@@ -36,35 +36,25 @@
 							</mat-select>
 						</mat-form-field>
 					</div>
-<!--					<div class="sto-daterange__button&#45;&#45;container">
-						<button type="button" (click)="tenWeeks()"
-							mat-raised-button>Previous 2w - Next 8w</button>
-					</div>
-					<div class="sto-daterange__button&#45;&#45;container">
-						<em>Week:</em> <br>
-						<div class="btn-group" role="group" aria-label="Select period (week)">
-							<button type="button" (click)="periodPicker('week', '-')" mat-raised-button>Prev</button>
-							<button type="button" (click)="periodPicker('week', '')" mat-raised-button>This</button>
-							<button type="button" (click)="periodPicker('week', '+')" mat-raised-button>Next</button>
+					<div class="sto-daterange__button--container">
+						<div style="display: flex; flex-direction: row">
+							<mat-form-field readonly class="sto-form-field--readonly left">
+								<input readonly matInput [value]="form.value.start | formatDate">
+							</mat-form-field>
+							<span class="spacer" style="text-align: center; line-height: 43px;">—</span>
+							<mat-form-field readonly class="sto-form-field--readonly right">
+								<input readonly matInput [value]="form.value.end | formatDate">
+							</mat-form-field>
 						</div>
 					</div>
-					<div class="sto-daterange__button&#45;&#45;container">
-						<em>Month:</em> <br>
-						<div class="btn-group" role="group" aria-label="Select period (month)">
-							<button type="button" (click)="periodPicker('month', '-')" mat-raised-button>Prev</button>
-							<button type="button" (click)="periodPicker('month', '')" mat-raised-button>This</button>
-							<button type="button" (click)="periodPicker('month', '+')" mat-raised-button>Next</button>
-						</div>
-					</div>-->
-					<div class="spacer">
-					</div>
+					<div class="spacer"></div>
 					<div class="sto-daterange__error--container" *ngIf="error | async as message">
 						<span>{{ message }}</span>
 					</div>
 					<div class="sto-daterange__button--container sto-daterange__button--container--actions">
-						<button type="button" [disabled]="form.invalid || (error | async)" mat-raised-button
-								color="primary" (click)="onSubmit()">Submit</button>
-						<button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+						<button type="button" mat-button color="warn" (click)="onCancel()">Cancel</button>
+						<button type="button" [disabled]="form.invalid || (error | async)" mat-button
+								color="primary" (click)="onSubmit()">Apply</button>
 					</div>
 				</div>
 			</div>
