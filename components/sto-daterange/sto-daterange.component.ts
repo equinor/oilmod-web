@@ -299,7 +299,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
       .valueChanges
       .do(v => this.selected = 4)
       .do(v => this.selectValue = 'Custom')
-      .map((value: {start: Date, end: Date}) {
+      .map((value: {start: Date, end: Date}) => {
         const {start, end} = value;
         return isAfter(start, end) ? 'Start date is after end date' : null;
       });

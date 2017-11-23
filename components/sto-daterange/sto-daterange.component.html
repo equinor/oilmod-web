@@ -32,7 +32,7 @@
 								<mat-option [value]="1" (click)="periodPicker('month', '-')">Previous month</mat-option>
 								<mat-option [value]="2" (click)="periodPicker('month', null)">This month</mat-option>
 								<mat-option [value]="3" (click)="periodPicker('month', '+')">Next month</mat-option>
-								<mat-option [value]="4">Custom</mat-option>
+								<mat-option disabled [value]="4">Custom</mat-option>
 							</mat-select>
 						</mat-form-field>
 					</div>
