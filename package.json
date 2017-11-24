@@ -1,7 +1,7 @@
 {
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
-  "version": "2.1.24",
+  "version": "2.1.25",
   "scripts": {
     "build": "rimraf dist && webpack && ngc && copy-static.bat",
     "postversion": "node postbump.js"
