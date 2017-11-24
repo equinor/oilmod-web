@@ -337,6 +337,7 @@ $content-height: 20px;
     height: $content-height;
     width: $content-height;
     font-size: $content-height;
+    line-height: 24px;
     cursor: pointer;
     &:hover {
       color: $black-medium;
@@ -510,10 +511,14 @@ $content-height: 20px;
     }
   }
   .datatable-body {
+    margin-bottom: -8px;
     .datatable-body-row {
       .datatable-body-cell {
         &:first-child {
           padding-left: 8px !important;
+        }
+        .datatable-body-cell-label{
+          line-height: 24px;
         }
 
       }
