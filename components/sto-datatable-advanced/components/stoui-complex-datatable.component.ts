@@ -19,6 +19,7 @@ import { DatatableComponent } from '../../../vendor/ngx-datatable/components/dat
 import { ScrollbarHelper } from '../../../vendor/ngx-datatable/services/scrollbar-helper.service';
 import { columnTotalWidth } from '../../../vendor/ngx-datatable/utils/column';
 import { StoDataTableBodyComponent } from './body/sto-body.component'
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'sto-complex-datatable',
@@ -117,11 +118,10 @@ export class StoComplexDatatableComponent extends DatatableComponent {
 
   @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
 
-  @HostBinding('style.height') _height;
+  private _height: number;
+  
   @Input() set height(value){
     this._height = value;
-
-
     if (this.scrollbarV) {
       let height = parseInt(value, 10);
       if (this.headerHeight) {
@@ -136,6 +136,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.recalculatePages();
 
   };
+
 
 
 

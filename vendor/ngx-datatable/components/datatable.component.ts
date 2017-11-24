@@ -722,9 +722,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Recalculates the pages after a update.
    */
   recalculatePages(): void {
-    console.log('recalculatePages')
     this.pageSize = this.calcPageSize();
-    console.log('calcRowCount')
     this.rowCount = this.calcRowCount();
   }
 

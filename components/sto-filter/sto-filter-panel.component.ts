@@ -57,7 +57,6 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     if (element) {
       const contentArea = element.parentElement;
       this.contentHeight = contentArea.offsetHeight;
-      console.log(this.contentHeight);
     }
   }
 
