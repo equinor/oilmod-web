@@ -15,6 +15,9 @@ import {
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import {
   addMonths,
@@ -25,7 +28,9 @@ import {
   startOfMonth,
   startOfWeek,
   subMonths,
-  subWeeks
+  subWeeks,
+  isBefore,
+  isAfter
 } from 'date-fns';
 
 @Component({
@@ -55,6 +60,7 @@ import {
 })
 export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
+  public log = console.log;
   @Input() showIcon: boolean = true;
   @Input() icon: string = 'fa-calendar';
   @Input() styleClass: string[];
@@ -87,6 +93,17 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public overlayShown: boolean;
   public value: any;
   public inputFieldValue: string = '';
+  public hasError: string;
+  public error: Observable<string>;
+  public selectValue = 'Custom';
+  public selected: number = 4;
+  /*<mat-option [ngValue]="{ type: 'tenweeks', }">-2 weeks – +8 weeks</mat-option>
+<mat-option>Previous month</mat-option>
+<mat-option>This month</mat-option>
+<mat-option>Next month</mat-option>
+<mat-option [value]="null">Custom</mat-option>
+  public periodPicker(unit: 'week' | 'month', when: string): void {
+*/
 
   private documentClickListener: any;
 
@@ -121,10 +138,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     };
     this.form.setValue(values);
     this.onSubmit();
-  }
-
-  public log(e) {
-    console.log(e);
+    this.selectValue = '-2 Weeks - +8 Weeks';
+    this.selected = 0;
   }
 
   public periodPicker(unit: 'week' | 'month', when: string): void {
@@ -139,18 +154,24 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
           start: week ? startOfWeek(subFn(new Date(), 1), {weekStartsOn: 1}) : startOfMonth(subFn(new Date(), 1)),
           end: week ? endOfWeek(subFn(new Date(), 1), {weekStartsOn: 1}) : endOfMonth(subFn(new Date(), 1))
         });
+        this.selectValue = `Previous ${unit}`;
+        this.selected = 1;
         break;
       case '+':
         this.form.setValue({
           start: week ? startOfWeek(addFn(new Date(), 1), {weekStartsOn: 1}) : startOfMonth(addFn(new Date(), 1)),
           end: week ? endOfWeek(addFn(new Date(), 1), {weekStartsOn: 1}) : endOfMonth(addFn(new Date(), 1))
         });
+        this.selectValue = `Next ${unit}`;
+        this.selected = 3;
         break;
       default:
         this.form.setValue({
           start: week ? startOfWeek(new Date(), {weekStartsOn: 1}) : startOfMonth(new Date()),
-          end: week ? endOfWeek(addFn(new Date(), 1), {weekStartsOn: 1}) : endOfMonth(new Date())
+          end: week ? endOfWeek(new Date(), {weekStartsOn: 1}) : endOfMonth(new Date())
         });
+        this.selectValue = `This ${unit}`;
+        this.selected = 2;
         break;
     }
     this.onSubmit();
@@ -165,7 +186,11 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
         // Don't close if inside the date range picker
         for (const el of event.path) {
-          if (el.localName === 'sto-calendar' || el.localName === 'sto-daterange') {
+          if (el.localName === 'sto-calendar' ||
+            el.localName === 'sto-daterange' ||
+            el.localName === 'mat-option' ||
+              el.className === 'cdk-overlay-container'
+          ) {
             this.closeOverlay = false;
             break;
           }
@@ -272,5 +297,13 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
       start: [null, Validators.required],
       end: [null, Validators.required]
     });
+    this.error = this.form
+      .valueChanges
+      .do(v => this.selected = 4)
+      .do(v => this.selectValue = 'Custom')
+      .map((value: {start: Date, end: Date}) => {
+        const {start, end} = value;
+        return isAfter(start, end) ? 'Start date is after end date' : null;
+      });
   }
 }

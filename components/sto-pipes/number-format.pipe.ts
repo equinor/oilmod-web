@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumberFormatPipe implements PipeTransform {
   transform(value: number, unit: string = '', abs?: boolean, appendDecimals = true): string {
     if (value !== 0 && !value) {
-      return null;
+      return value as any;
     }
     if (typeof value === 'string') {
       const newValue = parseFloat(value);

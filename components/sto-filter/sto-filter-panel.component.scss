@@ -53,6 +53,9 @@ $sto-filter-header-elevation: 2;
 .sto-filter-actions{
   padding: 0 0 0 $space-2x;
 }
+sto-filter-actions {
+  height: 32px;
+}
 
 .sto-filter-table-actions, .sto-filter-actions {
   display: flex;

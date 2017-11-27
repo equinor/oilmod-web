@@ -7,7 +7,14 @@ import { DomHandler } from '../sto-shared/sto-api';
   selector: 'sto-inline-calendar',
   template: `
     <mat-calendar [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
+    style="max-width: 216px;"
+    *ngIf="hackToShowCorrectMonth"
     [selected]="value" (selectedChange)="changeDate($event)"></mat-calendar>
+    <mat-calendar [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
+    style="max-width: 216px;"
+    *ngIf="!hackToShowCorrectMonth"
+    [selected]="value" (selectedChange)="changeDate($event)"></mat-calendar>
+    <span style="display: none">{{ hackToShowCorrectMonth }}</span>
   `,
   providers: [
     {
@@ -20,6 +27,7 @@ import { DomHandler } from '../sto-shared/sto-api';
 })
 export class StoInlineCalendarComponent implements ControlValueAccessor {
   public value: Date;
+  public hackToShowCorrectMonth: boolean;
   @Input() minDate: Date;
   @Input() maxDate: Date;
   private propagateChange = (_: any) => {
@@ -27,11 +35,19 @@ export class StoInlineCalendarComponent implements ControlValueAccessor {
 
   public changeDate(date) {
     this.value = date;
+    // console.log(date);
     this.propagateChange(date);
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.value = value ? new Date(value) : null;
+    this.hackToShowCorrectMonth = !this.hackToShowCorrectMonth;
+/*    setTimeout(() => {
+      if (value instanceof Date) {
+        this.value = new Date(value);
+      }
+      this.hackToShowCorrectMonth = !this.hackToShowCorrectMonth;
+    });*/
   }
 
   registerOnChange(fn: any): void {

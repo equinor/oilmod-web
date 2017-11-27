@@ -1,9 +1,78 @@
 @import "../../variables";
 
-.sto-daterange__button--container {
-  width: 100%;
-  margin: 1em 2em;
+.sto-daterange {
+  @include mat-elevation(8);
+  background-color: $white-light;
+  width: 744px;
+  max-height: 332px;
+  padding: 21px 23px .2em;
+  position: absolute;
+  margin-top: -1.3em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  .calendar-box {
+    flex: 1;
+    margin-right: 25px;
+  }
+  .actions {
+    flex: 1;
+    .action-container {
+      height: 100%;
+      display: flex;
+      &:not(:first-of-type) {
+        padding-top: 1rem;
+      }
+      margin-right: 1em;
+      flex-direction: column;
+      .spacer {
+        flex: 1 1 auto;
+      }
+      .sto-daterange__button--container {
+        padding-bottom: 1rem;
+        align-content: right;
+        &.sto-daterange__button--container--actions {
+          text-align: right;
+        }
+      }
+      .sto-daterange__error--container {
+        text-align: center;
+        text-align: center;
+        margin-bottom: 1rem;
+        background-color: $red-light;
+        height: 48px;
+        border-radius: 2px;
+        opacity: 0.9;
+        span {
+          &::before {
+            content: "error";
+            font-family: "Material Icons";
+            padding-right: 8px;
+            color: red;
+          }
+          line-height: 48px;
+        }
+      }
+    }
+  }
+  mat-form-field.sto-form-field--readonly {
+    width: 93px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 2px;
+    height: 42px;
+    input {
+      text-align: center;
+      color: #000000;
+    }
+    &.left {
+      float: left;
+    }
+    &.right {
+      float: right;
+    }
+  }
 }
+
 
 .mat-input-suffix {
   font-size: inherit;
@@ -12,31 +81,8 @@
   }
 }
 
-
-.sto-daterange {
-  @include mat-elevation(8);
-  min-width: calc(17em * 4);
-  background-color: $white-light;
-  max-width: 50%;
-  padding: .2em;
-  position: absolute;
-  margin-top: -1.3em;
-}
-
 .sto-daterange-wrapper {
-  width: 19em;
-  display: block;
-}
-
-.btn-group .btn {
-  margin-left: -2px;
-}
-
-.sto-daterange-wrapper button.sto-datepicker-trigger {
-  height: 100%;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  position: absolute;
-  width: 2em;
-  border-left: 0 none;
+  .mat-input-infix {
+    line-height: 1;
+  }
 }
