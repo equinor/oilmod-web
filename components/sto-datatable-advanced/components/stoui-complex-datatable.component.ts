@@ -121,6 +121,10 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   private _height: number;
   
   @Input() set height(value){
+
+    if(value === undefined){
+      return;
+    }
     this._height = value;
     if (this.scrollbarV) {
       let height = parseInt(value, 10);

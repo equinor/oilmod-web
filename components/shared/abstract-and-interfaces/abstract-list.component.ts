@@ -27,7 +27,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
       this.toggleSubscription$ = this.toggleService.isToggled.subscribe($event => {
         this.onToggle($event);
       });
-    }, 1)
+    }, 300)
 
   }
   ngOnDestroy(){
@@ -54,6 +54,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
 
 
   private calculateAndSetElementHeight() {
+
     const PADDING_BOTTOM = 28;
     const windowHeight = window.innerHeight;
     const elementOffsetTop = this.getElementOffsetTop();
