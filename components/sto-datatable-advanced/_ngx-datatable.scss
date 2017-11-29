@@ -145,6 +145,17 @@ $content-height: 20px;
         font-weight: $font-weight-normal;
         &.date-cell {
           padding: 0;
+          small {
+            font-style: normal;
+            font-weight: 500;
+            line-height: 7px; // was 18px, but position absolute. no go.
+            font-size: 7px;
+            padding-top: 6px;
+            text-align: center;
+            text-transform: uppercase;
+
+            color: rgba(0, 0, 0, 0.4);
+          }
         }
         // cell active class
         // &.active {
@@ -434,6 +445,7 @@ $content-height: 20px;
 }
 
 .ngx-datatable.sto-datatable__overview {
+
   .datatable-header-inner .datatable-row-left .datatable-header-column-group .datatable-header-cell {
     border-right: 1px solid $border-color-dark;
   }
@@ -463,6 +475,21 @@ $content-height: 20px;
     }
   }
   .datatable-body-row {
+    &.active, &.active:hover  {
+      background-color: $header-bg-color;// !important;
+      .datatable-row-group {
+        background-color: $header-bg-color;
+      }
+    }
+    &.month-row, &.month-row:hover {
+      .datatable-row-group {
+        background-color: $gray-lighter;
+        cursor: auto;
+        .datatable-body-cell-label {
+          color: $gray-dark;
+        }
+      }
+    }
     .datatable-row-left {
       background-color: $datatable-header-background;
     }

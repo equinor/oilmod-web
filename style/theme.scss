@@ -1,0 +1,27 @@
+@import "../vendor/material-icons/material-icons";
+@import '~@angular/material/theming';
+@import "~typeface-roboto/index.css";
+
+$custom-typography: mat-typography-config(
+        $subheading-2: mat-typography-level(13px, 24px, 400), // This is for menu-items. Can break other subheadings
+        $body-1: mat-typography-level(13px, 24px, 400),
+        $button: mat-typography-level(14px, 14px, 400),
+        $headline: mat-typography-level(20px, 32px, 500)
+);
+
+@include mat-core($custom-typography);
+@include mat-menu-typography($custom-typography);
+@include angular-material-typography($custom-typography);
+
+// Material color palettes
+$sto-primary: mat-palette($mat-indigo);
+$sto-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$sto-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$sto-theme: mat-light-theme($sto-primary, $sto-accent, $sto-warn);
+
+// Include theme styles for core and each component used in your app.
+@include angular-material-theme($sto-theme);
