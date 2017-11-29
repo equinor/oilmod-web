@@ -6,6 +6,8 @@ $orange-medium: orange;
 $red-medium: red;
 $red-light: #FFCCCC;
 
+$purple-dark: #3f51b5;
+
 /**
 ** From figma:
 ** background-color: #F2F2F2;
@@ -13,7 +15,7 @@ $red-light: #FFCCCC;
 $yellow-light: #FFFFCC;
 
 $black-medium: rgba(0,0,0,0.8);
-$black-light: rgba(0,0,0,0.6);
+$black-light: rgba(0,0,0,0.54);
 
 $white-light: #FFFFFF;
 $white-medium: #FAFAFA;
@@ -42,3 +44,4 @@ $content-bg-color-highlight: $gray-medium;
 $text-color: $gray-darker;
 $header-color: $gray-darker;
 $subtle-color: $gray-dark;
+$primary-color: $purple-dark;
