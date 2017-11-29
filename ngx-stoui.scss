@@ -1,10 +1,18 @@
 @import "style/functions";
 @import "variables";
 @import "mixins";
-//@import "vendor/bootstrap/forms";
+@import "style/theme";
+
+@import "components/sto-datatable-advanced/ngx-datatable";
+@import "components/sto-filter/sto-filter-panel.component";
+@import "components/sto-directives/edit-mode.directive";
 
 label {
   max-width: 100%;
+}
+
+span.spacer {
+  flex-grow: 1;
 }
 
 //body
@@ -17,16 +25,12 @@ body {
 *{
   box-sizing: border-box;
 }
-
-@import "components/sto-button/sto-button.directive";
-@import "components/sto-tooltip/sto-tooltip.directive";
-@import "components/sto-inputtext/sto-inputtext.directive";
-@import "components/sto-inputtextarea/sto-inputtextarea.directive";
-@import "components/sto-password/sto-password.directive";
-
-@import "components/sto-datatable-advanced/ngx-datatable";
-@import "components/sto-filter/sto-filter-panel.component";
-@import "components/sto-directives/edit-mode.directive";
+// Styles to remove arrows from number inputs
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; // Apparently some margin is still there even though it's hidden
+}
 
 .sto-datatable-wrapper {
   background-color: white;
@@ -45,16 +49,64 @@ body {
   }
 }
 
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
+/**
+Below styles overrides Angular Material defaults
+ */
+
+
+.cdk-overlay-container {
+  z-index: 9999 !important; // !important, as it needs to override Angular Material styles
+}
+// CSS to avoid text-wrapping. In this case, "Toggle Filter Panel" tooltip
+.mat-tooltip.nowrap {
+  white-space: nowrap;
+}
+.mat-tooltip {
+  line-height: 13px;
+}
+
+
 //Mo to buttons
 .mat-button, .mat-raised-button {
   text-transform: uppercase;
 }
+
+// Material menu overrides
+.mat-menu-item.active {
+  color: $primary-color;
+}
+
+
+.mat-menu-panel.large {
+  /**
+  ** Per https://material.io/guidelines/components/menus.html: width should be a multiple of 56
+  ** Without this width, the menu will be to slim, and crop the inner content
+  ** Default 280px
+   */
+  max-width: 336px;
+}
+
+.mat-menu-item[disabled] .mat-icon {
+  color: currentColor;
+}
+
+.mat-menu-item {
+  &.dense {
+    height: 36px; // !important;
+    line-height: 36px; // !important;
+  }
+  .mat-icon {
+    height: 24px; // hack to align svg icons
+    width: 18px;
+    font-size: 18px;
+  }
+}
+// End material menu overrides
 
 //move STO-dialog
 .stoui-dialog .mat-dialog-container {
@@ -68,6 +120,7 @@ table {
     margin: 0;
     p {
       margin-bottom: 0;
+      white-space: pre-line;
     }
   }
   .mat-dialog-actions {
@@ -80,6 +133,55 @@ table {
 //END STO-DIALOG
 
 //STO FORM
+mat-form-field {
+  .mat-input-suffix.mat-form-field-suffix {
+    button.mat-icon-button {
+      mat-icon {
+        font-size: 1rem;
+        color: $black-light;
+      }
+    }
+    mat-icon {
+      font-size: 1rem;
+      color: $black-light;
+    }
+  }
+
+  &.mat-focused {
+    .mat-input-suffix.mat-form-field-suffix {
+      button.mat-icon-button {
+        mat-icon {
+          font-size: 1rem;
+          color: $black-medium;
+        }
+      }
+      mat-icon {
+        font-size: 1rem;
+        color: $black-medium;
+      }
+    }
+  }
+}
+
+
+mat-form-field.table--inline {
+  max-width: 100%;
+  input[type="number"] {
+    text-align: right;
+  }
+  .mat-input-underline {
+    display: none;
+  }
+  .mat-input-subscript-wrapper {
+    display: none;
+  }
+  .mat-input-placeholder-wrapper.mat-form-field-placeholder-wrapper {
+    height: 3em;
+    text-align: right;
+    max-width: 97%;
+  }
+}
+
 .sto-form {
 
   .mat-form-field {
@@ -99,8 +201,14 @@ table {
 }
 
 .sto-form-field--readonly{
-  .mat-form-field-underline{
+  .mat-form-field-underline {
+    display: none;
     visibility: hidden;
+  }
+  &.ng-invalid.ng-dirty {
+    .mat-input-subscript-wrapper.mat-form-field-subscript-wrapper {
+      margin-top: -1px;
+    }
   }
 }
 
@@ -112,3 +220,61 @@ table {
 }
 
 //END STO-FORM
+
+// Line height date range picker
+.sto-daterange-wrapper {
+  .mat-input-infix {
+    line-height: 1;
+  }
+}
+
+
+/**STO-TOOLBAR-PANEL **/
+.mat-menu-panel.sto-toolbar-panel {
+  padding: 0;
+  max-width: spacer(80);
+  min-width: spacer(80);
+}
+
+.sto-toolbar-panel {
+
+  .mat-menu-content {
+    padding: 0;
+  }
+
+  &__content {
+    width: 100%;
+    max-height: spacer(40);
+    min-height: 36px;
+    overflow-y: auto;
+
+    &__message {
+      padding: spacer(2) spacer(2);
+      display: inline-block;
+
+    }
+  }
+  &__actions {
+    border-top: solid 1px $gray-medium;
+    padding: spacer(2);
+
+    .mat-button, .mat-raised-button {
+      padding: 0 spacer(2);
+      min-width: spacer(16);
+    }
+
+  }
+}
+
+.mat-button.selected {
+  .mat-button-focus-overlay {
+    opacity: 1;
+  }
+}
+
+/**
+To make an icon appear as a button
+ */
+.mat__icon--clickable {
+  cursor: pointer;
+}

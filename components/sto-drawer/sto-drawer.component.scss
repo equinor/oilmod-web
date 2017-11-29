@@ -25,6 +25,9 @@ $header-size: 16px;
   bottom: 0;
   width: 20%;
   min-width: 260px;
+  &.right {
+    min-width: 450px;
+  }
   z-index: 30;
 
   .mat-card {
@@ -55,7 +58,6 @@ $header-size: 16px;
 .sto-drawer__content {
   padding: spacer(4) spacer(4);
   overflow-y: auto;
-  height: calc(100% - calc(#{$header-height} + #{$footer-height}));
   &.navigation {
     height: 100%;
   }
