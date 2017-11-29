@@ -8,7 +8,8 @@ import {
   KeyValueDiffers,
   QueryList,
   ViewEncapsulation,
-  ViewChild
+  ViewChild,
+  HostBinding
 } from '@angular/core';
 
 import { translateTemplates } from '../../../vendor/ngx-datatable/utils';
@@ -18,6 +19,7 @@ import { DatatableComponent } from '../../../vendor/ngx-datatable/components/dat
 import { ScrollbarHelper } from '../../../vendor/ngx-datatable/services/scrollbar-helper.service';
 import { columnTotalWidth } from '../../../vendor/ngx-datatable/utils/column';
 import { StoDataTableBodyComponent } from './body/sto-body.component'
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'sto-complex-datatable',
@@ -115,6 +117,33 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   _columnGroups: ColumnGroup[];
 
   @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
+
+  private _height: number;
+  
+  @Input() set height(value){
+    this._height = value;
+    if (this.scrollbarV) {
+      let height = parseInt(value, 10);
+      if (this.headerHeight) {
+        height = height - this.headerHeight;
+      }
+      if (this.footerHeight) {
+        height = height - this.footerHeight;
+      }
+      this.bodyHeight = height;
+    }
+
+    this.recalculatePages();
+
+  };
+
+
+
+
+
+
+  //data-bind to the host element's style property
+  @HostBinding('style.backgroundColor') color = 'white';//default color
 
   @Input() set summaryRow(val: any) {
     if (val) {
