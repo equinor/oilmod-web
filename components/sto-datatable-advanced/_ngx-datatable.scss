@@ -1,5 +1,6 @@
 @import "_ngx-datatable-core";
 @import "_ngx-datatable-material";
+@import "../../style/colors";
 
 
 //colors: datatable
@@ -11,7 +12,7 @@ $actual-color: $green-light;
 $day-color: $green-dark;
 
 $border-color-light: $gray-medium;
-$border-color-dark: $gray-dark;
+$border-color-dark: $black-light;
 
 $datatable-cell-color: $black-medium;
 $datatable-background-color: $white-light;
@@ -195,7 +196,7 @@ $content-height: 20px;
       height: 5px;
       padding: 0;
       margin: 0;
-      position: absolute;
+      //position: absolute;
 
       .container {
         display: block;
@@ -350,7 +351,7 @@ $content-height: 20px;
   }
 
   .right-group-seperator {
-    border-right: solid 1px $border-color-light;
+    border-right: solid 1px $border-color-dark;
   }
 
   &.single-selection {
@@ -434,11 +435,11 @@ $content-height: 20px;
 
 .ngx-datatable.sto-datatable__overview {
   .datatable-header-inner .datatable-row-left .datatable-header-column-group .datatable-header-cell {
-    border-right: 1px solid $border-color-light;
+    border-right: 1px solid $border-color-dark;
   }
   .datatable-footer-summary-row {
     .datatable-row-group.datatable-row-left .datatable-body-cell {
-      border-right: 1px solid $border-color-light;
+      border-right: 1px solid $border-color-dark;
     }
     :hover {
       background-color: $datatable-background-color;
