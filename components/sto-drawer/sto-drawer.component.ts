@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ViewEncapsulation, HostListener} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ViewEncapsulation, HostListener} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { animate, AnimationMetadata, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
 
 @Component({
   selector: 'sto-drawer',
@@ -27,7 +29,7 @@ import { StoButtonModule } from '../sto-button/sto-button.directive';
 )
   ]
 })
-export class StoDrawerComponent implements OnInit {
+export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Input() header: string;
   @Input() headerIcon: string;
   @Input() width = '25vw';
@@ -35,6 +37,9 @@ export class StoDrawerComponent implements OnInit {
   @Input() padding = '0px';
   @Input() position: 'left' | 'right';
   @Input() closeOnClick: boolean;
+  @ViewChild('footer') footerRef: ElementRef;
+  @ViewChild('header') headerRef: ElementRef;
+  public height = '100vh';
 
 
   @Output() onToggle = new EventEmitter<boolean>();
@@ -52,6 +57,10 @@ export class StoDrawerComponent implements OnInit {
     if (event.keyCode === 27) {
      // this.closeDrawer(true);
     }
+  }
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(e) {
+    this.resizeContent();
   }
 
   set open(open: boolean) {
@@ -118,7 +127,6 @@ export class StoDrawerComponent implements OnInit {
       return pathArr;
     };
 
-
   private bindDocumentClickListener() {
     if (!this.documentClickListener) {
       this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
@@ -137,14 +145,32 @@ export class StoDrawerComponent implements OnInit {
       });
     }
   }
+  private resizeContent() {
+    if (this.headerRef) {
+      const hasFooter = this.footerRef.nativeElement.children.length > 0;
+      const hasHeader = this.headerRef.nativeElement.children.length > 0;
+      const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
+      let footerHeight = 0;
+      const headerHeight = this.headerRef.nativeElement.offsetHeight;
+      if (hasFooter) {
+        footerHeight = this.footerRef.nativeElement.offsetHeight;
+      } else {
+        this.footerRef.nativeElement.style = 'display: none';
+      }
+      this.height = `${totalHeight - footerHeight - headerHeight}px`;
+    }
+  }
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private el: ElementRef) {
   }
 
   ngOnInit() {
     if (!this.position) {
       this.position = 'left';
     }
+  }
+  ngAfterViewInit() {
+    setTimeout(() => this.resizeContent());
   }
 }
 
@@ -158,7 +184,7 @@ export class StoDrawerHeaderComponent {
 
 @Component({
   selector: 'sto-drawer-footer',
-  template: `<div class="sto-drawer__footer"><ng-content></ng-content><div>`
+  template: `<ng-content></ng-content>`
 })
 export class StoDrawerFooterComponent {
 }
