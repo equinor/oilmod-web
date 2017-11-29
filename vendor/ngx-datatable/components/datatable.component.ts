@@ -700,7 +700,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    */
   recalculateDims(): void {
-    console.log('Recalcing dims')
     const dims = this.element.getBoundingClientRect();
     this.innerWidth = Math.floor(dims.width);
 
