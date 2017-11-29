@@ -8,29 +8,58 @@ import { ViewChild, AfterViewInit, Component, Directive, EventEmitter, Input, On
 })
 export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @Input() expandable: true;
-  @ViewChild('contentWrapper') contentWrapper;
-  @ViewChild('contentWrapper2') contentWrapper2;
-  @Output() toggled = new EventEmitter();
 
+  @ViewChild('tableActions') contentWrapper;
+  @ViewChild('filterActions') contentWrapper2;
+  @ViewChild('filterForm') filterForm;
+  @Output() toggled = new EventEmitter<any>();
+
+  private _contentHeight : number;
+  set contentHeight(contentHeight: number){
+     this._contentHeight = contentHeight;
+  };
+  get contentHeight() : number{
+    return this._contentHeight;
+  }
 
   public hasSeperator = false;
-  public expanded: boolean = false;
+  @Input() public expanded;
 
   public toggle() {
     this.expanded = !this.expanded;
-    this.toggled.emit(this.expanded);
+    this.setContentHeight();
+    this.toggled.emit({isExpanded : this.expanded, contentHeight : this.contentHeight });
   }
 
   ngOnInit() {
     if (this.expandable) {
-      this.expanded = true;
+      if(this.expanded === undefined){
+        this.expanded = true;
+      }
+      else{
+        this.expanded = false;
+      }
     }
+    else{
+      this.expanded = false;
+    }
+
     this.needSeperator();
   }
 
   ngAfterViewInit(){
     this.needSeperator();
+    this.setContentHeight();
   }
+
+  private setContentHeight() {
+    const element = this.filterForm.nativeElement;
+    if (element) {
+      const contentArea = element.parentElement;
+      this.contentHeight = contentArea.offsetHeight;
+    }
+  }
+
   public needSeperator(){
     this.hasSeperator = false;
     if(this.contentWrapper && this.contentWrapper2) {

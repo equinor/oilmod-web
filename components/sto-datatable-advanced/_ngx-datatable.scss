@@ -658,3 +658,14 @@ $content-height: 20px;
 span.sortable {
   cursor: pointer;
 }
+
+.stoui.ngx-datatable{
+
+  .datatable-body{
+    -moz-transition:height 225ms cubic-bezier(0.4,0.0,0.2,1);
+    -webkit-transition: height 225ms cubic-bezier(0.4,0.0,0.2,1);
+    -o-transition: height 225ms cubic-bezier(0.4,0.0,0.2,1);
+    transition: height 225ms cubic-bezier(0.4,0.0,0.2,1);
+  }
+
+}
