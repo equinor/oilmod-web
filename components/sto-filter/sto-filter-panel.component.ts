@@ -121,6 +121,8 @@ export class StoFilterActions {
 	  <ng-content></ng-content>
 	  <mat-button-toggle class="icon" *ngIf="expandable" style="box-shadow:none" [checked]="true" (change)="onChange($event)"
 	                      matTooltip="Toggle filter panel"
+                        matTooltipShowDelay="500"
+                        matTooltipHideDelay="200"
 	                      matTooltipClass="nowrap"
                       (click)="toggle.emit()">
 		  <mat-icon>filter_list</mat-icon>
