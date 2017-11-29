@@ -1,6 +1,6 @@
 @import "../vendor/material-icons/material-icons";
 @import '~@angular/material/theming';
-@import "~typeface-roboto/index.css";
+@import url("~typeface-roboto/index.css");
 
 $custom-typography: mat-typography-config(
         $subheading-2: mat-typography-level(13px, 24px, 400), // This is for menu-items. Can break other subheadings

@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const ngc = require('gulp-ngc');
 const inlineNg2Template = require('gulp-inline-ng2-template');
 const sass = require('node-sass');
+const tildeImporter = require('node-sass-tilde-importer');
 const gSass = require('gulp-sass');
 const fs = require('fs');
 const glob = require('glob');
@@ -92,7 +93,9 @@ gulp.task('default', ['clean'], function(cb) {
 
 gulp.task('sass', function() {
   return gulp.src('./ngx-stoui.scss')
-    .pipe(gSass().on('error', gSass.logError))
+    .pipe(gSass({
+      importer: tildeImporter
+    }).on('error', gSass.logError))
     .pipe(gulp.dest('./dist'))
 });
 
