@@ -148,7 +148,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   private resizeContent() {
     if (this.headerRef) {
       const hasFooter = this.footerRef.nativeElement.children.length > 0;
-      const hasHeader = this.headerRef.nativeElement.children.length > 0;
       const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
       let footerHeight = 0;
       const headerHeight = this.headerRef.nativeElement.offsetHeight;

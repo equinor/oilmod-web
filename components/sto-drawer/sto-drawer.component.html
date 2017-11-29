@@ -18,7 +18,8 @@
 		<ng-content></ng-content>
 	</div>
 
-		<div class="sto-drawer__footer" #footer>
+		<div class="sto-drawer__footer"
+			 [style.display]="header ? 'inherit' : 'none'" #footer>
 			<ng-content select="sto-drawer-footer"></ng-content>
 		</div>
 
