@@ -1,14 +1,16 @@
 import {
   AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, HostListener, Input, OnInit, Output,
-  ViewChild
+  ViewChild, OnDestroy
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ListAutoResizeService } from '../services/list-auto-resize.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
-export abstract class AbstractListComponent implements AfterViewInit {
+export abstract class AbstractListComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('table', {read: ElementRef}) public table: ElementRef;
+  private toggleSubscription$: Subscription;
 
   private _height: string;
   set height(height: string) {
@@ -20,16 +22,24 @@ export abstract class AbstractListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.calculateAndSetElementHeight();
-    this.toggleService.isToggled.subscribe($event => {
-      this.onToggle($event);
-    });
+    setTimeout(() => {
+      this.calculateAndSetElementHeight();
+      this.toggleSubscription$ = this.toggleService.isToggled.subscribe($event => {
+        this.onToggle($event);
+      });
+    }, 300)
+
+  }
+  ngOnDestroy(){
+    this.toggleSubscription$.unsubscribe();
   }
 
+  private resizeId;
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    clearTimeout(this.resizeId);
+    this.resizeId = setTimeout(() => this.calculateAndSetElementHeight(), 100);
     // The datatable also does listens to this so we have to wait for this to finish.
-    setTimeout(() => {this.calculateAndSetElementHeight();}, 100);
 
   }
 
@@ -44,11 +54,11 @@ export abstract class AbstractListComponent implements AfterViewInit {
 
 
   private calculateAndSetElementHeight() {
+
+    const PADDING_BOTTOM = 28;
     const windowHeight = window.innerHeight;
     const elementOffsetTop = this.getElementOffsetTop();
-    const elementMarginBottom = this.table.nativeElement.style.marginBottom;
-
-    this.height = windowHeight - 64 - elementOffsetTop + 'px';
+    this.height = windowHeight - PADDING_BOTTOM - elementOffsetTop + 'px';
     this.cdr.detectChanges();
 
   }
