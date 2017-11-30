@@ -39,7 +39,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Input() closeOnClick: boolean;
   @ViewChild('footer') footerRef: ElementRef;
   @ViewChild('header') headerRef: ElementRef;
-  public height = '100vh';
+  public height = '100%';
 
 
   @Output() onToggle = new EventEmitter<boolean>();
