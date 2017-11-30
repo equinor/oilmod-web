@@ -157,7 +157,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
       }
       const fields = Object.keys(data);
       fields.forEach(f => {
-        this.rows.forEach(row => {
+        this.rows.filter(row => row.hasOwnProperty(f)).forEach(row => {
           val.data[f] += row[f];
         });
       });
