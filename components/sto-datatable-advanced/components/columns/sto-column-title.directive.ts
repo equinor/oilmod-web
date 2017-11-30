@@ -8,6 +8,7 @@ export class StoDataTableColumnGroupDirective {
   @Input() frozenLeft: any;
   @Input() frozenRight: any;
   @Input() headerTemplate?: TemplateRef<any>
+   @Input() headerClass?: any;
   //@Input()
   //@ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
   //headerTemplate: TemplateRef<any>;

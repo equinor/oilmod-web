@@ -20,6 +20,7 @@ import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/';
 				  [ngStyle]="stylesByGroup(colGroup.type)">
 			  <div class="datatable-header-column-group" *ngIf="columnGroups">
 				  <div class="datatable-header-cell" style="display: inline-block"
+				    [ngClass]="columnGroup.headerClass"
 					   [style.width]="columnGroup.width+'px'" *ngFor="let columnGroup of 
 				         columnGroupByPin[colGroup.type]">
 					  <ng-container *ngIf="!columnGroup.headerTemplate">
