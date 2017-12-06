@@ -1,0 +1,70 @@
+@import "../../style/functions";
+@import "../../style/colors";
+
+
+//colors: datatable
+$warning-color: $orange-dark;
+$warning-bg-color: $orange-light;
+$error-color: $red-medium;
+$error-bg-color: $red-light;
+$info-color: $purple-dark;
+$info-bg-color: $blue-light;
+
+:host {
+  width: 100%;
+  border: 1px solid;
+  display: flex;
+  padding: spacer(3);
+  font-weight: 500;
+  font-size: 13px;
+
+
+}
+:host(.warning){
+  background-color: $warning-bg-color;
+  border-color: $warning-color;
+
+  .mat-icon {
+    color: $warning-color;
+  }
+}
+:host(.error){
+  background-color: $error-bg-color;
+  border-color: $error-color;
+
+  .mat-icon {
+    color: $error-color;
+  }
+}
+:host(.info){
+  background-color: $info-bg-color;
+  border-color: $info-color;
+
+  .mat-icon {
+    color: $info-color;
+  }
+}
+
+.sto-message-panel{
+  &__icon-wrapper{
+    flex-grow: 1;
+    height: 24px;
+    min-width: 42px;
+    max-width: 42px;
+  }
+  &__content-wrapper{
+    padding-top: 2px;
+    flex-grow: 99;
+
+  }
+}
+
+::ng-deep ul {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+::ng-deep .mat-typography p{
+  margin: 0;
+}
