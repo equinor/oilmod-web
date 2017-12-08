@@ -55,3 +55,5 @@ export * from './components/sto-layout/sto-layout.module';
 export * from './components/sto-action-footer/sto-action-footer.module';
 export * from './components/datepicker/index';
 export * from './components/shared'
+
+export * from './components/sto-message-panel/sto-message-panel.module';
