@@ -7,8 +7,7 @@ export class TankStatePipe implements PipeTransform {
 
   transform(tankId: string, tankStates: TankState[], key: string): any {
     if (!tankId || !tankStates || !key) {
-      console.error('Missing Input');
-      return 'Error';
+      return null;
     }
     const tankState = tankStates
       .filter(x => !!(x))
@@ -17,7 +16,7 @@ export class TankStatePipe implements PipeTransform {
       return tankState[key];
     }
     console.error('Not Found');
-    return 'Error';
+    return null;
   }
 
 }
