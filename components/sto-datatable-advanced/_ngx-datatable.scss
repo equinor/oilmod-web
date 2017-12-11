@@ -1,5 +1,6 @@
 @import "_ngx-datatable-core";
 @import "_ngx-datatable-material";
+@import "_ngx-datatable-icons";
 @import "../../style/colors";
 
 
@@ -51,6 +52,15 @@ $content-height: 20px;
         position: relative;
       }
 
+      .unit{
+        font-size: 8px;
+        position: absolute;
+        top: -12px;
+        right: 2px;
+      }
+
+
+
       &.longpress {
         .draggable::after {
           transition: transform 400ms ease, opacity 400ms ease;
@@ -92,7 +102,24 @@ $content-height: 20px;
 
       .datatable-header-cell {
         font-weight: bold;
+        padding: 8px 16px;
         border-left: 1px solid $border-color-light;
+        vertical-align: middle;
+        .column-group-header{
+          display:flex;
+          justify-content: center;
+          margin-top: 0;
+
+
+          &-icon{
+            max-width: 8px;
+            flex-grow: 1;
+          }
+          &-title{
+
+            flex-grow: 1;
+          }
+        }
       }
     }
 
@@ -400,13 +427,12 @@ $content-height: 20px;
   }
 
   .mat-icon-button {
-    margin-left: -16px;
+    margin-left: -8px;
     margin-top: -18px;
     height: 36px;
     width: 36px;
     line-height: 36px;
   }
-
 }
 
 .datatable-header {
@@ -420,7 +446,6 @@ $content-height: 20px;
 }
 
 .datatable-body-row {
-
   &.active {
     background-color: $gray-light;
   }
@@ -444,215 +469,14 @@ $content-height: 20px;
   }
 }
 
-.ngx-datatable.sto-datatable__overview {
-
-  .datatable-header-inner .datatable-row-left .datatable-header-column-group .datatable-header-cell {
-    border-right: 1px solid $border-color-dark;
-  }
-  .datatable-footer-summary-row {
-    .datatable-row-group.datatable-row-left .datatable-body-cell {
-      border-right: 1px solid $border-color-dark;
-    }
-    :hover {
-      background-color: $datatable-background-color;
-      cursor: default;
-    }
-    background-color: $datatable-background-color;
-    .datatable-body-cell {
-      background-color: $datatable-background-color;
-    }
-    .datatable-body-cell-label, span {
-      cursor: text;
-    }
-  }
-
-  .datatable-header-column-group {
-    line-height: 11px;
-    .mat-icon {
-      height: 13px;
-      width: 13px;
-      line-height: 13px;
-    }
-  }
-  .datatable-body-row {
-    &.active, &.active:hover  {
-      background-color: $header-bg-color;// !important;
-      .datatable-row-group {
-        background-color: $header-bg-color;
-      }
-    }
-    &.month-row, &.month-row:hover {
-      .datatable-row-group {
-        background-color: $gray-lighter;
-        cursor: auto;
-        .datatable-body-cell-label {
-          color: $black-light;
-        }
-      }
-    }
-    .datatable-row-left {
-      background-color: $datatable-header-background;
-    }
-    .datatable-row-center {
-      background-color: $datatable-header-background;
-    }
-    &:hover {
-      .datatable-row-left {
-        background-color: $white-medium;
-      }
-      .datatable-row-center {
-        background-color: $white-medium;
-      }
-    }
-  }
 
 
-  .datatable-header {
-    line-height: 11px;
-    height: auto;
-    border-top: 1px solid $border-color-light;
-    border-bottom: 1px solid $border-color-light;
-    color: $black-light;
-  }
-
-  .datatable-header-cell {
-
-    line-height: 11px;
-    padding: $datatable-header-vertical-padding $datatable-horizontal-padding;
-
-    small {
-      font-size: 10px;
-    }
-  }
-}
-
-.ngx-datatable.sto-datatable__inline-card {
-  font-size: 12px;
-  margin-left: -8px;
-  margin-right: -8px;
-  .datatable-header {
-    .datatable-header-cell {
-      padding: 6px 4px;
-      &:first-child {
-        padding-left: 8px;
-      }
-    }
-  }
-  .datatable-body {
-    margin-bottom: -8px;
-    .datatable-body-row {
-      .datatable-body-cell {
-        &:first-child {
-          padding-left: 8px !important;
-        }
-        .datatable-body-cell-label{
-          line-height: 24px;
-        }
-
-      }
-    }
-
-  }
-  .empty-row {
-    padding-left: 4px;
-  }
-}
+@import 'ngx-datatable-overview';
+@import 'ngx-datatable-inside-card';
 
 .ngx-datatable.stoui .datatable-header .datatable-header-cell .sort-btn {
   line-height: 0%;
   vertical-align: bottom;
-}
-
-[data-icon]:before {
-  font-family: "Material Icons" !important;
-  content: attr(data-icon);
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  font-size: 24px;
-  line-height: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-[class^="datatable-icon-"]:before,
-[class*=" datatable-icon-"]:before {
-  font-family: "Material Icons" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  font-size: 24px;
-  line-height: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.datatable-icon-filter:before {
-  content: "\62";
-}
-
-.datatable-icon-collapse:before {
-  content: "\61";
-}
-
-.datatable-icon-expand:before {
-  content: "\63";
-}
-
-.datatable-icon-close:before {
-  content: "\64";
-}
-
-.datatable-icon-up:before {
-  content: "arrow_drop_up";
-}
-
-.datatable-icon-down:before {
-  content: "arrow_drop_down";
-}
-
-.datatable-icon-sort:before {
-  content: "sort_by_alpha";
-}
-
-.datatable-icon-done:before {
-  content: "\68";
-}
-
-.datatable-icon-done-all:before {
-  content: "\69";
-}
-
-.datatable-icon-search:before {
-  content: "\6a";
-}
-
-.datatable-icon-pin:before {
-  content: "\6b";
-}
-
-.datatable-icon-add:before {
-  content: "\6d";
-}
-
-.datatable-icon-left:before {
-  content: "\6f";
-}
-
-.datatable-icon-right:before {
-  content: "\70";
-}
-
-.datatable-icon-skip:before {
-  content: "\71";
-}
-
-.datatable-icon-prev:before {
-  content: "\72";
 }
 
 span.sortable {
@@ -669,3 +493,20 @@ span.sortable {
   }
 
 }
+
+.date-status-cell {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .month-label {
+    line-height: 22px;
+    position: absolute;
+    left: 8px;
+  }
+}
+
+
+
+
+@import "ngx-datatable-compact";
