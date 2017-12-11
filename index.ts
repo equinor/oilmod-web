@@ -57,3 +57,4 @@ export * from './components/datepicker/index';
 export * from './components/shared'
 
 export * from './components/sto-message-panel/sto-message-panel.module';
+export * from './components/sto-ultracompact/sto-ultracompact.directive';

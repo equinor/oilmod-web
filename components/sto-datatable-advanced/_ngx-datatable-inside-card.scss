@@ -1,0 +1,31 @@
+.ngx-datatable.stoui.inside-card {
+  font-size: 12px;
+  margin-left: -8px;
+  margin-right: -8px;
+  .datatable-header {
+    .datatable-header-cell {
+      padding: 6px 4px;
+      &:first-child {
+        padding-left: 8px;
+      }
+    }
+  }
+  .datatable-body {
+    margin-bottom: -8px;
+    .datatable-body-row {
+      .datatable-body-cell {
+        &:first-child {
+          padding-left: 8px;
+        }
+        .datatable-body-cell-label{
+          line-height: 24px;
+        }
+
+      }
+    }
+
+  }
+  .empty-row {
+    padding-left: 4px;
+  }
+}

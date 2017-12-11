@@ -119,8 +119,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
 
   private _height: number;
-  
-  @Input() set height(value){
+    @Input() set height(value){
 
     if(value === undefined){
       return;
