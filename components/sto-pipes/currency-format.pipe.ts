@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'currencyFormat'
 }) 
 export class CurrencyFormatPipe implements PipeTransform {
-  transform(value: number, unit: string = ''): string {
+  transform(value: number, unit: string = '', maximumFractionDigits = 3): string {
     if (!value) {
       return null;
     }
@@ -15,7 +15,7 @@ export class CurrencyFormatPipe implements PipeTransform {
       }
     }
 
-    const intl = new Intl.NumberFormat().format(value);
+    const intl = new Intl.NumberFormat('en-US', {maximumFractionDigits}).format(value);
     return intl.replace(/,/g, ' ').replace('.', ',') + ` ${unit}`;
   }
 }
