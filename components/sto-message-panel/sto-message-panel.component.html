@@ -1,5 +1,10 @@
 <div class="sto-message-panel__icon-wrapper">
 	<mat-icon>{{severity}}</mat-icon>
-</div><div class="sto-message-panel__content-wrapper">
+</div>
+<div class="sto-message-panel__content-wrapper">
 	<ng-content></ng-content>
+</div>
+<div *ngIf="dismissable"
+	 class="sto-message-panel__dismiss-wrapper mat__icon--clickable">
+	<mat-icon (click)="dismissed.emit()" style="color: #E0E0E0">close</mat-icon>
 </div>
