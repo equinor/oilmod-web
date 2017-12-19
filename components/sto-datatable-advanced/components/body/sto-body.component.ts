@@ -132,7 +132,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     const width = parseInt(this.bodyWidth, 0);
     let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
     if (colWidth > width) {
-      scroll = 17;
+      scroll = 12;
     }
     translateXY(style, 0, height - summaryHeight - scroll);
 
