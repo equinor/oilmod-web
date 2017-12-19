@@ -52,7 +52,7 @@ const formatServerDownOrTimeout = (err: HttpErrorResponse): FormattedError => {
   const title = `I was not able to contact the server`;
   const message = `The server appears to have gone offline, or the connection timed out.
 
-  Please report this issue via Services@Statoil, and attach the file that has been downloaded to you computer (filename).
+  Please report this issue via Services@Statoil.
 
   In the issue registration form, select "Business Specific IT", and "TOPS IM" as Application.`;
   const serviceNowUrl = `https://statoil.service-now.com/selfservice/?id=sc_cat_item&sys_id=3373cf4cdb97f200bc7af7461d96195b`;
