@@ -21,6 +21,8 @@ import {
 export class StoMessagePanelComponent implements OnInit {
 
   @HostBinding('class') @Input() severity : string;
+  @Output() dismissed = new EventEmitter();
+  @Input() dismissable: boolean;
   
   ngOnInit() {
 

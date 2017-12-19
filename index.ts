@@ -58,3 +58,6 @@ export * from './components/shared'
 
 export * from './components/sto-message-panel/sto-message-panel.module';
 export * from './components/sto-ultracompact/sto-ultracompact.directive';
+export * from './components/http-error-handler/http-error-handler.module';
+export * from './components/http-error-handler/http-error-handler.service';
+export * from './components/http-error-handler/format-error-message';
