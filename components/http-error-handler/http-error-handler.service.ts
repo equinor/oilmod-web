@@ -21,13 +21,6 @@ export class HttpErrorHandlerService {
       return;
     }
     switch (err.status) {
-      case 500:
-      case 409:
-      case 0:
-      case 503:
-      case 504:
-        this.handleModalError(err);
-        break;
       case 404:
       case 400:
         this.errorMessageSubject.next(err);
