@@ -70,6 +70,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
    * @type {boolean}
    */
   @Input() ignoreValidation = false;
+  @Input() helpText: string;
   public filtered$: Observable<any[]>;
   public searchControl = new FormControl();
   public errors: ValidationErrors | null;
