@@ -1,2 +1,201 @@
-@import "sto-menu-core.component";
-@import "sto-menu-theme.component";
+@import "../../variables";
+@import "../../mixins";
+
+.ui-menu {
+  width: 12.5em;
+  padding: 0;
+  position: relative;
+  &.ui-menu-dynamic {
+    position: absolute;
+    display: none;
+    z-index: 100000;
+  }
+  &.ui-shadow {
+    @include sto-shadows(0, 1);
+  }
+}
+
+.ui-menu-list {
+  position: static;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem {
+  border: none;
+}
+
+.ui-menu .ui-menu-list .ui-widget-header {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin: .125em 0;
+  padding: .25em .5em;
+}
+
+.ui-menu .ui-menuitem-parent,
+.ui-menu .ui-menuitem {
+  width: 100%;
+  clear: both;
+  margin: .125em 0;
+  padding: 0;
+}
+
+.ui-menu .ui-menuitem-link {
+  display: block;
+  width: 100%;
+  outline: none;
+  text-decoration: none;
+  font-weight: normal;
+  border: 1px solid transparent;
+  line-height: 1em;
+  padding: .25em;
+  cursor: pointer;
+}
+
+.ui-menu .ui-menuitem-link .ui-menuitem-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.ui-menu .ui-menuitem-text {
+  vertical-align: middle;
+}
+
+.ui-menu .ui-widget-header h1,
+.ui-menu .ui-widget-header h2,
+.ui-menu .ui-widget-header h3,
+.ui-menu .ui-widget-header h4,
+.ui-menu .ui-widget-header h5,
+.ui-menu .ui-widget-header h6 {
+  font-size: 1em;
+  margin: 0 auto;
+}
+
+.ui-menu .ui-menu-parent .ui-menu-child {
+  display: none;
+  width: 12.5em;
+  padding: .25em;
+  position: absolute;
+  margin: 0;
+  outline: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+.ui-menu .ui-menu-parent {
+  position: relative;
+}
+
+.ui-menu .ui-menu-parent .ui-submenu-icon {
+  float: right;
+  margin-right: -.25em;
+}
+
+/**
+Theme
+ */
+
+.ui-menu.ui-shadow {
+  @include sto-shadows(0, 1);
+}
+
+.ui-menu .ui-menu-parent .ui-submenu-icon {
+  margin-top: 0.2em;
+}
+
+.ui-menu .ui-menu-list .ui-widget-header h3 {
+  padding: 0.375em 0.75em;
+  font-weight: 400;
+}
+
+.ui-menu .ui-menu-list .ui-widget-header .ui-icon {
+  color: $text-color;
+}
+
+.ui-menu .ui-menu-list .ui-widget-header:hover {
+  background-color: $content-bg-color-highlight;
+}
+
+.ui-menu .ui-menu-list .ui-widget-header:hover .ui-icon {
+  color: #2d353c;
+}
+
+.ui-menu .ui-menu-list .ui-widget-header:first-child {
+  margin-top: 0;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem {
+  margin: 0;
+  box-sizing: border-box;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link {
+  padding: 0.5em 0.75em;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  color: #373a3c;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link:hover {
+  background-color: $content-bg-color-highlight !important;
+  color: $text-color;
+}
+
+.ui-menuitem-active {
+  background-color: $content-bg-color;
+  color: $text-color;
+}
+
+.ui-menu .ui-menu-list .ui-menu-child {
+  padding: 0;
+}
+
+.ui-menu .ui-menu-list .ui-menu-child.ui-shadow {
+  @include sto-shadows(0, 1px);
+}
+
+.ui-menu.ui-menubar {
+  background-color: #ffffff;
+  border-color: #e6e6e6;
+}
+
+.ui-menu.ui-menubar > .ui-menu-list > .ui-menuitem {
+  width: auto;
+}
+
+.ui-menu.ui-menubar > .ui-menu-list > .ui-menuitem > .ui-menuitem-link {
+  color: #2d353c;
+}
+
+.ui-menu.ui-menubar > .ui-menu-list > .ui-menuitem > .ui-menuitem-link .ui-menuitem-icon {
+  color: #767b7f;
+}
+
+.ui-menu.ui-menubar > .ui-menu-list > .ui-menuitem > .ui-menuitem-link:hover {
+  color: #ffffff;
+}
+
+.ui-menu.ui-menubar > .ui-menu-list > .ui-menuitem > .ui-menuitem-link:hover .ui-menuitem-icon {
+  color: #ffffff;
+}
+
+.ui-menu.ui-menubar > .ui-menu-list > .ui-menuitem.ui-menubar-options {
+  margin-right: 8px;
+}
+
+.ui-menu.ui-megamenu .ui-menu-list > table > t > tr > td {
+  padding: 0;
+}
+
+.ui-menu.ui-megamenu.ui-megamenu-vertical > .ui-menu-list .ui-menuitem {
+  width: 100%;
+}
+
+.ui-menubutton .ui-button.ui-button-text-icon-left .ui-icon {
+  margin-top: -.625em;
+}

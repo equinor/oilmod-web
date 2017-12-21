@@ -1,0 +1,20 @@
+<mat-form-field [class.mat-form-field-invalid]="searchControl.touched && errors">
+  <input matInput
+         [matAutocomplete]="searchList"
+         (keyup.enter)="onEnter()"
+         [placeholder]="placeholder"
+         #searchInput
+         [formControl]="searchControl">
+  <mat-hint [class.mat-error]="searchControl.touched && errors">
+    <ng-container *ngIf="searchControl.touched && errors; else info">
+      <span *ngIf="errors.required">Field is required</span>
+      <span *ngIf="errors.optionSelected">{{ errors.optionSelected }}</span>
+    </ng-container>
+    <ng-template #info>{{ helpText }}</ng-template>
+  </mat-hint>
+  <mat-autocomplete #searchList="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelect($event)">
+    <mat-option *ngFor="let item of filtered$ | async" [value]="item">
+      {{ displayFn(item) }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

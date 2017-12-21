@@ -1,47 +1,114 @@
-.sidebar__header {
-  padding: 0px 5px;
+@import "../../variables";
+@import "../../style/functions";
+
+$header-height: spacer(16);
+$large-header-height: spacer(24);
+$footer-height: spacer(16);
+$header-size: 16px;
+
+.large-header {
+  .sto-drawer__content {
+    height: calc(100% - calc(#{$large-header-height} + #{$footer-height})
+  }
+  .sto-drawer__header {
+    line-height: 30px;
+    height: $large-header-height;
+  }
 }
 
-.fa {
-  margin: 0px 5px;
-}
-
-.sidebar__content {
-  padding: 5px;
-  overflow-y: auto;
-  max-height: 100%;
-}
-
-.sidebar__header {
-  background-color: lightgrey;
-  display: flex;
-  box-sizing: border-box;
-  width: 100%;
-  flex-direction: row;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.sidebar {
-  box-shadow: 0 8px 10px -5px rgba(0, 0, 0, .2), 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12);
-  background: #fff;
+.sto-drawer {
+  @include mat-elevation(16);
+  background: $gray-lighter;
   color: #000;
   position: fixed;
   top: 0;
   bottom: 0;
   width: 20%;
-  min-width: 250px;
-  z-index: 10;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  min-width: 260px;
+  &.right {
+    min-width: 450px;
+  }
+  z-index: 30;
+
+  .mat-card {
+   // padding: spacer(4) spacer(6) spacer(6) spacer(6);
+    margin-bottom: spacer(4);
+    &-title {
+      border-bottom: 1 solid $gray-dark;
+      font-size: $header-size;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+    }
+  }
+
+  &.right {
+    left: auto;
+    right: 0;
+  }
+
+  &.left {
+    left: 0;
+    right: auto;
+  }
 }
 
-.sidebar.right {
-  left: auto;
-  right: 0;
+.sto-drawer__content {
+  padding: spacer(4) spacer(4);
+  overflow-y: auto;
+  &.navigation {
+    height: 100%;
+  }
 }
 
-.sidebar.left {
+.sto-drawer__footer {
+  @include mat-elevation(4);
+  position: absolute;
+  border-top: solid 1px $gray-medium;
+  bottom: 0;
   left: 0;
-  right: auto;
+  padding: spacer(4);
+  width: 100%;
+
+  background-color: $gray-light;
+  height: calc(#{$footer-height} - spacer(4));
+
+  button {
+    text-transform: uppercase;
+  }
+
+  &__more {
+    float: right;
+  }
+}
+
+.sto-drawer__header {
+
+  @include mat-elevation(4);
+  padding: 0 spacer(2) 0 spacer(4);
+  background-color: $gray-light;
+  border-bottom: solid 1px $gray-medium;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: $header-height;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+
+  &__title, h1, h2, h3, h4 {
+    font-size: $header-size;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  button {
+    background-color: transparent;
+    color: #828282;
+    border: 0;
+    outline: none;
+  }
 }
 

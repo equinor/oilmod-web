@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const ngc = require('gulp-ngc');
 const inlineNg2Template = require('gulp-inline-ng2-template');
 const sass = require('node-sass');
+const tildeImporter = require('node-sass-tilde-importer');
 const gSass = require('gulp-sass');
 const fs = require('fs');
 const glob = require('glob');
@@ -31,7 +32,10 @@ const copyFiles = [
   './_variables.scss',
   './_mixins.scss',
   './vendor/bootstrap/**/_variables.scss',
-  './vendor/font-awesome/scss/_variables.scss'
+  './vendor/font-awesome/scss/_variables.scss',
+  './vendor/_material_angular_variables.scss',
+  './style/**/*.scss',
+  './vendor/material-icons/**/*'
 ];
 
 gulp.task('inline', function() {
@@ -46,7 +50,7 @@ gulp.task('inline', function() {
 gulp.task('index', function(cb) {
   const dir = path.join(__dirname, 'build');
   glob('**/*.ts', { cwd: dir}, function(err, files) {
-    let indexContents = files.map(file => `export * from './build/${file.replace('.ts', '')}'`);
+    let indexContents = files.filter(file => !file.match(/index\.ts$/)).map(file => `export * from './build/${file.replace('.ts', '')}'`);
     fs.writeFile('index-esm.ts', indexContents.join('\n'), err => {
       cb(err);
     });
@@ -89,7 +93,9 @@ gulp.task('default', ['clean'], function(cb) {
 
 gulp.task('sass', function() {
   return gulp.src('./ngx-stoui.scss')
-    .pipe(gSass().on('error', gSass.logError))
+    .pipe(gSass({
+      importer: tildeImporter
+    }).on('error', gSass.logError))
     .pipe(gulp.dest('./dist'))
 });
 

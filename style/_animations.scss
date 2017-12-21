@@ -1,0 +1,15 @@
+/**
+.spin makes an element rotate 360 degrees infinitely.
+Use to rotate icons indicating we're waiting for a response
+ */
+.spin {
+  animation: spin 2s infinite linear;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}

@@ -1,50 +1,61 @@
-<span [ngClass]="{'ui-daterange-wrapper': true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style"
-	  [class]="styleClass">
-	<input #inputfield type="text" [attr.id]="inputId" [attr.required]="required" [value]="inputFieldValue"
-		   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
-		   [readonly]="true" [ngStyle]="inputStyle" [class]="inputStyleClass" [placeholder]="placeholder||''"
-		   [disabled]="disabled"
-		   [ngClass]="'ui-inputtext ui-widget ui-state-default ui-corner-all'">
-	<button type="button" [icon]="icon" stoButton *ngIf="showIcon" (click)="onButtonClick($event,inputfield)"
-			[ngClass]="{'ui-datepicker-trigger':true,'ui-state-disabled':disabled}" [disabled]="disabled"></button>
-	<div class="ui-g ui-daterange ui-shadow ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" #datepicker
-		 [class.ui-state-disabled]="disabled"
-		 [ngStyle]="{'display': overlayVisible ? 'block' : 'none'}"
-		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'"
-	>
-			<div class="ui-g-8">
-				<form [formGroup]="form">
-					<div class="ui-g-6">
-						<sto-calendar formControlName="start" [inline]="true"></sto-calendar>
+<span [ngStyle]="style"
+	  class="sto-daterange-wrapper">
+	<mat-form-field [class]="inputStyleClass">
+		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
+			   (keydown)="$event.preventDefault()"
+			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
+			   [placeholder]="placeholder||''">
+		<mat-icon *ngIf="showIcon"
+				  matSuffix
+				  style="cursor: default;">date_range</mat-icon>
+	</mat-form-field>
+
+	<div class="sto-daterange" #datepicker
+		 [ngStyle]="{'display': overlayVisible ? 'flex' : 'none'}"
+		 [formGroup]="form"
+		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'">
+					<div class="calendar-box">
+							<sto-inline-calendar formControlName="start"></sto-inline-calendar>
 					</div>
-					<div class="ui-g-6">
-						<sto-calendar formControlName="end" [inline]="true"></sto-calendar>
+					<div class="calendar-box">
+							<sto-inline-calendar formControlName="end"></sto-inline-calendar>
 					</div>
-				</form>
-			</div>
-			<div class="ui-g-4">
-				<div class="ui-g-12">
-					<button (click)="tenWeeks()" stoButton label="Previous 2w - Next 8w"></button>
-				</div>
-				<div class="ui-g-12">
-					<em>Week:</em> <br>
-					<div class="btn-group" role="group" aria-label="Select period (week)">
-						<button (click)="periodPicker('week', '-')" class="btn" stoButton label="Prev"></button>
-						<button (click)="periodPicker('week', '')" class="btn" stoButton label="This"></button>
-						<button (click)="periodPicker('week', '+')" class="btn" stoButton label="Next"></button>
+			<div class="actions">
+				<div class="action-container">
+					<div class="sto-daterange__button--container">
+						<mat-form-field>
+							<mat-select [value]="selected" placeholder="Date Range">
+								<mat-select-trigger>
+									{{ selectValue }}
+								</mat-select-trigger>
+								<mat-option [value]="0" (click)="tenWeeks()">-2 weeks – +8 weeks</mat-option>
+								<mat-option [value]="1" (click)="periodPicker('month', '-')">Previous month</mat-option>
+								<mat-option [value]="2" (click)="periodPicker('month', null)">This month</mat-option>
+								<mat-option [value]="3" (click)="periodPicker('month', '+')">Next month</mat-option>
+								<mat-option disabled [value]="4">Custom</mat-option>
+							</mat-select>
+						</mat-form-field>
 					</div>
-				</div>
-				<div class="ui-g-12">
-					<em>Month:</em> <br>
-					<div class="btn-group" role="group" aria-label="Select period (month)">
-						<button (click)="periodPicker('month', '-')" class="btn" stoButton label="Prev"></button>
-						<button (click)="periodPicker('month', '')" class="btn" stoButton label="This"></button>
-						<button (click)="periodPicker('month', '+')" class="btn" stoButton label="Next"></button>
+					<div class="sto-daterange__button--container">
+						<div style="display: flex; flex-direction: row">
+							<mat-form-field readonly class="sto-form-field--readonly left">
+								<input readonly matInput [value]="form.value.start | formatDate">
+							</mat-form-field>
+							<span class="spacer" style="text-align: center; line-height: 43px;">—</span>
+							<mat-form-field readonly class="sto-form-field--readonly right">
+								<input readonly matInput [value]="form.value.end | formatDate">
+							</mat-form-field>
+						</div>
 					</div>
-				</div>
-				<div class="ui-g-12">
-					<button [disabled]="form.invalid" stoButton (click)="onSubmit()" label="Submit"></button>
-					<button stoButton (click)="onCancel()" label="Cancel"></button>
+					<div class="spacer"></div>
+					<div class="sto-daterange__error--container" *ngIf="error | async as message">
+						<span>{{ message }}</span>
+					</div>
+					<div class="sto-daterange__button--container sto-daterange__button--container--actions">
+						<button type="button" mat-button color="warn" (click)="onCancel()">Cancel</button>
+						<button type="button" [disabled]="form.invalid || (error | async)" mat-button
+								color="primary" (click)="onSubmit()">Apply</button>
+					</div>
 				</div>
 			</div>
 	</div>

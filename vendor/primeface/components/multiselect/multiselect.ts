@@ -119,7 +119,7 @@ export class MultiSelect implements OnInit,AfterViewInit,AfterViewChecked,DoChec
     
     ngDoCheck() {
         let changes = this.differ.diff(this.value);
-        
+
         if(changes) {
             this.updateLabel();
         }
@@ -255,7 +255,7 @@ export class MultiSelect implements OnInit,AfterViewInit,AfterViewChecked,DoChec
                 }
                 label = label + this.findLabelByValue(this.value[i]);
             }
-            
+
             if(this.value.length <= this.maxSelectedLabels) {
                 this.valuesAsString = label;
             }

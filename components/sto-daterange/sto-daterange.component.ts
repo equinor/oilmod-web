@@ -6,6 +6,7 @@ import {
   EventEmitter,
   forwardRef,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   Renderer,
@@ -14,16 +15,28 @@ import {
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import {
-  addMonths, addWeeks, endOfMonth, endOfWeek, format, startOfMonth, startOfWeek, subMonths,
-  subWeeks
+  addMonths,
+  addWeeks,
+  endOfMonth,
+  endOfWeek,
+  format,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
+  subWeeks,
+  isBefore,
+  isAfter
 } from 'date-fns';
 
 @Component({
   selector: 'sto-daterange',
   templateUrl: './sto-daterange.component.html',
-  styleUrls: [ './sto-daterange.component.scss' ],
+  styleUrls: ['./sto-daterange.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -45,8 +58,9 @@ import {
     ])
   ]
 })
-export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
+  public log = console.log;
   @Input() showIcon: boolean = true;
   @Input() icon: string = 'fa-calendar';
   @Input() styleClass: string[];
@@ -67,8 +81,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   @Output() onBlur: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('datepicker') overlayViewChild: ElementRef;
-
-  @ViewChild('inputfield') inputfieldViewChild: ElementRef;
+  private initValues;
 
   public form: FormGroup;
 
@@ -80,10 +93,21 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public overlayShown: boolean;
   public value: any;
   public inputFieldValue: string = '';
+  public hasError: string;
+  public error: Observable<string>;
+  public selectValue = 'Custom';
+  public selected: number = 4;
+  /*<mat-option [ngValue]="{ type: 'tenweeks', }">-2 weeks – +8 weeks</mat-option>
+<mat-option>Previous month</mat-option>
+<mat-option>This month</mat-option>
+<mat-option>Next month</mat-option>
+<mat-option [value]="null">Custom</mat-option>
+  public periodPicker(unit: 'week' | 'month', when: string): void {
+*/
 
   private documentClickListener: any;
 
-  public showOverlay( inputfield ) {
+  public showOverlay(inputfield?) {
     this.overlayVisible = true;
     this.overlayShown = true;
     this.overlay.style.zIndex = String(++DomHandler.zindex);
@@ -94,13 +118,13 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public onCancel() {
     this.overlayVisible = false;
     this.closeOverlay = true;
-    this.form.reset();
+    this.form.setValue(this.initValues, {emitEvent: false});
   }
 
   public onSubmit() {
     this.overlayVisible = false;
     this.closeOverlay = true;
-    let { start, end } = this.form.value;
+    let {start, end} = this.form.value;
     if (start && end) {
       this.updateInputfield(this.form.value);
       this.propagateChange(this.form.value);
@@ -114,9 +138,11 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     };
     this.form.setValue(values);
     this.onSubmit();
+    this.selectValue = '-2 Weeks - +8 Weeks';
+    this.selected = 0;
   }
 
-  public periodPicker( unit: 'week' | 'month', when: string ): void {
+  public periodPicker(unit: 'week' | 'month', when: string): void {
     const week = unit === 'week';
     const addFn = unit === 'week' ? addWeeks : addMonths;
     const subFn = unit === 'week' ? subWeeks : subMonths;
@@ -125,21 +151,27 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     switch (when) {
       case '-':
         this.form.setValue({
-          start: week ? startOfWeek(subFn(new Date(), 1), { weekStartsOn: 1 }) : startOfMonth(subFn(new Date(), 1)),
-          end: week ? endOfWeek(subFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(subFn(new Date(), 1))
+          start: week ? startOfWeek(subFn(new Date(), 1), {weekStartsOn: 1}) : startOfMonth(subFn(new Date(), 1)),
+          end: week ? endOfWeek(subFn(new Date(), 1), {weekStartsOn: 1}) : endOfMonth(subFn(new Date(), 1))
         });
+        this.selectValue = `Previous ${unit}`;
+        this.selected = 1;
         break;
       case '+':
         this.form.setValue({
-          start: week ? startOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : startOfMonth(addFn(new Date(), 1)),
-          end: week ? endOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(addFn(new Date(), 1))
+          start: week ? startOfWeek(addFn(new Date(), 1), {weekStartsOn: 1}) : startOfMonth(addFn(new Date(), 1)),
+          end: week ? endOfWeek(addFn(new Date(), 1), {weekStartsOn: 1}) : endOfMonth(addFn(new Date(), 1))
         });
+        this.selectValue = `Next ${unit}`;
+        this.selected = 3;
         break;
       default:
         this.form.setValue({
-          start: week ? startOfWeek(new Date(), { weekStartsOn: 1 }) : startOfMonth(new Date()),
-          end: week ? endOfWeek(addFn(new Date(), 1), { weekStartsOn: 1 }) : endOfMonth(addFn(new Date(), 1))
+          start: week ? startOfWeek(new Date(), {weekStartsOn: 1}) : startOfMonth(new Date()),
+          end: week ? endOfWeek(new Date(), {weekStartsOn: 1}) : endOfMonth(new Date())
         });
+        this.selectValue = `This ${unit}`;
+        this.selected = 2;
         break;
     }
     this.onSubmit();
@@ -150,11 +182,15 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
    */
   public bindDocumentClickListener() {
     if (!this.documentClickListener) {
-      this.documentClickListener = this.renderer.listenGlobal('document', 'click', ( event ) => {
+      this.documentClickListener = this.renderer.listenGlobal('document', 'click', (event) => {
 
         // Don't close if inside the date range picker
         for (const el of event.path) {
-          if (el.localName === 'sto-calendar' || el.localName === 'sto-daterange') {
+          if (el.localName === 'sto-calendar' ||
+            el.localName === 'sto-daterange' ||
+            el.localName === 'mat-option' ||
+              el.className === 'cdk-overlay-container'
+          ) {
             this.closeOverlay = false;
             break;
           }
@@ -171,13 +207,13 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  onInputFocus( inputfield, event ) {
+  onInputFocus(inputfield, event) {
     this.focus = true;
     this.showOverlay(inputfield);
     this.onFocus.emit(event);
   }
 
-  onButtonClick( event, inputfield ) {
+  onButtonClick(event, inputfield) {
     this.closeOverlay = false;
 
     if (!this.overlay.offsetParent) {
@@ -189,51 +225,58 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  onInputBlur( event ) {
+  onInputBlur(event) {
     this.focus = false;
     this.onBlur.emit(event);
     // this.onModelTouched();
   }
 
-  private updateInputfield( values ) {
+  private updateInputfield(values) {
     if (values) {
-      const start = format(values.start, 'YYYY-MM-DD');
-      const end = format(values.end, 'YYYY-MM-DD');
-      this.inputFieldValue = `${start} - ${end}`;
+      const start = format(values.start, 'MMM DD, YYYY');
+      const end = format(values.end, 'MMM DD, YYYY');
+      this.inputFieldValue = `${start} — ${end}`;
     }
     else {
       this.inputFieldValue = '';
     }
   }
 
-  private propagateChange = ( _: any ) => {
+  private propagateChange = (_: any) => {
   };
 
-  writeValue( value: any ): void {
+  writeValue(value: any): void {
     if (value && typeof value !== 'undefined') {
       if (value.hasOwnProperty('start') && value.hasOwnProperty('end') && Object.keys(value).length === 2) {
         let newValues = {};
         for (let key in value) {
-          if (value[ key ] instanceof Date) {
-            newValues[ key ] = value[ key ];
+          if (value[key] instanceof Date) {
+            newValues[key] = value[key];
           } else if (!isNaN(new Date(value[key]).getTime())) {
             newValues[key] = new Date(value[key]);
           }
         }
+        this.initValues = newValues;
         this.form.setValue(newValues);
         this.updateInputfield(newValues);
       }
     }
   }
 
-  registerOnChange( fn: any ): void {
+  registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched( fn: any ): void {
+  registerOnTouched(fn: any): void {
   }
 
-  constructor( private fb: FormBuilder, public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef ) {
+  constructor(private fb: FormBuilder, public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef) {
+  }
+
+  ngOnDestroy() {
+    if (this.documentClickListener) {
+      this.documentClickListener();
+    }
   }
 
   ngAfterViewInit() {
@@ -251,9 +294,16 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   ngOnInit() {
     this.form = this.fb.group({
-      start: [ null, Validators.required ],
-      end: [ null, Validators.required ]
+      start: [null, Validators.required],
+      end: [null, Validators.required]
     });
-
+    this.error = this.form
+      .valueChanges
+      .do(v => this.selected = 4)
+      .do(v => this.selectValue = 'Custom')
+      .map((value: {start: Date, end: Date}) => {
+        const {start, end} = value;
+        return isAfter(start, end) ? 'Start date is after end date' : null;
+      });
   }
 }

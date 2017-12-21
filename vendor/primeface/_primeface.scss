@@ -1,6 +1,6 @@
 @import "mixins";
 
-.ui-widget * {
+/*.ui-widget * {
   @include ui-widget();
 }
 .ui-helper-hidden {
@@ -14,7 +14,7 @@
 }
 .ui-helper-clearfix {
   @include ui-helper-clearfix();
-}
+}*/
 .ui-helper-zfix {
   width: 100%;
   height: 100%;
@@ -320,26 +320,6 @@
 
 .ui-blockui-document {
   position: fixed;
-}
-/** Breadcrumb **/
-.ui-breadcrumb {
-  margin: 0;
-  padding: 0;
-  padding: .3em;
-}
-
-.ui-breadcrumb ul {
-  margin: 0;
-  padding: 0;
-}
-
-.ui-breadcrumb ul li {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.ui-breadcrumb ul li .ui-menuitem-link {
-  text-decoration: none;
 }
 /* Button */
 .ui-button {
@@ -1553,7 +1533,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /* New Grid CSS */
-.ui-g {
+/*.ui-g {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -1895,7 +1875,7 @@ button.ui-button::-moz-focus-inner {
 
 .ui-g-nopad {
   padding: 0;
-}
+}*/
 
 .ui-growl {
   position:fixed;

@@ -1,0 +1,512 @@
+@import "_ngx-datatable-core";
+@import "_ngx-datatable-material";
+@import "_ngx-datatable-icons";
+@import "../../style/colors";
+
+
+//colors: datatable
+$warning-color: $orange-medium;
+$error-color: $red-medium;
+$tentative-color: $gray-light;
+$planned-color: $yellow-light;
+$actual-color: $green-light;
+$day-color: $green-dark;
+
+$border-color-light: $gray-medium;
+$border-color-dark: $black-light;
+
+$datatable-cell-color: $black-medium;
+$datatable-background-color: $white-light;
+$datatable-font-size: $font-size;
+$datatable-header-background: $white-light;
+$datatable-header-vertical-padding: $space-2x;
+$datatable-header-horizontal-padding: $space-4x;
+$datatable-header-font-size: 11px;
+
+$datatable-vertical-padding: $space-2x;
+$datatable-horizontal-padding: $space-4x;
+
+$content-height: 20px;
+
+.ngx-datatable.stoui, .ngx-datatable.sto-datatable {
+  background: $datatable-background-color;
+  font-size: $datatable-font-size;
+  border-radius: 2px;
+
+  .datatable-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    .datatable-header-cell {
+      padding: $space-4x $space-4x $space $space-4x;
+      line-height: 13px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, .54);
+      vertical-align: baseline;
+      font-size: $datatable-header-font-size;
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+
+      .datatable-header-cell-wrapper {
+        position: relative;
+      }
+
+      .unit{
+        font-size: 8px;
+        position: absolute;
+        top: -12px;
+        right: 2px;
+      }
+
+
+
+      &.longpress {
+        .draggable::after {
+          transition: transform 400ms ease, opacity 400ms ease;
+          opacity: .5;
+          transform: scale(1);
+        }
+      }
+
+      .draggable::after {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        height: 60px;
+        width: 60px;
+        background: #eee;
+        border-radius: 100%;
+        opacity: 1;
+        filter: none;
+        transform: scale(0);
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      &.dragging {
+        .resize-handle {
+          border-right: none;
+        }
+      }
+    }
+
+    .resize-handle {
+      border-right: solid 1px #eee;
+    }
+
+    .datatable-header-column-group {
+      border-bottom: 1px solid $border-color-light;
+
+      .datatable-header-cell {
+        font-weight: bold;
+        padding: 8px 16px;
+        border-left: 1px solid $border-color-light;
+        vertical-align: middle;
+        .column-group-header{
+          display:flex;
+          justify-content: center;
+          margin-top: 0;
+
+
+          &-icon{
+            max-width: 8px;
+            flex-grow: 1;
+          }
+          &-title{
+
+            flex-grow: 1;
+          }
+        }
+      }
+    }
+
+    .datatable-row-left {
+      background-color: $datatable-header-background;
+      //border-right: 1px solid $border-color-dark;
+    }
+
+    .datatable-row-right {
+      background-color: $datatable-header-background;
+    }
+    .mat-icon {
+      vertical-align: bottom;
+    }
+  }
+
+  .datatable-body {
+
+    .datatable-body-cell-label {
+      line-height: 20px;
+    }
+    .datatable-group-header {
+      background: $datatable-header-background;
+      border-bottom: solid 1px $border-color-light;
+      border-top: solid 1px $border-color-light;
+    }
+
+    .datatable-row-wrapper:last-child {
+      .datatable-body-row {
+        .datatable-body-cell {
+          border-bottom-width: 0;
+        }
+      }
+    }
+
+    .datatable-body-row {
+
+      &.planned, &.tentative {
+        font-style: italic;
+      }
+
+      .datatable-body-cell {
+        border-bottom: 1px solid $border-color-light;
+        padding: $datatable-vertical-padding $datatable-horizontal-padding;
+        vertical-align: top;
+        border-top: 0;
+        color: $datatable-cell-color;
+        transition: width 0.3s ease;
+        font-size: $font-size;
+        font-weight: $font-weight-normal;
+        &.date-cell {
+          padding: 0;
+          small {
+            font-style: normal;
+            font-weight: 500;
+            line-height: 7px; // was 18px, but position absolute. no go.
+            font-size: 7px;
+            padding-top: 6px;
+            text-align: center;
+            text-transform: uppercase;
+
+            color: rgba(0, 0, 0, 0.4);
+          }
+        }
+        // cell active class
+        // &.active {
+        //  background: #0829e0
+        // }
+      }
+      &.today-seperator {
+        .datatable-body-cell {
+          border-bottom: 3px solid $green-dark;
+
+        }
+      }
+
+      .datatable-body-group-cell {
+        text-align: left;
+        padding: $datatable-vertical-padding $datatable-horizontal-padding;
+        vertical-align: top;
+        border-top: 0;
+        color: $datatable-cell-color;
+        transition: width 0.3s ease;
+        font-size: $font-size;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+    .datatable-row-left {
+      background-color: $datatable-background-color;
+
+      // border-right: 1px solid $border-color-dark;
+    }
+
+    .datatable-row-right {
+      background-color: $datatable-background-color;
+    }
+
+    .datatable-footer-summary-row {
+      .datatable-row {
+        &-left, &-center, &-right {
+          background-color: $datatable-header-background;
+          border-top: 1px solid $border-color-dark;
+        }
+      }
+    }
+
+    .progress-linear {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 5px;
+      padding: 0;
+      margin: 0;
+      //position: absolute;
+
+      .container {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 5px;
+        -webkit-transform: translate(0, 0) scale(1, 1);
+        transform: translate(0, 0) scale(1, 1);
+        background-color: rgb(170, 209, 249);
+
+        .bar {
+          transition: all .2s linear;
+          -webkit-animation: query .8s infinite cubic-bezier(.39, .575, .565, 1);
+          animation: query .8s infinite cubic-bezier(.39, .575, .565, 1);
+
+          transition: -webkit-transform .2s linear;
+          transition: transform .2s linear;
+          background-color: rgb(16, 108, 200);
+
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          height: 5px;
+        }
+      }
+    }
+
+  }
+
+  .empty-row {
+    height: 50px;
+    text-align: left;
+    padding: .5rem 1.2rem;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  .loading-row {
+    text-align: left;
+    padding: .5rem 1.2rem;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  .datatable-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .54);
+
+    .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem;
+    }
+
+    .datatable-pager {
+      margin: 0 10px;
+
+      li {
+        vertical-align: middle;
+
+        &.disabled a {
+          color: rgba(0, 0, 0, 0.26) !important;
+          background-color: transparent !important;
+        }
+
+        &.active a {
+          background-color: rgba(158, 158, 158, 0.2);
+          font-weight: bold;
+        }
+      }
+
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0 6px;
+        border-radius: 3px;
+        margin: 6px 3px;
+        text-align: center;
+        vertical-align: top;
+        color: rgba(0, 0, 0, .54);
+        text-decoration: none;
+        vertical-align: bottom;
+
+        &:hover {
+          color: rgba(0, 0, 0, .75);
+          background-color: rgba(158, 158, 158, 0.2);
+        }
+      }
+
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 0 3px;
+      }
+    }
+  }
+
+  .negative-number {
+    color: $error-color;
+  }
+
+  .icon {
+    text-align: center;
+  }
+  .warning {
+    color: $warning-color;
+  }
+  .error {
+    color: $error-color;
+  }
+
+  .status {
+    text-align: center;
+    &.cancelled {
+    }
+    &.planned {
+      background-color: $planned-color;
+    }
+    &.actual {
+      background-color: $actual-color;
+    }
+    &.tentative {
+      background-color: $tentative-color;
+    }
+
+  }
+
+  .mat-icon {
+    color: $black-light;
+    height: $content-height;
+    width: $content-height;
+    font-size: $content-height;
+    line-height: 24px;
+    cursor: pointer;
+    &:hover {
+      color: $black-medium;
+    }
+
+  }
+
+  .group-seperator {
+    border-left: solid 1px $border-color-light;
+  }
+
+  .right-group-seperator {
+    border-right: solid 1px $border-color-dark;
+  }
+
+  &.single-selection {
+    .datatable-body-row {
+      cursor: pointer;
+    }
+  }
+}
+
+.datatable-body-cell-label {
+  > span {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mat-select, .mat-input {
+    padding: 0;
+    font-size: $font-size;
+  }
+  .mat-select-value {
+    height: $content-height;
+  }
+  .mat-select-trigger {
+    font-size: $font-size;
+    height: $content-height;
+  }
+  .mat-form-field-infix {
+    margin-top: -10px;
+    padding: 0 9px 0px 0;
+
+  }
+  .mat-input-underline {
+    //display: none;
+  }
+
+  .mat-icon-button {
+    margin-left: -8px;
+    margin-top: -18px;
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+  }
+}
+
+.datatable-header {
+  .mat-input-infix {
+    padding: 4px 0;
+  }
+  .mat-form-field {
+    font-size: 13px;
+    margin-top: -4px;
+  }
+}
+
+.datatable-body-row {
+  &.active {
+    background-color: $gray-light;
+  }
+  &:hover {
+    background-color: $white-medium;
+  }
+}
+
+.sto-datatable__column {
+  &--number {
+    text-align: right;
+  }
+  &--expandable {
+    .icon-wrapper {
+      display: inline-block;
+
+      .mat-icon {
+        margin-top: -5px;
+      }
+    }
+  }
+}
+
+
+
+@import 'ngx-datatable-overview';
+@import 'ngx-datatable-inside-card';
+
+.ngx-datatable.stoui .datatable-header .datatable-header-cell .sort-btn {
+  line-height: 0%;
+  vertical-align: bottom;
+}
+
+span.sortable {
+  cursor: pointer;
+}
+
+.stoui.ngx-datatable{
+
+  .datatable-body{
+    -moz-transition:height 225ms cubic-bezier(0.4,0.0,0.2,1);
+    -webkit-transition: height 225ms cubic-bezier(0.4,0.0,0.2,1);
+    -o-transition: height 225ms cubic-bezier(0.4,0.0,0.2,1);
+    transition: height 225ms cubic-bezier(0.4,0.0,0.2,1);
+  }
+
+}
+
+.date-status-cell {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .month-label {
+    line-height: 22px;
+    position: absolute;
+    left: 8px;
+  }
+}
+
+
+
+
+@import "ngx-datatable-compact";

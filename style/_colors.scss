@@ -1,0 +1,54 @@
+// Base Colors
+// NO MORE THAN 3 shades of each color.
+// Exception: 5 shades of gray.
+
+$orange-light: #FEF5ED;
+$orange-medium: orange;
+$orange-dark: #F2994A;
+
+$red-medium: red;
+$red-light: #FFCCCC;
+
+$blue-light: #f7f8ff;
+$blue-medium: #003aff;
+
+
+$purple-dark: #3f51b5;
+
+/**
+** From figma:
+** background-color: #F2F2F2;
+ */
+$yellow-light: #FFFFCC;
+
+$black-medium: rgba(0,0,0,0.8);
+$black-light: rgba(0,0,0,0.54);
+
+$white-light: #FFFFFF;
+$white-medium: #FAFAFA;
+
+$gray-darker: #666666;
+$gray-dark: #828282;
+$gray-medium: #CCCCCC;
+/**
+** From figma:
+** background-color: rgba(242, 201, 76, 0.3);
+ */
+$gray-light: #E0E0E0;
+$gray-lighter: #F1F2F3;
+
+$green-dark: #0A6666;
+/**
+** From figma:
+** background-color: rgba(33, 150, 83, 0.2);
+ */
+$green-light: #D4DDD3;
+
+
+$header-bg-color: $gray-light;
+$content-bg-color: $white-medium;
+$content-bg-color-highlight: $gray-medium;
+$text-color: $gray-darker;
+$header-color: $gray-darker;
+$subtle-color: $gray-dark;
+$primary-color: $purple-dark;

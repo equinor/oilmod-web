@@ -1,3 +1,7 @@
+export * from './components/confirm-dialog/confirm-dialog.component';
+export {StoPipesModule} from './components/sto-pipes/sto-pipes.module';
+export {StoDirectivesModule} from './components/sto-directives/sto-directives.module';
+
 export * from './components/sto-calendar/sto-calendar.component';
 export * from './components/sto-dialog/sto-dialog.component';
 export * from './components/sto-button/sto-button.directive';
@@ -42,3 +46,20 @@ export * from './components/sto-codehighlighter/sto-codehighlighter';
 export * from './components/sto-contextmenu/sto-contextmenu.component';
 export * from './components/sto-daterange/sto-daterange.module';
 export * from './components/sto-splitbutton/sto-splitbutton.component';
+export * from './components/sto-drawer/sto-drawer.component';
+export * from './components/sto-breadcrumbs/sto-breadcrumbs.component';
+export * from './components/sto-datatable-advanced/index';
+
+export * from './components/sto-filter/sto-filter-panel.module';
+export * from './components/sto-layout/sto-layout.module';
+export * from './components/sto-action-footer/sto-action-footer.module';
+export * from './components/datepicker/index';
+export * from './components/shared'
+
+export * from './components/sto-message-panel/sto-message-panel.module';
+export * from './components/sto-ultracompact/sto-ultracompact.directive';
+export * from './components/http-error-handler/http-error-handler.module';
+export * from './components/http-error-handler/http-error-handler.service';
+export * from './components/http-error-handler/format-error-message';
+export * from './components/autocomplete/autocomplete.module';
+export * from './components/autocomplete/autocomplete.component';

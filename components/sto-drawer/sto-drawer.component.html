@@ -1,18 +1,26 @@
 <div [@slideInOut]="open ? 'in': 'out' + position"
+	 (@slideInOut.done)="onOpened.emit()"
 	 [ngClass]="position"
 	 [style.width]="width"
 	 [style.top]="padding"
-	 [style.zIndex]="header ? 30 : 10"
-	 class="sidebar">
-	<div *ngIf="header" class="sidebar__header">
-		<h3>{{ header }}</h3>
+	 [style.zIndex]="header ? 60 : 30"
+	 [style.right]="offset"
+	 class="sto-drawer">
+	<div class="sto-drawer__header" #header *ngIf="header">
+		<ng-content select="sto-drawer-header">
+		</ng-content>
 		<span style="flex: 1 1 auto"></span>
-		<i class="fa fa-external-link fa-fw"></i>
-		<button type="button" (click)="toggle(); onToggle.emit(true)">
-			<i class="fa fa-times fa-fw"></i>
-		</button>
+		<ng-content select=".header__actions"></ng-content>
 	</div>
-	<div class="sidebar__content">
+	<div [class.navigation]="!header"
+		 [style.height]="height"
+		 class="sto-drawer__content">
 		<ng-content></ng-content>
 	</div>
+
+		<div class="sto-drawer__footer"
+			 [style.display]="header ? 'inherit' : 'none'" #footer>
+			<ng-content select="sto-drawer-footer"></ng-content>
+		</div>
+
 </div>

@@ -12,6 +12,7 @@ export { ConfirmationService } from '../../vendor/primeface/components/common/ap
 @Component({
   selector: 'sto-confirmDialog',
   templateUrl: './sto-confirmdialog.component.html',
+  styleUrls: ['../sto-dialog/sto-dialog.component.scss'],
   animations: [
     trigger('dialogState', [
       state('hidden', style({

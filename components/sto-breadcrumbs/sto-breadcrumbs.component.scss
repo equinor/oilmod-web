@@ -1,0 +1,62 @@
+@import "../../variables";
+@import "../../style/functions";
+$header-height: 64px;
+$breadcrumb-font-size: 20px;
+
+:host{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sto-breadcrumb__home{
+  margin: spacer(4);
+  cursor: pointer;
+  &:hover{
+    color: $content-bg-color-highlight;
+  }
+}
+
+ul {
+  margin: 0;
+  padding-left: 0;
+
+
+}
+li {
+  display: inline-block;
+  font-size: $breadcrumb-font-size;
+  line-height: $header-height;
+  vertical-align: middle;
+
+  &:first-child {
+    .sto-breadcrumb__item{
+      border-left-width: 0;
+      padding-left: 0;
+    }
+  }
+  &:last-child {
+    .sto-breadcrumb__item{
+      border-right-width: 0;
+    }
+  }
+}
+
+.sto-breadcrumb__item{
+  border-right: solid 1px black;
+  border-left: solid 1px $gray-dark;
+  padding: 0 spacer(4);
+}
+
+a {
+  cursor: pointer;
+  color: $white-light;
+  text-decoration: none;
+
+  &:hover {
+    color: $content-bg-color-highlight;
+  }
+
+
+}
+
