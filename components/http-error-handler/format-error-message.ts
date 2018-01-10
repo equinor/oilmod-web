@@ -18,6 +18,13 @@ export const formatError = (err: HttpErrorResponse): FormattedError => {
   }
 };
 
+const defaultActions: ErrorAction[] = [
+  {
+    label: 'Cancel',
+    closeDialogData: null
+  }
+]
+
 const convertMessageStringToJson = (serverError: string): ServerError => {
   let parsed;
   try {
@@ -67,7 +74,7 @@ const formatServerDownOrTimeout = (err: HttpErrorResponse): FormattedError => {
     message,
     path: null
   };
-  return Object.assign({}, response, {title, message, actions});
+  return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
 const formatNotFound = (err: HttpErrorResponse): FormattedError => {
@@ -93,12 +100,14 @@ const formatUnknownException = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Unexcepted error occured`;
   const message = `The application experienced an unknown and fatal exception, and returned the following error:
+
   ${response.message}
+
   You can attempt reloading the page, and if the error still occurs, please log a ticket via ServiceNow`;
   const actions: ErrorAction[] = [
     {label: 'Refresh the page', action: () => window.location.reload(true)}
   ];
-  return Object.assign({}, response, {title, message, actions});
+  return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
 const formatConflict = (err: HttpErrorResponse): FormattedError => {
@@ -108,12 +117,12 @@ tabindex="-1"
 target="_blank">you can open the updated version in a new window</a>`;
   const title = `I was not able to save because your data is obsolete`;
   const message = `The server has a newer version of this item.
+
   If you do not want to loose your unsaved data, ${url} and apply your changes there.`;
   const actions: ErrorAction[] = [
-    {label: 'Cancel', closeDialogData: null},
     {label: 'DISCARD MY CHANGES AND GET THE LATEST VERSION', closeDialogData: 'replace'},
   ];
-  return Object.assign({}, response, {title, message, actions});
+  return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
 

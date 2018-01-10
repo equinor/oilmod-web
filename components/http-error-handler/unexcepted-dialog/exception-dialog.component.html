@@ -4,6 +4,7 @@
 </div>
 <div mat-dialog-actions style="float: right">
   <button *ngFor="let action of data.actions"
+          color="primary"
           (click)="action.action ? action.action() : null"
           [mat-dialog-close]="action.closeDialogData"
           mat-button>{{ action.label }}</button>
