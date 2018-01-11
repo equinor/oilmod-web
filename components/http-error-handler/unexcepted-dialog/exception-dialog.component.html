@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
 <div mat-dialog-content>
-  <div style="white-space: pre-line" [innerHTML]="data.message"></div>
+  <div [innerHTML]="data.message"></div>
 </div>
 <div mat-dialog-actions style="float: right">
   <button *ngFor="let action of data.actions"
