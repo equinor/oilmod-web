@@ -6,17 +6,25 @@ import { format as formatDate } from 'date-fns';
 })
 export class DateFormatPipe implements PipeTransform {
 
-  transform(value: any, format?: 'long'|'short'): string {
+  transform(value: any, format?: string): string {
     if (!value) {
       return null;
     }
     switch (format) {
       case 'long':
-        return formatDate(value, 'MMMM DD, YYYY HH:mm');
+        return formatDate(value, 'dddd MMM D, YYYY');
       case 'short':
-        return formatDate(value, 'YY-MM-DD');
+        return formatDate(value, 'YYYY-MM-DD');
+      case 'datetime':
+        return formatDate(value, 'MMM D, YYYY, HH:mm');
+      case 'datetimezone':
+        return formatDate(value, 'MMM D, YYYY, HH:mm:ss (UTCZ)');
+      case 'datetime-long':
+        return formatDate(value, 'dddd MMM, YYYY, HH:mm');
+      case 'datetime-short':
+        return formatDate(value, 'YYYY-MM-DD, HH:mm');
       default:
-        return formatDate(value, 'MMM DD, YYYY');
+        return formatDate(value, 'MMM D, YYYY');
     }
   }
 

@@ -38,10 +38,14 @@ import { StoScrollerComponent } from './components/body/sto-scroller.component';
 import { DataTableFixedRowWrapperComponent } from './components/body/sto-fixed-body-row-wrapper.component';
 import { StoDataTableColumnGroupDirective } from './components/columns/sto-column-title.directive';
 import { StoDataTableBodyRowComponent } from './components/body/sto-body-row.component';
+import { StoDataTableDateColumnComponent } from './components/columns/sto-date-column.component';
+import { StoDataTableNumberColumnComponent } from './components/columns/sto-number-column.component';
+import { StoPipesModule } from '../../components/sto-pipes/sto-pipes.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    StoPipesModule
   ],
   providers: [
     ScrollbarHelper
@@ -75,7 +79,9 @@ import { StoDataTableBodyRowComponent } from './components/body/sto-body-row.com
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DatatableFooterDirective,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    StoDataTableDateColumnComponent,
+    StoDataTableNumberColumnComponent
   ],
   exports: [
     StoComplexDatatableComponent,
@@ -89,7 +95,9 @@ import { StoDataTableBodyRowComponent } from './components/body/sto-body-row.com
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
     DataTablePagerComponent,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    StoDataTableDateColumnComponent,
+    StoDataTableNumberColumnComponent
   ]
 })
 export class NgxDatatableModule {
