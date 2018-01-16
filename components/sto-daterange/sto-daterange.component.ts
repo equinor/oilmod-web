@@ -5,6 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -81,6 +82,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   @Output() onBlur: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('datepicker') overlayViewChild: ElementRef;
+  @ViewChild('inputfield') inputfield: ElementRef;
   private initValues;
 
   public form: FormGroup;
@@ -106,6 +108,9 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 */
 
   private documentClickListener: any;
+  @HostListener('document:keydown.escape ', ['$event']) onEscape(event) {
+    this.onCancel();
+  }
 
   public showOverlay(inputfield?) {
     this.overlayVisible = true;
@@ -119,6 +124,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     this.overlayVisible = false;
     this.closeOverlay = true;
     this.form.setValue(this.initValues, {emitEvent: false});
+    this.inputfield.nativeElement.focus();
   }
 
   public onSubmit() {

@@ -1,9 +1,12 @@
 <span [ngStyle]="style"
 	  class="sto-daterange-wrapper">
-	<mat-form-field [class]="inputStyleClass">
+	<mat-form-field [class]="inputStyleClass" [class.mat-focused]="focus">
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
-			   (keydown)="$event.preventDefault()"
-			   (focus)="onInputFocus(inputfield, $event)" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
+			   readonly
+			   (keydown.enter)="onInputFocus(inputfield, $event)"
+			   (keydown.space)="onInputFocus(inputfield, $event)"
+			   (click)="onInputFocus(inputfield, $event)"
+			   (focus)="focus = true" (click)="closeOverlay=false" (blur)="onInputBlur($event)"
 			   [placeholder]="placeholder||''">
 		<mat-icon *ngIf="showIcon"
 				  matSuffix
