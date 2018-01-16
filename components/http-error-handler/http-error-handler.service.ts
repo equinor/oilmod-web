@@ -31,7 +31,7 @@ export class HttpErrorHandlerService {
     }
   }
 
-  private handleModalError(data: FormattedError) {
+  protected handleModalError(data: FormattedError) {
     const dialog = this.dialog.open(ExceptionDialogComponent, {
       width: '600px',
       data

@@ -30,8 +30,12 @@ const convertMessageStringToJson = (serverError: string): ServerError => {
   try {
     parsed = JSON.parse(serverError);
   } catch (e) {
-    console.log(serverError);
-    alert(`Failed to convert error: ${e.message}`);
+    console.log('Failed to parse', serverError);
+  }
+  if (!parsed) {
+    parsed = {
+      message: 'No error message returned from server!'
+    };
   }
   return parsed;
 };
@@ -120,12 +124,12 @@ const formatConflict = (err: HttpErrorResponse): FormattedError => {
 
 
 export interface ServerError {
-  timestamp: number;
-  status: number;
-  error: string;
-  exception: string;
+  timestamp?: number;
+  status?: number;
+  error?: string;
+  exception?: string;
   message: string;
-  path: string;
+  path?: string;
 }
 
 export interface FormattedError extends ServerError {
