@@ -9,7 +9,6 @@ $footer-height: 69px;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: spacer(4) spacer(6);
   background-color: $gray-light;
   border-top: solid 1px $gray-medium;
   height: $footer-height;
@@ -21,6 +20,13 @@ $footer-height: 69px;
   }
   &__message {
     line-height: 2.9;
+  }
+  &__content{
+    padding: spacer(4) spacer(6);
+  }
+
+  .mat-progress-bar{
+    margin-top: -5px;
   }
 
 }

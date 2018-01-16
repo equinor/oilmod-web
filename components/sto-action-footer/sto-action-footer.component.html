@@ -1,1 +1,9 @@
-<ng-content></ng-content>
+<mat-progress-bar
+		*ngIf="isLoading"
+		color="primary"
+		mode="indeterminate"
+
+></mat-progress-bar>
+<div class="sto-action-footer__content">
+	<ng-content></ng-content>
+</div>

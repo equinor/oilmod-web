@@ -12,6 +12,9 @@ import { Renderer2, OnDestroy} from '@angular/core';
   }
 })
 export class StoActionFooterComponent implements OnInit, OnDestroy  {
+
+  @Input() isLoading : boolean;
+
   ngOnDestroy(): void {
     this.renderer.removeClass(document.body, 'sto-has-action-footer');
   }
