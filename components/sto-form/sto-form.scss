@@ -4,10 +4,12 @@ $border-radius: 4px;
 $height: 72px;
 
 %sto-form__field {
+  width: 100%;
+  height: $height;
+
   .mat-input-element {
     cursor: pointer;
   }
-  height: $height;
 }
 
 %sto-card {
@@ -52,11 +54,9 @@ $height: 72px;
 
 .mat-card.sto-card {
   @extend %sto-card;
-}
 
-.sto-form {
 
-  &__header {
+  .mat-card-title.sto-card__title {
     width: 100%;
     padding-left: 8px;
     display: flex;
@@ -65,14 +65,22 @@ $height: 72px;
       display: inline-block;
       font-size: 15px;
     }
-    &__button-row {
-      .mat-button{
-        margin-top: -8px;
-      }
-      display: flex;
-      justify-content: flex-end;
-    }
   }
+  .sto-card__button-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .mat-button{
+      margin-top: -8px;
+    }
+
+  }
+
+}
+
+.sto-form {
+
+
 
   &__field {
     @extend %sto-form__field;

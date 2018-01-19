@@ -14,13 +14,15 @@
       height: 31px;
       padding: 4px 6px;
     }
-
-    .mat-select-arrow {
-      margin-top: -5px;
+    .mat-select{
+      .mat-select-arrow {
+        margin-top: -5px;
+      }
     }
+
   }
 
-  &__cell {
+  &__column {
     &--editable {
       padding: 2px 0 !important;
 
