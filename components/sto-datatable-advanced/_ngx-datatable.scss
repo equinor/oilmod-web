@@ -20,15 +20,14 @@ $datatable-background-color: $white-light;
 $datatable-font-size: $font-size;
 $datatable-header-background: $white-light;
 $datatable-header-vertical-padding: $space-2x;
-$datatable-header-horizontal-padding: $space-4x;
+$datatable-header-horizontal-padding: $space-2x;
 $datatable-header-font-size: 11px;
-
 $datatable-vertical-padding: $space-2x;
-$datatable-horizontal-padding: $space-4x;
+$datatable-horizontal-padding: $space-2x;
 
 $content-height: 20px;
 
-.ngx-datatable.stoui, .ngx-datatable.sto-datatable {
+.ngx-datatable.sto-datatable {
   background: $datatable-background-color;
   font-size: $datatable-font-size;
   border-radius: 2px;
@@ -37,7 +36,7 @@ $content-height: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
     .datatable-header-cell {
-      padding: $space-4x $space-4x $space $space-4x;
+      padding: $space-4x $space-2x $space $space-2x;
       line-height: 13px;
       font-weight: 400;
       color: rgba(0, 0, 0, .54);
@@ -102,7 +101,7 @@ $content-height: 20px;
 
       .datatable-header-cell {
         font-weight: bold;
-        padding: 8px 16px;
+        padding: 8px 8px;
         border-left: 1px solid $border-color-light;
         vertical-align: middle;
         .column-group-header{
@@ -163,7 +162,7 @@ $content-height: 20px;
 
       .datatable-body-cell {
         border-bottom: 1px solid $border-color-light;
-        padding: $datatable-vertical-padding $datatable-horizontal-padding;
+        padding: 8px;
         vertical-align: top;
         border-top: 0;
         color: $datatable-cell-color;
@@ -474,7 +473,7 @@ $content-height: 20px;
 @import 'ngx-datatable-overview';
 @import 'ngx-datatable-inside-card';
 
-.ngx-datatable.stoui .datatable-header .datatable-header-cell .sort-btn {
+.ngx-datatable.sto-datatable .datatable-header .datatable-header-cell .sort-btn {
   line-height: 0%;
   vertical-align: bottom;
 }
@@ -483,7 +482,7 @@ span.sortable {
   cursor: pointer;
 }
 
-.stoui.ngx-datatable{
+.sto-datatable.ngx-datatable{
 
   .datatable-body{
     -moz-transition:height 225ms cubic-bezier(0.4,0.0,0.2,1);
@@ -508,5 +507,5 @@ span.sortable {
 
 
 
-
 @import "ngx-datatable-compact";
+@import "ngx-datatable-form";

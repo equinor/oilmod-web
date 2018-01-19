@@ -1,0 +1,26 @@
+//Grid
+.sto-grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  &__divider {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &--2 {
+    .sto-grid__spacer, .sto-grid__column {
+      width: calc(50% - 10px);
+      &:nth-child(even) {
+        margin-left: 16px;
+      }
+    }
+    .sto-grid__column--full{
+      width: 100%;
+    }
+
+  }
+}
+
+

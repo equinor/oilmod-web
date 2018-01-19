@@ -1,0 +1,189 @@
+$form-field-bg: rgba(0, 135, 184, 0.1);
+$underline-color: rgba(0, 0, 0, 0.12);
+$border-radius: 4px;
+$height: 72px;
+
+%sto-form__field {
+  .mat-input-element {
+    cursor: pointer;
+  }
+  height: $height;
+}
+
+%sto-card {
+  width: 100%;
+  padding: 16px 8px 0 8px;
+  margin-bottom: 8px;
+  border-radius: $border-radius;
+}
+
+%sto-form__field--focused {
+  .mat-input-suffix.mat-form-field-suffix {
+    .mat-icon-button {
+      .mat-icon {
+        color: $black-medium;
+      }
+    }
+    .mat-icon {
+      color: $black-medium;
+    }
+  }
+  .mat-form-field-underline {
+    bottom: 16px;
+    background-color: transparent;
+    -webkit-transition-property: background-color width left;
+    -webkit-transition-delay: 0.2s;
+    width: calc(100% - 2px);
+    left: 1px;
+
+    .mat-form-field-ripple {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      top: -1px;
+    }
+  }
+}
+
+%sto-form__select {
+  .mat-select-arrow {
+    margin-top:-10px;
+  }
+}
+
+.mat-card.sto-card {
+  @extend %sto-card;
+}
+
+.sto-form {
+
+  &__header {
+    width: 100%;
+    padding-left: 8px;
+    display: flex;
+    justify-content: space-between;
+    h1, h2, h3 {
+      display: inline-block;
+      font-size: 15px;
+    }
+    &__button-row {
+      .mat-button{
+        margin-top: -8px;
+      }
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__field {
+    @extend %sto-form__field;
+
+    &.mat-focused {
+      @extend %sto-form__field--focused;
+    }
+
+    .mat-input-flex.mat-form-field-flex {
+      padding: 6px;
+      border-radius: 4px;
+      background-color: $form-field-bg;
+      align-items: center;
+      .mat-icon-button {
+        .mat-icon {
+          font-size: 1rem;
+          color: $black-light;
+        }
+      }
+      .mat-icon {
+        color: $black-light;
+      }
+    }
+
+    .mat-form-field-subscript-wrapper {
+      font-size: 11px;
+      margin: 6px;
+    }
+    .mat-input-wrapper, .mat-form-field-wrapper {
+      margin: 0 2px;
+    }
+    .mat-form-field-infix {
+      padding: 6px 0 0 0;
+    }
+    .mat-form-field-suffix {
+      height: 18px;
+    }
+
+    .mat-form-field-invalid .mat-form-field-ripple {
+      height: 2px;
+    }
+
+    .mat-slide-toggle {
+      position: absolute;
+      top: 0;
+      right: 4px;
+    }
+    .mat-select {
+      @extend %sto-form__select;
+    }
+  }
+
+  .mat-form-field-underline {
+    bottom: 16px;
+    width: calc(100% - 4px);
+    left: 2px;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    background-color: $underline-color;
+  }
+
+  &__color {
+    position: absolute;
+    top: -8px;
+    right: 4px;
+    height: 30px;
+    width: 30px;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+
+
+}
+
+//Readonly
+.sto-form__field--readonly {
+
+  .mat-input-element {
+    cursor: default;
+  }
+  .mat-input-flex.mat-form-field-flex {
+    background-color: transparent;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+    visibility: hidden;
+  }
+  &.ng-invalid.ng-dirty {
+    .mat-input-subscript-wrapper.mat-form-field-subscript-wrapper {
+      margin-top: -1px;
+    }
+  }
+}
+
+.sto-form__field--disabled {
+
+  .mat-select.mat-select-disabled{
+    .mat-select-trigger{
+      user-select: all;
+    }
+    .mat-select-arrow{
+      color: rgba(0, 0, 0, 0.38);
+    }
+  }
+
+  .mat-input-flex.mat-form-field-flex {
+    cursor: default;
+    color: rgba(0, 0, 0, 0.38);
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+}
+

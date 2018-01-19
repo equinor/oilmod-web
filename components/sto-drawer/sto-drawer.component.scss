@@ -8,7 +8,7 @@ $header-size: 16px;
 
 .large-header {
   .sto-drawer__content {
-    height: calc(100% - calc(#{$large-header-height} + #{$footer-height})
+    height: calc(100% - calc(#{$large-header-height} + #{$footer-height}));
   }
   .sto-drawer__header {
     line-height: 30px;
@@ -30,20 +30,6 @@ $header-size: 16px;
   }
   z-index: 30;
 
-  .mat-card {
-   // padding: spacer(4) spacer(6) spacer(6) spacer(6);
-    margin-bottom: spacer(4);
-    &-title {
-      border-bottom: 1 solid $gray-dark;
-      font-size: $header-size;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-    }
-  }
-
   &.right {
     left: auto;
     right: 0;
@@ -56,7 +42,7 @@ $header-size: 16px;
 }
 
 .sto-drawer__content {
-  padding: spacer(4) spacer(4);
+  padding: spacer(2);
   overflow-y: auto;
   &.navigation {
     height: 100%;
@@ -69,7 +55,7 @@ $header-size: 16px;
   border-top: solid 1px $gray-medium;
   bottom: 0;
   left: 0;
-  padding: spacer(4);
+  padding: spacer(2);
   width: 100%;
 
   background-color: $gray-light;

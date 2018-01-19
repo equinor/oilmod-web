@@ -3,10 +3,12 @@
 @import "mixins";
 @import "style/theme";
 @import "style/animations";
-
+@import "components/sto-grid/sto-grid";
 @import "components/sto-datatable-advanced/ngx-datatable";
 @import "components/sto-filter/sto-filter-panel.component";
 @import "components/sto-directives/edit-mode.directive";
+@import "components/sto-form/sto-form";
+
 
 label {
   max-width: 100%;
@@ -133,85 +135,8 @@ Below styles overrides Angular Material defaults
 }
 //END STO-DIALOG
 
-//STO FORM
-mat-form-field {
-  .mat-input-suffix.mat-form-field-suffix {
-    button.mat-icon-button {
-      mat-icon {
-        font-size: 1rem;
-        color: $black-light;
-      }
-    }
-    mat-icon {
-      font-size: 1rem;
-      color: $black-light;
-    }
-  }
-
-  &.mat-focused {
-    .mat-input-suffix.mat-form-field-suffix {
-      button.mat-icon-button {
-        mat-icon {
-          font-size: 1rem;
-          color: $black-medium;
-        }
-      }
-      mat-icon {
-        font-size: 1rem;
-        color: $black-medium;
-      }
-    }
-  }
-}
 
 
-mat-form-field.table--inline {
-  max-width: 100%;
-  input[type="number"] {
-    text-align: right;
-  }
-  .mat-input-underline {
-    display: none;
-  }
-  .mat-input-subscript-wrapper {
-    display: none;
-  }
-  .mat-input-placeholder-wrapper.mat-form-field-placeholder-wrapper {
-    height: 3em;
-    text-align: right;
-    max-width: 97%;
-  }
-}
-
-.sto-form {
-
-  .mat-form-field {
-    margin-top: 8px;
-    height: 72px;
-  }
-  .mat-form-field-subscript-wrapper {
-    font-size: 11px;
-    margin: 8px 0;
-  }
-  .mat-form-field-infix {
-    padding: 8px 0 4px 0;
-  }
-  .mat-form-field-invalid .mat-form-field-ripple{
-    height: 2px;
-  }
-}
-
-.sto-form-field--readonly{
-  .mat-form-field-underline {
-    display: none;
-    visibility: hidden;
-  }
-  &.ng-invalid.ng-dirty {
-    .mat-input-subscript-wrapper.mat-form-field-subscript-wrapper {
-      margin-top: -1px;
-    }
-  }
-}
 
 //Don't know how to overwrite this without important O_o
 .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder{
