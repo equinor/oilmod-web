@@ -42,6 +42,13 @@
 
     }
   }
+  .mat-form-field-placeholder{
+    top: 0;
+  }
+  .mat-form-field-placeholder-wrapper{
+    top: 0;
+    padding: 0;
+  }
 }
 
 .sto-compact {
@@ -58,12 +65,5 @@
     .datatable-body .datatable-body-cell-label {
       line-height: 19px;
     }
-  }
-  .mat-form-field-placeholder{
-    top: 0;
-  }
-  .mat-form-field-placeholder-wrapper{
-    top: 0;
-    padding: 0;
   }
 }
