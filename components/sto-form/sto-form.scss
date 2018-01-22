@@ -64,6 +64,7 @@ $height: 72px;
     h1, h2, h3 {
       display: inline-block;
       font-size: 15px;
+      margin-bottom: 0;
     }
   }
   .sto-card__button-row {
@@ -208,5 +209,31 @@ $height: 72px;
     }
   }
 
+  .mat-form-field-placeholder{
+    top: 0;
+  }
+  .mat-form-field-placeholder-wrapper{
+    top: 0;
+    padding: 0;
+  }
+
 }
 
+.sto-form{
+  &__input{
+    &--color{
+        cursor: pointer;
+        margin-top: -5px;
+        padding: 0;
+        background-color: transparent;
+        border-color: transparent;
+        width: 28px;
+        height: 30px;
+
+        &::-webkit-color-swatch {
+            border-radius: 4px;
+            border-color: rgba(0,0,0,0.42);
+        }
+    }
+  }
+}
