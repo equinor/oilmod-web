@@ -79,9 +79,6 @@ $height: 72px;
 }
 
 .sto-form {
-
-
-
   &__field {
     @extend %sto-form__field;
 
@@ -193,5 +190,23 @@ $height: 72px;
     color: rgba(0, 0, 0, 0.38);
     background-color: rgba(0, 0, 0, 0.08);
   }
+}
+
+.sto-form__field--without-placeholder{
+  height: 0px;
+  .mat-input-flex, mat-form-field-flex{
+    height: 30px;
+  }
+  .mat-input-infix, mat-form-field-infix{
+    border-top-width: 0px;
+    padding: 0;
+
+  }
+  .mat-select{
+    .mat-select-arrow{
+        margin-top: 0px;
+    }
+  }
+
 }
 
