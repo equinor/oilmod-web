@@ -49,6 +49,7 @@ const offlineError = (): FormattedError => {
     message = `<p>You appear to have lost your network connection</p>`;
   }
   const error = {
+    actions: defaultActions,
     timestamp: Date.now(),
     status: 0,
     error: 'offline',
@@ -85,7 +86,8 @@ const formatNotFound = (err: HttpErrorResponse): FormattedError => {
   const message = `<p>We were unable to locate the requested item, and the server responsed with the following error:</p>
   <p>${response.message}</p>`;
   const severity = 'warning';
-  return Object.assign({}, response, {title, message, severity});
+  const actions = defaultActions:
+  return Object.assign({}, response, {title, message, severity, actions});
 };
 
 const formatBadRequest = (err: HttpErrorResponse): FormattedError => {
@@ -95,7 +97,8 @@ const formatBadRequest = (err: HttpErrorResponse): FormattedError => {
   <p>${response.message}</p>
   <p>Please correct the errors listed above, and try again</p>`;
   const severity = 'error';
-  return Object.assign({}, response, {title, message, severity});
+  const actions = defaultActions:
+  return Object.assign({}, response, {title, message, severity, actions});
 };
 
 const formatUnknownException = (err: HttpErrorResponse): FormattedError => {
