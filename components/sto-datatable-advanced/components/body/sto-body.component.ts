@@ -126,7 +126,6 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 			summaryHeight = this.getRowHeight(this.rows[1]);
 		}
 
-
     let style = {
     	position: 'fixed'
 		};
@@ -135,7 +134,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     const width = parseInt(this.bodyWidth, 0);
     let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
     if (colWidth > width) {
-      if(summaryHeight >= 36){
+      if(summaryHeight > 35){
 				scroll = 12;
 			}
 			else{

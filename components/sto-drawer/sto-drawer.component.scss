@@ -1,7 +1,7 @@
 @import "../../variables";
 @import "../../style/functions";
 
-$header-height: spacer(16);
+$header-height: 74px;
 $large-header-height: spacer(24);
 $footer-height: spacer(16);
 $header-size: 16px;
@@ -25,6 +25,7 @@ $header-size: 16px;
   bottom: 0;
   width: 20%;
   min-width: 260px;
+  padding-top: $header-height;
   &.right {
     min-width: 450px;
   }
@@ -71,11 +72,13 @@ $header-size: 16px;
 }
 
 .sto-drawer__header {
-
   @include mat-elevation(4);
+  position: absolute;
+  top: 0;
+  z-index: 1;
   padding: 0 spacer(2) 0 spacer(4);
-  background-color: $gray-light;
-  border-bottom: solid 1px $gray-medium;
+  color: $white-light;
+  background-color: $black-medium;
   display: flex;
   box-sizing: border-box;
   width: 100%;
@@ -92,7 +95,7 @@ $header-size: 16px;
 
   button {
     background-color: transparent;
-    color: #828282;
+    color: rgba(255, 255, 255, 0.87);
     border: 0;
     outline: none;
   }
