@@ -50,6 +50,7 @@
   }
   &--2, &--3, &--6 {
     .sto-grid__column--full {
+      margin-right: 0;
       width: 100%;
       .sto-form__field {
         width: 100%;
