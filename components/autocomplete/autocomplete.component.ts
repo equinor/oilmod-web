@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -28,7 +28,8 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
       useExisting: forwardRef(() => StoAutocompleteComponent),
       multi: true,
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 /**
  * StoAutocompleteComponent is a wrapper for angular material's auto complete
@@ -71,9 +72,25 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
    */
   @Input() ignoreValidation = false;
   @Input() helpText: string;
+  @Input() get inheritedErrors(): ValidationErrors | null {
+    return this._inheritedErrors;
+  };
+  set inheritedErrors(errors: ValidationErrors | null) {
+    this._inheritedErrors = errors;
+    if (errors) {
+      this.searchControl.markAsTouched();
+    }
+  }
+  private _inheritedErrors: ValidationErrors | null;
   public filtered$: Observable<any[]>;
   public searchControl = new FormControl();
   public errors: ValidationErrors | null;
+  public markAsTouched() {
+    if (this.searchControl) {
+      this.searchControl.markAsTouched();
+      this.searchControl.markAsDirty();
+    }
+  }
 
   validate(c: AbstractControl) {
     if (this.ignoreValidation) {
