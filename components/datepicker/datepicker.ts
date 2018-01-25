@@ -274,7 +274,6 @@ export class MatMonthPicker<D> implements OnDestroy {
 
   /** Close the calendar. */
   close(): void {
-    console.log('Close?',this.opened, this);
     if (!this.opened) {
       return;
     }
