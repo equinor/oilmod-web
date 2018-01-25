@@ -3,10 +3,10 @@
 	 [ngClass]="position"
 	 [style.width]="width"
 	 [style.top]="padding"
-	 [style.zIndex]="header ? 60 : 30"
+	 [style.zIndex]="60"
 	 [style.right]="offset"
 	 class="sto-drawer">
-	<div class="sto-drawer__header" #header *ngIf="header">
+	<div class="sto-drawer__header" #header>
 		<ng-content select="sto-drawer-header">
 		</ng-content>
 		<span style="flex: 1 1 auto"></span>
