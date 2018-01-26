@@ -1,4 +1,7 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ViewEncapsulation, HostListener} from '@angular/core';
+import {
+  Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2,
+  ViewEncapsulation, HostListener, HostBinding
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { animate, AnimationMetadata, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
@@ -179,6 +182,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   styleUrls: ['./sto-drawer.component.scss']
 })
 export class StoDrawerHeaderComponent {
+  @HostBinding('class.sto-drawer__header') class: boolean = true;
 }
 
 @Component({

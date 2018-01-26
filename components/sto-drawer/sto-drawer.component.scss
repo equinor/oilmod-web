@@ -1,14 +1,14 @@
 @import "../../variables";
 @import "../../style/functions";
 
-$header-height: spacer(16);
+$header-height: 74px;
 $large-header-height: spacer(24);
 $footer-height: spacer(16);
 $header-size: 16px;
 
 .large-header {
   .sto-drawer__content {
-    height: calc(100% - calc(#{$large-header-height} + #{$footer-height})
+    height: calc(100% - calc(#{$large-header-height} + #{$footer-height}));
   }
   .sto-drawer__header {
     line-height: 30px;
@@ -25,24 +25,11 @@ $header-size: 16px;
   bottom: 0;
   width: 20%;
   min-width: 260px;
+  padding-top: $header-height;
   &.right {
     min-width: 450px;
   }
   z-index: 30;
-
-  .mat-card {
-   // padding: spacer(4) spacer(6) spacer(6) spacer(6);
-    margin-bottom: spacer(4);
-    &-title {
-      border-bottom: 1 solid $gray-dark;
-      font-size: $header-size;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-    }
-  }
 
   &.right {
     left: auto;
@@ -56,7 +43,7 @@ $header-size: 16px;
 }
 
 .sto-drawer__content {
-  padding: spacer(4) spacer(4);
+  padding: spacer(2);
   overflow-y: auto;
   &.navigation {
     height: 100%;
@@ -69,7 +56,7 @@ $header-size: 16px;
   border-top: solid 1px $gray-medium;
   bottom: 0;
   left: 0;
-  padding: spacer(4);
+  padding: spacer(2);
   width: 100%;
 
   background-color: $gray-light;
@@ -84,12 +71,14 @@ $header-size: 16px;
   }
 }
 
-.sto-drawer__header {
-
+.sto-drawer__header__wrapper {
   @include mat-elevation(4);
+  position: absolute;
+  top: 0;
+  z-index: 1;
   padding: 0 spacer(2) 0 spacer(4);
-  background-color: $gray-light;
-  border-bottom: solid 1px $gray-medium;
+  color: $white-light;
+  background-color: $black-medium;
   display: flex;
   box-sizing: border-box;
   width: 100%;
@@ -98,17 +87,42 @@ $header-size: 16px;
   align-items: center;
   white-space: nowrap;
 
+}
+
+.sto-drawer__header{
+  display: flex;
+  height:25px;
+  width: 100%;
+
   &__title, h1, h2, h3, h4 {
     font-size: $header-size;
     font-weight: 500;
     margin: 0;
   }
 
+  &__suffix{
+    width: 100%;
+    text-align: right;
+  }
   button {
     background-color: transparent;
-    color: #828282;
+    color: rgba(255, 255, 255, 0.87);
     border: 0;
     outline: none;
+    cursor: pointer;
+    :hover{
+      color: #ccc;
+    }
   }
 }
 
+
+.sto-navigation{
+  .mat-list {
+    .mat-subheader {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.54);
+      padding: 8px;
+    }
+  }
+}

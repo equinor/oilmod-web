@@ -6,11 +6,9 @@
 	 [style.zIndex]="60"
 	 [style.right]="offset"
 	 class="sto-drawer">
-	<div class="sto-drawer__header" #header>
+	<div class="sto-drawer__header__wrapper" #header>
 		<ng-content select="sto-drawer-header">
 		</ng-content>
-		<span style="flex: 1 1 auto"></span>
-		<ng-content select=".header__actions"></ng-content>
 	</div>
 	<div [class.navigation]="!header"
 		 [style.height]="height"
