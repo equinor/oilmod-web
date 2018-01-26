@@ -19,16 +19,7 @@ $height: 72px;
   border-radius: $border-radius;
 }
 
-%sto-form__field--hover{
-    .mat-input-flex.mat-form-field-flex {
-      background-color: rgba(0, 135, 184, 0.15);
-    }
-    .mat-form-field-underline{
-      background-color: rgba(0, 0, 0, 0.25);
-    }
 
-
-}
 
 %sto-form__field--focused {
   .mat-input-suffix.mat-form-field-suffix {
@@ -92,6 +83,17 @@ $height: 72px;
 
 }
 
+@mixin mat-input-hover-effect($background-color, $underline-color){
+    .mat-input-flex.mat-form-field-flex{
+        &:hover {
+           background-color: $background-color;
+        }
+        &:hover + .mat-form-field-underline{
+                background-color: $underline-color;
+        }
+    }
+}
+
 .sto-form {
   &__field {
     @extend %sto-form__field;
@@ -106,31 +108,17 @@ $height: 72px;
           }
        }
     }
-    &:hover{
-     @extend %sto-form__field--hover;
 
-     &.sto-form__field--readonly{
-       .mat-input-flex.mat-form-field-flex {
-           background-color: transparent;
-       }
-       .mat-form-field-underline{
-           display:none;
-        }
-      }
-     &.sto-form__field--disabled{
+   @include mat-input-hover-effect(rgba(0, 135, 184, 0.15), rgba(0, 0, 0, 0.25));
+   &.sto-form__field--readonly{
+      @include mat-input-hover-effect(transparent, transparent);
+   }
+   &.sto-form__field--disabled{
+     @include mat-input-hover-effect(rgba(0, 0, 0, 0.08), transparent);
+        .mat-input-element{
             cursor: default;
-           .mat-input-flex.mat-form-field-flex {
-             background-color: rgba(0, 0, 0, 0.08);
-           }
-           .mat-form-field-underline{
-              background-color: transparent;
-            }
-     }
-
-
+        }
     }
-
-
 
     .mat-input-flex.mat-form-field-flex {
       padding: 6px;
@@ -146,6 +134,8 @@ $height: 72px;
       .mat-icon {
         color: $black-light;
       }
+
+
     }
 
     .mat-form-field-subscript-wrapper {
