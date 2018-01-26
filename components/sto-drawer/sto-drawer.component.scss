@@ -42,6 +42,12 @@ $header-size: 16px;
   }
 }
 
+.large-header {
+  .sto-drawer {
+    padding-top: $large-header-height;
+  }
+}
+
 .sto-drawer__content {
   padding: spacer(2);
   overflow-y: auto;
