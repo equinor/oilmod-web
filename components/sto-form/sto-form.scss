@@ -117,9 +117,15 @@ $height: 72px;
              background-color: rgba(0, 0, 0, 0.12);
              .mat-form-field-ripple {
                display:none;
-             }
-            }
-         }
+           }
+        }
+     }
+     &.sto-form__field--readonly{
+       .mat-input-flex.mat-form-field-flex {
+           background-color: transparent;
+       }
+     }
+
     }
 
 
