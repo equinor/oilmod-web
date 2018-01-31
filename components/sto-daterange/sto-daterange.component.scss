@@ -5,24 +5,23 @@
   background-color: $white-light;
   width: 744px;
   max-height: 332px;
-  padding: 21px 23px .2em;
+  padding: 0px;
   position: absolute;
-  margin-top: -1.3em;
+  margin-top: -20px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   .calendar-box {
     flex: 1;
-    margin-right: 25px;
+    margin: -2px 0px 12px 12px;
   }
   .actions {
     flex: 1;
     .action-container {
+
       height: 100%;
       display: flex;
-      &:not(:first-of-type) {
-        padding-top: 1rem;
-      }
+      padding-top: 1rem;
       margin-right: 1em;
       flex-direction: column;
       .spacer {
@@ -78,5 +77,10 @@
   font-size: inherit;
   mat-icon {
     font-size: inherit;
+  }
+}
+.sto-daterange{
+  .mat-calendar-controls{
+    margin: 0 calc(33% / 7 - 16px)
   }
 }

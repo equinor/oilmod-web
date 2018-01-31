@@ -1,4 +1,7 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit,
+  ViewChild
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -28,7 +31,8 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
       useExisting: forwardRef(() => StoAutocompleteComponent),
       multi: true,
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 /**
  * StoAutocompleteComponent is a wrapper for angular material's auto complete
@@ -71,9 +75,27 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
    */
   @Input() ignoreValidation = false;
   @Input() helpText: string;
+  @Input() get inheritedErrors(): ValidationErrors | null {
+    return this._inheritedErrors;
+  };
+  set inheritedErrors(errors: ValidationErrors | null) {
+    this._inheritedErrors = errors;
+    if (errors) {
+      this.searchControl.markAsTouched();
+    }
+  }
+  public elementHasFocus: boolean;
+  private _inheritedErrors: ValidationErrors | null;
   public filtered$: Observable<any[]>;
   public searchControl = new FormControl();
   public errors: ValidationErrors | null;
+  public markAsTouched() {
+    if (this.searchControl) {
+      this.searchControl.markAsTouched();
+      this.searchControl.markAsDirty();
+    }
+  }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   validate(c: AbstractControl) {
     if (this.ignoreValidation) {
@@ -84,7 +106,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
     const isInvalid = typeof value === 'string';
     const error = isInvalid && value ? {optionSelected: this.validationMessage} : null;
     this.errors = (c.errors || error) ? Object.assign({}, c.errors, error) : null;
-    setTimeout(() => c.updateValueAndValidity(), 5); // Need to force a refresh of validity *after* returning error
+    this.cdr.detectChanges();
     return !isInvalid ? null : error;
   }
 

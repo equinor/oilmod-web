@@ -31,7 +31,11 @@ import {
   subMonths,
   subWeeks,
   isBefore,
-  isAfter
+  isAfter,
+  isFirstDayOfMonth,
+  isLastDayOfMonth,
+  isThisMonth,
+  isSameDay
 } from 'date-fns';
 
 @Component({
@@ -143,7 +147,6 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
       end: addWeeks(new Date(), 8)
     };
     this.form.setValue(values);
-    this.onSubmit();
     this.selectValue = '-2 Weeks - +8 Weeks';
     this.selected = 0;
   }
@@ -159,7 +162,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
         this.form.setValue({
           start: week ? startOfWeek(subFn(new Date(), 1), {weekStartsOn: 1}) : startOfMonth(subFn(new Date(), 1)),
           end: week ? endOfWeek(subFn(new Date(), 1), {weekStartsOn: 1}) : endOfMonth(subFn(new Date(), 1))
-        });
+        }, { emitEvent : false        });
         this.selectValue = `Previous ${unit}`;
         this.selected = 1;
         break;
@@ -180,7 +183,6 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
         this.selected = 2;
         break;
     }
-    this.onSubmit();
   }
 
   /**
@@ -264,7 +266,9 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
         }
         this.initValues = newValues;
         this.form.setValue(newValues);
+        this.checkForKnownRange(newValues);
         this.updateInputfield(newValues);
+
       }
     }
   }
@@ -298,6 +302,57 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   }
 
+  private isMonthRange(v){ 
+    return isFirstDayOfMonth(v.start) && isLastDayOfMonth(v.end);
+  }
+
+  private isThisMonthRange(v){
+    return (isThisMonth(v.start) && isThisMonth(v.end));
+  }
+
+  private isNextMonthRange(v){
+    return (isThisMonth(subMonths(v.start, 1)) && isThisMonth(subMonths(v.end , 1)));
+  }
+  private isPreMonthRange(v){
+    return (isThisMonth(addMonths(v.start, 1)) && isThisMonth(addMonths(v.end, 1)));
+  }
+
+  public isTenWeeks(v) {
+    const control = {
+      start: subWeeks(new Date(), 2),
+      end: addWeeks(new Date(), 8)
+    };
+    return isSameDay(v.start, control.start) &&  isSameDay(v.end, control.end)
+  }
+
+
+  private checkForKnownRange(v){
+    if(this.isMonthRange(v)){
+      if(this.isThisMonthRange(v)){
+        this.selected = 2;
+        this.selectValue = 'This month';
+      } else if(this.isNextMonthRange(v)) {
+        this.selected = 3;
+        this.selectValue = 'Next month';
+      } else if(this.isPreMonthRange(v)) {
+        this.selected = 1;
+        this.selectValue = 'Prev month';
+      }
+        else{
+          this.selected = 4
+          this.selectValue = 'Custom';
+        }
+      }
+    else if(this.isTenWeeks(v)) {
+      this.selectValue = '-2 Weeks - +8 Weeks';
+      this.selected = 0;
+    }
+    else{
+      this.selected = 4
+      this.selectValue = 'Custom';
+    }
+  }
+
   ngOnInit() {
     this.form = this.fb.group({
       start: [null, Validators.required],
@@ -305,8 +360,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     });
     this.error = this.form
       .valueChanges
-      .do(v => this.selected = 4)
-      .do(v => this.selectValue = 'Custom')
+      .do(v => this.checkForKnownRange(v))
       .map((value: {start: Date, end: Date}) => {
         const {start, end} = value;
         return isAfter(start, end) ? 'Start date is after end date' : null;
