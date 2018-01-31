@@ -124,11 +124,10 @@ const formatUnknownException = (err: HttpErrorResponse): FormattedError => {
 const formatConflict = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const url = `<a href="${window.location.href}" tabindex="-1" target="_blank">you can open the updated version in a new window</a>`;
-  const title = `I was not able to save because your data is obsolete`;
-  const message = `<p>The server has a newer version of this item.</p>
-  <p>If you do not want to loose your unsaved data, ${url} and apply your changes there.</p>`;
+  const title = `Not able to save because your data is obsolete`;
+  const message = `<p>The server has a newer version of this item.</p>`;
   const actions: ErrorAction[] = [
-    {label: 'DISCARD MY CHANGES AND GET THE LATEST VERSION', closeDialogData: 'replace'},
+    {label: 'GET THE LATEST VERSION', closeDialogData: 'replace'},
   ];
   return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
