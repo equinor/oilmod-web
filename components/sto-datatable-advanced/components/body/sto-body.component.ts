@@ -120,9 +120,11 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
   }
 
   getRowSummaryStyle() {
-
-    let summaryHeight = 36;
-    let scroll = 0;
+		let summaryHeight = 36;
+		let scroll = 0;
+  	if(this.rows && this.rows.length > 1){
+			summaryHeight = this.getRowHeight(this.rows[1]);
+		}
 
     let style = {
     	position: 'fixed'
@@ -132,7 +134,12 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     const width = parseInt(this.bodyWidth, 0);
     let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
     if (colWidth > width) {
-      scroll = 12;
+      if(summaryHeight > 35){
+				scroll = 12;
+			}
+			else{
+      	scroll = 19;
+			}
     }
     translateXY(style, 0, height - summaryHeight - scroll);
 

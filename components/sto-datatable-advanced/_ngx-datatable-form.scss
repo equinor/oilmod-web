@@ -1,0 +1,69 @@
+.sto-datatable {
+  .sto-form__field {
+    width: 100%;
+
+    input[type="number"] {
+      text-align: right;
+    }
+    .mat-input-infix.mat-form-field-infix {
+      border: 0 !important;
+      margin: 0 !important;
+      padding: 1px 0 0 0 !important;
+    }
+    .mat-input-flex.mat-form-field-flex {
+      height: 31px;
+      padding: 4px 6px;
+    }
+    .mat-select{
+      .mat-select-arrow {
+        margin-top: -5px;
+      }
+    }
+
+  }
+
+  &__column {
+    &--editable {
+      padding: 2px 0 !important;
+
+      .datatable-body-cell-label .mat-select {
+        height: 14px;
+      }
+
+      .datatable-body-cell-label .mat-icon-button {
+        margin: 0;
+        height: 16px;
+        width: 16px;
+        .mat-icon {
+          height: 1.125em;
+          width: 16px;
+        }
+      }
+
+    }
+  }
+  .mat-form-field-placeholder{
+    top: 0;
+  }
+  .mat-form-field-placeholder-wrapper{
+    top: 0;
+    padding: 0;
+  }
+}
+
+.sto-compact {
+  .sto-datatable {
+    .sto-form__field {
+      .mat-input-flex.mat-form-field-flex {
+        height: 19px;
+        padding: 0px 6px;
+      }
+      .mat-form-field-suffix {
+        height: 22px;
+      }
+    }
+    .datatable-body .datatable-body-cell-label {
+      line-height: 19px;
+    }
+  }
+}

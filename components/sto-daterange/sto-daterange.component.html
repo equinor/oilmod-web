@@ -1,6 +1,6 @@
 <span [ngStyle]="style"
-	  class="sto-daterange-wrapper">
-	<mat-form-field [class]="inputStyleClass"
+	  class="sto-daterange-wrapper ">
+	<mat-form-field   [class]="inputStyleClass"
 					(click)="onInputFocus(inputfield, $event)" [class.mat-focused]="focus">
 		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
 			   readonly
@@ -23,10 +23,10 @@
 					<div class="calendar-box">
 							<sto-inline-calendar formControlName="end"></sto-inline-calendar>
 					</div>
-			<div class="actions">
+			<div class="actions sto-form">
 				<div class="action-container">
 					<div class="sto-daterange__button--container">
-						<mat-form-field>
+						<mat-form-field class="sto-form__field">
 							<mat-select [value]="selected" placeholder="Date Range">
 								<mat-select-trigger>
 									{{ selectValue }}
@@ -39,6 +39,7 @@
 							</mat-select>
 						</mat-form-field>
 					</div>
+					<!-- Removed until the DateRange can update the input fields
 					<div class="sto-daterange__button--container">
 						<div style="display: flex; flex-direction: row">
 							<mat-form-field readonly class="sto-form-field--readonly left">
@@ -49,14 +50,15 @@
 								<input readonly matInput [value]="form.value.end | formatDate">
 							</mat-form-field>
 						</div>
-					</div>
+					</div>-->
+
 					<div class="spacer"></div>
 					<div class="sto-daterange__error--container" *ngIf="error | async as message">
 						<span>{{ message }}</span>
 					</div>
 					<div class="sto-daterange__button--container sto-daterange__button--container--actions">
-						<button type="button" mat-button color="warn" (click)="onCancel()">Cancel</button>
-						<button type="button" [disabled]="form.invalid || (error | async)" mat-button
+						<button type="button" class="dense" mat-button (click)="onCancel()">Cancel</button>
+						<button type="button" class="dense" [disabled]="form.invalid || (error | async)" mat-button
 								color="primary" (click)="onSubmit()">Apply</button>
 					</div>
 				</div>
