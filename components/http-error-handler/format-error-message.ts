@@ -83,8 +83,10 @@ const formatServerDownOrTimeout = (err: HttpErrorResponse): FormattedError => {
 const formatNotFound = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Item not found`;
-  const message = `<p>We were unable to locate the requested item, and the server responsed with the following error:</p>
-  <p>${response.message}</p>`;
+  let message = response.message;
+  if (!message) {
+    message = `<p>We were unable to locate the requested item</p>`;
+  }
   const severity = 'warning';
   const actions = defaultActions;
   return Object.assign({}, response, {title, message, severity, actions});
@@ -93,9 +95,12 @@ const formatNotFound = (err: HttpErrorResponse): FormattedError => {
 const formatBadRequest = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Errors in submitted data`;
-  const message = `<p>The server refused to process your request, and responsed with the follow error:</p>
+  let message = response.message;
+  if(!message) {
+    message = `<p>The server refused to process your request, and responsed with the follow error:</p>
   <p>${response.message}</p>
   <p>Please correct the errors listed above, and try again</p>`;
+  }
   const severity = 'error';
   const actions = defaultActions;
   return Object.assign({}, response, {title, message, severity, actions});
@@ -104,9 +109,12 @@ const formatBadRequest = (err: HttpErrorResponse): FormattedError => {
 const formatUnknownException = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Unexcepted error occured`;
-  const message = `<p>The application experienced an unknown and fatal exception, and returned the following error:</p>
+  let message = response.message;
+  if (!message) {
+    message = `<p>The application experienced an unknown and fatal exception, and returned the following error:</p>
   <p>${response.message}</p>
   <p>You can attempt reloading the page, and if the error still occurs, please log a ticket via ServiceNow</p>`;
+  }
   const actions: ErrorAction[] = [
     {label: 'Refresh the page', action: () => window.location.reload(true)}
   ];
