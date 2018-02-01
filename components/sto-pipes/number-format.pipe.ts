@@ -18,6 +18,9 @@ export class NumberFormatPipe implements PipeTransform {
     if (abs) {
       value = Math.abs(value);
     }
+    if (!isNaN(value)) {
+      value = parseFloat(value.toFixed(3));
+    }
     const intl = new Intl.NumberFormat().format(value);
     const split = intl.split('.');
     let localized = split[0];

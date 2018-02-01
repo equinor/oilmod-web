@@ -4,13 +4,13 @@ $row-height: 24px;
 $icon-height: 16px;
 
 
-.sto-compact .imo-overview { //only in .imo-overview for now
+.sto-compact { //only in .imo-overview for now
 
-  .ngx-datatable.stoui, .ngx-datatable.stoui.inside-card {
+  .ngx-datatable.sto-datatable, .ngx-datatable.sto-datatable.inside-card {
     .datatable-body {
       .datatable-body-row{
         .datatable-body-cell{
-          padding: 2px;
+          padding: 2px 8px;
 
           &.date-cell{
             padding: 0px;
@@ -33,7 +33,7 @@ $icon-height: 16px;
     }
     .datatable-header{
       .datatable-header-cell {
-        padding: 4px 2px;
+        padding: 4px 8px;
         .unit{
           visibility: hidden;
         }
@@ -81,7 +81,7 @@ $icon-height: 16px;
 }
 //ONLY inside cards
 .sto-compact .imo-overview{
-  .ngx-datatable.stoui.inside-card{
+  .ngx-datatable.sto-datatable.inside-card{
     .mat-icon{
       margin-top: 2px;
     }

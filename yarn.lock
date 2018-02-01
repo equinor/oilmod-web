@@ -20,7 +20,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@>=2.4.1", "@angular/compiler-cli@>=4.3.0 <5.0.0":
+"@angular/compiler-cli@<5.0.0", "@angular/compiler-cli@>=2.4.1", "@angular/compiler-cli@>=4.3.0 <5.0.0":
   version "4.4.6"
   resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcompiler-cli/-/compiler-cli-4.4.6.tgz#bafd3d1e260e99087eb9a8cf7532dbd603abb9b1"
   dependencies:
