@@ -4,7 +4,7 @@
 $header-height: 74px;
 $large-header-height: spacer(24);
 $footer-height: spacer(16);
-$header-size: 16px;
+$header-size: 20px;
 
 .large-header {
   .sto-drawer__content {
@@ -97,22 +97,34 @@ $header-size: 16px;
 
 .sto-drawer__header{
   display: flex;
-  height:25px;
+  height: 25px;
   width: 100%;
 
   &__title, h1, h2, h3, h4 {
+    font-family: 'statoilsans_medium';
     font-size: $header-size;
     font-weight: 500;
+    line-height: 24px;
     margin: 0;
   }
 
   &__suffix{
     width: 100%;
     text-align: right;
-  }
-  button {
-    background-color: transparent;
+
     color: rgba(255, 255, 255, 0.87);
+  }
+
+  &__infix{
+    min-width: 52px;
+    color: rgba(255, 255, 255, 1);
+  }
+  button.mat-icon-button {
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    background-color: transparent;
+
     border: 0;
     outline: none;
     cursor: pointer;

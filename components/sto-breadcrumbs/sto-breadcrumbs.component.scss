@@ -6,14 +6,19 @@ $breadcrumb-font-size: 20px;
 :host{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
+  font-family: 'statoilsans_medium';
+  font-weight: 500;
+  overflow: hidden;
+  width: 100%;
 }
 
 .sto-breadcrumb__home{
   margin: spacer(4);
+  color: rgba(255,255,255,0.38);
   cursor: pointer;
   &:hover{
-    color: $content-bg-color-highlight;
+    color: rgba(255,255,255,0.86);
   }
 }
 
@@ -29,24 +34,32 @@ li {
   line-height: $header-height;
   vertical-align: middle;
 
-  &:first-child {
-    .sto-breadcrumb__item{
-      border-left-width: 0;
-      padding-left: 0;
-    }
-  }
-  &:last-child {
-    .sto-breadcrumb__item{
-      border-right-width: 0;
-    }
-  }
 }
 
-.sto-breadcrumb__item{
-  border-right: solid 1px black;
-  border-left: solid 1px $gray-dark;
-  padding: 0 spacer(4);
+.sto-breadcrumb__list-item{
+  position: relative;
+  padding: 0 24px;
 }
+
+.sto-breadcrumb__list-item:before {
+  content: " ";
+  display: block;
+  border-top: 2px solid rgba(255,255,255,0.18);
+  border-right: 2px solid rgba(255,255,255,0.18);
+  background-color: transparent;
+  pointer-events: none;
+  position: absolute;
+  left: -25px;
+  top: 7px;
+  width:50px;
+  height:50px;
+  margin:0 0 0 -11px;
+  -webkit-transform:rotate(45deg) skew(25deg,25deg);
+}
+
+
+
+
 
 a {
   cursor: pointer;
@@ -56,7 +69,5 @@ a {
   &:hover {
     color: $content-bg-color-highlight;
   }
-
-
 }
 
