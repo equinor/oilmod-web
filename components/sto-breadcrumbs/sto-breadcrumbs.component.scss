@@ -75,3 +75,12 @@ li {
   }
 }
 
+.sto-breadcrumb__list-item:last-child{
+  .sto-breadcrumb__item {
+    &:hover{
+      color: $white-light;
+      cursor: default;
+    }
+  }
+
+}

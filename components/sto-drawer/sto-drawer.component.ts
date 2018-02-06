@@ -149,10 +149,11 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     }
   }
   private resizeContent() {
-
+    
       const hasFooter = this.footerRef.nativeElement.children.length > 0;
       const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
       let footerHeight = 0;
+
       const headerHeight = this.headerRef.nativeElement.offsetHeight;
       if (hasFooter) {
         footerHeight = this.footerRef.nativeElement.offsetHeight;
@@ -160,8 +161,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
         this.footerRef.nativeElement.style = 'display: none';
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
-    
-  }
+    }
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
