@@ -27,7 +27,7 @@ import 'rxjs/add/observable/fromEvent';
           transform: 'translate3d(100%, 0, 0)',
           visibility: 'hidden',
         })),
-        transition('in <=> *', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
+        transition('in <=> *', animate('400ms ease'))
       ]
 )
   ]
@@ -149,7 +149,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     }
   }
   private resizeContent() {
-    if (this.headerRef) {
+
       const hasFooter = this.footerRef.nativeElement.children.length > 0;
       const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
       let footerHeight = 0;
@@ -160,7 +160,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
         this.footerRef.nativeElement.style = 'display: none';
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
-    }
+    
   }
 
   constructor(private renderer: Renderer2, private el: ElementRef) {

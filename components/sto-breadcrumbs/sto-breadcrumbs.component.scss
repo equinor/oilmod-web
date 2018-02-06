@@ -14,7 +14,9 @@ $breadcrumb-font-size: 20px;
 }
 
 .sto-breadcrumb__home{
-  margin: spacer(4);
+  padding: 20px 14px;
+  height: 64px;
+  width: 52px;
   color: rgba(255,255,255,0.38);
   cursor: pointer;
   &:hover{
@@ -38,8 +40,9 @@ li {
 
 .sto-breadcrumb__list-item{
   position: relative;
-  padding: 0 24px;
+  padding: 0px;
 }
+
 
 .sto-breadcrumb__list-item:before {
   content: " ";
@@ -61,7 +64,8 @@ li {
 
 
 
-a {
+.sto-breadcrumb__item {
+  padding: 24px;
   cursor: pointer;
   color: $white-light;
   text-decoration: none;
