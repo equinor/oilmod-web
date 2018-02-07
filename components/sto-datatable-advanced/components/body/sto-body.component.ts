@@ -135,7 +135,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
     if (colWidth > width) {
       if(summaryHeight > 35){
-				scroll = 12;
+				scroll = 17;
 			}
 			else{
       	scroll = 19;

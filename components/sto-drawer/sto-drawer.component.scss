@@ -4,7 +4,7 @@
 $header-height: 74px;
 $large-header-height: spacer(24);
 $footer-height: spacer(16);
-$header-size: 16px;
+$header-size: 20px;
 
 .large-header {
   .sto-drawer__content {
@@ -77,12 +77,12 @@ $header-size: 16px;
   }
 }
 
-.sto-drawer__header {
+.sto-drawer__header__wrapper {
   @include mat-elevation(4);
   position: absolute;
   top: 0;
   z-index: 1;
-  padding: 0 spacer(2) 0 spacer(4);
+  padding: 0;
   color: $white-light;
   background-color: $black-medium;
   display: flex;
@@ -93,17 +93,62 @@ $header-size: 16px;
   align-items: center;
   white-space: nowrap;
 
-  &__title, h1, h2, h3, h4 {
-    font-size: $header-size;
-    font-weight: 500;
-    margin: 0;
+}
+
+.sto-drawer__header{
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .sto-main-icon{
+    height: 40px;
+    width: 40px;
+    margin: 6px 0 0 16px;
   }
 
-  button {
-    background-color: transparent;
+  &__title, h1, h2, h3, h4 {
+    font-family: 'statoilsans_medium';
+    font-size: $header-size;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 0;
+    padding-left: 16px;
+  }
+
+  &__suffix{
+    width: 100%;
+    text-align: right;
+    min-width: 56px;
     color: rgba(255, 255, 255, 0.87);
+  }
+
+  &__infix{
+    min-width: 56px;
+
+    color: rgba(255, 255, 255, 1);
+  }
+  button.mat-icon-button {
+    height: $header-height;
+    width: 56px;
+    line-height: $header-height;
+    background-color: transparent;
+
     border: 0;
     outline: none;
+    cursor: pointer;
+    &:hover{
+      color: #ccc;
+    }
   }
 }
 
+
+.sto-navigation{
+  .mat-list {
+    .mat-subheader {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.54);
+      padding: 8px;
+    }
+  }
+}
