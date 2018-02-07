@@ -1,4 +1,7 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ViewEncapsulation, HostListener} from '@angular/core';
+import {
+  Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2,
+  ViewEncapsulation, HostListener, HostBinding
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { animate, AnimationMetadata, state, style, transition, trigger } from '@angular/animations';
 import { StoButtonModule } from '../sto-button/sto-button.directive';
@@ -24,7 +27,7 @@ import 'rxjs/add/observable/fromEvent';
           transform: 'translate3d(100%, 0, 0)',
           visibility: 'hidden',
         })),
-        transition('in <=> *', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
+        transition('in <=> *', animate('400ms ease'))
       ]
 )
   ]
@@ -146,10 +149,11 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     }
   }
   private resizeContent() {
-    if (this.headerRef) {
+    
       const hasFooter = this.footerRef.nativeElement.children.length > 0;
       const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
       let footerHeight = 0;
+
       const headerHeight = this.headerRef.nativeElement.offsetHeight;
       if (hasFooter) {
         footerHeight = this.footerRef.nativeElement.offsetHeight;
@@ -158,7 +162,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
     }
-  }
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
@@ -179,6 +182,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   styleUrls: ['./sto-drawer.component.scss']
 })
 export class StoDrawerHeaderComponent {
+  @HostBinding('class.sto-drawer__header') class: boolean = true;
 }
 
 @Component({

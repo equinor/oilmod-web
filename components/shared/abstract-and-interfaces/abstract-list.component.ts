@@ -7,7 +7,7 @@ import { ListAutoResizeService } from '../services/list-auto-resize.service';
 import { Subscription } from 'rxjs/Subscription';
 import { throttleable } from '../../../vendor/ngx-datatable/utils/throttle';
 
-
+ 
 export abstract class AbstractListComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('table', {read: ElementRef}) public table: ElementRef;
@@ -54,7 +54,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
   }
 
 
-  private calculateAndSetElementHeight() {
+  public calculateAndSetElementHeight() {
 
     const PADDING_BOTTOM = 28;
     const windowHeight = window.innerHeight;
