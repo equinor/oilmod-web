@@ -124,7 +124,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     if(value === undefined){
       return;
     }
-    this._height = value;
+    this._height = parseInt(value, 10);
     if (this.scrollbarV) {
       let height = parseInt(value, 10);
       if (this.headerHeight) {
@@ -218,6 +218,27 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     }
 
 }
+
+  recalculateDims(): void {
+    const dims = this.element.getBoundingClientRect();
+    this.innerWidth = Math.floor(dims.width);
+
+    if (this.scrollbarV) {
+      let height = dims.height;
+      if(this._height){
+        height = this._height;
+      }
+      if (this.headerHeight) {
+        height = height - this.headerHeight;
+      }
+      if (this.footerHeight) {
+        height = height - this.footerHeight;
+      }
+      this.bodyHeight = height;
+    }
+
+    this.recalculatePages();
+  }
 
   onColumnResize({column, newValue}: any): void {
     super.onColumnResize({column, newValue});
