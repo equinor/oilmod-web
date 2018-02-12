@@ -5,8 +5,9 @@ import {
 import { FormGroup } from '@angular/forms';
 import { ListAutoResizeService } from '../services/list-auto-resize.service';
 import { Subscription } from 'rxjs/Subscription';
+import { throttleable } from '../../../vendor/ngx-datatable/utils/throttle';
 
-
+ 
 export abstract class AbstractListComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('table', {read: ElementRef}) public table: ElementRef;
@@ -27,18 +28,18 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
       this.toggleSubscription$ = this.toggleService.isToggled.subscribe($event => {
         this.onToggle($event);
       });
-    }, 300)
+    }, 350)
 
   }
   ngOnDestroy(){
     this.toggleSubscription$.unsubscribe();
   }
 
-  private resizeId;
+
   @HostListener('window:resize', ['$event'])
+  @throttleable(100)
   onResize(event) {
-    clearTimeout(this.resizeId);
-    this.resizeId = setTimeout(() => this.calculateAndSetElementHeight(), 100);
+    this.calculateAndSetElementHeight()
     // The datatable also does listens to this so we have to wait for this to finish.
 
   }
@@ -53,7 +54,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
   }
 
 
-  private calculateAndSetElementHeight() {
+  public calculateAndSetElementHeight() {
 
     const PADDING_BOTTOM = 28;
     const windowHeight = window.innerHeight;
