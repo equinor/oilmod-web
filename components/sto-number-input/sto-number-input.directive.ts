@@ -1,0 +1,218 @@
+import {Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
+import {Key} from '../shared/abstract-and-interfaces/keyPress.enum';
+import {StoNumberInputPipe} from './sto-number-input.pipe';
+
+
+@Directive({selector: '[stoNumberInput]'})
+export class StoNumberInputDirective  {
+
+    private _el: HTMLInputElement;
+
+    @Input() fractionSize = 5;
+    /**
+     * List of keys ignored, to work as default.
+     * @type {Key[]}
+     */
+    private ignoredKeys = [
+        Key.Dash,
+        Key.Backspace,
+        Key.Delete,
+        Key.Home,
+        Key.LeftArrow,
+        Key.RightArrow,
+        Key.Enter,
+        Key.End,
+        Key.Tab,
+        Key.Subtract
+    ];
+
+    /**
+     * Listens for the paste events.
+     * Handles spaces, long dash, period and commas.
+     * Tries to the format, will be ignored if something fails.
+     * @param e event
+     */
+    @HostListener('paste', ['$event'])
+    onPaste(e) {
+        if(this._el.readOnly || this._el.disabled){
+            return;
+        }
+        e.preventDefault();
+        let pasted = e.clipboardData.getData('text');
+        pasted = pasted.replace('—', '-'); //long dash, sometime used in Excel and Word
+
+        let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize);
+
+        if (!this.hasInvalidValues(parsedValue)) {
+            parsedValue = parsedValue.replace('.', ',');
+            this._el.value = parsedValue;
+            this._el.dispatchEvent(new Event('input'));
+        }
+    }
+
+    /**
+     * Se if parsed string contains words that indicate a failed parse.
+     * @param {string} parsedValue
+     * @returns {boolean}
+     */
+    private hasInvalidValues(parsedValue: string) {
+        return parsedValue.includes('NaN')
+            || parsedValue.includes('undefined')
+            || parsedValue.includes('null');
+    }
+
+    /**
+     * Listen for key event to work like a number field.
+     * Transforms period to comma.
+     * Handles hash, allows copy,pase,cut and select all.
+     * @param e
+     */
+    @HostListener('keydown', ['$event'])
+    onKeyPress(e) {
+        if(this._el.readOnly || this._el.disabled){
+            return;
+        }
+        if (this.isNumberKeypress(e)) {
+
+        }
+        else if ([Key.Period, Key.Comma, Key.DecimalPoint].includes(e.which)) {
+            this.handlePeriodDelimiter(e);
+        }
+        else if ([Key.Dash, Key.Subtract].includes(e.which)) {
+            this.handleDash(e);
+        }
+        else if ([Key.UpArrow, Key.DownArrow].includes(e.which)) {
+            this.handleKeyUpAndDown(e);
+        }
+        else if (this.ignoredKeys.indexOf(e.which) !== -1) {
+        }
+        else if (this.isCopyPaste(e) || this.isCtrlA(e)) {
+        }
+        else {
+            e.preventDefault();
+        }
+    }
+
+    /**
+     * Handles dash. Is ignored if already exist a comma.
+     * Replaces period with comma.
+     * @param e
+     */
+    private handlePeriodDelimiter(e) {
+        if (this._el.value.includes(',')) {
+            e.preventDefault();
+        }
+        else if (e.which === Key.Period) {
+            setTimeout(() => {
+                const caretPosition = e.target.selectionStart;
+                this._el.value = this._el.value.replace('.', ',');
+                this._el.setSelectionRange(caretPosition, caretPosition);
+
+            }, 0);
+        }
+    }
+
+    /**
+     * All text is selected in the input
+     * @param e
+     * @returns {boolean}
+     */
+    private hasSelectedAllText(e) {
+        return e.target.selectionEnd - e.target.selectionStart === this._el.value.length;
+
+    }
+
+    /**
+     * Handles dashes. Should only be allowed in the beginning and only once.
+     * @param e
+     */
+    private handleDash(e) {
+        if (this.hasSelectedAllText(e)) {
+        }
+        else if (!this._el.value.includes('-') && e.target.selectionStart === 0) {
+        }
+        else {
+            e.preventDefault();
+        }
+    }
+
+    /**
+     * Is copy, paste or cut.
+     * @param e
+     * @returns {boolean}
+     */
+    private isCopyPaste(e) {
+        return e.ctrlKey && (e.which === Key.C || e.which === Key.V || e.which === Key.X);
+    }
+
+    /**
+     * Is select all text (CTRL+A)
+     * @param e
+     * @returns {boolean}
+     */
+    private isCtrlA(e) {
+        return e.ctrlKey && (e.which === Key.A);
+    }
+
+    /**
+     * Is a number, on keyboard and on numpad.
+     * @param e
+     * @returns {boolean}
+     */
+    private isNumberKeypress(e) {
+        return (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105);
+    }
+
+
+    /**
+     * Handles up and down arrows by adding/subtracting one
+     * @param e
+     */
+    private handleKeyUpAndDown(e) {
+        if(this._el.readOnly || this._el.disabled){
+            return;
+        }
+        const value = this._el.value;
+        const addition = e.which  === Key.UpArrow ? 1 : -1;
+        let [integerSplit = '', fractionSplit = ''] = (value || '').split(',');
+        integerSplit = integerSplit.replace(' ', '');
+        if(integerSplit.length === 0){
+            integerSplit = '0';
+        }
+        const currentValue = parseInt(integerSplit, 10);
+
+        setTimeout(() => {
+            if(fractionSplit.length > 0){
+                this._el.value = ((currentValue + addition) + ',' + fractionSplit);
+            }
+            else {
+                this._el.value = (currentValue + addition) + '';
+            }
+            this._el.dispatchEvent(new Event('input'));
+        }, 0);
+
+    }
+
+    @HostListener('focus', ['$event'])
+    onFocus($event) {
+        if(this._el.readOnly || this._el.disabled){
+            return;
+        }
+        const value = $event.target.value;
+        this._el.value = (this.numberFormatPipe.parse(value, this.fractionSize) + '').replace('.', ',');
+    }
+
+    @HostListener('blur', ['$event.target.value'])
+    onBlur(value) {
+        if(this._el.readOnly || this._el.disabled){
+            return;
+        }
+        this._el.value = this.numberFormatPipe.transform(value, this.fractionSize);
+    }
+
+
+    constructor(private elementRef: ElementRef,
+                private numberFormatPipe: StoNumberInputPipe) {
+        this._el = this.elementRef.nativeElement;
+    }
+}
