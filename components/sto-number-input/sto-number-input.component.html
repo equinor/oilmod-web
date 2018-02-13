@@ -5,18 +5,8 @@
         [class.sto-form__field--readonly]="readonly"
         [class.mat-form-field-invalid]="control.touched && errors">
 
-    <ng-container *ngIf="readonly && suffix; else normal">
-        <input
-                [ngStyle]="{textAlign : textAlign}"
-                [placeholder]="placeholder"
-                [readonly]="readonly"
-                [disabled]="disabled"
-                matInput type="text"
-                [value]="control.value + ' ' + suffix" />
-    </ng-container>
-
-    <ng-template #normal>
-    <input [ngStyle]="{textAlign : textAlign}"
+    <input *ngIf="!(readonly && suffix)"
+           [ngStyle]="{textAlign : textAlign}"
            matInput
            stoNumberInput
            [fractionSize]="fractionSize"
@@ -25,8 +15,17 @@
            [disabled]="disabled"
            type="text"
            [formControl]="control" />
-    <span *ngIf="suffix" matSuffix>{{ suffix }}</span>
 
+        <input
+                *ngIf="readonly && suffix"
+                [ngStyle]="{textAlign : textAlign}"
+                [placeholder]="placeholder"
+                [readonly]="readonly"
+                [disabled]="disabled"
+                matInput type="text"
+                [value]="control.value + ' ' + suffix" />
+
+    <span *ngIf="suffix && !readonly" matSuffix>{{ suffix }}</span>
     <mat-hint [class.mat-error]="control.touched && errors">
         <ng-container *ngIf="control.touched && errors; else hint">
             <span *ngIf="errors.required">Field is required</span>
@@ -35,5 +34,5 @@
         </ng-container>
         <ng-template #hint><ng-content select=".sto-form__field__hint"></ng-content></ng-template>
     </mat-hint>
-    </ng-template>
 </mat-form-field>
+
