@@ -1,5 +1,5 @@
 <mat-form-field
-        class="sto-form__field"
+        [class]="'sto-form__field ' + formFieldClass"
         [floatPlaceholder]="floatPlaceholder"
         [class.sto-form__field--disabled]="disabled"
         [class.sto-form__field--readonly]="readonly"

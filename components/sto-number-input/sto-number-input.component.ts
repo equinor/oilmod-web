@@ -1,7 +1,7 @@
 import {
     AbstractControl, ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ValidationErrors
 } from '@angular/forms';
-import {Component, forwardRef, Host, Input, OnInit, Optional, SkipSelf} from '@angular/core';
+import { Component, forwardRef, Host, HostBinding, Input, OnInit, Optional, SkipSelf } from '@angular/core';
 import {StoNumberInputPipe} from './sto-number-input.pipe';
 
 
@@ -18,7 +18,7 @@ import {StoNumberInputPipe} from './sto-number-input.pipe';
     }
 )
 export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
-
+    @HostBinding('class.sto-number-input') class: boolean = true;
     @Input() formControlName: string;
     @Input() placeholder: string;
     @Input() label: string;
@@ -28,7 +28,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     @Input() readonly: boolean;
     @Input() disabled: boolean;
     @Input() floatPlaceholder = 'always';
-
+    @Input() formFieldClass: string;
 
     /**
      * Force value is used to set a value, which shall always be display only.
