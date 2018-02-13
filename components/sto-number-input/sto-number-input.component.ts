@@ -28,7 +28,20 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     @Input() readonly: boolean;
     @Input() disabled: boolean;
     @Input() floatPlaceholder = 'always';
-    @Input() forceValue: any;
+
+
+    /**
+     * Force value is used to set a value, which shall always be display only.
+     * When a forceValue is used, no other values will be propagated.
+     */
+    private _forceValue: any;
+    @Input() set forceValue(forceValue){
+        this._forceValue = forceValue;
+        this.writeValue(forceValue);
+    }
+    get forceValue(): any{
+        return this._forceValue;
+    }
 
 
     /**
@@ -43,15 +56,19 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
 
     /**
      * Listens for changes in form, transforms from string to number.
+     * If a forceValue is set, we don't want to propagate that value to the conroller.
      * Return null if NaN.
      */
     private handleChanges(){
-        this.control.valueChanges
-            .subscribe((value) => {
-                let numberValue =  parseFloat(this.numberFormatterPipe.parse(value, this.fractionSize));
-                numberValue = !isNaN(numberValue) ? numberValue : null;
-                this.propagateChange(numberValue);
-            });
+        if(!this.forceValue && this.forceValue !== 0){
+            this.control.valueChanges
+              .subscribe((value) => {
+                  let numberValue =  parseFloat(this.numberFormatterPipe.parse(value, this.fractionSize));
+                  numberValue = !isNaN(numberValue) ? numberValue : null;
+                  this.propagateChange(numberValue);
+              });
+        }
+
     }
 
     /**

@@ -4,6 +4,18 @@
         [class.sto-form__field--disabled]="disabled"
         [class.sto-form__field--readonly]="readonly"
         [class.mat-form-field-invalid]="control.touched && errors">
+
+    <ng-container *ngIf="readonly && suffix; else normal">
+        <input
+                [ngStyle]="{textAlign : textAlign}"
+                [placeholder]="placeholder"
+                [readonly]="readonly"
+                [disabled]="disabled"
+                matInput type="text"
+                [value]="control.value + ' ' + suffix" />
+    </ng-container>
+
+    <ng-template #normal>
     <input [ngStyle]="{textAlign : textAlign}"
            matInput
            stoNumberInput
@@ -14,6 +26,7 @@
            type="text"
            [formControl]="control" />
     <span *ngIf="suffix" matSuffix>{{ suffix }}</span>
+
     <mat-hint [class.mat-error]="control.touched && errors">
         <ng-container *ngIf="control.touched && errors; else hint">
             <span *ngIf="errors.required">Field is required</span>
@@ -21,6 +34,6 @@
             <span *ngIf="errors.max">Value can't be more than {{errors.max.max }}</span>
         </ng-container>
         <ng-template #hint><ng-content select=".sto-form__field__hint"></ng-content></ng-template>
-
     </mat-hint>
+    </ng-template>
 </mat-form-field>
