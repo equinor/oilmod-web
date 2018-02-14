@@ -25,13 +25,28 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
-import { animations } from './animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'sto-quick-view',
   templateUrl: './quick-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: animations,
+  animations: [
+    trigger('transformPanel', [
+      state('showing', style({
+        opacity: 1
+      })),
+      transition('void => *', [
+        style({
+          opacity: 0
+        }),
+        animate('400ms ease-in')
+      ]),
+      transition('* => void', [
+        animate('400ms ease-out', style({opacity: 0}))
+      ])
+    ])
+  ],
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./quick-view.component.scss']
 })
