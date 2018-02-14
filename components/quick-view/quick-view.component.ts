@@ -38,6 +38,8 @@ import { animations } from './animations';
 export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() overlayOrigin: OverlayOrigin;
   @Input() position: 'over' | 'below' = 'over';
+  @Input('offsetY') userDefinedOffsetY = 0;
+  @Input() offsetX = 0;
 
   @Output() closed = new EventEmitter();
   @Output() opened = new EventEmitter();
@@ -86,7 +88,7 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
     const el = this.overlayOrigin.elementRef.nativeElement;
     const dims = el.getBoundingClientRect();
     if (this.position === 'over') {
-      this.offsetY = dims.height;
+      this.offsetY = -dims.height + this.userDefinedOffsetY;
     } else {
       this.offsetY = 0;
     }

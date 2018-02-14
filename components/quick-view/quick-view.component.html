@@ -2,7 +2,8 @@
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="overlayOrigin"
   [cdkConnectedOverlayOpen]="isOpened"
-  [cdkConnectedOverlayOffsetY]="-offsetY"
+  [cdkConnectedOverlayOffsetX]="offsetX"
+  [cdkConnectedOverlayOffsetY]="offsetY"
   (detach)="connectedOverlayDetach()">
   <div [@transformPanel]="isOpened ? 'showing' : null" #dialog class="sto-portal">
     <div #heading class="sto-portal__heading">
