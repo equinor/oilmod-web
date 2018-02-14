@@ -64,3 +64,6 @@ export * from './components/http-error-handler/format-error-message';
 export * from './components/autocomplete/autocomplete.module';
 export * from './components/autocomplete/autocomplete.component';
 export * from './components/sto-number-input/sto-number-input.module';
+
+export * from './components/quick-view/quick-view.module';
+export * from './components/quick-view/quick-view.component';
