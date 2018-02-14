@@ -9,7 +9,7 @@
     <div #heading class="sto-portal__heading">
       <ng-content select="[quickViewHeader]"></ng-content>
     </div>
-    <hr *ngIf="heading.children.length > 0" style="margin: 0; height: 0; border: 1px solid rgba(0, 0, 0, 0.08);">
+    <hr *ngIf="heading.children.length > 0" class="sto-portal__divider">
     <div class="sto-portal__body">
       <ng-content></ng-content>
     </div>

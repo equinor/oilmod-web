@@ -4,6 +4,11 @@
   @include mat-elevation(8);
   width: 250px;
   background-color: white;
+  &__divider {
+    margin: 0;
+    height: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
   &__body {
     padding: 8px;
     font-size: 13px;
@@ -26,7 +31,7 @@
     padding: 8px 16px;
     h3 {
       font-weight: 700;
-      color: rgba(0,0,0,.54);
+      color: rgba(0, 0, 0, .54);
       line-height: 13px;
       font-size: 11px;
       margin: 0;
