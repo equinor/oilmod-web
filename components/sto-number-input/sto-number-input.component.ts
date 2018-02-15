@@ -120,7 +120,6 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
 
     writeValue(value: any) {
         if(value || value === 0){
-            console.log(this.numberFormatterPipe.transform(value, this.fractionSize));
             this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize));
         }
 
