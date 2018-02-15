@@ -4,7 +4,7 @@
         [class.sto-form__field--disabled]="disabled"
         [class.sto-form__field--readonly]="readonly"
         [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
-        [class.mat-form-field-invalid]="control.touched && errors">
+        [class.mat-form-field-invalid]="touched && errors">
 
     <input *ngIf="!(readonly && suffix)"
            [ngStyle]="{textAlign : textAlign}"
@@ -27,8 +27,8 @@
                 [value]="control.value + ' ' + suffix" />
 
     <span *ngIf="suffix && !readonly" matSuffix>{{ suffix }}</span>
-    <mat-hint [class.mat-error]="control.touched && errors">
-        <ng-container *ngIf="control.touched && errors; else hint">
+    <mat-hint [class.mat-error]="touched && errors">
+        <ng-container *ngIf="touched && errors; else hint">
             <span *ngIf="errors.required">Field is required</span>
             <span *ngIf="errors.min">Value must be at least {{errors.min.min}}</span>
             <span *ngIf="errors.max">Value can't be more than {{errors.max.max }}</span>
