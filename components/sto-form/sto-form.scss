@@ -20,7 +20,6 @@ $height: 72px;
 }
 
 
-
 %sto-form__field--focused {
   .mat-input-suffix.mat-form-field-suffix {
     .mat-icon-button {
@@ -96,6 +95,7 @@ $height: 72px;
 
 .sto-form {
   &__field {
+    cursor: pointer;
     @extend %sto-form__field;
 
     &.mat-focused {
@@ -111,9 +111,11 @@ $height: 72px;
 
    @include mat-input-hover-effect(rgba(0, 135, 184, 0.15), rgba(0, 0, 0, 0.25));
    &.sto-form__field--readonly{
+      cursor: default;
       @include mat-input-hover-effect(transparent, transparent);
    }
    &.sto-form__field--disabled{
+     cursor: default;
      @include mat-input-hover-effect(rgba(0, 0, 0, 0.08), transparent);
         .mat-input-element{
             cursor: default;

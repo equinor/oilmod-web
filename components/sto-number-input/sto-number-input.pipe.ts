@@ -12,7 +12,7 @@ export class StoNumberInputPipe implements PipeTransform {
     }
 
     private handleIntegerAndFractions(integer: string, fraction: string, fractionSize: number) {
-
+            console.log(fraction)
         if ((integer === '' && fraction === '') || integer === 'NaN') {
             return {integer : null, fraction : null}
         }
@@ -41,10 +41,11 @@ export class StoNumberInputPipe implements PipeTransform {
                 fraction = '';
             }
             else {
-                fraction = (rounded + '').split('.')[1];
+                fraction = (rounded + '').split('.')[1] || '';
             }
 
         }
+
         return {integer: integer, fraction: fraction};
     }
 

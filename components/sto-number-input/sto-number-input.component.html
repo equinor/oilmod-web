@@ -1,8 +1,9 @@
 <mat-form-field
-        [class]="'sto-form__field ' + formFieldClass"
+        class="sto-form__field"
         [floatPlaceholder]="floatPlaceholder"
         [class.sto-form__field--disabled]="disabled"
         [class.sto-form__field--readonly]="readonly"
+        [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
         [class.mat-form-field-invalid]="control.touched && errors">
 
     <input *ngIf="!(readonly && suffix)"

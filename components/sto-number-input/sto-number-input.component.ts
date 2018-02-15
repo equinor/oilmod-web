@@ -18,7 +18,7 @@ import {StoNumberInputPipe} from './sto-number-input.pipe';
     }
 )
 export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
-    @HostBinding('class.sto-number-input') class: boolean = true;
+
     @Input() formControlName: string;
     @Input() placeholder: string;
     @Input() label: string;
@@ -28,7 +28,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     @Input() readonly: boolean;
     @Input() disabled: boolean;
     @Input() floatPlaceholder = 'always';
-    @Input() formFieldClass: string;
+    @Input() withoutPlaceHolder: boolean;
 
     /**
      * Force value is used to set a value, which shall always be display only.
@@ -50,6 +50,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     public value: any;
 
     public errors: ValidationErrors | null;
+    public touched: any;
     public control = new FormControl();
 
 
@@ -62,6 +63,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     private handleChanges(){
         if(!this.forceValue && this.forceValue !== 0){
             this.control.valueChanges
+              .debounceTime(1) // https://github.com/angular/angular/issues/14057
               .subscribe((value) => {
                   let numberValue =  parseFloat(this.numberFormatterPipe.parse(value, this.fractionSize));
                   numberValue = !isNaN(numberValue) ? numberValue : null;
@@ -96,11 +98,18 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     private handleErrors(control: AbstractControl | null) {
         if(control){
             control.statusChanges.subscribe(() => {
-                this.errors = control.errors;
+                this.markErrors(control);
             });
         }
 
     }
+
+    private markErrors(control){
+        this.touched = control.touched;
+        this.errors = control.errors;
+    }
+
+
 
     propagateChange = (_: any) => {
     }
@@ -111,6 +120,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
 
     writeValue(value: any) {
         if(value || value === 0){
+            console.log(this.numberFormatterPipe.transform(value, this.fractionSize));
             this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize));
         }
 
@@ -137,9 +147,25 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
             });
         }
 
+        this.monkeyPatchMarkAsTouched(control);
+
         this.initForm(control);
         this.handleErrors(control);
         this.handleChanges();
+    }
+
+    /**
+     * To react on the manually mark as touched
+     * https://github.com/angular/angular/issues/17736
+     * @param control
+     */
+    private monkeyPatchMarkAsTouched(control){
+        const self = this;
+        const origFunc = control.markAsTouched;
+        control.markAsTouched = function () {
+            origFunc.apply(this, arguments);
+            self.markErrors(this);
+        }
     }
 
     /**
