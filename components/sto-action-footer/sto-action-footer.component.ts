@@ -14,17 +14,21 @@ import { Renderer2, OnDestroy} from '@angular/core';
 export class StoActionFooterComponent implements OnInit, OnDestroy  {
 
   @Input() isLoading : boolean;
+  @Input() shouldAddClass = true;
 
   ngOnDestroy(): void {
-    this.renderer.removeClass(document.body, 'sto-has-action-footer');
+    if (this.shouldAddClass) {
+      this.renderer.removeClass(document.body, 'sto-has-action-footer');
+    }
   }
 
   ngOnInit(): void {
-
+    if (this.shouldAddClass) {
+      this.renderer.addClass(document.body, 'sto-has-action-footer');
+    }
   }
 
   constructor(private renderer: Renderer2) {
-    this.renderer.addClass(document.body, 'sto-has-action-footer');
   }
 
 }
