@@ -95,6 +95,26 @@ Below styles overrides Angular Material defaults
   color: currentColor;
 }
 
+
+button {
+  &.mat-button, &.mat-raised-button {
+    min-width: 88px;
+  }
+  &.mat-button {
+    margin: 0 spacer(2);
+    padding: 0 spacer(2);
+  }
+  &.dense {
+    min-width: 72px;
+    line-height: 32px;
+    padding: 0 spacer(2);
+    &.breadcrumbs__button {
+      margin-top: spacer(-1);
+      margin-right: spacer(2);
+    }
+  }
+}
+
 .mat-menu-item {
   &.dense {
     height: 36px; // !important;
