@@ -85,7 +85,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
         else{
             value = control.value;
         }
-        this.writeValue(value);
+        this.writeValue(value, false);
         if(this.disabled){
             this.control.disable();
         }
@@ -118,9 +118,9 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
         this.propagateChange = fn;
     }
 
-    writeValue(value: any) {
+    writeValue(value: any, propergateChange : true) {
         if(value || value === 0){
-            this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize));
+            this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize), {emitEvent: propergateChange});
         }
 
     }
