@@ -96,12 +96,22 @@ Below styles overrides Angular Material defaults
 }
 
 
+
+.sto-portal__footer, .sto-drawer__footer {
+  .mat-button:first-of-type {
+    margin-left: 0;
+  }
+  .mat-button:last-of-type {
+    margin-right: 0;
+  }
+}
+
 button {
   &.mat-button, &.mat-raised-button {
     min-width: 88px;
   }
   &.mat-button {
-    margin: 0 spacer(2);
+    margin: 0 spacer(1);
     padding: 0 spacer(2);
   }
   &.dense {
