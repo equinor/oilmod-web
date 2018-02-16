@@ -95,6 +95,33 @@ Below styles overrides Angular Material defaults
   color: currentColor;
 }
 
+
+
+.sto-portal__footer, .sto-drawer__footer {
+  button:first-of-type {
+    margin-left: 0;
+  }
+  button:last-of-type {
+    margin-right: 0;
+  }
+}
+
+button {
+  &.mat-button, &.mat-raised-button {
+    min-width: 88px;
+    margin: 0 spacer(1);
+    padding: 0 spacer(2);
+  }
+  &.dense {
+    min-width: 72px;
+    line-height: 32px;
+    &.breadcrumbs__button {
+      margin-top: spacer(-1);
+      margin-right: spacer(2);
+    }
+  }
+}
+
 .mat-menu-item {
   &.dense {
     height: 36px; // !important;
