@@ -37,7 +37,11 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     private _forceValue: any;
     @Input() set forceValue(forceValue){
         this._forceValue = forceValue;
-        this.writeValue(forceValue);
+        if(forceValue){
+
+            this.writeValue(forceValue);
+        }
+
     }
     get forceValue(): any{
         return this._forceValue;
@@ -85,7 +89,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
         else{
             value = control.value;
         }
-        this.writeValue(value, false);
+        this.writeValue(value);
         if(this.disabled){
             this.control.disable();
         }
@@ -118,12 +122,12 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
         this.propagateChange = fn;
     }
 
-    writeValue(value: any, propergateChange : true) {
-        if(value || value === 0){
-            this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize), {emitEvent: propergateChange});
+    writeValue(value: any) {
+        if(value || value === 0) {
+            this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize), {emitEvent: false})
         }
-
     }
+
 
     registerOnTouched() {
     }
