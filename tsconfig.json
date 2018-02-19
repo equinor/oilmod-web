@@ -13,7 +13,6 @@
     "lib": ["es2017", "dom"]
   },
   "include": [
-    "index.ts",
     "index-esm.ts",
     "build/**/*.ts"
   ],
