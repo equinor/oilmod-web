@@ -122,16 +122,28 @@ button {
   }
 }
 
+.mat-menu-content{
+  .mat-divider{
+    margin-top: 8px;
+    margin-bottom: 7px;
+  }
+}
+
 .mat-menu-item {
   &.dense {
+
     height: 36px; // !important;
     line-height: 36px; // !important;
   }
   .mat-icon {
-    height: 24px; // hack to align svg icons
-    width: 18px;
-    font-size: 18px;
+    height: 24px;
+    width: 24px;
+    font-size: 24px;
   }
+  .mat-icon[svgIcon]{
+    height: 100%;// hack to align svg icons
+  }
+
 }
 // End material menu overrides
 
@@ -194,6 +206,7 @@ button {
 
   &__content {
     width: 100%;
+    padding: spacer(2) 0;
     max-height: spacer(40);
     min-height: 36px;
     overflow-y: auto;
@@ -213,6 +226,17 @@ button {
       min-width: spacer(16);
     }
 
+  }
+}
+//GLI-902 Fixes in selectlist
+.mat-select-panel {
+  border-radius: 4px;
+
+ .mat-select-content{
+   padding: spacer(2) 0;
+ }
+  .mat-option-pseudo-checkbox{
+    margin-right: 16px;
   }
 }
 
