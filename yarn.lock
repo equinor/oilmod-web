@@ -2,25 +2,25 @@
 # yarn lockfile v1
 
 
-"@angular/animations@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fanimations/-/animations-4.4.6.tgz#fa661899a8a4e38cb7c583c7a5c97ce65d592a35"
+"@angular/animations@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fanimations/-/animations-5.2.5.tgz#3e72184321c4979305619c74902b8be92d76db70"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cdk@^2.0.0-beta.12":
-  version "2.0.0-beta.12"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcdk/-/cdk-2.0.0-beta.12.tgz#3a243cb62b93f4e039120ba70f900dc9e235622e"
+"@angular/cdk@^5.0.0":
+  version "5.2.1"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcdk/-/cdk-5.2.1.tgz#11500502deeaf42f88f92ca7d78d9a7642b07761"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/common@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcommon/-/common-4.4.6.tgz#4b81420724e0828a0e839b95a55eb1a7e83918f2"
+"@angular/common@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcommon/-/common-5.2.5.tgz#08dd636fa46077d047066b13a1aae494066f6c55"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@<5.0.0", "@angular/compiler-cli@>=2.4.1", "@angular/compiler-cli@>=4.3.0 <5.0.0":
+"@angular/compiler-cli@<5.0.0", "@angular/compiler-cli@>=2.4.1":
   version "4.4.6"
   resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcompiler-cli/-/compiler-cli-4.4.6.tgz#bafd3d1e260e99087eb9a8cf7532dbd603abb9b1"
   dependencies:
@@ -28,51 +28,68 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^4.3.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcompiler/-/compiler-4.4.6.tgz#2ee1faf25b757e1d128979074be7fae529b3bc20"
+"@angular/compiler-cli@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcompiler-cli/-/compiler-cli-5.2.5.tgz#b1988bb2c0a956e7fc163acf8c7d794a07a88d08"
+  dependencies:
+    chokidar "^1.4.2"
+    minimist "^1.2.0"
+    reflect-metadata "^0.1.2"
+    tsickle "^0.26.0"
+
+"@angular/compiler@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcompiler/-/compiler-5.2.5.tgz#5e3b511906048a579fcd007aba72911472e5aa28"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcore/-/core-4.4.6.tgz#13031fd10dcfe438875419b38f21120958bc2354"
+"@angular/core@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcore/-/core-5.2.5.tgz#24f9cd75c5b2728f2ddd1869777590ea7177bca9"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/flex-layout@2.0.0-beta.9":
-  version "2.0.0-beta.9"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fflex-layout/-/flex-layout-2.0.0-beta.9.tgz#3e54f898e805d0b1426d15e6139db415d04ee75f"
+"@angular/forms@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fforms/-/forms-5.2.5.tgz#2ad7a420c6ef6cd87a34071c5319ec83f7ed56aa"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fforms/-/forms-4.4.6.tgz#fe64ace42435c1b80f49034b7c41ce8caf14a44a"
+"@angular/http@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fhttp/-/http-5.2.5.tgz#1208256e36f0e486d96d10a733fdc8424ffa16bf"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/http@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fhttp/-/http-4.4.6.tgz#0af680c6710bdc026d940e225cfd0f6a5c005d0c"
+"@angular/material@^5.0.0":
+  version "5.2.1"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fmaterial/-/material-5.2.1.tgz#c0433edf98904dc35ae15dfa93ede755418843dd"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@^2.0.0-beta.12":
-  version "2.0.0-beta.12"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fmaterial/-/material-2.0.0-beta.12.tgz#71b6d0b7b021891e5d0e3688c1d4bd78c7457f58"
+"@angular/platform-browser-dynamic@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fplatform-browser-dynamic/-/platform-browser-dynamic-5.2.5.tgz#b89df410bd953e2a6843325f9ac3c09a10eadaf0"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fplatform-browser/-/platform-browser-4.4.6.tgz#a9839c547e1b654fa1d24a89780c8ba6ab8dcce0"
+"@angular/platform-browser@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fplatform-browser/-/platform-browser-5.2.5.tgz#eae4af2b742fb901d84d6367cd99f9e88102151f"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/router@^4.4.0":
-  version "4.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2frouter/-/router-4.4.6.tgz#0f6ad29ae0ff8d2c9ea379bd320447217b7ec866"
+"@angular/platform-server@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fplatform-server/-/platform-server-5.2.5.tgz#2111bfd836a16c787a10f2099a0c26b6a3a02b05"
+  dependencies:
+    domino "^1.0.29"
+    tslib "^1.7.1"
+    xhr2 "^0.1.4"
+
+"@angular/router@^5.0.0":
+  version "5.2.5"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2frouter/-/router-5.2.5.tgz#f8f220d5fb85fc10d60fe606b0f2a64732265142"
   dependencies:
     tslib "^1.7.1"
 
@@ -617,7 +634,7 @@ chalk@^2.3.0:
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
 
-chokidar@^1.7.0:
+chokidar@^1.4.2, chokidar@^1.7.0:
   version "1.7.0"
   resolved "http://ai-linapp1022.statoil.no:4873/chokidar/-/chokidar-1.7.0.tgz#798e689778151c8076b4b360e5edd28cda2bb468"
   dependencies:
@@ -1068,6 +1085,10 @@ diffie-hellman@^5.0.0:
 domain-browser@^1.1.1:
   version "1.1.7"
   resolved "http://ai-linapp1022.statoil.no:4873/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
+
+domino@^1.0.29:
+  version "1.0.30"
+  resolved "http://ai-linapp1022.statoil.no:4873/domino/-/domino-1.0.30.tgz#54a4154ecae968616680f8feba3cedff355c71f4"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -3750,11 +3771,11 @@ run-sequence@^2.1.0:
     chalk "^1.1.3"
     gulp-util "^3.0.8"
 
-rxjs@^5.4.2:
-  version "5.5.2"
-  resolved "http://ai-linapp1022.statoil.no:4873/rxjs/-/rxjs-5.5.2.tgz#28d403f0071121967f18ad665563255d54236ac3"
+rxjs@^5.5.2:
+  version "5.5.6"
+  resolved "http://ai-linapp1022.statoil.no:4873/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
   dependencies:
-    symbol-observable "^1.0.1"
+    symbol-observable "1.0.1"
 
 safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
@@ -4134,9 +4155,9 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-symbol-observable@^1.0.1:
-  version "1.1.0"
-  resolved "http://ai-linapp1022.statoil.no:4873/symbol-observable/-/symbol-observable-1.1.0.tgz#5c68fd8d54115d9dfb72a84720549222e8db9b32"
+symbol-observable@1.0.1:
+  version "1.0.1"
+  resolved "http://ai-linapp1022.statoil.no:4873/symbol-observable/-/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
 
 tapable@^0.2.5, tapable@^0.2.7, tapable@~0.2.5:
   version "0.2.8"
@@ -4286,6 +4307,15 @@ tsickle@^0.21.0:
     source-map "^0.5.6"
     source-map-support "^0.4.2"
 
+tsickle@^0.26.0:
+  version "0.26.0"
+  resolved "http://ai-linapp1022.statoil.no:4873/tsickle/-/tsickle-0.26.0.tgz#40b30a2dd6abcb33b182e37596674bd1cfe4039c"
+  dependencies:
+    minimist "^1.2.0"
+    mkdirp "^0.5.1"
+    source-map "^0.5.6"
+    source-map-support "^0.4.2"
+
 tslib@^1.7.1:
   version "1.8.0"
   resolved "http://ai-linapp1022.statoil.no:4873/tslib/-/tslib-1.8.0.tgz#dc604ebad64bcbf696d613da6c954aa0e7ea1eb6"
@@ -4312,9 +4342,9 @@ typeface-roboto@^0.0.43:
   version "0.0.43"
   resolved "http://ai-linapp1022.statoil.no:4873/typeface-roboto/-/typeface-roboto-0.0.43.tgz#204b8b18f052f14c09862b6f5b7f1fd24d4f1b3a"
 
-typescript@^2.0.0:
-  version "2.6.2"
-  resolved "http://ai-linapp1022.statoil.no:4873/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
+typescript@2.4.2:
+  version "2.4.2"
+  resolved "http://ai-linapp1022.statoil.no:4873/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
 
 uglify-js@^2.8.27:
   version "2.8.29"
@@ -4624,6 +4654,10 @@ wrap-ansi@^2.0.0:
 wrappy@1:
   version "1.0.2"
   resolved "http://ai-linapp1022.statoil.no:4873/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
+
+xhr2@^0.1.4:
+  version "0.1.4"
+  resolved "http://ai-linapp1022.statoil.no:4873/xhr2/-/xhr2-0.1.4.tgz#7f87658847716db5026323812f818cadab387a5f"
 
 "xtend@>=4.0.0 <4.1.0-0", xtend@^4.0.0, xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.1"

@@ -65,7 +65,6 @@ gulp.task('copy', function() {
   return gulp.src(copyFiles)
     .pipe(gulp.dest(function(file) {
       var destination = file.base.replace('ngx-stoui', 'ngx-stoui\\dist');
-      console.log(destination);
       return destination;
     }));
 });
@@ -78,15 +77,40 @@ gulp.task('compile', function() {
   return ngc('tsconfig.json');
 });
 
-gulp.task('default', ['clean'], function(cb) {
+gulp.task('watch:sass', function() {
+  gulp.watch(['./ngx-stoui.scss', './style/**/*.scss', './components/**/*.scss'], ['sass', 'copy'])
+});
+
+gulp.task('watch:ts', function() {
+  gulp.watch(['index.ts', 'components/**/*.ts'], ['build:ts']);
+});
+
+gulp.task('watch', ['watch:ts', 'watch:sass']);
+
+gulp.task('build:ts', function(cb) {
+  runSequence(
+    'inline',
+    'index',
+    'compile',
+    cb
+  );
+});
+
+gulp.task('build', function(cb) {
   runSequence(
     'inline',
     'index',
     'compile',
     'copy',
-//    'bundle', // No need for a bundle atm
     'sass',
     'clean-temp',
+    cb
+  );
+});
+
+gulp.task('default', ['clean'], function(cb) {
+  runSequence(
+    'build',
     cb
   );
 });

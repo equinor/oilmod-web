@@ -32,14 +32,14 @@
    }
 
   &--4 {
-    .sto-grid__spacer, .sto-grid__column {
-      width: calc(25% - 11px);
-      margin-right: 16px;
-      float:left;
-      &:nth-child(4n+0) {
-        margin-right: 0;
+      .sto-grid__spacer, .sto-grid__column {
+        width: calc(25% - 12px);
+        margin-right: 16px;
+        float:left;
+        &:nth-child(4n+0) {
+          margin-right: 0;
+        }
       }
-    }
   }
 
   &--6 {
@@ -58,6 +58,16 @@
       width: 100%;
       .sto-form__field {
         width: 100%;
+      }
+    }
+  }
+  @media only screen  and (max-width : 1224px) {
+    &--4 {
+      .sto-grid__spacer, .sto-grid__column {
+        width: calc(50% - 8px);
+        &:nth-child(2n+0) {
+          margin-right: 0;
+        }
       }
     }
   }

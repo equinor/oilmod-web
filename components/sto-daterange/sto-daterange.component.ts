@@ -10,7 +10,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  Renderer,
+  Renderer2,
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
@@ -19,7 +19,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import { DomHandler } from '../../vendor/primeface/components/dom/domhandler';
 import {
   addMonths,
   addWeeks,
@@ -30,13 +29,14 @@ import {
   startOfWeek,
   subMonths,
   subWeeks,
-  isBefore,
   isAfter,
   isFirstDayOfMonth,
   isLastDayOfMonth,
   isThisMonth,
   isSameDay
 } from 'date-fns';
+
+// TODO: Rewrite hide / Show logic (overlay)
 
 @Component({
   selector: 'sto-daterange',
@@ -47,8 +47,7 @@ import {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => StoDaterangeComponent),
       multi: true
-    },
-    DomHandler
+    }
   ],
   animations: [
     trigger('overlayState', [
@@ -119,7 +118,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public showOverlay(inputfield?) {
     this.overlayVisible = true;
     this.overlayShown = true;
-    this.overlay.style.zIndex = String(++DomHandler.zindex);
+    // this.overlay.style.zIndex = String(++DomHandler.zindex);
 
     this.bindDocumentClickListener();
   }
@@ -190,7 +189,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
    */
   public bindDocumentClickListener() {
     if (!this.documentClickListener) {
-      this.documentClickListener = this.renderer.listenGlobal('document', 'click', (event) => {
+      this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
 
         // Don't close if inside the date range picker
         for (const el of event.path) {
@@ -280,7 +279,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   registerOnTouched(fn: any): void {
   }
 
-  constructor(private fb: FormBuilder, public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public cd: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, public el: ElementRef, public renderer: Renderer2, public cd: ChangeDetectorRef) {
   }
 
   ngOnDestroy() {
@@ -296,7 +295,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
       if (this.appendTo === 'body') {
         document.body.appendChild(this.overlay);
       } else {
-        this.domHandler.appendChild(this.overlay, this.appendTo);
+        // this.domHandler.appendChild(this.overlay, this.appendTo);
       }
     }
 

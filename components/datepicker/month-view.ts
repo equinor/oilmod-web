@@ -32,7 +32,7 @@ const DAYS_PER_WEEK = 7;
  * @docs-private
  */
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'md-month-view',
   templateUrl: 'month-view.html',
   encapsulation: ViewEncapsulation.None,

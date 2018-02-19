@@ -12,9 +12,16 @@
     "outDir": "./dist",
     "lib": ["es2017", "dom"]
   },
-  "files": ["index-esm.ts"],
+  "include": [
+    "index.ts",
+    "index-esm.ts",
+    "build/**/*.ts"
+  ],
   "exclude": [
-    "vendor"
+    "vendor",
+    "node_modules",
+    "dist",
+    "components"
   ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

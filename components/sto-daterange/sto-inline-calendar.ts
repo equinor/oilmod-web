@@ -1,7 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomHandler } from '../sto-shared/sto-api';
 
 @Component({
   selector: 'sto-inline-calendar',
@@ -21,8 +19,7 @@ import { DomHandler } from '../sto-shared/sto-api';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => StoInlineCalendarComponent),
       multi: true
-    },
-    DomHandler
+    }
   ]
 })
 export class StoInlineCalendarComponent implements ControlValueAccessor {

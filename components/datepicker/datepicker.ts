@@ -18,7 +18,6 @@ import {
   ScrollStrategy,
 } from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {first} from '@angular/cdk/rxjs';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -45,6 +44,7 @@ import {MatCalendar} from './calendar';
 import {coerceDateProperty} from './coerce-date-property';
 import {createMissingDateImplError} from './datepicker-errors';
 import {MatMonthpickerInput} from './datepicker-input';
+import { first, take } from 'rxjs/operators';
 
 
 /** Used to generate a unique ID for each datepicker instance. */
@@ -76,7 +76,7 @@ export const MAT_DATEPICKER_SCROLL_STRATEGY_PROVIDER = {
  * @docs-private
  */
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'md-datepicker-content',
   templateUrl: 'datepicker-content.html',
   styleUrls: ['datepicker-content.scss'],
@@ -117,7 +117,7 @@ export class MatDatepickerContent<D> implements AfterContentInit {
 // if angular adds support for `exportAs: '$implicit'` on directives.
 /** Component responsible for managing the datepicker popup/dialog. */
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'md-monthpicker',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -198,7 +198,7 @@ export class MatMonthPicker<D> implements OnDestroy {
   private _dialogRef: MatDialogRef<any> | null;
 
   /** A portal containing the calendar for this datepicker. */
-  private _calendarPortal: ComponentPortal<MatDatepickerContent<D>>;
+  private _calendarPortal: ComponentPortal<MatDatepickerContent<any>>;
 
   /** The element that was focused before the datepicker was opened. */
   private _focusedElementBeforeOpen: HTMLElement | null = null;
@@ -324,7 +324,7 @@ export class MatMonthPicker<D> implements OnDestroy {
       componentRef.instance.datepicker = this;
 
       // Update the position once the calendar has rendered.
-      first.call(this._ngZone.onStable.asObservable()).subscribe(() => {
+      this._ngZone.onStable.asObservable().pipe(take(1)).subscribe(() => {
         this._popupRef.updatePosition();
       });
     }
