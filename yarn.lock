@@ -20,7 +20,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@<5.0.0", "@angular/compiler-cli@>=2.4.1":
+"@angular/compiler-cli@>=2.4.1":
   version "4.4.6"
   resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcompiler-cli/-/compiler-cli-4.4.6.tgz#bafd3d1e260e99087eb9a8cf7532dbd603abb9b1"
   dependencies:
@@ -1704,6 +1704,10 @@ gulp-ngc@^0.3.2:
     gulp ">=3.9.1"
     gulp-util ">=3.0.8"
     through2 ">=2.0.3"
+
+gulp-rename@^1.2.2:
+  version "1.2.2"
+  resolved "http://ai-linapp1022.statoil.no:4873/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
 gulp-sass@^3.1.0:
   version "3.1.0"

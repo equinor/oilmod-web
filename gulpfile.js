@@ -11,7 +11,6 @@ const runSequence = require('run-sequence');
 const del = require('del');
 const rollup = require('rollup-stream');
 const source = require('vinyl-source-stream');
-const gulpCopy = require('gulp-copy');
 
 const globals = {
   'rxjs/Observable': 'Rx',
@@ -68,6 +67,7 @@ gulp.task('copy', function() {
       return destination;
     }));
 });
+
 
 gulp.task('clean-temp', function() {
   return del(['build', 'index-esm.ts']);
