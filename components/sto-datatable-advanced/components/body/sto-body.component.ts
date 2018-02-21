@@ -138,7 +138,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 				scroll = 16;
 			}
 			else{
-      	scroll = 19;
+      	scroll = 21;
 			}
     }
     translateXY(style, 0, height - summaryHeight - scroll);
