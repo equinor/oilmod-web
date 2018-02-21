@@ -233,11 +233,17 @@ button {
   border-radius: 4px;
 
  .mat-select-content{
-   padding: spacer(2) 0;
+   .mat-option-pseudo-checkbox{
+     margin-right: 16px;
+   }
+
+   .mat-option, .mat-optgroup-label{
+     line-height: 36px;
+     height: 36px;
+   }
  }
-  .mat-option-pseudo-checkbox{
-    margin-right: 16px;
-  }
+
+
 }
 
 .mat-button.selected {

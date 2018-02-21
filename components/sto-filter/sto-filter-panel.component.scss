@@ -15,7 +15,7 @@ $sto-filter-header-elevation: 2;
   }
   .mat-expansion-panel-header{
     @include mat-elevation($sto-filter-header-elevation);
-    padding: 0 $space-3x;
+    padding: 0 $space-2x;
     background-color: $sto-filter-header-bg;
     cursor: default;
 
