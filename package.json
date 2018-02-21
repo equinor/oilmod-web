@@ -1,7 +1,7 @@
 {
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "scripts": {
     "postversion": "node postbump.js"
   },
@@ -17,16 +17,15 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/platform-server": "^5.0.0",
     "@angular/router": "^5.0.0",
-    "@material/elevation": "^0.1.12",
     "date-fns": "^1.28.5",
     "rxjs": "^5.5.2",
     "typeface-roboto": "^0.0.43",
-    "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
     "@angular/compiler": "^5.0.0",
     "@angular/compiler-cli": "^5.0.0",
+    "@material/elevation": "^0.1.12",
     "@ngtools/webpack": "^1.5.5",
     "@types/node": "^8.0.17",
     "angular2-template-loader": "^0.6.2",
@@ -53,6 +52,7 @@
     "style-loader": "^0.18.2",
     "typescript": "2.4.2",
     "vinyl-source-stream": "^1.1.0",
+    "web-animations-js": "^2.3.1",
     "webpack": "^2.0.0",
     "webpack-angular-externals": "^1.0.2",
     "webpack-rxjs-externals": "^1.0.0"
