@@ -96,7 +96,7 @@ Below styles overrides Angular Material defaults
 
 
 
-.sto-portal__footer, .sto-drawer__footer {
+.sto-portal__footer, .sto-drawer__footer, .sto-toolbar-panel__actions, .sto-card__button-row {
   button:first-of-type {
     margin-left: 0;
   }
@@ -105,8 +105,9 @@ Below styles overrides Angular Material defaults
   }
 }
 
-button {
+button, a {
   &.mat-button, &.mat-raised-button {
+    font-weight: 500;
     min-width: 88px;
     margin: 0 spacer(1);
     padding: 0 spacer(2);
@@ -219,24 +220,27 @@ button {
   &__actions {
     border-top: solid 1px $gray-medium;
     padding: spacer(2);
-
-    .mat-button, .mat-raised-button {
-      padding: 0 spacer(2);
-      min-width: spacer(16);
-    }
-
   }
 }
 //GLI-902 Fixes in selectlist
-.mat-select-panel {
+$selectPanelHeight : 36px;
+.mat-select-panel, .mat-autocomplete-panel {
   border-radius: 4px;
-
- .mat-select-content{
-   padding: spacer(2) 0;
- }
-  .mat-option-pseudo-checkbox{
-    margin-right: 16px;
+  .mat-option, .mat-optgroup-label{
+    line-height: $selectPanelHeight;
+    height: $selectPanelHeight;
   }
+  .mat-select-content{
+    .mat-option-pseudo-checkbox{
+      margin-right: 16px;
+    }
+
+    .mat-option, .mat-optgroup-label{
+      line-height: $selectPanelHeight;
+      height: $selectPanelHeight;
+    }
+  }
+
 }
 
 .mat-button.selected {
