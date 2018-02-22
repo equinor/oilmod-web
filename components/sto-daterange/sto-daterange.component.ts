@@ -11,9 +11,12 @@ import {
   OnInit,
   Output,
   Renderer2,
-  ViewChild
+  ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import {
+  ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR,
+  Validators
+} from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
@@ -33,15 +36,14 @@ import {
   isFirstDayOfMonth,
   isLastDayOfMonth,
   isThisMonth,
-  isSameDay
+  isSameDay, isValid, parse
 } from 'date-fns';
-
-// TODO: Rewrite hide / Show logic (overlay)
 
 @Component({
   selector: 'sto-daterange',
   templateUrl: './sto-daterange.component.html',
   styleUrls: ['./sto-daterange.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -89,6 +91,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   private initValues;
 
   public form: FormGroup;
+  public fromControl = new FormControl();
+  public toControl = new FormControl();
 
   public dateClick: boolean;
   public overlay: HTMLDivElement;
@@ -98,17 +102,9 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public overlayShown: boolean;
   public value: any;
   public inputFieldValue: string = '';
-  public hasError: string;
   public error: Observable<string>;
   public selectValue = 'Custom';
   public selected: number = 4;
-  /*<mat-option [ngValue]="{ type: 'tenweeks', }">-2 weeks – +8 weeks</mat-option>
-<mat-option>Previous month</mat-option>
-<mat-option>This month</mat-option>
-<mat-option>Next month</mat-option>
-<mat-option [value]="null">Custom</mat-option>
-  public periodPicker(unit: 'week' | 'month', when: string): void {
-*/
 
   private documentClickListener: any;
   @HostListener('document:keydown.escape ', ['$event']) onEscape(event) {
@@ -240,8 +236,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   private updateInputfield(values) {
     if (values) {
-      const start = format(values.start, 'MMM DD, YYYY');
-      const end = format(values.end, 'MMM DD, YYYY');
+      const start = format(values.start, 'MMM D, YYYY');
+      const end = format(values.end, 'MMM D, YYYY');
       this.inputFieldValue = `${start} — ${end}`;
     }
     else {
@@ -352,6 +348,35 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
+  public inputChanged(control: FormControl, controlName: 'start'|'end') {
+    const parsed = parse(control.value);
+    const formControl = this.form.controls[controlName];
+    const isValidDate = isValid(parsed);
+    if (!isValidDate) {
+      control.setErrors({ invalidDate: true });
+      return;
+    }
+    control.setErrors(null);
+    if (isValidDate && !isSameDay(parsed, formControl.value)) {
+      formControl.setValue(parsed);
+    }
+  }
+
+  private syncSelectionsToInput() {
+    this.form.valueChanges
+      .debounceTime(50)
+      .subscribe(value => {
+        const {start, end} = value;
+        if (!isSameDay(start, this.fromControl.value)) {
+          const startValue = format(start, 'MMM D, YYYY')
+          this.fromControl.setValue(startValue);
+        }
+        if (!isSameDay(end, this.toControl.value)) {
+          const endValue = format(end, 'MMM D, YYYY')
+          this.toControl.setValue(endValue);
+        }
+      });
+  }
   ngOnInit() {
     this.form = this.fb.group({
       start: [null, Validators.required],
@@ -362,7 +387,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
       .do(v => this.checkForKnownRange(v))
       .map((value: {start: Date, end: Date}) => {
         const {start, end} = value;
-        return isAfter(start, end) ? 'Start date is after end date' : null;
+        return isAfter(start, end) && !isSameDay(start, end) ? 'Start date is after end date' : null;
       });
+    this.syncSelectionsToInput();
   }
 }

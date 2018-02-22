@@ -82,7 +82,7 @@ gulp.task('watch:sass', function() {
 });
 
 gulp.task('watch:ts', function() {
-  gulp.watch(['index.ts', 'components/**/*.ts', 'vendor/**/*.ts'], ['build:ts']);
+  gulp.watch(['index.ts', 'components/**/*', 'vendor/**/*.ts'], ['build:ts']);
 });
 
 gulp.task('watch', ['watch:ts', 'watch:sass']);
