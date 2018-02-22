@@ -106,8 +106,9 @@ Below styles overrides Angular Material defaults
   }
 }
 
-button {
+button, a {
   &.mat-button, &.mat-raised-button {
+    font-weight: 500;
     min-width: 88px;
     margin: 0 spacer(1);
     padding: 0 spacer(2);
@@ -220,12 +221,6 @@ button {
   &__actions {
     border-top: solid 1px $gray-medium;
     padding: spacer(2);
-
-    .mat-button, .mat-raised-button {
-      padding: 0 spacer(2);
-      min-width: spacer(16);
-    }
-
   }
 }
 //GLI-902 Fixes in selectlist
