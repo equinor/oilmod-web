@@ -20,6 +20,8 @@ import { ScrollbarHelper } from '../../../vendor/ngx-datatable/services/scrollba
 import { columnTotalWidth } from '../../../vendor/ngx-datatable/utils/column';
 import { StoDataTableBodyComponent } from './body/sto-body.component'
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.type';
+import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
 
 @Component({
   selector: 'sto-complex-datatable',
@@ -141,7 +143,30 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   };
 
 
+  /**
+   * Columns to be displayed.
+   */
+  @Input() set columns(val: TableColumn[]) {
 
+    if (val) {
+      this._internalColumns = [...val];
+      setColumnDefaults(this._internalColumns);
+      this.recalculateColumns();
+      this.resizeColumnGroups();
+      if (this._internalSummaryColumns) {
+        this.linkColumns(this._internalSummaryColumns, this._internalColumns);
+      }
+    }
+
+    this._columns = val;
+  }
+
+  /**
+   * Get the columns.
+   */
+  get columns(): TableColumn[] {
+    return this._columns;
+  }
 
 
 

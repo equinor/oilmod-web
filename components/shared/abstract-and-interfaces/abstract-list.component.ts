@@ -38,7 +38,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
 
   @HostListener('window:resize', ['$event'])
   @throttleable(100)
-  onResize(event) {
+  onWindowResize(event) {
     this.calculateAndSetElementHeight()
     // The datatable also does listens to this so we have to wait for this to finish.
 
