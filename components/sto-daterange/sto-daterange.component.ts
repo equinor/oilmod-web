@@ -107,15 +107,15 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public selected: number = 4;
 
   private documentClickListener: any;
-  @HostListener('document:keydown.escape ', ['$event']) onEscape(event) {
-    this.onCancel();
+  @HostListener('document:keydown.escape ') onEscape() {
+    if (this.overlayVisible) {
+      this.onCancel();
+    }
   }
 
   public showOverlay(inputfield?) {
     this.overlayVisible = true;
     this.overlayShown = true;
-    // this.overlay.style.zIndex = String(++DomHandler.zindex);
-
     this.bindDocumentClickListener();
   }
 

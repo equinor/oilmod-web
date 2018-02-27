@@ -5,13 +5,6 @@ import { isAfter, isSameDay, isBefore, parse } from 'date-fns';
 @Component({
   selector: '[sto-calendar-body]',
   template: `
-	  <tr *ngIf="_firstRowOffset < labelMinRequiredCells" aria-hidden="true">
-		  <td class="mat-calendar-body-label" [attr.colspan]="numCols"
-			  [style.paddingTop.%]="50 * cellAspectRatio / numCols"
-			  [style.paddingBottom.%]="50 * cellAspectRatio / numCols">
-			  {{label}}
-		  </td>
-	  </tr>
 	  <tr *ngFor="let row of rows; let rowIndex = index" #rowElement role="row">
 		  <td *ngIf="rowIndex === 0 && _firstRowOffset"
 			  aria-hidden="true" class="mat-calendar-body-label"

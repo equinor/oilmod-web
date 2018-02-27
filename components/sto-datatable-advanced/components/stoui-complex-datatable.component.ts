@@ -22,7 +22,6 @@ import { StoDataTableBodyComponent } from './body/sto-body.component'
 import { DataTableColumnDirective } from '../../../vendor/ngx-datatable/components/columns/column.directive';
 import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
 import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.type';
-import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
 
 @Component({
   selector: 'sto-complex-datatable',

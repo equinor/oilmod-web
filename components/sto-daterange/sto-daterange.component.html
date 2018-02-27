@@ -50,7 +50,6 @@
 									Invalid Date
 								</mat-error>
 							</mat-form-field>
-							<span class="spacer" style="text-align: center; line-height: 43px;">—</span>
 							<mat-form-field class="sto-daterange__form-field--small right">
 								<input [formControl]="toControl"
 									   (blur)="inputChanged(toControl, 'end')"
@@ -65,6 +64,7 @@
 
 					<div class="spacer"></div>
 					<div class="sto-daterange__error--container" *ngIf="error | async as message">
+						<mat-icon>error</mat-icon>
 						<span>{{ message }}</span>
 					</div>
 					<div class="sto-daterange__button--container sto-daterange__button--container--actions">

@@ -64,7 +64,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     return this._open;
   }
 
-  @HostListener('document:keydown ', ['$event'])
+  @HostListener('keydown ', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.keyCode === 27) {
       // this.closeDrawer(true);
