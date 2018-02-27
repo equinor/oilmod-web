@@ -25,19 +25,22 @@ const defaultActions: ErrorAction[] = [
   }
 ]
 
-const convertMessageStringToJson = (serverError: string): ServerError => {
-  let parsed;
-  try {
-    parsed = JSON.parse(serverError);
-  } catch (e) {
-    console.log('Failed to parse', serverError);
+const convertMessageStringToJson = (serverError: string|ServerError): ServerError => {
+  if (typeof serverError === 'string') {
+    let parsed;
+    try {
+      parsed = JSON.parse(serverError);
+    } catch (e) {
+      console.log('Failed to parse', serverError);
+    }
+    if (!parsed) {
+      parsed = {
+        message: 'No error message returned from server!'
+      };
+    }
+    return parsed;
   }
-  if (!parsed) {
-    parsed = {
-      message: 'No error message returned from server!'
-    };
-  }
-  return parsed;
+  return serverError;
 };
 
 const offlineError = (): FormattedError => {

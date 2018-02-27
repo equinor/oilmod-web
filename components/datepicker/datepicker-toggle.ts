@@ -25,7 +25,7 @@ import {of as observableOf} from 'rxjs/observable/of';
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'md-monthpicker-toggle',
   templateUrl: 'datepicker-toggle.html',
   host: {

@@ -19,7 +19,8 @@ import { DatatableComponent } from '../../../vendor/ngx-datatable/components/dat
 import { ScrollbarHelper } from '../../../vendor/ngx-datatable/services/scrollbar-helper.service';
 import { columnTotalWidth } from '../../../vendor/ngx-datatable/utils/column';
 import { StoDataTableBodyComponent } from './body/sto-body.component'
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DataTableColumnDirective } from '../../../vendor/ngx-datatable/components/columns/column.directive';
+import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
 import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.type';
 import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
 
@@ -141,8 +142,24 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.recalculatePages();
 
   };
+  private previousLength: number;
 
 
+  @ContentChildren(DataTableColumnDirective)
+  set columnTemplates(val: QueryList<DataTableColumnDirective>) {
+    if (val) {
+      // only set this if results were brought back
+      const arr = val.toArray();
+      if (arr.length && arr.length !== this.previousLength) {
+        // translate them to normal objects
+        this._internalColumns = translateTemplates(arr);
+        setColumnDefaults(this._internalColumns);
+        this.recalculateColumns();
+      }
+      this._columnTemplates = val;
+      this.previousLength = arr.length;
+    }
+  }
   /**
    * Columns to be displayed.
    */

@@ -24,7 +24,7 @@ export function coerceDateProperty<D>(adapter: DateAdapter<D>, value: any): D | 
     if (value == '') {
       value = null;
     } else {
-      value = adapter.fromIso8601(value) || value;
+      value = adapter.parse(value, 'YYYY-MM') || value;
     }
   }
   if (value == null || adapter.isDateInstance(value)) {

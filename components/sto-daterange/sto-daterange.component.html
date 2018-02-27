@@ -18,10 +18,10 @@
 		 [formGroup]="form"
 		 [@overlayState]="overlayVisible ? 'visible' : 'hidden'">
 					<div class="calendar-box">
-							<sto-inline-calendar formControlName="start"></sto-inline-calendar>
+							<sto-inline-calendar [endDate]="form.value.end" formControlName="start"></sto-inline-calendar>
 					</div>
 					<div class="calendar-box">
-							<sto-inline-calendar formControlName="end"></sto-inline-calendar>
+							<sto-inline-calendar [startDate]="form.value.start" formControlName="end"></sto-inline-calendar>
 					</div>
 			<div class="actions sto-form">
 				<div class="action-container">
@@ -39,18 +39,29 @@
 							</mat-select>
 						</mat-form-field>
 					</div>
-					<!-- Removed until the DateRange can update the input fields
 					<div class="sto-daterange__button--container">
 						<div style="display: flex; flex-direction: row">
-							<mat-form-field readonly class="sto-form-field--readonly left">
-								<input readonly matInput [value]="form.value.start | formatDate">
+							<mat-form-field class="sto-daterange__form-field--small left">
+								<input [formControl]="fromControl"
+									   (blur)="inputChanged(fromControl, 'start')"
+									   (keydown.enter)="$event.preventDefault(); inputChanged(fromControl, 'start')"
+									   placeholder="From" matInput>
+								<mat-error *ngIf="fromControl.hasError('invalidDate')">
+									Invalid Date
+								</mat-error>
 							</mat-form-field>
 							<span class="spacer" style="text-align: center; line-height: 43px;">—</span>
-							<mat-form-field readonly class="sto-form-field--readonly right">
-								<input readonly matInput [value]="form.value.end | formatDate">
+							<mat-form-field class="sto-daterange__form-field--small right">
+								<input [formControl]="toControl"
+									   (blur)="inputChanged(toControl, 'end')"
+									   (keydown.enter)="$event.preventDefault(); inputChanged(toControl, 'end')"
+									   placeholder="To" matInput>
+								<mat-error *ngIf="toControl.hasError('invalidDate')">
+									Invalid Date
+								</mat-error>
 							</mat-form-field>
 						</div>
-					</div>-->
+					</div>
 
 					<div class="spacer"></div>
 					<div class="sto-daterange__error--container" *ngIf="error | async as message">

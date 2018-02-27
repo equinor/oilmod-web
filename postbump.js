@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile('./package.json', (err, data) => {
+fs.readFile('./package.json', 'utf8', (err, data) => {
   if (err) {
     throw err;
   }
@@ -10,9 +10,12 @@ fs.readFile('./package.json', (err, data) => {
     "module": "./index-esm.js",
     "main": "./index-esm.js",
     "typings": "./index-esm.d.ts",
-    "devDependencies": {}
+    "devDependencies": {},
+    "peerDependencies": package.dependencies,
+    "dependencies": {}
   };
   newPackage = Object.assign({}, package, newPackage);
+  delete newPackage.dependencies;
   fs.writeFile('./dist/package.json', JSON.stringify(newPackage), 'utf8', err => {
     if (err) {
       throw err;

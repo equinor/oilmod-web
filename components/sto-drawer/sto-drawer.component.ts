@@ -1,11 +1,20 @@
 import {
-  Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2,
-  ViewEncapsulation, HostListener, HostBinding
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  NgModule,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { animate, AnimationMetadata, state, style, transition, trigger } from '@angular/animations';
-import { StoButtonModule } from '../sto-button/sto-button.directive';
-import { Observable } from 'rxjs/Observable';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/observable/fromEvent';
 
 @Component({
@@ -29,7 +38,7 @@ import 'rxjs/add/observable/fromEvent';
         })),
         transition('in <=> *', animate('400ms ease'))
       ]
-)
+    )
   ]
 })
 export class StoDrawerComponent implements OnInit, AfterViewInit {
@@ -58,9 +67,10 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @HostListener('document:keydown ', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.keyCode === 27) {
-     // this.closeDrawer(true);
+      // this.closeDrawer(true);
     }
   }
+
   @HostListener('window:resize', ['$event'])
   onWindowResize(e) {
     this.resizeContent();
@@ -116,19 +126,19 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   //Move to polyfill?
   private eventPathPolyfill = function (element) {
 
-      var pathArr = [element];
+    var pathArr = [element];
 
-      if (element === null || element.parentElement === null) {
-        return [];
-      }
+    if (element === null || element.parentElement === null) {
+      return [];
+    }
 
-      while (element.parentElement !== null) {
-        element = element.parentElement;
-        pathArr.unshift(element);
-      }
+    while (element.parentElement !== null) {
+      element = element.parentElement;
+      pathArr.unshift(element);
+    }
 
-      return pathArr;
-    };
+    return pathArr;
+  };
 
   private bindDocumentClickListener() {
     if (!this.documentClickListener) {
@@ -148,20 +158,21 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  private resizeContent() {
-    
-      const hasFooter = this.footerRef.nativeElement.children.length > 0;
-      const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
-      let footerHeight = 0;
 
-      const headerHeight = this.headerRef.nativeElement.offsetHeight;
-      if (hasFooter) {
-        footerHeight = this.footerRef.nativeElement.offsetHeight;
-      } else {
-        this.footerRef.nativeElement.style = 'display: none';
-      }
-      this.height = `${totalHeight - footerHeight - headerHeight}px`;
+  private resizeContent() {
+
+    const hasFooter = this.footerRef.nativeElement.children.length > 0;
+    const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
+    let footerHeight = 0;
+
+    const headerHeight = this.headerRef.nativeElement.offsetHeight;
+    if (hasFooter) {
+      footerHeight = this.footerRef.nativeElement.offsetHeight;
+    } else {
+      this.footerRef.nativeElement.style = 'display: none';
     }
+    this.height = `${totalHeight - footerHeight - headerHeight}px`;
+  }
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
@@ -171,6 +182,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       this.position = 'left';
     }
   }
+
   ngAfterViewInit() {
     setTimeout(() => this.resizeContent());
   }
@@ -178,7 +190,8 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
 @Component({
   selector: 'sto-drawer-header',
-  template: `<ng-content></ng-content>`,
+  template: `
+	  <ng-content></ng-content>`,
   styleUrls: ['./sto-drawer.component.scss']
 })
 export class StoDrawerHeaderComponent {
@@ -187,7 +200,8 @@ export class StoDrawerHeaderComponent {
 
 @Component({
   selector: 'sto-drawer-footer',
-  template: `<ng-content></ng-content>`
+  template: `
+	  <ng-content></ng-content>`
 })
 export class StoDrawerFooterComponent {
 }
@@ -201,7 +215,7 @@ export class StoDrawerWrapperComponent {
 }
 
 @NgModule({
-  imports: [CommonModule, StoButtonModule],
+  imports: [CommonModule],
   exports: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent],
   declarations: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent]
 })
