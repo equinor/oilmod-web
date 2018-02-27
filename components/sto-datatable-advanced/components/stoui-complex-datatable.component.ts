@@ -21,6 +21,8 @@ import { columnTotalWidth } from '../../../vendor/ngx-datatable/utils/column';
 import { StoDataTableBodyComponent } from './body/sto-body.component'
 import { DataTableColumnDirective } from '../../../vendor/ngx-datatable/components/columns/column.directive';
 import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
+import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.type';
+import { setColumnDefaults } from '../../../vendor/ngx-datatable/utils/column-helper';
 
 @Component({
   selector: 'sto-complex-datatable',
@@ -158,7 +160,30 @@ export class StoComplexDatatableComponent extends DatatableComponent {
       this.previousLength = arr.length;
     }
   }
+  /**
+   * Columns to be displayed.
+   */
+  @Input() set columns(val: TableColumn[]) {
 
+    if (val) {
+      this._internalColumns = [...val];
+      setColumnDefaults(this._internalColumns);
+      this.recalculateColumns();
+      this.resizeColumnGroups();
+      if (this._internalSummaryColumns) {
+        this.linkColumns(this._internalSummaryColumns, this._internalColumns);
+      }
+    }
+
+    this._columns = val;
+  }
+
+  /**
+   * Get the columns.
+   */
+  get columns(): TableColumn[] {
+    return this._columns;
+  }
 
 
 

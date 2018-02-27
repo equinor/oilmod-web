@@ -106,7 +106,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
     const isInvalid = typeof value === 'string';
     const error = isInvalid && value ? {optionSelected: this.validationMessage} : null;
     this.errors = (c.errors || error) ? Object.assign({}, c.errors, error) : null;
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
     return !isInvalid ? null : error;
   }
 
