@@ -5,6 +5,7 @@ import {
 
 import { DataTableBodyRowComponent } from '../../../../vendor/ngx-datatable/components/body/body-row.component';
 import { ScrollbarHelper } from '../../../../vendor/ngx-datatable/services/scrollbar-helper.service';
+import { Keys } from '../../../../vendor/ngx-datatable/utils/keys';
 
 @Component({
   selector: 'sto-datatable-body-row',
@@ -31,6 +32,33 @@ import { ScrollbarHelper } from '../../../../vendor/ngx-datatable/services/scrol
   `
 })
 export class StoDataTableBodyRowComponent extends DataTableBodyRowComponent implements DoCheck {
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    const keyCode = event.keyCode;
+    const isTargetRow = event.target === this.element;
+
+    const isAction =
+      keyCode === Keys.return ||
+      keyCode === Keys.down ||
+      keyCode === Keys.up ||
+      keyCode === Keys.k ||
+      keyCode === Keys.j ||
+      keyCode === Keys.left ||
+      keyCode === Keys.right;
+
+    if (isAction && isTargetRow) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      this.activate.emit({
+        type: 'keydown',
+        event,
+        row: this.row,
+        rowElement: this.element
+      });
+    }
+  }
+
   constructor(
     protected differs: KeyValueDiffers,
     protected scrollbarHelper: ScrollbarHelper,
