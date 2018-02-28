@@ -197,7 +197,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _rowHeight: number;
   private _rowIndex: number;
   private _expanded: boolean;
-  private _element: any;
+  protected _element: any;
 
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;

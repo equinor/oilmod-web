@@ -1,11 +1,11 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
+  Component, ElementRef, KeyValueDiffers,
+  HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, Input
 } from '@angular/core';
 
 import { DataTableBodyRowComponent } from '../../../../vendor/ngx-datatable/components/body/body-row.component';
 import { ScrollbarHelper } from '../../../../vendor/ngx-datatable/services/scrollbar-helper.service';
-import { Keys } from '../../../../vendor/ngx-datatable/utils/keys';
+import { Key } from '../../../shared/abstract-and-interfaces/keyPress.enum';
 
 @Component({
   selector: 'sto-datatable-body-row',
@@ -15,7 +15,7 @@ import { Keys } from '../../../../vendor/ngx-datatable/utils/keys';
       *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
       class="datatable-row-{{colGroup.type}} datatable-row-group"
       [ngStyle]="stylesByGroup(colGroup.type)">
-      <datatable-body-cell
+      <sto-datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
         [attr.prop]="column.prop"
@@ -27,7 +27,7 @@ import { Keys } from '../../../../vendor/ngx-datatable/utils/keys';
         [column]="column"
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">
-      </datatable-body-cell>
+      </sto-datatable-body-cell>
     </div>      
   `
 })
@@ -38,13 +38,13 @@ export class StoDataTableBodyRowComponent extends DataTableBodyRowComponent impl
     const isTargetRow = event.target === this.element;
 
     const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.k ||
-      keyCode === Keys.j ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
+      keyCode === Key.Enter ||
+      keyCode === Key.DownArrow ||
+      keyCode === Key.UpArrow ||
+      keyCode === Key.K ||
+      keyCode === Key.J ||
+      keyCode === Key.LeftArrow ||
+      keyCode === Key.RightArrow;
 
     if (isAction && isTargetRow) {
       event.preventDefault();
