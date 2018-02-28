@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import 'rxjs/add/observable/fromEvent';
 
 import {
+  DataTableBodyCellComponent,
+  DataTableSelectionComponent,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
@@ -58,6 +60,8 @@ import { StoDataTableBodyCellComponent } from './components/body/sto-body-cell.c
     OrderableDirective,
     LongPressDirective,
     StoScrollerComponent,
+    DataTableBodyCellComponent,
+    DataTableSelectionComponent,
     StoComplexDatatableComponent,
     DataTableColumnDirective,
     StoDataTableColumnGroupDirective,
