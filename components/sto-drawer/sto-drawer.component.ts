@@ -16,6 +16,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/observable/fromEvent';
+import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
 
 @Component({
   selector: 'sto-drawer',
@@ -58,16 +59,56 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Output() onClose = new EventEmitter();
   @Output() onOpen = new EventEmitter();
   @Output() onOpened = new EventEmitter();
+  @Output() afterClosed = new EventEmitter();
+  @Output() afterOpened = new EventEmitter();
+
+  @Output() cancel = new EventEmitter();
+  @Output() submit = new EventEmitter();
 
   @Input()
   get open() {
     return this._open;
   }
 
-  @HostListener('keydown ', ['$event'])
+  @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.keyCode === 27) {
-      // this.closeDrawer(true);
+    if (event.ctrlKey || event.altKey || event.shiftKey) {
+      this.testKeyCombos(event);
+    } else {
+      this.testSingleKeys(event);
+    }
+  }
+
+  private testKeyCombos(ev: KeyboardEvent) {
+    const path: HTMLElement[] = event['path'];
+    // Test to ensure we have focus inside the drawer
+    if (!(path && path.includes(this.el.nativeElement))) {
+      return;
+    }
+    if (ev.ctrlKey && ev.keyCode === Key.Enter) {
+      this.submit.emit();
+    }
+  }
+
+  private testSingleKeys(ev: KeyboardEvent) {
+    const path: Array<HTMLElement> = ev['path'];
+    const daterangeInPath = path
+      .filter(el => !!el.tagName)
+      .map(el => el.tagName.toLowerCase())
+      .find(tagname => tagname === 'sto-daterange');
+    if (ev.keyCode === Key.Escape && !daterangeInPath) {
+      const overlays = Array.from(document.getElementsByClassName('cdk-overlay-container'))
+        .filter(overlay => !!overlay)
+        .filter(overlay => overlay.children.length > 0)
+        .map(overlay => overlay.children)
+        .reduce((a, b) => [...a, ...Array.from(b)], []);
+      const overlaysActive = overlays
+        .map(el => el.innerHTML)
+        .filter(content => !!content || content !== '');
+      if (overlaysActive.length === 0) {
+        this.closeDrawer();
+        this.cancel.emit();
+      }
     }
   }
 
