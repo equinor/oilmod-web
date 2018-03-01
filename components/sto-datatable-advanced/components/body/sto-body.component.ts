@@ -8,7 +8,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 @Component({
   selector: 'sto-complex-body',
   template: `
-	  <datatable-selection
+	  <sto-datatable-selection
 			  #selector
 			  [selected]="selected"
 			  [rows]="temp"
@@ -96,7 +96,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 				  *ngIf="!rows?.length"
 				  [innerHTML]="emptyMessage">
 		  </div>
-	  </datatable-selection>
+	  </sto-datatable-selection>
 
 
   `,

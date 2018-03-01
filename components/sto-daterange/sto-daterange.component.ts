@@ -231,7 +231,6 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   onInputBlur(event) {
     this.focus = false;
     this.onBlur.emit(event);
-    // this.onModelTouched();
   }
 
   private updateInputfield(values) {

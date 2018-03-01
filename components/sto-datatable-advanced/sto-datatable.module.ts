@@ -4,6 +4,7 @@ import 'rxjs/add/observable/fromEvent';
 
 import {
   DataTableBodyCellComponent,
+  DataTableSelectionComponent,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
@@ -18,7 +19,6 @@ import {
   DatatableRowDetailDirective,
   DatatableRowDetailTemplateDirective,
   DataTableRowWrapperComponent,
-  DataTableSelectionComponent,
   ProgressBarComponent
 } from '../../vendor/ngx-datatable/components';
 
@@ -41,6 +41,8 @@ import { StoDataTableBodyRowComponent } from './components/body/sto-body-row.com
 import { StoDataTableDateColumnComponent } from './components/columns/sto-date-column.component';
 import { StoDataTableNumberColumnComponent } from './components/columns/sto-number-column.component';
 import { StoPipesModule } from '../../components/sto-pipes/sto-pipes.module';
+import { StoDataTableSelectionComponent } from './components/body/sto-selection.component';
+import { StoDataTableBodyCellComponent } from './components/body/sto-body-cell.component';
 
 @NgModule({
   imports: [
@@ -58,6 +60,8 @@ import { StoPipesModule } from '../../components/sto-pipes/sto-pipes.module';
     OrderableDirective,
     LongPressDirective,
     StoScrollerComponent,
+    DataTableBodyCellComponent,
+    DataTableSelectionComponent,
     StoComplexDatatableComponent,
     DataTableColumnDirective,
     StoDataTableColumnGroupDirective,
@@ -74,8 +78,8 @@ import { StoPipesModule } from '../../components/sto-pipes/sto-pipes.module';
     DatatableRowDetailDirective,
     DatatableGroupHeaderDirective,
     DatatableRowDetailTemplateDirective,
-    DataTableBodyCellComponent,
-    DataTableSelectionComponent,
+    StoDataTableBodyCellComponent,
+    StoDataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DatatableFooterDirective,
