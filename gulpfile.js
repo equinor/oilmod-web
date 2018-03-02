@@ -12,9 +12,6 @@ const del = require('del');
 const rollup = require('rollup-stream');
 const source = require('vinyl-source-stream');
 
-var exec = require('child_process').exec;
-const cp = require('child_process');
-
 const globals = {
   'rxjs/Observable': 'Rx',
   'rxjs/Subject': 'Rx',
@@ -76,13 +73,7 @@ gulp.task('clean-temp', function() {
   return del(['build', 'index-esm.ts']);
 });
 
-gulp.task('compile', function(cb) {
-/*  const { spawn } = cp;
-  spawn('"./node_modules/.bin/ngc" -p tsconfig.json', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });*/
+gulp.task('compile', function() {
   return ngc(['-p', 'tsconfig.json']);
 });
 
