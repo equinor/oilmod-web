@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const ngc = require('gulp-ngc');
+const ngc = require('./gulp-ngc');
 const inlineNg2Template = require('gulp-inline-ng2-template');
 const sass = require('node-sass');
 const tildeImporter = require('node-sass-tilde-importer');
@@ -11,6 +11,9 @@ const runSequence = require('run-sequence');
 const del = require('del');
 const rollup = require('rollup-stream');
 const source = require('vinyl-source-stream');
+
+var exec = require('child_process').exec;
+const cp = require('child_process');
 
 const globals = {
   'rxjs/Observable': 'Rx',
@@ -73,7 +76,13 @@ gulp.task('clean-temp', function() {
   return del(['build', 'index-esm.ts']);
 });
 
-gulp.task('compile', function() {
+gulp.task('compile', function(cb) {
+/*  const { spawn } = cp;
+  spawn('"./node_modules/.bin/ngc" -p tsconfig.json', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });*/
   return ngc(['-p', 'tsconfig.json']);
 });
 
