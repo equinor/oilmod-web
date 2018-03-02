@@ -329,10 +329,10 @@ export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
         this._activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, 1);
         break;
       case UP_ARROW:
-        this._activeDate = this._prevMonthInSameCol(this._activeDate);
+        this._activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, -4);
         break;
       case DOWN_ARROW:
-        this._activeDate = this._nextMonthInSameCol(this._activeDate);
+        this._activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, 4);
         break;
       case HOME:
         this._activeDate = this._dateAdapter.addCalendarMonths(this._activeDate,
