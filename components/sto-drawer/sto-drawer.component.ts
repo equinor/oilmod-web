@@ -49,6 +49,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Input() offset: string = '0';
   @Input() padding = '0px';
   @Input() position: 'left' | 'right';
+  @Input() cssClass: string;
   @Input() closeOnClick: boolean;
   @ViewChild('footer') footerRef: ElementRef;
   @ViewChild('header') headerRef: ElementRef;

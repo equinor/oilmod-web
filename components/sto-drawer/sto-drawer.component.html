@@ -1,6 +1,6 @@
 <div [@slideInOut]="open ? 'in': 'out' + position"
 	 (@slideInOut.done)="onOpened.emit()"
-	 [ngClass]="position"
+	 [ngClass]="position + ' ' + cssClass"
 	 [style.width]="width"
 	 [style.top]="padding"
 	 [style.zIndex]="60"
