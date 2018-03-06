@@ -5,10 +5,11 @@ $height: 72px;
 
 %sto-form__field {
   width: 100%;
-  height: $height;
+  min-height: $height;
 
   .mat-input-element {
     cursor: pointer;
+    overflow: hidden;
   }
 }
 

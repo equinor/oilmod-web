@@ -1,0 +1,23 @@
+@import "../../variables";
+@import "../../style/functions";
+
+.sto-dialog{
+  &__content.mat-dialog-content {
+
+    border-top: solid 1px $gray-light;
+    border-bottom: solid 1px $gray-light;
+    padding: 0;
+
+    .sto-selection-list{
+      .sto-selection-list__item{
+        .mat-list-item-content.mat-list-item-content-reverse{
+          padding: 0 24px;
+        }
+      }
+    }
+
+  }
+  &__actions.mat-dialog-actions{
+    margin: 0 -20px;
+  }
+}

@@ -20,7 +20,9 @@
     .mat-list-item {
       padding: 0;
       cursor: move;
-      border-top: solid 1px $gray-light;
+
+
+
 
 
       .sto-list__suffix{
@@ -37,7 +39,11 @@
       }
 
       .mat-list-item-content {
+        border-top: solid 1px $gray-light;
         padding: 0;
+        &:hover {
+          background-color: $white-medium;
+        }
       }
       .mat-icon {
         padding: 0px 32px 0px 16px;
@@ -61,8 +67,9 @@
 }
 
 #mirrorContainer {
-  .mat-list-item {
+  .mat-list-item-content {
     border: solid 1px $gray-light;
+
   }
   .mat-icon-button{
     visibility: hidden;
