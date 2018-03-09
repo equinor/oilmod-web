@@ -1,18 +1,21 @@
-import { Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, OnInit, ViewContainerRef } from '@angular/core';
 import { MatSelect } from '@angular/material';
 import {  OverlayRef } from '@angular/cdk/overlay';
 
+/**
+ * This is a menu that adds a style to the backdrop that allow click events to go through.
+ * Because the close event is on the backdrop, we add a listener this feature.
+ * Case: GLI-593
+ */
 @Directive({
   selector: '[stoIgnoreMenuBackdrop]'
 })
 export class StoIgnoreMenuBackdropDirective implements OnInit {
 
-
-
   private _matSelect: MatSelect;
   private _overlayRef: OverlayRef;
 
-  private closeMenu = (e) => {
+  private closeMenu = (event) => {
   const target = this._overlayRef.overlayElement;
     if(!target.contains((<any>event.target))){
       this._matSelect.close();
