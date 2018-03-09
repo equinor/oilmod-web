@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuickKeysDirective } from './quick-keys.directive';
 import { StoIgnoreMenuBackdropDirective } from './sto-ignore-menu-backdrop.directive';
-import { StoIgnoreContextmenuBackdropDirective } from './sto-ignore-menu-backdrop';
+import { StoIgnoreContextmenuBackdropDirective } from './sto-ignore-contextmenu-backdrop.directive';
+
 
 @NgModule({
   imports: [CommonModule],
@@ -11,6 +12,6 @@ import { StoIgnoreContextmenuBackdropDirective } from './sto-ignore-menu-backdro
    , StoIgnoreMenuBackdropDirective
    , StoIgnoreContextmenuBackdropDirective
   ],
-  exports: [QuickKeysDirective]
+  exports: [QuickKeysDirective, StoIgnoreMenuBackdropDirective, StoIgnoreContextmenuBackdropDirective]
 })
 export class StoDirectivesModule {}
