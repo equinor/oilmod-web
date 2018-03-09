@@ -16,10 +16,19 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit {
   private _matMenu: MatMenuPanel;
   private _matMenuTrigger: MatMenuTrigger;
 
-
-  private closeMenu = (e) => {
+  private closeMenu = (event) => {
+    const path = event.path || [];
+    const isClickOutside = !path.find(el => {
+      if (!el.classList) {
+        return false;
+      } else {
+        return el.classList.contains('cdk-overlay-pane');
+      }
+    });
+    if (isClickOutside) {
       this._matMenuTrigger.closeMenu();
-  }
+    }
+  };
 
   ngOnInit(): void {
     try {
