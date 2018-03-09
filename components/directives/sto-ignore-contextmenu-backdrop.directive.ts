@@ -11,10 +11,9 @@ import { MatMenuPanel, MatMenuTrigger } from '@angular/material';
 })
 export class StoIgnoreContextmenuBackdropDirective implements OnInit {
 
-  @Input('stoIgnoreContextmenuBackdrop') triggerName: string;
+  @Input('stoIgnoreContextmenuBackdrop') _matMenuTrigger: MatMenuTrigger;
 
   private _matMenu: MatMenuPanel;
-  private _matMenuTrigger: MatMenuTrigger;
 
   private closeMenu = (event) => {
     const path = event.path || [];
@@ -32,8 +31,7 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit {
 
   ngOnInit(): void {
     try {
-      const component = (<any>this._view)._view.component;
-      this._matMenuTrigger = component[this.triggerName];
+
       this._matMenu = this._matMenuTrigger.menu;
 
       this._matMenuTrigger.menuOpened.subscribe(() => {
