@@ -163,11 +163,13 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
      * @param control
      */
     private monkeyPatchMarkAsTouched(control){
-        const self = this;
-        const origFunc = control.markAsTouched;
-        control.markAsTouched = function () {
+        if (control) {
+          const self = this;
+          const origFunc = control.markAsTouched;
+          control.markAsTouched = function () {
             origFunc.apply(this, arguments);
             self.markErrors(this);
+          }
         }
     }
 
