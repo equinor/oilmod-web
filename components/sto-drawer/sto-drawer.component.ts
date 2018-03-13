@@ -53,6 +53,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Input() closeOnClick: boolean;
   @ViewChild('footer') footerRef: ElementRef;
   @ViewChild('header') headerRef: ElementRef;
+  @Input() closeFunction: any;
   public height = '100%';
 
 
@@ -65,6 +66,8 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   @Output() cancel = new EventEmitter();
   @Output() submit = new EventEmitter();
+
+  @Input() ignoreEscKey = false;
 
   @Input()
   get open() {
@@ -92,6 +95,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   }
 
   private testSingleKeys(ev: KeyboardEvent) {
+
     const path: Array<HTMLElement> = ev['path'];
     const daterangeInPath = path
       .filter(el => !!el.tagName)
@@ -107,7 +111,9 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
         .map(el => el.innerHTML)
         .filter(content => !!content || content !== '');
       if (overlaysActive.length === 0) {
-        this.closeDrawer();
+        if(!this.ignoreEscKey){
+          this.closeDrawer();
+        }
         this.cancel.emit();
       }
     }
