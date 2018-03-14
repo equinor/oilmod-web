@@ -132,7 +132,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   private isKeyPressInDaterangePicker(ev: KeyboardEvent) : boolean{
     const path: Array<HTMLElement> = ev['path'];
-    return path
+    return !!path
       .filter(el => !!el.tagName)
       .map(el => el.tagName.toLowerCase())
       .find(tagname => tagname === 'sto-daterange');
