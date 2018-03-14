@@ -95,28 +95,47 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   }
 
   private testSingleKeys(ev: KeyboardEvent) {
-
-    const path: Array<HTMLElement> = ev['path'];
-    const daterangeInPath = path
-      .filter(el => !!el.tagName)
-      .map(el => el.tagName.toLowerCase())
-      .find(tagname => tagname === 'sto-daterange');
-    if (ev.keyCode === Key.Escape && !daterangeInPath) {
-      const overlays = Array.from(document.getElementsByClassName('cdk-overlay-container'))
-        .filter(overlay => !!overlay)
-        .filter(overlay => overlay.children.length > 0)
-        .map(overlay => overlay.children)
-        .reduce((a, b) => [...a, ...Array.from(b)], []);
-      const overlaysActive = overlays
-        .map(el => el.innerHTML)
-        .filter(content => !!content || content !== '');
-      if (overlaysActive.length === 0) {
-        if(!this.ignoreEscKey){
-          this.closeDrawer();
-        }
+    if(ev.keyCode !== Key.Escape || this.ignoreEscKey){
+        return;
+    }
+    const isNotInsideADatePicker = !this.isKeyPressInDaterangePicker(ev);
+    if (isNotInsideADatePicker) {
+      const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
+      if (isNotInsideAMenu) {
+        this.closeDrawer();
         this.cancel.emit();
       }
     }
+  }
+
+  /**
+   * Test if an active overlay is active by checkout for cdk-overlay-containeres that are active.
+   * This indicates a select-list, dialog or menu is opened.
+   * @returns true if an active overlay is present in the DOM.
+   */
+  private isAnActiveOverlayPresent() : boolean{
+    const overlays = Array.from(document.getElementsByClassName('cdk-overlay-container'))
+      .filter(overlay => !!overlay)
+      .filter(overlay => overlay.children.length > 0)
+      .map(overlay => overlay.children)
+      .reduce((a, b) => [...a, ...Array.from(b)], []);
+    const overlaysActive = overlays
+      .map(el => el.innerHTML)
+      .filter(content => !!content || content !== '');
+    return overlaysActive.length !== 0
+  }
+
+  /**
+   * Test if a keypress is inside a sto-daterange picker by the tagnamne
+   * @param ev
+   * @returns true if inside sto-daterange false if else
+   */
+  private isKeyPressInDaterangePicker(ev: KeyboardEvent) : boolean{
+    const path: Array<HTMLElement> = ev['path'];
+    return path
+      .filter(el => !!el.tagName)
+      .map(el => el.tagName.toLowerCase())
+      .find(tagname => tagname === 'sto-daterange');
   }
 
   @HostListener('window:resize', ['$event'])
