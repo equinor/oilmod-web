@@ -25,3 +25,9 @@ export * from './components/quick-view/quick-view.module';
 export * from './components/quick-view/quick-view.component';
 
 export * from './components/directives/directives.module';
+
+export * from './components/unsaved-changes/confirm-dialog/confirm-dialog.component';
+export * from './components/unsaved-changes/form-serialize-validator';
+export * from './components/unsaved-changes/unsaved-changes.guard';
+export * from './components/unsaved-changes/unsaved-changes.interface';
+export * from './components/unsaved-changes/unsaved-changes.module';
