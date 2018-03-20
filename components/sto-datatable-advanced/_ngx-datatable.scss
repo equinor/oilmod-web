@@ -194,6 +194,13 @@ $content-height: 20px;
           border-bottom: 2px solid $blue-dark;
         }
       }
+      &.month-row {
+        background-color: $gray-lighter;
+        .datatable-body-cell {
+          padding: 0 8px;
+          color: $black-light;
+        }
+      }
 
       .datatable-body-group-cell {
         text-align: left;
