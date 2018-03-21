@@ -10,6 +10,8 @@ export const formatError = (err: HttpErrorResponse): FormattedError => {
       return formatNotFound(err);
     case 409:
       return formatConflict(err);
+    case 401:
+      return noAccessError(err);
     case 503:
     case 504:
       return formatServerDownOrTimeout(err);
@@ -42,6 +44,36 @@ const convertMessageStringToJson = (serverError: string|ServerError): ServerErro
   }
   return serverError;
 };
+
+const noAccessError = (err: HttpErrorResponse): FormattedError => {
+  const title = `Sorry, but you don´t have access to view this page`;
+  const baseUrl = `https://accessit.statoil.no/Home/Search?term=`;
+  const terms = createAccessItSearchString(err.url);
+  const url = baseUrl + terms;
+  const message = `<a href="${url}">APPLY FOR ACCESS IN "ACCESS IT"</a>`;
+  const response = {
+    timestamp: Date.now(),
+    status: err.status,
+    error: 'timeout',
+    exception: null,
+    message,
+    path: null
+  };
+  return Object.assign({}, response, {title, message, actions: []});
+}
+
+function createAccessItSearchString(url: string): string {
+  if (url.includes('/im/')) {
+    return `OPERATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  }
+  if (url.includes('/is/')) {
+    return `SETTLEMENT - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  }
+  if (url.includes('/va/')) {
+    return `VALUATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  }
+  return `TOPS IM (TOPS IM)`.replace(/ /g, '+');
+}
 
 const offlineError = (): FormattedError => {
   const title = `No network connection`;
