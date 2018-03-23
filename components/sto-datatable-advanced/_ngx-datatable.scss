@@ -473,6 +473,9 @@ $content-height: 20px;
       }
     }
   }
+  &--last{
+    border-right: solid 1px $border-color-light;
+  }
 }
 
 
