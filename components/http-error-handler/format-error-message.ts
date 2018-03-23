@@ -11,6 +11,7 @@ export const formatError = (err: HttpErrorResponse): FormattedError => {
     case 409:
       return formatConflict(err);
     case 401:
+    case 403:
       return noAccessError(err);
     case 503:
     case 504:
