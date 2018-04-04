@@ -67,11 +67,9 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     private handleChanges(){
 
         if(!this.forceValue && this.forceValue !== 0){
-          console.log('HandleChanges');
             this.control.valueChanges
               .debounceTime(1) // https://github.com/angular/angular/issues/14057
               .subscribe((value) => {
-                console.log(value,'HandleChanges');
                   let numberValue =  parseFloat(this.numberFormatterPipe.parse(value, this.fractionSize));
                   numberValue = !isNaN(numberValue) ? numberValue : null;
                   this.propagateChange(numberValue);
