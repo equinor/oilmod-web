@@ -5,7 +5,6 @@ $footer-height: 69px;
 .sto-action-footer {
   @include mat-elevation(4);
 
-  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;

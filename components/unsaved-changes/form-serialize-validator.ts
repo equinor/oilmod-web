@@ -6,9 +6,14 @@ export class FormSerializeValidator {
 
   public set orginalValue(form : any){
     if(form && !form.dirty) {
-      this._originalValue = JSON.stringify(form.value).replace('\"\"', 'null');
+      this._originalValue = this.replaceEmptyStringsWithNull(form.value);
     }
   }
+
+  private replaceEmptyStringsWithNull(value) {
+    return JSON.stringify(value).replace(/""/g, 'null');
+  }
+
   public get originalValue() : any{
     return this._originalValue;
   }
@@ -24,7 +29,7 @@ export class FormSerializeValidator {
     this._form.valueChanges.subscribe(changedValue => {
 
       if(this._form.dirty) {
-        const current_value = JSON.stringify(this._form.value).replace('\"\"', 'null');
+        const current_value = this.replaceEmptyStringsWithNull(this._form.value);
 
         if (this.originalValue == current_value) {
           this._form.markAsPristine();

@@ -14,38 +14,22 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import 'rxjs/add/observable/fromEvent';
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'sto-drawer',
   templateUrl: './sto-drawer.component.html',
   styleUrls: ['./sto-drawer.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('slideInOut', [
-        state('in', style({
-          transform: 'translate3d(0%, 0, 0)',
-          visibility: 'visible',
-        })),
-        state('outleft', style({
-          transform: 'translate3d(-100%, 0, 0)',
-          visibility: 'hidden',
-        })),
-        state('outright', style({
-          transform: 'translate3d(100%, 0, 0)',
-          visibility: 'hidden',
-        })),
-        transition('in <=> *', animate('400ms ease'))
-      ]
-    )
-  ]
+  encapsulation: ViewEncapsulation.None
 })
+
 export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Input() header: string;
   @Input() headerIcon: string;
-  @Input() width = '25vw';
+  @HostBinding('style.display') display = 'block';
+  @HostBinding('style.width') @Input() width = '25vw';
   @Input() offset: string = '0';
   @Input() padding = '0px';
   @Input() position: 'left' | 'right';
@@ -55,7 +39,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @ViewChild('header') headerRef: ElementRef;
   @Input() closeFunction: any;
   public height = '100%';
-
 
   @Output() onToggle = new EventEmitter<boolean>();
   @Output() onClose = new EventEmitter();
@@ -282,7 +265,7 @@ export class StoDrawerWrapperComponent {
 }
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   exports: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent],
   declarations: [StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent]
 })

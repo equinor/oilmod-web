@@ -1,4 +1,7 @@
-import { ViewChild, AfterViewInit, Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import {
+  ViewChild, AfterViewInit, Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation,
+  ChangeDetectorRef, HostBinding
+} from '@angular/core';
 import { Renderer2, OnDestroy} from '@angular/core';
 
 
@@ -15,6 +18,8 @@ export class StoActionFooterComponent implements OnInit, OnDestroy  {
 
   @Input() isLoading : boolean;
   @Input() shouldAddClass = true;
+
+  @HostBinding('style.position') @Input() position = 'fixed';
 
   ngOnDestroy(): void {
     if (this.shouldAddClass) {

@@ -19,34 +19,27 @@ export class UnsavedChangesGuard implements CanDeactivate<UnsavedChanges> {
     this._dialogConfig.hasBackdrop = true;
   }
 
-  canDeactivate(component: UnsavedChanges) {
-    if(!component.form || component.ignoreUnsavedChanges){
+  canDeactivate(component: any) {
+    const unsavedChangesComponent = component.unsavedChild || component;
+    if (!unsavedChangesComponent.form || unsavedChangesComponent.ignoreUnsavedChanges) {
       return true;
     }
-    if (!component.form.dirty) {
+    if (!unsavedChangesComponent.form.dirty) {
 
       return Observable.create((observer: Observer<boolean>) => {
-        this.close(component, observer);
+        this.close(unsavedChangesComponent, observer);
       });
 
     } else {
       return Observable.create((observer: Observer<boolean>) => {
-        this.showChangesDialog(component, observer);
+        this.showChangesDialog(unsavedChangesComponent, observer);
       });
     }
   }
 
   private close(component: UnsavedChanges, observer: Observer<boolean>) {
-    if(component.drawer){
-      component.drawer.closeDrawer();
-      setTimeout(() => {
-        observer.next(true);
-        observer.complete();
-      }, this._animationSpeedDrawer);
-    } else {
-      observer.next(true);
-      observer.complete();
-    }
+    observer.next(true);
+    observer.complete();
   }
 
   private showChangesDialog(component: UnsavedChanges, observer: Observer<boolean>) {

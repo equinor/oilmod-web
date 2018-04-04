@@ -6,6 +6,7 @@ export interface UnsavedChanges {
   form: FormGroup;
   drawer?: StoDrawerComponent;
   ignoreUnsavedChanges?: boolean;
+  beforeClose?();
   formSerializeValidator: FormSerializeValidator;
   initFormSerializeValidator();
   globalUnsavedChanges($event: any);

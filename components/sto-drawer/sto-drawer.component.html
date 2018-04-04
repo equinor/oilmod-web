@@ -1,9 +1,8 @@
-<div [@slideInOut]="open ? 'in': 'out' + position"
-	 (@slideInOut.done)="onOpened.emit()"
+<div
 	 [ngClass]="position + ' ' + cssClass"
 	 [style.width]="width"
 	 [style.top]="padding"
-	 [style.zIndex]="60"
+	 [style.zIndex]="position === 'left' ? 60 : 58"
 	 [style.right]="offset"
 	 class="sto-drawer">
 	<div class="sto-drawer__header__wrapper" #header>

@@ -16,7 +16,10 @@ $header-size: 20px;
   }
 }
 
+
+
 .sto-drawer {
+  transition: right 400ms ease-in-out;
   @include mat-elevation(16);
   background: $gray-lighter;
   color: #000;
