@@ -65,10 +65,13 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
      * Return null if NaN.
      */
     private handleChanges(){
+
         if(!this.forceValue && this.forceValue !== 0){
+          console.log('HandleChanges');
             this.control.valueChanges
               .debounceTime(1) // https://github.com/angular/angular/issues/14057
               .subscribe((value) => {
+                console.log(value,'HandleChanges');
                   let numberValue =  parseFloat(this.numberFormatterPipe.parse(value, this.fractionSize));
                   numberValue = !isNaN(numberValue) ? numberValue : null;
                   this.propagateChange(numberValue);
@@ -125,6 +128,8 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     writeValue(value: any) {
         if(value || value === 0) {
             this.control.setValue(this.numberFormatterPipe.transform(value, this.fractionSize), {emitEvent: false})
+        } else {
+            this.control.setValue(null, {emitEvent: false});
         }
     }
 
@@ -137,6 +142,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
     }
 
     ngOnInit() {
+
         const control = this.controlContainer.control.get(this.formControlName) as FormControl;
         if(control){
             control.registerOnDisabledChange((isDisabled: boolean) => {
