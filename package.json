@@ -1,7 +1,7 @@
 {
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
-  "version": "3.0.13",
+  "version": "3.0.15",
   "scripts": {
     "postversion": "node postbump.js"
   },

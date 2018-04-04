@@ -1,0 +1,13 @@
+  <mat-checkbox color="primary"
+                #selectAll
+                [indeterminate]="indeterminate"
+                [formControl]="checkboxControl"></mat-checkbox>
+  <input [formControl]="inputControl"
+         autocomplete="off" style="margin-left: 16px;" placeholder="Search" matInput>
+ <mat-icon *ngIf="inputControl.value?.length > 0"
+                  class="mat__icon--clickable"
+                  (click)="inputControl.reset()"
+                  matSuffix>close</mat-icon>
+        <mat-icon *ngIf="inputControl.value?.length <= 0"
+                  matSuffix>search</mat-icon>
+                  
