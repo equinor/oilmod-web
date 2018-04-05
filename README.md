@@ -15,6 +15,12 @@ To install the package, run `yarn add ngx-stoui`
 * Open your project, and run `npm link ngx-stoui`
 * Start working
 
+### Deploy
+
+* Run `gulp` to create build
+* run `npm version major|minor|patch`
+* `cd dist` and `npm publish`
+
 ### TODOS:
 * Add gulp-cache for faster rebuilds
 * Implement versioning in gulp flow
