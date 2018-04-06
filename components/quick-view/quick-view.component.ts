@@ -69,6 +69,10 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event) {
     if (this.dialog) {
+      const isOption = event.path.map(el => el.tagName).includes('MAT-OPTION');
+      if (isOption) {
+        return;
+      }
       const overlayOriginEl = this.overlayOrigin.elementRef.nativeElement;
       const btnClicked = overlayOriginEl.contains(event.target);
       const dialogEl = this.dialog.nativeElement;
@@ -87,6 +91,10 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
       this.changeState(!shouldClose);
     }
 
+  }
+
+  public close() {
+    this.changeState(false);
   }
 
   public connectedOverlayDetach() {
