@@ -4,7 +4,7 @@ $row-height: 24px;
 $icon-height: 16px;
 
 
-.sto-compact .imo-overview, .sto-compact imo-tank-status-proxy { //only in .imo-overview for now
+.sto-compact .imo-overview, .sto-compact .sto-drawer--compact { //only in .imo-overview for now
 
   .ngx-datatable.sto-datatable, .ngx-datatable.sto-datatable.inside-card {
     .datatable-body {
@@ -78,12 +78,4 @@ $icon-height: 16px;
     }
   }
 
-}
-//ONLY inside cards
-.sto-compact .imo-overview{
-  .ngx-datatable.sto-datatable.inside-card{
-    .mat-icon{
-      margin-top: 2px;
-    }
-  }
 }

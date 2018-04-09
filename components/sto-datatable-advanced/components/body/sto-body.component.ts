@@ -85,7 +85,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 						  [offsetX]="offsetX"
 						  [row]="summaryRowData"
 						  [columns]="summaryColumns"
-						  rowHeight="100%"
+						  [rowHeight]="getSummaryRowHeight()"
 						  [rowClass]="getFooterRowClass"
 				  >
 				  </sto-datatable-body-row>
@@ -119,12 +119,20 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
   }
 
+  getSummaryRowHeight() {
+    if(this.rows && this.rows.length > 1){
+      return this.getRowHeight(this.rows[1]);
+    }
+    return '100%';
+  }
+
   getRowSummaryStyle() {
 		let summaryHeight = 36;
 		let scroll = 0;
   	if(this.rows && this.rows.length > 1){
 			summaryHeight = this.getRowHeight(this.rows[1]);
 		}
+    const isCompactMode = summaryHeight <= 35;
 
     let style = {
     	position: 'fixed'
@@ -134,13 +142,18 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     const width = parseInt(this.bodyWidth, 0);
     let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
     if (colWidth > width) {
-      if(summaryHeight > 35){
-				scroll = 16;
+      if(!isCompactMode){
+				scroll = 11; // maaagic
 			}
 			else{
-      	scroll = 21;
+      	scroll = 18;
 			}
+    } else{
+      if(isCompactMode){
+        scroll = 8;
+      }
     }
+
     translateXY(style, 0, height - summaryHeight - scroll);
 
     return style;
