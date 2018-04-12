@@ -39,7 +39,8 @@ export class NumberFormatPipe implements PipeTransform {
   }
 
   private prettyPrintValue(value: number, appendDecimals: boolean, numberOfDecimals) {
-    const intl = new Intl.NumberFormat().format(value);
+    const intlOptions = {minimumFractionDigits: numberOfDecimals, maximumFractionDigits: numberOfDecimals};
+    const intl = new Intl.NumberFormat(undefined, intlOptions).format(value);
     const split = intl.split('.');
     let localized = split[0];
 
