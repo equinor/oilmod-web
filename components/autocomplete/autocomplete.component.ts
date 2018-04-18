@@ -55,6 +55,9 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
    *   return quality ? quality.material : 'No Regrade';
    * }
    */
+
+  @Input() label: string;
+
   @Input() displayFn: Function;
   /**
    * valueKey is the key that gets emitted (often the elements ID)

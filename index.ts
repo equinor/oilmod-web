@@ -31,3 +31,5 @@ export * from './components/unsaved-changes/form-serialize-validator';
 export * from './components/unsaved-changes/unsaved-changes.guard';
 export * from './components/unsaved-changes/unsaved-changes.interface';
 export * from './components/unsaved-changes/unsaved-changes.module';
+
+export * from './components/sto-slide-toggle/sto-slide-toggle.component'

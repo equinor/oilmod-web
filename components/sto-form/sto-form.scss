@@ -6,7 +6,7 @@ $height: 72px;
 %sto-form__field {
   width: 100%;
   min-height: $height;
-
+  outline: none;
   .mat-input-element {
     cursor: pointer;
     overflow: hidden;
@@ -272,6 +272,7 @@ $height: 72px;
 
 .sto-form__field--without-placeholder{
   height: 0px;
+  min-height: 32px;
   .mat-input-flex, mat-form-field-flex{
     height: 30px;
   }

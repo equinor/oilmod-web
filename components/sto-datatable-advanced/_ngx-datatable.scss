@@ -122,6 +122,11 @@ $content-height: 20px;
           justify-content: center;
           margin-top: 0;
 
+          .column-group-header-title{
+            width: calc(100% - 24px);
+            overflow: hidden;
+            text-overflow:  ellipsis;
+          }
 
           &-icon{
             max-width: 8px;
@@ -524,6 +529,16 @@ span.sortable {
   }
 }
 
+
+.allocation-status {
+  height: 4px;
+  border-radius: 50%;
+  width: 4px;
+  position: absolute;
+  left: 5px;
+  top: 4px;
+  background: rgba(204, 41, 41, 0.87);
+}
 
 
 @import "ngx-datatable-compact";

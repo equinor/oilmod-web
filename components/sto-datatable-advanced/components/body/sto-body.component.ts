@@ -143,17 +143,16 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     let colWidth = (this.columns.map(c => {return c.width}).reduce((r, s) => r + s, 0));
     if (colWidth > width) {
       if(!isCompactMode){
-				scroll = 11; // maaagic
+				scroll = 14; // maaagic
 			}
 			else{
-      	scroll = 18;
+      	scroll = 21;
 			}
     } else{
       if(isCompactMode){
         scroll = 8;
       }
     }
-
     translateXY(style, 0, height - summaryHeight - scroll);
 
     return style;
