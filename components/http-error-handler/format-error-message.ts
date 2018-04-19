@@ -47,11 +47,20 @@ const convertMessageStringToJson = (serverError: string|ServerError): ServerErro
 };
 
 const noAccessError = (err: HttpErrorResponse): FormattedError => {
-  const title = `Sorry, but you don´t have access to view this page`;
   const baseUrl = `https://accessit.statoil.no/Home/Search?term=`;
-  const terms = createAccessItSearchString(err.url);
+  const method = err['method'] as RequestMethods;
+  const title = noAccessTitle(method);
+  const terms = createAccessItSearchString(err.url, method);
   const url = baseUrl + terms;
-  const message = `<a href="${url}">APPLY FOR ACCESS IN "ACCESS IT"</a>`;
+  const linkText = noAccessLinkText(method);
+  const message = `<a href="${url}">${linkText}</a>`;
+  const actions = [];
+  if (method !== 'GET') {
+    actions.push({
+      label: 'OK',
+      closeDialogData: null
+    })
+  }
   const response = {
     timestamp: Date.now(),
     status: err.status,
@@ -60,20 +69,44 @@ const noAccessError = (err: HttpErrorResponse): FormattedError => {
     message,
     path: null
   };
-  return Object.assign({}, response, {title, message, actions: []});
+  return Object.assign({}, response, {title, message, actions});
 }
 
-function createAccessItSearchString(url: string): string {
+function noAccessLinkText(method: RequestMethods): string {
+  let text: string;
+  if (method === 'GET') {
+    text = 'APPLY FOR ACCESS';
+  } else {
+    text = 'APPLY FOR EDIT PRIVILEGES';
+  }
+  return text;
+}
+
+function noAccessTitle(method: RequestMethods): string {
+  let title: string;
+  if (method === 'GET') {
+    title = `Sorry, but you don´t have access to view this page`;
+  } else {
+    title = 'You do not have edit privileges';
+  }
+  return title;
+}
+
+  function createAccessItSearchString(url: string, method: RequestMethods): string {
+  let searchString: string;
   if (url.includes('/im/')) {
-    return `OPERATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+    searchString = `OPERATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  } else if (url.includes('/is/')) {
+    searchString = `SETTLEMENT - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  } else if (url.includes('/va/')) {
+    searchString =  `VALUATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  } else {
+    searchString = `TOPS IM (TOPS IM)`.replace(/ /g, '+');
   }
-  if (url.includes('/is/')) {
-    return `SETTLEMENT - TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  if (method !== 'GET') {
+    searchString += ' WRITE';
   }
-  if (url.includes('/va/')) {
-    return `VALUATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
-  }
-  return `TOPS IM (TOPS IM)`.replace(/ /g, '+');
+  return searchString;
 }
 
 const offlineError = (): FormattedError => {
@@ -189,3 +222,5 @@ export interface ErrorAction {
   action?: Function;
   closeDialogData?: any;
 }
+
+export type RequestMethods = 'GET'|'POST'|'PUT'|'PATCH'|'DELETE';
