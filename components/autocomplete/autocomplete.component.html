@@ -5,7 +5,7 @@
   <mat-label *ngIf="label">{{label}}</mat-label>
   <input matInput
          [matAutocomplete]="searchList"
-         (keyup.enter)="onEnter()"
+         (keyup.enter)="onEnter($event)"
          [placeholder]="placeholder ? placeholder : ''"
          #searchInput
          [formControl]="searchControl">

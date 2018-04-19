@@ -13,6 +13,8 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
+import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
+import { map, debounceTime, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'sto-autocomplete',
@@ -113,7 +115,10 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
     return !isInvalid ? null : error;
   }
 
-  onEnter() {
+  onEnter(event?: KeyboardEvent) {
+    if (event && event.keyCode === Key.Enter) {
+      event.stopPropagation();
+    }
     const {value} = this.searchControl;
     const results = this.unfiltered.filter(item => item[this.searchForKey].match(new RegExp(value, 'i')));
     if (results.length === 1) {
@@ -126,16 +131,6 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
   public onSelect(event: MatAutocompleteSelectedEvent) {
     const v = event.option.value[this.valueKey];
     this.propagateChange(v);
-  }
-
-  public onChange() {
-    let {value} = this.searchControl;
-    if (typeof value === 'string') {
-      if (value === '') {
-        value = null;
-      }
-      this.propagateChange(this.searchControl.value);
-    }
   }
 
   writeValue(value: any) {
@@ -155,14 +150,50 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
   registerOnTouched(fn: any): void {
   }
 
+  private sortSearchByRelevance(input: any[], startsWith: string): any[] {
+    const first = [];
+    const others = [];
+    const startsWithRegex = new RegExp('^' + startsWith, 'i');
+    input.forEach(el => {
+      const curr = el[this.searchForKey];
+      if (startsWithRegex.test(curr)) {
+        first.push(el);
+      } else {
+        others.push(el);
+      }
+    });
+    return [...first, ...others];
+  }
+
+  private filterSearch(unfiltered: any[], search: string): any[] {
+    const searchAsRegex = new RegExp(search, 'i');
+    const filtered = unfiltered
+      .filter(item => searchAsRegex.test(item[this.searchForKey]));
+    return filtered;
+  }
+
+  private searchChanged = () => map((search: string) => {
+    const filtered = this.filterSearch([...this.unfiltered], search);
+    const sorted = this.sortSearchByRelevance(filtered, search);
+    return sorted;
+  });
+
+  public emitSearchChanged = () => tap((value: string) => {
+    if (typeof value === 'string') {
+      if (value === '') {
+        value = null;
+      }
+      this.propagateChange(value);
+    }
+  });
+
   ngOnInit() {
     this.filtered$ = this.searchControl
       .valueChanges
-      .debounceTime(50)
-      .do(v => this.onChange())
-      .map(search => [...this.unfiltered]
-        .filter(item => item[this.searchForKey].match(new RegExp(search, 'i')))
-        .slice(0, 50)
+      .pipe(
+        debounceTime(50),
+        this.emitSearchChanged(),
+        this.searchChanged()
       );
   }
 
