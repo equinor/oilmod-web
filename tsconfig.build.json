@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "es5",
     "module": "es2015",
@@ -13,12 +14,14 @@
     "lib": ["es2017", "dom"]
   },
   "include": [
-    "index.ts",
-    "components/**/*.ts"
+    "index-esm.ts",
+    "build/**/*.ts"
   ],
   "exclude": [
+    "vendor",
     "node_modules",
-    "dist"
+    "dist",
+    "components"
   ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

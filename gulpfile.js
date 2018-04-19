@@ -74,7 +74,7 @@ gulp.task('clean-temp', function() {
 });
 
 gulp.task('compile', function() {
-  return ngc(['-p', 'tsconfig.json']);
+  return ngc(['-p', 'tsconfig.build.json']);
 });
 
 gulp.task('watch:sass', function() {
