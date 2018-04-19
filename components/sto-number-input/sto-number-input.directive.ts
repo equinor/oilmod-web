@@ -20,7 +20,6 @@ export class StoNumberInputDirective  {
         Key.Home,
         Key.LeftArrow,
         Key.RightArrow,
-        Key.Enter,
         Key.End,
         Key.Tab,
         Key.Subtract
@@ -72,6 +71,9 @@ export class StoNumberInputDirective  {
         if(this._el.readOnly || this._el.disabled){
             return;
         }
+        if([Key.Enter].includes(e.which)){
+          this._el.blur();
+        }
         if (this.isNumberKeypress(e)) {
 
         }
@@ -99,7 +101,13 @@ export class StoNumberInputDirective  {
      * @param e
      */
     private handlePeriodDelimiter(e) {
-        if (this._el.value.includes(',')) {
+        let selectionIncludesPeriod = false;
+        if(e.target.selectionStart !== e.target.selectionEnd && this._el.value && this._el.value.length > 0){
+          const selection = this._el.value.substring(e.target.selectionStart, e.target.selectionEnd);
+          selectionIncludesPeriod = selection.includes(',');
+        };
+
+        if (this._el.value.includes(',') && !selectionIncludesPeriod) {
             e.preventDefault();
         }
         else if (e.which === Key.Period) {

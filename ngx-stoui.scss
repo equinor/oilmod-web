@@ -260,8 +260,8 @@ To make an icon appear as a button
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height:10px;
+  width: 14px;
+  height:14px;
   background-color: $white-light;
 }
 
@@ -269,10 +269,11 @@ To make an icon appear as a button
   -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
+
 ::-webkit-scrollbar-thumb {
-  background-color: $gray-medium;
+  background-color: $gray-light;
   &:hover {
-    background-color: $gray-light;
+    background-color: $gray-medium;
   }
   outline: 1px solid slategrey;
 }

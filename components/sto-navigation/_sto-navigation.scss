@@ -7,7 +7,7 @@
     background-color: rgba(0,0,0,0.06);
   }
 
-    .mat-divider{
+   .mat-divider{
       margin-top: 15px;
       margin-bottom: 16px;
     }
@@ -16,6 +16,7 @@
       color: rgba(0,0,0,0.54);
     }
     padding: 8px 0 0 0;
+
     .mat-list-item {
       .mat-button{
         width: 100%;
@@ -26,8 +27,6 @@
         line-height: 48px;
         font-size: 13px;
         font-weight: 500;
-
-
       }
       padding: 0;
       cursor: pointer;
