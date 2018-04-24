@@ -1,17 +1,16 @@
 import {
   Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { mouseEvent } from '../events';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
-/*@Directive({
+@Directive({
   selector: '[resizeable]',
   host: {
     '[class.resizeable]': 'resizeEnabled'
   }
-})*/
+})
 export class ResizeableDirective implements OnDestroy, AfterViewInit {
 
   @Input() resizeEnabled: boolean = true;
@@ -59,12 +58,14 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
       event.stopPropagation();
       this.resizing = true;
 
-      const mouseup = Observable.fromEvent(document, 'mouseup');
+      const mouseup = fromEvent(document, 'mouseup');
       this.subscription = mouseup
         .subscribe((ev: MouseEvent) => this.onMouseup());
 
-      const mouseMoveSub = Observable.fromEvent(document, 'mousemove')
-        .takeUntil(mouseup)
+      const mouseMoveSub = fromEvent(document, 'mousemove')
+        .pipe(
+          takeUntil(mouseup)
+        )
         .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
 
       this.subscription.add(mouseMoveSub);

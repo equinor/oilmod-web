@@ -1,6 +1,8 @@
-import { Directive, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { MatSelect } from '@angular/material';
 import {  OverlayRef } from '@angular/cdk/overlay';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * This is a menu that adds a style to the backdrop that allow click events to go through.
@@ -10,8 +12,9 @@ import {  OverlayRef } from '@angular/cdk/overlay';
 @Directive({
   selector: '[stoIgnoreMenuBackdrop]'
 })
-export class StoIgnoreMenuBackdropDirective implements OnInit {
+export class StoIgnoreMenuBackdropDirective implements OnInit, OnDestroy {
 
+  private destroyed$ = new Subject();
   private _matSelect: MatSelect;
   private _overlayRef: OverlayRef;
 
@@ -25,7 +28,10 @@ export class StoIgnoreMenuBackdropDirective implements OnInit {
   ngOnInit(): void {
     try {
       this._matSelect = (<any>this._view)._data.componentView.component;
-      this._matSelect.openedChange.subscribe((isOpen) => {
+      this._matSelect.openedChange
+        .pipe(
+          takeUntil(this.destroyed$)
+        ).subscribe((isOpen) => {
         this._overlayRef = this._matSelect.overlayDir.overlayRef;
         this._overlayRef.backdropElement.style.pointerEvents = 'none';
         if (isOpen) {
@@ -39,6 +45,11 @@ export class StoIgnoreMenuBackdropDirective implements OnInit {
       console.error('This StoSelectDirective was build on undocumented features, and now it has failed. Remove or' +
         ' fix the directive.', e);
     }
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   constructor(private _view: ViewContainerRef) {

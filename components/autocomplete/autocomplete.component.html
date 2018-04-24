@@ -2,7 +2,7 @@
                 [class.mat-form-field-invalid]="searchControl.touched && errors"
                 [floatPlaceholder]="label ? 'always' : 'auto'"
 >
-  <mat-label *ngIf="label">{{label}}</mat-label>
+  <mat-label *ngIf="label">{{ label }}</mat-label>
   <input matInput
          [matAutocomplete]="searchList"
          (keyup.enter)="onEnter($event)"

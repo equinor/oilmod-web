@@ -12,7 +12,7 @@
                 (keydown.enter)="toggle($event,slider, input)"
                 (keydown.space)="toggle($event,slider, input)"
 >
-  <mat-label>{{label}}</mat-label>
+  <mat-label>{{ label }}</mat-label>
   <input #input="matInput"
 		 matInput [value]="slider.checked | yesNo"
 		 class="sto-slide-toggle__input"

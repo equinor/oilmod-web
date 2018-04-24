@@ -1,8 +1,10 @@
 import {
     AbstractControl, ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ValidationErrors
 } from '@angular/forms';
-import { Component, forwardRef, Host, HostBinding, Input, OnInit, Optional, SkipSelf } from '@angular/core';
+import { Component, forwardRef, Host, HostBinding, Input, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
 import {StoNumberInputPipe} from './sto-number-input.pipe';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 
 @Component({
@@ -17,8 +19,9 @@ import {StoNumberInputPipe} from './sto-number-input.pipe';
         ]
     }
 )
-export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
+export class StoNumberInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
+    private destroyed$ = new Subject();
     @Input() formControlName: string;
     @Input() placeholder: string;
     @Input() label: string;
@@ -67,7 +70,10 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
 
         if(!this.forceValue && this.forceValue !== 0){
             this.control.valueChanges
-              .debounceTime(1) // https://github.com/angular/angular/issues/14057
+              .pipe(
+                debounceTime(1), // https://github.com/angular/angular/issues/14057
+                takeUntil(this.destroyed$)
+              )
               .subscribe((value) => {
                   let numberValue =  parseFloat(this.numberFormatterPipe.parse(value, this.fractionSize));
                   numberValue = !isNaN(numberValue) ? numberValue : null;
@@ -101,7 +107,10 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
      */
     private handleErrors(control: AbstractControl | null) {
         if(control){
-            control.statusChanges.subscribe(() => {
+            control.statusChanges
+              .pipe(
+                takeUntil(this.destroyed$)
+              ).subscribe(() => {
                 this.markErrors(control);
             });
         }
@@ -175,6 +184,11 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit {
           }
         }
     }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
 
     /**
      * The controlContainer is required to listen for value and status changes and interact with the parent formController.

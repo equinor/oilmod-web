@@ -14,18 +14,10 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { OverlayOrigin } from '@angular/cdk/overlay';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/switchMapTo';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { filter, takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Component({
   selector: 'sto-quick-view',
@@ -120,10 +112,11 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     const overlayOriginEl = this.overlayOrigin.elementRef.nativeElement;
 
-    Observable.fromEvent(overlayOriginEl, 'click')
-      .filter(() => !this.isOpened)
-      .takeUntil(this.destroy$)
-      .subscribe(() => this.changeState(true));
+    fromEvent(overlayOriginEl, 'click')
+      .pipe(
+        filter(() => !this.isOpened),
+        takeUntil(this.destroy$)
+      ).subscribe(() => this.changeState(true));
 
   }
 

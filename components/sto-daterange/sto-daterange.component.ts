@@ -18,9 +18,6 @@ import {
   Validators
 } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import {
   addMonths,
@@ -38,6 +35,8 @@ import {
   isThisMonth,
   isSameDay, isValid, parse
 } from 'date-fns';
+import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'sto-daterange',
@@ -67,6 +66,7 @@ import {
 export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
   public log = console.log;
+  private destroy$ = new Subject();
   @Input() showIcon: boolean = true;
   @Input() icon: string = 'fa-calendar';
   @Input() styleClass: string[];
@@ -278,6 +278,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.documentClickListener) {
       this.documentClickListener();
     }
@@ -363,8 +365,10 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   private syncSelectionsToInput() {
     this.form.valueChanges
-      .debounceTime(50)
-      .subscribe(value => {
+      .pipe(
+        debounceTime(50),
+        takeUntil(this.destroy$)
+      ).subscribe(value => {
         const {start, end} = value;
         if (!isSameDay(start, this.fromControl.value)) {
           const startValue = format(start, 'MMM D, YYYY')
@@ -383,11 +387,13 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     });
     this.error = this.form
       .valueChanges
-      .do(v => this.checkForKnownRange(v))
-      .map((value: {start: Date, end: Date}) => {
-        const {start, end} = value;
-        return isAfter(start, end) && !isSameDay(start, end) ? 'Start date is after end date' : null;
-      });
+      .pipe(
+        tap((v => this.checkForKnownRange(v))),
+        map((value: {start: Date, end: Date}) => {
+          const {start, end} = value;
+          return isAfter(start, end) && !isSameDay(start, end) ? 'Start date is after end date' : null;
+        })
+      );
     this.syncSelectionsToInput();
   }
 }

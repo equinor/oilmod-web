@@ -2,10 +2,10 @@
 <ul style="position: relative">
 	<li class="sto-breadcrumb__list-item" role="menuitem" *ngFor="let item of model; let index = index; let last = last">
 		<a class="sto-breadcrumb__item" *ngIf="index===0" (click)="itemClick($event, item)">
-			{{item.label}}
+			{{ item.label }}
 		</a>
 		<span class="sto-breadcrumb__item" *ngIf="index > 0">
-			{{item.label}}
+			{{ item.label }}
 		</span>
 	</li>
 </ul>
