@@ -148,8 +148,12 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     }
 
     ngOnInit() {
-
-        const control = this.controlContainer.control.get(this.formControlName) as FormControl;
+        let control: FormControl;
+        if (this.controlContainer) {
+            control = this.controlContainer.control.get(this.formControlName) as FormControl;
+        } else {
+            control = null;
+        }
         if(control){
             control.registerOnDisabledChange((isDisabled: boolean) => {
                 if(isDisabled){
