@@ -14,7 +14,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import 'rxjs/add/observable/fromEvent';
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
 import { RouterModule } from '@angular/router';
 

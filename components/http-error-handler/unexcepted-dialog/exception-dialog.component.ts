@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'imo-exception-dialog',
@@ -14,7 +15,10 @@ export class ExceptionDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.data.status === 0) {
-      Observable.fromEvent(window, 'online')
+      fromEvent(window, 'online')
+        .pipe(
+          take(1)
+        )
         .subscribe(event => {
           this.dialogRef.close(null);
         });

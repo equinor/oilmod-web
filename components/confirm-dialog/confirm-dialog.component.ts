@@ -8,11 +8,11 @@ import { Observable } from 'rxjs/Observable';
   template: `
     <h1 *ngIf="data.title" mat-dialog-title>{{ data.title }}</h1>
     <div mat-dialog-content>
-        <p>{{data.message}}</p>
+		    <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions>
       <button color="primary" mat-button [mat-dialog-close]="false">Cancel</button>
-      <button color="primary" mat-button [mat-dialog-close]="true">{{data.confirmText}}</button>
+      <button color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
      </div>
   `,
   styleUrls: ['confirm-dialog.component.scss']
@@ -43,7 +43,6 @@ export class ConfirmService {
   }
 
 }
-
 
 @NgModule({
   declarations: [

@@ -1,10 +1,12 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'sto-mat-select-filter',
@@ -18,12 +20,13 @@ import {
     }
   ]
 })
-export class MatSelectFilterComponent implements OnInit, ControlValueAccessor {
+export class MatSelectFilterComponent implements OnInit, OnDestroy, ControlValueAccessor {
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
   @Input() isMulti: boolean;
   @Output() selectAll = new EventEmitter<boolean>();
   @Input() indeterminate: boolean;
+  private destroyed$ = new Subject();
 
   writeValue(value: any) {
     if (value) {
@@ -44,12 +47,21 @@ export class MatSelectFilterComponent implements OnInit, ControlValueAccessor {
 
   constructor() { }
 
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+  }
+
   ngOnInit() {
     this.checkboxControl.valueChanges
-      .subscribe(value => this.selectAll.emit(value));
+      .pipe(
+        takeUntil(this.destroyed$)
+      ).subscribe(value => this.selectAll.emit(value));
 
     this.inputControl.valueChanges
-      .subscribe(value => this.propagateChange(value));
+      .pipe(
+        takeUntil(this.destroyed$)
+      ).subscribe(value => this.propagateChange(value));
   }
 
 }

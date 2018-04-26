@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import 'rxjs/add/observable/fromEvent';
 
 import {
   DataTableBodyCellComponent,
@@ -23,10 +22,7 @@ import {
 } from '../../vendor/ngx-datatable/components';
 
 import {
-  DraggableDirective,
-  LongPressDirective,
   OrderableDirective,
-  ResizeableDirective,
   VisibilityDirective
 } from '../../vendor/ngx-datatable/directives';
 
@@ -43,6 +39,8 @@ import { StoDataTableNumberColumnComponent } from './components/columns/sto-numb
 import { StoPipesModule } from '../../components/sto-pipes/sto-pipes.module';
 import { StoDataTableSelectionComponent } from './components/body/sto-selection.component';
 import { StoDataTableBodyCellComponent } from './components/body/sto-body-cell.component';
+import { ResizeableDirective } from './directives/resizeable.directive';
+import { LongPressDirective } from './directives/long-press.directive';
 
 @NgModule({
   imports: [
@@ -55,7 +53,6 @@ import { StoDataTableBodyCellComponent } from './components/body/sto-body-cell.c
   declarations: [
     DataTableFooterTemplateDirective,
     VisibilityDirective,
-    DraggableDirective,
     ResizeableDirective,
     OrderableDirective,
     LongPressDirective,

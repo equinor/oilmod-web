@@ -1,15 +1,20 @@
 import { Component, forwardRef, Host, Input, NgModule, OnInit, Optional, SkipSelf } from '@angular/core';
 import {
   AbstractControl,
-  ControlContainer, ControlValueAccessor,
+  ControlContainer,
+  ControlValueAccessor,
   FormControl,
-  FormsModule, NG_VALUE_ACCESSOR,
-  ReactiveFormsModule, ValidationErrors
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatInputModule, MatSlideToggleModule } from '@angular/material';
 import { StoPipesModule } from '../sto-pipes/sto-pipes.module';
 import { StoNumberInputPipe } from '../sto-number-input/sto-number-input.pipe';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'sto-slide-toggle',
@@ -25,6 +30,7 @@ import { StoNumberInputPipe } from '../sto-number-input/sto-number-input.pipe';
 })
 export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
+  private destroyed$ = new Subject();
   @Input() formControlName: string;
   @Input() formControl: FormControl;
   @Input() placeholder: string;
@@ -72,12 +78,14 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
    */
   private handleChanges(){
 
-    if(!this.forceValue && this.forceValue !== 0){
+    if (!this.forceValue && this.forceValue !== 0) {
       this.control.valueChanges
-        .debounceTime(1) // https://github.com/angular/angular/issues/14057
-        .subscribe((value) => {
-          this.propagateChange(value);
-        });
+        .pipe(
+          debounceTime(1), // https://github.com/angular/angular/issues/14057
+          takeUntil(this.destroyed$)
+        ).subscribe((value) => {
+        this.propagateChange(value);
+      });
     }
 
   }
@@ -106,7 +114,10 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
    */
   private handleErrors(control: AbstractControl | null) {
     if(control){
-      control.statusChanges.subscribe(() => {
+      control.statusChanges
+        .pipe(
+          takeUntil(this.destroyed$)
+        ).subscribe(() => {
         this.markErrors(control);
       });
     }
@@ -167,6 +178,11 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
     this.initForm(control);
     this.handleErrors(control);
     this.handleChanges();
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   /**

@@ -4,7 +4,7 @@ import { Component, Input, HostBinding} from '@angular/core';
   selector: 'sto-date-column',
   template: `
 	  <span [title]="value | formatDate:(titleFormat || format)">
-        {{value | formatDate:format}}
+        {{ value | formatDate:format }}
     </span>
   `
 })

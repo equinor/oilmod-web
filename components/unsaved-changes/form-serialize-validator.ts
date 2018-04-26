@@ -1,4 +1,6 @@
 import { FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 export class FormSerializeValidator {
 
@@ -19,18 +21,22 @@ export class FormSerializeValidator {
   }
 
 
-  constructor(private _form: FormGroup) {
+  constructor(private _form: FormGroup, private destroyed$: Subject<boolean>) {
     this.orginalValue = this._form;
 
-    this._form.statusChanges.subscribe(change => {
+    this._form.statusChanges
+      .pipe(
+        takeUntil(this.destroyed$)
+      ).subscribe(change => {
       this.orginalValue = this._form;
     });
 
-    this._form.valueChanges.subscribe(changedValue => {
-
+    this._form.valueChanges
+      .pipe(
+        takeUntil(this.destroyed$)
+      ).subscribe(changedValue => {
       if(this._form.dirty) {
         const current_value = this.replaceEmptyStringsWithNull(this._form.value);
-
         if (this.originalValue == current_value) {
           this._form.markAsPristine();
          }

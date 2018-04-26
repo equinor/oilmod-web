@@ -24,7 +24,7 @@ import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/';
 					   [style.width]="columnGroup.width+'px'" *ngFor="let columnGroup of 
 				         columnGroupByPin[colGroup.type]">
 					  <ng-container *ngIf="!columnGroup.headerTemplate">
-					      {{columnGroup.name}}
+					      {{ columnGroup.name }}
             </ng-container>
             <ng-template #headerTemplate
               *ngIf="columnGroup.headerTemplate"

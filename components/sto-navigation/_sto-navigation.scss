@@ -1,3 +1,6 @@
+@import '../../variables';
+@import "../../style/functions";
+
 %list-item-properties{
   width: 100%;
   text-transform: none;
@@ -8,7 +11,8 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  color: rgba(0,0,0,0.84);
+  color: $black-medium;
+
 }
 
 .mat-list{
@@ -23,13 +27,15 @@
     }
     .mat-subheader{
       font-size: 13px;
-      color: rgba(0,0,0,0.54);
+      color: $black-light;
     }
     padding: 8px 0 0 0;
 
     .mat-list-item {
+      background-color: $gray-lighter;
       padding: 0;
       cursor: pointer;
+      font-weight: 500;
 
       .mat-button{
         @extend %list-item-properties;
@@ -37,8 +43,8 @@
 
       .sto-navigation__item__text a{
         text-decoration: none;
-        color: rgba(0,0,0,0.84);
-        font-weight: bold;
+        color: $black-medium;
+        font-weight: 500;
       }
 
       .sto-navigation__suffix{
@@ -58,7 +64,7 @@
       }
       .mat-icon {
         padding: 0px 32px 0px 16px;
-        color: rgba(0,0,0,0.54);
+        color: $black-light;
         line-height: 24px;
         svg{
           color: rgba(0,0,0,1);

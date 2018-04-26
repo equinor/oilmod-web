@@ -1,7 +1,7 @@
 {
   "name": "ngx-stoui",
   "description": "UI Library for Statoil (Angular 4+)",
-  "version": "3.1.7",
+  "version": "3.2.1",
   "scripts": {
     "postversion": "node postbump.js",
     "postpublish": "git push"
@@ -31,6 +31,7 @@
     "@types/node": "^8.0.17",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.2.2",
+    "codelyzer": "~4.2.0",
     "css-loader": "^0.28.4",
     "css-raw-loader": "^0.1.2",
     "del": "^3.0.0",
@@ -50,8 +51,10 @@
     "rimraf": "^2.6.1",
     "rollup-stream": "^1.23.1",
     "run-sequence": "^2.1.0",
+    "rxjs-tslint-rules": "^3.17.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "tslint": "^5.0.0",
     "typescript": "2.4.2",
     "vinyl-source-stream": "^1.1.0",
     "web-animations-js": "^2.3.1",

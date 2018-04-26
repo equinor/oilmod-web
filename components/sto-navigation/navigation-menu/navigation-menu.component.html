@@ -14,14 +14,14 @@
 						</mat-panel-title>
 					</mat-expansion-panel-header>
 					<ng-container *ngFor="let item of group.items">
-						<imo-navigation-menu-item [item]="item" (onCommand)="onCommand.emit($event)" ></imo-navigation-menu-item>
+						<sto-navigation-menu-item [item]="item" (onCommand)="onCommand.emit($event)" ></sto-navigation-menu-item>
 					</ng-container>
 				</mat-expansion-panel>
 			</ng-container>
 			<ng-template #normal>
 				<h3 *ngIf="group.name" mat-subheader>{{group.name}}</h3>
 				<ng-container *ngFor="let item of group.items">
-					<imo-navigation-menu-item [item]="item" (onCommand)="onCommand.emit($event)"></imo-navigation-menu-item>
+					<sto-navigation-menu-item [item]="item" (onCommand)="onCommand.emit($event)"></sto-navigation-menu-item>
 				</ng-container>
 
 			</ng-template>
