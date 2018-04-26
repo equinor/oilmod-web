@@ -1,7 +1,17 @@
+%list-item-properties{
+  width: 100%;
+  text-transform: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  line-height: 48px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: rgba(0,0,0,0.84);
+}
+
 .mat-list{
-
-
-
   &.sto-navigation {
   .mat-button-focus-overlay{
     background-color: rgba(0,0,0,0.06);
@@ -18,23 +28,17 @@
     padding: 8px 0 0 0;
 
     .mat-list-item {
-      .mat-button{
-        width: 100%;
-        text-transform: none;
-        text-align: left;
-        padding: 0;
-        margin: 0;
-        line-height: 48px;
-        font-size: 13px;
-        font-weight: 500;
-      }
       padding: 0;
       cursor: pointer;
-      font-weight: bold;
+
+      .mat-button{
+        @extend %list-item-properties;
+      }
 
       .sto-navigation__item__text a{
         text-decoration: none;
         color: rgba(0,0,0,0.84);
+        font-weight: bold;
       }
 
       .sto-navigation__suffix{
@@ -44,10 +48,9 @@
         line-height: 0;
         .mat-icon{
           padding: 0;
-          width: 24x;
+          width: 24px;
           color: rgba(0, 0, 0, 0.38);
         }
-
       }
 
       .mat-list-item-content {
@@ -58,7 +61,6 @@
         color: rgba(0,0,0,0.54);
         line-height: 24px;
         svg{
-
           color: rgba(0,0,0,1);
           opacity: 0.54;
         }
@@ -89,5 +91,45 @@
 .sto-drawer{
   .sto-slide-panel{
     margin: -8px;
+  }
+}
+// dropdown
+.mat-list.sto-navigation{
+
+  .mat-expansion-panel.sto-navigation__dropdown{
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .mat-expansion-panel-header.sto-navigation__dropdown__header{
+    padding: 0;
+  }
+  .mat-expansion-panel-header-title.sto-navigation__dropdown__title{
+    @extend %list-item-properties;
+  }
+
+  .mat-expansion-indicator{
+    margin-right: 24px;
+    float: right;
+    line-height: 0;
+    &:after{
+      padding: 4px;
+      color: rgba(0, 0, 0, 0.38);
+    }
+  }
+
+  .mat-expansion-panel-body{
+    padding: 0;
+    .sto-navigation__item__text{
+      padding-left: 16px;
+      font-weight: normal;
+    }
+  }
+
+  .sto-navigation__prefix{
+    display: inline-block;
+    padding: 12px 35px 0 16px;
+    color: rgba(0, 0, 0, 0.54);
+    line-height: 0;
   }
 }

@@ -1,11 +1,8 @@
 <mat-icon class="sto-breadcrumb__home" (click)="itemClick($event, home)">apps</mat-icon>
 <ul style="position: relative">
 	<li class="sto-breadcrumb__list-item" role="menuitem" *ngFor="let item of model; let index = index; let last = last">
-		<a class="sto-breadcrumb__item" *ngIf="index===0" (click)="itemClick($event, item)">
+		<a class="sto-breadcrumb__item" (click)="itemClick($event, item)">
 			{{item.label}}
 		</a>
-		<span class="sto-breadcrumb__item" *ngIf="index > 0">
-			{{item.label}}
-		</span>
 	</li>
 </ul>

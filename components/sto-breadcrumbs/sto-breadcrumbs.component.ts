@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material';
 
 @Component({
@@ -40,6 +40,10 @@ export class StoBreadcrumbsComponent {
         item: item
       });
     }
+   else if(item.segment){
+      this.router.navigate([item.segment], {queryParamsHandling: 'preserve'})
+        .catch(console.error);
+    }
   }
 
   onHomeClick(event) {
@@ -56,6 +60,9 @@ export class StoBreadcrumbsComponent {
         }
       }
     }
+  }
+  constructor(private router: Router){
+
   }
 }
 

@@ -75,12 +75,11 @@ li {
   }
 }
 
-.sto-breadcrumb__list-item:last-child{
-  .sto-breadcrumb__item {
+.sto-breadcrumb__list-item{
+  .sto-breadcrumb__item--last {
     &:hover{
       color: $white-light;
       cursor: default;
     }
   }
-
 }

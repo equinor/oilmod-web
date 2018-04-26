@@ -33,3 +33,5 @@ export * from './components/unsaved-changes/unsaved-changes.interface';
 export * from './components/unsaved-changes/unsaved-changes.module';
 
 export * from './components/sto-slide-toggle/sto-slide-toggle.component'
+
+export * from './components/sto-navigation/sto-navigation.module';
