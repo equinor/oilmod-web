@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit,
   ViewChild
 } from '@angular/core';
@@ -11,10 +12,11 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
-import { map, debounceTime, tap } from 'rxjs/operators';
+import { map, debounceTime, tap, filter } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'sto-autocomplete',
@@ -41,7 +43,7 @@ import { map, debounceTime, tap } from 'rxjs/operators';
  * It takes care of a lot of the grunt work required by the original one, and simplifies usage by automatically
  * ensuring the value set exists in the list
  */
-export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, Validator {
+export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, Validator, AfterViewInit{
   @ViewChild(MatAutocompleteTrigger) searchInput: MatAutocompleteTrigger;
   /**
    * unfiltered list of items to search for
@@ -79,6 +81,12 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
    * @type {boolean}
    */
   @Input() ignoreValidation = false;
+  /**
+   * ignoredIds is a list of Ids that should be ignored in filter
+   * @type {any}
+   */
+  @Input() ignoredIds: any[];
+
   @Input() helpText: string;
   @Input() get inheritedErrors(): ValidationErrors | null {
     return this._inheritedErrors;
@@ -120,10 +128,20 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
       event.stopPropagation();
     }
     const {value} = this.searchControl;
-    const results = this.unfiltered.filter(item => item[this.searchForKey].match(new RegExp(value, 'i')));
+
+    const results = this.unfiltered
+      .filter(item => {
+        if(!this.ignoredIds ||  item.id === null){
+          return true;
+        }
+        return this.ignoredIds.indexOf(item.id) === -1;
+      })
+      .filter(item => item[this.searchForKey].match(new RegExp(value, 'i')));
+
     if (results.length === 1) {
       this.searchControl.setValue(results[0]);
       this.propagateChange(results[0][this.valueKey]);
+      this.validate(this.searchControl);
       this.searchInput.closePanel();
     }
   }
@@ -138,6 +156,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
       const foundElement = this.unfiltered.find(el => el[this.valueKey] === value);
       this.searchControl.setValue(foundElement);
     }
+
   }
 
   propagateChange = (_: any) => {
@@ -188,13 +207,27 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
   });
 
   ngOnInit() {
+
+
     this.filtered$ = this.searchControl
       .valueChanges
       .pipe(
         debounceTime(50),
+        filter(item => {
+          if(!this.ignoredIds ||  item.id === null){
+            return true;
+          }
+          return this.ignoredIds.indexOf(item.id) === -1;
+        }),
         this.emitSearchChanged(),
         this.searchChanged()
       );
+  }
+
+  ngAfterViewInit(): void {
+    this.searchInput.panelClosingActions.subscribe((c) => {
+      this.onEnter();
+    });
   }
 
 }

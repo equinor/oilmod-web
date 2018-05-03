@@ -16,7 +16,11 @@
     </ng-container>
     <ng-template #info>{{ helpText }}</ng-template>
   </mat-hint>
-  <mat-autocomplete #searchList="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelect($event)">
+  <mat-autocomplete #searchList="matAutocomplete"
+                    [displayWith]="displayFn"
+                    (optionSelected)="onSelect($event)"
+
+  >
     <mat-option *ngFor="let item of filtered$ | async" [value]="item">
       {{ displayFn(item) }}
     </mat-option>
