@@ -371,11 +371,18 @@ $content-height: 20px;
   .icon {
     text-align: center;
   }
-  .warning {
+  .warning, .sto-datatable-body-cell--warning{
     color: $warning-color;
   }
-  .error {
+  .error, .sto-datatable-body-cell--error{
     color: $error-color;
+  }
+  .dimmed, .sto-datatable-body-cell--dimmed{
+    color: rgba(0,0,0,0.38);
+    &.sto-datatable-body-cell--warning{
+      color: rgba(255, 165, 0, 0.57);
+
+    }
   }
 
   .status {
