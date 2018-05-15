@@ -1,7 +1,7 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSelectFilterComponent } from './mat-select-filter.component';
+import { StoSelectFilterComponent } from './sto-select-filter.component';
 import { MatInputModule, MatIconModule, MatCheckboxModule } from '@angular/material';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { MatInputModule, MatIconModule, MatCheckboxModule } from '@angular/mater
     MatInputModule, MatIconModule, MatCheckboxModule,
     FormsModule, ReactiveFormsModule
   ],
-  declarations: [MatSelectFilterComponent],
-  exports: [MatSelectFilterComponent],
+  declarations: [StoSelectFilterComponent],
+  exports: [StoSelectFilterComponent],
 })
-export class MatSelectFilterModule { }
+export class StoSelectFilterModule { }
