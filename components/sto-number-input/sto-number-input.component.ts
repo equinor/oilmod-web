@@ -40,12 +40,9 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     private _forceValue: any;
     @Input() set forceValue(forceValue){
         this._forceValue = forceValue;
-        if(forceValue || forceValue === 0){
-            this.writeValue(forceValue);
-        }
-
+        this.writeValue(forceValue);
     }
-    get forceValue(): any{
+    get forceValue(): any {
         return this._forceValue;
     }
 

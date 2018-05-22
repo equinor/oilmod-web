@@ -65,7 +65,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
    * Value should not normally be used, will be overwtit
    */
   public value: any;
-  public errors: ValidationErrors | null;
+  public errors: string[] = [];
   public touched: any;
   public control = new FormControl();
 
@@ -125,8 +125,8 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   }
 
   private markErrors(control){
-    this.touched = control.touched;
-    this.errors = control.errors;
+    this.touched = control.touched || control.dirty;
+    this.errors = control.errors ? Object.values(control.errors) : [];
   }
 
 
