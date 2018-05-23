@@ -197,8 +197,11 @@ export class StoComplexDatatableComponent extends DatatableComponent {
       }
       const fields = Object.keys(data);
       fields.forEach(f => {
-        this.rows.filter(row => row.hasOwnProperty(f)).forEach(row => {
-          val.data[f] += row[f];
+        this.rows
+          // .filter(row => row.hasOwnProperty(f))
+          .filter(row => this.nestedValue(f, row))
+          .forEach(row => {
+          val.data[f] += this.nestedValue(f, row);
         });
       });
       this.linkColumns(val.columns, this._internalColumns);
@@ -221,6 +224,21 @@ export class StoComplexDatatableComponent extends DatatableComponent {
       }
     }
     this.setSummaryRowCellWidth(summaryColumns);
+  }
+
+  private nestedValue(location: string, object: Object): number|null {
+    if (object instanceof Object) {
+      const keys = location.split('.'); // Split object keys by .
+      let val: number | Object = Object.assign({}, object);
+      let i = 0;
+      while (i < keys.length && !!val) {
+        const key = keys[i];
+        val = val[key];
+        i++;
+      }
+      return typeof val === 'number' ? val : 0;
+    }
+    return null;
   }
 
   private setSummaryRowCellWidth(summaryColumns: any[]) {

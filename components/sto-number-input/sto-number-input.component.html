@@ -6,6 +6,7 @@
         [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
         [class.mat-form-field-invalid]="touched && errors">
 
+    <mat-label *ngIf="label">{{label}}</mat-label>
     <input *ngIf="!(readonly && suffix)"
            [ngStyle]="{textAlign : textAlign}"
            matInput
@@ -24,7 +25,7 @@
                 [readonly]="readonly"
                 [disabled]="disabled"
                 matInput type="text"
-                [value]="control.value + ' ' + suffix" />
+                [value]="control.value ? control.value + ' ' + suffix : ''" />
 
     <span *ngIf="suffix && !readonly" matSuffix>{{ suffix }}</span>
     <mat-hint [class.mat-error]="touched && errors">

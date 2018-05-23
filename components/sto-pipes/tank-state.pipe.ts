@@ -5,7 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TankStatePipe implements PipeTransform {
 
-  transform(tankId: string, tankStates: TankState[], key: string): any {
+  /**
+   * tankState returns the requested key from a tank state, given that it exists.
+   * @param {string} tankId
+   * @param {TankState[]} tankStates
+   * @param {string} key
+   * @param {"operational" | "capcity"} unit
+   * @returns {any}
+   */
+  transform(tankId: string, tankStates: TankState[], key: string, unit: 'operational'|'capacity' = 'operational'): any {
     if (!tankId || !tankStates || !key) {
       return null;
     }
@@ -13,7 +21,16 @@ export class TankStatePipe implements PipeTransform {
       .filter(x => !!(x))
       .find(t => t.tankId === tankId);
     if (tankState) {
-      return tankState[key];
+      const keySplit = key.split('.');
+      const section = keySplit[0];
+      const value: Value = tankState[section];
+      // To preserve backwards compability with old model, we check if we can access the unit binding
+      // If the [unit] is null, 0 or anything else, we use it. Otherwise, we assume the old tank state model
+      if (value && (value[unit] || value[unit] === 0 || value[unit] === null)) {
+        return value[unit];
+      } else {
+        return value;
+      }
     }
     console.error('Not Found');
     return null;
@@ -25,11 +42,14 @@ export class TankState {
   tankId: string;
   tankName?: string;
   unit?: string;
-  balance: number;
-  statoilStock: number;
-  ullage: number;
   qualityIds?: string[];
   tankQualities: TankQuality[];
+  [key: string]: Value | any;
+}
+
+export class Value {
+  operational: number;
+  capacity: number;
 }
 
 export class TankQuality {
