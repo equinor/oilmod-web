@@ -38,6 +38,8 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
 
+  public indeterminate : boolean;
+
   private _value: any;
   @Input() set value(value : any){
     this._value = value;
@@ -47,15 +49,41 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
     return this._value;
   };
 
-  private _isChecked : boolean;
-  @Input() set isChecked(isChecked : boolean){
-    this._isChecked = isChecked;
+
+  private _total : number;
+  @Input() set total(total : number){
+    this._total = total;
+  }
+  get total(): number{
+    return this._total;
+  };
+
+
+  private _selected : number;
+  @Input() set selected(selected : number){
+    if(this.total === selected){
+      this.isChecked(true);
+      this.indeterminate = false;
+    } else if(selected > 0){
+      this.indeterminate = true;
+      this.isChecked(false);
+    }
+    else{
+      this.indeterminate = false;
+      this.isChecked(false);
+    }
+    this._selected = selected;
+  }
+  get selected(): number{
+    return this._selected;
+  };
+
+
+  public isChecked(isChecked : boolean){;
     this.checkboxControl.setValue(isChecked, {emitEvent : false});
   }
 
-  get isChecked(): boolean{
-    return this._isChecked;
-  };
+
 
   @Output() selectAll = new EventEmitter<boolean>();
   @Output() valueChanges = new EventEmitter<boolean>();
@@ -95,7 +123,6 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(isChecked => {
-        this.isChecked = isChecked;
         this.selectAll.emit(isChecked)
       });
 

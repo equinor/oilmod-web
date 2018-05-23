@@ -1,10 +1,10 @@
-<ng-container *ngIf="isFilter;else noFilter">
+<div class="sto-form" style="width: 100%" *ngIf="isFilter;else noFilter">
     <mat-form-field class="sto-form__field sto-form__field--without-placeholder" floatLabel="never" floatPlaceholder="never">
-
         <span matPrefix>
             <mat-checkbox color="primary"
            class="sto-select-filter__checkbox"
            #selectAll
+           [indeterminate]="indeterminate"
            [formControl]="checkboxControl">
         </mat-checkbox>
         </span>
@@ -20,13 +20,13 @@
         <mat-icon *ngIf="inputControl.value?.length <= 0"
                   matSuffix>search</mat-icon>
     </mat-form-field>
-</ng-container>
+</div>
 <ng-template #noFilter>
     <div class="sto-select-filter__select-all mat-option">
         <mat-checkbox color="primary"
                       class="sto-select-filter__select-all__checkbox "
                       #selectAll
-
+                      [indeterminate]="indeterminate"
                       [formControl]="checkboxControl">
            All
         </mat-checkbox>

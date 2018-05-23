@@ -20,13 +20,29 @@
   background-color: white;
   z-index: 1;
   .sto-form__field{
-    height: 49px;
+    height: 48px;
     .mat-input-flex.mat-form-field-flex {
       padding: 2px 16px;
       height: 48px;
       border-radius: 0;
       .mat-input-prefix, mat-form-field-prefix{
         margin-right: 16px;
+      }
+    }
+    .mat-form-field-underline{
+      width: 100%;
+      left: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      .mat-form-field-underline .mat-form-field-ripple{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+    &.mat-focused{
+      .mat-form-field-underline .mat-form-field-ripple{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
       }
     }
 
