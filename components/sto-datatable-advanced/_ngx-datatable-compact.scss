@@ -8,6 +8,20 @@ $icon-height: 16px;
 
   .ngx-datatable.sto-datatable, .ngx-datatable.sto-datatable.inside-card {
     .datatable-body {
+
+      .progress-linear {
+        height: 3px;
+        margin: -3px 0 0 0;
+
+        .container {
+          height: 3px;
+
+          .bar {
+            height: 3px;
+          }
+        }
+      }
+
       .datatable-body-row{
         .datatable-body-cell{
           padding: 2px 8px;

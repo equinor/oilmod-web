@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { translateXY } from '../../../../vendor/ngx-datatable/utils';
 import { DataTableBodyComponent } from '../../../../vendor/ngx-datatable/components/body/body.component';
 import { TableColumn } from '../../../../vendor/ngx-datatable/types/table-column.type';
@@ -16,7 +24,9 @@ import { StoScrollerComponent } from './sto-scroller.component';
 			  [selectEnabled]="selectEnabled"
 			  [selectionType]="selectionType"
 			  [rowIdentity]="rowIdentity"
-			  (select)="select.emit($event)"
+    		[canMoveRows]="canMoveRows"
+        (moveRow)="onMoveRow($event)"
+    		(select)="select.emit($event)"
 			  (activate)="activate.emit($event)">
 		  <datatable-progress
 				  *ngIf="loadingIndicator">
@@ -109,6 +119,12 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
   _summaryRow: any;
 	@ViewChild(StoScrollerComponent) scroller: StoScrollerComponent;
+	@Input() canMoveRows: boolean;
+	@Input() moveRowMapper: Function;
+	@Input() moveRowsCheck: Function;
+	@Output() moveRow = new EventEmitter();
+	private moveTimeout: any;
+	private moveModel: {source: any, target: any};
 
   /**
    * Creates an instance of DataTableBodyComponent.
@@ -157,8 +173,64 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
     return style;
   }
+  private canMoveRow(row: any, target: any): boolean {
+    let canMove: boolean;
+    if (this.moveRowsCheck && typeof this.moveRowsCheck === 'function') {
+      canMove = this.moveRowsCheck(row, target);
+    }
+    if (canMove) {
+      canMove = !this.loadingIndicator;
+    }
+    return canMove;
+  }
 
+  public onMoveRow({fromIndex, toIndex, event}) {
+    let source = this.temp[fromIndex];
+    const target = this.temp[toIndex];
+    if (!this.canMoveRow(source, target)) {
+      this.setMoveErrorClasses(event, fromIndex, toIndex);
+      return; // Do nothing if loading is true
+    }
+    // Index we get is from the temp rows (scroll area), but moving happens on the actual rows
+    const actualFromIndex = this.rows.findIndex(r => r === source);
+    const diffedIndex = toIndex - fromIndex;
+    const actualToIndex = diffedIndex + actualFromIndex;
+    if (this.moveModel && this.moveModel.source !== source) {
+      // Tried moving a different row - emit update and clear timeout
+      clearTimeout(this.moveTimeout);
+      this.moveRow.emit({...this.moveModel});
+      this.moveModel = null;
+      return;
+    }
+    const rows = [...this.rows];
+    if (this.moveRowMapper && typeof this.moveRowMapper === 'function') {
+      source = this.moveRowMapper(source, target);
+    }
+    rows[actualToIndex] = source;
+    rows[actualFromIndex] = target;
+    this.rows = rows;
+    if (this.moveTimeout) {
+      clearTimeout(this.moveTimeout);
+    }
+    this.moveModel = {
+      source,
+      target
+    };
+    // Debounce
+    this.moveTimeout = setTimeout(() => {
+      this.moveRow.emit({...this.moveModel});
+      this.moveModel = null;
+    }, 1000);
+  }
 
+  private setMoveErrorClasses(event: any, fromIndex: any, toIndex: any) {
+    const el: HTMLElement = event.target;
+    const direction = fromIndex > toIndex ? 'up' : 'down';
+    const moveClasses = ['datatable-body-row--move', `datatable-body-row--move--error-${direction}`];
+    el.classList.add(...moveClasses);
+    setTimeout(() => el.classList.remove(...moveClasses), 1000);
+    setTimeout(() => el.focus()); // revert focus
+  }
 
   private _summaryColumns;
   @Input() set summaryColumns(val: TableColumn[]) {

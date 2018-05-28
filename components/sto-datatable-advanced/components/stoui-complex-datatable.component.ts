@@ -9,7 +9,7 @@ import {
   QueryList,
   ViewEncapsulation,
   ViewChild,
-  HostBinding
+  HostBinding, Output, EventEmitter
 } from '@angular/core';
 
 import { translateTemplates } from '../../../vendor/ngx-datatable/utils';
@@ -79,9 +79,13 @@ import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.ty
 				  [selectCheck]="selectCheck"
 				  (page)="onBodyPage($event)"
 				  (activate)="activate.emit($event)"
+          [canMoveRows]="canMoveRows"
+          [moveRowsCheck]="moveRowsCheck"
 				  (rowContextmenu)="onRowContextmenu($event)"
 				  (select)="onBodySelect($event)"
 				  (scroll)="onBodyScroll($event)"
+          (moveRow)="moveRow.emit($event)"
+          [moveRowMapper]="moveRowMapper"
 				  [summaryRowData]="_internalSummaryRowData"
 				  [summaryColumns]="_internalSummaryColumns"
 		  >
@@ -119,6 +123,10 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   _columnGroups: ColumnGroup[];
 
   @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
+  @Input() canMoveRows: boolean;
+  @Input() moveRowsCheck: Function;
+  @Input() moveRowMapper: Function;
+  @Output() moveRow = new EventEmitter();
 
   private _height: number;
     @Input() set height(value){

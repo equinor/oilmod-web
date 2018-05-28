@@ -174,6 +174,16 @@ $content-height: 20px;
 
     .datatable-body-row {
 
+
+      &--move {
+        &--error-up .datatable-body-cell {
+          box-shadow: 0 2px 0 0 $red-medium inset;
+        }
+        &--error-down .datatable-body-cell {
+          box-shadow: 0 -2px 0 0 $red-medium inset;
+        }
+      }
+
       &.planned, &.tentative {
         font-style: italic;
       }
@@ -184,7 +194,7 @@ $content-height: 20px;
         vertical-align: top;
         border-top: 0;
         color: $datatable-cell-color;
-        transition: width 0.3s ease;
+        transition: width 0.3s ease, box-shadow 500ms linear;
         font-size: $font-size;
         font-weight: $font-weight-normal;
         &.date-cell {
@@ -252,12 +262,12 @@ $content-height: 20px;
 
     .progress-linear {
       display: block;
-      position: relative;
+      position: fixed;
+      z-index: 10;
       width: 100%;
       height: 5px;
       padding: 0;
-      margin: 0;
-      //position: absolute;
+      margin: -5px 0 0 0;
 
       .container {
         display: block;
