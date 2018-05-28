@@ -194,7 +194,7 @@ $content-height: 20px;
         vertical-align: top;
         border-top: 0;
         color: $datatable-cell-color;
-        transition: width 0.3s ease, box-shadow 500ms linear;
+        transition: width 0.3s ease, box-shadow 250ms linear;
         font-size: $font-size;
         font-weight: $font-weight-normal;
         &.date-cell {

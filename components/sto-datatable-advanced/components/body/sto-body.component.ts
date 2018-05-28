@@ -228,7 +228,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     const direction = fromIndex > toIndex ? 'up' : 'down';
     const moveClasses = ['datatable-body-row--move', `datatable-body-row--move--error-${direction}`];
     el.classList.add(...moveClasses);
-    setTimeout(() => el.classList.remove(...moveClasses), 1000);
+    setTimeout(() => el.classList.remove(...moveClasses), 500);
     setTimeout(() => el.focus()); // revert focus
   }
 
