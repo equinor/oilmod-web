@@ -6,6 +6,7 @@
   }
   .datatable-footer-summary-row {
     .datatable-row-group.datatable-row-left .datatable-body-cell {
+      border-right: 1px solid $border-color-dark;
       border-bottom-width: 0;
     }
     :hover {
