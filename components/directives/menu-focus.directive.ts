@@ -78,10 +78,12 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
    */
   private handleFakeFocus(e: KeyboardEvent) {
     if (e.keyCode === DOWN_ARROW) {
+      e.preventDefault();
       this.focusElement.blur();
       this.menu.focusFirstItem();
     }
     if (e.keyCode === UP_ARROW) {
+      e.preventDefault();
       this.focusElement.blur();
       const last = this.menuItems.filter(item => !item.disabled)
         .reverse()[0];
