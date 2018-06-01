@@ -10,10 +10,23 @@ import { DOWN_ARROW, LEFT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
   selector: '[stoMenuFocus]'
 })
 export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
+  /**
+   * Element created on the dom (and removed on host destroy), use to have an inivisible initial focus
+   */
   private focusElement: HTMLElement;
   private destroyed$ = new Subject();
+  /**
+   * QueryList<Menuitem> contains all the menu items for the given directive
+   */
   @ContentChildren(MatMenuItem) menuItems: QueryList<MatMenuItem>;
 
+  /**
+   * triggers is a QueryList of all the triggers pointing to this menu
+   * This needs to be applied from the host component, and needs to be via ViewChildren
+   * If we just pass in the actual trigger, we can't subscribe to change events, meaning any triggers added *after*
+   * view is initialized, will not be checked
+   * @param {QueryList<MatMenuTrigger>} triggers
+   */
   @Input()
   set triggers(triggers: QueryList<MatMenuTrigger>) {
     if (triggers) {
@@ -23,6 +36,11 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     }
   }
 
+  /**
+   * Listens for when the menu is opened, and focuses on {@link focusElement} after waiting 20 ms (~1 frame)
+   * Will additionally replace the listeners whenever new triggers are added
+   * @param {QueryList<MatMenuTrigger>} triggers
+   */
   private listenOnMenuOpened(triggers: QueryList<MatMenuTrigger>) {
     triggers.changes
       .pipe(
@@ -39,6 +57,11 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     });
   }
 
+  /**
+   * Handles keydown events on our fake menu item
+   * @see handleFakeFocus
+   * @param {HTMLElement} el
+   */
   private setFocusFromElement(el: HTMLElement) {
     fromEvent(el, 'keydown')
       .pipe(
@@ -49,6 +72,10 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     );
   }
 
+  /**
+   * Handler for keyboard events on our fake menu item
+   * @param {KeyboardEvent} e
+   */
   private handleFakeFocus(e: KeyboardEvent) {
     if (e.keyCode === DOWN_ARROW) {
       this.focusElement.blur();
@@ -67,10 +94,18 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     }
   }
 
+  /**
+   * Handle subscription errors - a lot of the methods we use are undocumented and private
+   * To ensure we don't get an application crash, we use this to handle our errors
+   * @param {Error} err
+   */
   private illegalErrorException(err: Error) {
     console.error('Menu directive depends on some illegal methods - this has now broken', err);
   }
 
+  /**
+   * Creates {@link focusElement}, and appends it outside of the viewport
+   */
   private createHiddenFocusElement() {
     const el = document.createElement('button');
     el.style.position = 'fixed';
@@ -79,6 +114,11 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     this.focusElement = el;
   }
 
+  /**
+   * Listens for changes to hover on the items in the menu, and focuses the element, enabling keyboard shortcuts
+   * Additionally listens to changes to dynamic menu items, and replaces the listener
+   * @param {QueryList<MatMenuItem>} menuItems
+   */
   private updateFocusOnHover(menuItems: QueryList<MatMenuItem>) {
     menuItems.changes
       .pipe(
@@ -110,6 +150,9 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();
+    /**
+     * Strip our fake menu element from the DOM on destroy to avoid memory leaks.
+     */
     document.body.removeChild(this.focusElement);
   }
 
