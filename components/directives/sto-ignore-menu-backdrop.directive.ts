@@ -1,8 +1,18 @@
-import { Directive, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
-import { MatSelect } from '@angular/material';
-import {  OverlayRef } from '@angular/cdk/overlay';
+import {
+  AfterContentInit,
+  ContentChildren,
+  Directive,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewContainerRef
+} from '@angular/core';
+import { MatOption, MatSelect } from '@angular/material';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs/Subject';
-import { takeUntil } from 'rxjs/operators';
+import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 /**
  * This is a menu that adds a style to the backdrop that allow click events to go through.
@@ -12,8 +22,9 @@ import { takeUntil } from 'rxjs/operators';
 @Directive({
   selector: '[stoIgnoreMenuBackdrop]'
 })
-export class StoIgnoreMenuBackdropDirective implements OnInit, OnDestroy {
+export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit, OnDestroy {
 
+  @ContentChildren(MatOption) options: QueryList<MatOption>;
   private destroyed$ = new Subject();
   private _matSelect: MatSelect;
   private _overlayRef: OverlayRef;
@@ -24,6 +35,28 @@ export class StoIgnoreMenuBackdropDirective implements OnInit, OnDestroy {
       this._matSelect.close();
     }
   };
+
+  ngAfterContentInit() {
+    this.focusOptionOnHover(this.options)
+  }
+  private focusOptionOnHover(options: QueryList<MatOption>) {
+    options.changes
+      .pipe(
+        startWith(options),
+        switchMap(options => merge(
+          ...options.map(
+            (opt, i) =>
+              fromEvent(opt._getHostElement(), 'mouseenter')
+                .pipe(map(() => ({opt, i})))
+          )
+        )),
+        takeUntil(this.destroyed$)
+      ).subscribe(
+      ({opt, i}) => {
+        this._matSelect._keyManager.setActiveItem(i);
+      }
+    );
+  }
 
   ngOnInit(): void {
     try {

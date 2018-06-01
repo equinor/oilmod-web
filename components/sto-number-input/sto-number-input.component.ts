@@ -89,7 +89,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
         if(this.forceValue !== undefined && this.forceValue !== null){
            value = this.forceValue;
         }
-        else{
+        else if (control) {
             value = control.value;
         }
         this.writeValue(value);
