@@ -124,7 +124,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 	@Input() moveRowsCheck: Function;
 	@Output() moveRow = new EventEmitter();
 	private moveTimeout: any;
-	private moveModel: {source: any, target: any};
+	private moveModel: {source: any, target: any, beforeOrAfter: 'before'|'after'};
 
   /**
    * Creates an instance of DataTableBodyComponent.
@@ -187,6 +187,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
   public onMoveRow({fromIndex, toIndex, event}) {
     let source = this.temp[fromIndex];
     const target = this.temp[toIndex];
+    const beforeOrAfter = fromIndex > toIndex ? 'before' : 'after';
     if (!this.canMoveRow(source, target)) {
       this.setMoveErrorClasses(event, fromIndex, toIndex);
       return; // Do nothing if loading is true
@@ -214,7 +215,8 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
     }
     this.moveModel = {
       source,
-      target
+      target,
+      beforeOrAfter
     };
     // Debounce
     this.moveTimeout = setTimeout(() => {
