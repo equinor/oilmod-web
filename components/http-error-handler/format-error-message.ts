@@ -1,4 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { format } from 'date-fns';
+
 
 export const formatError = (err: HttpErrorResponse): FormattedError => {
   switch (err.status) {
@@ -13,6 +15,8 @@ export const formatError = (err: HttpErrorResponse): FormattedError => {
     case 401:
     case 403:
       return noAccessError(err);
+    case 424:
+      return dependencyError(err);
     case 503:
     case 504:
       return formatServerDownOrTimeout(err);
@@ -85,7 +89,7 @@ function noAccessLinkText(method: RequestMethods): string {
 function noAccessTitle(method: RequestMethods): string {
   let title: string;
   if (method === 'GET') {
-    title = `Sorry, but you don´t have access to view this page`;
+    title = `Sorry, but you don�t have access to view this page`;
   } else {
     title = 'You do not have edit privileges';
   }
@@ -201,13 +205,50 @@ const formatConflict = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
+const dependencyError = (err: HttpErrorResponse): FormattedError => {
+  const response = convertMessageStringToJson(err.error);
+  const errorObject: DependencyError = JSON.parse(response.message);
+  const movementTypeMap = getMovementTypeMap();
+  const movementType = movementTypeMap.get(errorObject.transactionType.toLowerCase());
+  const href = `/#/overview/movements/${movementType}/${errorObject.id}`;
+  const title = errorObject.messageHeader;
+  const {messageBody, errorMessage} = errorObject;
+  const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType}; ${errorObject.referenceKey || 'No Refernce'}</p>`;
+  const actions: ErrorAction[] = [
+    {label: `Open ${errorObject.transactionType}`, action: () => window.open(href, '_blank')},
+  ];
+
+  return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
+};
+
+function getMovementTypeMap(): Map<string, string> {
+  const movementTypeMap = new Map<string, string>();
+  movementTypeMap.set('movement import', 'imports');
+  movementTypeMap.set('movement export', 'exports');
+  movementTypeMap.set('movement t2t', 't2t');
+  movementTypeMap.set('movement itt', 'itt');
+  movementTypeMap.set('statement', 'statement');
+  movementTypeMap.set('regrade', 'regrade');
+  return movementTypeMap;
+}
+
+export interface DependencyError {
+  date: string;
+  errorMessage: string;
+  messageBody: string;
+  id: string;
+  messageHeader: string;
+  transactionType: string;
+  referenceKey: string;
+
+}
 
 export interface ServerError {
   timestamp?: number;
   status?: number;
   error?: string;
   exception?: string;
-  message: string;
+  message: any;
   path?: string;
 }
 
