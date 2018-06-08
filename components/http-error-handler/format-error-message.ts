@@ -213,7 +213,7 @@ const dependencyError = (err: HttpErrorResponse): FormattedError => {
   const href = `/#/overview/movements/${movementType}/${errorObject.id}`;
   const title = errorObject.messageHeader;
   const {messageBody, errorMessage} = errorObject;
-  const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType}; ${errorObject.referenceKey || 'No Refernce'}</p>`;
+  const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType}; ${errorObject.referenceKey || 'No Reference'}</p>`;
   const actions: ErrorAction[] = [
     {label: `Open ${errorObject.transactionType}`, action: () => window.open(href, '_blank')},
   ];
