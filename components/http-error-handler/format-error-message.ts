@@ -210,10 +210,11 @@ const dependencyError = (err: HttpErrorResponse): FormattedError => {
   const errorObject: DependencyError = JSON.parse(response.message);
   const movementTypeMap = getMovementTypeMap();
   const movementType = movementTypeMap.get(errorObject.transactionType.toLowerCase());
-  const href = `/#/overview/movements/${movementType}/${errorObject.id}`;
+  const {pathname} = window.location;
+  const href = `${pathname}#/overview/movements/${movementType}/${errorObject.id}`;
   const title = errorObject.messageHeader;
   const {messageBody, errorMessage} = errorObject;
-  const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType}</p>`;
+  const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Movement details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType};${errorObject.referenceKey}</p>`;
   const actions: ErrorAction[] = [
     {label: `Open ${errorObject.transactionType}`, action: () => window.open(href, '_blank')},
   ];
