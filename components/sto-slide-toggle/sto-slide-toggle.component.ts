@@ -119,9 +119,21 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
           takeUntil(this.destroyed$)
         ).subscribe(() => {
         this.markErrors(control);
+        this.handleParentState(control);
       });
     }
 
+  }
+
+  private handleParentState(control: AbstractControl) {
+    if (control.disabled && !this.disabled) {
+      this.disabled = true;
+      this.control.disable();
+    }
+    if (control.enabled && this.disabled) {
+      this.disabled = false;
+      this.control.enable();
+    }
   }
 
   private markErrors(control){

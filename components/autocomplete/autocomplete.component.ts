@@ -1,21 +1,24 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Host, Input, OnDestroy, OnInit, Optional, SkipSelf,
   ViewChild
 } from '@angular/core';
 import {
-  AbstractControl,
-  ControlValueAccessor,
+  AbstractControl, ControlContainer,
+  ControlValueAccessor, FormBuilder,
   FormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator
+  Validator, ValidatorFn, Validators
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
-import { map, debounceTime, tap, filter } from 'rxjs/operators';
+import { map, debounceTime, tap, filter, takeUntil, startWith } from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import { AutoCompleteValidator } from './autocomplete.validate';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { Subject } from 'rxjs/Subject';
 
 
 @Component({
@@ -29,11 +32,6 @@ import {Observable} from 'rxjs';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => StoAutocompleteComponent),
       multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => StoAutocompleteComponent),
-      multi: true,
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,7 +41,8 @@ import {Observable} from 'rxjs';
  * It takes care of a lot of the grunt work required by the original one, and simplifies usage by automatically
  * ensuring the value set exists in the list
  */
-export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, Validator, AfterViewInit{
+export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnDestroy {
+  @Input() formControlName: string;
   @ViewChild(MatAutocompleteTrigger) searchInput: MatAutocompleteTrigger;
   /**
    * unfiltered list of items to search for
@@ -88,6 +87,11 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
   @Input() ignoredIds: any[];
 
   @Input() helpText: string;
+
+  /**
+   * @deprecated inheritedErrors are now being retrieved from the host control, rendering this moot.
+   * @returns {ValidationErrors | null}
+   */
   @Input() get inheritedErrors(): ValidationErrors | null {
     return this._inheritedErrors;
   };
@@ -98,6 +102,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
     }
   }
   public elementHasFocus: boolean;
+  private destroyed$ = new Subject();
   private _inheritedErrors: ValidationErrors | null;
   public filtered$: Observable<any[]>;
   public searchControl = new FormControl();
@@ -108,20 +113,11 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
       this.searchControl.markAsDirty();
     }
   }
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  validate(c: AbstractControl) {
-    if (this.ignoreValidation) {
-      this.errors = c.errors;
-      return null;
-    }
-    const value = this.searchControl.value;
-    const isInvalid = typeof value === 'string';
-    const error = isInvalid && value ? {optionSelected: this.validationMessage} : null;
-    this.errors = (c.errors || error) ? Object.assign({}, c.errors, error) : null;
-    this.cdr.markForCheck();
-    return !isInvalid ? null : error;
-  }
+  private parent: AbstractControl;
+  constructor(private cdr: ChangeDetectorRef,
+              private fb: FormBuilder,
+              @Optional() @Host() @SkipSelf()
+              private controlContainer: ControlContainer,) {}
 
   onEnter(event?: KeyboardEvent) {
     if (event && event.keyCode === Key.Enter) {
@@ -137,11 +133,17 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
         return this.ignoredIds.indexOf(item.id) === -1;
       })
       .filter(item => item[this.searchForKey].match(new RegExp(value, 'i')));
+    const directMatchRe = new RegExp(`^${value}$`, 'i');
+    const directMatch = this.unfiltered
+      .find(item => directMatchRe.test(item[this.searchForKey]));
 
     if (results.length === 1) {
       this.searchControl.setValue(results[0]);
       this.propagateChange(results[0][this.valueKey]);
-      this.validate(this.searchControl);
+      this.searchInput.closePanel();
+    } else if (directMatch) {
+      this.searchControl.setValue(directMatch);
+      this.propagateChange(directMatch[this.valueKey]);
       this.searchInput.closePanel();
     }
   }
@@ -156,7 +158,6 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
       const foundElement = this.unfiltered.find(el => el[this.valueKey] === value);
       this.searchControl.setValue(foundElement);
     }
-
   }
 
   propagateChange = (_: any) => {
@@ -202,12 +203,59 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
       if (value === '') {
         value = null;
       }
-      this.propagateChange(value);
+      this.beforePropagateChange(value);
     }
   });
+  private beforePropagateChange(value) {
+    const parent = this.controlContainer.control.get(this.formControlName);
+    parent.updateValueAndValidity({onlySelf: true});
+    this.propagateChange(value);
+  }
+  private mapErrors() {
+    return map(() => {
+      return this.parent.errors;
+    });
+  }
+  private monkeypatchSetValidators(control: AbstractControl) {
+    const origFunc = control.setValidators;
+    const self = this;
+    control.setValidators = function(newValidator: ValidatorFn|ValidatorFn[]|null) {
+      let args = [];
+      if (newValidator instanceof Array) {
+        args = [...newValidator];
+      } else if (!!newValidator) {
+        args.push(newValidator);
+      }
+      if (!self.ignoreValidation) {
+        args.push(AutoCompleteValidator(self.unfiltered, self.valueKey));
+      }
+      origFunc.apply(this, [args]);
+    }
+  }
 
   ngOnInit() {
-
+    this.parent = this.controlContainer.control.get(this.formControlName);
+    const validators = [];
+    if (this.parent.validator) {
+      validators.push(this.parent.validator);
+    }
+    validators.push(AutoCompleteValidator(this.unfiltered, this.valueKey));
+    if (!this.ignoreValidation) {
+      this.parent.setValidators(Validators.compose(validators));
+    }
+    this.monkeypatchSetValidators(this.parent);
+    this.parent.valueChanges.pipe(
+      startWith(''),
+      debounceTime(50),
+      this.mapErrors(),
+      takeUntil(this.destroyed$)
+    ).subscribe(err => {
+      this.errors = err;
+      if (this.parent.touched && this.searchControl.untouched) {
+        this.searchControl.markAsTouched();
+      }
+      this.cdr.markForCheck();
+    });
 
     this.filtered$ = this.searchControl
       .valueChanges
@@ -228,6 +276,10 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, V
     this.searchInput.panelClosingActions.subscribe((c) => {
       this.onEnter();
     });
+  }
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
 }
