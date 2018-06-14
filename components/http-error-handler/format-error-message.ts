@@ -241,6 +241,7 @@ export interface DependencyError {
   messageHeader: string;
   transactionType: string;
   referenceKey: string;
+  externalReference: string;
 
 }
 
