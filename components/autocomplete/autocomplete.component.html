@@ -4,6 +4,7 @@
 >
   <mat-label *ngIf="label">{{ label }}</mat-label>
   <input matInput
+         (blur)="parent.markAsTouched()"
          [matAutocomplete]="searchList"
          (keyup.enter)="onEnter($event)"
          [placeholder]="placeholder ? placeholder : ''"
@@ -12,7 +13,7 @@
   <mat-hint [class.mat-error]="searchControl.touched && errors">
     <ng-container *ngIf="searchControl.touched && errors; else info">
       <span *ngIf="errors.required">Field is required</span>
-      <span *ngIf="errors.optionSelected">{{ errors.optionSelected }}</span>
+      <span *ngIf="errors.optionSelected">{{ validationMessage }}</span>
     </ng-container>
     <ng-template #info>{{ helpText }}</ng-template>
   </mat-hint>
