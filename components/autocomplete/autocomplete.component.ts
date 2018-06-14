@@ -113,7 +113,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
       this.searchControl.markAsDirty();
     }
   }
-  private parent: AbstractControl;
+  public parent: AbstractControl;
   constructor(private cdr: ChangeDetectorRef,
               private fb: FormBuilder,
               @Optional() @Host() @SkipSelf()
