@@ -155,7 +155,9 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     /**
      * Strip our fake menu element from the DOM on destroy to avoid memory leaks.
      */
-    document.body.removeChild(this.focusElement);
+    if (this.focusElement) {
+      document.body.removeChild(this.focusElement);
+    }
   }
 
   constructor(@Host() @Self() private menu: MatMenu) {

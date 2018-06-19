@@ -6,6 +6,9 @@
         [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
         [class.mat-form-field-invalid]="touched && errors">
 
+    <span matPrefix>
+        <ng-content select=".sto-number-input__prefix"></ng-content>
+    </span>
     <mat-label *ngIf="label">{{label}}</mat-label>
     <input *ngIf="!(readonly && suffix)"
            [ngStyle]="{textAlign : textAlign}"
