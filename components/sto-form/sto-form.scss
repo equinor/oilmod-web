@@ -130,9 +130,12 @@ $height: 72px;
       background-color: $form-field-bg;
       align-items: center;
       .mat-icon-button {
-        .mat-icon {
+        .mat-icon, .mat-datepicker-toggle-default-icon {
           font-size: 1rem;
           color: $black-light;
+        }
+        .mat-datepicker-toggle-default-icon{
+          margin-top: -2px;
         }
       }
       .mat-icon {
