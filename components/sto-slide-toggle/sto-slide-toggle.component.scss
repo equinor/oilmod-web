@@ -7,3 +7,8 @@
 .sto-slide-toggle__input{
     pointer-events: none;
 }
+
+// If multiple errors, we need to have separate lines per error. Previously it would directly append them on one line
+.mat-error span {
+    display: inherit;
+}
