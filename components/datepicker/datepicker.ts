@@ -290,7 +290,7 @@ export class MatMonthPicker<D> implements OnDestroy {
     if (this._focusedElementBeforeOpen &&
       typeof this._focusedElementBeforeOpen.focus === 'function') {
 
-      //this._focusedElementBeforeOpen.focus(); //Commented out because of IE. We don't want to be able to write date.
+      this._focusedElementBeforeOpen.focus();
       this._focusedElementBeforeOpen = null;
     }
 

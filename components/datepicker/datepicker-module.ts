@@ -25,6 +25,7 @@ import {MatDatepickerIntl} from './datepicker-intl';
 import {MatDatepickerToggle} from './datepicker-toggle';
 import {MatMonthView} from './month-view';
 import {MatYearView} from './year-view';
+import { StoMonthFormFieldClickDirective } from './sto-monthformfield-click.directive';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {MatYearView} from './year-view';
     MatDatepickerToggle,
     MatMonthView,
     MatYearView,
+    StoMonthFormFieldClickDirective
   ],
   declarations: [
     MatCalendar,
@@ -55,6 +57,7 @@ import {MatYearView} from './year-view';
     MatDatepickerToggle,
     MatMonthView,
     MatYearView,
+    StoMonthFormFieldClickDirective
   ],
   providers: [
     MatDatepickerIntl,
