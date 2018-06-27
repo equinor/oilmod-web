@@ -157,6 +157,8 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
     if (value) {
       const foundElement = this.unfiltered.find(el => el[this.valueKey] === value);
       this.searchControl.setValue(foundElement);
+    } else {
+      this.searchControl.setValue(null);
     }
   }
 

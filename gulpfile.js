@@ -11,6 +11,7 @@ const runSequence = require('run-sequence');
 const del = require('del');
 const rollup = require('rollup-stream');
 const source = require('vinyl-source-stream');
+const copyPackageJson = require('./postbump');
 
 const globals = {
   'rxjs/Observable': 'Rx',
@@ -111,8 +112,14 @@ gulp.task('build', function(cb) {
 gulp.task('default', ['clean'], function(cb) {
   runSequence(
     'build',
+    'packagejson',
     cb
   );
+});
+
+gulp.task('packagejson', function(cb) {
+  copyPackageJson()
+    .then(() => cb())
 });
 
 gulp.task('sass', function() {
