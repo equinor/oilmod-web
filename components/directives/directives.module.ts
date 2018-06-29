@@ -4,6 +4,7 @@ import { QuickKeysDirective } from './quick-keys.directive';
 import { StoIgnoreMenuBackdropDirective } from './sto-ignore-menu-backdrop.directive';
 import { StoIgnoreContextmenuBackdropDirective } from './sto-ignore-contextmenu-backdrop.directive';
 import { StoMenuFocusDirective } from './menu-focus.directive';
+import { DateFormFieldClickDirective } from './date-form-field-click.directive';
 
 
 @NgModule({
@@ -13,7 +14,14 @@ import { StoMenuFocusDirective } from './menu-focus.directive';
    , StoIgnoreMenuBackdropDirective
    , StoIgnoreContextmenuBackdropDirective
    , StoMenuFocusDirective
+   , DateFormFieldClickDirective
   ],
-  exports: [QuickKeysDirective, StoIgnoreMenuBackdropDirective, StoIgnoreContextmenuBackdropDirective, StoMenuFocusDirective]
+  exports: [
+    QuickKeysDirective
+    , StoIgnoreMenuBackdropDirective
+    , StoIgnoreContextmenuBackdropDirective
+    , StoMenuFocusDirective
+    , DateFormFieldClickDirective
+  ]
 })
 export class StoDirectivesModule {}
