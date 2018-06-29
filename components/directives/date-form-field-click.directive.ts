@@ -18,10 +18,7 @@ export class DateFormFieldClickDirective implements OnInit, OnDestroy {
     this.stoDateFormFieldClick.closedStream
       .pipe(
         takeUntil(this.destroy$)
-      ).subscribe(
-      () => this.inputs.first.focus(),
-      console.error,
-      () => console.log('Destroyed'));
+      ).subscribe(() => this.inputs.first.focus());
   }
   ngOnDestroy() {
     this.destroy$.next(true);
