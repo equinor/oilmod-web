@@ -2,12 +2,9 @@
 @import "../../style/colors";
 
 //colors: datatable
-$warning-color: $orange-dark;
-$warning-bg-color: $orange-light;
-$error-color: $red-medium;
-$error-bg-color: $red-light;
+
 $info-color: $purple-dark;
-$info-bg-color: $blue-light;
+$info-background-color: $blue-light;
 
 :host {
   width: 100%;
@@ -19,8 +16,8 @@ $info-bg-color: $blue-light;
 }
 
 :host(.warning) {
-  background-color: $warning-bg-color;
-  border-color: $warning-color;
+  background-color: $warning-color-background;
+  border-color: $warning-color-border;
 
   .mat-icon {
     color: $warning-color;
@@ -28,8 +25,8 @@ $info-bg-color: $blue-light;
 }
 
 :host(.error) {
-  background-color: $error-bg-color;
-  border-color: $error-color;
+  background-color: $error-color-background;
+  border-color: $error-color-border;
 
   .mat-icon {
     color: $error-color;
@@ -37,11 +34,20 @@ $info-bg-color: $blue-light;
 }
 
 :host(.info) {
-  background-color: $info-bg-color;
-  border-color: $info-color;
+  background-color: $success-color-background;
+  border-color: $success-color-border;
 
   .mat-icon {
-    color: $info-color;
+    color: $success-color;
+  }
+}
+
+:host(.success) {
+  background-color: $success-color-background;
+  border-color: $success-color-border;
+
+  .mat-icon {
+    color: $success-color;
   }
 }
 

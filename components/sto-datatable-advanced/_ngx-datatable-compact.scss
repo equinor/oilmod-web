@@ -103,3 +103,22 @@ $icon-height: 16px;
     top: 9px;
   }
 }
+
+.sto-compact .imo-overview .ngx-datatable.sto-datatable .datatable-body .datatable-body-row .datatable-body-cell.sto-datatable__column--editable .datatable-body-cell-label {
+  .mat-input-prefix {
+    height: 19px;
+    width: 19px;
+    button.mat-icon-button {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      line-height: 18px;
+    }
+    .mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+      line-height: 16px;
+    }
+  }
+}

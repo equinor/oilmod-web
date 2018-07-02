@@ -13,3 +13,14 @@ Use to rotate icons indicating we're waiting for a response
     transform: rotate(359deg);
   }
 }
+
+.sto-animation{
+  position: fixed;
+  height: 100%;
+  width: auto;
+  z-index: 60;
+  top: 0;
+}
+.sto-animation--right{
+  right: 0;
+}

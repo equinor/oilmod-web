@@ -17,3 +17,16 @@
     }
   }
 }
+
+.sto-selection-list.mat-selection-list .mat-list-option .mat-list-text{
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mat__icon--clickable{
+  color: $black-38;
+
+  &:hover{
+    color: $black-54;
+  }
+}

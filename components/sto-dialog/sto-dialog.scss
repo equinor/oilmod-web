@@ -21,3 +21,25 @@
     margin: 0 -20px;
   }
 }
+
+.stoui-dialog .mat-dialog-container {
+  padding: 0;
+  .mat-dialog-title {
+    padding: 24px 24px 0 24px;
+    margin-bot: -4px;
+  }
+  .mat-dialog-content {
+    padding: 24px;
+    margin: 0;
+    p {
+      margin-bottom: 0;
+      white-space: pre-line;
+    }
+  }
+  .mat-dialog-actions {
+    padding: 8px;
+  }
+  .mat-dialog-actions:last-child {
+    margin-bottom: 0;
+  }
+}

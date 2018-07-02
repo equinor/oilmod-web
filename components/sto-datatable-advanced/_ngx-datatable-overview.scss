@@ -39,10 +39,10 @@
     }
     &.month-row, &.month-row:hover {
       .datatable-row-group {
-        background-color: $gray-lighter;
+        background-color: $porcelain;
         cursor: auto;
         .datatable-body-cell-label {
-          color: $black-light;
+          color: $black-54;
         }
       }
     }
@@ -54,10 +54,10 @@
     }
     &:hover {
       .datatable-row-left {
-        background-color: $white-medium;
+        background-color: $alabaster;
       }
       .datatable-row-center {
-        background-color: $white-medium;
+        background-color: $alabaster;
       }
     }
   }
@@ -67,7 +67,7 @@
     height: auto;
     border-top: 0px solid transparent;
     border-bottom: 1px solid $border-color-dark;
-    color: $black-light;
+    color: $black-54;
   }
 
   .datatable-header-cell {

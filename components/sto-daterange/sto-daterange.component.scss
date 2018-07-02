@@ -99,3 +99,10 @@
     margin: 0 calc(33% / 7 - 16px)
   }
 }
+
+// Line height date range picker
+.sto-daterange-wrapper {
+  .mat-input-infix {
+    line-height: 1;
+  }
+}
