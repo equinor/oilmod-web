@@ -66,7 +66,9 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
           takeUntil(this.destroyed$)
         ).subscribe((isOpen) => {
         this._overlayRef = this._matSelect.overlayDir.overlayRef;
-        this._overlayRef.backdropElement.style.pointerEvents = 'none';
+        if (this._overlayRef) {
+          this._overlayRef.backdropElement.style.pointerEvents = 'none';
+        }
         if (isOpen) {
           document.addEventListener('mousedown', this.closeMenu);
         } else {
