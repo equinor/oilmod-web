@@ -37,16 +37,7 @@ export class StoDataTableBodyRowComponent extends DataTableBodyRowComponent impl
     const keyCode = event.keyCode;
     const isTargetRow = event.target === this.element;
 
-    const isAction =
-      keyCode === Key.Enter ||
-      keyCode === Key.DownArrow ||
-      keyCode === Key.UpArrow ||
-      keyCode === Key.K ||
-      keyCode === Key.J ||
-      keyCode === Key.LeftArrow ||
-      keyCode === Key.RightArrow;
-
-    if (isAction && isTargetRow) {
+    if (isTargetRow) {
       event.preventDefault();
       event.stopPropagation();
 

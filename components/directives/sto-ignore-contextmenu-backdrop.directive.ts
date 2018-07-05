@@ -43,7 +43,10 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit, OnDestroy 
           takeUntil(this.destroyed$)
         ).subscribe(() => {
         const _overlay = (<any>this._matMenuTrigger)._overlayRef.backdropElement;
-        _overlay.style.pointerEvents = 'none';
+        if (_overlay) {
+          _overlay.style.pointerEvents = 'none';
+        }
+
         setTimeout(() => { // The trigger from code is set in a setTimeout so this has to be as well.
           document.addEventListener('mousedown', this.closeMenu);
         });
