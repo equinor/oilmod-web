@@ -4,7 +4,11 @@ import {
 } from '@angular/core';
 import { Renderer2, OnDestroy} from '@angular/core';
 
-
+/**
+ * The action footer is a fixed footer at the bottom of the viewport.
+ * Should be used with buttons with actions like "Save, cancel etc.
+ * Has a built-in loading/progress bar.
+ */
 @Component({
   selector: 'sto-action-footer',
   templateUrl: './sto-action-footer.component.html',
@@ -16,9 +20,20 @@ import { Renderer2, OnDestroy} from '@angular/core';
 })
 export class StoActionFooterComponent implements OnInit, OnDestroy  {
 
+  /**
+   * Triggers if the progressbar should be visible or not.
+   */
   @Input() isLoading : boolean;
+  /**
+   * If a class "sto-has-action-footer" should be appended to the body-tag.
+   * This is used to calculate correct height by adding padding to the body element as the footer is a fixed element.
+   * Default true.
+   */
   @Input() shouldAddClass = true;
 
+  /**
+   * Hostbinds to style.position. Defaults to "fixed", but could be absolute inside a relative container.
+   */
   @HostBinding('style.position') @Input() position = 'fixed';
 
   ngOnDestroy(): void {

@@ -32,28 +32,28 @@ How many decimals(fractions). Default 3. The input will round half away from zer
 ```html
 <sto-number-input [fractionSize]="5"></sto-number-input>
 ```
+
 ##### suffix
- A suffix after the number, e.g. "M3"
- ```html
+A suffix after the number, e.g. "M3".
+```html
 <sto-number-input suffix="m3"></sto-number-input>
 ```
 
 ##### readonly
- A suffix after the number, e.g. "M3"
- ```html
+Make the field as readonly.
+```html
 <sto-number-input [readonly]="true"></sto-number-input>
 ```
 
 ##### disabled
- A suffix after the number, e.g. "M3"
- ```html
-<sto-number-input [readonly]="true"></sto-number-input>
+ Toggles if a field should be readonly.
+```html
+<sto-number-input [disabled]="true"></sto-number-input>
 ```
-
 
 ##### floatPlaceholder
 The position/animation of the label. Default 'always'. https://material.angular.io/components/form-field/overview#floating-label
- ```html
+```html
 <sto-number-input floatPlaceholder="always"></sto-number-input>
 ```
 
