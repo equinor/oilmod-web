@@ -27,3 +27,8 @@ To install the package, run `yarn add ngx-stoui`
   * Something like `gulp.task('release', ['build', 'version', 'release'])`
 * Minify css
 * Sourcemaps
+
+
+### Components 
+
+
