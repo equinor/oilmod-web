@@ -1,18 +1,42 @@
 import { ViewChild, AfterViewInit, Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
-
+/**
+ * Sto filter panel is an extentiong
+ */
 @Component({
   selector: 'sto-filter-panel',
   templateUrl: './sto-filter-panel.component.html',
   encapsulation: ViewEncapsulation.None
 })
 export class StoFilterPanelComponent implements OnInit, AfterViewInit {
+
+  /**
+   * If the filter panel should be expandable. Default true.
+   */
   @Input() expandable: true;
 
+  /**
+   * If the filter panel should be expanded by default. Default false.
+   */
+  @Input() public expanded;
+
+  /**
+   * Emits {isExpanded: boolean, contentHeight: number } where
+   * isExpanded is true if the panel opens and false if not.
+   * ContentHeight is the height of the expanded content i pixels.
+   * @type {EventEmitter<{isExpanded: boolean, contentHeight: number }>}
+   */
+  @Output() toggled = new EventEmitter<{isExpanded: boolean, contentHeight: number }>();
+
+  /**
+   * Buttons and actions on the left side of the separator if both table and filter actions is present.
+   */
   @ViewChild('tableActions') contentWrapper;
+  /**
+   * Buttons and actions on the right side of the separator if both table and filter actions is present.
+   */
   @ViewChild('filterActions') contentWrapper2;
   @ViewChild('filterForm') filterForm;
-  @Output() toggled = new EventEmitter<any>();
 
   private _contentHeight : number;
   set contentHeight(contentHeight: number){
@@ -23,7 +47,6 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   }
 
   public hasSeperator = false;
-  @Input() public expanded;
 
   public toggle() {
     this.expanded = !this.expanded;
