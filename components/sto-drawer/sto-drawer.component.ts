@@ -17,6 +17,9 @@ import { CommonModule } from '@angular/common';
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
 import { RouterModule } from '@angular/router';
 
+/**
+ * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
+ */
 @Component({
   selector: 'sto-drawer',
   templateUrl: './sto-drawer.component.html',
@@ -25,36 +28,90 @@ import { RouterModule } from '@angular/router';
 })
 
 export class StoDrawerComponent implements OnInit, AfterViewInit {
-  @Input() header: string;
-  @Input() headerIcon: string;
-  @HostBinding('style.display') display = 'block';
-  @HostBinding('style.width') @Input() width = '25vw';
+  /**
+   * Offset (space) between the viewPanel right and the drawer in pixels
+   * Binds to the right style property.
+   * Used for multiple drawers where the offset would be the widht of the allready opened drawer.
+   * Default 0.
+   */
   @Input() offset: string = '0';
+  /**
+  * Offset (space) between the viewPanel top and the drawer in pixels.
+   * Binds to the top style property.
+   * Default 0.
+  */
   @Input() padding = '0px';
+  /**
+   * Position of the drawer as a string
+   * Left or right. Default right.
+   */
   @Input() position: 'left' | 'right';
+  /**
+   * Additional css class(es) as a string e.g 'sto-drawer--xmas'.
+   */
   @Input() cssClass: string;
+  /**
+   * If the drawer should close when clicked outside the drawer.
+   */
   @Input() closeOnClick: boolean;
-  @ViewChild('footer') footerRef: ElementRef;
-  @ViewChild('header') headerRef: ElementRef;
-  @Input() closeFunction: any;
-  public height = '100%';
 
-  @Output() onToggle = new EventEmitter<boolean>();
-  @Output() onClose = new EventEmitter();
-  @Output() onOpen = new EventEmitter();
-  @Output() onOpened = new EventEmitter();
-  @Output() afterClosed = new EventEmitter();
-  @Output() afterOpened = new EventEmitter();
-
-  @Output() cancel = new EventEmitter();
-  @Output() submit = new EventEmitter();
-
+  /**
+   * Esc key closed by default the drawer, this overrides that behaviour.
+   * Default false.
+   */
   @Input() ignoreEscKey = false;
 
-  @Input()
-  get open() {
+  /**
+   * If the drawer is opened.
+   */
+  @Input() get open() {
     return this._open;
   }
+
+  /**
+   * The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
+   * Default '25vw'
+   */
+  @Input() @HostBinding('style.width') width = '25vw';
+  /**
+   * @deprecated Use selector sto-drawer-header instead
+   */
+  @Input() header: string;
+  /**
+   * @deprecated Use selector sto-drawer-header instead
+   */
+  @Input() headerIcon: string;
+
+  /**
+   * Emits true if opened, false if closed.
+   * @type {EventEmitter<boolean>}
+   */
+  @Output() onToggle = new EventEmitter<boolean>();
+  /**
+   * Emits on close.
+   */
+  @Output() onClose = new EventEmitter();
+  /**
+   * Emits on open.
+   */
+  @Output() onOpen = new EventEmitter();
+
+  /**
+   * Emits on cancel. When the cancel is called by pressing ESC key.
+   * @type {EventEmitter<any>}
+   */
+  @Output() cancel = new EventEmitter();
+  /**
+   * Emits on submit. When the submit is called from code like CTRL+S.
+   * @type {EventEmitter<any>}
+   */
+  @Output() submit = new EventEmitter();
+
+  @ViewChild('footer') footerRef: ElementRef;
+  @ViewChild('header') headerRef: ElementRef;
+
+
+  @HostBinding('style.display') display = 'block';
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -64,6 +121,8 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       this.testSingleKeys(event);
     }
   }
+
+  public height = '100%';
 
   private testKeyCombos(ev: KeyboardEvent) {
     const path: HTMLElement[] = event['path'];

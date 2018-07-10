@@ -1,75 +1,112 @@
-#### Sto number input
-The number input is component that formats the number after you blur the field.
-It is possible to decide how many decimals (fractions) the number can show, input a unit.
-E.g. 1303200.32 is default formatted to 1 303 200,320
-Tries to interpret pasted values and export the numberic value to the clipboard.
-Should handle most common keystrokes as a normal input field.
+### Sto Drawer
+A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
 
-##### FormControlName
-Syncs a FormControl in an existing FormGroup to a form control element by name.
-Is used to sync the input with the Form.
+####Selector / Content projection
+##### sto-filter-header 
+Content (HTML) that is inside the header of the drawer.  
 ```html
-<sto-number-input formControlName="quantity"></sto-number-input>
-```
-
-##### Placeholder
-Text in the input field when no value.
-```html
-<sto-number-input placeholder="Please input quantity"></sto-number-input>
-```
-##### Label
-Label above the input field.
-```html
-<sto-number-input label="Quantity *"></sto-number-input>
-```
-##### textAlign
-The alignment of the text. 'right' or 'left'. Default 'right'.
-```html
-<sto-number-input textAlign="right"></sto-number-input>
-```
-##### fractionSize
-How many decimals(fractions). Default 3. The input will round half away from zero. 7.9995 => 8 and -7.9995 => -8
-```html
-<sto-number-input [fractionSize]="5"></sto-number-input>
+<sto-drawer-header>
+		<h3>Price</h3>
+		<div class="sto-drawer__header__suffix">
+			<button type="button"
+					mat-icon-button
+					(click)="cancel()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</sto-drawer-header>
 ```
 
-##### suffix
-A suffix after the number, e.g. "M3".
+##### sto-drawer__footer
+Content (HTML) that is inside the header footer.  
 ```html
-<sto-number-input suffix="m3"></sto-number-input>
+<sto-drawer-footer>
+		<mat-progress-bar class="sto-progress-bar" mode="indeterminate" *ngIf="!hasData || (isLoading$ | async)"></mat-progress-bar>
+		<button mat-raised-button (click)="save()" color="primary">Save</button>
+		<button mat-button (click)="cancel(true)" color="primary">Cancel</button>
+</sto-drawer-footer>
 ```
 
-##### readonly
-Make the field as readonly.
+####Input 
+##### offset
+Offset (space) between the viewPanel right and the drawer in pixels. Binds to the right style property.
+Used for multiple drawers where the offset would be the width of the already opened drawer.
+Default 0.
 ```html
-<sto-number-input [readonly]="true"></sto-number-input>
+<sto-drawer-footer offset="32px">
 ```
 
-##### disabled
- Toggles if a field should be readonly.
+##### padding
+Offset (space) between the viewPanel top and the drawer in pixels.
+Binds to the top style property.
+ Default 0.
 ```html
-<sto-number-input [disabled]="true"></sto-number-input>
+<sto-drawer-footer padding="16px">
 ```
 
-##### floatPlaceholder
-The position/animation of the label. Default 'always'. https://material.angular.io/components/form-field/overview#floating-label
+##### position
+Position of the drawer as a string
+Left or right. Default right.
 ```html
-<sto-number-input floatPlaceholder="always"></sto-number-input>
+<sto-drawer-footer position="left">
 ```
 
-##### withoutPlaceHolder
-Disabled styling assosiated with label. Used in tables and such.
- ```html
-<sto-number-input [withoutPlaceHolder]="true"></sto-number-input>
-```
-
-##### forceValue
-Force value is used to set a value, which shall always be display only.
-When a forceValue is used, no other values will be propagated.
-
+##### cssClass
+Additional css class(es) as a string e.g "sto-drawer--xmas".
 ```html
-<sto-number-input [forceValue]="1.2394"></sto-number-input>
+<sto-drawer-footer cssClass="sto-drawer--xmas">
 ```
-    
-    
-     
+
+##### closeOnClick
+If the drawer should close when clicked outside the drawer.
+```html
+<sto-drawer-footer [closeOnClick]="false">
+```
+
+##### ignoreEscKey
+Esc key closed by default the drawer, this overrides that behaviour.
+Default false.
+```html
+<sto-drawer-footer [ignoreEscKey]="true">
+```
+
+##### open
+If the drawer is opened.
+```html
+<sto-drawer-footer [open]="true">
+```
+
+##### width
+The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
+Default '25vw'
+```html
+<sto-drawer-footer width="320px">
+```
+
+####Output 
+##### onToggle
+Emits true if opened, false if closed.
+```html
+<sto-drawer-footer (onToggle)="onToggle($event)">
+```
+##### onClose
+Emits on close.
+```html
+<sto-drawer-footer (onClose)="onClose()">
+```
+##### onOpen
+Emits on open.
+```html
+<sto-drawer-footer (onOpen)="onOpen()">
+```
+##### cancel
+Emits on cancel. When the cancel is called by pressing ESC key.
+```html
+<sto-drawer-footer (cancel)="onCancel()">
+```
+##### submit
+Emits on submit. When the submit is called from code like CTRL+S.
+```html
+<sto-drawer-footer (submit)="onSubmit()">
+```
+
