@@ -1,4 +1,4 @@
-export * from './components/confirm-dialog/confirm-dialog.component';
+export * from './components/sto-confirm-dialog/sto-confirm-dialog.component';
 export {StoPipesModule} from './components/sto-pipes/sto-pipes.module';
 
 export * from './components/sto-daterange/sto-daterange.module';
@@ -17,8 +17,8 @@ export * from './components/http-error-handler/http-error-handler.module';
 export * from './components/http-error-handler/http-error-handler.service';
 export * from './components/http-error-handler/unexcepted-dialog/exception-dialog.component';
 export * from './components/http-error-handler/format-error-message';
-export * from './components/autocomplete/autocomplete.module';
-export * from './components/autocomplete/autocomplete.component';
+export * from './components/sto-autocomplete/sto-autocomplete.module';
+export * from './components/sto-autocomplete/sto-autocomplete.component';
 export * from './components/sto-number-input/sto-number-input.module';
 
 export * from './components/quick-view/quick-view.module';
