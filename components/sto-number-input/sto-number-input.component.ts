@@ -10,6 +10,8 @@ import { Component, forwardRef, Host, Input, OnDestroy, OnInit, Optional, SkipSe
 import { StoNumberInputPipe } from './sto-number-input.pipe';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
+import { StoUserPreferenceService } from '../sto-user-preference/sto-user-preference.service';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * The number input is component that formats the number after you blur the field.
@@ -88,7 +90,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     return this._forceValue;
   }
 
-
+  public $hasSelectAllEnabled: Observable<boolean>;
   public value: any;
   public errors: ValidationErrors | null;
   public touched: any;
@@ -213,6 +215,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     this.initForm(control);
     this.handleErrors(control);
     this.handleChanges();
+    this.$hasSelectAllEnabled = this.userPreferenceService.hasSelectTextOnFocusEnabled.asObservable();
   }
 
   /**
@@ -244,7 +247,8 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
   constructor(
     @Optional() @Host() @SkipSelf()
     private controlContainer: ControlContainer,
-    private numberFormatterPipe: StoNumberInputPipe
+    private numberFormatterPipe: StoNumberInputPipe,
+    private userPreferenceService: StoUserPreferenceService
   ) {
   }
 

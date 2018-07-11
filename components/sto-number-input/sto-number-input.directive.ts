@@ -9,6 +9,13 @@ export class StoNumberInputDirective  {
     private _el: HTMLInputElement;
 
     @Input() fractionSize = 5;
+    private _hasSelectAllEnabled = true;
+    @Input() set hasSelectAllEnabled(hasSelectAllEnabled :boolean){
+        this._hasSelectAllEnabled = hasSelectAllEnabled;
+    }
+    get hasSelectAllEnabled() : boolean {
+        return this._hasSelectAllEnabled;
+    }
     /**
      * List of keys ignored, to work as default.
      * @type {Key[]}
@@ -208,6 +215,9 @@ export class StoNumberInputDirective  {
         }
         const value = $event.target.value;
         this._el.value = (this.numberFormatPipe.parse(value, this.fractionSize) + '').replace('.', ',');
+        if(this.hasSelectAllEnabled){
+          this._el.setSelectionRange(0, this._el.value.length);
+        }
     }
 
     @HostListener('blur', ['$event.target.value'])
@@ -220,7 +230,8 @@ export class StoNumberInputDirective  {
 
 
     constructor(private elementRef: ElementRef,
-                private numberFormatPipe: StoNumberInputPipe) {
+                private numberFormatPipe: StoNumberInputPipe,
+    ) {
         this._el = this.elementRef.nativeElement;
     }
 }

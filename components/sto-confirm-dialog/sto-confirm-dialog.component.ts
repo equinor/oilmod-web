@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
       <button color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
      </div>
   `,
-  styleUrls: ['confirm-dialog.component.scss']
+  styleUrls: ['sto-confirm-dialog.component.scss']
 })
 export class ConfirmComponent {
 

@@ -6,6 +6,7 @@
   <input matInput
          (blur)="parent.markAsTouched()"
          [matAutocomplete]="searchList"
+         stoSelectTextOnFocus
          (keyup.enter)="onEnter($event)"
          [placeholder]="placeholder ? placeholder : ''"
          #searchInput
