@@ -1,3 +1,5 @@
+@import "_ngx-datatable-variables";
+@import "_ngx-datatable-mixins";
 
 .ngx-datatable.sto-datatable__overview {
 
@@ -31,11 +33,9 @@
     }
   }
   .datatable-body-row {
-    &.active, &.active:hover  {
-      background-color: $header-bg-color;// !important;
-      .datatable-row-group {
-        background-color: $header-bg-color;
-      }
+    &.active {
+      @include datatable-row-group((background-color: $datatable-row-selected-color));
+      @include datatable-row-border($datatable-row-selected-border-color);
     }
     &.month-row, &.month-row:hover {
       .datatable-row-group {
@@ -52,13 +52,8 @@
     .datatable-row-center {
       background-color: $datatable-header-background;
     }
-    &:hover {
-      .datatable-row-left {
-        background-color: $alabaster;
-      }
-      .datatable-row-center {
-        background-color: $alabaster;
-      }
+    &:hover:not(.active) {
+      @include datatable-row-group((background-color: $datatable-row-hover-color));
     }
   }
 

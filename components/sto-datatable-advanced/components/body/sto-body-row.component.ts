@@ -1,6 +1,6 @@
 import {
   Component, ElementRef, KeyValueDiffers,
-  HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, Input
+  HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, Input, Output, EventEmitter
 } from '@angular/core';
 
 import { DataTableBodyRowComponent } from '../../../../vendor/ngx-datatable/components/body/body-row.component';

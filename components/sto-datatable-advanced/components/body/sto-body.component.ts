@@ -19,6 +19,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 	  <sto-datatable-selection
 			  #selector
 			  [selected]="selected"
+        [selectByDoubleClick]="selectByDoubleClick"
 			  [rows]="temp"
 			  [selectCheck]="selectCheck"
 			  [selectEnabled]="selectEnabled"
@@ -119,6 +120,7 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
   _summaryRow: any;
 	@ViewChild(StoScrollerComponent) scroller: StoScrollerComponent;
+  @Input() selectByDoubleClick: boolean;
 	@Input() canMoveRows: boolean;
 	@Input() moveRowMapper: Function;
 	@Input() moveRowsCheck: Function;
