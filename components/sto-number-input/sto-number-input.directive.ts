@@ -37,17 +37,38 @@ export class StoNumberInputDirective  {
             return;
         }
         e.preventDefault();
-        let pasted = e.clipboardData.getData('text');
+        let pasted = e.clipboardData.getData('text') || '';
         pasted = pasted.replace('—', '-'); //long dash, sometime used in Excel and Word
-
+        pasted = this.handleMixedCommasAndDecimals(pasted);
         let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize);
 
         if (!this.hasInvalidValues(parsedValue)) {
+
             parsedValue = parsedValue.replace('.', ',');
             this._el.value = parsedValue;
             this._el.dispatchEvent(new Event('input'));
         }
     }
+
+  /**
+   *  Handles thousand seperator with commas
+   * @param {string} orgStr eg. 123.214,123
+   * @returns {string} 123214.123
+   */
+    private handleMixedCommasAndDecimals(orgStr: string){
+      let str = orgStr + '';
+      str = str.replace(',','.');
+      let array = str.split('.');
+      if(array.length > 1){
+        let prefix = array.slice(0,array.length-1).join('');
+        str = prefix + '.' + array[array.length-1];
+      }else {
+        str = orgStr;
+      }
+      return str;
+    }
+
+
 
     /**
      * Se if parsed string contains words that indicate a failed parse.

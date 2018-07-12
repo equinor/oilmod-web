@@ -16,14 +16,14 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
 import { map, debounceTime, tap, filter, takeUntil, startWith } from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import { AutoCompleteValidator } from './autocomplete.validate';
+import { AutoCompleteValidator } from './sto-autocomplete.validate';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { Subject } from 'rxjs/Subject';
 
 
 @Component({
   selector: 'sto-autocomplete',
-  templateUrl: './autocomplete.component.html',
+  templateUrl: './sto-autocomplete.component.html',
   styles: [`mat-form-field {
       width: 100%
   }`],
@@ -45,29 +45,31 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
   @Input() formControlName: string;
   @ViewChild(MatAutocompleteTrigger) searchInput: MatAutocompleteTrigger;
   /**
-   * unfiltered list of items to search for
+   * Unfiltered list of items to search for
    */
   @Input() unfiltered: any[];
   /**
-   * Placeholder text
+   * Text in the input field when no value.
    */
   @Input() placeholder: string;
+
+  /**
+   * Label above the input field.
+   */
+  @Input() label: string;
   /**
    * Display function. Takes in the item, and returns a key. Example:
    * public displayQualityName(quality: Quality) {
    *   return quality ? quality.material : 'No Regrade';
    * }
    */
-
-  @Input() label: string;
-
   @Input() displayFn: Function;
   /**
    * valueKey is the key that gets emitted (often the elements ID)
    */
   @Input() valueKey: string;
   /**
-   * searchForKey is the key used in regex searches
+   * SearchForKey is the key used in searches. Defaults to 'id', but could be 'qualityName'.
    */
   @Input() searchForKey: string;
   /**
@@ -86,6 +88,9 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
    */
   @Input() ignoredIds: any[];
 
+  /**
+   * Help/hint text below the input
+   */
   @Input() helpText: string;
 
   /**

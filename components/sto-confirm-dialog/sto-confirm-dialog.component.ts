@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'app-confirm',
+  selector: 'sto-confirm',
   template: `
     <h1 *ngIf="data.title" mat-dialog-title>{{ data.title }}</h1>
     <div mat-dialog-content>
@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
       <button color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
      </div>
   `,
-  styleUrls: ['confirm-dialog.component.scss']
+  styleUrls: ['sto-confirm-dialog.component.scss']
 })
 export class ConfirmComponent {
 
@@ -35,7 +35,7 @@ export class ConfirmService {
   confirm(message: string, title = 'Confirm', confirmText = 'OK'): Observable<any> {
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
-      panelClass: 'stoui-dialog',
+      panelClass: 'sto-dialog',
       data: {message, title, confirmText}
     });
 
