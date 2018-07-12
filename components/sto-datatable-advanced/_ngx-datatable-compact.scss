@@ -48,9 +48,7 @@ $icon-height: 16px;
     .datatable-header{
       .datatable-header-cell {
         padding: 4px 8px;
-        .unit{
-          visibility: hidden;
-        }
+
         .column-group-header{
           &-icon{
             max-width: 8px;
@@ -63,7 +61,22 @@ $icon-height: 16px;
           }
 
         }
+        &.sto-datatable__header-column {
+          &--withunit{
+            .sto-datatable__header-column__unit{
+              margin-right: -3px; //Adjusment for weird whitepace
+              font-size: 10px;
+              position: static;
+              &::before{
+                content: "("
+              }
+              &::after{
+                content: ")"
+              }
+            }
 
+          }
+        }
       }
 
     }

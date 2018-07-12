@@ -69,7 +69,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
    */
   @Input() valueKey: string;
   /**
-   * SearchForKey is the key used in searches. Defaults to 'id', but could be 'qualityName'.
+   * searchForKey is the key used in searches. Defaults to 'id', but could be 'qualityName'.
    */
   @Input() searchForKey: string;
   /**
