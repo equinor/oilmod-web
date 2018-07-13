@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { StoAutocompleteComponent } from './sto-autocomplete.component';
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoDirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoDirectivesModule
   ],
   declarations: [StoAutocompleteComponent],
   exports: [StoAutocompleteComponent]

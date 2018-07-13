@@ -7,11 +7,12 @@ import {StoNumberInputPipe} from './sto-number-input.pipe';
 import {StoNumberInputDirective} from './sto-number-input.directive';
 import {StoNumberInputComponent} from './sto-number-input.component';
 import {CommonModule} from '@angular/common';
-import {BrowserModule} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { StoDirectivesModule } from '../directives/directives.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatInputModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatInputModule, StoDirectivesModule],
   declarations: [
     StoNumberInputPipe, StoNumberInputDirective, StoNumberInputComponent
   ],

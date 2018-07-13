@@ -31,18 +31,25 @@
           padding-left: 38px;
           margin-top: -8px;
         }
+        &--withunit {
+          text-align: right;
+          .datatable-header-cell-label{
+            position: relative;
+          }
+          .sto-datatable__header-column__unit{
+            font-size: 8px;
+            position: absolute;
+            top: -12px;
+            right: 2px;
+          }
+        }
       }
 
       .datatable-header-cell-wrapper {
         position: relative;
       }
 
-      .unit{
-        font-size: 8px;
-        position: absolute;
-        top: -12px;
-        right: 2px;
-      }
+
 
 
 
