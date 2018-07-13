@@ -1,31 +1,8 @@
 @import "_ngx-datatable-core";
 @import "_ngx-datatable-material";
 @import "_ngx-datatable-icons";
-@import "../../style/colors";
-
-
-//colors: datatable
-$warning-color: $mango-tango;
-$tentative-color: $alto;
-$planned-color: $yellow-light;
-$actual-color: $rainee;
-$day-color: $fern-green;
-
-$border-color-light: $black-8;
-$border-color-dark: $black-15;
-
-$datatable-cell-color: $black-84;
-
-$datatable-background-color: $white;
-$datatable-font-size: $font-size;
-$datatable-header-background: $white;
-$datatable-header-vertical-padding: $space-2x;
-$datatable-header-horizontal-padding: $space-2x;
-$datatable-header-font-size: 11px;
-$datatable-vertical-padding: $space-2x;
-$datatable-horizontal-padding: $space-2x;
-
-$content-height: 20px;
+@import "_ngx-datatable-variables";
+@import "_ngx-datatable-mixins";
 
 .ngx-datatable.sto-datatable {
   background: $datatable-background-color;
@@ -171,12 +148,9 @@ $content-height: 20px;
       border-top: solid 1px $black-15;
     }
 
-    .datatable-body-row:focus {
-      &:not(.active) {
-        .datatable-row-group {
-          background-color: $alabaster;
-        }
-      }
+    .datatable-body-row:focus:not(.active) {
+      @include datatable-row-border($datatable-row-focus-border-color);
+      @include datatable-row-group((background-color: $datatable-row-focus-color));
     }
 
     .datatable-body-row {
@@ -184,10 +158,10 @@ $content-height: 20px;
 
       &--move {
         &--error-up .datatable-body-cell {
-          box-shadow: 0 2px 0 0 $red-medium inset;
+          box-shadow: 0 2px 0 0 $red-medium inset !important;
         }
         &--error-down .datatable-body-cell {
-          box-shadow: 0 -2px 0 0 $red-medium inset;
+          box-shadow: 0 -2px 0 0 $red-medium inset !important;
         }
       }
 
@@ -493,10 +467,10 @@ $content-height: 20px;
 
 .datatable-body-row {
   &.active {
-    background-color: $gray-light;
+    background-color: $datatable-row-selected-color;
   }
   &:hover {
-    background-color: $white-medium;
+    background-color: $datatable-row-hover-color;
   }
 }
 

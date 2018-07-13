@@ -54,6 +54,7 @@ import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.ty
 		  <sto-complex-body
 				  [groupRowsBy]="groupRowsBy"
 				  [groupedRows]="groupedRows"
+          [selectByDoubleClick]="selectByDoubleClick"
 				  [rows]="_internalRows"
 				  [groupExpansionDefault]="groupExpansionDefault"
 				  [scrollbarV]="scrollbarV"
@@ -127,6 +128,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   @Input() moveRowsCheck: Function;
   @Input() moveRowMapper: Function;
   @Output() moveRow = new EventEmitter();
+  @Input() selectByDoubleClick: boolean;
 
   private _height: number;
     @Input() set height(value){

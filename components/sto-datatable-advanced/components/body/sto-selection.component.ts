@@ -5,6 +5,7 @@ import {
 } from '../../../../vendor/ngx-datatable/components/body/selection.component';
 import { Key } from '../../../shared/abstract-and-interfaces/keyPress.enum';
 import { SelectionType } from '../../../../vendor/ngx-datatable/types/selection.type';
+import { Keys } from '../../../../vendor/ngx-datatable/utils';
 
 @Component({
   selector: 'sto-datatable-selection',
@@ -15,7 +16,45 @@ import { SelectionType } from '../../../../vendor/ngx-datatable/types/selection.
 })
 export class StoDataTableSelectionComponent extends DataTableSelectionComponent {
   @Input() canMoveRows: boolean;
+  @Input() selectByDoubleClick: boolean;
   @Output() moveRow = new EventEmitter<{fromIndex: number, toIndex: number, event: KeyboardEvent}>();
+  public previousSelectedRow: HTMLElement;
+
+  onActivate(model: Model, index: number): void {
+    const { type, event, row } = model;
+    const chkbox = this.selectionType === SelectionType.checkbox;
+    const singleClick = !chkbox && type === 'click';
+    const clickShouldSelect = singleClick && this.shouldOpenRow(model);
+    const select = (!chkbox && type === 'dblclick') || (chkbox && type === 'checkbox') || clickShouldSelect;
+    if (select) {
+      this.selectRow(event, index, row);
+    } else if (type === 'keydown') {
+      if ((<KeyboardEvent>event).keyCode === Keys.return) {
+        this.selectRow(event, index, row);
+      } else {
+        this.onKeyboardFocus(model);
+      }
+    } else if (singleClick && this.selectByDoubleClick) {
+      this.focusCurrentRow(model.rowElement);
+    }
+    this.activate.emit(model);
+  }
+  private shouldOpenRow(model: Model): boolean {
+    if (!this.selectByDoubleClick) { // ignore all checks
+      return true;
+    }
+    const isSame = model.rowElement === this.previousSelectedRow;
+    const hasOpenRow = (this.selected || []).length > 0;
+    // Cache the activated rowElement, and clear it after 1 second (essentially a doubleclick with gracetime)
+    this.previousSelectedRow = model.rowElement;
+    setTimeout(() => this.previousSelectedRow = null, 1000);
+    return isSame || hasOpenRow;
+  }
+
+  focusCurrentRow(rowElement: HTMLElement): void {
+    rowElement.focus();
+  }
+
   focusRow(rowElement: any, keyCode: number): void {
     const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
     if (nextRowElement && !nextRowElement.classList.contains('datatable-footer-summary-row')) {
