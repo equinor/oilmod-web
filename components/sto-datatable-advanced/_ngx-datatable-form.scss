@@ -56,12 +56,22 @@
     .sto-form__field {
       .mat-input-flex.mat-form-field-flex {
         height: 19px;
-        padding: 0px 6px;
+        padding: 0 6px;
       }
       .mat-form-field-suffix {
         height: 22px;
       }
+
+      &.mat-form-field-type-mat-input{
+        .mat-input-underline {
+          bottom: 18px;
+          .mat-input-ripple {
+            height: 2px;
+          }
+        }
+      }
     }
+
     .datatable-body .datatable-body-cell-label {
       line-height: 19px;
       height: 100%;
