@@ -253,7 +253,6 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
     this.monkeypatchSetValidators(this.parent);
     this.parent.valueChanges.pipe(
       startWith(''),
-      debounceTime(50),
       this.mapErrors(),
       takeUntil(this.destroyed$)
     ).subscribe(err => {
