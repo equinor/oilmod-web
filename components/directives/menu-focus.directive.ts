@@ -6,6 +6,10 @@ import { Subject } from 'rxjs/Subject';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { DOWN_ARROW, LEFT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 
+/**
+ * stoMenuFocus sets a focus (active) state on a menu item when it's hovered.
+ * Used to seamlessly switch between using the mouse and keyboard to select menu items.
+ */
 @Directive({
   selector: '[stoMenuFocus]'
 })
