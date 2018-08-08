@@ -4,3 +4,4 @@ node_modules_
 dist
 build
 index-esm.ts
+documentation

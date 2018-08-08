@@ -4,7 +4,8 @@
   "version": "3.5.3",
   "scripts": {
     "postversion": "node postbump.js",
-    "postpublish": "git push"
+    "postpublish": "git push",
+    "docs": "compodoc -p tsconfig.json --theme material --silent -n \"TOPS UI Library\""
   },
   "dependencies": {
     "@angular/animations": "^5.0.0",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@angular/compiler": "^5.0.0",
     "@angular/compiler-cli": "^5.0.0",
+    "@compodoc/compodoc": "^1.1.3",
     "@material/elevation": "^0.1.12",
     "@ngtools/webpack": "^1.5.5",
     "@types/node": "^8.0.17",
