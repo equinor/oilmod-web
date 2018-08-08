@@ -20,6 +20,7 @@
            [placeholder]="placeholder"
            [readonly]="readonly"
            [disabled]="disabled"
+           [tabindex]="(readonly || disabled) ? -1 : 0"
            type="text"
            [formControl]="control" />
 
@@ -28,6 +29,7 @@
                 [ngStyle]="{textAlign : textAlign}"
                 [placeholder]="placeholder"
                 [readonly]="readonly"
+                [tabindex]="(readonly || disabled) ? -1 : 0"
                 [disabled]="disabled"
                 matInput type="text"
                 [value]="control.value ? control.value + ' ' + suffix : ''" />
