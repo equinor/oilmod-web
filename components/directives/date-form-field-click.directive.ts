@@ -3,6 +3,12 @@ import { MatDatepicker, MatInput } from '@angular/material';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 
+/**
+ * Directive that can be placed on mat-form-fields that contains a mat-datepicker.
+ * This directive has two tasks:
+ * Clicking anywhere on the mat-form-field will open the datepicker dialog
+ * When the datepicker is closed in any manner, we shift focus back to the datepicker input
+ */
 @Directive({
   selector: '[stoDateFormFieldClick]'
 })
