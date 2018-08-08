@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA, MatButtonModule, MatDialog, MatDialogModule, MatDialog
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
+/**
+ * A confirm dialog that emits an observable.
+ */
 @Component({
   selector: 'sto-confirm',
   template: `
@@ -11,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 		    <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions>
-      <button color="primary" mat-button [mat-dialog-close]="false">Cancel</button>
+      <button color="primary" title="Cancel (esc)" mat-button [mat-dialog-close]="false">Cancel</button>
       <button color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
      </div>
   `,
