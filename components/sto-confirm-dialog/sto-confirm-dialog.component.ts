@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA, MatButtonModule, MatDialog, MatDialogModule, MatDialog
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
+/**
+ * A confirm dialog that emits an observable.
+ */
 @Component({
   selector: 'sto-confirm',
   template: `

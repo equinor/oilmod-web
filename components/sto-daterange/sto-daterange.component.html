@@ -68,7 +68,7 @@
 						<span>{{ message }}</span>
 					</div>
 					<div class="sto-daterange__button--container sto-daterange__button--container--actions">
-						<button type="button" class="dense" mat-button (click)="onCancel()">Cancel</button>
+						<button type="button" class="dense" mat-button (click)="onCancel()" title="Cancel (esc)">Cancel</button>
 						<button type="button" class="dense" [disabled]="form.invalid || (error | async)" mat-button
 								color="primary" (click)="onSubmit()">Apply</button>
 					</div>

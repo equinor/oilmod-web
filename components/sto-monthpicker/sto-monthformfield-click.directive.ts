@@ -1,6 +1,9 @@
 import { Directive, HostListener, Input, OnInit } from '@angular/core';
 import { MatMonthPicker } from './datepicker';
 
+/**
+ * Directive that opens the monthPicker from the input field.
+ */
 @Directive({
   selector: '[stoMonthFormFieldClick]'
 })
