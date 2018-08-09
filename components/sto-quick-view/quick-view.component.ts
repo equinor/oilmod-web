@@ -19,6 +19,22 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { filter, takeUntil } from 'rxjs/operators';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 
+/**
+ * QuickViewComponent is a fixed overlay that is anchored to an element.
+ * Can be used to display contextual information about an item
+ *
+ * @example
+ *
+ * <span cdkOverlayOrigin #origin="cdkOverlayOrigin">Edit item</span>
+ * <sto-quick-view [overlayOrigin]="origin" [offsetX]="-8" position="below" #quickView>
+ *   <h3 quickViewHeader>{{ item.title }}</h3>
+ *   <app-edit-item [item]="item"></app-edit-item>
+ *   <div quickViewFooter>
+ *     <app-save-footer (save)="save(item)"></app-save-footer>
+ *   </div>
+ * </sto-quick-view>
+ *
+ */
 @Component({
   selector: 'sto-quick-view',
   templateUrl: './quick-view.component.html',
@@ -43,11 +59,45 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
   styleUrls: ['./quick-view.component.scss']
 })
 export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
+  /**
+   * overlayOrigin contains information about the originating element.
+   *
+   * @example
+   *
+   * <span cdkOverlayOrigin #origin="cdkOverlayOrigin">Origin</span>
+   * <sto-quick-view [overlayOrigin]="origin" #quickView>...</sto-quick-view>
+   */
   @Input() overlayOrigin: OverlayOrigin;
+  /**
+   * position determing the direction of the overlay (above or below the element).
+   * Defaults to 'over'
+   *
+   * @example
+   *
+   * <span cdkOverlayOrigin #origin="cdkOverlayOrigin">Origin</span>
+   * <sto-quick-view [overlayOrigin]="origin" position="below" #quickView>...</sto-quick-view>
+   */
   @Input() position: 'over' | 'below' = 'over';
+  /**
+   * @type number
+   * Determines the overlay offset in px on the X and Y-axis. Defaults to 0.
+   *
+   * @example
+   *
+   * <span cdkOverlayOrigin #origin="cdkOverlayOrigin">Origin</span>
+   * <sto-quick-view [overlayOrigin]="origin" [offsetY]="12" [offsetX]="12" #quickView>...</sto-quick-view>
+   */
   @Input('offsetY') userDefinedOffsetY = 0;
   @Input() offsetX = 0;
 
+  /**
+   * Emits an event when the overlay is closed or opened. Used to act on close events.
+   *
+   * @example
+   *
+   * <span cdkOverlayOrigin #origin="cdkOverlayOrigin">Origin</span>
+   * <sto-quick-view [overlayOrigin]="origin" (opened)="getItem()" (closed)="saveItem()" #quickView>...</sto-quick-view>
+   */
   @Output() closed = new EventEmitter();
   @Output() opened = new EventEmitter();
 

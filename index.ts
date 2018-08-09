@@ -21,8 +21,8 @@ export * from './components/sto-autocomplete/sto-autocomplete.module';
 export * from './components/sto-autocomplete/sto-autocomplete.component';
 export * from './components/sto-number-input/sto-number-input.module';
 
-export * from './components/quick-view/quick-view.module';
-export * from './components/quick-view/quick-view.component';
+export * from './components/sto-quick-view/quick-view.module';
+export * from './components/sto-quick-view/quick-view.component';
 
 export * from './components/directives/directives.module';
 

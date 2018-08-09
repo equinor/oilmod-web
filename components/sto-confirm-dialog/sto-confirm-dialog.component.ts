@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 		    <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions>
-      <button color="primary" mat-button [mat-dialog-close]="false">Cancel</button>
+      <button color="primary" title="Cancel (esc)" mat-button [mat-dialog-close]="false">Cancel</button>
       <button color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
      </div>
   `,

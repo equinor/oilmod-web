@@ -4,6 +4,11 @@ import {
 } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MatCalendar, MatDateFormats, MatDatepickerIntl } from '@angular/material';
 
+/**
+ * StoInlineCalendar is based on {@link MatCalendar}.
+ * It is designed to be used inline, rather than in a modal.
+ * Currently used in {@link StoDaterangeComponent} - example usage can be found there.
+ */
 @Component({
   selector: 'sto-inline-datepicker',
   template: `
@@ -43,6 +48,10 @@ import { DateAdapter, MAT_DATE_FORMATS, MatCalendar, MatDateFormats, MatDatepick
   }
 })
 export class StoInlineCalendarComponent extends MatCalendar<Date> {
+  /**
+   * endDate and startDate is used in {@link StoDatepickerCalendarBodyComponent}
+   * They are used to highlight a range of of active dates in {@link StoDaterangeComponent}
+   */
   @Input() endDate: Date;
   @Input() startDate: Date;
   constructor(_elementRef: ElementRef, _intl: MatDatepickerIntl

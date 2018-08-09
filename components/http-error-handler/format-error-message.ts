@@ -64,7 +64,7 @@ const convertMessageStringToJson = (serverError: string|ServerError): ServerErro
  * @ignore
  */
 const noAccessError = (err: HttpErrorResponse): FormattedError => {
-  const baseUrl = `https://accessit.statoil.no/Home/Search?term=`;
+  const baseUrl = `https://accessit.statoil.no/Search/Search?term=`;
   const method = err['method'] as RequestMethods;
   const title = noAccessTitle(method);
   const terms = createAccessItSearchString(err.url, method);
