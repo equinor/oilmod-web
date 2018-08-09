@@ -1,7 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { format } from 'date-fns';
 
-
+/**
+ * Function used to format server errors, and convert them to a generalized format to be handled by
+ * {@link HttpErrorHandlerService#errorHandler}
+ * @param err
+ * @returns {FormattedError}
+ */
 export const formatError = (err: HttpErrorResponse): FormattedError => {
   switch (err.status) {
     case 0:
@@ -30,8 +35,13 @@ const defaultActions: ErrorAction[] = [
     label: 'Cancel',
     closeDialogData: null
   }
-]
+];
 
+/**
+ * Angular will sometimes not format the error-object returned from the server.
+ * If we get this as a string, this function will convert it to an instance of {@link ServerError}
+ * @param serverError
+ */
 const convertMessageStringToJson = (serverError: string|ServerError): ServerError => {
   if (typeof serverError === 'string') {
     let parsed;
@@ -50,6 +60,9 @@ const convertMessageStringToJson = (serverError: string|ServerError): ServerErro
   return serverError;
 };
 
+/**
+ * @ignore
+ */
 const noAccessError = (err: HttpErrorResponse): FormattedError => {
   const baseUrl = `https://accessit.statoil.no/Home/Search?term=`;
   const method = err['method'] as RequestMethods;
@@ -76,6 +89,9 @@ const noAccessError = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, actions});
 }
 
+/**
+ * @ignore
+ */
 function noAccessLinkText(method: RequestMethods): string {
   let text: string;
   if (method === 'GET') {
@@ -86,6 +102,9 @@ function noAccessLinkText(method: RequestMethods): string {
   return text;
 }
 
+/**
+ * @ignore
+ */
 function noAccessTitle(method: RequestMethods): string {
   let title: string;
   if (method === 'GET') {
@@ -96,7 +115,13 @@ function noAccessTitle(method: RequestMethods): string {
   return title;
 }
 
-  function createAccessItSearchString(url: string, method: RequestMethods): string {
+/**
+ * Creates a search string for Access IT, making it easier for the end user to apply for required rights.
+ * @param url
+ * @param method
+ * @returns {string} A search string pointing to the relevant access it query.
+ */
+function createAccessItSearchString(url: string, method: RequestMethods): string {
   let searchString: string;
   if (url.includes('/im/')) {
     searchString = `OPERATION - TOPS IM (TOPS IM)`.replace(/ /g, '+');
@@ -113,6 +138,9 @@ function noAccessTitle(method: RequestMethods): string {
   return searchString;
 }
 
+/**
+ * @ignore
+ */
 const offlineError = (): FormattedError => {
   const title = `No network connection`;
   let message: string;
@@ -133,6 +161,9 @@ const offlineError = (): FormattedError => {
   return Object.assign({}, error, {title, message});
 };
 
+/**
+ * @ignore
+ */
 const formatServerDownOrTimeout = (err: HttpErrorResponse): FormattedError => {
   const title = `I was not able to contact the server`;
   const message = `<p>The server appears to have gone offline, or the connection timed out.</p>
@@ -153,6 +184,9 @@ const formatServerDownOrTimeout = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
+/**
+ * @ignore
+ */
 const formatNotFound = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Item not found`;
@@ -165,6 +199,9 @@ const formatNotFound = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, severity, actions});
 };
 
+/**
+ * @ignore
+ */
 const formatBadRequest = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Errors in submitted data`;
@@ -179,6 +216,9 @@ const formatBadRequest = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, severity, actions});
 };
 
+/**
+ * @ignore
+ */
 const formatUnknownException = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const title = `Unexcepted error occured`;
@@ -194,6 +234,9 @@ const formatUnknownException = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
+/**
+ * @ignore
+ */
 const formatConflict = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const url = `<a href="${window.location.href}" tabindex="-1" target="_blank">you can open the updated version in a new window</a>`;
@@ -205,6 +248,9 @@ const formatConflict = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
+/**
+ * @ignore
+ */
 const dependencyError = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
   const errorObject: DependencyError = JSON.parse(response.message);
@@ -222,6 +268,9 @@ const dependencyError = (err: HttpErrorResponse): FormattedError => {
   return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
 };
 
+/**
+ * @ignore
+ */
 function getMovementTypeMap(): Map<string, string> {
   const movementTypeMap = new Map<string, string>();
   movementTypeMap.set('movement import', 'imports');
@@ -233,6 +282,9 @@ function getMovementTypeMap(): Map<string, string> {
   return movementTypeMap;
 }
 
+/**
+ * @ignore
+ */
 export interface DependencyError {
   date: string;
   errorMessage: string;
@@ -242,9 +294,11 @@ export interface DependencyError {
   transactionType: string;
   referenceKey: string;
   externalReference: string;
-
 }
 
+/**
+ * Represents the error object returned from the server
+ */
 export interface ServerError {
   timestamp?: number;
   status?: number;
@@ -254,15 +308,39 @@ export interface ServerError {
   path?: string;
 }
 
+/**
+ * A formatted instance of the server error, including additional info
+ */
 export interface FormattedError extends ServerError {
+  /**
+   * A list of the available actions for the given error
+   */
   actions?: ErrorAction[];
+  /**
+   * Error or warning severity
+   */
   severity?: string;
+  /**
+   * Dialog title
+   */
   title: string;
 }
 
+/**
+ * Available properties on dialog actions
+ */
 export interface ErrorAction {
+  /**
+   * Button label
+   */
   label: string;
+  /**
+   * A function to be called based on the given action (e.g window.location.reload to refresh the tab)
+   */
   action?: Function;
+  /**
+   * The data to be returned when the dialog is closed.
+   */
   closeDialogData?: any;
 }
 

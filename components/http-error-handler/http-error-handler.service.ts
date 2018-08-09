@@ -6,14 +6,29 @@ import { Subject } from 'rxjs/Subject';
 import { ExceptionDialogComponent } from './unexcepted-dialog/exception-dialog.component';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
+/**
+ * Service that handles error messages. Can either open a dialog (with a returning action), or just a plain error
+ * message to be displayed.
+ * Extended documentation in {@link HttpErrorHandlerModule#readme}
+ */
 @Injectable()
 export class HttpErrorHandlerService {
   private errorActionSubject: Subject<any> = new Subject();
+  /**
+   * errorAction$ emits a key telling the subscriber the action requested by the user
+   * This is used e.g if we get a conflict (409), and the user wants to reload the latest version of an entity
+   */
   public errorAction$: Observable<any> = this.errorActionSubject.asObservable();
 
   private errorMessageSubject = new ReplaySubject<FormattedError>();
   public errorMessage$: Observable<FormattedError> = this.errorMessageSubject.asObservable();
 
+  /**
+   * Exposed method that takes in a {@link FormattedError} and handles it according to design specs.
+   * Will either emit a message to any subscribers listening for messages, or open a dialog.
+   * Dialogs are primarily for critical errors, or errors requiring user action.
+   * @param {FormattedError} err
+   */
   public errorHandler(err: FormattedError) {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 10);
     if (!err) {
@@ -31,6 +46,11 @@ export class HttpErrorHandlerService {
     }
   }
 
+  /**
+   * Takes in a {FormattedError}, and opens a dialog with {ExceptionDialogComponent}.
+   * Sends out information about the action (if any) was performed by the user in the dialog
+   * @param {FormattedError} data
+   */
   public handleModalError(data: FormattedError) {
     const dialog = this.dialog.open(ExceptionDialogComponent, {
       width: '600px',

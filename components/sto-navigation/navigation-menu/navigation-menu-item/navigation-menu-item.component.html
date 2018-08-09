@@ -5,7 +5,7 @@
       <mat-icon *ngIf="!item.svgIcon" matListIcon>{{item.icon}}</mat-icon>
       <span class="sto-navigation__item__text">
 				 <ng-container *ngIf="item.command && item.command.type === 'externalLink'">
-					 <a (click)="$event.preventDefault()" [href]="'#/' +item.command.arguments[0]">
+					 <a (click)="$event.preventDefault()" [href]="item.command.arguments[0]">
 						{{item.name}}
 				  	</a>
 				 </ng-container>
