@@ -13,10 +13,10 @@ export * from './components/shared';
 
 export * from './components/sto-message-panel/sto-message-panel.module';
 export * from './components/sto-ultracompact/sto-ultracompact.directive';
-export * from './components/http-error-handler/http-error-handler.module';
-export * from './components/http-error-handler/http-error-handler.service';
-export * from './components/http-error-handler/unexcepted-dialog/exception-dialog.component';
-export * from './components/http-error-handler/format-error-message';
+export * from './components/sto-http-error-handler/http-error-handler.module';
+export * from './components/sto-http-error-handler/http-error-handler.service';
+export * from './components/sto-http-error-handler/unexcepted-dialog/exception-dialog.component';
+export * from './components/sto-http-error-handler/format-error-message';
 export * from './components/sto-autocomplete/sto-autocomplete.module';
 export * from './components/sto-autocomplete/sto-autocomplete.component';
 export * from './components/sto-number-input/sto-number-input.module';
@@ -24,7 +24,7 @@ export * from './components/sto-number-input/sto-number-input.module';
 export * from './components/sto-quick-view/quick-view.module';
 export * from './components/sto-quick-view/quick-view.component';
 
-export * from './components/directives/directives.module';
+export * from './components/sto-directives/directives.module';
 
 export * from './components/unsaved-changes/confirm-dialog/confirm-dialog.component';
 export * from './components/unsaved-changes/form-serialize-validator';
