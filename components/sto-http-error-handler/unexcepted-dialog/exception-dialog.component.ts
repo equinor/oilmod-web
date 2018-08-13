@@ -11,7 +11,10 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'imo-exception-dialog',
   templateUrl: './exception-dialog.component.html',
-  styles: []
+  styles: [`.mat-dialog-actions{
+      float: right;
+  }`
+  ]
 })
 export class ExceptionDialogComponent implements OnInit {
 

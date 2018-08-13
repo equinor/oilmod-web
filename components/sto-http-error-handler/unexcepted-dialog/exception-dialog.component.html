@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="sto-dialog__content">
   <div [innerHTML]="data.message"></div>
 </div>
-<div mat-dialog-actions style="float: right">
+<div mat-dialog-actions class="sto-dialog__actions">
   <button *ngFor="let action of data.actions"
           color="primary"
           (click)="action.action ? action.action() : null"
