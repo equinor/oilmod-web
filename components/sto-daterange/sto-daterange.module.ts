@@ -15,7 +15,7 @@ import {
 } from '@angular/material';
 import { StoDaterangeInlineWrapper } from './sto-inline-calendar';
 import { StoPipesModule } from '../sto-pipes/sto-pipes.module';
-import { StoInlineCalendarModule } from '../inline-calendar/sto-inline-calendar.module';
+import { StoInlineCalendarModule } from '../sto-inline-calendar/sto-inline-calendar.module';
 
 export class StoDateAdapter extends NativeDateAdapter {
   getFirstDayOfWeek(): number {

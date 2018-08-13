@@ -2,7 +2,7 @@
 	  class="sto-daterange-wrapper ">
 	<mat-form-field   [class]="inputStyleClass"
 					(click)="onInputFocus(inputfield, $event)" [class.mat-focused]="focus">
-		<input #inputfield matInput type="text" [required]="required" [value]="inputFieldValue"
+		<input #inputfield matInput type="text" [value]="inputFieldValue"
 			   readonly
 			   (keydown.enter)="$event.preventDefault(); onInputFocus(inputfield, $event)"
 			   (keydown.space)="onInputFocus(inputfield, $event)"

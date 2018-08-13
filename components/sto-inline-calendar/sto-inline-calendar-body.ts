@@ -40,15 +40,28 @@ export class StoDatepickerCalendarBodyComponent extends MatCalendarBody {
   @Input() startDate: Date;
   @Input() selectedDate: Date;
 
+  /**
+   * Determines if the cell should be highlighted (if it is within a range)
+   * @param cellLabel
+   */
   public isActive(cellLabel: string) {
     const check = parse(cellLabel);
     return this.endDate ? this.endCheck(check) : this.startDate ? this.startCheck(check) : false;
   }
 
+  /**
+   * Checks if the cell date is after the selected date.
+   * @param date
+   */
   private endCheck(date: Date): boolean {
     return isAfter(date, this.selectedDate) && (isSameDay(date, this.endDate) || isBefore(date, this.endDate));
   }
 
+
+  /**
+   * Checks if the cell date is before the selected date.
+   * @param date
+   */
   private startCheck(date: Date): boolean {
     return isBefore(date, this.selectedDate) && (isSameDay(date, this.startDate) || isAfter(date, this.startDate));
   }

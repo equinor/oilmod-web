@@ -9,7 +9,7 @@ import {StoNumberInputComponent} from './sto-number-input.component';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { StoDirectivesModule } from '../directives/directives.module';
+import { StoDirectivesModule } from '../sto-directives/directives.module';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MatInputModule, StoDirectivesModule],

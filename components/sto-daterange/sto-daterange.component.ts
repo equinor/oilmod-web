@@ -38,6 +38,17 @@ import {
 import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
+/**
+ * StoDaterangeComponent enables a user to select a specific range of dates.
+ * Primarily used for filtering (show all movements from 01-08-18 to 31-08-18)
+ * Does *not* allow direct user input, but will always open a dialog
+ *
+ * @example
+ *
+ * <sto-daterange formControlName="dateRange"
+ *  inputStyleClass="sto-form__field"
+ *  placeholder="Date range"></sto-daterange>
+ */
 @Component({
   selector: 'sto-daterange',
   templateUrl: './sto-daterange.component.html',
@@ -64,26 +75,29 @@ import { Subject } from 'rxjs/Subject';
   ]
 })
 export class StoDaterangeComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
-
-  public log = console.log;
   private destroy$ = new Subject();
+
+  /**
+   * showIcon determines if we want an icon shown in the input suffix
+   */
   @Input() showIcon: boolean = true;
-  @Input() icon: string = 'fa-calendar';
-  @Input() styleClass: string[];
-  @Input() style: string[];
-  @Input() inputStyle: string[];
+  /**
+   * inputStyleClass allows you to set an additional class on the rendered
+   */
   @Input() inputStyleClass: string[];
-  @Input() appendTo: string;
-
+  /**
+   * placeholder shown on the input element
+   */
   @Input() placeholder: string;
-  @Input() inputId: string;
-  @Input() required: boolean;
-  @Input() disabled: boolean;
 
-  @Input() monthNavigator: boolean;
-  @Input() yearNavigator: boolean;
-
+  /**
+   * emits when our input element is focused
+   */
   @Output() onFocus: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * emits when our input element is blurred
+   */
   @Output() onBlur: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('datepicker') overlayViewChild: ElementRef;
@@ -94,13 +108,10 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   public fromControl = new FormControl();
   public toControl = new FormControl();
 
-  public dateClick: boolean;
   public overlay: HTMLDivElement;
   public closeOverlay: boolean;
   public focus: boolean;
   public overlayVisible: boolean;
-  public overlayShown: boolean;
-  public value: any;
   public inputFieldValue: string = '';
   public error: Observable<string>;
   public selectValue = 'Custom';
@@ -113,9 +124,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  public showOverlay(inputfield?) {
+  private showOverlay() {
     this.overlayVisible = true;
-    this.overlayShown = true;
     this.bindDocumentClickListener();
   }
 
@@ -181,7 +191,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   /**
-   * This function creates a perf hit, as it triggers a global DOM listener for all click events
+   * Create a listener for document click events to close the dialog.
+   * Filters out elements inside our container to ensure closing only happens when you click outside.
    */
   public bindDocumentClickListener() {
     if (!this.documentClickListener) {
@@ -204,7 +215,6 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
         }
 
         this.closeOverlay = true;
-        this.dateClick = false;
         this.cd.detectChanges();
       });
     }
@@ -212,20 +222,8 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   onInputFocus(inputfield, event) {
     this.focus = true;
-    this.showOverlay(inputfield);
+    this.showOverlay();
     this.onFocus.emit(event);
-  }
-
-  onButtonClick(event, inputfield) {
-    this.closeOverlay = false;
-
-    if (!this.overlay.offsetParent) {
-      inputfield.focus();
-      this.showOverlay(inputfield);
-    }
-    else {
-      this.closeOverlay = true;
-    }
   }
 
   onInputBlur(event) {
@@ -287,15 +285,6 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   ngAfterViewInit() {
     this.overlay = <HTMLDivElement> this.overlayViewChild.nativeElement;
-
-    if (this.appendTo) {
-      if (this.appendTo === 'body') {
-        document.body.appendChild(this.overlay);
-      } else {
-        // this.domHandler.appendChild(this.overlay, this.appendTo);
-      }
-    }
-
   }
 
   private isMonthRange(v){ 
