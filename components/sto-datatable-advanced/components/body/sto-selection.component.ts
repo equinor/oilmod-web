@@ -57,7 +57,7 @@ export class StoDataTableSelectionComponent extends DataTableSelectionComponent 
 
   focusRow(rowElement: any, keyCode: number): void {
     const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
-    if (nextRowElement && !nextRowElement.classList.contains('datatable-footer-summary-row')) {
+    if (nextRowElement && !nextRowElement.classList.contains('datatable-footer-summary-row--fixed')) {
       nextRowElement.focus();
     }
   }

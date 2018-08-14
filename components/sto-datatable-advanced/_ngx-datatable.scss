@@ -232,7 +232,7 @@
       background-color: $datatable-background-color;
     }
 
-    .datatable-footer-summary-row {
+    .datatable-footer-summary-row--fixed {
       .datatable-row {
         &-left, &-center, &-right {
           background-color: $datatable-header-background;
@@ -617,5 +617,10 @@ span.sortable {
 
   .sto-panel-content{
     border-radius: 2px;
+  }
+}
+.datatable-footer-summary-row{
+  :hover {
+    background-color: transparent;
   }
 }

@@ -13,7 +13,7 @@ export class TankStatePipe implements PipeTransform {
    * @param {"operational" | "capcity"} unit
    * @returns {any}
    */
-  transform(tankId: string, tankStates: TankState[], key: string, unit: 'operational'|'capacity' = 'operational'): any {
+  transform(tankId: string, tankStates: any[], key: string, unit: 'operational'|'capacity' = 'operational'): any {
     if (!tankId || !tankStates || !key) {
       return null;
     }
@@ -38,14 +38,7 @@ export class TankStatePipe implements PipeTransform {
 
 }
 
-export class TankState {
-  tankId: string;
-  tankName?: string;
-  unit?: string;
-  qualityIds?: string[];
-  tankQualities: TankQuality[];
-  [key: string]: Value | any;
-}
+
 
 export class Value {
   operational: number;
