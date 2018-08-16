@@ -253,19 +253,25 @@ const formatConflict = (err: HttpErrorResponse): FormattedError => {
  */
 const dependencyError = (err: HttpErrorResponse): FormattedError => {
   const response = convertMessageStringToJson(err.error);
-  const errorObject: DependencyError = JSON.parse(response.message);
-  const movementTypeMap = getMovementTypeMap();
-  const movementType = movementTypeMap.get(errorObject.transactionType.toLowerCase());
-  const {pathname} = window.location;
-  const href = `${pathname}#/overview/movements/${movementType}/${errorObject.id}`;
-  const title = errorObject.messageHeader;
-  const {messageBody, errorMessage} = errorObject;
-  const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Movement details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType};${errorObject.externalReference || 'No Reference'}</p>`;
-  const actions: ErrorAction[] = [
-    {label: `Open ${errorObject.transactionType}`, action: () => window.open(href, '_blank')},
-  ];
+  try{
+    const errorObject: DependencyError = JSON.parse(response.message);
+    const movementTypeMap = getMovementTypeMap();
+    const movementType = movementTypeMap.get(errorObject.transactionType.toLowerCase());
+    const {pathname} = window.location;
+    const href = `${pathname}#/overview/movements/${movementType}/${errorObject.id}`;
+    const title = errorObject.messageHeader;
+    const {messageBody, errorMessage} = errorObject;
+    const message = `<p>${messageBody}</p><p>${errorMessage}</p><p>Movement details: ${format(errorObject.date, 'ddd DD. MMM YYYY')}; ${errorObject.transactionType};${errorObject.externalReference || 'No Reference'}</p>`;
+    const actions: ErrorAction[] = [
+      {label: `Open ${errorObject.transactionType}`, action: () => window.open(href, '_blank')},
+    ];
 
-  return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
+    return Object.assign({}, response, {title, message, actions: [...actions, ...defaultActions]});
+  }
+  catch(e){
+    return Object.assign({}, response, {title: 'Unexcepted error occured', message: response.message, actions: defaultActions});
+  }
+
 };
 
 /**

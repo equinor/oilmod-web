@@ -54,6 +54,7 @@ export class HttpErrorHandlerService {
   public handleModalError(data: FormattedError) {
     const dialog = this.dialog.open(ExceptionDialogComponent, {
       width: '600px',
+      panelClass: 'sto-dialog',
       data
     });
     dialog

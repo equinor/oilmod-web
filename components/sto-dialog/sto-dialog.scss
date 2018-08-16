@@ -6,8 +6,7 @@
 
     border-top: solid 1px $gray-light;
     border-bottom: solid 1px $gray-light;
-    padding: 0;
-
+    padding: 24px;
     .sto-selection-list{
       .sto-selection-list__item{
         .mat-list-item-content.mat-list-item-content-reverse{
@@ -18,18 +17,17 @@
 
   }
   &__actions.mat-dialog-actions{
-    margin: 0 -20px;
+    margin: 0;
   }
 }
 
 .sto-dialog .mat-dialog-container {
   padding: 0;
   .mat-dialog-title {
-    padding: 24px 24px 0 24px;
-    margin-bot: -4px;
+    padding: 24px 24px 20px 24px;
+    margin-bottom: -4px;
   }
   .mat-dialog-content {
-    padding: 24px;
     margin: 0;
     p {
       margin-bottom: 0;
@@ -41,5 +39,17 @@
   }
   .mat-dialog-actions:last-child {
     margin-bottom: 0;
+  }
+}
+
+.sto-dialog {
+  .sto-selection-list{
+    margin: -24px;
+  }
+}
+
+sto-confirm{
+  .mat-dialog-content{
+    padding: 24px;
   }
 }
