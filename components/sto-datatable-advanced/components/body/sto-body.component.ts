@@ -268,7 +268,6 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
   }
 
   getFooterRowClass() {
-    console.log('getFooterRowClass',this.fixedFooter)
     if(this.fixedFooter){
       return 'datatable-footer-summary-row--fixed';
     }
