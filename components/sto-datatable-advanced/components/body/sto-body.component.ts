@@ -97,6 +97,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 						  [row]="summaryRowData"
 						  [columns]="summaryColumns"
 						  [rowHeight]="getSummaryRowHeight()"
+              [fixedFooter]="fixedFooter"
 						  [rowClass]="getFooterRowClass"
 				  >
 				  </sto-datatable-body-row>

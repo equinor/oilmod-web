@@ -41,6 +41,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() offsetX: number;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
+  @Input() fixedFooter: boolean;
 
   @HostBinding('class')
   get cssClass() {
