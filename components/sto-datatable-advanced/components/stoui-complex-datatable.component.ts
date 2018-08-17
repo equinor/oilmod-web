@@ -250,7 +250,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
         val = val[key];
         i++;
       }
-      return typeof val === 'number' ? val : 0;
+      return typeof val === 'number' ? parseFloat(val.toFixed(10)) : 0;
     }
     return null;
   }
