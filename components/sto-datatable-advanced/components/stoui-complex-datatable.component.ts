@@ -89,8 +89,9 @@ import { TableColumn } from '../../../vendor/ngx-datatable/types/table-column.ty
           [moveRowMapper]="moveRowMapper"
 				  [summaryRowData]="_internalSummaryRowData"
 				  [summaryColumns]="_internalSummaryColumns"
+          [fixedFooter]="fixedFooter"
 		  >
-		  </sto-complex-body>
+		  </sto-complex-body> 
 		  <datatable-footer
 				  *ngIf="footerHeight"
 				  [rowCount]="rowCount"
@@ -129,7 +130,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   @Input() moveRowMapper: Function;
   @Output() moveRow = new EventEmitter();
   @Input() selectByDoubleClick: boolean;
-
+  @Input() fixedFooter: boolean;
   private _height: number;
     @Input() set height(value){
 
@@ -200,20 +201,24 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   @HostBinding('style.backgroundColor') color = 'white';//default color
 
   @Input() set summaryRow(val: any) {
+
     if (val) {
       const data = Object.assign({}, val.data);
       if (data.summaryText) {
         delete data.summaryText;
       }
-      const fields = Object.keys(data);
-      fields.forEach(f => {
-        this.rows
+      if(this.fixedFooter){
+        const fields = Object.keys(data);
+        fields.forEach(f => {
+          this.rows
           // .filter(row => row.hasOwnProperty(f))
-          .filter(row => this.nestedValue(f, row))
-          .forEach(row => {
-          val.data[f] += this.nestedValue(f, row);
+            .filter(row => this.nestedValue(f, row))
+            .forEach(row => {
+              val.data[f] += this.nestedValue(f, row);
+            });
         });
-      });
+      }
+
       this.linkColumns(val.columns, this._internalColumns);
       this._internalSummaryColumns = val.columns;
       this._internalSummaryRowData = val.data;
@@ -221,7 +226,6 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   }
 
   private linkColumns(summaryColumns: any[], columns: any) {
-
     for (let ii = 0; ii < summaryColumns.length; ii++) {
       let summaryColumn = summaryColumns[ii];
       if (columns) {
@@ -246,7 +250,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
         val = val[key];
         i++;
       }
-      return typeof val === 'number' ? val : 0;
+      return typeof val === 'number' ? parseFloat(val.toFixed(10)) : 0;
     }
     return null;
   }

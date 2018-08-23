@@ -97,6 +97,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 						  [row]="summaryRowData"
 						  [columns]="summaryColumns"
 						  [rowHeight]="getSummaryRowHeight()"
+              [fixedFooter]="fixedFooter"
 						  [rowClass]="getFooterRowClass"
 				  >
 				  </sto-datatable-body-row>
@@ -145,6 +146,9 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
   }
 
   getRowSummaryStyle() {
+    if(!this.fixedFooter){
+       return {};
+    };
 		let summaryHeight = 36;
 		let scroll = 0;
   	if(this.rows && this.rows.length > 1){
@@ -250,16 +254,26 @@ export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
   private _summaryRowData;
   @Input() set summaryRowData(val: any) {
-
-    this._summaryRowData = val;
+      this._summaryRowData = val;
   }
 
   get summaryRowData(): any {
     return this._summaryRowData;
   }
-
+  private _fixedFooter = true;
+  @Input() set fixedFooter(fixedFooter: boolean){
+   this._fixedFooter = fixedFooter;
+  }
+  get fixedFooter(): boolean {
+    return this._fixedFooter;
+  }
 
   getFooterRowClass() {
-    return 'datatable-footer-summary-row';
+    if(this.fixedFooter){
+      return 'datatable-footer-summary-row--fixed';
+    }
+    else{
+      return 'datatable-footer-summary-row'
+    }
   }
 }
