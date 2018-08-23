@@ -108,7 +108,7 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   stylesByGroup(group: string) {
    let isSummary = false; //TODO FOR DEMO 13.09.2017 only. Move body-row to sto-body-fixed-row!
-    if(this.element.classList.contains('datatable-footer-summary-row')){
+    if(this.element.classList.contains('datatable-footer-summary-row--fixed')){
       isSummary = true;
    }
 
