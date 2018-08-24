@@ -1,69 +1,67 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
-import { SelectionType, SortType } from '../../../../vendor/ngx-datatable/types';
-import { columnGroupWidths, columnsByPin, columnsByPinArr, columnTotalWidth, translateXY } from '../../../../vendor/ngx-datatable//utils';
-import { DataTableColumnDirective } from '../../../../vendor/ngx-datatable/components/columns';
+import { Component, Input } from '@angular/core';
+import { columnGroupWidths, columnsByPin, columnsByPinArr, columnTotalWidth } from '../../../../vendor/ngx-datatable//utils';
 import { ColumnGroup } from '../../types/column-header.type';
-import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/';
+import { DataTableHeaderComponent } from '../../../../vendor/ngx-datatable/components/header/header.component';
 
 @Component({
   selector: 'sto-complex-header',
   template: `
-	  <div
-			  orderable
-			  (reorder)="onColumnReordered($event)"
-			  [style.width.px]="columnGroupWidths.total"
-			  class="datatable-header-inner">
+    <div
+      orderable
+      (reorder)="onColumnReordered($event)"
+      [style.width.px]="columnGroupWidths.total"
+      class="datatable-header-inner">
 
-		  <div
-				  *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
-				  [class]="'datatable-row-' + colGroup.type"
-				  [ngStyle]="stylesByGroup(colGroup.type)">
-			  <div class="datatable-header-column-group" *ngIf="columnGroups">
-				  <div class="datatable-header-cell" style="display: inline-block"
-				    [ngClass]="columnGroup.headerClass"
-					   [style.width]="columnGroup.width+'px'" *ngFor="let columnGroup of
+      <div
+        *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
+        [class]="'datatable-row-' + colGroup.type"
+        [ngStyle]="stylesByGroup(colGroup.type)">
+        <div class="datatable-header-column-group" *ngIf="columnGroups">
+          <div class="datatable-header-cell" style="display: inline-block"
+               [ngClass]="columnGroup.headerClass"
+               [style.width]="columnGroup.width+'px'" *ngFor="let columnGroup of
 				         columnGroupByPin[colGroup.type]">
-					  <ng-container *ngIf="!columnGroup.headerTemplate">
-					      {{ columnGroup.name }}
+            <ng-container *ngIf="!columnGroup.headerTemplate">
+              {{ columnGroup.name }}
             </ng-container>
             <ng-template #headerTemplate
-              *ngIf="columnGroup.headerTemplate"
-              [ngTemplateOutletContext]="{ columnGroup: columnGroup, $implicit: columnGroup }"
-              [ngTemplateOutlet]="columnGroup.headerTemplate">
+                         *ngIf="columnGroup.headerTemplate"
+                         [ngTemplateOutletContext]="{ columnGroup: columnGroup, $implicit: columnGroup }"
+                         [ngTemplateOutlet]="columnGroup.headerTemplate">
             </ng-template>
-				  </div>
-			  </div>
-			  <!--removed from datatable-header-cell. issues with grouping-->
-<!--					  draggable
-					  [dragModel]="column"
-					  [dragEventTarget]="dragEventTarget"
-					  [dragX]="reorderable && column.draggable && column.dragging"
-					  [dragY]="false"-->
-			  <datatable-header-cell
-					  *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
-					  resizeable
-					  [resizeEnabled]="column.resizeable"
-					  (resize)="onColumnResized($event, column)"
-					  long-press
-					  [pressModel]="column"
-					  [pressEnabled]="reorderable && column.draggable"
-					  (longPressStart)="onLongPressStart($event)"
-					  (longPressEnd)="onLongPressEnd($event)"
-					  [headerHeight]="headerHeight"
-					  [column]="column"
-					  [sortType]="sortType"
-					  [sorts]="sorts"
-					  [selectionType]="selectionType"
-					  [sortAscendingIcon]="sortAscendingIcon"
-					  [sortDescendingIcon]="sortDescendingIcon"
-					  [allRowsSelected]="allRowsSelected"
-					  (sort)="onSort($event)"
-					  (select)="select.emit($event)"
-					  (columnContextmenu)="columnContextmenu.emit($event)">
-			  </datatable-header-cell>
-		  </div>
+          </div>
+        </div>
+        <!--removed from datatable-header-cell. issues with grouping-->
+        <!--					  draggable
+                    [dragModel]="column"
+                    [dragEventTarget]="dragEventTarget"
+                    [dragX]="reorderable && column.draggable && column.dragging"
+                    [dragY]="false"-->
+        <datatable-header-cell
+          *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
+          resizeable
+          [resizeEnabled]="column.resizeable"
+          (resize)="onColumnResized($event, column)"
+          long-press
+          [pressModel]="column"
+          [pressEnabled]="reorderable && column.draggable"
+          (longPressStart)="onLongPressStart($event)"
+          (longPressEnd)="onLongPressEnd($event)"
+          [headerHeight]="headerHeight"
+          [column]="column"
+          [sortType]="sortType"
+          [sorts]="sorts"
+          [selectionType]="selectionType"
+          [sortAscendingIcon]="sortAscendingIcon"
+          [sortDescendingIcon]="sortDescendingIcon"
+          [allRowsSelected]="allRowsSelected"
+          (sort)="onSort($event)"
+          (select)="select.emit($event)"
+          (columnContextmenu)="columnContextmenu.emit($event)">
+        </datatable-header-cell>
+      </div>
 
-	  </div>
+    </div>
   `,
   host: {
     class: 'datatable-header'
@@ -95,7 +93,6 @@ export class StoComplexDataTableHeaderComponent extends DataTableHeaderComponent
   get innerWidth(): number {
     return this._innerWidth;
   }
-
 
 
   @Input() set columns(val: any[]) {
@@ -140,8 +137,6 @@ export class StoComplexDataTableHeaderComponent extends DataTableHeaderComponent
   get columnGroups(): any[] {
     return this._columnGroups;
   }
-
-
 
 
 }

@@ -13,9 +13,6 @@ import {
 import { columnGroupWidths, columnsByPin, RowHeightCache, translateXY } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-import { columnTotalWidth } from '../../utils/column';
-import { TableColumn } from '../../types/table-column.type';
-import { setColumnDefaults } from '../../utils/column-helper';
 
 export class DataTableBodyComponent implements OnInit, OnDestroy {
 

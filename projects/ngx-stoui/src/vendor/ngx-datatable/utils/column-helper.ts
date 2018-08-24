@@ -1,5 +1,5 @@
 import { TableColumn } from '../types';
-import { DataTableColumnDirective } from '../components/columns';
+import { DataTableColumnDirective } from '../components/columns/column.directive';
 import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';
 import { getterForProp } from './column-prop-getters';

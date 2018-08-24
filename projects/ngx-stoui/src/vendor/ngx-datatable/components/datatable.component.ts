@@ -30,11 +30,11 @@ import {
 } from '../utils';
 import { ScrollbarHelper } from '../services';
 import { ColumnMode, ContextmenuType, SelectionType, SortType, TableColumn } from '../types';
-import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
-import { DataTableColumnDirective } from './columns';
-import { DatatableRowDetailDirective } from './row-detail';
-import { DatatableFooterDirective } from './footer';
+import { DataTableColumnDirective } from './columns/column.directive';
+import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
+import { DatatableFooterDirective } from './footer/footer.directive';
+import { DataTableBodyComponent } from './body/body.component';
 
 
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {

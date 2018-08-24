@@ -5,7 +5,6 @@ import {
 
 import { DataTableBodyRowComponent } from '../../../../vendor/ngx-datatable/components/body/body-row.component';
 import { ScrollbarHelper } from '../../../../vendor/ngx-datatable/services/scrollbar-helper.service';
-import { Key } from '../../../shared/abstract-and-interfaces/keyPress.enum';
 
 @Component({
   selector: 'sto-datatable-body-row',
