@@ -42,7 +42,7 @@ export class QuickKeysDirective {
   /**
    * Handler for generic keydowns, such as cancel events to close drawers
    * @param e {KeyboardEvent}
-   * @returns void
+   * void
    */
   private handleGenericKeydown(e: KeyboardEvent) {
     // Shortcuts that are useful outside of forms

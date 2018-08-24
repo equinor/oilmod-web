@@ -24,7 +24,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    * Emits {isExpanded: boolean, contentHeight: number } where
    * isExpanded is true if the panel opens and false if not.
    * ContentHeight is the height of the expanded content i pixels.
-   * @type {EventEmitter<{isExpanded: boolean, contentHeight: number }>}
+   *  {EventEmitter<{isExpanded: boolean, contentHeight: number }>}
    */
   @Output() toggled = new EventEmitter<{isExpanded: boolean, contentHeight: number }>();
 

@@ -3,7 +3,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MatCalendar, MatDateFormats, MatDatepickerIntl } from '@angular/material';
-import { Key } from '../..';
+import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
 
 const yearsPerPage = 24;
 

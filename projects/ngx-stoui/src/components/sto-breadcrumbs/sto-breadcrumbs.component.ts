@@ -35,7 +35,7 @@ export class StoBreadcrumbsComponent {
   /**
    * @DEPRECATED
    * The material icon that is show top left
-   * @type {string}
+   *  {string}
    */
   @Input() homeIcon = 'home';
 

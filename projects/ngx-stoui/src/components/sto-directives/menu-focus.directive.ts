@@ -27,7 +27,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
    * This needs to be applied from the host component, and needs to be via ViewChildren
    * If we just pass in the actual trigger, we can't subscribe to change events, meaning any triggers added *after*
    * view is initialized, will not be checked
-   * @param {QueryList<MatMenuTrigger>} triggers
+   * @param triggers
    */
   @Input()
   set triggers(triggers: QueryList<MatMenuTrigger>) {
@@ -41,7 +41,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
   /**
    * Listens for when the menu is opened, and focuses on {@link focusElement} after waiting 20 ms (~1 frame)
    * Will additionally replace the listeners whenever new triggers are added
-   * @param {QueryList<MatMenuTrigger>} triggers
+   * @param triggers
    */
   private listenOnMenuOpened(triggers: QueryList<MatMenuTrigger>) {
     triggers.changes
@@ -62,7 +62,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
   /**
    * Handles keydown events on our fake menu item
    * @see handleFakeFocus
-   * @param {HTMLElement} el
+   * @param el
    */
   private setFocusFromElement(el: HTMLElement) {
     fromEvent(el, 'keydown')
@@ -76,7 +76,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
 
   /**
    * Handler for keyboard events on our fake menu item
-   * @param {KeyboardEvent} e
+   * @param e
    */
   private handleFakeFocus(e: KeyboardEvent) {
     if (e.keyCode === DOWN_ARROW) {
@@ -101,7 +101,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
   /**
    * Handle subscription errors - a lot of the methods we use are undocumented and private
    * To ensure we don't get an application crash, we use this to handle our errors
-   * @param {Error} err
+   * @param err
    */
   private illegalErrorException(err: Error) {
     console.error('Menu directive depends on some illegal methods - this has now broken', err);
@@ -121,7 +121,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
   /**
    * Listens for changes to hover on the items in the menu, and focuses the element, enabling keyboard shortcuts
    * Additionally listens to changes to dynamic menu items, and replaces the listener
-   * @param {QueryList<MatMenuItem>} menuItems
+   * @param menuItems
    */
   private updateFocusOnHover(menuItems: QueryList<MatMenuItem>) {
     menuItems.changes

@@ -1,21 +1,32 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Host, Input, OnDestroy, OnInit, Optional, SkipSelf,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Host,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SkipSelf,
   ViewChild
 } from '@angular/core';
 import {
-  AbstractControl, ControlContainer,
-  ControlValueAccessor, FormBuilder,
+  AbstractControl,
+  ControlContainer,
+  ControlValueAccessor,
+  FormBuilder,
   FormControl,
-  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator, ValidatorFn, Validators
+  ValidatorFn,
+  Validators
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
 import { Key } from '../shared/abstract-and-interfaces/keyPress.enum';
-import { map, debounceTime, tap, filter, takeUntil, startWith } from 'rxjs/operators';
-import {Observable,  combineLatest ,  Subject } from 'rxjs';
+import { debounceTime, filter, map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, MonoTypeOperatorFunction } from 'rxjs';
 import { AutoCompleteValidator } from './sto-autocomplete.validate';
 
 
@@ -23,7 +34,7 @@ import { AutoCompleteValidator } from './sto-autocomplete.validate';
   selector: 'sto-autocomplete',
   templateUrl: './sto-autocomplete.component.html',
   styles: [`mat-form-field {
-      width: 100%
+    width: 100%
   }`],
   providers: [
     {
@@ -72,17 +83,17 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
   @Input() searchForKey: string;
   /**
    * Desired validation message (optional)
-   * @type {string}
+   *  {string}
    */
   @Input() validationMessage = `Invalid option selected`;
   /**
    * ignoreValidation set to true to disable validation handling
-   * @type {boolean}
+   *  {boolean}
    */
   @Input() ignoreValidation = false;
   /**
    * ignoredIds is a list of Ids that should be ignored in filter
-   * @type {any}
+   *  {any}
    */
   @Input() ignoredIds: any[];
 
@@ -93,34 +104,40 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
 
   /**
    * @deprecated inheritedErrors are now being retrieved from the host control, rendering this moot.
-   * @returns {ValidationErrors | null}
+   * {ValidationErrors | null}
    */
   @Input() get inheritedErrors(): ValidationErrors | null {
     return this._inheritedErrors;
   }
+
   set inheritedErrors(errors: ValidationErrors | null) {
     this._inheritedErrors = errors;
     if (errors) {
       this.searchControl.markAsTouched();
     }
   }
+
   public elementHasFocus: boolean;
   private destroyed$ = new Subject();
   private _inheritedErrors: ValidationErrors | null;
   public filtered$: Observable<any[]>;
   public searchControl = new FormControl();
   public errors: ValidationErrors | null;
+
   public markAsTouched() {
     if (this.searchControl) {
       this.searchControl.markAsTouched();
       this.searchControl.markAsDirty();
     }
   }
+
   public parent: AbstractControl;
+
   constructor(private cdr: ChangeDetectorRef,
               private fb: FormBuilder,
               @Optional() @Host() @SkipSelf()
-              private controlContainer: ControlContainer, ) {}
+              private controlContainer: ControlContainer,) {
+  }
 
   onEnter(event?: KeyboardEvent) {
     if (event && event.keyCode === Key.Enter) {
@@ -130,7 +147,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
 
     const results = this.unfiltered
       .filter(item => {
-        if (!this.ignoredIds ||  item.id === null) {
+        if (!this.ignoredIds || item.id === null) {
           return true;
         }
         return this.ignoredIds.indexOf(item.id) === -1;
@@ -166,7 +183,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
   }
 
   propagateChange = (_: any) => {
-  }
+  };
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -201,7 +218,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
     const filtered = this.filterSearch([...this.unfiltered], search);
     const sorted = this.sortSearchByRelevance(filtered, search);
     return sorted;
-  })
+  });
 
   public emitSearchChanged = () => tap((value: string) => {
     if (typeof value === 'string') {
@@ -210,21 +227,24 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
       }
       this.beforePropagateChange(value);
     }
-  })
+  });
+
   private beforePropagateChange(value) {
     const parent = this.controlContainer.control.get(this.formControlName);
     parent.updateValueAndValidity({onlySelf: true});
     this.propagateChange(value);
   }
+
   private mapErrors() {
     return map(() => {
       return this.parent.errors;
     });
   }
+
   private monkeypatchSetValidators(control: AbstractControl) {
     const origFunc = control.setValidators;
     const self = this;
-    control.setValidators = function(newValidator: ValidatorFn|ValidatorFn[]|null) {
+    control.setValidators = function (newValidator: ValidatorFn | ValidatorFn[] | null) {
       let args = [];
       if (newValidator instanceof Array) {
         args = [...newValidator];
@@ -266,7 +286,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
       .pipe(
         debounceTime(50),
         filter(item => {
-          if (!this.ignoredIds ||  item.id === null) {
+          if (!this.ignoredIds || item.id === null) {
             return true;
           }
           return this.ignoredIds.indexOf(item.id) === -1;
@@ -281,6 +301,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
       this.onEnter();
     });
   }
+
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();

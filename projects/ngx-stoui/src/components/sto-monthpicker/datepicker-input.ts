@@ -315,7 +315,7 @@ export class MatMonthpickerInput<D> implements AfterContentInit, ControlValueAcc
 
   /**
    * @param obj The object to check.
-   * @returns The given object if it is both a date instance and valid, otherwise null.
+   * The given object if it is both a date instance and valid, otherwise null.
    */
   private _getValidDateOrNull(obj: any): D | null {
     return (this._dateAdapter.isDateInstance(obj) && this._dateAdapter.isValid(obj)) ? obj : null;

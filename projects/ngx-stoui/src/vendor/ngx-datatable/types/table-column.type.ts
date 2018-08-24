@@ -10,14 +10,14 @@ export type TableColumnProp = string|number;
 
 /**
  * Column Type
- * @type {object}
+ *  {object}
  */
 export interface TableColumn {
 
   /**
    * Internal unique id
    *
-   * @type {string}
+   *  {string}
    * @memberOf TableColumn
    */
   $$id?: string;
@@ -25,7 +25,7 @@ export interface TableColumn {
   /**
    * Internal for column width distributions
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   $$oldWidth?: number;
@@ -33,7 +33,7 @@ export interface TableColumn {
   /**
    * Internal for setColumnDefaults
    *
-   * @type {ValueGetter}
+   *  {ValueGetter}
    * @memberOf TableColumn
    */
   $$valueGetter?: ValueGetter;
@@ -41,7 +41,7 @@ export interface TableColumn {
   /**
    * Determines if column is checkbox
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   checkboxable?: boolean;
@@ -49,7 +49,7 @@ export interface TableColumn {
   /**
    * Determines if the column is frozen to the left
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   frozenLeft?: boolean;
@@ -57,7 +57,7 @@ export interface TableColumn {
   /**
    * Determines if the column is frozen to the right
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   frozenRight?: boolean;
@@ -68,7 +68,7 @@ export interface TableColumn {
    * take any available extra width and distribute it proportionally
    * according to all columns' flexGrow values.
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   flexGrow?: number;
@@ -76,7 +76,7 @@ export interface TableColumn {
   /**
    * Min width of the column
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   minWidth?: number;
@@ -84,7 +84,7 @@ export interface TableColumn {
   /**
    * Max width of the column
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   maxWidth?: number;
@@ -92,7 +92,7 @@ export interface TableColumn {
   /**
    * The default width of the column, in pixels
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   width?: number;
@@ -100,7 +100,7 @@ export interface TableColumn {
   /**
    * Can the column be resized
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   resizeable?: boolean;
@@ -108,7 +108,7 @@ export interface TableColumn {
   /**
    * Custom sort comparator
    *
-   * @type {*}
+   *  {*}
    * @memberOf TableColumn
    */
   comparator?: any;
@@ -116,7 +116,7 @@ export interface TableColumn {
   /**
    * Custom pipe transforms
    *
-   * @type {PipeTransform}
+   *  {PipeTransform}
    * @memberOf TableColumn
    */
   pipe?: PipeTransform;
@@ -124,7 +124,7 @@ export interface TableColumn {
   /**
    * Can the column be sorted
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   sortable?: boolean;
@@ -132,7 +132,7 @@ export interface TableColumn {
   /**
    * Can the column be re-arranged by dragging
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   draggable?: boolean;
@@ -140,7 +140,7 @@ export interface TableColumn {
   /**
    * Whether the column can automatically resize to fill space in the table.
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   canAutoResize?: boolean;
@@ -148,7 +148,7 @@ export interface TableColumn {
   /**
    * Column name or label
    *
-   * @type {string}
+   *  {string}
    * @memberOf TableColumn
    */
   name?: string;
@@ -160,7 +160,7 @@ export interface TableColumn {
    *
    * If left blank, will use the name as camel case conversion
    *
-   * @type {TableColumnProp}
+   *  {TableColumnProp}
    * @memberOf TableColumn
    */
   prop?: TableColumnProp;
@@ -168,7 +168,7 @@ export interface TableColumn {
   /**
    * Cell template ref
    *
-   * @type {*}
+   *  {*}
    * @memberOf TableColumn
    */
   cellTemplate?: any;
@@ -176,7 +176,7 @@ export interface TableColumn {
   /**
    * Header template ref
    *
-   * @type {*}
+   *  {*}
    * @memberOf TableColumn
    */
   headerTemplate?: any;
@@ -200,7 +200,7 @@ export interface TableColumn {
   /**
    * Header checkbox enabled
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   headerCheckboxable?: boolean;

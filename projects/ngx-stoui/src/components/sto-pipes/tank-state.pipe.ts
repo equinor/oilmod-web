@@ -7,11 +7,11 @@ export class TankStatePipe implements PipeTransform {
 
   /**
    * tankState returns the requested key from a tank state, given that it exists.
-   * @param {string} tankId
-   * @param {TankState[]} tankStates
-   * @param {string} key
-   * @param {"operational" | "capcity"} unit
-   * @returns {any}
+   * @param tankId
+   * @param tankStates
+   * @param key
+   * @param unit
+   * {any}
    */
   transform(tankId: string, tankStates: any[], key: string, unit: 'operational'|'capacity' = 'operational'): any {
     if (!tankId || !tankStates || !key) {

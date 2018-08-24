@@ -18,7 +18,7 @@ export class StoNumberInputDirective  {
     }
     /**
      * List of keys ignored, to work as default.
-     * @type {Key[]}
+     *  {Key[]}
      */
     private ignoredKeys = [
         Key.Dash,
@@ -59,8 +59,8 @@ export class StoNumberInputDirective  {
 
   /**
    *  Handles thousand seperator with commas
-   * @param {string} orgStr eg. 123.214,123
-   * @returns {string} 123214.123
+   * @param orgStr eg. 123.214,123
+   * {string} 123214.123
    */
     private handleMixedCommasAndDecimals(orgStr: string) {
       let str = orgStr + '';
@@ -79,8 +79,8 @@ export class StoNumberInputDirective  {
 
     /**
      * Se if parsed string contains words that indicate a failed parse.
-     * @param {string} parsedValue
-     * @returns {boolean}
+     * @param parsedValue
+     * {boolean}
      */
     private hasInvalidValues(parsedValue: string) {
         return parsedValue.includes('NaN')
@@ -144,7 +144,7 @@ export class StoNumberInputDirective  {
     /**
      * All text is selected in the input
      * @param e
-     * @returns {boolean}
+     * {boolean}
      */
     private hasSelectedAllText(e) {
         return e.target.selectionEnd - e.target.selectionStart === this._el.value.length;
@@ -166,7 +166,7 @@ export class StoNumberInputDirective  {
     /**
      * Is copy, paste or cut.
      * @param e
-     * @returns {boolean}
+     * {boolean}
      */
     private isCopyPaste(e) {
         return e.ctrlKey && (e.which === Key.C || e.which === Key.V || e.which === Key.X);
@@ -175,7 +175,7 @@ export class StoNumberInputDirective  {
     /**
      * Is select all text (CTRL+A)
      * @param e
-     * @returns {boolean}
+     * {boolean}
      */
     private isCtrlA(e) {
         return e.ctrlKey && (e.which === Key.A);
@@ -184,7 +184,7 @@ export class StoNumberInputDirective  {
     /**
      * Is a number, on keyboard and on numpad.
      * @param e
-     * @returns {boolean}
+     * {boolean}
      */
     private isNumberKeypress(e) {
         return (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105);

@@ -5,7 +5,7 @@ import { format } from 'date-fns';
  * Function used to format server errors, and convert them to a generalized format to be handled by
  * {@link HttpErrorHandlerService#errorHandler}
  * @param err
- * @returns {FormattedError}
+ * {FormattedError}
  */
 export const formatError = (err: HttpErrorResponse): FormattedError => {
   switch (err.status) {
@@ -119,7 +119,7 @@ function noAccessTitle(method: RequestMethods): string {
  * Creates a search string for Access IT, making it easier for the end user to apply for required rights.
  * @param url
  * @param method
- * @returns {string} A search string pointing to the relevant access it query.
+ * {string} A search string pointing to the relevant access it query.
  */
 function createAccessItSearchString(url: string, method: RequestMethods): string {
   let searchString: string;

@@ -84,7 +84,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   /**
    * Emits true if opened, false if closed.
-   * @type {EventEmitter<boolean>}
+   *  {EventEmitter<boolean>}
    */
   @Output() onToggle = new EventEmitter<boolean>();
   /**
@@ -98,12 +98,12 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   /**
    * Emits on cancel. When the cancel is called by pressing ESC key.
-   * @type {EventEmitter<any>}
+   *  {EventEmitter<any>}
    */
   @Output() cancel = new EventEmitter();
   /**
    * Emits on submit. When the submit is called from code like CTRL+S.
-   * @type {EventEmitter<any>}
+   *  {EventEmitter<any>}
    */
   @Output() submit = new EventEmitter();
 
@@ -152,7 +152,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   /**
    * Test if an active overlay is active by checkout for cdk-overlay-containeres that are active.
    * This indicates a select-list, dialog or menu is opened.
-   * @returns true if an active overlay is present in the DOM.
+   * true if an active overlay is present in the DOM.
    */
   private isAnActiveOverlayPresent(): boolean {
     const overlays = Array.from(document.getElementsByClassName('cdk-overlay-container'))
@@ -169,7 +169,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   /**
    * Test if a keypress is inside a sto-daterange picker by the tagnamne
    * @param ev
-   * @returns true if inside sto-daterange false if else
+   * true if inside sto-daterange false if else
    */
   private isKeyPressInDaterangePicker(ev: KeyboardEvent): boolean {
     const path: Array<HTMLElement> = ev['path'];

@@ -5,14 +5,14 @@ import { TableColumnProp } from '../../../vendor/ngx-datatable/types';
 
 /**
  * Column Type
- * @type {object}
+ *  {object}
  */
 export interface ColumnGroup {
 
   /**
    * Internal unique id
    *
-   * @type {string}
+   *  {string}
    * @memberOf TableColumn
    */
   $$id?: string;
@@ -20,7 +20,7 @@ export interface ColumnGroup {
   /**
    * Internal for column width distributions
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   $$oldWidth?: number;
@@ -35,7 +35,7 @@ export interface ColumnGroup {
    * take any available extra width and distribute it proportionally
    * according to all columns' flexGrow values.
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   flexGrow?: number;
@@ -43,7 +43,7 @@ export interface ColumnGroup {
   /**
    * The default width of the column, in pixels
    *
-   * @type {number}
+   *  {number}
    * @memberOf TableColumn
    */
   width?: number;
@@ -51,7 +51,7 @@ export interface ColumnGroup {
   /**
    * Can the column be resized
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   resizeable?: boolean;
@@ -60,7 +60,7 @@ export interface ColumnGroup {
   /**
    * Can the column be re-arranged by dragging
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   draggable?: boolean;
@@ -68,7 +68,7 @@ export interface ColumnGroup {
   /**
    * Whether the column can automatically resize to fill space in the table.
    *
-   * @type {boolean}
+   *  {boolean}
    * @memberOf TableColumn
    */
   canAutoResize?: boolean;
@@ -76,7 +76,7 @@ export interface ColumnGroup {
   /**
    * Column name or label
    *
-   * @type {string}
+   *  {string}
    * @memberOf TableColumn
    */
   name?: string;
@@ -85,7 +85,7 @@ export interface ColumnGroup {
   /**
    * Header template ref
    *
-   * @type {*}
+   *  {*}
    * @memberOf TableColumn
    */
   headerTemplate?: any;

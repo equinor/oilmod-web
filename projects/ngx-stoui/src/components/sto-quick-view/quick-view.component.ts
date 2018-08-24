@@ -78,7 +78,7 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   @Input() position: 'over' | 'below' = 'over';
   /**
-   * @type number
+   *  number
    * Determines the overlay offset in px on the X and Y-axis. Defaults to 0.
    *
    * @example

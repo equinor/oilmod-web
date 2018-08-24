@@ -6,7 +6,7 @@ export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
 
 /**
  * Always returns the empty string ''
- * @returns {string}
+ * {string}
  */
 export function emptyStringGetter(): string {
   return '';
@@ -35,7 +35,7 @@ export function getterForProp(prop: TableColumnProp): ValueGetter {
  * Returns the value at this numeric index.
  * @param row array of values
  * @param index numeric index
- * @returns {any} or '' if invalid index
+ * {any} or '' if invalid index
  */
 export function numericIndexGetter(row: any[], index: number): any {
   // mimic behavior of deepValueGetter
@@ -51,7 +51,7 @@ export function numericIndexGetter(row: any[], index: number): any {
  * (more efficient than deepValueGetter)
  * @param obj object containing the field
  * @param fieldName field name string
- * @returns {any}
+ * {any}
  */
 export function shallowValueGetter(obj: any, fieldName: string): any {
   if (!obj || !fieldName) { return obj; }
@@ -63,8 +63,8 @@ export function shallowValueGetter(obj: any, fieldName: string): any {
 
 /**
  * Returns a deep object given a string. zoo['animal.type']
- * @param {object} obj
- * @param {string} path
+ * @param obj
+ * @param path
  */
 export function deepValueGetter(obj: any, path: string): any {
   if (!obj || !path) { return obj; }

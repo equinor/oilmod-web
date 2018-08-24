@@ -25,7 +25,7 @@ export class HttpErrorHandlerService {
    * Exposed method that takes in a {@link FormattedError} and handles it according to design specs.
    * Will either emit a message to any subscribers listening for messages, or open a dialog.
    * Dialogs are primarily for critical errors, or errors requiring user action.
-   * @param {FormattedError} err
+   * @param err
    */
   public errorHandler(err: FormattedError) {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 10);
@@ -47,7 +47,7 @@ export class HttpErrorHandlerService {
   /**
    * Takes in a {FormattedError}, and opens a dialog with {ExceptionDialogComponent}.
    * Sends out information about the action (if any) was performed by the user in the dialog
-   * @param {FormattedError} data
+   * @param data
    */
   public handleModalError(data: FormattedError) {
     const dialog = this.dialog.open(ExceptionDialogComponent, {

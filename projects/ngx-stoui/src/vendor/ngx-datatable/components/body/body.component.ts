@@ -449,8 +449,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * case the positionY of the translate3d for row2 would be the sum of all the
    * heights of the rows before it (i.e. row0 and row1).
    *
-   * @param {*} rows The row that needs to be placed in the 2D space.
-   * @returns {*} Returns the CSS3 style to be applied
+   * @param rows The row that needs to be placed in the 2D space.
+   * {*} Returns the CSS3 style to be applied
    *
    * @memberOf DataTableBodyComponent
    */
