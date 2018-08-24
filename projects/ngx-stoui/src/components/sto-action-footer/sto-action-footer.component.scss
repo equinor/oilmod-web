@@ -1,0 +1,36 @@
+@import '../../variables';
+@import "../../style/functions";
+$footer-height: 69px;
+
+.sto-action-footer {
+  @include mat-elevation(4);
+
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $gray-light;
+  border-top: solid 1px $gray-medium;
+  height: $footer-height;
+  min-height: $footer-height;
+  z-index: 25;
+
+  button {
+    text-transform: uppercase;
+  }
+  &__message {
+    line-height: 2.9;
+  }
+  &__content{
+    padding: spacer(4) spacer(6);
+  }
+
+  .mat-progress-bar{
+    margin-top: -5px;
+  }
+
+}
+
+.sto-has-action-footer{
+  padding-bottom: $footer-height;
+}
+
