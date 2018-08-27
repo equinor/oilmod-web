@@ -5,7 +5,7 @@
   "scripts": {
     "postversion": "node postbump.js",
     "postpublish": "git push",
-    "docs": "compodoc -p tsconfig.json --theme material --silent -n \"TOPS UI Library\""
+    "docs": "compodoc -p tsconfig.json --theme material --disablePrivate --silent -n \"TOPS UI Library\""
   },
   "dependencies": {
     "@angular/animations": "^5.0.0",

@@ -6,7 +6,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { UnsavedChanges } from './unsaved-changes.interface';
 
-
+/**
+ * Display a dialog if the user has made changes to the current model.
+ * The user can then choose to return to their form, or ignore the changes.
+ */
 @Injectable()
 export class UnsavedChangesGuard implements CanDeactivate<UnsavedChanges> {
 

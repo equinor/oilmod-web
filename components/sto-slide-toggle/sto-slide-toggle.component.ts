@@ -52,7 +52,13 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   @Input() textAlign: 'right' | 'left' = 'right';
   @Input() fractionSize = 3;
   @Input() suffix: string;
+  /**
+   * Set the readonly state on the slide-toggle
+   */
   @Input() readonly: boolean;
+  /**
+   * Set the disabled state on the slide-toggle
+   */
   @Input() disabled: boolean;
   @Input() floatPlaceholder = 'always';
   @Input() withoutPlaceHolder: boolean;
