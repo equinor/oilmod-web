@@ -16,6 +16,14 @@ import { StoNumberInputPipe } from '../sto-number-input/sto-number-input.pipe';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
+/**
+ * Wrapper component for @angular/material's slide-toggle inside a mat-form-field.
+ * Used to present a slide-toggle as text.
+ *
+ * @example
+ *
+ * <sto-slide-toggle formControlName="slide"></sto-slide-toggle>
+ */
 @Component({
   selector: 'sto-slide-toggle',
   templateUrl: './sto-slide-toggle.component.html',
@@ -31,7 +39,13 @@ import { Subject } from 'rxjs/Subject';
 export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   private destroyed$ = new Subject();
+  /**
+   * Used to retrieve AbstractControl from the form
+   */
   @Input() formControlName: string;
+  /**
+   * You can also pass in a formControl directly to have it outside a regular form
+   */
   @Input() formControl: FormControl;
   @Input() placeholder: string;
   @Input() label: string;

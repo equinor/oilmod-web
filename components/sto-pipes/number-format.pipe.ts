@@ -1,7 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**
- * Rounds numbers
+ * Formats numbers to use our standard formatting (d ddd,ddd)
+ *
+ * @example
+ *
+ * {{ 1234,32 | numberFormat }} -> 1 234,320
+ * {{ 1234,32 | numberFormat:'M3' }} -> 1 234,320 M3
+ * {{ -1234,32 | numberFormat:'M3':true }} -> 1 234,320 M3
+ * {{ 1234,32 | numberFormat:'M3':false:false }} -> 1 234 M3
+ * {{ 1234,32 | numberFormat:'M3':false:true:5 }} -> 1 234,32000 M3
  */
 @Pipe({
   name: 'numberFormat'

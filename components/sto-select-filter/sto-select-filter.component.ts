@@ -10,13 +10,31 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {
-  AbstractControl,
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
+
+/**
+ * Component used in mat-select's to filter out the values, and adds a Select all checkbox
+ *
+ * @example
+ *
+ * public all = ["a", "b", "c"];
+ * public filtered = [];
+ * public selectAll(checked: boolean) {
+ *  this.control.setValue(checked ? all : []);
+ * }
+ * public filter(val: string) {
+ *    this.filtered = all.filter(x => x === val);
+ * }
+ * <mat-select [formControl]="control">
+ *   <sto-select-filter (valueChanges)="filter($event)" (selectAll)="selectAll($event)"></sto-select-filter>
+ *   <mat-option *ngFor="let v of filtered">{{ v }}</mat-option>
+ * </mat-select>
+ */
 
 @Component({
   selector: 'sto-select-filter',
@@ -41,6 +59,10 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   public indeterminate : boolean;
 
   private _value: any;
+  /**
+   * Initial value of the filter
+   * @param value
+   */
   @Input() set value(value : any){
     this._value = value;
     this.writeValue(value)
@@ -51,6 +73,10 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
 
   private _total : number;
+  /**
+   * Length of unfiltered Array
+   * @param {number} total
+   */
   @Input() set total(total : number){
     this._total = total;
   }
@@ -60,6 +86,10 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
 
   private _selected : number;
+  /**
+   * Determines the checkbox state. Can be checked, indeterminate or unchecked
+   * @param {number} selected
+   */
   @Input() set selected(selected : number){
     if(this.total === selected){
       this.isChecked(true);
@@ -83,12 +113,24 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
     this.checkboxControl.setValue(isChecked, {emitEvent : false});
   }
 
-
-
+  /**
+   * Emits when selectAll checkbox changes
+   * @type {EventEmitter<boolean>}
+   */
   @Output() selectAll = new EventEmitter<boolean>();
+  /**
+   * Emits when the search value changes
+   * @type {EventEmitter<boolean>}
+   */
   @Output() valueChanges = new EventEmitter<boolean>();
 
+  /**
+   * isMulti determines if select all is available
+   */
   @Input() isMulti: boolean;
+  /**
+   * isFilter determines if filtering is active
+   */
   @Input() isFilter: boolean;
   private destroyed$ = new Subject();
 
