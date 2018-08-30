@@ -20,6 +20,7 @@ export class UnsavedChangesGuard implements CanDeactivate<UnsavedChanges> {
   constructor(private dialog: MatDialog) {
     this._dialogConfig.width = '420px';
     this._dialogConfig.hasBackdrop = true;
+    this._dialogConfig.panelClass = 'sto-dialog';
   }
 
   canDeactivate(component: any) {
