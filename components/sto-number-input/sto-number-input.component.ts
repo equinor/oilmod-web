@@ -6,7 +6,17 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors
 } from '@angular/forms';
-import { Component, forwardRef, Host, Input, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    forwardRef,
+    Host,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    SkipSelf
+} from '@angular/core';
 import { StoNumberInputPipe } from './sto-number-input.pipe';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
@@ -161,6 +171,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
   private markErrors(control) {
     this.touched = control.touched;
     this.errors = control.errors;
+    this.cdr.markForCheck();
   }
 
 
@@ -243,12 +254,15 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
    * The controlContainer is required to listen for value and status changes and interact with the parent formController.
    * @param {ControlContainer} controlContainer
    * @param {StoNumberInputPipe} numberFormatterPipe
+   * @param {StoUserPreferenceService} userPreferenceService
+   * @param {ChangeDetectorRef} cdr
    */
   constructor(
     @Optional() @Host() @SkipSelf()
     private controlContainer: ControlContainer,
     private numberFormatterPipe: StoNumberInputPipe,
-    private userPreferenceService: StoUserPreferenceService
+    private userPreferenceService: StoUserPreferenceService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
