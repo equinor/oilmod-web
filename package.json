@@ -4,7 +4,6 @@
   "version": "3.6.2",
   "scripts": {
     "postversion": "node postbump.js",
-    "postpublish": "git push",
     "docs": "compodoc -p tsconfig.json --theme material --disablePrivate --silent -n \"TOPS UI Library\""
   },
   "dependencies": {
