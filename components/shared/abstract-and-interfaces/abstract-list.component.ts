@@ -1,13 +1,12 @@
 import {
-  AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, HostListener, Input, OnInit, Output,
+  AfterViewInit, ChangeDetectorRef, ElementRef, HostListener,
   ViewChild, OnDestroy
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ListAutoResizeService } from '../services/list-auto-resize.service';
 import { Subscription } from 'rxjs/Subscription';
 import { throttleable } from '../../../vendor/ngx-datatable/utils/throttle';
 
- 
+
 export abstract class AbstractListComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('table', {read: ElementRef}) public table: ElementRef;
@@ -65,7 +64,13 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
   }
 
   private getElementOffsetTop() {
-    return this.table.nativeElement.getBoundingClientRect().top;
+    let offset = 0;
+    try {
+        offset = this.table.nativeElement.getBoundingClientRect().top;
+    } catch (e) {
+      console.error('Failed to get offset from tableRef', e);
+    }
+    return offset;
   }
 
   constructor(protected cdr: ChangeDetectorRef, protected toggleService: ListAutoResizeService) {

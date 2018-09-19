@@ -203,22 +203,6 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   @Input() set summaryRow(val: any) {
 
     if (val) {
-      const data = Object.assign({}, val.data);
-      if (data.summaryText) {
-        delete data.summaryText;
-      }
-      if(this.fixedFooter){
-        const fields = Object.keys(data);
-        fields.forEach(f => {
-          this.rows
-          // .filter(row => row.hasOwnProperty(f))
-            .filter(row => this.nestedValue(f, row))
-            .forEach(row => {
-              val.data[f] += this.nestedValue(f, row);
-            });
-        });
-      }
-
       this.linkColumns(val.columns, this._internalColumns);
       this._internalSummaryColumns = val.columns;
       this._internalSummaryRowData = val.data;

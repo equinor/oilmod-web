@@ -1,6 +1,7 @@
 <mat-form-field
         class="sto-form__field"
         [floatPlaceholder]="floatPlaceholder"
+        [class.sto-form__field--float-right]="textAlign === 'right'"
         [class.sto-form__field--disabled]="disabled"
         [class.sto-form__field--readonly]="readonly"
         [class.sto-form__field--without-placeholder]="withoutPlaceHolder"

@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import {AbstractControl, FormGroup} from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 
@@ -7,19 +7,20 @@ import { takeUntil } from 'rxjs/operators';
  * Used to simplify the {@link UnsavedChangesGuard} and improve usage (not showing a modal if form is same as original)
  */
 export class FormSerializeValidator {
+  private monkeypatchMarkAsPristine(control: AbstractControl) {
+      if (control) {
+          const self = this;
+          const origFunc = control.markAsPristine;
+          control.markAsPristine = function () {
+              origFunc.apply(this, arguments);
+              self.orginalValue = self._form;
+          };
+      }
+  }
 
   constructor( private _form: FormGroup, private destroyed$: Subject<boolean> ) {
+    this.monkeypatchMarkAsPristine(this._form);
     this.orginalValue = this._form;
-
-    /**
-     * Listen for form status changes, and update the current value.
-     */
-    this._form.statusChanges
-      .pipe(
-        takeUntil( this.destroyed$ )
-      ).subscribe( change => {
-      this.orginalValue = this._form;
-    } );
 
     /**
      * Listen for changes to the form values.

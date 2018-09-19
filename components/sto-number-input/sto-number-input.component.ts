@@ -1,10 +1,10 @@
 import {
-  AbstractControl,
-  ControlContainer,
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-  ValidationErrors
+    AbstractControl,
+    ControlContainer,
+    ControlValueAccessor,
+    FormControl,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors
 } from '@angular/forms';
 import {
     ChangeDetectorRef,
@@ -15,13 +15,14 @@ import {
     OnDestroy,
     OnInit,
     Optional,
-    SkipSelf
+    SkipSelf,
+    ViewEncapsulation
 } from '@angular/core';
-import { StoNumberInputPipe } from './sto-number-input.pipe';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
-import { StoUserPreferenceService } from '../sto-user-preference/sto-user-preference.service';
-import { Observable } from 'rxjs/Observable';
+import {StoNumberInputPipe} from './sto-number-input.pipe';
+import {debounceTime, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs/Subject';
+import {StoUserPreferenceService} from '../sto-user-preference/sto-user-preference.service';
+import {Observable} from 'rxjs/Observable';
 
 /**
  * The number input is component that formats the number after you blur the field.
@@ -33,6 +34,8 @@ import { Observable } from 'rxjs/Observable';
 @Component({
     selector: 'sto-number-input',
     templateUrl: 'sto-number-input.component.html',
+    styleUrls: ['./sto-number-input.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,

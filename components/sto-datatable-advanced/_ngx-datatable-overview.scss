@@ -75,3 +75,11 @@
     }
   }
 }
+
+.ngx-datatable.sto-datatable__overview .datatable-body-row {
+  &--context-menu .datatable-row {
+    &-left, &-center, &-right {
+      background-color: $datatable-row-context-menu-color;
+    }
+  }
+}
