@@ -38,7 +38,6 @@
       }
       .sto-daterange__button--container {
         padding-bottom: 8px;
-        align-content: right;
         &.sto-daterange__button--container--actions {
           text-align: right;
         }
@@ -67,7 +66,7 @@
     background: rgba(0, 135, 184, 0.1);
     border-radius: 2px;
     height: 42px;
-    .mat-input-flex {
+    .mat-form-field-flex {
       padding: 6px 6px 0;
     }
     input {
@@ -102,7 +101,7 @@
 
 // Line height date range picker
 .sto-daterange-wrapper {
-  .mat-input-infix {
+  .mat-form-field-infix {
     line-height: 1;
   }
 }

@@ -23,7 +23,13 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() set innerWidth(val: number) {
     if (this._columns) {
       const colByPin = columnsByPin(this._columns);
-      this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);
+      const all = [
+        ...colByPin.center,
+        ...colByPin.grouping,
+        ...colByPin.left,
+        ...colByPin.right
+      ];
+      this.columnGroupWidths = columnGroupWidths(colByPin, all);
     }
 
     this._innerWidth = val;
@@ -107,7 +113,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   stylesByGroup(group: string) {
-   let isSummary = false; //TODO FOR DEMO 13.09.2017 only. Move body-row to sto-body-fixed-row!
+   let isSummary = false; // TODO FOR DEMO 13.09.2017 only. Move body-row to sto-body-fixed-row!
     if (this.element.classList.contains('datatable-footer-summary-row--fixed')) {
       isSummary = true;
    }

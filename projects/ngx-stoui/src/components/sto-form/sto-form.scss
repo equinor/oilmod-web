@@ -24,7 +24,7 @@ $height: 72px;
 
 
 %sto-form__field--focused {
-  .mat-input-suffix.mat-form-field-suffix {
+  .mat-form-field-suffix {
     .mat-icon-button {
       .mat-icon {
         color: $black-84;
@@ -38,7 +38,7 @@ $height: 72px;
     bottom: 16px;
     heigth: 2px;
     background-color: transparent;
-    -webkit-transition-property: background-color width left;
+    -webkit-transition-property: background-color, width, left;
     -webkit-transition-delay: 0.2s;
     width: calc(100% - 2px);
     left: 1px;
@@ -87,7 +87,7 @@ $height: 72px;
 }
 
 @mixin mat-input-hover-effect($background-color, $underline-color){
-    .mat-input-flex.mat-form-field-flex{
+    .mat-form-field-flex{
         &:hover {
            background-color: $background-color;
         }
@@ -126,7 +126,7 @@ $height: 72px;
         }
     }
 
-    .mat-input-flex.mat-form-field-flex {
+    .mat-form-field-flex {
       padding: 6px;
       border-radius: 4px;
       background-color: $form-field-bg;
@@ -151,7 +151,7 @@ $height: 72px;
       font-size: 11px;
       margin: 6px;
     }
-    .mat-input-wrapper, .mat-form-field-wrapper {
+    .mat-form-field-wrapper {
       margin: 0 2px;
     }
     .mat-form-field-infix {
@@ -179,8 +179,8 @@ $height: 72px;
 
     .mat-radio-button{
         margin-right: 16px;
-        &:last-child(){
-            margin-right: 0px;
+        &:last-child{
+            margin-right: 0;
         }
     }
 
@@ -226,11 +226,11 @@ $height: 72px;
   .mat-input-element {
     cursor: default;
   }
-  .mat-input-flex.mat-form-field-flex {
+  .mat-form-field-flex {
     background-color: transparent;
   }
   :hover{
-    .mat-input-flex.mat-form-field-flex {
+    .mat-form-field-flex {
          background-color: transparent;
       }
       .mat-form-field-underline{
@@ -243,7 +243,7 @@ $height: 72px;
     visibility: hidden;
   }
   &.ng-invalid.ng-dirty {
-    .mat-input-subscript-wrapper.mat-form-field-subscript-wrapper {
+    .mat-form-field-subscript-wrapper {
       margin-top: -1px;
     }
   }
@@ -268,7 +268,7 @@ $height: 72px;
 
 
 
-  .mat-input-flex.mat-form-field-flex {
+  .mat-form-field-flex {
     cursor: default;
     color: $black-38;
     background-color: $black-8;
@@ -278,10 +278,10 @@ $height: 72px;
 .sto-form__field--without-placeholder{
   height: 0px;
   min-height: 32px;
-  .mat-input-flex, mat-form-field-flex{
+  .mat-form-field-flex {
     height: 30px;
   }
-  .mat-input-infix, mat-form-field-infix{
+  .mat-input-infix, .mat-form-field-infix{
     border-top-width: 0px;
     padding: 0;
 
@@ -292,10 +292,10 @@ $height: 72px;
     }
   }
 
-  .mat-form-field-placeholder{
+  .mat-form-field-placeholder, .mat-form-field-label {
     top: 0;
   }
-  .mat-form-field-placeholder-wrapper{
+  .mat-form-field-placeholder-wrapper, .mat-form-field-label-wrapper {
     top: 0;
     padding: 0;
   }
@@ -327,13 +327,19 @@ $height: 72px;
   }
 }
 //Don't know how to overwrite this without important O_o
-.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder{
-  -webkit-transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
-  transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
-  -ms-transform: translateY(-1.28125em) scale(0.8461538461538462) !important;
+.mat-form-field-can-float.mat-form-field-should-float{
+  .mat-form-field-placeholder, .mat-form-field-label {
+    -webkit-transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
+    transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
+    -ms-transform: translateY(-1.28125em) scale(0.8461538461538462) !important;
+  }
 }
 
 .sto-field--display {
   border-width: 0;
   border-style: none;
+}
+
+.mat-form-field.mat-form-field-appearance-legacy .mat-form-field-underline {
+  height: 2px;
 }

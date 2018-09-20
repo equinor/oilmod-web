@@ -5,12 +5,12 @@
     input[type="number"] {
       text-align: right;
     }
-    .mat-input-infix.mat-form-field-infix {
+    .mat-form-field-infix {
       border: 0 !important;
       margin: 0 !important;
       padding: 1px 0 0 0 !important;
     }
-    .mat-input-flex.mat-form-field-flex {
+    .mat-form-field-flex {
       height: 31px;
       padding: 4px 6px;
     }
@@ -42,10 +42,10 @@
 
     }
   }
-  .mat-form-field-placeholder{
+  .mat-form-field-placeholder, .mat-form-field-label {
     top: 0;
   }
-  .mat-form-field-placeholder-wrapper{
+  .mat-form-field-label-wrapper{
     top: 0;
     padding: 0;
   }
@@ -54,7 +54,7 @@
 .sto-compact {
   .sto-datatable {
     .sto-form__field {
-      .mat-input-flex.mat-form-field-flex {
+      .mat-form-field-flex {
         height: 19px;
         padding: 0 6px;
       }
@@ -63,9 +63,9 @@
       }
 
       &.mat-form-field-type-mat-input{
-        .mat-input-underline {
+        .mat-form-field-underline {
           bottom: 18px;
-          .mat-input-ripple {
+          .mat-form-field-ripple {
             height: 2px;
           }
         }

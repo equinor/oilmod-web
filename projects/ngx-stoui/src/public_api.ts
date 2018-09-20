@@ -13,6 +13,8 @@ export * from './components/sto-autocomplete/sto-autocomplete.validate';
 export * from './components/sto-breadcrumbs/sto-breadcrumbs.component';
 export * from './components/sto-confirm-dialog/sto-confirm-dialog.component';
 export * from './components/sto-datatable-advanced/sto-datatable.module';
+export * from './components/sto-datatable-advanced/components/stoui-complex-datatable.component';
+export * from './components/sto-datatable-advanced/types/activate';
 export * from './components/sto-daterange/sto-daterange.component';
 export * from './components/sto-daterange/sto-daterange.module';
 export * from './components/sto-daterange/sto-inline-calendar';
@@ -79,3 +81,4 @@ export * from './components/unsaved-changes/confirm-dialog/confirm-dialog.compon
 export * from './components/unsaved-changes/form-serialize-validator';
 export * from './components/unsaved-changes/unsaved-changes.guard';
 export * from './components/unsaved-changes/unsaved-changes.module';
+export * from './components/unsaved-changes/unsaved-changes.interface';

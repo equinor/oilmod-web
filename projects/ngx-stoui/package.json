@@ -1,6 +1,6 @@
 {
   "name": "ngx-stoui",
-  "version": "0.0.1",
+  "version": "4.0.0",
   "peerDependencies": {
     "@angular/animations": "^6.1.4",
     "@angular/cdk": "^6.0.0",
