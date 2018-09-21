@@ -1,29 +1,5 @@
-<!--
-<sto-complex-datatable
-  #table
-  class="sto-datatable expandable sto-datatable__overview"
-  [columnMode]="'fixed'"
-  [height]="800"
-  [headerHeight]="80"
-  [rowHeight]="50"
-  [scrollbarV]="true"
-  [scrollbarH]="true"
-  [loadingIndicator]="!ready"
-  [rows]="lines"
-  [columns]="columns"
->
-  <ngx-datatable-group *ngFor="let columnGroup of columnGroups"
-                       [name]="columnGroup.name"
-                       [headerClass]="columnGroup.headerClass"
-                       [headerTemplate]="columnGroup.headerTemplate"
-                       [frozenLeft]="columnGroup.frozenLeft"
-                       [properties]="columnGroup.props">
-  </ngx-datatable-group>
+<h1>Demo app to debug UI components</h1>
 
-
-</sto-complex-datatable>
--->
-
-<sto-message-panel severity="error">
-  OMG ERROR
-</sto-message-panel>
+<p>You can test a module by importing it in app module - everything except styles can be imported as normal (from '@ngx-stoui/...').</p>
+<p>CSS imports needs to be absolute, and pointing to the given project.</p>
+<p style="color: red">For core, this is a bit problematic - a workaround is linking the library (in dist/stoui-core, run "npm link", and in root folder, run npm link @ngx-stoui/core)</p>
