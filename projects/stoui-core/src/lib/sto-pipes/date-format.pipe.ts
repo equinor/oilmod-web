@@ -1,6 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { format as formatDate } from 'date-fns';
 
+/**
+ * Pipe used to transform dates, based on our default formats.
+ *
+ * @example
+ *
+ * public date = "2018-08-27 14:00:30"
+ * <span>{{ date | dateFormat }}</span> -> Aug 27, 2018
+ * <span>{{ date | dateFormat:'long' }}</span> -> Monday Aug 27, 2018
+ */
+
 @Pipe({
   name: 'formatDate'
 })

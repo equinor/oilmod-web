@@ -1,7 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**
- * Rounds numbers
+ * Formats numbers to use our standard formatting (d ddd,ddd)
+ *
+ * @example
+ *
+ * {{ 1234,32 | numberFormat }} -> 1 234,320
+ * {{ 1234,32 | numberFormat:'M3' }} -> 1 234,320 M3
+ * {{ -1234,32 | numberFormat:'M3':true }} -> 1 234,320 M3
+ * {{ 1234,32 | numberFormat:'M3':false:false }} -> 1 234 M3
+ * {{ 1234,32 | numberFormat:'M3':false:true:5 }} -> 1 234,32000 M3
  */
 @Pipe({
   name: 'numberFormat'
@@ -21,10 +29,10 @@ export class NumberFormatPipe implements PipeTransform {
     }
     // We absolute the value to ensure that the rounding rules is always away from zero.
     // 1.5 => 2 and -1.5 => -2
-    const isNegativeNumber = value < 0;
+    let isNegativeNumber = value < 0;
     value = Math.abs(value);
 
-    if (!appendDecimals) {
+    if(!appendDecimals){
       value = Math.round(value);
     }
     if (!isNaN(value) && appendDecimals) {
@@ -32,9 +40,9 @@ export class NumberFormatPipe implements PipeTransform {
     }
     //Turn negative numbers back, but only if value is not -0
     if (isNegativeNumber && value !== -0) {
-      value = value * -1;
+      value = value*-1;
     }
-    const localized = this.prettyPrintValue(value, appendDecimals, numberOfDecimals);
+    let localized = this.prettyPrintValue(value, appendDecimals,numberOfDecimals);
     return localized.replace(/,/g, ' ').replace('.', ',') + ` ${unit}`;
   }
 

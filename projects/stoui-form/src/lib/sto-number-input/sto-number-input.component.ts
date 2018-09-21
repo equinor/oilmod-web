@@ -6,11 +6,22 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors
 } from '@angular/forms';
-import { Component, forwardRef, Host, Input, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
-import { StoNumberInputPipe } from './sto-number-input.pipe';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { Subject ,  Observable } from 'rxjs';
-import { StoUserPreferenceService } from '@ngx-stoui/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Host,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SkipSelf,
+  ViewEncapsulation
+} from '@angular/core';
+import {StoNumberInputPipe} from './sto-number-input.pipe';
+import {debounceTime, takeUntil} from 'rxjs/operators';
+import {Subject, Observable} from 'rxjs';
+import {StoUserPreferenceService} from '@ngx-stoui/core';
 
 /**
  * The number input is component that formats the number after you blur the field.
@@ -28,7 +39,9 @@ import { StoUserPreferenceService } from '@ngx-stoui/core';
         useExisting: forwardRef(() => StoNumberInputComponent),
         multi: true
       }
-    ]
+    ],
+    styleUrls: ['./sto-number-input.component.scss'],
+    encapsulation: ViewEncapsulation.None,
   }
 )
 export class StoNumberInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
@@ -159,11 +172,12 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
   private markErrors(control) {
     this.touched = control.touched;
     this.errors = control.errors;
+    this.cdr.markForCheck();
   }
 
 
   propagateChange = (_: any) => {
-  }
+  };
 
   registerOnChange(fn) {
     this.propagateChange = fn;
@@ -238,14 +252,13 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
 
   /**
    * The controlContainer is required to listen for value and status changes and interact with the parent formController.
-   * @param controlContainer
-   * @param numberFormatterPipe
    */
   constructor(
     @Optional() @Host() @SkipSelf()
     private controlContainer: ControlContainer,
     private numberFormatterPipe: StoNumberInputPipe,
-    private userPreferenceService: StoUserPreferenceService
+    private userPreferenceService: StoUserPreferenceService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 

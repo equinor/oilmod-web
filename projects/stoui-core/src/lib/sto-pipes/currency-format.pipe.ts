@@ -1,5 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+  * Pipe used to transform numbers to a currency format
+  *
+  * @example
+  *
+  * <span>{{ 5000.5824 | currentFormat:'$':3 }}</span>
+  * Results in
+  * <span>5 000,582 $</span>
+  */
 @Pipe({
   name: 'currencyFormat'
 })

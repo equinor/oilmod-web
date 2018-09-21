@@ -2,6 +2,7 @@
         class="sto-form__field"
         [floatLabel]="floatLabel"
         [class.sto-form__field--disabled]="disabled"
+        [class.sto-form__field--float-right]="textAlign === 'right'"
         [class.sto-form__field--readonly]="readonly"
         [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
         [class.mat-form-field-invalid]="touched && errors">

@@ -29,7 +29,13 @@ import { Subject } from 'rxjs';
 export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   private destroyed$ = new Subject();
+  /**
+   * Used to retrieve AbstractControl from the form
+   */
   @Input() formControlName: string;
+  /**
+   * You can also pass in a formControl directly to have it outside a regular form
+   */
   @Input() formControl: FormControl;
   @Input() placeholder: string;
   @Input() label: string;
@@ -38,7 +44,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   @Input() suffix: string;
   @Input() readonly: boolean;
   @Input() disabled: boolean;
-  @Input() floatLabel = 'always';
+  @Input() floatPlaceholder = 'always';
   @Input() withoutPlaceHolder: boolean;
 
   /**
@@ -46,15 +52,15 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
    * When a forceValue is used, no other values will be propagated.
    */
   private _forceValue: any;
-  @Input() set forceValue(forceValue) {
+  @Input() set forceValue(forceValue){
     this._forceValue = forceValue;
-    if (forceValue) {
+    if(forceValue){
 
       this.writeValue(forceValue);
     }
 
   }
-  get forceValue(): any {
+  get forceValue(): any{
     return this._forceValue;
   }
 
@@ -74,7 +80,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
    * If a forceValue is set, we don't want to propagate that value to the conroller.
    * Return null if NaN.
    */
-  private handleChanges() {
+  private handleChanges(){
 
     if (!this.forceValue && this.forceValue !== 0) {
       this.control.valueChanges
@@ -90,27 +96,28 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   /**
    * Sets the init value
-   * @param control
+   * @param {AbstractControl | null} control
    */
   private initForm(control: AbstractControl | null) {
     let value = null;
-    if (this.forceValue !== undefined && this.forceValue !== null) {
+    if(this.forceValue !== undefined && this.forceValue !== null){
       value = this.forceValue;
-    } else {
+    }
+    else{
       value = control.value;
     }
     this.writeValue(value);
-    if (this.disabled) {
+    if(this.disabled){
       this.control.disable();
     }
   }
 
   /**
    * Subscribes for status changes on the parent control and display the errors inside the mat-formfield
-   * @param control
+   * @param {AbstractControl | null} control
    */
   private handleErrors(control: AbstractControl | null) {
-    if (control) {
+    if(control){
       control.statusChanges
         .pipe(
           takeUntil(this.destroyed$)
@@ -133,7 +140,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  private markErrors(control) {
+  private markErrors(control){
     this.touched = control.touched || control.dirty;
     this.errors = control.errors ? Object.values(control.errors) : [];
   }
@@ -148,7 +155,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(value: any) {
-    if (value) {
+    if(value) {
       this.control.setValue(true, {emitEvent: false});
     } else {
       this.control.setValue(false, {emitEvent: false});
@@ -159,22 +166,23 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   registerOnTouched() {
   }
 
-  public disable() {
+  public disable(){
 
   }
 
   ngOnInit() {
     let control;
-    if (this.formControl) {
+    if(this.formControl){
       control = this.formControl;
-    } else {
+    }else{
       control = this.controlContainer.control.get(this.formControlName) as FormControl;
     }
-    if (control) {
+    if(control){
       control.registerOnDisabledChange((isDisabled: boolean) => {
-        if (isDisabled) {
+        if(isDisabled){
           this.control.disable();
-        } else {
+        }
+        else{
           this.control.enable();
         }
 
@@ -198,43 +206,42 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
    * https://github.com/angular/angular/issues/17736
    * @param control
    */
-  private monkeyPatchMarkAsTouched(control) {
+  private monkeyPatchMarkAsTouched(control){
     if (control) {
       const self = this;
       const origFunc = control.markAsTouched;
       control.markAsTouched = function () {
         origFunc.apply(this, arguments);
         self.markErrors(this);
-      };
+      }
     }
   }
 
   /**
    * The controlContainer is required to listen for value and status changes and interact with the parent formController.
-   * @param controlContainer
    */
   constructor (
     @Optional() @Host() @SkipSelf()
-    private controlContainer: ControlContainer
+    private controlContainer: ControlContainer,
   ) {
   }
 
 
-  onFocus($event, element) {
-    if (this.disabled) {
+  onFocus($event, element){
+    if(this.disabled){
       return;
     }
     element.focused = true;
   }
-  onBlur($event, element) {
-    if (this.disabled) {
+  onBlur($event, element){
+    if(this.disabled){
       return;
     }
     element.focused = false;
   }
 
-  public toggle($event, slider, input) {
-    if (this.disabled) {
+  public toggle($event, slider, input){
+    if(this.disabled){
       return;
     }
     $event.preventDefault();
@@ -249,12 +256,12 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 @NgModule({
   imports : [
     CommonModule
-  , FormsModule
-  , ReactiveFormsModule
-  , MatInputModule
-  , MatSlideToggleModule
-  , StoPipesModule
-],
+    , FormsModule
+    , ReactiveFormsModule
+    , MatInputModule
+    , MatSlideToggleModule
+    , StoPipesModule
+  ],
   exports: [StoSlideToggleComponent],
   declarations: [StoSlideToggleComponent]
 

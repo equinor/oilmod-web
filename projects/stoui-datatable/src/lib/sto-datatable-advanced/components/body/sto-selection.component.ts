@@ -38,6 +38,9 @@ export class StoDataTableSelectionComponent extends DataTableSelectionComponent 
       this.focusCurrentRow(model.rowElement);
     }
     this.activate.emit(model);
+    if (type === 'dblclick') {
+      window.getSelection().removeAllRanges();
+    }
   }
   private shouldOpenRow(model: Model): boolean {
     if (!this.selectByDoubleClick) { // ignore all checks

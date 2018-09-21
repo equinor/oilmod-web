@@ -17,6 +17,25 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+/**
+ * Component used in mat-select's to filter out the values, and adds a Select all checkbox
+ *
+ * @example
+ *
+ * public all = ["a", "b", "c"];
+ * public filtered = [];
+ * public selectAll(checked: boolean) {
+ *  this.control.setValue(checked ? all : []);
+ * }
+ * public filter(val: string) {
+ *    this.filtered = all.filter(x => x === val);
+ * }
+ * <mat-select [formControl]="control">
+ *   <sto-select-filter (valueChanges)="filter($event)" (selectAll)="selectAll($event)"></sto-select-filter>
+ *   <mat-option *ngFor="let v of filtered">{{ v }}</mat-option>
+ * </mat-select>
+ */
+
 @Component({
   selector: 'sto-select-filter',
   templateUrl: './sto-select-filter.component.html',
@@ -32,61 +51,86 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-  @HostBinding('class.sto-select-filter') cssClass = true;
+  @HostBinding('class.sto-select-filter') cssClass: boolean = true;
 
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
 
-  public indeterminate: boolean;
+  public indeterminate : boolean;
 
   private _value: any;
-  @Input() set value(value: any) {
+  /**
+   * Initial value of the filter
+   * @param value
+   */
+  @Input() set value(value : any){
     this._value = value;
-    this.writeValue(value);
+    this.writeValue(value)
   }
-  get value(): any {
+  get value(): any{
     return this._value;
-  }
+  };
 
 
-  private _total: number;
-  @Input() set total(total: number) {
+  private _total : number;
+  /**
+   * Length of unfiltered Array
+   * @param {number} total
+   */
+  @Input() set total(total : number){
     this._total = total;
   }
-  get total(): number {
+  get total(): number{
     return this._total;
-  }
+  };
 
 
-  private _selected: number;
-  @Input() set selected(selected: number) {
-    if (this.total === selected) {
+  private _selected : number;
+  /**
+   * Determines the checkbox state. Can be checked, indeterminate or unchecked
+   * @param {number} selected
+   */
+  @Input() set selected(selected : number){
+    if(this.total === selected){
       this.isChecked(true);
       this.indeterminate = false;
-    } else if (selected > 0) {
+    } else if(selected > 0){
       this.indeterminate = true;
       this.isChecked(false);
-    } else {
+    }
+    else{
       this.indeterminate = false;
       this.isChecked(false);
     }
     this._selected = selected;
   }
-  get selected(): number {
+  get selected(): number{
     return this._selected;
-  }
+  };
 
 
-  public isChecked(isChecked: boolean) {
+  public isChecked(isChecked : boolean){;
     this.checkboxControl.setValue(isChecked, {emitEvent : false});
   }
 
-
-
+  /**
+   * Emits when selectAll checkbox changes
+   * @type {EventEmitter<boolean>}
+   */
   @Output() selectAll = new EventEmitter<boolean>();
+  /**
+   * Emits when the search value changes
+   * @type {EventEmitter<boolean>}
+   */
   @Output() valueChanges = new EventEmitter<boolean>();
 
+  /**
+   * isMulti determines if select all is available
+   */
   @Input() isMulti: boolean;
+  /**
+   * isFilter determines if filtering is active
+   */
   @Input() isFilter: boolean;
   private destroyed$ = new Subject();
 
@@ -121,8 +165,8 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(isChecked => {
-        this.selectAll.emit(isChecked);
-      });
+      this.selectAll.emit(isChecked)
+    });
 
     this.inputControl.valueChanges
       .pipe(
