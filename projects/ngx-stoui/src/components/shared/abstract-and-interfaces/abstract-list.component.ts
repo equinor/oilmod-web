@@ -1,8 +1,7 @@
 import {
-  AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, HostListener, Input, OnInit, Output,
+  AfterViewInit, ChangeDetectorRef, ElementRef, HostListener,
   ViewChild, OnDestroy
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ListAutoResizeService } from '../services/list-auto-resize.service';
 import { Subscription } from 'rxjs';
 import { throttleable } from '../../../vendor/ngx-datatable/utils/throttle';

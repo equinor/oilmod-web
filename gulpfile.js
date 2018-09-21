@@ -3,9 +3,11 @@ const sass = require('gulp-sass');
 const tildeImporter = require('node-sass-tilde-importer');
 const path = require('path');
 
-const projectName = 'ngx-stoui';
+const projectName = 'stoui-core';
 const distDir = './dist/' + projectName;
-const srcDir = `./projects/ngx-stoui/src`;
+const srcDir = `./projects/${projectName}/src`;
+const formScss = `./projects/stoui-form/src/lib/sto-form.scss`;
+const formCssOutput = './dist/stoui-form';
 
 const copyFiles = [
   '_variables.scss',
@@ -35,8 +37,13 @@ gulp.task('copy', function () {
     }))
 });
 
-gulp.task('watch', function() {
-  gulp.watch(['./ngx-stoui.scss', './style/**/*.scss', './components/**/*.scss'], ['sass', 'copy'])
+gulp.task('sass:form', function() {
+  return gulp.src(formScss)
+    .pipe(sass({
+      importer: tildeImporter,
+      includePaths: path.join(__dirname, './dist')
+    }).on('error', sass.logError))
+    .pipe(gulp.dest(formCssOutput))
 });
 
 gulp.task('default', [

@@ -23,6 +23,54 @@
       ],
       "ngx-stoui/*": [
         "dist/ngx-stoui/*"
+      ],
+      "@ngx-stoui/datatable": [
+        "dist/stoui-datatable"
+      ],
+      "@ngx-stoui/datatable/*": [
+        "dist/stoui-datatable/*"
+      ],
+      "@ngx-stoui/core": [
+        "dist/stoui-core"
+      ],
+      "@ngx-stoui/core/*": [
+        "dist/stoui-core"
+      ],
+      "@ngx-stoui/form": [
+        "dist/stoui-form"
+      ],
+      "@ngx-stoui/form/*": [
+        "dist/stoui-form/*"
+      ],
+      "@ngx-stoui/common": [
+        "dist/stoui-common"
+      ],
+      "@ngx-stoui/common/*": [
+        "dist/stoui-common/*"
+      ],
+      "@ngx-stoui/drawer": [
+        "dist/stoui-drawer"
+      ],
+      "@ngx-stoui/drawer/*": [
+        "dist/stoui-drawer/*"
+      ],
+      "@ngx-stoui/error-handler": [
+        "dist/stoui-error-handler"
+      ],
+      "@ngx-stoui/error-handler/*": [
+        "dist/stoui-error-handler/*"
+      ],
+      "@ngx-stoui/quick-view": [
+        "dist/stoui-quick-view"
+      ],
+      "@ngx-stoui/quick-view/*": [
+        "dist/stoui-quick-view/*"
+      ],
+      "@ngx-stoui/unsaved-changes": [
+        "dist/stoui-unsaved-changes"
+      ],
+      "@ngx-stoui/unsaved-changes/*": [
+        "dist/stoui-unsaved-changes/*"
       ]
     }
   }
