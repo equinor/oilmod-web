@@ -1,0 +1,35 @@
+/**
+TODO:
+Need to either rewrite styles (add a "sticky" input), or remove encapsulation for message-panel
+Removing encapsulation will break :host{...} selectors.
+ */
+
+.sto-message-panel__sticky {
+  position: sticky;
+  &--bottom {
+    padding-top: 8px;
+    bottom: 0;
+  }
+  &--top {
+    top: 0;
+    padding-bottom: 8px;
+  }
+  z-index: 25;
+}
+
+.sto-has-action-footer, .sto-message-panel__pad--bottom {
+  .sto-message-panel__sticky--bottom {
+    bottom: 76px;
+    width: 100%;
+  }
+}
+
+sto-message-panel {
+  .sto-message-panel__content-wrapper {
+    display: flex;
+  }
+  .sto-message-panel__action-button {
+    height: 24px;
+    line-height: 24px;
+  }
+}
