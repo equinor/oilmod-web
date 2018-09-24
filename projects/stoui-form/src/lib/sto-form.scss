@@ -154,7 +154,7 @@ $height: 72px;
     .mat-form-field-wrapper {
       margin: 0 2px;
     }
-    .mat-form-field-infix {
+    .mat-form-field-flex .mat-form-field-infix {
       padding: 6px 0 0 0;
     }
     .mat-form-field-suffix {
@@ -189,7 +189,7 @@ $height: 72px;
     }
   }
 
-  .mat-form-field-underline {
+  .mat-form-field-wrapper .mat-form-field-underline {
     bottom: 16px;
     height: 2px;
     width: calc(100% - 2px);
