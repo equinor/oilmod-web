@@ -35,7 +35,7 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
 
   /**
    * closeMenu checks if the click event is outside the select list, and closes the select
-   * @param event {MouseEvent}
+   * @param event
    */
   private closeMenu = (event) => {
   const target = this._overlayRef.overlayElement;
@@ -52,7 +52,7 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
    * focusOptionOnHover listens to all mat-option elements for mouseenter events.
    * On mouseenter, it will propagate this change, and set this item as focused
    * This enables keyboard navigation from any elements that are hovered
-   * @param options {QueryList<MatOption>}
+   * @param options
    */
   private focusOptionOnHover(options: QueryList<MatOption>) {
     options.changes

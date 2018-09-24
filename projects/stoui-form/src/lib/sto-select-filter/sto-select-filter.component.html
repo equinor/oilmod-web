@@ -8,10 +8,10 @@
            [formControl]="checkboxControl">
         </mat-checkbox>
         </span>
+        <mat-label>Search in list</mat-label>
         <input [formControl]="inputControl"
                class="sto-select-filter__searchfield"
                autocomplete="off"
-               placeholder="Search in list"
                matInput>
         <mat-icon *ngIf="inputControl.value?.length > 0"
                   class="mat__icon--clickable"

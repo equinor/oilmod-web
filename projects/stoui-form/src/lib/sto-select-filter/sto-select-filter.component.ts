@@ -14,8 +14,8 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
@@ -56,71 +56,72 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
 
-  public indeterminate : boolean;
+  public indeterminate: boolean;
 
   private _value: any;
   /**
    * Initial value of the filter
-   * @param value
    */
-  @Input() set value(value : any){
+  @Input() set value(value: any) {
     this._value = value;
-    this.writeValue(value)
+    this.writeValue(value);
   }
-  get value(): any{
+
+  get value(): any {
     return this._value;
   };
 
 
-  private _total : number;
+  private _total: number;
   /**
    * Length of unfiltered Array
-   * @param {number} total
+   * @param total
    */
-  @Input() set total(total : number){
+  @Input() set total(total: number) {
     this._total = total;
   }
-  get total(): number{
+
+  get total(): number {
     return this._total;
   };
 
 
-  private _selected : number;
+  private _selected: number;
   /**
    * Determines the checkbox state. Can be checked, indeterminate or unchecked
-   * @param {number} selected
+   * @param selected
    */
-  @Input() set selected(selected : number){
-    if(this.total === selected){
+  @Input() set selected(selected: number) {
+    if (this.total === selected) {
       this.isChecked(true);
       this.indeterminate = false;
-    } else if(selected > 0){
+    } else if (selected > 0) {
       this.indeterminate = true;
       this.isChecked(false);
     }
-    else{
+    else {
       this.indeterminate = false;
       this.isChecked(false);
     }
     this._selected = selected;
   }
-  get selected(): number{
+
+  get selected(): number {
     return this._selected;
   };
 
 
-  public isChecked(isChecked : boolean){;
-    this.checkboxControl.setValue(isChecked, {emitEvent : false});
+  public isChecked(isChecked: boolean) {
+    ;
+    this.checkboxControl.setValue(isChecked, {emitEvent: false});
   }
 
   /**
    * Emits when selectAll checkbox changes
-   * @type {EventEmitter<boolean>}
    */
   @Output() selectAll = new EventEmitter<boolean>();
   /**
    * Emits when the search value changes
-   * @type {EventEmitter<boolean>}
    */
   @Output() valueChanges = new EventEmitter<boolean>();
 
@@ -142,7 +143,7 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
   propagateChange = (value: any) => {
     this.valueChanges.emit(value);
-  }
+  };
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -152,7 +153,8 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   }
 
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnDestroy() {
 
@@ -165,7 +167,7 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(isChecked => {
-      this.selectAll.emit(isChecked)
+      this.selectAll.emit(isChecked);
     });
 
     this.inputControl.valueChanges

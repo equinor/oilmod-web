@@ -24,7 +24,7 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit, OnDestroy 
 
   /**
    * closeMenu finds the relevant overlay, and if the click event is outside the menu, it gets closed.
-   * @param event {MouseEvent}
+   * @param event
    */
   private closeMenu = (event) => {
     const path = event.path || [];

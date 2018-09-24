@@ -36,7 +36,7 @@ $height: 72px;
   }
   .mat-form-field-underline {
     bottom: 16px;
-    heigth: 2px;
+    height: 2px;
     background-color: transparent;
     -webkit-transition-property: background-color, width, left;
     -webkit-transition-delay: 0.2s;
@@ -46,7 +46,7 @@ $height: 72px;
     .mat-form-field-ripple {
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
-      top: 0px;
+      top: 0;
 
     }
   }
@@ -202,7 +202,7 @@ $height: 72px;
           height: 2px;
           border-bottom-left-radius: $border-radius;
           border-bottom-right-radius: $border-radius;
-          top: 0px;
+          top: 0;
        }
   }
 
@@ -276,13 +276,13 @@ $height: 72px;
 }
 
 .sto-form__field--without-placeholder{
-  height: 0px;
+  height: 0;
   min-height: 32px;
   .mat-form-field-flex {
     height: 30px;
   }
   .mat-input-infix, .mat-form-field-infix{
-    border-top-width: 0px;
+    border-top-width: 0;
     padding: 0;
 
   }

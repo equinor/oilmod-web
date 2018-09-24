@@ -21,11 +21,11 @@
   z-index: 1;
   .sto-form__field{
     height: 48px;
-    .mat-input-flex.mat-form-field-flex {
+    .mat-form-field-flex {
       padding: 2px 16px;
       height: 48px;
       border-radius: 0;
-      .mat-input-prefix, mat-form-field-prefix{
+      .mat-form-field-prefix{
         margin-right: 16px;
       }
     }

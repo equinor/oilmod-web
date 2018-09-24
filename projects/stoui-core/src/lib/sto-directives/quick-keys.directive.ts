@@ -29,7 +29,7 @@ export class QuickKeysDirective {
 
   /**
    * Listens on the host element for any keyup events
-   * @param e {KeyboardEvent}
+   * @param e
    */
   @HostListener('keyup', ['$event'])
   onKeyUp(e: KeyboardEvent) {
@@ -41,7 +41,7 @@ export class QuickKeysDirective {
 
   /**
    * Handler for generic keydowns, such as cancel events to close drawers
-   * @param e {KeyboardEvent}
+   * @param e
    * void
    */
   private handleGenericKeydown(e: KeyboardEvent) {
@@ -56,7 +56,7 @@ export class QuickKeysDirective {
 
   /**
    * Handler for form specific shortcuts, such as saving the form
-   * @param e {KeyboardEvent}
+   * @param e
    */
   private handleFormKeys(e: KeyboardEvent) {
     if (this.formGroup.pristine) {

@@ -44,6 +44,10 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   @Input() suffix: string;
   @Input() readonly: boolean;
   @Input() disabled: boolean;
+  @Input() floatLabel = 'always';
+  /**
+   * @deprecated
+   */
   @Input() floatPlaceholder = 'always';
   @Input() withoutPlaceHolder: boolean;
 
@@ -96,7 +100,6 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   /**
    * Sets the init value
-   * @param {AbstractControl | null} control
    */
   private initForm(control: AbstractControl | null) {
     let value = null;
@@ -114,7 +117,6 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   /**
    * Subscribes for status changes on the parent control and display the errors inside the mat-formfield
-   * @param {AbstractControl | null} control
    */
   private handleErrors(control: AbstractControl | null) {
     if(control){
