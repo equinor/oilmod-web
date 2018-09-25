@@ -39,7 +39,7 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
    */
   private closeMenu = (event) => {
   const target = this._overlayRef.overlayElement;
-    if (!target.contains((<any>event.target))) {
+    if (!target || !target.contains((<any>event.target))) {
       this._matSelect.close();
     }
   }
