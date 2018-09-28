@@ -88,6 +88,10 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   @Input('offsetY') userDefinedOffsetY = 0;
   @Input() offsetX = 0;
+  /**
+   * If dense is true, the portal body gets 0 padding
+   */
+  @Input() dense = false;
 
   /**
    * Emits an event when the overlay is closed or opened. Used to act on close events.
@@ -143,9 +147,20 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private changeState(isOpened: boolean) {
+    this.toggleOriginStateClass(isOpened);
     this.isOpened = isOpened;
     isOpened ? this.opened.emit() : this.closed.emit();
     this.changeDetectorRef.markForCheck();
+  }
+
+  private toggleOriginStateClass(isOpened: boolean) {
+    const el: HTMLElement = this.overlayOrigin.elementRef.nativeElement;
+    const openClass = 'sto-portal__origin--open';
+    if (isOpened && !el.classList.contains(openClass)) {
+      el.classList.add(openClass);
+    } else if (!isOpened) {
+      el.classList.remove(openClass);
+    }
   }
 
   ngAfterViewInit() {

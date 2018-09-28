@@ -7,14 +7,18 @@
   [cdkConnectedOverlayOffsetY]="offsetY"
   (detach)="connectedOverlayDetach()">
   <div [@transformPanel]="isOpened ? 'showing' : null" #dialog class="sto-portal">
-    <div #heading class="sto-portal__heading">
+    <div #heading
+         [style.display]="heading.children.length === 0 ? 'none' : 'block'"
+         class="sto-portal__heading">
       <ng-content select="[quickViewHeader]"></ng-content>
     </div>
     <hr *ngIf="heading.children.length > 0" class="sto-portal__divider">
-    <div class="sto-portal__body">
+    <div class="sto-portal__body" [class.sto-portal__body--dense]="dense">
       <ng-content></ng-content>
     </div>
-    <div class="sto-portal__footer" #footer>
+    <div #footer
+         [style.display]="footer.children.length === 0 ? 'none' : 'block'"
+         class="sto-portal__footer">
       <ng-content select="[quickViewFooter]"></ng-content>
     </div>
   </div>

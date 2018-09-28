@@ -16,6 +16,9 @@
     line-height: 20px;
     max-height: 400px;
     overflow-y: auto;
+    &--dense {
+      padding: 0;
+    }
   }
   &__footer {
     padding: 8px;
