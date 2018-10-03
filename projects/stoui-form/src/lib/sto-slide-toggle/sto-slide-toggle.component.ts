@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, Input, NgModule, OnInit, Optional, SkipSelf } from '@angular/core';
+import {ChangeDetectorRef, Component, forwardRef, Host, Input, NgModule, OnInit, Optional, SkipSelf} from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -196,6 +196,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
     this.initForm(control);
     this.handleErrors(control);
     this.handleChanges();
+    setTimeout(() => this.cdr.markForCheck(), 100);
   }
 
   ngOnDestroy() {
@@ -225,6 +226,7 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   constructor (
     @Optional() @Host() @SkipSelf()
     private controlContainer: ControlContainer,
+    private cdr: ChangeDetectorRef
   ) {
   }
 

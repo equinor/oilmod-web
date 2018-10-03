@@ -275,13 +275,13 @@ $height: 72px;
   }
 }
 
-.sto-form__field--without-placeholder{
+.sto-form__field.sto-form__field--without-placeholder{
   height: 0;
   min-height: 32px;
   .mat-form-field-flex {
     height: 30px;
   }
-  .mat-input-infix, .mat-form-field-infix{
+  .mat-form-field-infix {
     border-top-width: 0;
     padding: 0;
 
