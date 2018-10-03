@@ -13,11 +13,11 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
  *    (dismissed)="err = null" severity="warning">{{ err }}</sto-message-panel>
  */
 
-@Component( {
+@Component({
   selector: 'sto-message-panel',
   templateUrl: './sto-message-panel.component.html',
   styleUrls: [ './sto-message-panel.component.scss' ]
-} )
+})
 export class StoMessagePanelComponent {
 
   /**
