@@ -49,7 +49,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
     }
     const oldHeigth = this.height;
     this.height = $event.contentHeight + parseInt(oldHeigth, 10) + 'px';
-
+    this.cdr.markForCheck();
   }
 
 
@@ -59,7 +59,7 @@ export abstract class AbstractListComponent implements AfterViewInit, OnDestroy 
     const windowHeight = window.innerHeight;
     const elementOffsetTop = this.getElementOffsetTop();
     this.height = windowHeight - PADDING_BOTTOM - elementOffsetTop + 'px';
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
 
   }
 
