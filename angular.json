@@ -79,6 +79,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../dist"
+              ]
+            },
             "scripts": [],
             "assets": [
               "src/favicon.ico",
@@ -290,7 +295,12 @@
           "options": {
             "main": "projects/stoui-common/src/test.ts",
             "tsConfig": "projects/stoui-common/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-common/karma.conf.js"
+            "karmaConfig": "projects/stoui-common/karma.conf.js",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
