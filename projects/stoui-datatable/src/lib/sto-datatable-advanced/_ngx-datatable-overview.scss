@@ -1,0 +1,85 @@
+@import "_ngx-datatable-variables";
+@import "_ngx-datatable-mixins";
+
+.ngx-datatable.sto-datatable__overview {
+
+  .datatable-header-inner .datatable-row-left .datatable-header-column-group .datatable-header-cell {
+    border-right: 1px solid $border-color-dark;
+  }
+  .datatable-footer-summary-row--fixed {
+    .datatable-row-group.datatable-row-left .datatable-body-cell {
+      border-right: 1px solid $border-color-dark;
+      border-bottom-width: 0;
+    }
+    :hover {
+      background-color: $datatable-background-color;
+      cursor: default;
+    }
+    background-color: $datatable-background-color;
+    .datatable-body-cell {
+      background-color: $datatable-background-color;
+    }
+    .datatable-body-cell-label, span {
+      cursor: text;
+    }
+  }
+
+  .datatable-header-column-group {
+    line-height: 11px;
+    .mat-icon {
+      height: 13px;
+      width: 13px;
+      line-height: 13px;
+    }
+  }
+  .datatable-body-row {
+    &.active {
+      @include datatable-row-group((background-color: $datatable-row-selected-color));
+      @include datatable-row-border($datatable-row-selected-border-color);
+    }
+    &.month-row, &.month-row:hover {
+      .datatable-row-group {
+        background-color: $porcelain;
+        cursor: auto;
+        .datatable-body-cell-label {
+          color: $black-54;
+        }
+      }
+    }
+    .datatable-row-left {
+      background-color: $datatable-header-background;
+    }
+    .datatable-row-center {
+      background-color: $datatable-header-background;
+    }
+    &:hover:not(.active) {
+      @include datatable-row-group((background-color: $datatable-row-hover-color));
+    }
+  }
+
+  .datatable-header {
+    line-height: 11px;
+    height: auto;
+    border-top: 0px solid transparent;
+    border-bottom: 1px solid $border-color-dark;
+    color: $black-54;
+  }
+
+  .datatable-header-cell {
+
+    line-height: 11px;
+    padding: $datatable-header-vertical-padding $datatable-horizontal-padding;
+
+    small {
+      font-size: 10px;
+    }
+  }
+}
+
+.ngx-datatable.sto-datatable__overview .datatable-body-row {
+  &--context-menu .datatable-row {
+    &-left, &-center, &-right {
+      background-color: $datatable-row-context-menu-color;
+    }
+  }
+}

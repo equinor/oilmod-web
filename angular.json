@@ -1,0 +1,462 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ngx-stoui-cli": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ngx-stoui-cli",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../dist"
+              ]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngx-stoui-cli:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngx-stoui-cli:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngx-stoui-cli:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../dist"
+              ]
+            },
+            "scripts": [],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-stoui-cli-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "ngx-stoui-cli:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-stoui-cli:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-stoui": {
+      "root": "projects/ngx-stoui",
+      "sourceRoot": "projects/ngx-stoui/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-stoui/tsconfig.lib.json",
+            "project": "projects/ngx-stoui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngx-stoui/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-stoui/src/test.ts",
+            "tsConfig": "projects/ngx-stoui/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-stoui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-stoui/tsconfig.lib.json",
+              "projects/ngx-stoui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-datatable": {
+      "root": "projects/stoui-datatable",
+      "sourceRoot": "projects/stoui-datatable/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-datatable/tsconfig.lib.json",
+            "project": "projects/stoui-datatable/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-datatable/src/test.ts",
+            "tsConfig": "projects/stoui-datatable/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-datatable/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-datatable/tsconfig.lib.json",
+              "projects/stoui-datatable/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-core": {
+      "root": "projects/stoui-core",
+      "sourceRoot": "projects/stoui-core/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-core/tsconfig.lib.json",
+            "project": "projects/stoui-core/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-core/src/test.ts",
+            "tsConfig": "projects/stoui-core/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-core/tsconfig.lib.json",
+              "projects/stoui-core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-form": {
+      "root": "projects/stoui-form",
+      "sourceRoot": "projects/stoui-form/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-form/tsconfig.lib.json",
+            "project": "projects/stoui-form/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-form/src/test.ts",
+            "tsConfig": "projects/stoui-form/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-form/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-form/tsconfig.lib.json",
+              "projects/stoui-form/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-common": {
+      "root": "projects/stoui-common",
+      "sourceRoot": "projects/stoui-common/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-common/tsconfig.lib.json",
+            "project": "projects/stoui-common/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-common/src/test.ts",
+            "tsConfig": "projects/stoui-common/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-common/karma.conf.js",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./dist"
+              ]
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-common/tsconfig.lib.json",
+              "projects/stoui-common/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-drawer": {
+      "root": "projects/stoui-drawer",
+      "sourceRoot": "projects/stoui-drawer/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-drawer/tsconfig.lib.json",
+            "project": "projects/stoui-drawer/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-drawer/src/test.ts",
+            "tsConfig": "projects/stoui-drawer/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-drawer/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-drawer/tsconfig.lib.json",
+              "projects/stoui-drawer/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-error-handler": {
+      "root": "projects/stoui-error-handler",
+      "sourceRoot": "projects/stoui-error-handler/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-error-handler/tsconfig.lib.json",
+            "project": "projects/stoui-error-handler/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-error-handler/src/test.ts",
+            "tsConfig": "projects/stoui-error-handler/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-error-handler/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-error-handler/tsconfig.lib.json",
+              "projects/stoui-error-handler/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-quick-view": {
+      "root": "projects/stoui-quick-view",
+      "sourceRoot": "projects/stoui-quick-view/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-quick-view/tsconfig.lib.json",
+            "project": "projects/stoui-quick-view/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-quick-view/src/test.ts",
+            "tsConfig": "projects/stoui-quick-view/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-quick-view/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-quick-view/tsconfig.lib.json",
+              "projects/stoui-quick-view/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stoui-unsaved-changes": {
+      "root": "projects/stoui-unsaved-changes",
+      "sourceRoot": "projects/stoui-unsaved-changes/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stoui-unsaved-changes/tsconfig.lib.json",
+            "project": "projects/stoui-unsaved-changes/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stoui-unsaved-changes/src/test.ts",
+            "tsConfig": "projects/stoui-unsaved-changes/tsconfig.spec.json",
+            "karmaConfig": "projects/stoui-unsaved-changes/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stoui-unsaved-changes/tsconfig.lib.json",
+              "projects/stoui-unsaved-changes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-stoui-cli"
+}

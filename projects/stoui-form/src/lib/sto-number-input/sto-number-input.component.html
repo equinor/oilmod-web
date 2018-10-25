@@ -1,0 +1,48 @@
+<mat-form-field
+        class="sto-form__field"
+        [floatLabel]="floatLabel"
+        [class.sto-form__field--disabled]="disabled"
+        [class.sto-form__field--float-right]="textAlign === 'right'"
+        [class.sto-form__field--readonly]="readonly"
+        [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
+        [class.mat-form-field-invalid]="touched && errors">
+
+    <span matPrefix>
+        <ng-content select=".sto-number-input__prefix"></ng-content>
+    </span>
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <input *ngIf="!(readonly && suffix)"
+           [ngStyle]="{textAlign : textAlign}"
+           matInput
+           stoNumberInput
+           stoSelectTextOnFocus
+           [fractionSize]="fractionSize"
+           [hasSelectAllEnabled]="$hasSelectAllEnabled | async"
+           [placeholder]="placeholder"
+           [readonly]="readonly"
+           [disabled]="disabled"
+           [tabindex]="(readonly || disabled) ? -1 : 0"
+           type="text"
+           [formControl]="control" />
+
+        <input
+                *ngIf="readonly && suffix"
+                [ngStyle]="{textAlign : textAlign}"
+                [placeholder]="placeholder"
+                [readonly]="readonly"
+                [tabindex]="(readonly || disabled) ? -1 : 0"
+                [disabled]="disabled"
+                matInput type="text"
+                [value]="control.value ? control.value + ' ' + suffix : ''" />
+
+    <span *ngIf="suffix && !readonly" matSuffix>{{ suffix }}</span>
+    <mat-hint [class.mat-error]="touched && errors">
+        <ng-container *ngIf="touched && errors; else hint">
+            <span *ngIf="errors.required">Field is required</span>
+            <span *ngIf="errors.min">Value must be at least {{ errors.min.min }}</span>
+            <span *ngIf="errors.max">Value can't be more than {{ errors.max.max }}</span>
+        </ng-container>
+        <ng-template #hint><ng-content select=".sto-form__field__hint"></ng-content></ng-template>
+    </mat-hint>
+</mat-form-field>
+

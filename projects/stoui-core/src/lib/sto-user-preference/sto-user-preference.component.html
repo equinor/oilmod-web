@@ -1,0 +1,10 @@
+<mat-expansion-panel [expanded]="false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Settings<span style="opacity: 0.36">&nbsp;(beta)</span></mat-panel-title>
+  </mat-expansion-panel-header>
+  <div *ngIf="form" class="sto-grid sto-grid--4">
+
+    <ng-content></ng-content>
+
+  </div>
+</mat-expansion-panel>

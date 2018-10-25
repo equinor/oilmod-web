@@ -1,0 +1,86 @@
+@import "../../style/functions";
+@import "../../style/colors";
+
+//colors: datatable
+
+$info-color: $purple-dark;
+$info-background-color: $blue-light;
+
+:host {
+  width: 100%;
+  border: 1px solid;
+  display: flex;
+  padding: spacer(3);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+:host(.warning) {
+  background-color: $warning-color-background;
+  border-color: $warning-color-border;
+
+  .mat-icon {
+    color: $warning-color;
+  }
+}
+
+:host(.error) {
+  background-color: $error-color-background;
+  border-color: $error-color-border;
+
+  .mat-icon {
+    color: $error-color;
+  }
+}
+
+:host(.info) {
+  background-color: $success-color-background;
+  border-color: $success-color-border;
+
+  .mat-icon {
+    color: $success-color;
+  }
+}
+
+:host(.success) {
+  background-color: $success-color-background;
+  border-color: $success-color-border;
+
+  .mat-icon {
+    color: $success-color;
+  }
+}
+
+.sto-message-panel {
+  &__icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    flex-grow: 1;
+    min-width: 42px;
+    max-width: 42px;
+  }
+  &__content-wrapper {
+    padding-top: 2px;
+    flex-grow: 99;
+  }
+  &__dismiss-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    flex-grow: 1;
+    max-width: 42px;
+  }
+}
+
+::ng-deep ul {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+::ng-deep .mat-typography p {
+  margin: 0;
+}

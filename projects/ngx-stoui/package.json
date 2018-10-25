@@ -1,0 +1,23 @@
+{
+  "name": "ngx-stoui",
+  "version": "4.0.0-BETA.0",
+  "peerDependencies": {
+    "@angular/animations": "^6.1.4",
+    "@angular/cdk": "^6.0.0",
+    "@angular/common": "^6.1.4",
+    "@angular/compiler": "^6.1.4",
+    "@angular/core": "^6.1.4",
+    "@angular/forms": "^6.1.4",
+    "@angular/http": "^6.1.4",
+    "@angular/material": "^6.4.6",
+    "@angular/platform-browser": "^6.1.4",
+    "@angular/platform-browser-dynamic": "^6.1.4",
+    "@angular/platform-server": "^6.1.4",
+    "@angular/router": "^6.1.4",
+    "core-js": "^2.5.4",
+    "date-fns": "^1.29.0",
+    "rxjs": "^6.0.0",
+    "typeface-roboto": "^0.0.43",
+    "zone.js": "~0.8.26"
+  }
+}

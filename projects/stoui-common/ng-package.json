@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/stoui-common",
+  "lib": {
+    "entryFile": "src/public_api.ts",
+    "styleIncludePaths": [
+      "../../dist"
+    ]
+  }
+}
