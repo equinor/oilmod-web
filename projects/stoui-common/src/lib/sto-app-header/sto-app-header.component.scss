@@ -1,0 +1,74 @@
+@import "stoui-core/variables";
+@import "stoui-core/vendor/material_angular_variables";
+
+$header-height: 64px;
+$header-z-index: 50; //move to own z-index
+$header-bg-color: $black-84;
+$header-color: $white-light;
+$header-font-size: 20px;
+$environment-color: #FFC000;
+
+.sto-header {
+  @include mat-elevation(3);
+
+  &--test-environment {
+    border: 4px solid $environment-color;
+  }
+
+  background-color: $header-bg-color;
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+  height: $header-height;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $header-z-index;
+  color: $header-color;
+
+  mat-icon {
+    cursor: pointer;
+    margin: auto .2em;
+  }
+
+
+  button {
+    color: $header-color;
+    height: 100%;
+    border: 0;
+    font-size: $header-font-size;
+    line-height: $header-height;
+
+    position: relative;
+    outline: none;
+
+    &:focus {
+      background-color: $content-bg-color-highlight;
+    }
+    &:hover {
+      background-color: $content-bg-color-highlight;
+    }
+  }
+
+  &__environment {
+    position: absolute;
+    width:100%;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    &--label {
+      background: $environment-color;
+      text-transform: uppercase;
+      white-space: nowrap;
+      height: 40px;
+      width: fit-content;
+      font-size: 20px;
+      line-height: 24px;
+      padding: 8px 16px;
+      border-radius: 2px;
+      color: #000000;
+      position: relative;
+      margin: 8px auto;
+    }
+  }
+}
