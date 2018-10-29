@@ -132,46 +132,6 @@
         }
       }
     },
-    "ngx-stoui": {
-      "root": "projects/ngx-stoui",
-      "sourceRoot": "projects/ngx-stoui/src",
-      "projectType": "library",
-      "prefix": "sto",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/ngx-stoui/tsconfig.lib.json",
-            "project": "projects/ngx-stoui/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/ngx-stoui/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-stoui/src/test.ts",
-            "tsConfig": "projects/ngx-stoui/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-stoui/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-stoui/tsconfig.lib.json",
-              "projects/ngx-stoui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "stoui-datatable": {
       "root": "projects/stoui-datatable",
       "sourceRoot": "projects/stoui-datatable/src",
