@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filter',
@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: [ './filter.component.scss' ]
 })
 export class FilterComponent {
+  @Output()
+    docs = new EventEmitter<void>();
   expandable = true;
   expanded = true;
 }

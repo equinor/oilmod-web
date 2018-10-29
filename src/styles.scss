@@ -3,7 +3,12 @@
 
 @import "../dist/stoui-form/sto-form.css";
 @import "~typeface-roboto/index.css";
+@import "~highlight.js/styles/darcula.css";
 
 .mat-button-toggle-label-content {
   //padding: 0 !important;
+}
+
+h1,h2,h3,h4,h5 {
+  display: inline-block;
 }

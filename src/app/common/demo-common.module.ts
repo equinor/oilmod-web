@@ -3,7 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { CommonRoutingModule } from './common-routing.module';
 import { CommonComponent } from './common.component';
-import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatTabsModule
+} from '@angular/material';
 import { ConfirmModule, StoActionFooterModule, StoFilterPanelModule, StoMessagePanelModule } from '@ngx-stoui/common';
 import { FilterComponent } from './filter/filter.component';
 
@@ -20,7 +29,9 @@ import { FilterComponent } from './filter/filter.component';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule,
+    MatExpansionModule
   ],
   declarations: [CommonComponent, FilterComponent]
 })

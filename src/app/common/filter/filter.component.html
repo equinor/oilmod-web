@@ -1,7 +1,7 @@
 <sto-filter-panel [expandable]="expandable"
                   (toggled)="expanded = !expanded"
                   [expanded]="expanded">
-  <sto-filter-title>Title</sto-filter-title>
+  <sto-filter-title>Filter Panel Title</sto-filter-title>
   <sto-filter-table-actions>
     <button mat-button>
       Custom button
@@ -41,6 +41,14 @@
       <button type="button"
               mat-button
               (click)="expanded = !expanded">Collapse filter
+      </button>
+    </div>
+    <div class="sto-grid__column">
+      <button type="button"
+              mat-button
+              (click)="docs.emit()">
+        Docs
+        <mat-icon>help</mat-icon>
       </button>
     </div>
   </div>

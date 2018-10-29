@@ -8,6 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { RootComponent } from './root.component';
 import { StoDateAdapter } from '@ngx-stoui/form';
 import { DateAdapter, MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { DocsModule } from './docs/docs.module';
 
 const routes: Routes = [
   { path: '', component: RootComponent, pathMatch: 'full' },
@@ -17,13 +19,15 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    RootComponent
+    RootComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     StoAppHeaderModule,
-    RouterModule.forRoot(routes, {enableTracing: false})
+    RouterModule.forRoot(routes, {enableTracing: false}),
+    DocsModule,
+    HttpClientModule
   ],
   providers: [
     { provide: DateAdapter, useClass: StoDateAdapter },
