@@ -1,6 +1,9 @@
-<div class="sto-header" [class.sto-header--test-environment]="testEnvironment">
-  <sto-breadcrumbs [home]="homeBreadCrumbConfig" [model]="breadCrumbs"></sto-breadcrumbs>
-  <div class="sto-header__environment" *ngIf="testEnvironment">
+<div class="sto-header"
+     [class.sto-header--test-environment]="testEnvironment">
+  <sto-breadcrumbs [home]="homeBreadCrumbConfig"
+                   [model]="breadCrumbs"></sto-breadcrumbs>
+  <div class="sto-header__environment"
+       *ngIf="testEnvironment">
     <div class="sto-header__environment--label">
       {{environmentName}}
     </div>

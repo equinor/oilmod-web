@@ -13,7 +13,7 @@ import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
 @Component({
   selector: 'sto-app-header',
   templateUrl: './sto-app-header.component.html',
-  styleUrls: ['./sto-app-header.component.scss'],
+  styleUrls: [ './sto-app-header.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -32,7 +32,7 @@ export class StoAppHeaderComponent {
    * Configuration that determines what to do when clicking the top-level menu icon
    */
   @Input()
-  homeBreadCrumbConfig: {command: Function};
+  homeBreadCrumbConfig: { command: Function };
   /**
    * Configuration used to print out the relevant application breadcrumbs.
    */

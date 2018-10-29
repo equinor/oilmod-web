@@ -31,7 +31,6 @@ $environment-color: #FFC000;
     margin: auto .2em;
   }
 
-
   button {
     color: $header-color;
     height: 100%;
@@ -52,7 +51,7 @@ $environment-color: #FFC000;
 
   &__environment {
     position: absolute;
-    width:100%;
+    width: 100%;
     left: 0;
     top: 0;
     pointer-events: none;
