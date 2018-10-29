@@ -1,0 +1,47 @@
+<sto-filter-panel [expandable]="expandable"
+                  (toggled)="expanded = !expanded"
+                  [expanded]="expanded">
+  <sto-filter-title>Title</sto-filter-title>
+  <sto-filter-table-actions>
+    <button mat-button>
+      Custom button
+    </button>
+    <button mat-icon-button>
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </sto-filter-table-actions>
+  <form class="sto-form sto-grid sto-grid--4">
+    <div class="sto-grid__column">
+      <mat-form-field class="sto-form__field">
+        <mat-label>Text input</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+    <div class="sto-grid__column">
+      <mat-form-field class="sto-form__field">
+        <mat-label>Select input</mat-label>
+        <mat-select>
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="sto-grid__column">
+    </div>
+  </form>
+  <div class="sto-grid sto-grid--6">
+    <div class="sto-grid__column">
+      <button type="button"
+              mat-button
+              (click)="expandable = !expandable">Toggle expandable
+      </button>
+    </div>
+    <div class="sto-grid__column">
+      <button type="button"
+              mat-button
+              (click)="expanded = !expanded">Collapse filter
+      </button>
+    </div>
+  </div>
+</sto-filter-panel>

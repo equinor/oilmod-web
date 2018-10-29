@@ -1,3 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../dist/stoui-core/ngx-stoui.css";
+
+@import "../dist/stoui-form/sto-form.css";
 @import "~typeface-roboto/index.css";
+
+.mat-button-toggle-label-content {
+  //padding: 0 !important;
+}
