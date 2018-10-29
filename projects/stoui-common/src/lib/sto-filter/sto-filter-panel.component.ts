@@ -71,8 +71,6 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     if (this.expandable) {
       if (this.expanded === undefined) {
         this.expanded = true;
-      } else {
-        this.expanded = false;
       }
     } else {
       this.expanded = false;

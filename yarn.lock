@@ -112,9 +112,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/cdk@^6.0.0":
-  version "6.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcdk/-/cdk-6.4.6.tgz#478ec4010b193a0fb4c246768af4ab6854799a49"
+"@angular/cdk@^6.4.7":
+  version "6.4.7"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fcdk/-/cdk-6.4.7.tgz#1549b304dd412e82bd854cc55a7d5c6772ee0411"
   dependencies:
     tslib "^1.7.1"
 
@@ -177,9 +177,9 @@
   version "6.1.4"
   resolved "http://ai-linapp1022.statoil.no:4873/@angular%2flanguage-service/-/language-service-6.1.4.tgz#946a70e1afbf83dbae4c31b64784a5a77ae07e53"
 
-"@angular/material@^6.0.0":
-  version "6.4.6"
-  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fmaterial/-/material-6.4.6.tgz#30c3dd83173f42a1df28db084930f242706d323a"
+"@angular/material@^6.4.7":
+  version "6.4.7"
+  resolved "http://ai-linapp1022.statoil.no:4873/@angular%2fmaterial/-/material-6.4.7.tgz#3c8f2d6a6a7904d97be29e06a84ffb62a8da6c16"
   dependencies:
     tslib "^1.7.1"
   optionalDependencies:
