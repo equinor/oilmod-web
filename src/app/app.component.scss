@@ -1,0 +1,12 @@
+.app-shell {
+  margin: 64px auto 0;
+  padding: 24px 24px 12px;
+}
+
+.code {
+  font-style: italic;
+  background: lightgray;
+  &--disabled {
+    text-decoration: line-through;
+  }
+}

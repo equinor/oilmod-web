@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {QuickViewModule} from '@ngx-stoui/quick-view';
+import { StoAppHeaderModule } from '@ngx-stoui/common';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import {QuickViewModule} from '@ngx-stoui/quick-view';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    QuickViewModule
+    StoAppHeaderModule,
+    RouterModule.forRoot([])
   ],
   providers: [
   ],
