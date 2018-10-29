@@ -136,7 +136,7 @@
       "root": "projects/ngx-stoui",
       "sourceRoot": "projects/ngx-stoui/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -176,7 +176,7 @@
       "root": "projects/stoui-datatable",
       "sourceRoot": "projects/stoui-datatable/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -211,7 +211,7 @@
       "root": "projects/stoui-core",
       "sourceRoot": "projects/stoui-core/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -246,7 +246,7 @@
       "root": "projects/stoui-form",
       "sourceRoot": "projects/stoui-form/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -281,7 +281,7 @@
       "root": "projects/stoui-common",
       "sourceRoot": "projects/stoui-common/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -321,7 +321,7 @@
       "root": "projects/stoui-drawer",
       "sourceRoot": "projects/stoui-drawer/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -356,7 +356,7 @@
       "root": "projects/stoui-error-handler",
       "sourceRoot": "projects/stoui-error-handler/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -391,7 +391,7 @@
       "root": "projects/stoui-quick-view",
       "sourceRoot": "projects/stoui-quick-view/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -426,7 +426,7 @@
       "root": "projects/stoui-unsaved-changes",
       "sourceRoot": "projects/stoui-unsaved-changes/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "sto",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
