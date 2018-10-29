@@ -8,7 +8,8 @@ import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.compone
     CommonModule,
     StoBreadcrumbsModule
   ],
-  declarations: [StoAppHeaderComponent],
-  exports: [StoAppHeaderComponent],
+  declarations: [ StoAppHeaderComponent ],
+  exports: [ StoAppHeaderComponent ],
 })
-export class StoAppHeaderModule { }
+export class StoAppHeaderModule {
+}
