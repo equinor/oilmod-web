@@ -17,12 +17,14 @@ showdown.extension('highlight', function () {
         right = '</code></pre>',
         flags = 'g';
       const replacement = function (wholeMatch, match, left, right) {
+        const unescaped = match.replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>');
         const lang = ( left.match(/class=\"([^ \"]+)/) || [] )[ 1 ];
         left = left.slice(0, 18) + 'hljs ' + left.slice(18);
         if ( lang && hljs.getLanguage(lang) ) {
-          return left + hljs.highlight(lang, match).value + right;
+          return left + hljs.highlight(lang, unescaped).value + right;
         } else {
-          return left + hljs.highlightAuto(match).value + right;
+          return left + hljs.highlightAuto(unescaped).value + right;
         }
       };
       return showdown.helper.replaceRecursiveRegExp(text, replacement, left, right, flags);
@@ -76,21 +78,18 @@ export class CommonComponent implements OnInit {
         map(doc => doc.replace(/&amp;/g, '&')),
         map(doc => this.sanitizer.bypassSecurityTrustHtml(doc))
       );
-    /*    this.http.get(`/assets/docs/${name}`, {responseType: 'text'})
-          .subscribe(md => {
-            this.docService.docs.next(md);
-          }, (err: HttpErrorResponse) => {
-            if (err.status === 404) {
-              this.docService.docs.next(`No docs for ${name}`);
-            }
-          });*/
   }
 
-  constructor(private confirmSvc: ConfirmService, private http: HttpClient, private docService: DocsService, private sanitizer: DomSanitizer) {
+  constructor(
+    private confirmSvc: ConfirmService
+    , private http: HttpClient
+    , private docService: DocsService
+    , private sanitizer: DomSanitizer
+  ) {
   }
 
   ngOnInit() {
-    this.converter = new showdown.Converter({extensions: ['highlight']});
+    this.converter = new showdown.Converter({ extensions: [ 'highlight' ] });
     this.onTabChange({ index: 0 } as MatTabChangeEvent);
   }
 

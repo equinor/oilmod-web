@@ -33,6 +33,7 @@ import { FilterComponent } from './filter/filter.component';
     MatTabsModule,
     MatExpansionModule
   ],
-  declarations: [CommonComponent, FilterComponent]
+  declarations: [CommonComponent, FilterComponent],
+  entryComponents: []
 })
 export class DemoCommonModule { }

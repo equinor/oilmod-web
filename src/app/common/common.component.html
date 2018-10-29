@@ -1,7 +1,7 @@
 <mat-tab-group (selectedTabChange)="onTabChange($event)">
   <mat-tab label="Filter panel">
-    <app-filter (docs)="getDocs('sto-filter-panel.component.md')"></app-filter>
-    <mat-expansion-panel [expanded]="false">
+    <app-filter></app-filter>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>Documentation</mat-expansion-panel-header>
       <div class="docs"
            style="white-space: pre-line"
@@ -9,7 +9,7 @@
     </mat-expansion-panel>
   </mat-tab>
   <mat-tab label="Message panel + confirm dialog">
-    <div class="sto-grid sto-grid--3">
+    <div class="sto-grid sto-grid--3 sto-message-panel__container">
       <div class="sto-grid__column">
         <sto-message-panel severity="warning">
           <p>Warning</p>
@@ -47,7 +47,7 @@
         </sto-message-panel>
       </div>
     </div>
-    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>Documentation</mat-expansion-panel-header>
       <div class="docs"
            style="white-space: pre-line"
@@ -64,14 +64,8 @@
               (click)="loading = !loading"
               mat-button>Toggle loading
       </button>
-      <button style="float: right"
-              mat-button
-              (click)="getDocs('sto-action-footer.component.md')">
-        Docs
-        <mat-icon>help</mat-icon>
-      </button>
     </sto-action-footer>
-    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>Documentation</mat-expansion-panel-header>
       <div class="docs"
            style="white-space: pre-line"
