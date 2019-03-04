@@ -34,6 +34,8 @@ export class DaterangePopoutComponent implements AfterViewInit, OnDestroy {
   closed = new EventEmitter();
   @Output()
   valueChanged = new EventEmitter<Date | null>();
+  @Output()
+  clear = new EventEmitter();
   @Input()
   start: Date;
   @Input()

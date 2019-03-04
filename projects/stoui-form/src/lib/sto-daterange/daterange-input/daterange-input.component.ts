@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -120,17 +120,23 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe((value: DateRange) => {
-      if ( isValid(parse(value.start)) ) {
-        this.startDate = value.start ? format(value.start, 'MMM D, YYYY') : '';
-      } else {
-        this.startDate = '';
-        value.start = null;
+      if ( value.start ) {
+        const parsed = parse(value.start);
+        if ( isNaN(parsed.getTime()) ) {
+          this.startDate = '';
+          value.start = null;
+        } else {
+          this.startDate = format(value.start, 'MMM D, YYYY');
+        }
       }
-      if ( isValid(parse(value.end)) ) {
-        this.endDate = value.end ? format(value.end, 'MMM D, YYYY') : '';
-      } else {
-        this.endDate = '';
-        value.end = null;
+      if ( value.end ) {
+        const parsed = parse(value.end);
+        if ( isNaN(parsed.getTime()) ) {
+          this.endDate = '';
+          value.end = null;
+        } else {
+          this.endDate = format(value.end, 'MMM D, YYYY');
+        }
       }
       this.valueChanged.emit(value);
     });
@@ -159,12 +165,22 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
     }
   }
 
+  clear(control: AbstractControl) {
+    control.setValue(null);
+  }
+
   onValueChange(key: string, value: Date | string, inp?: HTMLInputElement) {
-    if ( typeof value === 'string' ) {
+    if ( !( value instanceof Date ) ) {
       value = parse(value);
     }
-    const valid = isValid(value);
+    let valid = true;
+    try {
+      isValid(value);
+    } catch {
+      valid = false;
+    }
     if ( !valid ) {
+      this.parts.get(key).setValue(null);
       if ( inp ) {
         inp.value = '';
       }

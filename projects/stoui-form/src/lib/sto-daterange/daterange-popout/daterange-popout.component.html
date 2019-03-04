@@ -9,7 +9,7 @@
                          [selected]="value"></sto-inline-datepicker>
   <mat-chip-list>
     <mat-chip [selected]="!value"
-              (click)="valueChanged.emit(null); close()"
+              (click)="clear.emit(); close()"
               style="margin: auto"
               color="accent">
       <mat-icon>check</mat-icon>

@@ -51,6 +51,7 @@
        *ngIf="footerRow && (!responsive || (responsive && !smallScreen))"
        [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
     <div class="sto-mdl-table__footer__row"
+         *ngFor="let row of footerRow; let i = index"
          [style.height]="rowHeight + 'px'">
       <div class="sto-mdl-table__footer__row__cell"
            [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
@@ -58,12 +59,12 @@
            [style.flex-basis]="(column.flexBasis || 80) + 'px'"
            *ngFor="let column of columns; trackBy: trackColumnsFn">
         <span *ngIf="!column.footerTemplate">
-          {{ footerRow[column.prop] }}
+          {{ row[column.prop] }}
         </span>
         <ng-template #footerTemplate
                      *ngIf="column.footerTemplate"
                      [ngTemplateOutlet]="column.footerTemplate"
-                     [ngTemplateOutletContext]="{column: column}">
+                     [ngTemplateOutletContext]="{column: column, value: row[column.prop], index: i}">
         </ng-template>
       </div>
     </div>

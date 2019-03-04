@@ -53,8 +53,16 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   rows: T[];
   @Input()
   selected: T;
-  @Input()
-  footerRow: T;
+  @Input('footerRow')
+  _footerRow: T;
+  get footerRow() {
+    if ( this._footerRow && typeof this._footerRow === 'object' ) {
+      if ( this._footerRow instanceof Array ) {
+        return this._footerRow;
+      }
+      return [ this._footerRow ];
+    }
+  }
   @Input()
   virtualScroll = true;
   @Input()
