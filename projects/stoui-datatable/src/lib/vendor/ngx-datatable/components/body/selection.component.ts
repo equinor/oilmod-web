@@ -1,7 +1,6 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
-import { mouseEvent, keyboardEvent } from '../../events';
 
 export interface Model {
   type: string;
@@ -68,6 +67,7 @@ export class DataTableSelectionComponent {
     this.prevIndex = index;
 
     this.select.emit({
+      event,
       selected
     });
   }

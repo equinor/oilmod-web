@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
+import { USE_HASH_ROUTING } from '../../sto-navigation.module';
 
 @Component({
   selector: 'sto-navigation-menu-item',
@@ -8,14 +9,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class NavigationMenuItemComponent {
   @Input() item: any;
   @Output() onCommand = new EventEmitter<any>();
+  public urlPrefix: string;
 
   public navigate($event, command, item) {
-    if (item.error) {
+    if ( item.error ) {
       return;
     }
-    this.onCommand.emit({$event, command});
+    this.onCommand.emit({ $event, command });
   }
 
-  constructor() {}
+  constructor(@Inject(USE_HASH_ROUTING) @Optional() useHash: boolean) {
+    this.urlPrefix = useHash === false ? '/' : '#/';
+  }
 
 }

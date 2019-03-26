@@ -4,5 +4,9 @@
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0"
+  },
+  "dependencies": {
+    "typeface-roboto": "^0.0.43",
+    "date-fns": "^1.29.0"
   }
 }

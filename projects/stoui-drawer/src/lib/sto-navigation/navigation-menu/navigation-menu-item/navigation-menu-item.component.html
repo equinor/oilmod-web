@@ -18,7 +18,8 @@
 					</span>
 			 	 </ng-container>
 			<ng-container *ngIf="item.command && item.command.type === 'internalLink'">
-				 <a (click)="$event.preventDefault()" [href]="'#/' + item.command.arguments.join('/')">
+        <a (click)="$event.preventDefault()"
+           [href]="urlPrefix + item.command.arguments.join('/')">
 					{{item.name}}
 				</a>
 		   </ng-container>
