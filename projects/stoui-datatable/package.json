@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/datatable",
-  "version": "5.1.15",
+  "version": "5.1.16",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
