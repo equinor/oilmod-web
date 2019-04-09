@@ -1,0 +1,60 @@
+<div style="margin: 16px;">
+  <sto-filter-panel [expandable]="true"
+                    (toggled)="dispatch()">
+    <sto-filter-title>Invoices</sto-filter-title>
+  </sto-filter-panel>
+  <mat-card style="padding: 0">
+    <sto-datatable #tbl
+                   [autoSize]="true"
+                   [rowClass]="getRowClass"
+                   *ngIf="cols"
+                   emptyMessage="We're out of stuff"
+                   [responsive]="true"
+                   [responsiveBreakPoint]="500"
+                   [responsiveView]="responsiveTmpl"
+                   [headerHeight]="22"
+                   [footerRow]="null"
+                   [rows]="rows"
+                   [columns]="cols"></sto-datatable>
+  </mat-card>
+
+  <ng-template #responsiveTmpl
+               let-row="row">
+    <div class="invoice-info">
+      <div class="invoice-info__left">
+        <div class="invoiceno">{{ row.invoiceNo }}</div>
+        <div class="voyageno">{{ row.voyageNo }} - {{ row.vesselName }}</div>
+      </div>
+      <div class="invoice-info__right">
+        <div class="allocated">{{ row.allocated }}</div>
+        <div class="available">of {{ row.total }} USD</div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #hdrTmpl
+               let-column="column">
+    <strong>{{ column.name }}</strong>
+  </ng-template>
+
+  <ng-template #footerTmpl
+               let-column="column">
+    <strong>{{column.name}} has footer tmpl!</strong>
+  </ng-template>
+
+
+  <ng-template #tmpl
+               let-value="value"
+               let-row="row"
+               let-column="column">
+    <strong>{{ value }}</strong>
+  </ng-template>
+
+  <ng-template #ltmpl
+               let-value="value"
+               let-row="row"
+               let-column="column">
+    <span style="text-decoration: line-through;">{{ value }}</span>
+  </ng-template>
+
+</div>

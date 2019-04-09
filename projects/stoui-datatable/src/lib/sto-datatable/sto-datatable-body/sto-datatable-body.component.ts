@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { Column } from '../columns';
@@ -10,7 +10,7 @@ import { Key } from '@ngx-stoui/core';
   templateUrl: './sto-datatable-body.component.html',
   styleUrls: [ './sto-datatable-body.component.scss' ]
 })
-export class StoDatatableBodyComponent<T = any> implements OnInit, OnDestroy {
+export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   @Input()
   responsive: boolean;
   @Input()
@@ -67,12 +67,6 @@ export class StoDatatableBodyComponent<T = any> implements OnInit, OnDestroy {
     }
     return `${userDefinedClass} sto-mdl-table__body__row`;
   };
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

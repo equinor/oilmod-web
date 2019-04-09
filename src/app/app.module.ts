@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: '', component: RootComponent, pathMatch: 'full' },
   { path: 'common', loadChildren: './common/demo-common.module#DemoCommonModule'},
   { path: 'form', loadChildren: './form/form.module#FormModule'},
+  { path: 'table', loadChildren: './table/table.module#TableModule' },
 ];
 
 @NgModule({

@@ -15,6 +15,8 @@ import {
 import { Column } from './columns';
 import { HeaderContextMenu, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
+import { fromEvent, Observable, of } from 'rxjs';
+import { map, startWith, tap } from 'rxjs/operators';
 
 declare var ResizeObserver: any;
 
@@ -23,7 +25,7 @@ declare var ResizeObserver: any;
   templateUrl: './sto-datatable.component.html',
   styleUrls: [ './sto-datatable.component.scss', './sto-datatable-progress-bar.scss' ],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoDatatableComponent<T = any> implements AfterViewInit {
   @ViewChild(StoDatatableBodyComponent)
@@ -34,10 +36,24 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   emptyMessage = `No records in set`;
   @Input()
   headerHeight = 24;
+
   @Input()
-  height;
+  get height() {
+    return this._height;
+  }
+
+  set height(height: number) {
+    this._height = height;
+    if ( !this.autoSize ) {
+      this.height$ = of(height);
+    }
+  }
+
+  private _height: number;
   @Input()
   loading: boolean;
+  public height$: Observable<number>;
+
   get bodyHeight() {
     if ( !this.height ) {
       return null;
@@ -48,6 +64,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
     const footerOffset = hasFooter ? this.rowHeight : 0;
     return this.height - headerOffset - footerOffset;
   }
+
+  @Input()
+  autoSize: boolean;
 
   @Input()
   rows: T[];
@@ -63,12 +82,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
       return [ this._footerRow ];
     }
   }
+
   @Input()
   virtualScroll = true;
-  @Input()
-  trackBy = (item: T, index: number) => {
-    return index;
-  };
 
   @Input()
   responsive: boolean;
@@ -107,6 +123,10 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   @Output()
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
   private resizeTimeout;
+  @Input()
+  trackBy = (item: T, index: number) => {
+    return index;
+  };
 
   rowClick(row: T, index: number, event: MouseEvent) {
     this.selected = row;
@@ -121,6 +141,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if ( this.autoSize ) {
+      this.setAutoSize();
+    }
     if ( this.responsive && !this.responsiveView ) {
       console.error('Responsive mode set to true, but no view passed in. Please pass in responsiveView (templateRef)');
       this.responsive = false;
@@ -166,4 +189,15 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
     }
   }
 
+  private setAutoSize() {
+    const el = this.elRef.nativeElement as HTMLElement;
+    this.height$ = fromEvent(window, 'resize')
+      .pipe(
+        startWith(null),
+        map(() => el.getBoundingClientRect()),
+        map(rect => rect.top),
+        map(top => window.innerHeight - top - 16),
+        tap(height => this.height = height)
+      );
+  }
 }

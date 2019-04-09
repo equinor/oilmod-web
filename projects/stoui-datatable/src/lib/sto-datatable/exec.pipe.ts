@@ -1,21 +1,26 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Column } from './columns';
 
 @Pipe({
   name: 'exec'
 })
-export class ExecPipe implements PipeTransform, Exec {
+export class ExecPipe<T = any> implements PipeTransform, Exec<T> {
 
-  transform(value: any, func?: Function): any {
+  transform(func: Function | string, value?: any, column?: Column, row?: T): string {
     if ( func && typeof func === 'function' ) {
-      return func(value);
+      return func(value, row, column);
+    } else if ( typeof func === 'string' ) {
+      return func;
     }
-    return value;
+    return '';
   }
 
 }
 
-interface Exec {
-  transform(value: string): string;
+interface Exec<T = any> {
+  transform(func: string): string;
 
-  transform(value: any, func?: Function): string;
+  transform(func: Function | string, value: any, column: Column, row: T): string;
+
+  transform(func: Function | string, value: T | Column): string;
 }

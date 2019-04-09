@@ -1,5 +1,5 @@
 <div class="sto-mdl-table"
-     [style.height]="height + 'px'">
+     [style.height.px]="height$ | async">
   <div class="sto-mdl-table__header"
        *ngIf="!responsive || (responsive && !smallScreen)">
     <div class="sto-mdl-table__header__row"
@@ -7,7 +7,7 @@
          [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
       <div class="sto-mdl-table__header__row__cell"
            (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
-           [ngClass]="column.headerClass | exec"
+           [ngClass]="column.headerClass | exec:column"
            [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
            [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
            [style.flex-basis]="(column.flexBasis || 80) + 'px'"

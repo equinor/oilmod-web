@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { fromEvent, merge } from 'rxjs';
+import { fromEvent, merge, Subject } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { Key } from '@ngx-stoui/core';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -41,6 +41,7 @@ export class DaterangePopoutComponent implements AfterViewInit, OnDestroy {
   @Input()
   end: Date;
   public isOpen: boolean;
+  private manualClose = new Subject();
 
   constructor(private cdr: ChangeDetectorRef, private elRef: ElementRef<HTMLElement>) {
   }
@@ -53,7 +54,7 @@ export class DaterangePopoutComponent implements AfterViewInit, OnDestroy {
 
   public close() {
     this.isOpen = false;
-    document.body.dispatchEvent(new Event('click'));
+    this.manualClose.next();
     this.cdr.markForCheck();
   }
 
@@ -65,10 +66,11 @@ export class DaterangePopoutComponent implements AfterViewInit, OnDestroy {
     const self = this.elRef.nativeElement;
     const clickEv$ = fromEvent<MouseEvent>(document, 'click');
     const keydownEv$ = fromEvent<KeyboardEvent>(document, 'keydown').pipe(filter((ev: KeyboardEvent) => ev.keyCode === Key.Escape));
-    merge(clickEv$, keydownEv$)
+    const manual$ = this.manualClose.asObservable();
+    merge(clickEv$, keydownEv$, manual$)
       .pipe(
-        map(event => event.target as Node),
-        filter(node => node !== self || !self.contains(node)),
+        map(event => event ? ( <Event>event ).target as Node : null),
+        filter(node => node ? node !== self || !self.contains(node) : true),
         take(1)
       )
       .subscribe(() => {

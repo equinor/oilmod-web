@@ -167,15 +167,13 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     this.overlayVisible = false;
     this.closeOverlay = true;
     const { start, end } = this.form.value;
-    if ( start || end ) {
-      // this.updateInputfield(this.form.value);
-      if ( this.monthRange ) {
-        const startMonth = start ? format(start, 'YYYY-MM') : null;
-        const endMonth = end ? format(end, 'YYYY-MM') : null;
-        this.propagateChange({ start: startMonth, end: endMonth });
-      } else {
-        this.propagateChange(this.form.value);
-      }
+    // this.updateInputfield(this.form.value);
+    if ( this.monthRange ) {
+      const startMonth = start ? format(start, 'YYYY-MM') : null;
+      const endMonth = end ? format(end, 'YYYY-MM') : null;
+      this.propagateChange({ start: startMonth, end: endMonth });
+    } else {
+      this.propagateChange(this.form.value);
     }
   }
 
@@ -319,7 +317,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   ngAfterViewInit() {
-    this.overlay = <HTMLDivElement> this.overlayViewChild.nativeElement;
+    this.overlay = <HTMLDivElement>this.overlayViewChild.nativeElement;
   }
 
   private isMonthRange(v) {

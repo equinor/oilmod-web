@@ -14,6 +14,8 @@ import { Component, OnInit } from '@angular/core';
     <a [routerLink]="['common']">Common module preview</a>
     <br />
     <a [routerLink]="['form']">Form preview</a>
+    <br />
+    <a [routerLink]="['table']">Datatable preview</a>
   `,
   styles: []
 })

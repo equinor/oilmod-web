@@ -10,8 +10,8 @@
          (click)="showPickersOnFocus && startPopout.open()">
   <sto-daterange-popout #startPopout
                         (clear)="startDate = ''; clear(parts.get('start'))"
-                        [end]="parts.get('end').value"
-                        (valueChanged)="onValueChange('start', $event)"
+                        [end]="endDatePlaceholder$ | async"
+                        (valueChanged)="onValueChange('start', $event); focusEnd(endInp); "
                         [value]="parts.get('start').value"></sto-daterange-popout>
   <span class="date-input-spacer">&mdash;</span>
   <input class="date-input-element"
@@ -21,7 +21,7 @@
          placeholder="Any date"
          (click)="showPickersOnFocus && endPopout.open()">
   <sto-daterange-popout #endPopout
-                        [start]="parts.get('start').value"
+                        [start]="startDatePlaceholder$ | async"
                         (clear)="endDate = ''; clear(parts.get('end'))"
                         (valueChanged)="onValueChange('end', $event)"
                         [value]="parts.get('end').value"></sto-daterange-popout>

@@ -12,7 +12,7 @@
               (click)="clear.emit(); close()"
               style="margin: auto"
               color="accent">
-      <mat-icon>check</mat-icon>
+      <mat-icon *ngIf="!value">check</mat-icon>
       ANY DATE
     </mat-chip>
   </mat-chip-list>

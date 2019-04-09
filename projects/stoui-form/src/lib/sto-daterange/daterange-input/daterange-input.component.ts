@@ -1,11 +1,11 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { MatFormFieldControl } from '@angular/material';
-import { takeUntil } from 'rxjs/operators';
-import { format, isSameDay, isValid, parse } from 'date-fns';
+import { map, startWith, takeUntil } from 'rxjs/operators';
+import { addYears, format, isSameDay, isValid, parse, subYears } from 'date-fns';
 
 export class DateRange {
   constructor(public start: Date | string, public end?: Date | string) {
@@ -27,6 +27,8 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
   private destroyed$ = new Subject();
   @ViewChild('container')
   container: ElementRef<HTMLDivElement>;
+  public startDatePlaceholder$: Observable<Date>;
+  public endDatePlaceholder$: Observable<Date>;
 
   parts: FormGroup;
   stateChanges = new Subject<void>();
@@ -111,6 +113,20 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
       start: [ '', { updateOn: 'blur' } ],
       end: [ '', { updateOn: 'blur' } ]
     });
+    const startCtrl = this.parts.get('start');
+    const endCtrl = this.parts.get('end');
+    this.startDatePlaceholder$ = startCtrl
+      .valueChanges
+      .pipe(
+        startWith(startCtrl.value),
+        map(value => value || subYears(endCtrl.value || new Date(), 5))
+      );
+    this.endDatePlaceholder$ = endCtrl
+      .valueChanges
+      .pipe(
+        startWith(endCtrl.value),
+        map(value => !!value ? value : addYears(startCtrl.value || new Date(), 5))
+      );
 
     fm.monitor(elRef, true).subscribe(origin => {
       this.focused = !!origin;
@@ -179,7 +195,7 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
     } catch {
       valid = false;
     }
-    if ( !valid ) {
+    if ( !valid || isNaN(value.getTime()) ) {
       this.parts.get(key).setValue(null);
       if ( inp ) {
         inp.value = '';
@@ -190,5 +206,12 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
     if ( !isSame ) {
       this.parts.get(key).setValue(value);
     }
+  }
+
+  focusEnd(el: HTMLInputElement) {
+    setTimeout(() => {
+      el.focus();
+      el.click();
+    });
   }
 }

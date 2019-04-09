@@ -6,7 +6,7 @@
        [tabindex]="0"
        #rowEl
        (keydown)="onKeyDownHandler($event, rowEl, {index: i, event: $event, row: row})"
-       [ngClass]="row | exec:_rowClass"
+       [ngClass]="_rowClass | exec:row"
        [class.sto-mdl-table__body__row--selected]="selected === row"
        (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl})"
        [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
@@ -18,7 +18,7 @@
     </ng-container>
     <ng-template #regular>
       <div class="sto-mdl-table__body__row__cell"
-           [ngClass]="column.cellClass | exec"
+           [ngClass]="column.cellClass | exec:row[column.prop]:row:column"
            [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
            [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
            [style.flex-basis]="(column.flexBasis || 80) + 'px'"
@@ -43,7 +43,7 @@
          [tabindex]="0"
          #rowEl
          (keydown)="onKeyDownHandler($event, rowEl, {index: i, event: $event, row: row})"
-         [ngClass]="row | exec:_rowClass"
+         [ngClass]="_rowClass | exec:row"
          [class.sto-mdl-table__body__row--selected]="selected === row"
          (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl})"
          [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
@@ -54,7 +54,7 @@
       </ng-container>
       <ng-template #regular>
         <div class="sto-mdl-table__body__row__cell"
-             [ngClass]="column.cellClass | exec"
+             [ngClass]="column.cellClass | exec:row[column.prop]:row:column"
              [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
              [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
              [style.flex-basis]="(column.flexBasis || 80) + 'px'"
