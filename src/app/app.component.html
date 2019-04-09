@@ -1,5 +1,130 @@
-<sto-app-header [homeBreadCrumbConfig]="homeBreadCrumbConfig" [breadCrumbs]="breadCrumbs"></sto-app-header>
+<sto-app-header [homeBreadCrumbConfig]="homeBreadCrumbConfig"
+                [breadCrumbs]="breadCrumbs"></sto-app-header>
 
 <div class="app-shell">
-  <router-outlet></router-outlet>
+  <!--<mat-drawer-container *ngIf="!o.isActivated" style="height: calc(100vh - 64px)"
+                        [hasBackdrop]="false">
+    <mat-drawer mode="over"
+                [class.fullscreen]="fullscreen"
+                opened>
+      <sto-filter-panel [expandable]="true"
+                        (toggled)="dispatch()">
+        <sto-filter-title>Invoices</sto-filter-title>
+        <sto-filter-table-actions>
+          <button mat-icon-button
+                  (click)="fullscreen = !fullscreen; dispatch()">
+            <mat-icon>fullscreen</mat-icon>
+          </button>
+        </sto-filter-table-actions>
+        <div [class.sto-grid]="fullscreen"
+             [class.sto-grid&#45;&#45;6]="fullscreen">
+          <div [class.sto-grid__column]="fullscreen">
+            <mat-form-field class="sto-form__field">
+              <mat-label>Last modified</mat-label>
+              <input matInput
+                     value="May 1–31, 2018">
+              <mat-icon matSuffix>date_range</mat-icon>
+            </mat-form-field>
+          </div>
+          <div [class.sto-grid__column]="fullscreen">
+            <mat-form-field class="sto-form__field">
+              <mat-label>Assigned</mat-label>
+              <mat-select value="0">
+                <mat-option value="0">All</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div [class.sto-grid__column]="fullscreen">
+            <mat-form-field class="sto-form__field">
+              <mat-label>Created by</mat-label>
+              <mat-select value="0">
+                <mat-option value="0">Per Christian Aagenæs (pcaa)</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div [class.sto-grid__column]="fullscreen">
+            <mat-form-field class="sto-form__field">
+              <mat-label>Free text</mat-label>
+              <input matInput
+                     placeholder="search">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+          <div [class.sto-grid__column]="fullscreen">
+            <mat-form-field class="sto-form__field">
+              <mat-label>ScrollTo</mat-label>
+              <input matInput
+                     type="number"
+                     [max]="rows.length - 1"
+                     [min]="0"
+                     #inp
+                     placeholder="search">
+              <mat-hint>Max {{rows.length - 1}}</mat-hint>
+              <mat-icon (click)="$event.stopPropagation(); scrollByIndex(inp.value)"
+                        matSuffix>check
+              </mat-icon>
+              <mat-icon (click)="$event.stopPropagation(); scrollByItemAtIndex(inp.value)"
+                        matSuffix>fullscreen
+              </mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </sto-filter-panel>
+      <sto-datatable [height]="height"
+                     #tbl
+                     [rowClass]="getRowClass"
+                     *ngIf="cols"
+                     emptyMessage="We're out of stuff"
+                     [responsive]="true"
+                     [responsiveBreakPoint]="500"
+                     [responsiveView]="responsiveTmpl"
+                     [headerHeight]="22"
+                     [footerRow]="null"
+                     [rows]="[]"
+                     [columns]="cols"></sto-datatable>
+    </mat-drawer>
+    <mat-drawer-content [class.fullscreen]="fullscreen">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>-->
+  <router-outlet #o="outlet"></router-outlet>
 </div>
+
+<ng-template #responsiveTmpl
+             let-row="row">
+  <div class="invoice-info">
+    <div class="invoice-info__left">
+      <div class="invoiceno">{{ row.invoiceNo }}</div>
+      <div class="voyageno">{{ row.voyageNo }} - {{ row.vesselName }}</div>
+    </div>
+    <div class="invoice-info__right">
+      <div class="allocated">{{ row.allocated }}</div>
+      <div class="available">of {{ row.total }} USD</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #hdrTmpl
+             let-column="column">
+  <strong>{{ column.name }}</strong>
+</ng-template>
+
+<ng-template #footerTmpl
+             let-column="column">
+  <strong>{{column.name}} has footer tmpl!</strong>
+</ng-template>
+
+
+<ng-template #tmpl
+             let-value="value"
+             let-row="row"
+             let-column="column">
+  <strong>{{ value }}</strong>
+</ng-template>
+
+<ng-template #ltmpl
+             let-value="value"
+             let-row="row"
+             let-column="column">
+  <span style="text-decoration: line-through;">{{ value }}</span>
+</ng-template>

@@ -1,0 +1,105 @@
+@import "../sto-datatable-advanced/ngx-datatable-variables";
+@import "../sto-datatable-advanced/ngx-datatable-mixins";
+@import "stoui-core/style/colors";
+@import "./sto-datatable-mixins";
+
+$datatable-header-color: $black-54;
+
+sto-datatable {
+  display: block;
+}
+
+
+sto-datatable .cdk-virtual-scroll-content-wrapper {
+  position: static;
+}
+
+.sto-mdl-table {
+  position: relative;
+  width: 100%;
+  //border: 1px solid $border-color-light;
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-size: $datatable-font-size;
+  background-color: $white;
+
+  &__row--scroll-offset {
+    padding-right: 12px;
+  }
+
+  &__header {
+    &__row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $border-color-light;
+      &__cell {
+        font-weight: 400;
+        flex: 1 0 50px;
+        overflow: hidden;
+        text-align: left;
+        padding: 0 $datatable-horizontal-padding;
+        position: relative;
+        vertical-align: bottom;
+        text-overflow: ellipsis;
+        font-size: $datatable-header-font-size;
+        color: $datatable-header-color;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  &__body, &__footer {
+    &__row {
+      display: flex;
+      position: relative;
+      align-items: center;
+      outline: none;
+      border-bottom: 1px solid $border-color-light;
+      //@include material-animation-default(0.3s);
+      transition-duration: .3s;
+      transition-timing-function: linear;
+      transition-property: background-color, height, box-shadow;
+
+      &--selected {
+        background-color: $datatable-row-selected-color;
+        box-shadow: -1px 1px 0px 0px rgba(0, 0, 0, .26) inset, 1px -1px 0px 0 rgba(0, 0, 0, .26) inset
+      }
+
+      &:not(.sto-mdl-table__body__row--selected) {
+        &:hover, &:focus {
+          background-color: $datatable-row-hover-color;
+        }
+      }
+      &__cell {
+        flex: 1 0 50px;
+        overflow: hidden;
+        text-align: left;
+        padding: 0 $datatable-horizontal-padding;
+        position: relative;
+        vertical-align: middle;
+        box-sizing: border-box;
+
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          display: block;
+        }
+      }
+    }
+  }
+
+  &__body--empty {
+    margin: 8px,
+  }
+
+  &__body--no-vscroll {
+    overflow-y: auto;
+  }
+
+  &__footer {
+    &__row {
+      border-top: 1px solid $border-color-light;
+    }
+  }
+}

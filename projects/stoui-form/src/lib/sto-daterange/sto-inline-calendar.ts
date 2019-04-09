@@ -5,13 +5,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'sto-inline-calendar',
   template: `
 	  <sto-inline-datepicker [endDate]="endDate" [startDate]="startDate"
-							 [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
-							 *ngIf="hackToShowCorrectMonth"
-							 [selected]="value" (selectedChange)="changeDate($event)"></sto-inline-datepicker>
+                           [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
+                           *ngIf="hackToShowCorrectMonth"
+                           [month]="month"
+                           [selected]="value" (selectedChange)="changeDate($event)"></sto-inline-datepicker>
 	  <sto-inline-datepicker [endDate]="endDate" [startDate]="startDate"
-							 [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
-							 *ngIf="!hackToShowCorrectMonth"
-							 [selected]="value" (selectedChange)="changeDate($event)"></sto-inline-datepicker>
+                           [startAt]="value" [minDate]="minDate" [maxDate]="maxDate"
+                           *ngIf="!hackToShowCorrectMonth"
+                           [month]="month"
+                           [selected]="value" (selectedChange)="changeDate($event)"></sto-inline-datepicker>
 	  <span style="display: none">{{ hackToShowCorrectMonth }}</span>
   `,
   providers: [
@@ -29,6 +31,8 @@ export class StoDaterangeInlineWrapper implements ControlValueAccessor {
   @Input() maxDate: Date;
   @Input() startDate: Date;
   @Input() endDate: Date;
+  @Input()
+  month = false;
   private propagateChange = (_: any) => {
   }
 

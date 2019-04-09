@@ -4,6 +4,6 @@ set +e
 
 for d in */ ; do
   cd $d
-  npm publish
+  npm publish --access public
   cd ..
 done

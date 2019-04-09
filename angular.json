@@ -419,9 +419,13 @@
     }
   },
   "defaultProject": "ngx-stoui-cli",
+  "cli": {
+    "defaultCollection": "@schematics/angular"
+  },
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "styleext": "scss",
+      "spec": false
     }
   }
 }

@@ -16,6 +16,7 @@
            matInput
            stoNumberInput
            stoSelectTextOnFocus
+           (blur)="onModelTouched($event)"
            [fractionSize]="fractionSize"
            [hasSelectAllEnabled]="$hasSelectAllEnabled | async"
            [placeholder]="placeholder"
@@ -26,14 +27,15 @@
            [formControl]="control" />
 
         <input
-                *ngIf="readonly && suffix"
-                [ngStyle]="{textAlign : textAlign}"
-                [placeholder]="placeholder"
-                [readonly]="readonly"
-                [tabindex]="(readonly || disabled) ? -1 : 0"
-                [disabled]="disabled"
-                matInput type="text"
-                [value]="control.value ? control.value + ' ' + suffix : ''" />
+          *ngIf="readonly && suffix"
+          [ngStyle]="{textAlign : textAlign}"
+          (blur)="onModelTouched($event)"
+          [placeholder]="placeholder"
+          [readonly]="readonly"
+          [tabindex]="(readonly || disabled) ? -1 : 0"
+          [disabled]="disabled"
+          matInput type="text"
+          [value]="control.value ? control.value + ' ' + suffix : ''" />
 
     <span *ngIf="suffix && !readonly" matSuffix>{{ suffix }}</span>
     <mat-hint [class.mat-error]="touched && errors">

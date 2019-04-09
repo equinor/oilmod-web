@@ -1,5 +1,8 @@
 .sto-form__field {
     &--float-right {
       text-align: right;
+      .mat-form-field-label-wrapper {
+        text-align: left;
+      }
     }
 }

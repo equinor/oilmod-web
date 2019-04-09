@@ -1,15 +1,7 @@
-import {
-  AfterContentInit,
-  ContentChildren,
-  Directive,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewContainerRef
-} from '@angular/core';
+import { AfterContentInit, ContentChildren, Directive, OnDestroy, OnInit, QueryList, ViewContainerRef } from '@angular/core';
 import { MatOption, MatSelect } from '@angular/material';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject ,  merge ,  fromEvent } from 'rxjs';
+import { fromEvent, merge, Subject } from 'rxjs';
 import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 /**
@@ -62,16 +54,17 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
          * switchMap takes the changes in, and creates a new, combined observable listening to mouseenter events on
          * each option
          */
-        switchMap(options => merge(
-          ...options.map(
+        switchMap(opts => merge(
+          opts.map(
             (opt, i) =>
-              fromEvent(opt._getHostElement(), 'mouseenter')
+              fromEvent<any>(opt._getHostElement(), 'mouseenter')
                 .pipe(map(() => ({opt, i})))
           )
         )),
         takeUntil(this.destroyed$)
       ).subscribe(
-      ({opt, i}) => {
+      (x) => {
+        const {opt, i} = x as any;
         this._matSelect._keyManager.setActiveItem(i);
       }
     );

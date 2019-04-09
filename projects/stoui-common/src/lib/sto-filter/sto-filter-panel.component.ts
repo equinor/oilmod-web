@@ -1,14 +1,14 @@
 import {
-  ViewChild,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   Directive,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewEncapsulation,
-  ChangeDetectorRef
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 
 /**
@@ -151,7 +151,11 @@ export class StoFilterActions {
 
   template: `
     <ng-content></ng-content>
-    <mat-button-toggle class="icon" *ngIf="expandable" style="box-shadow:none" [checked]="true" (change)="onChange($event)"
+    <mat-button-toggle class="icon"
+                       *ngIf="expandable"
+                       style="box-shadow:none"
+                       [checked]="expanded"
+                       (change)="onChange($event)"
                        title="Toggle filter panel"
                        (click)="toggle.emit()">
       <mat-icon>filter_list</mat-icon>

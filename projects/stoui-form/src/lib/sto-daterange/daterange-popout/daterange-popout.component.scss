@@ -1,0 +1,22 @@
+.sto-date {
+  &__popout {
+    position: absolute;
+    z-index: 50;
+    left: 0;
+    top: 27px;
+    background: white;
+    width: 264px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .mat-chip-list {
+      margin-bottom: 16px;
+
+      .mat-chip {
+        font-size: 11px;
+      }
+    }
+  }
+}

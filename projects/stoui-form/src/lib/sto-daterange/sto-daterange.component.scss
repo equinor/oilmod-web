@@ -84,6 +84,19 @@
       margin-left: 4px;
     }
   }
+  &.sto-monthrange {
+    width: 550px;
+    flex-wrap: wrap;
+    .calendar-box {
+      flex: 1 0 250px;
+    }
+    .sto-daterange__button--container {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1;
+      padding-bottom: 8px;
+    }
+  }
 }
 
 

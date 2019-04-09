@@ -1,11 +1,4 @@
-import {
-  AbstractControl,
-  ControlContainer,
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-  ValidationErrors
-} from '@angular/forms';
+import { AbstractControl, ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import {
   ChangeDetectorRef,
   Component,
@@ -18,10 +11,10 @@ import {
   SkipSelf,
   ViewEncapsulation
 } from '@angular/core';
-import {StoNumberInputPipe} from './sto-number-input.pipe';
-import {debounceTime, takeUntil} from 'rxjs/operators';
-import {Subject, Observable} from 'rxjs';
-import {StoUserPreferenceService} from '@ngx-stoui/core';
+import { StoNumberInputPipe } from './sto-number-input.pipe';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { StoUserPreferenceService } from '@ngx-stoui/core';
 
 /**
  * The number input is component that formats the number after you blur the field.
@@ -179,6 +172,9 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
   propagateChange = (_: any) => {
   };
 
+  onModelTouched = (_: any) => {
+  };
+
   registerOnChange(fn) {
     this.propagateChange = fn;
   }
@@ -196,7 +192,8 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
   }
 
 
-  registerOnTouched() {
+  registerOnTouched(fn: any) {
+    this.onModelTouched = fn;
   }
 
   public disable() {

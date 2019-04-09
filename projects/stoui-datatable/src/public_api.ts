@@ -8,3 +8,9 @@ export * from './lib/sto-datatable-advanced/types/activate';
 export * from './lib/abstract-list/abstract-list.component';
 export * from './lib/abstract-list/list-auto-resize.service';
 export * from './lib/sto-ultracompact/sto-ultracompact.directive';
+export * from './lib/sto-datatable/sto-datatable.module';
+export * from './lib/sto-datatable/sto-datatable.component';
+export * from './lib/sto-datatable/columns';
+export * from './lib/sto-datatable/events';
+
+

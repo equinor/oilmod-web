@@ -1,10 +1,38 @@
+.mat-calendar-body-active-range {
+  /*  &:first-of-type {
+      border-radius: 20% 0 0 20%;
+    }
+    &:last-of-type {
+      border-radius: 0 20% 20% 0;
+    }*/
+}
+
 .sto-calendar__inline {
   &.mat-calendar {
-    display: block
+    display: block;
+    height: auto;
+  }
+
+  .mat-calendar-body-selected {
+    background-color: #007079;
   }
 
   .mat-calendar-header {
     padding: 8px 8px 0 8px
+  }
+
+  .mat-calendar-body-cell {
+    &.mat-calendar-body-active-range {
+      background-color: rgba(#007079, 0.1);
+
+      &.end {
+        border-radius: 0 50% 50% 0;
+      }
+
+      &.start {
+        border-radius: 50% 0 0 50%;
+      }
+    }
   }
 
   .mat-calendar-content {

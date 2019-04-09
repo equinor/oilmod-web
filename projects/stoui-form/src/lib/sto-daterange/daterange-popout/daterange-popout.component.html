@@ -1,0 +1,19 @@
+<div *ngIf="isOpen"
+     [@open]
+     (click)="$event.stopPropagation()"
+     class="sto-date sto-date__popout mat-elevation-z5">
+  <sto-inline-datepicker (selectedChange)="close(); valueChanged.emit($event)"
+                         [startDate]="start"
+                         [endDate]="end"
+                         [startAt]="value"
+                         [selected]="value"></sto-inline-datepicker>
+  <mat-chip-list>
+    <mat-chip [selected]="!value"
+              (click)="valueChanged.emit(null); close()"
+              style="margin: auto"
+              color="accent">
+      <mat-icon>check</mat-icon>
+      ANY DATE
+    </mat-chip>
+  </mat-chip-list>
+</div>

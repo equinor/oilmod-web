@@ -1,6 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatCalendarBody } from '@angular/material';
-import { isAfter, isSameDay, isBefore, parse } from 'date-fns';
+import { isAfter, isBefore, isSameDay, parse } from 'date-fns';
 
 @Component({
   selector: '[sto-calendar-body]',
@@ -12,17 +12,23 @@ import { isAfter, isSameDay, isBefore, parse } from 'date-fns';
 			  [style.paddingBottom.%]="50 * cellAspectRatio / numCols">
 		  </td>
 		  <td *ngFor="let item of row; let colIndex = index"
-			  role="gridcell" class="mat-calendar-body-cell"
-			  [tabindex]="_isActiveCell(rowIndex, colIndex) ? 0 : -1"
-			  [class.mat-calendar-body-disabled]="!item.enabled"
-			  [class.mat-calendar-body-active]="_isActiveCell(rowIndex, colIndex)"
-			  [attr.aria-label]="item.ariaLabel"
-			  [attr.aria-disabled]="!item.enabled || null" (click)="_cellClicked(item)"
-			  [style.width.%]="100 / numCols" [style.paddingTop.%]="50 * cellAspectRatio / numCols"
-			  [style.paddingBottom.%]="50 * cellAspectRatio / numCols">
+          role="gridcell" class="mat-calendar-body-cell"
+          [tabindex]="_isActiveCell(rowIndex, colIndex) ? 0 : -1"
+          [class.mat-calendar-body-disabled]="!item.enabled"
+          [class.mat-calendar-body-active]="_isActiveCell(rowIndex, colIndex)"
+          [attr.aria-label]="item.ariaLabel"
+          [attr.aria-disabled]="!item.enabled || null" (click)="_cellClicked(item)"
+          [class.mat-calendar-body-active-range]="selectedValue === item.value || isActive(item.ariaLabel)"
+          [class.start]="isSameDay(startDate, item.ariaLabel) || (endDate && selectedValue === item.value )"
+          [class.end]="isSameDay(endDate, item.ariaLabel) || (startDate && selectedValue === item.value )"
+          [style.width.%]="100 / numCols" [style.paddingTop.%]="50 * cellAspectRatio / numCols"
+          [style.paddingBottom.%]="50 * cellAspectRatio / numCols">
 			  <div class="mat-calendar-body-cell-content"
-				   [class.mat-calendar-body-selected]="selectedValue === item.value || isActive(item.ariaLabel)"
-				   [class.mat-calendar-body-today]="todayValue === item.value">
+             [class.mat-calendar-body-selected]="
+				   selectedValue === item.value ||
+				   isSameDay(item.ariaLabel, startDate) ||
+				   isSameDay(item.ariaLabel, endDate)"
+             [class.mat-calendar-body-today]="todayValue === item.value">
 				  {{item.displayValue}}
 			  </div>
 		  </td>
@@ -47,6 +53,15 @@ export class StoDatepickerCalendarBodyComponent extends MatCalendarBody {
   public isActive(cellLabel: string) {
     const check = parse(cellLabel);
     return this.endDate ? this.endCheck(check) : this.startDate ? this.startCheck(check) : false;
+  }
+
+  public isSameDay(o: any, compareWith) {
+    const check = parse(o);
+    return isSameDay(check, compareWith);
+  }
+
+  public isStartOfRange(cellLabel: string) {
+    return isSameDay(this.selectedValue, cellLabel) && this.endDate;
   }
 
   /**

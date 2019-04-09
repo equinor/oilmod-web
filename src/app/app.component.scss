@@ -1,12 +1,85 @@
 .app-shell {
   margin: 64px auto 0;
-  padding: 24px 24px 12px;
+  //padding: 24px 24px 12px;
 }
 
 .code {
   font-style: italic;
   background: lightgray;
+
   &--disabled {
     text-decoration: line-through;
+  }
+}
+
+.invoice-info {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  height: 100%;
+  padding: 4px 8px;
+
+  &__left, &__right {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__left {
+    align-items: flex-start;
+
+    .invoiceno {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .voyageno {
+      font-size: 10px;
+      line-height: 18px;
+    }
+  }
+
+  &__right {
+    align-items: flex-end;
+
+    .allocated {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .available {
+      font-size: 10px;
+      line-height: 18px;
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
+
+.sto-mdl-table__body__row {
+  //transition: height 1000ms;
+}
+
+.mat-drawer {
+  width: 356px;
+  background: transparent;
+  border-right: 1px solid #9E9E9E;
+  box-shadow: none;
+  overflow-x: hidden;
+  transition: width 200ms ease-in, padding 200ms ease-in;
+
+  &.fullscreen {
+    width: 100vw;
+    padding: 16px;
+  }
+}
+
+.mat-drawer-content {
+  transition: transform 200ms ease-in-out;
+  transform: translateX(372px);
+
+  &.fullscreen {
+    transform: translateX(2000px);
+    position: absolute;
   }
 }

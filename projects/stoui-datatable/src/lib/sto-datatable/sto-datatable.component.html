@@ -1,0 +1,72 @@
+<div class="sto-mdl-table"
+     [style.height]="height + 'px'">
+  <div class="sto-mdl-table__header"
+       *ngIf="!responsive || (responsive && !smallScreen)">
+    <div class="sto-mdl-table__header__row"
+         [style.height]="headerHeight + 'px'"
+         [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
+      <div class="sto-mdl-table__header__row__cell"
+           (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
+           [ngClass]="column.headerClass | exec"
+           [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
+           [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
+           [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+           *ngFor="let column of columns; trackBy: trackColumnsFn">
+        <span *ngIf="!column.headerTemplate"
+              [title]="column.name">{{ column.name || '' }}</span>
+        <ng-template #headerTemplate
+                     *ngIf="column.headerTemplate"
+                     [ngTemplateOutlet]="column.headerTemplate"
+                     [ngTemplateOutletContext]="{column: column}">
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="sto-mdl-table__progress-bar"
+       *ngIf="loading"
+       role="progressbar">
+    <div class="sto-mdl-table__progress-bar__container">
+      <div class="sto-mdl-table__progress-bar__container__bar"></div>
+    </div>
+  </div>
+  <div class="sto-mdl-table__body--empty"
+       *ngIf="!rows || rows.length === 0">
+    {{ emptyMessage }}
+  </div>
+  <sto-datatable-body #body
+                      [rows]="rows"
+                      [rowClass]="rowClass"
+                      [trackBy]="trackBy"
+                      [virtualScroll]="virtualScroll"
+                      [height]="bodyHeight"
+                      [rowHeight]="rowHeight"
+                      (rowContextMenu)="rowContextMenu.emit($event)"
+                      (rowSelected)="select.emit($event)"
+                      [columns]="columns"
+                      [responsive]="responsive"
+                      [responsiveView]="responsiveView"
+                      [smallView]="smallScreen"
+                      [selected]="selected"></sto-datatable-body>
+  <div class="sto-mdl-table__footer"
+       *ngIf="footerRow && (!responsive || (responsive && !smallScreen))"
+       [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
+    <div class="sto-mdl-table__footer__row"
+         [style.height]="rowHeight + 'px'">
+      <div class="sto-mdl-table__footer__row__cell"
+           [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
+           [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
+           [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+           *ngFor="let column of columns; trackBy: trackColumnsFn">
+        <span *ngIf="!column.footerTemplate">
+          {{ footerRow[column.prop] }}
+        </span>
+        <ng-template #footerTemplate
+                     *ngIf="column.footerTemplate"
+                     [ngTemplateOutlet]="column.footerTemplate"
+                     [ngTemplateOutletContext]="{column: column}">
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+

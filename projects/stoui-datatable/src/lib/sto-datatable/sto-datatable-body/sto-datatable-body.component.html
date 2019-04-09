@@ -1,0 +1,74 @@
+<cdk-virtual-scroll-viewport [itemSize]="(!smallView || !responsive) ? rowHeight : 80"
+                             *ngIf="virtualScroll; else noScroll"
+                             [style.height]="(height || 500) + 'px'"
+                             class="sto-mdl-table__body">
+  <div *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; trackBy: trackBy"
+       [tabindex]="0"
+       #rowEl
+       (keydown)="onKeyDownHandler($event, rowEl, {index: i, event: $event, row: row})"
+       [ngClass]="row | exec:_rowClass"
+       [class.sto-mdl-table__body__row--selected]="selected === row"
+       (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl})"
+       [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
+    <!--(click)="rowEl.focus(); rowSelected.emit({index: i, event: $event, row: row})"-->
+    <ng-container *ngIf="smallView && responsive; else regular">
+      <ng-template [ngTemplateOutlet]="responsiveView"
+                   [ngTemplateOutletContext]="{row: row}">
+      </ng-template>
+    </ng-container>
+    <ng-template #regular>
+      <div class="sto-mdl-table__body__row__cell"
+           [ngClass]="column.cellClass | exec"
+           [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
+           [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
+           [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+           (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: i})"
+           *ngFor="let column of columns;">
+                <span *ngIf="!column.cellTemplate"
+                      [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
+        <ng-template #cellTemplate
+                     *ngIf="column.cellTemplate"
+                     [ngTemplateOutlet]="column.cellTemplate"
+                     [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: i}">
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<ng-template #noScroll>
+  <div class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
+       [style.height]="height ? (height + 'px') : 'auto'">
+    <div *ngFor="let row of rows; let i = index; trackBy: trackBy"
+         [tabindex]="0"
+         #rowEl
+         (keydown)="onKeyDownHandler($event, rowEl, {index: i, event: $event, row: row})"
+         [ngClass]="row | exec:_rowClass"
+         [class.sto-mdl-table__body__row--selected]="selected === row"
+         (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl})"
+         [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
+      <ng-container *ngIf="smallView && responsive; else regular">
+        <ng-template [ngTemplateOutlet]="responsiveView"
+                     [ngTemplateOutletContext]="{row: row}">
+        </ng-template>
+      </ng-container>
+      <ng-template #regular>
+        <div class="sto-mdl-table__body__row__cell"
+             [ngClass]="column.cellClass | exec"
+             [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
+             [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
+             [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+             (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: i})"
+             *ngFor="let column of columns;">
+                <span *ngIf="!column.cellTemplate"
+                      [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
+          <ng-template #cellTemplate
+                       *ngIf="column.cellTemplate"
+                       [ngTemplateOutlet]="column.cellTemplate"
+                       [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: i}">
+          </ng-template>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>

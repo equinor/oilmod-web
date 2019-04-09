@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../dist/stoui-core/ngx-stoui.css";
+@import "../dist/stoui-core/variables";
 
 @import "../dist/stoui-form/sto-form.css";
 @import "~typeface-roboto/index.css";
@@ -11,4 +12,19 @@
 
 h1,h2,h3,h4,h5 {
   display: inline-block;
+}
+
+body {
+  margin: 0;
+}
+
+.mat-button-toggle {
+  &-standalone.mat-button-toggle-appearance-standard {
+    color: $gray;
+    border: 0;
+
+    &:not(.mat-button-toggle-checked) {
+      background: transparent;
+    }
+  }
 }

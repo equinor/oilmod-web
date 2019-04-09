@@ -1,0 +1,26 @@
+<div [formGroup]="parts"
+     style="display: flex"
+     #container
+     class="date-input-container">
+  <input class="date-input-element"
+         [value]="startDate"
+         #startInp
+         (blur)="onValueChange('start', $event.target.value, startInp)"
+         placeholder="Any date"
+         (click)="showPickersOnFocus && startPopout.open()">
+  <sto-daterange-popout #startPopout
+                        [end]="parts.get('end').value"
+                        (valueChanged)="onValueChange('start', $event)"
+                        [value]="parts.get('start').value"></sto-daterange-popout>
+  <span class="date-input-spacer">&mdash;</span>
+  <input class="date-input-element"
+         [value]="endDate"
+         #endInp
+         (blur)="onValueChange('end', $event.target.value, endInp)"
+         placeholder="Any date"
+         (click)="showPickersOnFocus && endPopout.open()">
+  <sto-daterange-popout #endPopout
+                        [start]="parts.get('start').value"
+                        (valueChanged)="onValueChange('end', $event)"
+                        [value]="parts.get('end').value"></sto-daterange-popout>
+</div>
