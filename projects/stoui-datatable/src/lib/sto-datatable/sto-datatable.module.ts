@@ -4,6 +4,7 @@ import { StoDatatableComponent } from './sto-datatable.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { ExecPipe } from './exec.pipe';
+import { StoDatatableBodyRowComponent } from './sto-datatable-body/sto-datatable-body-row/sto-datatable-body-row.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { ExecPipe } from './exec.pipe';
     StoDatatableComponent
     , StoDatatableBodyComponent
     , ExecPipe
+    , StoDatatableBodyRowComponent
   ],
   exports: [ StoDatatableComponent ],
 })

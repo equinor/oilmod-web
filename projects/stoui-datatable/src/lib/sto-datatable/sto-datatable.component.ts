@@ -67,6 +67,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
 
   @Input()
   autoSize: boolean;
+  @Input()
+  autoSizeOffset = 0;
 
   @Input()
   rows: T[];
@@ -196,7 +198,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
         startWith(null),
         map(() => el.getBoundingClientRect()),
         map(rect => rect.top),
-        map(top => window.innerHeight - top - 16),
+        map(top => window.innerHeight - top - 16 - this.autoSizeOffset),
         tap(height => this.height = height)
       );
   }

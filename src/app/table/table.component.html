@@ -5,6 +5,9 @@
   </sto-filter-panel>
   <mat-card style="padding: 0">
     <sto-datatable #tbl
+                   [virtualScroll]="true"
+                   [autoSizeOffset]="60"
+                   (select)="onSelect($event)"
                    [autoSize]="true"
                    [rowClass]="getRowClass"
                    *ngIf="cols"

@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { StoDatatableComponent } from '@ngx-stoui/datatable';
 import data from '../invoice';
+import { RowSelection } from '../../../projects/stoui-datatable/src/lib/sto-datatable/events';
 
 @Component({
   selector: 'app-table',
@@ -30,7 +31,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   };
 
   getRowClass(row) {
-    return row.invoiceNo === 212666588 ? 'user-defined-class' : '';
+    return row.checked ? 'checked-row' : 'unchecked-row';
   }
 
   dispatch() {
@@ -56,10 +57,11 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // this.rows = [data[0], data[1]];
-    const rows = [
-      ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data
-    ];
-    this.rows = JSON.parse(JSON.stringify(rows));
+    // const rows = [
+    //   ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data
+    // ];
+    // this.rows = JSON.parse(JSON.stringify(rows));
+    this.rows = [ ...data ];
     const allocated = this.rows.map(r => r.allocated).reduce((a, b) => a + b, 0);
     const total = this.rows.map(r => r.total).reduce((a, b) => a + b, 0);
     this.footer = {
@@ -135,4 +137,8 @@ export class TableComponent implements OnInit, AfterViewInit {
         }, 100);*/
   }
 
+  onSelect(rowSelection: RowSelection<any>) {
+    console.log(rowSelection.row);
+    rowSelection.row.checked = !rowSelection.row.checked;
+  }
 }

@@ -1,4 +1,15 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnDestroy,
+  Output,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { Column } from '../columns';
@@ -41,6 +52,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   scroller: CdkVirtualScrollViewport;
 
   private destroyed$ = new Subject<boolean>();
+  private rowDiffer: KeyValueDiffer<T, T>;
   private timeout;
 
   @HostListener('window:resize', [ '$event' ])
@@ -68,6 +80,10 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
     return `${userDefinedClass} sto-mdl-table__body__row`;
   };
 
+  constructor(private differs: KeyValueDiffers,) {
+    this.rowDiffer = differs.find({}).create();
+  }
+
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
@@ -90,13 +106,13 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
     const prev = rowEl.previousSibling as HTMLDivElement;
     switch ( event.keyCode ) {
       case Key.DownArrow:
-        if ( next && next instanceof HTMLDivElement ) {
+        if ( next && next instanceof HTMLElement ) {
           next.focus();
           event.preventDefault();
         }
         break;
       case Key.UpArrow:
-        if ( prev && prev instanceof HTMLDivElement ) {
+        if ( prev && prev instanceof HTMLElement ) {
           prev.focus();
           event.preventDefault();
         }
