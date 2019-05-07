@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { FormattedError } from './format-error-message';
-import { Observable, Subject, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { ExceptionDialogComponent } from './unexcepted-dialog/exception-dialog.component';
+import { ErrorFormatter } from './error-formatter';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Service that handles error messages. Can either open a dialog (with a returning action), or just a plain error
@@ -29,11 +31,11 @@ export class HttpErrorHandlerService {
    */
   public errorHandler(err: FormattedError) {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 10);
-    if (!err) {
+    if ( !err ) {
       this.errorMessageSubject.next(null);
       return;
     }
-    switch (err.status) {
+    switch ( err.status ) {
       case 404:
       case 400:
         this.errorMessageSubject.next(err);
@@ -62,7 +64,24 @@ export class HttpErrorHandlerService {
       });
   }
 
-  constructor(private dialog: MatDialog) {
+  public globalHandler(error: HttpErrorResponse) {
+    const err = this.errorFormatter.format(error);
+    const dialog = this.dialog.open(ExceptionDialogComponent, {
+      width: '600px',
+      panelClass: 'sto-dialog',
+      data: err
+    });
+    this.dialogHandler(dialog);
+  }
+
+  public async dialogHandler(dialog: MatDialogRef<ExceptionDialogComponent>) {
+    const action = await dialog.afterClosed().toPromise();
+    if ( action === 'replace' ) {
+      window.location.reload();
+    }
+  }
+
+  constructor(private dialog: MatDialog, private errorFormatter: ErrorFormatter) {
   }
 
 }

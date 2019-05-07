@@ -1,13 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { format } from 'date-fns';
 
+const topsServiceNowUrl = 'https://equinor.service-now.com/selfservice/?id=sc_cat_item&sys_id=3373cf4cdb97f200bc7af7461d96195b';
+
 /**
  * Function used to format server errors, and convert them to a generalized format to be handled by
  * {@link HttpErrorHandlerService#errorHandler}
  * @param err
+ * @param serviceNow url to report issues in service now
+ * @param accessIt search terms for access it
  * {FormattedError}
  */
-export const formatError = (err: HttpErrorResponse): FormattedError => {
+export const formatError = (err: HttpErrorResponse, serviceNow?: string, accessIt?: string): FormattedError => {
   switch (err.status) {
     case 0:
       return offlineError();
@@ -19,12 +23,12 @@ export const formatError = (err: HttpErrorResponse): FormattedError => {
       return formatConflict(err);
     case 401:
     case 403:
-      return noAccessError(err);
+      return noAccessError(err, accessIt);
     case 424:
       return dependencyError(err);
     case 503:
     case 504:
-      return formatServerDownOrTimeout(err);
+      return formatServerDownOrTimeout(err, serviceNow);
     default:
       return formatUnknownException(err);
   }
@@ -63,12 +67,14 @@ const convertMessageStringToJson = (serverError: string|ServerError): ServerErro
 /**
  * @ignore
  */
-const noAccessError = (err: HttpErrorResponse): FormattedError => {
+const noAccessError = (err: HttpErrorResponse, searchTerms?: string): FormattedError => {
   const baseUrl = `https://accessit.statoil.no/Search/Search?term=`;
   const method = err['method'] as RequestMethods;
   const title = noAccessTitle(method);
-  const terms = createAccessItSearchString(err.url, method);
-  const url = baseUrl + terms;
+  if ( !searchTerms ) {
+    searchTerms = createAccessItSearchString(err.url, method);
+  }
+  const url = baseUrl + searchTerms;
   const linkText = noAccessLinkText(method);
   const message = `<a href="${url}">${linkText}</a>`;
   const actions = [];
@@ -164,12 +170,11 @@ const offlineError = (): FormattedError => {
 /**
  * @ignore
  */
-const formatServerDownOrTimeout = (err: HttpErrorResponse): FormattedError => {
+const formatServerDownOrTimeout = (err: HttpErrorResponse, serviceNowUrl = topsServiceNowUrl): FormattedError => {
   const title = `I was not able to contact the server`;
   const message = `<p>The server appears to have gone offline, or the connection timed out.</p>
   <p>Please report this issue via Services@Statoil.</p>
   <p>In the issue registration form, select "Business Specific IT", and "TOPS IM" as Application.</p>`;
-  const serviceNowUrl = `https://statoil.service-now.com/selfservice/?id=sc_cat_item&sys_id=3373cf4cdb97f200bc7af7461d96195b`;
   const actions: ErrorAction[] = [
     {label: 'REPORT ISSUE IN SERVICES@STATOIL', action: () => window.open(serviceNowUrl, '_blank')}
   ];
