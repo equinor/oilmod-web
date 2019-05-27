@@ -1,6 +1,13 @@
 import {
-  Component, ElementRef, KeyValueDiffers,
-  HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  KeyValueDiffers,
+  Output
 } from '@angular/core';
 
 import { DataTableBodyRowComponent } from '../../../vendor/ngx-datatable/components/body/body-row.component';
@@ -21,6 +28,7 @@ import { ScrollbarHelper } from '../../../vendor/ngx-datatable/services/scrollba
         [row]="row"
         [group]="group"
         [expanded]="expanded"
+        (contextmenu)="rowContextMenu.emit({ event: $event, row: row, type: 'cell', value: row[column.prop], column: column })"
         [isSelected]="isSelected"
         [rowIndex]="rowIndex"
         [column]="column"
@@ -48,6 +56,9 @@ export class StoDataTableBodyRowComponent extends DataTableBodyRowComponent impl
       });
     }
   }
+
+  @Output()
+  rowContextMenu = new EventEmitter<{ event: MouseEvent; row: any; column: any; value: any; type: 'cell' }>();
 
   constructor(
     protected differs: KeyValueDiffers,

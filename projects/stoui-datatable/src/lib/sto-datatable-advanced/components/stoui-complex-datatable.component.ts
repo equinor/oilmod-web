@@ -4,12 +4,14 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  EventEmitter,
+  HostBinding,
   Input,
   KeyValueDiffers,
+  Output,
   QueryList,
-  ViewEncapsulation,
   ViewChild,
-  HostBinding, Output, EventEmitter
+  ViewEncapsulation
 } from '@angular/core';
 
 import { translateTemplates } from '../../vendor/ngx-datatable/utils';
@@ -60,44 +62,45 @@ import { TableColumn } from '../../vendor/ngx-datatable/types/table-column.type'
 				  (columnContextmenu)="onColumnContextmenu($event)">
 		  </sto-complex-header>
 		  <sto-complex-body
-				  [groupRowsBy]="groupRowsBy"
-				  [groupedRows]="groupedRows"
-          [selectByDoubleClick]="selectByDoubleClick"
-				  [rows]="_internalRows"
-				  [groupExpansionDefault]="groupExpansionDefault"
-				  [scrollbarV]="scrollbarV"
-				  [scrollbarH]="scrollbarH"
-				  [loadingIndicator]="loadingIndicator"
-				  [externalPaging]="externalPaging"
-				  [rowHeight]="rowHeight"
-				  [rowCount]="rowCount"
-				  [offset]="offset"
-				  [trackByProp]="trackByProp"
-				  [columns]="_internalColumns"
-				  [pageSize]="pageSize"
-				  [offsetX]="offsetX"
-				  [rowDetail]="rowDetail"
-				  [groupHeader]="groupHeader"
-				  [selected]="selected"
-				  [innerWidth]="innerWidth"
-				  [bodyHeight]="bodyHeight"
-				  [selectionType]="selectionType"
-				  [emptyMessage]="messages.emptyMessage"
-				  [rowIdentity]="rowIdentity"
-				  [rowClass]="rowClass"
-				  [selectCheck]="selectCheck"
-				  (page)="onBodyPage($event)"
-				  (activate)="activate.emit($event)"
-          [canMoveRows]="canMoveRows"
-          [moveRowsCheck]="moveRowsCheck"
-				  (rowContextmenu)="onRowContextmenu($event)"
-				  (select)="onBodySelect($event)"
-				  (scroll)="onBodyScroll($event)"
-          (moveRow)="moveRow.emit($event)"
-          [moveRowMapper]="moveRowMapper"
-				  [summaryRowData]="_internalSummaryRowData"
-				  [summaryColumns]="_internalSummaryColumns"
-          [fixedFooter]="fixedFooter"
+        [groupRowsBy]="groupRowsBy"
+        [groupedRows]="groupedRows"
+        [selectByDoubleClick]="selectByDoubleClick"
+        [rows]="_internalRows"
+        [groupExpansionDefault]="groupExpansionDefault"
+        [scrollbarV]="scrollbarV"
+        [scrollbarH]="scrollbarH"
+        [loadingIndicator]="loadingIndicator"
+        [externalPaging]="externalPaging"
+        [rowHeight]="rowHeight"
+        [rowCount]="rowCount"
+        [offset]="offset"
+        [trackByProp]="trackByProp"
+        [columns]="_internalColumns"
+        [pageSize]="pageSize"
+        [offsetX]="offsetX"
+        [rowDetail]="rowDetail"
+        [groupHeader]="groupHeader"
+        [selected]="selected"
+        [innerWidth]="innerWidth"
+        [bodyHeight]="bodyHeight"
+        [selectionType]="selectionType"
+        [emptyMessage]="messages.emptyMessage"
+        [rowIdentity]="rowIdentity"
+        [rowClass]="rowClass"
+        [selectCheck]="selectCheck"
+        (page)="onBodyPage($event)"
+        (activate)="activate.emit($event)"
+        [canMoveRows]="canMoveRows"
+        [moveRowsCheck]="moveRowsCheck"
+        (rowContextmenu)="onRowContextmenu($event)"
+        (cellContextmenu)="onCellContextMenu($event)"
+        (select)="onBodySelect($event)"
+        (scroll)="onBodyScroll($event)"
+        (moveRow)="moveRow.emit($event)"
+        [moveRowMapper]="moveRowMapper"
+        [summaryRowData]="_internalSummaryRowData"
+        [summaryColumns]="_internalSummaryColumns"
+        [fixedFooter]="fixedFooter"
 		  >
 		  </sto-complex-body>
 		  <datatable-footer
@@ -351,6 +354,10 @@ export class StoComplexDatatableComponent extends DatatableComponent {
               element: ElementRef,
               differs: KeyValueDiffers) {
     super(scrollbarHelper, cd, element, differs);
+  }
+
+  onCellContextMenu(event) {
+    this.tableContextmenu.emit(event);
   }
 
 }
