@@ -34,8 +34,10 @@
     {{ emptyMessage }}
   </div>
   <sto-datatable-body #body
+                      [selectable]="select.observers.length"
                       [rows]="rows"
                       [rowClass]="rowClass"
+                      [selectionMode]="selectionMode"
                       [trackBy]="trackBy"
                       [virtualScroll]="virtualScroll"
                       [height]="bodyHeight"

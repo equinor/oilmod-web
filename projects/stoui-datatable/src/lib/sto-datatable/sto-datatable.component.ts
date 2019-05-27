@@ -17,6 +17,7 @@ import { HeaderContextMenu, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { fromEvent, Observable, of } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
+import { SelectionModes } from './selection-modes';
 
 declare var ResizeObserver: any;
 
@@ -36,6 +37,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   emptyMessage = `No records in set`;
   @Input()
   headerHeight = 24;
+  @Input()
+  selectionMode: SelectionModes = SelectionModes.Click;
 
   @Input()
   get height() {

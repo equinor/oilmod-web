@@ -15,4 +15,4 @@ export class Column {
   headerClass?: string | ClassFunction;
 }
 
-type ClassFunction = (column: Column) => string | string[];
+type ClassFunction = <T = any, U = any>(value: T, row: U, column: Column) => string | string[];

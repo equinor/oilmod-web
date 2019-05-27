@@ -49,6 +49,9 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
   }
 
   &__body, &__footer {
+    &--selectable &__row {
+      cursor: pointer;
+    }
     &__row {
       display: flex;
       position: relative;

@@ -15,6 +15,7 @@ import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { Column } from '../columns';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Key } from '@ngx-stoui/core';
+import { SelectionModes } from '../selection-modes';
 
 @Component({
   selector: 'sto-datatable-body',
@@ -33,6 +34,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   @Input()
   rows: T[];
   @Input()
+  selectable: boolean;
+  @Input()
   rowHeight: number;
   @Input()
   selected: T;
@@ -42,6 +45,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   virtualScroll: boolean;
   @Input()
   rowClass: Function;
+  @Input()
+  selectionMode: SelectionModes;
   @Output()
   rowSelected = new EventEmitter<RowSelection<T>>();
   @Output()
@@ -90,13 +95,15 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   }
 
   selectRow(event: KeyboardEvent | MouseEvent, activationData: RowSelection<T>) {
-    this.rowSelected.emit(activationData);
-    const el = event.target as HTMLElement;
-    const ignoreRe = /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
-    const elTag = el.tagName.toLowerCase();
-    const isIgnoredEl = ignoreRe.test(el.className) || elTag === 'input';
-    if ( !isIgnoredEl ) {
-      activationData.rowEl.focus();
+    if ( event.type === this.selectionMode ) {
+      this.rowSelected.emit(activationData);
+      const el = event.target as HTMLElement;
+      const ignoreRe = /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
+      const elTag = el.tagName.toLowerCase();
+      const isIgnoredEl = ignoreRe.test(el.className) || elTag === 'input';
+      if ( !isIgnoredEl ) {
+        activationData.rowEl.focus();
+      }
     }
   }
 

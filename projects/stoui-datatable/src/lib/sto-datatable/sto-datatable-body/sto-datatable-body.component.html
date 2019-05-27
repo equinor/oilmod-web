@@ -1,6 +1,7 @@
 <cdk-virtual-scroll-viewport [itemSize]="(!smallView || !responsive) ? rowHeight : 80"
                              *ngIf="virtualScroll; else noScroll"
                              [style.height]="(height || 500) + 'px'"
+                             [class.sto-mdl-table__body--selectable]="selectable"
                              class="sto-mdl-table__body">
   <sto-datatable-body-row *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; trackBy: trackBy"
                           [tabindex]="0"
@@ -15,12 +16,14 @@
                           [compressedView]="smallView && responsive"
                           (rowContextMenu)="rowContextMenu.emit($event)"
                           (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
                           [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
   </sto-datatable-body-row>
 </cdk-virtual-scroll-viewport>
 
 <ng-template #noScroll>
   <div class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
+       [class.sto-mdl-table__body--selectable]="selectable"
        [style.height]="height ? (height + 'px') : 'auto'">
 
     <sto-datatable-body-row *ngFor="let row of rows; let i = index; trackBy: trackBy"
@@ -36,6 +39,7 @@
                             [compressedView]="smallView && responsive"
                             (rowContextMenu)="rowContextMenu.emit($event)"
                             (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                            (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
                             [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
     </sto-datatable-body-row>
     <!--<div *ngFor="let row of rows; let i = index; trackBy: trackBy"
