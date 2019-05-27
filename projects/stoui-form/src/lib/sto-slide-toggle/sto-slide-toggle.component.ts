@@ -250,6 +250,10 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
     slider.toggle();
     this.control.markAsDirty();
     this.control.setValue(slider.checked);
+    try {
+      this.controlContainer.control.markAsDirty();
+    } catch {/**them all*/
+    }
     setTimeout(() => input._elementRef.nativeElement.parentElement.parentElement.parentElement.parentElement.focus(), 0);
   }
 
