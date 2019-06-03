@@ -13,7 +13,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Column } from './columns';
-import { HeaderContextMenu, RowContextMenu, RowSelection } from './events';
+import { HeaderContextMenu, RowActivation, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { fromEvent, Observable, of } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
@@ -127,12 +127,14 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   rowContextMenu = new EventEmitter<RowContextMenu<T>>();
   @Output()
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
+  @Output()
+  rowActivate = new EventEmitter<RowActivation<T>>();
+
   private resizeTimeout;
   @Input()
   trackBy = (item: T, index: number) => {
     return index;
   };
-
   rowClick(row: T, index: number, event: MouseEvent) {
     this.selected = row;
     this.select.emit({ row, index, event });

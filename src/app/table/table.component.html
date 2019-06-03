@@ -7,6 +7,9 @@
     <sto-datatable #tbl
                    [virtualScroll]="true"
                    [autoSizeOffset]="60"
+                   [selectionMode]="'dblclick'"
+                   (rowActivate)="onRowActivate($event)"
+                   [selected]="selected"
                    (select)="onSelect($event)"
                    [autoSize]="true"
                    [rowClass]="getRowClass"

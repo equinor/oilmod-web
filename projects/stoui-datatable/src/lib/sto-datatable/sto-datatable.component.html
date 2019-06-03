@@ -43,6 +43,7 @@
                       [height]="bodyHeight"
                       [rowHeight]="rowHeight"
                       (rowContextMenu)="rowContextMenu.emit($event)"
+                      (activate)="rowActivate.emit($event)"
                       (rowSelected)="select.emit($event)"
                       [columns]="columns"
                       [responsive]="responsive"

@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { StoDatatableComponent } from '@ngx-stoui/datatable';
 import data from '../invoice';
-import { RowSelection } from '../../../projects/stoui-datatable/src/lib/sto-datatable/events';
+import { RowActivation, RowSelection } from '../../../projects/stoui-datatable/src/lib/sto-datatable/events';
 
 @Component({
   selector: 'app-table',
@@ -29,6 +29,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     total: 0,
     invoiceNo: '0 rows'
   };
+  public selected: any;
 
   getRowClass(row) {
     return row.checked ? 'checked-row' : 'unchecked-row';
@@ -138,7 +139,11 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   onSelect(rowSelection: RowSelection<any>) {
-    console.log(rowSelection.row);
-    rowSelection.row.checked = !rowSelection.row.checked;
+    this.selected = rowSelection.row;
+    // rowSelection.row.checked = !rowSelection.row.checked;
+  }
+
+  onRowActivate(activateEvent: RowActivation<any>) {
+    console.log({ activateEvent });
   }
 }
