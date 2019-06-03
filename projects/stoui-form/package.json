@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/form",
-  "version": "5.2.0-BETA.10",
+  "version": "5.2.3",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
