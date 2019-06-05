@@ -20,11 +20,6 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
-    files: [
-      {pattern: './src/test.ts', watched: false},
-      {pattern: '../../globals/material-icons.css', watched: true},
-      {pattern: '../../dist/stoui-core/ngx-stoui.css', watched: false},
-    ],
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

@@ -1,13 +1,18 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
+  ChangeDetectorRef,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  Output
 } from '@angular/core';
 
-import {
-  allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
-} from '../../utils';
-import { ScrollbarHelper } from '../../services';
-import { mouseEvent, keyboardEvent } from '../../events';
+import { allColumnsByPinArr, columnGroupWidths, columnsByPin, Keys, translateXY } from '../../utils';
+import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 
 export class DataTableBodyRowComponent implements DoCheck {
 

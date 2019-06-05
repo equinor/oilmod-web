@@ -85,7 +85,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
     return `${userDefinedClass} sto-mdl-table__body__row`;
   };
 
-  constructor(private differs: KeyValueDiffers,) {
+  constructor(private differs: KeyValueDiffers) {
     this.rowDiffer = differs.find({}).create();
   }
 

@@ -1,8 +1,6 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
   ContentChild,
   ContentChildren,
   DoCheck,
@@ -16,19 +14,11 @@ import {
   OnInit,
   Output,
   QueryList,
-  ViewChild,
-  ViewEncapsulation
+  ViewChild
 } from '@angular/core';
 
-import {
-  adjustColumnWidths,
-  forceFillColumnWidths,
-  setColumnDefaults,
-  sortRows,
-  throttleable,
-  translateTemplates
-} from '../utils';
-import { ScrollbarHelper } from '../services';
+import { adjustColumnWidths, forceFillColumnWidths, setColumnDefaults, sortRows, throttleable, translateTemplates } from '../utils';
+import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import { ColumnMode, ContextmenuType, SelectionType, SortType, TableColumn } from '../types';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DataTableColumnDirective } from './columns/column.directive';

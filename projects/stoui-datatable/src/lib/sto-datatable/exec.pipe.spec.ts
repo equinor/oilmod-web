@@ -1,6 +1,6 @@
 import { ExecPipe } from './exec.pipe';
 
-fdescribe('ExecPipe', () => {
+describe('ExecPipe', () => {
   let pipe: ExecPipe;
   beforeEach(() => pipe = new ExecPipe());
 

@@ -36,32 +36,32 @@ import { TableColumn } from '../../vendor/ngx-datatable/types/table-column.type'
 @Component({
   selector: 'sto-complex-datatable',
   template: `
-	  <div
-			  visibilityObserver
-			  (visible)="recalculate()">
-		  <sto-complex-header
-				  *ngIf="headerHeight"
-				  [sorts]="sorts"
-				  [sortType]="sortType"
-				  [scrollbarH]="scrollbarH"
-				  [innerWidth]="innerWidth"
-				  [offsetX]="offsetX"
-				  [dealsWithGroup]="groupedRows"
-				  [columns]="_internalColumns"
-				  [columnGroups]="_internalColumnGroups"
-				  [headerHeight]="headerHeight"
-				  [reorderable]="reorderable"
-				  [sortAscendingIcon]="cssClasses.sortAscending"
-				  [sortDescendingIcon]="cssClasses.sortDescending"
-				  [allRowsSelected]="allRowsSelected"
-				  [selectionType]="selectionType"
-				  (sort)="onColumnSort($event)"
-				  (resize)="onColumnResize($event)"
-				  (reorder)="onColumnReorder($event)"
-				  (select)="onHeaderSelect($event)"
-				  (columnContextmenu)="onColumnContextmenu($event)">
-		  </sto-complex-header>
-		  <sto-complex-body
+    <div
+      visibilityObserver
+      (visible)="recalculate()">
+      <sto-complex-header
+        *ngIf="headerHeight"
+        [sorts]="sorts"
+        [sortType]="sortType"
+        [scrollbarH]="scrollbarH"
+        [innerWidth]="innerWidth"
+        [offsetX]="offsetX"
+        [dealsWithGroup]="groupedRows"
+        [columns]="_internalColumns"
+        [columnGroups]="_internalColumnGroups"
+        [headerHeight]="headerHeight"
+        [reorderable]="reorderable"
+        [sortAscendingIcon]="cssClasses.sortAscending"
+        [sortDescendingIcon]="cssClasses.sortDescending"
+        [allRowsSelected]="allRowsSelected"
+        [selectionType]="selectionType"
+        (sort)="onColumnSort($event)"
+        (resize)="onColumnResize($event)"
+        (reorder)="onColumnReorder($event)"
+        (select)="onHeaderSelect($event)"
+        (columnContextmenu)="onColumnContextmenu($event)">
+      </sto-complex-header>
+      <sto-complex-body
         [groupRowsBy]="groupRowsBy"
         [groupedRows]="groupedRows"
         [selectByDoubleClick]="selectByDoubleClick"
@@ -101,29 +101,29 @@ import { TableColumn } from '../../vendor/ngx-datatable/types/table-column.type'
         [summaryRowData]="_internalSummaryRowData"
         [summaryColumns]="_internalSummaryColumns"
         [fixedFooter]="fixedFooter"
-		  >
-		  </sto-complex-body>
-		  <datatable-footer
-				  *ngIf="footerHeight"
-				  [rowCount]="rowCount"
-				  [pageSize]="pageSize"
-				  [offset]="offset"
-				  [footerHeight]="footerHeight"
-				  [footerTemplate]="footer"
-				  [totalMessage]="messages.totalMessage"
-				  [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
-				  [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
-				  [pagerPreviousIcon]="cssClasses.pagerPrevious"
-				  [selectedCount]="selected.length"
-				  [selectedMessage]="!!selectionType && messages.selectedMessage"
-				  [pagerNextIcon]="cssClasses.pagerNext"
-				  (page)="onFooterPage($event)">
-		  </datatable-footer>
-	  </div>
+      >
+      </sto-complex-body>
+      <datatable-footer
+        *ngIf="footerHeight"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize"
+        [offset]="offset"
+        [footerHeight]="footerHeight"
+        [footerTemplate]="footer"
+        [totalMessage]="messages.totalMessage"
+        [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+        [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+        [pagerPreviousIcon]="cssClasses.pagerPrevious"
+        [selectedCount]="selected.length"
+        [selectedMessage]="!!selectionType && messages.selectedMessage"
+        [pagerNextIcon]="cssClasses.pagerNext"
+        (page)="onFooterPage($event)">
+      </datatable-footer>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['../../vendor/ngx-datatable/components/datatable.component.scss', '../_ngx-datatable.scss', '../_ngx-datatable-overview.scss'],
+  styleUrls: [ '../../vendor/ngx-datatable/components/datatable.component.scss', '../_ngx-datatable.scss', '../_ngx-datatable-overview.scss' ],
   host: {
     class: 'ngx-datatable'
   }
@@ -143,18 +143,18 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   @Input() selectByDoubleClick: boolean;
   @Input() fixedFooter: boolean;
   private _height: number;
-    @Input() set height(value) {
+  @Input() set height(value) {
 
-    if (value === undefined) {
+    if ( value === undefined ) {
       return;
     }
     this._height = parseInt(value, 10);
-    if (this.scrollbarV) {
+    if ( this.scrollbarV ) {
       let height = parseInt(value, 10);
-      if (this.headerHeight) {
+      if ( this.headerHeight ) {
         height = height - this.headerHeight;
       }
-      if (this.footerHeight) {
+      if ( this.footerHeight ) {
         height = height - this.footerHeight;
       }
       this.bodyHeight = height;
@@ -163,15 +163,16 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.recalculatePages();
 
   }
+
   private previousLength: number;
 
 
   @ContentChildren(DataTableColumnDirective)
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
-    if (val) {
+    if ( val ) {
       // only set this if results were brought back
       const arr = val.toArray();
-      if (arr.length && arr.length !== this.previousLength) {
+      if ( arr.length && arr.length !== this.previousLength ) {
         // translate them to normal objects
         this._internalColumns = translateTemplates(arr);
         setColumnDefaults(this._internalColumns);
@@ -181,17 +182,18 @@ export class StoComplexDatatableComponent extends DatatableComponent {
       this.previousLength = arr.length;
     }
   }
+
   /**
    * Columns to be displayed.
    */
   @Input() set columns(val: TableColumn[]) {
 
-    if (val) {
-      this._internalColumns = [...val];
+    if ( val ) {
+      this._internalColumns = [ ...val ];
       setColumnDefaults(this._internalColumns);
       this.recalculateColumns();
       this.resizeColumnGroups();
-      if (this._internalSummaryColumns) {
+      if ( this._internalSummaryColumns ) {
         this.linkColumns(this._internalSummaryColumns, this._internalColumns);
       }
     }
@@ -207,13 +209,12 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   }
 
 
-
   //data-bind to the host element's style property
   @HostBinding('style.backgroundColor') color = 'white'; //default color
 
   @Input() set summaryRow(val: any) {
 
-    if (val) {
+    if ( val ) {
       this.linkColumns(val.columns, this._internalColumns);
       this._internalSummaryColumns = val.columns;
       this._internalSummaryRowData = val.data;
@@ -221,10 +222,10 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   }
 
   private linkColumns(summaryColumns: any[], columns: any) {
-    for (let ii = 0; ii < summaryColumns.length; ii++) {
-      const summaryColumn = summaryColumns[ii];
-      if (columns) {
-        if (summaryColumn.props) {
+    for ( let ii = 0; ii < summaryColumns.length; ii++ ) {
+      const summaryColumn = summaryColumns[ ii ];
+      if ( columns ) {
+        if ( summaryColumn.props ) {
           summaryColumn.columns = columns.filter(column => summaryColumn.props.indexOf(column.prop) > -1);
         } else {
           summaryColumn.columns = columns.filter(column => summaryColumn.prop === column.prop);
@@ -234,14 +235,14 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.setSummaryRowCellWidth(summaryColumns);
   }
 
-  private nestedValue(location: string, object: Object): number|null {
-    if (object instanceof Object) {
+  private nestedValue(location: string, object: Object): number | null {
+    if ( object instanceof Object ) {
       const keys = location.split('.'); // Split object keys by .
       let val: number | Object = Object.assign({}, object);
       let i = 0;
-      while (i < keys.length && !!val) {
-        const key = keys[i];
-        val = val[key];
+      while ( i < keys.length && !!val ) {
+        const key = keys[ i ];
+        val = val[ key ];
         i++;
       }
       return typeof val === 'number' ? parseFloat(val.toFixed(10)) : 0;
@@ -258,16 +259,14 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   }
 
 
-
-
   @ContentChildren(StoDataTableColumnGroupDirective)
   set columnGroupTemplates(val: QueryList<StoDataTableColumnGroupDirective>) {
     this._columnGroupTemplates = val;
 
-    if (val) {
+    if ( val ) {
       // only set this if results were brought back
       const arr = val.toArray();
-      if (arr.length) {
+      if ( arr.length ) {
         // translate them to normal objects
         this._internalColumnGroups = translateTemplates(arr);
 
@@ -280,25 +279,25 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.recalculateDims();
     this.recalculateColumns();
     this.resizeColumnGroups();
-    if (this._internalSummaryColumns) {
+    if ( this._internalSummaryColumns ) {
       this.linkColumns(this._internalSummaryColumns, this._internalColumns);
     }
 
-}
+  }
 
   recalculateDims(): void {
     const dims = this.element.getBoundingClientRect();
     this.innerWidth = Math.floor(dims.width);
 
-    if (this.scrollbarV) {
+    if ( this.scrollbarV ) {
       let height = dims.height;
-      if (this._height) {
+      if ( this._height ) {
         height = this._height;
       }
-      if (this.headerHeight) {
+      if ( this.headerHeight ) {
         height = height - this.headerHeight;
       }
-      if (this.footerHeight) {
+      if ( this.footerHeight ) {
         height = height - this.footerHeight;
       }
       this.bodyHeight = height;
@@ -307,27 +306,27 @@ export class StoComplexDatatableComponent extends DatatableComponent {
     this.recalculatePages();
   }
 
-  onColumnResize({column, newValue}: any): void {
-    super.onColumnResize({column, newValue});
+  onColumnResize({ column, newValue }: any): void {
+    super.onColumnResize({ column, newValue });
     this.resizeSummaryColumns(column, newValue);
     this.resizeColumnGroups();
   }
 
   private resizeColumnGroups() {
-    if (!this._internalColumnGroups) {
+    if ( !this._internalColumnGroups ) {
       return;
     }
     this._internalColumnGroups = this._internalColumnGroups.map(c => c);
   }
 
   private resizeSummaryColumns(column: any, newValue: any) {
-    if (!this._internalSummaryColumns) {
+    if ( !this._internalSummaryColumns ) {
       return;
     }
     const cols = this._internalSummaryColumns.map((c, i) => {
-      c = {...c};
+      c = { ...c };
 
-      if (c.$$id === column.$$id) {
+      if ( c.$$id === column.$$id ) {
         c.width = newValue;
 
         // set this so we can force the column
