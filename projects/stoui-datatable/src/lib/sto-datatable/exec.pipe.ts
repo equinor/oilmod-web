@@ -4,23 +4,15 @@ import { Column } from './columns';
 @Pipe({
   name: 'exec'
 })
-export class ExecPipe<T = any> implements PipeTransform, Exec<T> {
+export class ExecPipe<T = any, R = any> implements PipeTransform/*, Exec<T>*/ {
 
-  transform(func: Function | string, value?: any, column?: Column, row?: T): string {
+  transform(func: Function | R, value?: any, column?: Column, row?: T): R {
     if ( func && typeof func === 'function' ) {
-      return func(value, row, column);
+      return ( <Function>func )(value, row, column);
     } else if ( typeof func === 'string' ) {
       return func;
     }
-    return '';
+    return '' as any;
   }
 
-}
-
-interface Exec<T = any> {
-  transform(func: string): string;
-
-  transform(func: Function | string, value: any, column: Column, row: T): string;
-
-  transform(func: Function | string, value: T | Column): string;
 }

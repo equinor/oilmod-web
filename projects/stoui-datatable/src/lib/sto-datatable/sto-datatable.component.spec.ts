@@ -7,9 +7,9 @@ import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrollin
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { ExecPipe } from './exec.pipe';
 import { StoDatatableBodyRowComponent } from './sto-datatable-body/sto-datatable-body-row/sto-datatable-body-row.component';
-import { MaterialModule } from '../../../../../globals/material.module';
 import { columns, rows } from '../../testing/utils';
 import { SelectionModes } from './selection-modes';
+import { MaterialModule } from '@testing/material.module';
 
 let comp: StoDatatableComponent;
 let fixture: ComponentFixture<StoDatatableComponent>;
