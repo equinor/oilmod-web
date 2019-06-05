@@ -20,7 +20,7 @@ Label above the input field.
 ```
 ##### displayFn
  Display function. Takes in the item, and returns a key. Example:  
-```javascript
+```typescript
 public displayQualityName(quality: Quality) {
   return quality ? quality.material : 'No Regrade';
 }

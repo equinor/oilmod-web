@@ -37,6 +37,7 @@ import {
   MatTreeModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -114,6 +115,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTreeModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class MaterialModule {
