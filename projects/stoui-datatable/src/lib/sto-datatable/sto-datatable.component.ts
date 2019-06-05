@@ -7,6 +7,7 @@ import {
   EventEmitter,
   HostBinding,
   Input,
+  OnDestroy,
   Output,
   TemplateRef,
   ViewChild,
@@ -16,7 +17,7 @@ import { Column } from './columns';
 import { HeaderContextMenu, RowActivation, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { fromEvent, Observable, of } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 import { SelectionModes } from './selection-modes';
 
 declare var ResizeObserver: any;
@@ -28,7 +29,7 @@ declare var ResizeObserver: any;
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StoDatatableComponent<T = any> implements AfterViewInit {
+export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy {
   @ViewChild(StoDatatableBodyComponent)
   body: StoDatatableBodyComponent;
   @Input()
@@ -135,6 +136,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
   trackBy = (item: T, index: number) => {
     return index;
   };
+
   rowClick(row: T, index: number, event: MouseEvent) {
     this.selected = row;
     this.select.emit({ row, index, event });
@@ -177,6 +179,12 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
     }
   }
 
+  ngOnDestroy(): void {
+    if ( this.resizeTimeout ) {
+      clearTimeout(this.resizeTimeout);
+    }
+  }
+
   private scrollToIndex(index: number, behaviour: ScrollBehavior) {
     if ( this.body.scroller ) {
       this.body.scroller.scrollToIndex(index, behaviour);
@@ -201,6 +209,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit {
     this.height$ = fromEvent(window, 'resize')
       .pipe(
         startWith(null),
+        debounceTime(20), // ~1 animation frame
         map(() => el.getBoundingClientRect()),
         map(rect => rect.top),
         map(top => window.innerHeight - top - 16 - this.autoSizeOffset),

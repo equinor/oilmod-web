@@ -59,6 +59,10 @@ export class StoDatatableBodyRowComponent<T = any> implements DoCheck {
       cls += userClass;
     }
 
+    if ( this.compressedView ) {
+      cls += ' sto-mdl-table__body__row--compressed';
+    }
+
     return cls;
   }
 
