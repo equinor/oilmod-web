@@ -28,6 +28,7 @@
     "core-js": "^2.5.4",
     "date-fns": "^1.29.0",
     "highlight.js": "^9.13.1",
+    "node-sass": "^4.11.0",
     "rxjs": "^6.3.3",
     "typeface-roboto": "^0.0.43",
     "zone.js": "~0.8.26"
@@ -56,6 +57,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-scss-preprocessor": "^4.0.0",
     "ng-packagr": "^4.1.1",
     "node-sass-tilde-importer": "^1.0.2",
     "nouislider": "9.1.0",

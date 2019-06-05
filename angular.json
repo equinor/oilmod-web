@@ -150,7 +150,17 @@
           "options": {
             "main": "projects/stoui-datatable/src/test.ts",
             "tsConfig": "projects/stoui-datatable/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-datatable/karma.conf.js"
+            "karmaConfig": "projects/stoui-datatable/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -185,7 +195,17 @@
           "options": {
             "main": "projects/stoui-core/src/test.ts",
             "tsConfig": "projects/stoui-core/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-core/karma.conf.js"
+            "karmaConfig": "projects/stoui-core/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -220,7 +240,17 @@
           "options": {
             "main": "projects/stoui-form/src/test.ts",
             "tsConfig": "projects/stoui-form/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-form/karma.conf.js"
+            "karmaConfig": "projects/stoui-form/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -256,8 +286,13 @@
             "main": "projects/stoui-common/src/test.ts",
             "tsConfig": "projects/stoui-common/tsconfig.spec.json",
             "karmaConfig": "projects/stoui-common/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": [
+                "../../dist",
+                "../dist",
                 "./dist"
               ]
             }
@@ -295,7 +330,17 @@
           "options": {
             "main": "projects/stoui-drawer/src/test.ts",
             "tsConfig": "projects/stoui-drawer/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-drawer/karma.conf.js"
+            "karmaConfig": "projects/stoui-drawer/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -330,7 +375,17 @@
           "options": {
             "main": "projects/stoui-error-handler/src/test.ts",
             "tsConfig": "projects/stoui-error-handler/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-error-handler/karma.conf.js"
+            "karmaConfig": "projects/stoui-error-handler/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -365,7 +420,17 @@
           "options": {
             "main": "projects/stoui-quick-view/src/test.ts",
             "tsConfig": "projects/stoui-quick-view/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-quick-view/karma.conf.js"
+            "karmaConfig": "projects/stoui-quick-view/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -400,7 +465,17 @@
           "options": {
             "main": "projects/stoui-unsaved-changes/src/test.ts",
             "tsConfig": "projects/stoui-unsaved-changes/tsconfig.spec.json",
-            "karmaConfig": "projects/stoui-unsaved-changes/karma.conf.js"
+            "karmaConfig": "projects/stoui-unsaved-changes/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "../../dist",
+                "../dist",
+                "./dist"
+              ]
+            }
           }
         },
         "lint": {
@@ -425,7 +500,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss",
-      "spec": false
+      "spec": true
     }
   }
 }

@@ -65,6 +65,12 @@
       ],
       "@ngx-stoui/unsaved-changes/*": [
         "dist/stoui-unsaved-changes/*"
+      ],
+      "@testing": [
+        "testing"
+      ],
+      "@testing/*": [
+        "testing/*"
       ]
     }
   }
