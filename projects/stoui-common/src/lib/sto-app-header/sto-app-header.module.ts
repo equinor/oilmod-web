@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoAppHeaderComponent } from './sto-app-header.component';
-import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.component';
+import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.module';
 
 @NgModule({
   imports: [

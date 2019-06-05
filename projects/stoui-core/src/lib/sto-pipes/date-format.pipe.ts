@@ -30,7 +30,7 @@ export class DateFormatPipe implements PipeTransform {
       case 'datetimezone':
         return formatDate(value, 'MMM D, YYYY, HH:mm:ss (UTCZ)');
       case 'datetime-long':
-        return formatDate(value, 'dddd MMM, YYYY, HH:mm');
+        return formatDate(value, 'dddd MMM DD, YYYY, HH:mm');
       case 'datetime-short':
         return formatDate(value, 'YYYY-MM-DD, HH:mm');
       default:

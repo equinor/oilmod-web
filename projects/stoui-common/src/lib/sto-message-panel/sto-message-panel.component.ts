@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
 /**
  * Message panel to display inline info boxes.
@@ -16,7 +16,8 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 @Component({
   selector: 'sto-message-panel',
   templateUrl: './sto-message-panel.component.html',
-  styleUrls: [ './sto-message-panel.component.scss' ]
+  styleUrls: [ './sto-message-panel.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StoMessagePanelComponent {
 
@@ -24,7 +25,22 @@ export class StoMessagePanelComponent {
    * Binds the severity-input to the host elements class
    * TODO: We need to refactor this when possible. Currently the usage disallows class="other-class"
    */
-  @HostBinding( 'class' ) @Input() severity: string;
+  @HostBinding('class.warning')
+  get warning() {
+    return this.severity === 'warning';
+  }
+
+  @HostBinding('class.info')
+  get info() {
+    return this.severity === 'info';
+  }
+
+  @HostBinding('class.error')
+  get error() {
+    return this.severity === 'error';
+  }
+
+  @Input() severity: 'info' | 'warning' | 'error' = 'info';
   /**
    * Emits an event on (dismissed) when the user clicks the dismiss icon
    */

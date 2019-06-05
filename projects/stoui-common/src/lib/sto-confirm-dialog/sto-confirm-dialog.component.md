@@ -6,7 +6,10 @@
  
  
 ```javascript
-constructor(private confirmService: ConfirmService) }
+class MyComp {
+  constructor(private confirmService: ConfirmService) {}
+  // component logic
+}
 ```
 Here the ConfirmService is injected to a component through the constructor.
 

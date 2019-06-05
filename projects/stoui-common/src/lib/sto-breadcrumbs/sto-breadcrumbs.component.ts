@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material';
+import { Component, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 /**
  * Breadcrumbs is the navigation scheme that reveals the user's location on the web application.
@@ -12,7 +10,7 @@ import { MatIconModule } from '@angular/material';
   templateUrl: './sto-breadcrumbs.component.html',
   styleUrls: ['./sto-breadcrumbs.component.scss']
 })
-export class StoBreadcrumbsComponent {
+export class StoBreadcrumbsComponent implements OnDestroy {
 
  /**
   * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
@@ -83,12 +81,4 @@ export class StoBreadcrumbsComponent {
   constructor(private router: Router) {
 
   }
-}
-
-@NgModule({
-  imports: [CommonModule, RouterModule, MatIconModule],
-  exports: [StoBreadcrumbsComponent],
-  declarations: [StoBreadcrumbsComponent]
-})
-export class StoBreadcrumbsModule {
 }

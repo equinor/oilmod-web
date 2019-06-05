@@ -1,7 +1,5 @@
-import { Component, Inject, Injectable, NgModule } from '@angular/core';
-import { MAT_DIALOG_DATA, MatButtonModule, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material';
-import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 /**
  * A confirm dialog that emits an observable.
@@ -14,54 +12,17 @@ import { Observable } from 'rxjs';
 		    <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions>
-      <button color="primary" title="Cancel (esc)" mat-button [mat-dialog-close]="false">Cancel</button>
-      <button color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
+      <button #cancel color="primary" title="Cancel (esc)" mat-button [mat-dialog-close]="false">Cancel</button>
+      <button #ok color="primary" mat-button [mat-dialog-close]="true">{{ data.confirmText }}</button>
      </div>
   `,
   styleUrls: ['sto-confirm-dialog.component.scss']
 })
 export class ConfirmComponent {
+  @ViewChild('ok')
+  ok: ElementRef<HTMLButtonElement>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-              private dialogRef: MatDialogRef<ConfirmComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ConfirmComponent>) {
   }
 
-}
-
-
-@Injectable()
-export class ConfirmService {
-
-  constructor(private dialog: MatDialog) {
-  }
-
-  confirm(message: string, title = 'Confirm', confirmText = 'OK'): Observable<any> {
-    const dialogRef = this.dialog.open(ConfirmComponent, {
-      width: '300px',
-      panelClass: 'sto-dialog',
-      data: {message, title, confirmText}
-    });
-
-    return dialogRef.afterClosed();
-  }
-
-}
-
-@NgModule({
-  declarations: [
-    ConfirmComponent
-  ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule
-  ],
-  providers: [
-    ConfirmService
-  ],
-  entryComponents: [
-    ConfirmComponent
-  ]
-})
-export class ConfirmModule {
 }

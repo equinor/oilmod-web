@@ -24,7 +24,7 @@ export class StoSelectTextOnFocusDirective implements OnInit, OnDestroy {
   @HostListener('dblclick')
   onFocus() {
     if (this._hasSelectTextOnFocusEnabled && this._el.readOnly === false) {
-      this._el.setSelectionRange(0, this._el.value.length);
+      this._el.select();
     }
 
   }

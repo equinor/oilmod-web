@@ -103,6 +103,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
           const hasTableButtons = el2.children[0].children.length > 0;
 
           this.hasSeperator = hasActionButtons && hasTableButtons;
+          console.log('separator', this.hasSeperator);
           this.cdr.detectChanges();
         }
       }

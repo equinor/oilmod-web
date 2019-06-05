@@ -1,7 +1,4 @@
-import {
-  Component, Input, OnInit, ViewEncapsulation, HostBinding
-} from '@angular/core';
-import { Renderer2, OnDestroy} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 
 /**
  * The action footer is a fixed footer at the bottom of the viewport.
@@ -15,7 +12,8 @@ import { Renderer2, OnDestroy} from '@angular/core';
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'sto-action-footer'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StoActionFooterComponent implements OnInit, OnDestroy  {
 
