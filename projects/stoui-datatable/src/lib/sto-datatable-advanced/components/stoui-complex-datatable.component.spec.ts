@@ -18,7 +18,7 @@ let page: Page;
 class WrapperComponent {
 }
 
-fdescribe('StoComplexDatatableComponent', () => {
+describe('StoComplexDatatableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -1,9 +1,15 @@
 <div class="sto-mdl-table"
      [style.height.px]="height$ | async">
   <div class="sto-mdl-table__header"
+       #header
+       [style.overflow-y]="'hidden'"
+       [style.overflowX]="'hidden'"
        *ngIf="!responsive || (responsive && !smallScreen)">
     <div class="sto-mdl-table__header__row"
          [style.height]="headerHeight + 'px'"
+         [style.min-width]="width"
+         [style.transform]="scrollLeft"
+         [style.overflow-y]="'hidden'"
          [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
       <div class="sto-mdl-table__header__row__cell"
            (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
@@ -38,6 +44,7 @@
                       [rows]="rows"
                       [rowClass]="rowClass"
                       [selectionMode]="selectionMode"
+                      [scrollbarH]="scrollbarH"
                       [trackBy]="trackBy"
                       [virtualScroll]="virtualScroll"
                       [height]="bodyHeight"
@@ -46,6 +53,7 @@
                       (activate)="rowActivate.emit($event)"
                       (rowSelected)="select.emit($event)"
                       [columns]="columns"
+                      (scrollHeader)="setHeaderScroll($event)"
                       [responsive]="responsive"
                       [responsiveView]="responsiveView"
                       [smallView]="smallScreen"

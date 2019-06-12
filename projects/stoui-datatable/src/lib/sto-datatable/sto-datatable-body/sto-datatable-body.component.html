@@ -1,9 +1,12 @@
 <cdk-virtual-scroll-viewport [itemSize]="(!smallView || !responsive) ? rowHeight : 80"
                              *ngIf="virtualScroll; else noScroll"
                              [style.height]="(height || 500) + 'px'"
+                             (scroll)="scrollHeader.emit($event)"
                              [class.sto-mdl-table__body--selectable]="selectable"
+                             [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
                              class="sto-mdl-table__body">
   <sto-datatable-body-row *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; trackBy: trackBy"
+                          [style.min-width]="width"
                           [tabindex]="0"
                           [columns]="columns"
                           [row]="row"

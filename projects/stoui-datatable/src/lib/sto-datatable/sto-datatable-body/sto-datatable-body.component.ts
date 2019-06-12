@@ -44,6 +44,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   @Input()
   virtualScroll: boolean;
   @Input()
+  scrollbarH: boolean;
+  @Input()
   rowClass: Function;
   @Input()
   selectionMode: SelectionModes;
@@ -53,8 +55,18 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   rowContextMenu = new EventEmitter<RowContextMenu<T>>();
   @Output()
   activate = new EventEmitter<RowActivation<T>>();
+  @Output()
+  scrollHeader = new EventEmitter<any>();
   @ViewChild(CdkVirtualScrollViewport)
   scroller: CdkVirtualScrollViewport;
+
+  get width() {
+    if ( this.scrollbarH ) {
+      const width = this.columns.map(col => col.flexBasis || 80).reduce((a, b) => a + b, 0);
+      return `${width}px`;
+    }
+    return 'auto';
+  }
 
   private destroyed$ = new Subject<boolean>();
   private rowDiffer: KeyValueDiffer<T, T>;

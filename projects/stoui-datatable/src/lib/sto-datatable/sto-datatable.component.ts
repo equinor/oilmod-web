@@ -35,6 +35,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Input()
   rowHeight = 36;
   @Input()
+  scrollbarH: boolean;
+  @Input()
   emptyMessage = `No records in set`;
   @Input()
   headerHeight = 24;
@@ -132,6 +134,18 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   rowActivate = new EventEmitter<RowActivation<T>>();
 
   private resizeTimeout;
+
+  get width() {
+    if ( this.scrollbarH && this.columns ) {
+      const widthOffset = this.bodyHeight && ( this.rows || [] ).length * this.rowHeight > this.bodyHeight ? 12 : 0;
+      const width = this.columns.map(col => col.flexBasis || 80).reduce((a, b) => a + b, 0);
+      return `${width + widthOffset}px`;
+    }
+    return 'auto';
+  }
+
+  public scrollLeft = 'translate3d(0px, 0px, 0px)';
+  public scrollNum: number;
   @Input()
   trackBy = (item: T, index: number) => {
     return index;
@@ -215,5 +229,12 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
         map(top => window.innerHeight - top - 16 - this.autoSizeOffset),
         tap(height => this.height = height)
       );
+  }
+
+  setHeaderScroll(event: any) {
+    const left = event.target.scrollLeft;
+    const str = `translate3d(-${left}px, 0px, 0px)`;
+    this.scrollLeft = str;
+    this.cdr.detectChanges();
   }
 }

@@ -2,11 +2,13 @@
   <sto-filter-panel [expandable]="true"
                     (toggled)="dispatch()">
     <sto-filter-title>Invoices</sto-filter-title>
+    <button (click)="addCol()">Add col</button>
   </sto-filter-panel>
   <mat-card style="padding: 0">
     <sto-datatable #tbl
                    [virtualScroll]="true"
                    [autoSizeOffset]="60"
+                   [scrollbarH]="true"
                    [selectionMode]="'dblclick'"
                    (rowActivate)="onRowActivate($event)"
                    [selected]="selected"

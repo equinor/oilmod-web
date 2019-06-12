@@ -80,12 +80,13 @@ export class TableComponent implements OnInit, AfterViewInit {
           name: 'Invoice#',
           cellTemplate: this.tmpl,
           headerTemplate: this.hdrTmpl,
-          flexBasis: 80,
+          flexBasis: 200,
           flexShrink: 1,
-          flexGrow: 0
+          flexGrow: 1
         },
         {
           prop: 'voyageNo',
+          flexBasis: 200,
           name: 'Voyage#',
           cellTemplate: this.ltmpl,
           headerClass: 'aclass',
@@ -95,17 +96,20 @@ export class TableComponent implements OnInit, AfterViewInit {
         },
         {
           prop: 'vesselName',
+          flexBasis: 200,
           name: 'Vessel',
           headerClass: 'bclass',
-          flexGrow: 10
+          flexGrow: 1
         },
         {
           prop: 'allocated',
+          flexBasis: 200,
           name: 'Allocated',
           headerClass: 'aclass'
         },
         {
           prop: 'total',
+          flexBasis: 200,
           name: 'Total',
           headerClass: 'aclass',
           cellClass: 'a-cell-class'
@@ -136,6 +140,17 @@ export class TableComponent implements OnInit, AfterViewInit {
               this.cdr.detectChanges();
             });
         }, 100);*/
+  }
+
+  addCol() {
+    this.cols = [
+      ...this.cols,
+      {
+        prop: '',
+        name: 'Stuff',
+        flexBasis: parseInt(String(Math.random() * 100), 10)
+      }
+    ];
   }
 
   onSelect(rowSelection: RowSelection<any>) {

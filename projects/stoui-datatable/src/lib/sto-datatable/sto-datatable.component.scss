@@ -48,6 +48,14 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
     }
   }
 
+  &__body {
+    &--scrollbar-h {
+      .cdk-virtual-scroll-content-wrapper {
+        width: fit-content;
+      }
+    }
+  }
+
   &__body, &__footer {
     &--selectable &__row {
       cursor: pointer;
