@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   Input,
@@ -17,12 +18,16 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Key } from '@ngx-stoui/core';
 import { SelectionModes } from '../selection-modes';
 
+declare var ResizeObserver: any;
+
 @Component({
   selector: 'sto-datatable-body',
   templateUrl: './sto-datatable-body.component.html',
   styleUrls: [ './sto-datatable-body.component.scss' ]
 })
 export class StoDatatableBodyComponent<T = any> implements OnDestroy {
+  @ViewChild('scrollViewport', { read: ElementRef })
+  scrollElement: ElementRef<HTMLElement>;
   @Input()
   responsive: boolean;
   @Input()
@@ -49,6 +54,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   rowClass: Function;
   @Input()
   selectionMode: SelectionModes;
+  @Input()
+  hasFooter: boolean;
   @Output()
   rowSelected = new EventEmitter<RowSelection<T>>();
   @Output()
@@ -71,6 +78,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   private destroyed$ = new Subject<boolean>();
   private rowDiffer: KeyValueDiffer<T, T>;
   private timeout;
+  private resizeObserver: any;
+  public horizontalScrollActive: boolean;
 
   @HostListener('window:resize', [ '$event' ])
   onresize(event) {
@@ -104,6 +113,39 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
+    this.resizeObserver.disconnect();
+  }
+
+  ngAfterViewInit() {
+    const elRef = this.scroller.elementRef.nativeElement;
+    const cb = (entries) => {
+      if ( !this.hasFooter ) {
+        return;
+      }
+      for ( const entry of entries ) {
+        const t = entry.target as HTMLElement;
+        const el = t.querySelector('.cdk-virtual-scroll-spacer') as HTMLDivElement;
+        const currentScale = el.style.transform;
+        const notScaled = this.rows.length * this.rowHeight;
+        if ( t.scrollWidth + 14 > t.offsetWidth ) {
+          this.horizontalScrollActive = true;
+          const strScale = /\d+/.exec(currentScale || '');
+          const numericScale = Number(strScale[ 0 ]);
+          if ( numericScale === notScaled ) {
+            const newScaleValue = notScaled + this.rowHeight;
+            el.style.transform = `scaleY(${newScaleValue}`;
+          }
+        } else {
+          this.horizontalScrollActive = false;
+          const strScale = /\d+/.exec(currentScale || '');
+          const numericScale = Number(strScale[ 0 ]);
+          if ( numericScale !== notScaled ) {
+            el.style.transform = `scaleY(${notScaled}`;
+          }
+        }
+      }
+    };
+    this.resizeObserver = new ResizeObserver(cb).observe(elRef);
   }
 
   selectRow(event: KeyboardEvent | MouseEvent, activationData: RowSelection<T>) {

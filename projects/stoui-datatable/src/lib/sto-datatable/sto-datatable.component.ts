@@ -67,7 +67,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     const hasHeader = !this.responsive || ( this.responsive && !this.smallScreen );
     const hasFooter = this.footerRow && ( !this.responsive || ( this.responsive && !this.smallScreen ) );
     const headerOffset = hasHeader ? this.headerHeight : 0;
-    const footerOffset = hasFooter ? this.rowHeight : 0;
+    const footerOffset = hasFooter && !this.body.horizontalScrollActive ? this.rowHeight : 0;
     return this.height - headerOffset - footerOffset;
   }
 

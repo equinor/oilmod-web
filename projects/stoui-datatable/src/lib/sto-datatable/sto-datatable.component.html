@@ -1,7 +1,6 @@
 <div class="sto-mdl-table"
      [style.height.px]="height$ | async">
   <div class="sto-mdl-table__header"
-       #header
        [style.overflow-y]="'hidden'"
        [style.overflowX]="'hidden'"
        *ngIf="!responsive || (responsive && !smallScreen)">
@@ -57,12 +56,21 @@
                       [responsive]="responsive"
                       [responsiveView]="responsiveView"
                       [smallView]="smallScreen"
+                      [hasFooter]="!!footerRow"
                       [selected]="selected"></sto-datatable-body>
   <div class="sto-mdl-table__footer"
-       *ngIf="footerRow && (!responsive || (responsive && !smallScreen))"
-       [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
+       [style.overflowY]="'hidden'"
+       [style.overflowX]="'hidden'"
+       [style.background]="'white'"
+       style="width: calc(100% - 14px)"
+       [style.transform]="body.horizontalScrollActive ? 'translateY( -' + (rowHeight + 14) + 'px)' : ''"
+       *ngIf="footerRow && (!responsive || (responsive && !smallScreen))">
     <div class="sto-mdl-table__footer__row"
+         [class.sto-mdl-table__row--scroll-offset]="(body.horizontalScrollActive) && !!bodyHeight && rows?.length * rowHeight > bodyHeight"
          *ngFor="let row of footerRow; let i = index"
+         [style.min-width]="width"
+         [style.transform]="scrollLeft"
+         [style.overflowY]="'hidden'"
          [style.height]="rowHeight + 'px'">
       <div class="sto-mdl-table__footer__row__cell"
            [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
