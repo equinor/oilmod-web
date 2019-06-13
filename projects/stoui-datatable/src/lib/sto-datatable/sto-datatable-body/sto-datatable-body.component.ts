@@ -130,6 +130,9 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
         if ( t.scrollWidth + 14 > t.offsetWidth ) {
           this.horizontalScrollActive = true;
           const strScale = /\d+/.exec(currentScale || '');
+          if ( !strScale ) {
+            return;
+          }
           const numericScale = Number(strScale[ 0 ]);
           if ( numericScale === notScaled ) {
             const newScaleValue = notScaled + this.rowHeight;
