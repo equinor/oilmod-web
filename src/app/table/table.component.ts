@@ -62,7 +62,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     //   ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data
     // ];
     // this.rows = JSON.parse(JSON.stringify(rows));
-    this.rows = [ ...data ];
+    this.rows = [ ...data ];//.slice(0, 5);
     const allocated = this.rows.map(r => r.allocated).reduce((a, b) => a + b, 0);
     const total = this.rows.map(r => r.total).reduce((a, b) => a + b, 0);
     this.footer = {

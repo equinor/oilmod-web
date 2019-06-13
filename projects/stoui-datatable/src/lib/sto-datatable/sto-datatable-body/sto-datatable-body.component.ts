@@ -80,6 +80,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   private timeout;
   private resizeObserver: any;
   public horizontalScrollActive: boolean;
+  public verticalScrollOffset: number = 0;
 
   @HostListener('window:resize', [ '$event' ])
   onresize(event) {
@@ -127,7 +128,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
         const el = t.querySelector('.cdk-virtual-scroll-spacer') as HTMLDivElement;
         const currentScale = el.style.transform;
         const notScaled = this.rows.length * this.rowHeight;
-        if ( t.scrollWidth + 14 > t.offsetWidth ) {
+        this.verticalScrollOffset = t.scrollHeight > t.offsetHeight ? 14 : 0;
+        if ( t.scrollWidth > t.offsetWidth ) {
           this.horizontalScrollActive = true;
           const strScale = /\d+/.exec(currentScale || '');
           if ( !strScale ) {
