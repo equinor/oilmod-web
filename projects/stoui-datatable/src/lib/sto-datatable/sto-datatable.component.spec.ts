@@ -34,7 +34,7 @@ let page: Page;
   `
 })
 class WrapperComponent {
-  @ViewChild('responsiveTmpl')
+  @ViewChild('responsiveTmpl', { static: true })
   responsiveTmpl: TemplateRef<any>;
   public width = 1000;
   public columns: any;

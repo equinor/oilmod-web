@@ -14,7 +14,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { Subject, fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -104,8 +104,8 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() closed = new EventEmitter();
   @Output() opened = new EventEmitter();
 
-  @ViewChild('dialog') dialog: ElementRef;
-  @ViewChild('footer') footer: ElementRef;
+  @ViewChild('dialog', { static: false }) dialog: ElementRef;
+  @ViewChild('footer', { static: false }) footer: ElementRef;
 
   public offsetY: number;
   public isOpened: boolean;

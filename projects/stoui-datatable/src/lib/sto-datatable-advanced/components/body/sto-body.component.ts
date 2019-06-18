@@ -113,7 +113,7 @@ import { StoScrollerComponent } from './sto-scroller.component';
 export class StoDataTableBodyComponent extends DataTableBodyComponent {
 
   _summaryRow: any;
-  @ViewChild(StoScrollerComponent) scroller: StoScrollerComponent;
+  @ViewChild(StoScrollerComponent, { static: false }) scroller: StoScrollerComponent;
   @Input() selectByDoubleClick: boolean;
   @Input() canMoveRows: boolean;
   @Input() moveRowMapper: Function;

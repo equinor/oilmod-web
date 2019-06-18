@@ -6,17 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {
-  DOWN_ARROW,
-  END,
-  ENTER,
-  HOME,
-  LEFT_ARROW,
-  PAGE_DOWN,
-  PAGE_UP,
-  RIGHT_ARROW,
-  UP_ARROW,
-} from '@angular/cdk/keycodes';
+import { DOWN_ARROW, END, ENTER, HOME, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARROW, UP_ARROW, } from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -27,22 +17,22 @@ import {
   Inject,
   Input,
   NgZone,
+  OnChanges,
   OnDestroy,
   Optional,
   Output,
-  ViewEncapsulation,
-  ViewChild,
-  OnChanges,
   SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { take } from 'rxjs/operators';
-import {Subscription} from 'rxjs';
-import {coerceDateProperty} from './coerce-date-property';
-import {createMissingDateImplError} from './datepicker-errors';
-import {MatDatepickerIntl} from './datepicker-intl';
-import {MatMonthView} from './month-view';
-import {MatYearView} from './year-view';
+import { Subscription } from 'rxjs';
+import { coerceDateProperty } from './coerce-date-property';
+import { createMissingDateImplError } from './datepicker-errors';
+import { MatDatepickerIntl } from './datepicker-intl';
+import { MatMonthView } from './month-view';
+import { MatYearView } from './year-view';
 
 
 /**
@@ -101,10 +91,10 @@ export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
   @Output() _userSelection = new EventEmitter<void>();
 
   /** Reference to the current month view component. */
-  @ViewChild(MatMonthView) monthView: MatMonthView<D>;
+  @ViewChild(MatMonthView, { static: false }) monthView: MatMonthView<D>;
 
   /** Reference to the current year view component. */
-  @ViewChild(MatYearView) yearView: MatYearView<D>;
+  @ViewChild(MatYearView, { static: false }) yearView: MatYearView<D>;
 
   /** Date filter for the month and year views. */
   _dateFilterForViews = (date: D) => {

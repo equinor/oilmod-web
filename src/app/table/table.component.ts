@@ -10,17 +10,17 @@ import { RowActivation, RowSelection } from '../../../projects/stoui-datatable/s
 })
 export class TableComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('tbl', { read: ElementRef })
+  @ViewChild('tbl', { read: ElementRef, static: false })
   table: ElementRef;
-  @ViewChild('tmpl')
+  @ViewChild('tmpl', { static: true })
   tmpl: TemplateRef<any>;
-  @ViewChild('ltmpl')
+  @ViewChild('ltmpl', { static: true })
   ltmpl: TemplateRef<any>;
-  @ViewChild('hdrTmpl')
+  @ViewChild('hdrTmpl', { static: true })
   hdrTmpl: TemplateRef<any>;
-  @ViewChild('footerTmpl')
+  @ViewChild('footerTmpl', { static: true })
   footerTmpl: TemplateRef<any>;
-  @ViewChild(StoDatatableComponent)
+  @ViewChild(StoDatatableComponent, { static: false })
   comp: StoDatatableComponent;
   public cols;
   public rows;

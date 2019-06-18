@@ -25,7 +25,7 @@ export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, 
   @Input()
   showPickersOnFocus: boolean;
   private destroyed$ = new Subject();
-  @ViewChild('container')
+  @ViewChild('container', { static: true })
   container: ElementRef<HTMLDivElement>;
   public startDatePlaceholder$: Observable<Date>;
   public endDatePlaceholder$: Observable<Date>;

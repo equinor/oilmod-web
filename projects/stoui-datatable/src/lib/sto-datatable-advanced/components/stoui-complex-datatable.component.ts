@@ -135,7 +135,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
   _internalColumnGroups: ColumnGroup[];
   _columnGroups: ColumnGroup[];
 
-  @ViewChild(StoDataTableBodyComponent) bodyComponent: StoDataTableBodyComponent;
+  @ViewChild(StoDataTableBodyComponent, { static: true }) bodyComponent: StoDataTableBodyComponent;
   @Input() canMoveRows: boolean;
   @Input() moveRowsCheck: Function;
   @Input() moveRowMapper: Function;

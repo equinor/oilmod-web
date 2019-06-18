@@ -24,9 +24,9 @@ import { StoDatatableModule } from '@ngx-stoui/datatable';
 
 const routes: Routes = [
   { path: '', component: RootComponent, pathMatch: 'full' },
-  { path: 'common', loadChildren: './common/demo-common.module#DemoCommonModule'},
-  { path: 'form', loadChildren: './form/form.module#FormModule'},
-  { path: 'table', loadChildren: './table/table.module#TableModule' },
+  { path: 'common', loadChildren: () => import('./common/demo-common.module').then(m => m.DemoCommonModule) },
+  { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
+  { path: 'table', loadChildren: () => import('./table/table.module').then(m => m.TableModule) },
 ];
 
 @NgModule({

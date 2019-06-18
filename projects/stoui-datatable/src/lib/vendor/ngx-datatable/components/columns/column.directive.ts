@@ -1,4 +1,4 @@
-import { Directive, TemplateRef, ContentChild, Input } from '@angular/core';
+import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
 import { TableColumnProp } from '../../types';
@@ -26,11 +26,11 @@ export class DataTableColumnDirective {
   @Input() cellClass: string | ((data: any) => string|any);
 
   @Input()
-  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
+  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
   cellTemplate: TemplateRef<any>;
 
   @Input()
-  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
+  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
   headerTemplate: TemplateRef<any>;
 
 }

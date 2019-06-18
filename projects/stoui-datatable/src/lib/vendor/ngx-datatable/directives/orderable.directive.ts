@@ -1,9 +1,16 @@
 import {
-  Directive, Output, EventEmitter, ContentChildren,
-  QueryList, KeyValueDiffers, AfterContentInit, OnDestroy, Inject
+  AfterContentInit,
+  ContentChildren,
+  Directive,
+  EventEmitter,
+  Inject,
+  KeyValueDiffers,
+  OnDestroy,
+  Output,
+  QueryList
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {

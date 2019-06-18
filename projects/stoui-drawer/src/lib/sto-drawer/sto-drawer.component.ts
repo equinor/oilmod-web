@@ -6,16 +6,13 @@ import {
   HostBinding,
   HostListener,
   Input,
-  NgModule,
   OnInit,
   Output,
   Renderer2,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Key } from '@ngx-stoui/core';
-import { RouterModule } from '@angular/router';
 
 /**
  * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
@@ -107,8 +104,8 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   @Output() submit = new EventEmitter();
 
-  @ViewChild('footer') footerRef: ElementRef;
-  @ViewChild('header') headerRef: ElementRef;
+  @ViewChild('footer', { static: true }) footerRef: ElementRef;
+  @ViewChild('header', { static: true }) headerRef: ElementRef;
 
 
   @HostBinding('style.display') display = 'block';

@@ -26,7 +26,7 @@ declare var ResizeObserver: any;
   styleUrls: [ './sto-datatable-body.component.scss' ]
 })
 export class StoDatatableBodyComponent<T = any> implements OnDestroy {
-  @ViewChild('scrollViewport', { read: ElementRef })
+  @ViewChild('scrollViewport', { read: ElementRef, static: false })
   scrollElement: ElementRef<HTMLElement>;
   @Input()
   responsive: boolean;
@@ -64,7 +64,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   activate = new EventEmitter<RowActivation<T>>();
   @Output()
   scrollHeader = new EventEmitter<any>();
-  @ViewChild(CdkVirtualScrollViewport)
+  @ViewChild(CdkVirtualScrollViewport, { static: false })
   scroller: CdkVirtualScrollViewport;
 
   get width() {

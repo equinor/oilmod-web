@@ -1,7 +1,18 @@
 import {
-  Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
-  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  PipeTransform,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 
 import { Keys } from '../../utils';
@@ -122,7 +133,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
+  @ViewChild('cellTemplate', { read: ViewContainerRef, static: false }) cellTemplate: ViewContainerRef;
 
   @HostBinding('class')
   get columnCssClasses(): any {

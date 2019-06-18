@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { DatatableGroupHeaderTemplateDirective } from './body-group-header-template.directive';
 
 @Directive({ selector: 'ngx-datatable-group-header' })
@@ -11,7 +11,7 @@ export class DatatableGroupHeaderDirective {
   @Input() rowHeight: (number | ((group?: any, index?: number) => number)) = 0;
 
   @Input()
-  @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef })
+  @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef, static: true })
   template: TemplateRef<any>;
 
   /**

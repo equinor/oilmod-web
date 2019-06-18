@@ -30,7 +30,7 @@ declare var ResizeObserver: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy {
-  @ViewChild(StoDatatableBodyComponent)
+  @ViewChild(StoDatatableBodyComponent, { static: true })
   body: StoDatatableBodyComponent;
   @Input()
   rowHeight = 36;

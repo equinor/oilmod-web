@@ -52,7 +52,7 @@ import { AutoCompleteValidator } from './sto-autocomplete.validate';
  */
 export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnDestroy {
   @Input() formControlName: string;
-  @ViewChild(MatAutocompleteTrigger) searchInput: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger, { static: true }) searchInput: MatAutocompleteTrigger;
   /**
    * Unfiltered list of items to search for
    */

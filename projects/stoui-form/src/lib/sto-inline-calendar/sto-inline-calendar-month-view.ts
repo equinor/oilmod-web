@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, Inject, Input, Optional, ViewChild, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, MatMonthView } from '@angular/material';
 import { Directionality } from '@angular/cdk/bidi';
-import {StoDatepickerCalendarBodyComponent} from './sto-inline-calendar-body';
+import { StoDatepickerCalendarBodyComponent } from './sto-inline-calendar-body';
 
 @Component({
   selector: 'sto-month-view',
@@ -28,7 +28,7 @@ import {StoDatepickerCalendarBodyComponent} from './sto-inline-calendar-body';
 export class StoDatepickerMonthviewComponent extends MatMonthView<Date> {
   @Input() endDate: Date;
   @Input() startDate: Date;
-  @ViewChild(StoDatepickerCalendarBodyComponent) _matCalendarBody: StoDatepickerCalendarBodyComponent;
+  @ViewChild(StoDatepickerCalendarBodyComponent, { static: true }) _matCalendarBody: StoDatepickerCalendarBodyComponent;
 
   constructor(cd: ChangeDetectorRef,
               @Optional() @Inject(MAT_DATE_FORMATS) _dateFormats: MatDateFormats,

@@ -6,18 +6,11 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Directionality} from '@angular/cdk/bidi';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {ESCAPE} from '@angular/cdk/keycodes';
-import {
-  Overlay,
-  OverlayConfig,
-  OverlayRef,
-  PositionStrategy,
-  RepositionScrollStrategy,
-  ScrollStrategy,
-} from '@angular/cdk/overlay';
-import {ComponentPortal} from '@angular/cdk/portal';
+import { Directionality } from '@angular/cdk/bidi';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ESCAPE } from '@angular/cdk/keycodes';
+import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, RepositionScrollStrategy, ScrollStrategy, } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -35,15 +28,15 @@ import {
   ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
-import {DateAdapter} from '@angular/material/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {DOCUMENT} from '@angular/platform-browser';
-import {Subject, Subscription} from 'rxjs';
-import {MatCalendar} from './calendar';
-import {coerceDateProperty} from './coerce-date-property';
-import {createMissingDateImplError} from './datepicker-errors';
-import {MatMonthpickerInput} from './datepicker-input';
-import { first, take } from 'rxjs/operators';
+import { DateAdapter } from '@angular/material/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DOCUMENT } from '@angular/common';
+import { Subject, Subscription } from 'rxjs';
+import { MatCalendar } from './calendar';
+import { coerceDateProperty } from './coerce-date-property';
+import { createMissingDateImplError } from './datepicker-errors';
+import { MatMonthpickerInput } from './datepicker-input';
+import { take } from 'rxjs/operators';
 
 
 /** Used to generate a unique ID for each datepicker instance. */
@@ -91,7 +84,7 @@ export const MAT_DATEPICKER_SCROLL_STRATEGY_PROVIDER = {
 export class MatDatepickerContent<D> implements AfterContentInit {
   datepicker: MatMonthPicker<D>;
 
-  @ViewChild(MatCalendar) _calendar: MatCalendar<D>;
+  @ViewChild(MatCalendar, { static: true }) _calendar: MatCalendar<D>;
 
   ngAfterContentInit() {
     this._calendar._focusActiveCell();
