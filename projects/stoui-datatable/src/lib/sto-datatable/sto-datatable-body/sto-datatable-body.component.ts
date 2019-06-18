@@ -114,7 +114,9 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-    this.resizeObserver.disconnect();
+    if ( this.resizeObserver ) {
+      this.resizeObserver.disconnect();
+    }
   }
 
   ngAfterViewInit() {
@@ -143,6 +145,9 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
         } else {
           this.horizontalScrollActive = false;
           const strScale = /\d+/.exec(currentScale || '');
+          if ( !strScale ) {
+            return;
+          }
           const numericScale = Number(strScale[ 0 ]);
           if ( numericScale !== notScaled ) {
             el.style.transform = `scaleY(${notScaled}`;
@@ -150,7 +155,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
         }
       }
     };
-    this.resizeObserver = new ResizeObserver(cb).observe(elRef);
+    this.resizeObserver = new ResizeObserver(cb);
+    this.resizeObserver.observe(elRef);
   }
 
   selectRow(event: KeyboardEvent | MouseEvent, activationData: RowSelection<T>) {

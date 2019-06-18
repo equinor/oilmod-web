@@ -183,8 +183,11 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
             if ( this.smallScreen !== smallScreen ) {
               this.smallScreen = smallScreen;
               requestAnimationFrame(() => {
-                this.cdr.markForCheck();
-                this.cdr.detectChanges();
+                try {
+                  this.cdr.markForCheck();
+                  this.cdr.detectChanges();
+                } catch { /** them all */
+                }
               });
             }
           }
