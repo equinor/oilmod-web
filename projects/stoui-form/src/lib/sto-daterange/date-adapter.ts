@@ -1,4 +1,4 @@
-import { MatDateFormats, NativeDateAdapter } from '@angular/material';
+import { MatDateFormats, NativeDateAdapter } from '@angular/material/core';
 import { format, isValid } from 'date-fns';
 
 export const DATE_FORMATS: MatDateFormats = {

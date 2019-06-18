@@ -1,7 +1,7 @@
 import { AfterContentInit, ContentChildren, Directive, Host, Input, OnDestroy, QueryList, Self } from '@angular/core';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { debounceTime, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { merge ,  Subject ,  fromEvent } from 'rxjs';
+import { fromEvent, merge, Subject } from 'rxjs';
 import { DOWN_ARROW, LEFT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 
 /**

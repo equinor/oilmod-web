@@ -1,5 +1,6 @@
 import { AfterContentInit, ContentChildren, Directive, OnDestroy, OnInit, QueryList, ViewContainerRef } from '@angular/core';
-import { MatOption, MatSelect } from '@angular/material';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';

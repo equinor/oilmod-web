@@ -23,7 +23,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Key } from '@ngx-stoui/core';
 import { debounceTime, filter, map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { MonoTypeOperatorFunction, Observable, Subject } from 'rxjs';

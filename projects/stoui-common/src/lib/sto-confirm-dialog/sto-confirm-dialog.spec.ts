@@ -5,7 +5,7 @@ import { MaterialModule } from '@testing/material.module.ts';
 import { ConfirmComponent } from './sto-confirm-dialog.component';
 import { ConfirmModule } from './sto-confirm-dialog.module';
 import { ConfirmService } from './sto-confirm-dialog.service';
-import { MatButton } from '@angular/material';
+import { MatButton } from '@angular/material/button';
 import { By } from '@angular/platform-browser';
 
 let comp: WrapperComponent;

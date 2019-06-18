@@ -12,7 +12,10 @@ import {
   StoSlideToggleModule,
 } from '@ngx-stoui/form';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { StoDirectivesModule } from '@ngx-stoui/core';
 
 @NgModule({

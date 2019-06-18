@@ -1,5 +1,6 @@
 import { ContentChildren, Directive, HostListener, Input, OnDestroy, OnInit, QueryList } from '@angular/core';
-import { MatDatepicker, MatInput } from '@angular/material';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

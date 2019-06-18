@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
 import { DateFormFieldClickDirective } from './date-form-field-click.directive';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '@testing/material.module';
-import { MatDatepicker, MatFormField } from '@angular/material';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatFormField } from '@angular/material/form-field';
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;

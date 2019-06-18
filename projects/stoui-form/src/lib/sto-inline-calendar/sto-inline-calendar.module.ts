@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDatepickerModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { StoInlineCalendarComponent } from './sto-inline-calendar';
 import { StoDatepickerMonthviewComponent } from './sto-inline-calendar-month-view';

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import showdown from 'showdown';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { DocsService } from '../docs/docs.service';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import hljs from 'highlight.js';

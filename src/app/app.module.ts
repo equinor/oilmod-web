@@ -7,16 +7,13 @@ import { StoAppHeaderModule, StoFilterPanelModule } from '@ngx-stoui/common';
 import { RouterModule, Routes } from '@angular/router';
 import { RootComponent } from './root.component';
 import { StoDateAdapter } from '@ngx-stoui/form';
-import {
-  DateAdapter,
-  MAT_LABEL_GLOBAL_OPTIONS,
-  MatButtonModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatSelectModule,
-  MatSidenavModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { DateAdapter, MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
 import { DocsModule } from './docs/docs.module';
 import { StoUserPreferenceModule } from '@ngx-stoui/core';

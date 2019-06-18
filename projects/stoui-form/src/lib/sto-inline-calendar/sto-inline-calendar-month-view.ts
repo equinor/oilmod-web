@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, Input, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, MatMonthView } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { MatMonthView } from '@angular/material/datepicker';
 import { Directionality } from '@angular/cdk/bidi';
 import { StoDatepickerCalendarBodyComponent } from './sto-inline-calendar-body';
 

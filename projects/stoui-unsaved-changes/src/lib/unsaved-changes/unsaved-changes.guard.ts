@@ -1,8 +1,8 @@
 import { CanDeactivate } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable ,  Observer } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UnsavedChanges } from './unsaved-changes.interface';
 
 

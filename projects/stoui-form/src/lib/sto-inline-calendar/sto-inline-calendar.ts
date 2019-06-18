@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, HostBinding, Inject, Input, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MatCalendar, MatDateFormats, MatDatepickerIntl } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { MatCalendar, MatDatepickerIntl } from '@angular/material/datepicker';
 import { Key } from '@ngx-stoui/core';
 import { StoDatepickerMonthviewComponent } from './sto-inline-calendar-month-view';
 

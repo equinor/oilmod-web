@@ -1,12 +1,16 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatExpansionModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatTooltipModule} from '@angular/material';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  StoFilterPanelComponent,
-  StoFilterTitle,
   StoFilterActions,
+  StoFilterActionsBar,
+  StoFilterPanelComponent,
   StoFilterTableActions,
-  StoFilterActionsBar
+  StoFilterTitle
 } from './sto-filter-panel.component';
 
 @NgModule({

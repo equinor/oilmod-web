@@ -2,18 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoDaterangeComponent } from './sto-daterange.component';
-import {
-  DateAdapter,
-  MatButtonModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatNativeDateModule,
-  MatSelectModule,
-  NativeDateAdapter
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { DateAdapter, MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { StoDaterangeInlineWrapper } from './sto-inline-calendar';
 import { StoPipesModule } from '@ngx-stoui/core';
 import { StoInlineCalendarModule } from '../sto-inline-calendar/sto-inline-calendar.module';

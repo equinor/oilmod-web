@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoActionFooterComponent } from './sto-action-footer.component';
 import { CommonModule } from '@angular/common';
-import { MatButton, MatButtonModule, MatButtonToggleModule, MatIconModule, MatProgressBar, MatProgressBarModule } from '@angular/material';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 

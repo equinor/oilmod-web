@@ -9,15 +9,11 @@ import {
   StoFilterTableActions,
   StoFilterTitle
 } from './sto-filter-panel.component';
-import {
-  MatButton,
-  MatButtonModule,
-  MatButtonToggle,
-  MatButtonToggleModule,
-  MatExpansionModule,
-  MatIconModule,
-  MatTooltipModule
-} from '@angular/material';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonToggle, MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 let comp: StoFilterPanelComponent;

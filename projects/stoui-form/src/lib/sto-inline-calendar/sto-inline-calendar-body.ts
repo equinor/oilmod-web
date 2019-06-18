@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MatCalendarBody } from '@angular/material';
+import { MatCalendarBody } from '@angular/material/datepicker';
 import { isAfter, isBefore, isSameDay, parse } from 'date-fns';
 
 @Component({

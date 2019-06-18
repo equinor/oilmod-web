@@ -1,5 +1,5 @@
 import { Directive, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
-import { MatMenuPanel, MatMenuTrigger } from '@angular/material';
+import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

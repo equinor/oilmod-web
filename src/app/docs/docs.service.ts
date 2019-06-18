@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import showdown from 'showdown';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DocsComponent } from './docs.component';
 
 @Injectable()
