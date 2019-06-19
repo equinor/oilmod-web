@@ -1,6 +1,7 @@
 {
   "name": "@ngx-stoui/error-handler",
   "version": "5.1.0",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
