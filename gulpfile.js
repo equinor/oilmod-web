@@ -46,7 +46,4 @@ gulp.task('sass:form', function() {
     .pipe(gulp.dest(formCssOutput))
 });
 
-gulp.task('default', [
-  'sass',
-  'copy'
-]);
+gulp.task('default', gulp.series('sass', 'copy'));

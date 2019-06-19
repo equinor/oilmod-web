@@ -40,7 +40,8 @@
                     [disabled]="form.invalid || (error | async)"
                     mat-button
                     color="primary"
-                    (click)="onSubmit()">Apply</button>
+                    (click)="onSubmit(false)">Apply
+            </button>
 					</div>
 			<div class="actions sto-form" *ngIf="!monthRange">
 				<div class="action-container">
@@ -106,7 +107,8 @@
                     [disabled]="form.invalid || (error | async)"
                     mat-button
                     color="primary"
-                    (click)="onSubmit()">Apply</button>
+                    (click)="onSubmit(false)">Apply
+            </button>
 					</div>
 				</div>
 			</div>

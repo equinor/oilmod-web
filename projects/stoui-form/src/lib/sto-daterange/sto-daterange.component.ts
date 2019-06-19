@@ -163,9 +163,9 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
     // this.inputfield.nativeElement.focus();
   }
 
-  public onSubmit() {
-    this.overlayVisible = false;
-    this.closeOverlay = true;
+  public onSubmit(overlayVisible = true) {
+    this.overlayVisible = overlayVisible;
+    this.closeOverlay = !overlayVisible;
     const { start, end } = this.form.value;
     // this.updateInputfield(this.form.value);
     if ( this.monthRange ) {
