@@ -78,14 +78,14 @@ describe('StoDatatableComponent', () => {
     const scrollTo = rows[ scrollToIndex ];
     let range = page.scroller.getRenderedRange();
     expect(scrollToIndex).toBeGreaterThan(range.end);
-    comp.scrollTo(scrollTo, 'instant');
+    comp.scrollTo(scrollTo, 'auto');
     // Update scroller - normally Angular takes care of this via regular change detection
     page.scroller.checkViewportSize();
     fixture.detectChanges();
     range = page.scroller.getRenderedRange();
     expect(scrollToIndex).toBeLessThan(range.end);
     expect(scrollToIndex).toBeGreaterThan(range.start);
-    comp.scrollTo(0, 'instant');
+    comp.scrollTo(0, 'auto');
   });
 
   it('should emit a select event when a row is clicked', fakeAsync(() => {

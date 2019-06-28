@@ -20,10 +20,14 @@ Run `ng generate --project stoui-<core|common|...> component component-name` to 
 
 ## Running unit tests
 
+##### Docker
+Run `docker build --build-arg PROJECT={core|common|form|datatable|etc}` to execute unit tests in a container with HeadlessChrome. This will also print out a coverage summary, but primarily this is intended to be used in a CI environment.
+
+##### Browser (Chrome)
+
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Future TODOs
 
-* Unit tests
-* Demo of all components
+* Demo of all components (storybook)
 * Auto generate docs for each module, and build a docker image

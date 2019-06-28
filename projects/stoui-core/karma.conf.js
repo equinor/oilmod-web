@@ -1,10 +1,17 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
+const isDocker = require('is-docker')();
 
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    customLaunchers: {
+      ChromeCustom: {
+        base: 'ChromeHeadless',
+        // We must disable the Chrome sandbox when running Chrome inside Docker (Chrome's sandbox needs
+        // more permissions than Docker allows by default)
+        flags: isDocker ? ['--no-sandbox'] : []
+      }
+    },
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
@@ -17,20 +24,19 @@ module.exports = function (config) {
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../../coverage'),
-      reports: ['html', 'lcovonly'],
+      reports: ['text-summary'],
       fixWebpackSourcePaths: true
     },
     files: [
       {pattern: './src/test.ts', watched: false},
       {pattern: '../../testing/material-icons.css', watched: true},
-      {pattern: '../../dist/stoui-core/ngx-stoui.css', watched: false},
     ],
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['ChromeCustom'],
     singleRun: false
   });
 };

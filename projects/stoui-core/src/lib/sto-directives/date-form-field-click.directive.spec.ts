@@ -16,7 +16,6 @@ let page: Page;
   template: `
     <mat-form-field [stoDateFormFieldClick]="picker">
       <input matInput
-             formControlName="date"
              [matDatepicker]="picker"
              placeholder="Date">
       <mat-datepicker-toggle matSuffix

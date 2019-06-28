@@ -1,6 +1,46 @@
 const util = require('util');
 const path = require('path');
 const exec = util.promisify(require('child_process').exec);
+const fs = require('fs');
+const stat = util.promisify(fs.stat);
+
+const projects = {
+  common: {
+    name: 'stoui-common',
+    order: 1,
+  },
+  core: {
+    name: 'stoui-core',
+    order: 0,
+    extra: async () => await runGulpTask(),
+  },
+  datatable: {
+    name: 'stoui-datatable',
+    order: 1,
+    extra: async () => await sharedFormCss(),
+  },
+  drawer: {
+    name: 'stoui-drawer',
+    order: 1,
+  },
+  'error-handler': {
+    name: 'stoui-error-handler',
+    order: 1,
+  },
+  form: {
+    name: 'stoui-form',
+    order: 1,
+    extra: async () => await sharedFormCss(),
+  },
+  'quick-view': {
+    name: 'stoui-quick-view',
+    order: 1,
+  },
+  'unsaved-changes': {
+    name: 'stoui-unsaved-changes',
+    order: 2,
+  },
+};
 
 const others = [
   'stoui-common',
@@ -18,16 +58,61 @@ const last = [
 runner()
   .catch(console.error);
 
-async function runner() {
-  await bumpVersions();
-  /*  await build('stoui-core');
-    await runGulpTask();
-    await buildOthers();
-    await buildLast();
-    await sharedFormCss();*/
+
+async function buildOne(projectName) {
+  if (projectName !== 'core') {
+    await hasCore();
+  }
+  const project = projects[projectName];
+  if (!project) {
+    throw new Error(`${projectName} is not a valid project`);
+  }
+  await bumpVersions(projectName);
+  await build(project.name);
+  if (project.extra) {
+    await project.extra();
+  }
 }
 
-async function bumpVersions() {
+async function hasCore() {
+  const corePath = path.join(__dirname, 'dist', 'stoui-core');
+  let hasCore = true;
+  try {
+    await stat(corePath);
+  } catch {
+    hasCore = false;
+    console.log('Missing core, will be built first..');
+  }
+  if (!hasCore) {
+    await buildOne('core');
+  }
+}
+
+async function buildAll() {
+  await bumpVersions();
+  await build('stoui-core');
+  await runGulpTask();
+  await buildOthers();
+  await buildLast();
+  await sharedFormCss();
+}
+
+async function runner() {
+  const args = process.argv;
+  if (args.includes('--project')) {
+    const i = args.indexOf('--project');
+    const project = args[i + 1];
+    if (project === 'ALL') {
+      await buildAll();
+    } else {
+      await buildOne(project);
+    }
+  } else {
+    await buildAll();
+  }
+}
+
+async function bumpVersions(projects) {
   const shouldBump = process.argv.includes('--bump');
   if (shouldBump) {
     const i = process.argv.indexOf('--bump');
