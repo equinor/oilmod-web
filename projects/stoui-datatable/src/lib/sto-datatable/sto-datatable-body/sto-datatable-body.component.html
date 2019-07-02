@@ -27,10 +27,14 @@
 
 <ng-template #noScroll>
   <div class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
+       (scroll)="scrollHeader.emit($event)"
+       #scroller
+       [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
        [class.sto-mdl-table__body--selectable]="selectable"
        [style.height]="height ? (height + 'px') : 'auto'">
 
     <sto-datatable-body-row *ngFor="let row of rows; let i = index; trackBy: trackBy"
+                            [style.min-width]="width"
                             [tabindex]="0"
                             [columns]="columns"
                             [row]="row"

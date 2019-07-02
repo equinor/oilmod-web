@@ -203,13 +203,13 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   }
 
   private scrollToIndex(index: number, behaviour: ScrollBehavior) {
-    if ( this.body.scroller ) {
-      this.body.scroller.scrollToIndex(index, behaviour);
+    if ( this.body.vScroller ) {
+      this.body.vScroller.scrollToIndex(index, behaviour);
     }
   }
 
   public scrollTo(item: T | number, behaviour: ScrollBehavior = 'smooth') {
-    if ( this.body.scroller ) {
+    if ( this.body.vScroller ) {
       if ( typeof item === 'number' ) {
         this.scrollToIndex(item, behaviour);
       } else {

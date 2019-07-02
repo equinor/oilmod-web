@@ -65,7 +65,9 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   @Output()
   scrollHeader = new EventEmitter<any>();
   @ViewChild(CdkVirtualScrollViewport, { static: false })
-  scroller: CdkVirtualScrollViewport;
+  vScroller: CdkVirtualScrollViewport;
+  @ViewChild('scroller', { static: false })
+  scroller: ElementRef<HTMLDivElement>;
 
   get width() {
     if ( this.scrollbarH ) {
@@ -84,14 +86,14 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
 
   @HostListener('window:resize', [ '$event' ])
   onresize(event) {
-    if ( !this.scroller ) {
+    if ( !this.vScroller ) {
       return;
     }
     if ( this.timeout ) {
       clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(() => {
-      this.scroller.ngOnInit();
+      this.vScroller.ngOnInit();
     }, 100);
   }
 
@@ -120,7 +122,55 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   }
 
   ngAfterViewInit() {
-    const elRef = this.scroller.elementRef.nativeElement;
+    if ( this.scrollbarH && this.virtualScroll ) {
+      this.virtHorzScrollPosition();
+    } else if ( this.scrollbarH ) {
+      this.horzScrollPosition();
+    }
+  }
+
+  private horzScrollPosition() {
+    const elRef = this.scroller.nativeElement;
+    const cb = (entries) => {
+      if ( !this.hasFooter ) {
+        return;
+      }
+      for ( const entry of entries ) {
+        const t = entry.target as HTMLElement;
+        const el = t;
+        const currentScale = el.style.transform;
+        const notScaled = this.rows.length * this.rowHeight;
+        this.verticalScrollOffset = t.scrollHeight > t.offsetHeight ? 14 : 0;
+        if ( t.scrollWidth > t.offsetWidth ) {
+          this.horizontalScrollActive = true;
+          const strScale = /\d+/.exec(currentScale || '');
+          if ( !strScale ) {
+            return;
+          }
+          const numericScale = Number(strScale[ 0 ]);
+          if ( numericScale === notScaled ) {
+            const newScaleValue = notScaled + this.rowHeight;
+            el.style.transform = `scaleY(${newScaleValue}`;
+          }
+        } else {
+          this.horizontalScrollActive = false;
+          const strScale = /\d+/.exec(currentScale || '');
+          if ( !strScale ) {
+            return;
+          }
+          const numericScale = Number(strScale[ 0 ]);
+          if ( numericScale !== notScaled ) {
+            el.style.transform = `scaleY(${notScaled}`;
+          }
+        }
+      }
+    };
+    this.resizeObserver = new ResizeObserver(cb);
+    this.resizeObserver.observe(elRef);
+  }
+
+  private virtHorzScrollPosition() {
+    const elRef = this.vScroller.elementRef.nativeElement;
     const cb = (entries) => {
       if ( !this.hasFooter ) {
         return;

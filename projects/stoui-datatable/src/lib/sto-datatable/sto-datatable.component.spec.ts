@@ -286,6 +286,6 @@ class Page {
     this.body = bodyDe.componentInstance;
     const rowDeElements = bodyDe.queryAll(By.directive(StoDatatableBodyRowComponent));
     this.rowElements = rowDeElements.map(el => el.nativeElement);
-    this.scroller = this.body.scroller;
+    this.scroller = this.body.vScroller;
   }
 }
