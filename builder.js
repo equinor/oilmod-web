@@ -67,7 +67,7 @@ async function buildOne(projectName) {
   if (!project) {
     throw new Error(`${projectName} is not a valid project`);
   }
-  await bumpVersions(projectName);
+  await bumpVersions(project.name);
   await build(project.name);
   if (project.extra) {
     await project.extra();
@@ -112,7 +112,7 @@ async function runner() {
   }
 }
 
-async function bumpVersions(projects) {
+async function bumpVersions(project) {
   const shouldBump = process.argv.includes('--bump');
   if (shouldBump) {
     const i = process.argv.indexOf('--bump');
@@ -120,7 +120,11 @@ async function bumpVersions(projects) {
     if (!['major', 'minor', 'patch'].includes(type)) {
       throw new Error(`Invalid version bump. Expected 'major', 'minor', 'patch' but got ${type}`);
     }
-    return await Promise.all(['stoui-core', ...others, ...last].map(lib => bumpLib(lib, type)));
+    if (project) {
+      return await bumpLib(project, type);
+    } else {
+      return await Promise.all(['stoui-core', ...others, ...last].map(lib => bumpLib(lib, type)));
+    }
   }
   return true;
 }
