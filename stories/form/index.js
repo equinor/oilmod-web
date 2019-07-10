@@ -5,8 +5,9 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import '../../src/styles.scss'
 import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.module";
-import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {StoDatepickerModule} from "../../projects/stoui-form/src/lib/sto-monthpicker";
+import {MatFormFieldModule, MatInputModule, MatNativeDateModule} from "@angular/material";
 
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
@@ -33,7 +34,7 @@ Value: {{ control.value | json }}
 
 stories.add('Number input', () => ({
   moduleMetadata: {
-    imports: [StoNumberInputModule, StoDirectivesModule, ReactiveFormsModule, BrowserAnimationsModule],
+    imports: [StoNumberInputModule, BrowserAnimationsModule],
     schemas: [NO_ERRORS_SCHEMA]
   },
   template: `<div *ngIf="group" style="width: 250px" class="sto-form mat-typography">
@@ -47,5 +48,22 @@ stories.add('Number input', () => ({
     readonly: boolean('Readonly', false),
     value: number('Value', 100),
     textAlign: radios('Align', ['left', 'right'], 'left')
+  }
+}));
+
+stories.add('Monthpicker', () => ({
+  moduleMetadata: {
+    imports: [MatNativeDateModule, BrowserAnimationsModule, StoDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  },
+  template: `<div class="sto-form">
+<mat-form-field class="sto-form__field" [stoMonthFormFieldClick]="picker">
+<mat-label>Month</mat-label>
+<input matInput [formControl]="ctrl" [mdMonthpicker]="picker">
+<md-monthpicker-toggle matSuffix [for]="picker"></md-monthpicker-toggle>
+<md-monthpicker #picker></md-monthpicker>
+</mat-form-field>
+</div>`,
+  props: {
+    ctrl: new FormControl(new Date())
   }
 }));
