@@ -11,23 +11,23 @@
         <ng-content select=".sto-number-input__prefix"></ng-content>
     </span>
     <mat-label *ngIf="label">{{label}}</mat-label>
-    <input *ngIf="!(readonly && suffix)"
-           [ngStyle]="{textAlign : textAlign}"
-           matInput
-           stoNumberInput
-           stoSelectTextOnFocus
-           (blur)="onModelTouched($event)"
-           [fractionSize]="fractionSize"
-           [hasSelectAllEnabled]="$hasSelectAllEnabled | async"
-           [placeholder]="placeholder"
-           [readonly]="readonly"
-           [disabled]="disabled"
-           [tabindex]="(readonly || disabled) ? -1 : 0"
-           type="text"
-           [formControl]="control" />
+  <input *ngIf="!readonly"
+         [ngStyle]="{textAlign : textAlign}"
+         matInput
+         stoNumberInput
+         stoSelectTextOnFocus
+         (blur)="onModelTouched($event)"
+         [fractionSize]="fractionSize"
+         [hasSelectAllEnabled]="$hasSelectAllEnabled | async"
+         [placeholder]="placeholder"
+         [readonly]="readonly"
+         [disabled]="disabled"
+         [tabindex]="(readonly || disabled) ? -1 : 0"
+         type="text"
+         [formControl]="control" />
 
         <input
-          *ngIf="readonly && suffix"
+          *ngIf="readonly"
           [ngStyle]="{textAlign : textAlign}"
           (blur)="onModelTouched($event)"
           [placeholder]="placeholder"

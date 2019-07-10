@@ -1,5 +1,6 @@
 <span class="sto-daterange-wrapper ">
 	<mat-form-field [class]="inputStyleClass"
+                  floatLabel="always"
                   [class.mat-focused]="focus">
     <mat-label>{{ label || placeholder }}</mat-label>
     <sto-daterange-input (valueChanged)="onValueChange($event)"

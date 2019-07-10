@@ -420,6 +420,6 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
 
   onValueChange(dateRange) {
     this.form.patchValue(dateRange);
-    this.onSubmit();
+    this.onSubmit(!this.showPickersOnFocus);
   }
 }
