@@ -27,6 +27,10 @@ Run `docker build --build-arg PROJECT={core|common|form|datatable|etc}` to execu
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Attributions
+* StoComplexDatatableComponent builds on [@swimlane/ngx-datatable](https://github.com/swimlane/ngx-datatable) (MIT License)
+* Misc other components extends from [@angular/material](https://github.com/angular/components) (MIT License)
+
 ## Future TODOs
 
 * Demo of all components (storybook)
