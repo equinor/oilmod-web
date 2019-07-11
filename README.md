@@ -4,15 +4,26 @@ Monorepo containing all our packages for UI development, split into sub-packages
 
 ## Build
 
-To build a specific package, run `ng build stoui-<core|common|...>`. To build all packages, run `node builder`. This will run as much as possible in parallel, and output global styles and other static dependencies.
+To build a specific package, run `node builder --project <core|common|...>`. To build all packages, run `node builder`. This will run as much as possible in parallel, and output global styles and other static dependencies.
+
+Adding --bump patch|minor|major to the builder will also bump the package version
 
 ## Local development
+
+You have two options for local development:
+
+#### Via angular cli
 
 All the libraries are linked with the prefix they would normally use (@ngx-stoui/name). To do local development, you can run:
 * `ng serve`
 * `ng build stoui-<name> --watch`
 
 After this, you can test your changes by importing them to src/app/app.module.ts, and both the app and library is built on changes.
+
+#### Via Storybook
+
+Simply create a new story for your new component, and run `yarn storybook`. 
+
 
 ## Code scaffolding
 
@@ -33,5 +44,5 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Future TODOs
 
-* Demo of all components (storybook)
-* Auto generate docs for each module, and build a docker image
+* Demo of ~~all~~ remaining components (storybook)
+* Integrate documentation with storybook ~~Auto generate docs for each module, and build a docker image~~ 
