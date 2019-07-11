@@ -46,6 +46,7 @@
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-knobs": "^5.1.9",
     "@storybook/addon-links": "^5.1.9",
+    "@storybook/addon-notes": "^5.1.9",
     "@types/adal-angular": "^1.0.1",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",

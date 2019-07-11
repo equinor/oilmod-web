@@ -13,7 +13,7 @@ stories
       declarations: [],
       imports: [StoDatatableModule]
     },
-    template: `<div style="margin: 50px">
+    template: `<div>
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [rowHeight]="rowHeight"
 [headerHeight]="headerHeight"
@@ -40,7 +40,7 @@ stories
       declarations: [],
       imports: [StoDatatableModule]
     },
-    template: `<div style="margin: 50px" [style.width.px]="slimView ? breakpoint - 1 : 1000">
+    template: `<div [style.width.px]="slimView ? breakpoint - 1 : 1000">
 <sto-datatable [virtualScroll]="true"
 [responsiveBreakPoint]="breakpoint"
 [responsive]="true"
@@ -63,7 +63,7 @@ stories.add('Automatic height adjustment', () => ({
     declarations: [],
     imports: [StoDatatableModule]
   },
-  template: `<div style="margin: 50px" (resize)="resize()">
+  template: `<div (resize)="resize()">
 <sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
 </div>`,
   props: {

@@ -263,7 +263,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
   ngOnInit() {
     const container = this.controlContainer;
     if ( container ) {
-      this.parent = container.control.get(this.formControlName);
+      this.parent = this.formControlName ? container.control.get(this.formControlName) : container.control;
     }
     const validators = [];
     validators.push(AutoCompleteValidator(this.unfiltered, this.valueKey));

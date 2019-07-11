@@ -41,11 +41,13 @@ Buttons and actions on the right side of the separator if both table and filter 
 ####Input
 ##### expandable
 If the filter panel should be expandable. Default true.
+
 ```html
 <sto-filter-panel [expandable]="true">
 ```
 ##### expanded
 If the filter panel should be expanded by default. Default false.
+
 ```html
 <sto-filter-panel [expanded]="true">
 ```
@@ -55,6 +57,7 @@ If the filter panel should be expanded by default. Default false.
 Emits {isExpanded: boolean, contentHeight: number } where
 isExpanded is true if the panel opens and false if not.
 ContentHeight is the height of the expanded content. 
+
 ```html
 <sto-filter-panel (toggled)="onToggle($event)">
 ```

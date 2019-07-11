@@ -1,4 +1,4 @@
-import { InjectionToken, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationPartComponent } from './navigation-part/navigation-part.component';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
@@ -8,7 +8,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 
-export const USE_HASH_ROUTING = new InjectionToken<boolean>('sto.nav.hash');
 
 @NgModule({
   imports: [
@@ -27,7 +26,8 @@ export const USE_HASH_ROUTING = new InjectionToken<boolean>('sto.nav.hash');
       NavigationPartComponent
     , NavigationMenuComponent
     , NavigationMenuItemComponent
-  ]
+  ],
 })
 export class StoNavigationModule {
 }
+
