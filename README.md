@@ -46,3 +46,4 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 * Demo of ~~all~~ remaining components (storybook)
 * Integrate documentation with storybook ~~Auto generate docs for each module, and build a docker image~~ 
+* Use storybook + jest + puppeteer for automated visual testing
