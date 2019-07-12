@@ -8,9 +8,10 @@ import { StoNumberInputDirective } from './sto-number-input.directive';
 import { StoNumberInputComponent } from './sto-number-input.component';
 import { CommonModule } from '@angular/common';
 import { StoDirectivesModule } from '@ngx-stoui/core';
+import { StoFormModule } from '../sto-form/sto-form.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatInputModule, StoDirectivesModule],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule, MatInputModule, StoDirectivesModule, StoFormModule ],
   declarations: [
     StoNumberInputPipe, StoNumberInputDirective, StoNumberInputComponent
   ],

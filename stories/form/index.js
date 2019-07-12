@@ -10,7 +10,7 @@ import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-inpu
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {StoDatepickerModule} from "../../projects/stoui-form/src/lib/sto-monthpicker";
 import monthPickerReadme from "../../projects/stoui-form/src/lib/sto-monthpicker/sto-monthpicker.md";
-import {MatFormFieldModule, MatInputModule, MatNativeDateModule} from "@angular/material";
+import {MAT_LABEL_GLOBAL_OPTIONS, MatFormFieldModule, MatInputModule, MatNativeDateModule} from "@angular/material";
 import {StoAutocompleteModule} from "../../projects/stoui-form/src/lib/sto-autocomplete/sto-autocomplete.module";
 import autocompleteReadme from "../../projects/stoui-form/src/lib/sto-autocomplete/sto-autocomplete.component.md";
 import {items} from "./item-list";
@@ -18,6 +18,8 @@ import {StoSlideToggleModule} from "../../projects/stoui-form/src/lib/sto-slide-
 import {StoSelectFilterModule} from "../../projects/stoui-form/src/lib/sto-select-filter/sto-select-filter.module";
 import {MatSelectModule} from "@angular/material/select";
 import {CommonModule} from "@angular/common";
+import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
+import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.md'
 
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
@@ -123,8 +125,8 @@ stories.add('MatSelect filter', () => ({
     imports: [StoSelectFilterModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule]
   },
   template: `
-<div style="width: 300px" class="sto-form">
-<mat-form-field *ngIf="multi" class="sto-form__field" floatLabel="always">
+<div style="width: 300px" class="sto-form" (click)="flip()">
+<mat-form-field *ngIf="multi" class="sto-form__field" floatLabel="always" >
 <mat-label>Multiselect with filter</mat-label>
   <mat-select [multiple]="true" [value]="selected">
     <sto-select-filter (keydown.space)="$event.stopPropagation()" [isFilter]="true" [isMulti]="true" (valueChanges)="filteredItems = filter($event, allItems)"
@@ -150,9 +152,35 @@ stories.add('MatSelect filter', () => ({
       return all.filter(el => re.test(el.name));
     },
     selectAll: action('Select all'),
+    flip: () => {
+    },
     selected: [],
-    multi: boolean('Multiple', true),
+    multi: boolean('Multiple', false),
     filteredItems: items,
     allItems: items
   }
 }));
+
+stories.add('StoFormField', () => ({
+  moduleMetadata: {
+    imports: [MatFormFieldModule, MatInputModule, StoFormModule, BrowserAnimationsModule],
+    providers: [{provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}]
+  },
+  template: `<div class="sto-form">
+<mat-form-field stoFormField *ngIf="withClasses">
+<mat-label>Form field with styles</mat-label>
+<input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
+</mat-form-field>
+<mat-form-field appearance="fill" *ngIf="!withClasses">
+<mat-label>Form field without styles</mat-label>
+<input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
+</mat-form-field>
+</div>`,
+  props: {
+    withClasses: boolean('Use styling', true),
+    readonly: boolean('Readonly', false),
+    disabled: boolean('Disabled', false)
+  }
+}), {
+  notes: {markdown: stoFormReadme}
+});

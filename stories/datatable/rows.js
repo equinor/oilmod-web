@@ -1,4 +1,5 @@
-export const rows = [{
+export const rows = [
+  {
   'invoiceNo': 212666588,
   'voyageNo': 16206,
   'vesselName': 'False Cloak Fern',
@@ -600,6 +601,7 @@ export const rows = [{
   'total': 241177
 }];
 
+
 export const columns = [
   {
     prop: 'invoiceNo',
@@ -636,5 +638,8 @@ export const columns = [
     name: 'Total',
     headerClass: 'aclass',
     cellClass: 'a-cell-class'
-  },
+  }
 ];
+
+export const manyColumns = [...columns, ...columns, ...columns];
+

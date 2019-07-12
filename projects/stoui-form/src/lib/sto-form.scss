@@ -74,6 +74,10 @@ $height: 72px;
       white-space: nowrap;
     }
   }
+
+  .mat-card-subtitle.sto-card__subtitle {
+    padding-left: 8px;
+  }
   .sto-card__button-row {
     width: 100%;
     display: flex;
@@ -327,7 +331,7 @@ $height: 72px;
   }
 }
 //Don't know how to overwrite this without important O_o
-.mat-form-field-can-float.mat-form-field-should-float{
+.sto-form__field.mat-form-field-can-float.mat-form-field-should-float {
   .mat-form-field-placeholder, .mat-form-field-label {
     -webkit-transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
     transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;

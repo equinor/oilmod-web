@@ -31,6 +31,7 @@
        #scroller
        [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
        [class.sto-mdl-table__body--selectable]="selectable"
+       [style.padding-bottom.px]="horizontalScrollActive && hasFooter ? rowHeight : 0"
        [style.height]="height ? (height + 'px') : 'auto'">
 
     <sto-datatable-body-row *ngFor="let row of rows; let i = index; trackBy: trackBy"

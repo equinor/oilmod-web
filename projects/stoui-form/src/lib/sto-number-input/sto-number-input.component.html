@@ -1,11 +1,9 @@
 <mat-form-field
-        class="sto-form__field"
-        [floatLabel]="floatLabel"
-        [class.sto-form__field--disabled]="disabled"
-        [class.sto-form__field--float-right]="textAlign === 'right'"
-        [class.sto-form__field--readonly]="readonly"
-        [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
-        [class.mat-form-field-invalid]="touched && errors">
+  stoFormField
+  [floatLabel]="floatLabel"
+  [class.sto-form__field--float-right]="textAlign === 'right'"
+  [class.sto-form__field--without-placeholder]="withoutPlaceHolder"
+  [class.mat-form-field-invalid]="touched && errors">
 
     <span matPrefix>
         <ng-content select=".sto-number-input__prefix"></ng-content>
@@ -15,7 +13,6 @@
          [ngStyle]="{textAlign : textAlign}"
          matInput
          stoNumberInput
-         stoSelectTextOnFocus
          (blur)="onModelTouched($event)"
          [fractionSize]="fractionSize"
          [hasSelectAllEnabled]="$hasSelectAllEnabled | async"
