@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnDestroy, OnInit, Optional } from '@angular/core';
 import { Subject } from 'rxjs';
 import { StoUserPreferenceService } from '../sto-user-preference/sto-user-preference.service';
 import { takeUntil } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class StoSelectTextOnFocusDirective implements OnInit, OnDestroy {
 
   }
 
-  constructor(private elementRef: ElementRef, private userPreferenceService: StoUserPreferenceService) {
+  constructor(private elementRef: ElementRef, @Optional() private userPreferenceService: StoUserPreferenceService) {
     this._el = this.elementRef.nativeElement;
   }
 
@@ -37,12 +37,14 @@ export class StoSelectTextOnFocusDirective implements OnInit, OnDestroy {
    * Subscribes to changes in {@link StoUserPreferenceService}, and binds the variable accordingly.
    */
   ngOnInit() {
-    this.userPreferenceService.hasSelectTextOnFocusEnabled
-      .pipe(
-        takeUntil(this.destroyed$)
-      ).subscribe((hasSelectTextOnFocusEnabled) => {
+    if ( this.userPreferenceService ) {
+      this.userPreferenceService.hasSelectTextOnFocusEnabled
+        .pipe(
+          takeUntil(this.destroyed$)
+        ).subscribe((hasSelectTextOnFocusEnabled) => {
         this._hasSelectTextOnFocusEnabled = hasSelectTextOnFocusEnabled;
       });
+    }
   }
 
   ngOnDestroy() {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
-import { USE_HASH_ROUTING } from '../../sto-navigation.module';
+import { USE_HASH_ROUTING } from '../../tokens';
 
 @Component({
   selector: 'sto-navigation-menu-item',

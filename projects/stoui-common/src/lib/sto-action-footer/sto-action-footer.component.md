@@ -12,6 +12,7 @@ Has a built-in loading/progress bar.
 
 ##### isLoading
 Triggers if the progressbar should be visible or not.
+
 ```html
 <sto-action-footer [isLoading]="true"></sto-action-footer> 
 ```
@@ -20,12 +21,14 @@ Triggers if the progressbar should be visible or not.
 If a class "sto-has-action-footer" should be appended to the body-tag.  
 This is used to calculate correct height by adding padding to the body element as the footer is a fixed element.  
 Default true.
+
 ```html
 <sto-action-footer [shouldAddClass]="false"></sto-action-footer> 
 ```
 
 ##### position
 Hostbinds to style.position. Defaults to "fixed", but could be absolute inside a relative container.
+
 ```html
 <sto-action-footer position="absolute" [shouldAddClass]="false"></sto-action-footer> 
 ```

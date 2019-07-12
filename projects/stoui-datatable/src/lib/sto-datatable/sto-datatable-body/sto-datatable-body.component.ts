@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -25,7 +26,7 @@ declare var ResizeObserver: any;
   templateUrl: './sto-datatable-body.component.html',
   styleUrls: [ './sto-datatable-body.component.scss' ]
 })
-export class StoDatatableBodyComponent<T = any> implements OnDestroy {
+export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewInit {
   @ViewChild('scrollViewport', { read: ElementRef, static: false })
   scrollElement: ElementRef<HTMLElement>;
   @Input()
@@ -49,7 +50,25 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy {
   @Input()
   virtualScroll: boolean;
   @Input()
-  scrollbarH: boolean;
+  get scrollbarH(): boolean {
+    return this._scrollbarH;
+  };
+
+  set scrollbarH(scrollbarH: boolean) {
+    this._scrollbarH = scrollbarH;
+    this.horizontalScrollActive = false;
+    if ( this.resizeObserver ) {
+      this.resizeObserver.disconnect();
+    }
+    if ( scrollbarH && this.virtualScroll ) {
+      this.virtHorzScrollPosition();
+    } else if ( scrollbarH ) {
+      this.horzScrollPosition();
+    }
+    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  }
+
+  private _scrollbarH: boolean;
   @Input()
   rowClass: Function;
   @Input()

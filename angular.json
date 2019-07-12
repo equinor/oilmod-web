@@ -27,7 +27,9 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "../dist"
+                "../dist",
+                "../../dist",
+                "./dist"
               ]
             },
             "scripts": []

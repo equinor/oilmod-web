@@ -4,7 +4,7 @@
 >
   <mat-label *ngIf="label">{{ label }}</mat-label>
   <input matInput
-         (blur)="parent.markAsTouched()"
+         (blur)="parent ? parent.markAsTouched() : null"
          [matAutocomplete]="searchList"
          stoSelectTextOnFocus
          (keyup.enter)="onEnter($event)"

@@ -202,7 +202,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
 
   ngOnInit() {
     let control: FormControl;
-    if (this.controlContainer) {
+    if ( this.controlContainer && this.formControlName ) {
       control = this.controlContainer.control.get(this.formControlName) as FormControl;
     } else {
       control = null;
@@ -223,7 +223,9 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     this.initForm(control);
     this.handleErrors(control);
     this.handleChanges();
-    this.$hasSelectAllEnabled = this.userPreferenceService.hasSelectTextOnFocusEnabled.asObservable();
+    if ( this.userPreferenceService ) {
+      this.$hasSelectAllEnabled = this.userPreferenceService.hasSelectTextOnFocusEnabled.asObservable();
+    }
   }
 
   /**
@@ -254,6 +256,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     @Optional() @Host() @SkipSelf()
     private controlContainer: ControlContainer,
     private numberFormatterPipe: StoNumberInputPipe,
+    @Optional()
     private userPreferenceService: StoUserPreferenceService,
     private cdr: ChangeDetectorRef
   ) {
