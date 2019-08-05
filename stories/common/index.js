@@ -11,6 +11,8 @@ import footerReadme from "../../projects/stoui-common/src/lib/sto-action-footer/
 import {MatButtonModule, MatFormFieldModule, MatInputModule} from "@angular/material";
 import {StoFilterPanelModule} from "../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.module";
 import filterReadme from "../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.component.md";
+import messagePanelReadme from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.component.md";
+import appHeaderReadme from "../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.component.md";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const stories = storiesOf('Common', module)
@@ -34,30 +36,33 @@ stories
       }, 'info')
     }
   }), {
-    notes: 'No readme for message panel'
+    notes: {markdown: messagePanelReadme}
   });
 
 stories.add('AppHeader & BreadCrumbs', () => ({
-  moduleMetadata: {
-    imports: [StoAppHeaderModule, RouterTestingModule],
-    providers: [
-      {provide: APP_BASE_HREF, useValue: '/'}
-    ]
-  },
-  template: `<sto-app-header [testEnvironment]="test"
+    moduleMetadata: {
+      imports: [StoAppHeaderModule, RouterTestingModule],
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/'}
+      ]
+    },
+    template: `<sto-app-header [testEnvironment]="test"
 [environmentName]="envName"
 [breadCrumbs]="breadCrumbs"
 [homeBreadCrumbConfig]="home"></sto-app-header>`,
-  props: {
-    test: boolean('Style as test environment', false),
-    envName: 'Systemtest',
-    home: {command: () => action('Clicked home')},
-    breadCrumbs: [
-      {label: 'Home', segment: 'home'},
-      {label: 'Step 2', segment: 'step2'}
-    ]
-  }
-}));
+    props: {
+      test: boolean('Style as test environment', false),
+      envName: 'Systemtest',
+      home: {command: () => action('Clicked home')},
+      breadCrumbs: [
+        {label: 'Home', segment: 'home'},
+        {label: 'Step 2', segment: 'step2'}
+      ]
+    }
+  }),
+  {
+    notes: {markdown: appHeaderReadme}
+  });
 
 stories.add('ActionFooter', () => ({
   moduleMetadata: {
