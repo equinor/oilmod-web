@@ -8,8 +8,8 @@ FROM node:alpine as builder
 #ENV HTTPS_PROXY=$HTTP_PROXY
 
 COPY package.json yarn.lock ./
-RUN yarn config set proxy $HTTP_PROXY
-RUN yarn config set https-proxy $HTTP_PROXY
+#RUN yarn config set proxy $HTTP_PROXY
+#RUN yarn config set https-proxy $HTTP_PROXY
 RUN yarn
 
 RUN mkdir /client && cp -R ./node_modules ./client
