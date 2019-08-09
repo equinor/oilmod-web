@@ -36,3 +36,43 @@ Card title
 }), {
   notes: 'Card with sto-style is largely used for input fields, to align the title with labels.'
 });
+
+
+stories.add('Stogrid', () => ({
+  moduleMetadata: {
+    declarations: [],
+    imports: [BrowserAnimationsModule, CommonModule]
+  },
+  template: `
+<div class="sto-grid sto-grid--2" style="margin-bottom: 8px;">
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>  
+</div>
+<div class="sto-grid sto-grid--3" style="margin-bottom: 8px;">
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>  
+</div>
+<div class="sto-grid sto-grid--4" style="margin-bottom: 8px;">
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
+</div>
+<div class="sto-grid sto-grid--6" style="margin-bottom: 8px;">
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+</div>
+  `,
+  props: {
+    withClasses: boolean('Use styling', true),
+    disabled: boolean('disabled', false),
+    readonly: boolean('readonly', false),
+  }
+}), {
+  notes: 'sto-grid--4 is responsive and wraps'
+});

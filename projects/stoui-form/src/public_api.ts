@@ -13,3 +13,4 @@ export * from './lib/sto-number-input/sto-number-input.pipe';
 export * from './lib/sto-select-filter/sto-select-filter.component';
 export * from './lib/sto-select-filter/sto-select-filter.module';
 export * from './lib/sto-slide-toggle/sto-slide-toggle.component';
+export * from './lib/sto-form/sto-form.module';
