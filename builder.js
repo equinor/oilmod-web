@@ -58,6 +58,22 @@ const last = [
 runner()
   .catch(console.error);
 
+async function publish(projectName) {
+  const project = projects[projectName];
+  if (!project) {
+    throw new Error(`${projectName} is not a valid project`);
+  }
+  const release = process.argv.includes('--release');
+  if (!release) {
+    return;
+  }
+  const {stdout, stderr} = await exec(`cd ${path.join(__dirname, 'dist', project.name)} && yarn publish --non-interactive && cd ${__dirname}`);
+  if (stderr) {
+    console.error('Failed to publish', stderr);
+    return;
+  }
+  console.log(`${projectName} published successfully.`)
+}
 
 async function buildOne(projectName) {
   if (projectName !== 'core') {
@@ -72,6 +88,7 @@ async function buildOne(projectName) {
   if (project.extra) {
     await project.extra();
   }
+  await publish(projectName);
 }
 
 async function hasCore() {
