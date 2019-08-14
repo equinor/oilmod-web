@@ -60,6 +60,10 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
         if ( disabled ) {
           el.classList.add('sto-form__field--disabled');
         }
+        if ( this.input.first instanceof MatInput ) {
+          const inputEl = this.input.first[ '_elementRef' ] as ElementRef<HTMLInputElement>;
+          inputEl.nativeElement.autocomplete = 'off';
+        }
       });
   }
 
