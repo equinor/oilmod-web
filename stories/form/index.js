@@ -163,13 +163,17 @@ stories.add('MatSelect filter', () => ({
 
 stories.add('StoFormField', () => ({
   moduleMetadata: {
-    imports: [MatFormFieldModule, MatInputModule, StoFormModule, BrowserAnimationsModule],
+    imports: [MatFormFieldModule, MatInputModule, StoFormModule, MatSelectModule, BrowserAnimationsModule],
     providers: [{provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}]
   },
   template: `<div class="sto-form">
 <mat-form-field stoFormField *ngIf="withClasses">
 <mat-label>Form field with styles</mat-label>
 <input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
+</mat-form-field>
+<mat-form-field stoFormField *ngIf="withClasses">
+<mat-label>Form field with styles</mat-label>
+<mat-select><mat-option>A</mat-option></mat-select>
 </mat-form-field>
 <mat-form-field appearance="fill" *ngIf="!withClasses">
 <mat-label>Form field without styles</mat-label>
