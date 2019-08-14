@@ -4,6 +4,7 @@ import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule} from
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
+import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
 import {StoUserPreferenceModule} from "@ngx-stoui/core";
 
 const stories = storiesOf('Core (styling)', module)
@@ -37,8 +38,7 @@ Card title
   notes: 'Card with sto-style is largely used for input fields, to align the title with labels.'
 });
 
-
-stories.add('Stogrid', () => ({
+stories.add('StoGrid', () => ({
   moduleMetadata: {
     declarations: [],
     imports: [BrowserAnimationsModule, CommonModule]
@@ -66,6 +66,36 @@ stories.add('Stogrid', () => ({
   <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
   <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
   <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+</div>
+  `,
+  props: {
+    withClasses: boolean('Use styling', true),
+    disabled: boolean('disabled', false),
+    readonly: boolean('readonly', false),
+  }
+}), {
+  notes: 'sto-grid--4 is responsive and wraps'
+});
+
+
+stories.add('StoGridDirective', () => ({
+  moduleMetadata: {
+    declarations: [],
+    imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule]
+  },
+  template: `
+<div style="background: white; display: block; width: 94vw; height: 300px;" stoGrid [stoGridMax]="228" [stoGridMin]="216" #grid="stoGrid">
+<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn style="background: blue"></div>
+</div>
+<br>
+<div style="background: white; width: 94vw;;" stoGrid [stoGridMax]="456" [stoGridMin]="432" >
+<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn style="background: blue"></div>
 </div>
   `,
   props: {
