@@ -84,18 +84,19 @@ stories.add('StoGridDirective', () => ({
     imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule]
   },
   template: `
-<div style="background: white; display: block; width: 94vw; height: 300px;" stoGrid [stoGridMax]="228" [stoGridMin]="216" #grid="stoGrid">
+<div style="background: white;" stoGrid>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
-</div>
-<br>
-<div style="background: white; width: 94vw;;" stoGrid [stoGridMax]="456" [stoGridMin]="432" >
+<div stoGridColumn [stoGridColumnDouble]="true" style="background: blue"></div>
+<div stoGridColumn [stoGridColumnDouble]="true" style="background: blue"></div>
+<div stoGridColumn [stoGridColumnDouble]="true" stoGridSpacer></div>
+<div stoGridColumn [stoGridColumnDouble]="true" style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
+<div stoGridColumn stoGridSpacer></div>
 </div>
   `,
   props: {
