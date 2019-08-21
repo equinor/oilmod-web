@@ -39,10 +39,12 @@ export class StoGridColumnDirective {
   exportAs: 'stoGrid'
 })
 export class StoGridDirective implements AfterViewInit, AfterContentInit {
+  @HostBinding('style.max-width.px')
   @Input()
-  stoGridMin: number;
+  maxWidth = 1000;
+  @HostBinding('style.min-width.px')
   @Input()
-  stoGridMax: number;
+  minWidth = 250;
   @HostBinding('class.sto-f-grid')
   baseClass = true;
   @ContentChildren(StoGridColumnDirective, { read: ElementRef })

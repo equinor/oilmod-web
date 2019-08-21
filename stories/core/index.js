@@ -84,7 +84,7 @@ stories.add('StoGridDirective', () => ({
     imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule]
   },
   template: `
-<div style="background: white;" stoGrid>
+<div style="background: white;" stoGrid [maxWidth]="1000">
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>

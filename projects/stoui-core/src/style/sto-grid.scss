@@ -79,3 +79,67 @@
 }
 
 
+/**
+Flexible, dynamic grid
+automatically resizes between 1 and 4 columns, depending on available space
+Use with StoGridDirective
+ */
+.sto-f-grid {
+  background: slategray;
+  display: flex;
+  flex-wrap: wrap;
+
+  &__col {
+    height: 50px;
+    margin: 8px;
+
+    &--spacer {
+      background: transparent;
+    }
+  }
+
+  &--1 {
+    .sto-f-grid__col--spacer {
+      display: none;
+    }
+
+    .sto-f-grid__col, .sto-f-grid__col--2 {
+      flex: 1 1 calc(100% - 16px);
+    }
+  }
+
+  &--2 {
+    .sto-f-grid__col {
+      flex: 1 1 calc(50% - 16px);
+    }
+
+    .sto-f-grid__col--2 {
+      flex: 1 1 100%;
+
+      &.sto-f-grid__col--spacer {
+        display: none;
+
+      }
+    }
+  }
+
+  &--4 {
+    .sto-f-grid__col {
+      flex: 1 1 calc(25% - 16px);
+    }
+
+    .sto-f-grid__col--2 {
+      flex: 1 1 calc(50% - 16px);
+    }
+  }
+
+  &--6 {
+    .sto-f-grid__col {
+      flex: 1 1 calc(16.667% - 16px);
+    }
+
+    .sto-f-grid__col--2 {
+      flex: 1 1 calc(16.667% - 16px);
+    }
+  }
+}
