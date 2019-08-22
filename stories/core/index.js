@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, withKnobs} from '@storybook/addon-knobs';
+import {boolean, object, withKnobs} from '@storybook/addon-knobs';
 import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
@@ -77,14 +77,13 @@ stories.add('StoGrid', () => ({
   notes: 'sto-grid--4 is responsive and wraps'
 });
 
-
 stories.add('StoGridDirective', () => ({
   moduleMetadata: {
     declarations: [],
     imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule]
   },
   template: `
-<div style="background: white;" stoGrid [maxWidth]="1000">
+<div style="background: white;" stoGrid [maxWidth]="1400" [breakpoints]="breakpoints">
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
 <div stoGridColumn style="background: blue"></div>
@@ -100,10 +99,11 @@ stories.add('StoGridDirective', () => ({
 </div>
   `,
   props: {
-    withClasses: boolean('Use styling', true),
-    disabled: boolean('disabled', false),
-    readonly: boolean('readonly', false),
+    breakpoints: object('Breakpoints', {
+      2: 600,
+      4: 1200
+    })
   }
 }), {
-  notes: 'sto-grid--4 is responsive and wraps'
+  notes: 'StoGridDirective is designed to be a responsive grid, which bases itself on the container size to determine how big each column should be.'
 });

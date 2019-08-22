@@ -2,10 +2,13 @@ import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Inp
 
 declare var ResizeObserver: any;
 
-const getClass = (width: number) => {
+interface BreakpointConfig {
+  2: number;
+  4: number;
+}
+
+const getClass = (width: number, small = 400, large = 800) => {
   let cols = 1;
-  const small = 400;
-  const large = 800;
   if ( width > small ) {
     cols += 1;
   }
@@ -49,6 +52,9 @@ export class StoGridDirective implements AfterViewInit, OnDestroy {
   baseClass = true;
   @ContentChildren(StoGridColumnDirective, { read: ElementRef })
   columns: QueryList<ElementRef<HTMLElement>>;
+  @Input()
+  breakpoints: BreakpointConfig;
+
   private observer: any;
 
   constructor(
@@ -62,7 +68,8 @@ export class StoGridDirective implements AfterViewInit, OnDestroy {
       for ( const entry of entries ) {
         const cr = entry.contentRect;
         const { width } = cr;
-        const gridType = getClass(width);
+        const breakpoints = this.breakpoints || { 2: 400, 4: 800 };
+        const gridType = getClass(width, breakpoints[ 2 ], breakpoints[ 4 ]);
         if ( !el.classList.contains(gridType) ) {
           el.classList.remove(...ALL_GRIDS);
           el.classList.add(gridType);
