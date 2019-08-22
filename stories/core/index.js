@@ -6,6 +6,7 @@ import {CommonModule} from "@angular/common";
 import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
 import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
 import {StoUserPreferenceModule} from "@ngx-stoui/core";
+import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.module";
 
 const stories = storiesOf('Core (styling)', module)
   .addDecorator(withKnobs);
@@ -80,30 +81,33 @@ stories.add('StoGrid', () => ({
 stories.add('StoGridDirective', () => ({
   moduleMetadata: {
     declarations: [],
-    imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule]
+    imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule, StoNumberInputModule]
   },
   template: `
-<div style="background: white;" stoGrid [maxWidth]="1400" [breakpoints]="breakpoints">
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn [stoGridColumnDouble]="true" style="background: blue"></div>
-<div stoGridColumn [stoGridColumnDouble]="true" style="background: blue"></div>
-<div stoGridColumn [stoGridColumnDouble]="true" stoGridSpacer></div>
-<div stoGridColumn [stoGridColumnDouble]="true" style="background: blue"></div>
-<div stoGridColumn style="background: blue"></div>
-<div stoGridColumn stoGridSpacer></div>
+<div style="background: white;" stoGrid [maxWidth]="1000" [breakpoints]="breakpoints">
+<div stoGridColumn style="background: lightblue;">1 (col)</div>
+<div stoGridColumn style="background: lightblue;">2 (col)</div>
+<div stoGridColumn style="background: lightblue;">3 (col)</div>
+<div stoGridColumn style="background: lightblue;">4 (col)</div>
+<div stoGridColumn style="background: lightblue;">5 (col)</div>
+<div stoGridColumn style="background: lightblue;">6 (col)</div>
+<div stoGridColumn [stoGridColumnDouble]="true" style="background: lightblue;">7 (double col)</div>
+<div stoGridColumn [stoGridColumnDouble]="true" style="background: lightblue;">8 (double col)</div>
+<div stoGridColumn [stoGridColumnDouble]="true" stoGridSpacer>9 (double spacer, hidden on 2-col)</div>
+<div stoGridColumn [stoGridColumnDouble]="true" style="background: lightblue;">10 (double col)</div>
+<div stoGridColumn style="background: lightblue;">11 (col)</div>
+<div stoGridColumn stoGridSpacer>12 (spacer, hidden on 1-col)</div>
+<div stoGridColumn style="background: transparent;" class="sto-form"><sto-number-input [forceValue]="123.456" label="Input field in grid"></sto-number-input></div>
+<div stoGridColumn stoGridSpacer style="background: lightblue;">13 (col spacer, hidden on 1-col grid)</div>
+<div stoGridColumn stoGridSpacer style="background: lightblue;" [stoGridColumnDouble]="true" >14 (double spacer, hidden on 2-col)</div>
 </div>
   `,
   props: {
     breakpoints: object('Breakpoints', {
-      2: 600,
-      4: 1200
+      2: 400,
+      4: 800
     })
   }
 }), {
-  notes: 'StoGridDirective is designed to be a responsive grid, which bases itself on the container size to determine how big each column should be.'
+  notes: 'StoGridDirective is designed to be a responsive grid, which bases itself on the container size to determine how big each column should be. NOTE: Will only function in Chrome / Chromium'
 });

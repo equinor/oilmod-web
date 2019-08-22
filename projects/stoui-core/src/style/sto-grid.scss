@@ -85,16 +85,16 @@ automatically resizes between 1 and 4 columns, depending on available space
 Use with StoGridDirective
  */
 .sto-f-grid {
-  background: slategray;
   display: flex;
   flex-wrap: wrap;
 
   &__col {
-    height: 50px;
+    min-height: 24px;
     margin: 8px;
+    overflow: hidden;
 
     &--spacer {
-      background: transparent;
+      visibility: hidden;
     }
   }
 
