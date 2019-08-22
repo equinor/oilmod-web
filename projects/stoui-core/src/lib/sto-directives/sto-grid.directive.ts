@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, QueryList } from '@angular/core';
+import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, OnDestroy, QueryList } from '@angular/core';
 
 declare var ResizeObserver: any;
 
@@ -38,7 +38,7 @@ export class StoGridColumnDirective {
   selector: '[stoGrid]',
   exportAs: 'stoGrid'
 })
-export class StoGridDirective implements AfterViewInit, AfterContentInit {
+export class StoGridDirective implements AfterViewInit, OnDestroy {
   @HostBinding('style.max-width.px')
   @Input()
   maxWidth = 1000;
@@ -49,6 +49,7 @@ export class StoGridDirective implements AfterViewInit, AfterContentInit {
   baseClass = true;
   @ContentChildren(StoGridColumnDirective, { read: ElementRef })
   columns: QueryList<ElementRef<HTMLElement>>;
+  private observer: any;
 
   constructor(
     private elRef: ElementRef<HTMLElement>,
@@ -57,7 +58,7 @@ export class StoGridDirective implements AfterViewInit, AfterContentInit {
 
   ngAfterViewInit() {
     const el = this.elRef.nativeElement as HTMLElement;
-    new ResizeObserver(entries => {
+    this.observer = new ResizeObserver(entries => {
       for ( const entry of entries ) {
         const cr = entry.contentRect;
         const { width } = cr;
@@ -67,10 +68,12 @@ export class StoGridDirective implements AfterViewInit, AfterContentInit {
           el.classList.add(gridType);
         }
       }
-    }).observe(this.elRef.nativeElement);
+    });
+    this.observer.observe(this.elRef.nativeElement);
   }
 
-  ngAfterContentInit() {
+  ngOnDestroy() {
+    this.observer.disconnect();
   }
 
 }
