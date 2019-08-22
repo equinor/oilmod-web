@@ -7,6 +7,8 @@ import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form
 import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
 import {StoUserPreferenceModule} from "@ngx-stoui/core";
 import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.module";
+import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
+import {columns, rows} from '../datatable/rows';
 
 const stories = storiesOf('Core (styling)', module)
   .addDecorator(withKnobs);
@@ -81,9 +83,10 @@ stories.add('StoGrid', () => ({
 stories.add('StoGridDirective', () => ({
   moduleMetadata: {
     declarations: [],
-    imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule, StoNumberInputModule]
+    imports: [BrowserAnimationsModule, CommonModule, StoDirectivesModule, StoNumberInputModule, MatCardModule, StoDatatableModule]
   },
   template: `
+<mat-card class="sto-card">
 <div style="background: white;" stoGrid [maxWidth]="1000" [breakpoints]="breakpoints">
 <div stoGridColumn style="background: lightblue;">1 (col)</div>
 <div stoGridColumn style="background: lightblue;">2 (col)</div>
@@ -101,12 +104,19 @@ stories.add('StoGridDirective', () => ({
 <div stoGridColumn stoGridSpacer style="background: lightblue;">13 (col spacer, hidden on 1-col grid)</div>
 <div stoGridColumn stoGridSpacer style="background: lightblue;" [stoGridColumnDouble]="true" >14 (double spacer, hidden on 2-col)</div>
 </div>
+</mat-card>
+<mat-card class="sto-card">
+<sto-datatable [responsiveView]="resp" [responsive]="true" [responsiveBreakPoint]="breakpoints[2] - 15" style="box-shadow: none" [columns]="columns" [rows]="rows"></sto-datatable>
+<ng-template #resp let-row="row">{{ row.invoiceNo }} -- {{ row.voyageNo }}</ng-template>
+</mat-card>
   `,
   props: {
     breakpoints: object('Breakpoints', {
       2: 400,
       4: 800
-    })
+    }),
+    columns: columns,
+    rows: rows
   }
 }), {
   notes: 'StoGridDirective is designed to be a responsive grid, which bases itself on the container size to determine how big each column should be. NOTE: Will only function in Chrome / Chromium'
