@@ -105,8 +105,8 @@ stories.add('StoGridDirective', () => ({
 <div stoGridColumn stoGridSpacer style="background: lightblue;" [stoGridColumnDouble]="true" >14 (double spacer, hidden on 2-col)</div>
 </div>
 </mat-card>
-<mat-card class="sto-card">
-<sto-datatable [responsiveView]="resp" [responsive]="true" [responsiveBreakPoint]="breakpoints[2] - 15" style="box-shadow: none" [columns]="columns" [rows]="rows"></sto-datatable>
+<mat-card class="sto-card sto-card--table">
+<sto-datatable [elevation]="false" [autoSize]="true" [autoSizeOffset]="30" [responsiveView]="resp" [responsive]="true" [responsiveBreakPoint]="breakpoints[2] - 15" [columns]="columns" [rows]="rows"></sto-datatable>
 <ng-template #resp let-row="row">{{ row.invoiceNo }} -- {{ row.voyageNo }}</ng-template>
 </mat-card>
   `,

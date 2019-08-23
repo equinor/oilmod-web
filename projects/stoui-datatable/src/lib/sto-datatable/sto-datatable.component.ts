@@ -106,6 +106,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   rowClass: Function;
 
   @HostBinding('class.mat-elevation-z3')
+  @Input()
   elevation = true;
 
   @Input()
