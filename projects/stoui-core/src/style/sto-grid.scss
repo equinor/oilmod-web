@@ -92,7 +92,8 @@ Use with StoGridDirective
 
   &__col {
     min-height: 24px;
-    margin: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
     overflow: hidden;
 
     &--spacer {
