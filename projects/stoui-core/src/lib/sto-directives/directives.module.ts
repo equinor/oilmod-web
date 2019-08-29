@@ -6,18 +6,22 @@ import { StoIgnoreContextmenuBackdropDirective } from './sto-ignore-contextmenu-
 import { StoMenuFocusDirective } from './menu-focus.directive';
 import { DateFormFieldClickDirective } from './date-form-field-click.directive';
 import { StoSelectTextOnFocusDirective } from './sto-select-text-on-focus.directive';
+import { StoGridColumnDirective, StoGridDirective, StoGridSpacerDirective } from './sto-grid.directive';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [ CommonModule, LayoutModule ],
   declarations: [
-     QuickKeysDirective
-   , StoIgnoreMenuBackdropDirective
-   , StoIgnoreContextmenuBackdropDirective
-   , StoMenuFocusDirective
-   , DateFormFieldClickDirective
-   , StoSelectTextOnFocusDirective
-   ,
+    QuickKeysDirective
+    , StoIgnoreMenuBackdropDirective
+    , StoIgnoreContextmenuBackdropDirective
+    , StoMenuFocusDirective
+    , DateFormFieldClickDirective
+    , StoSelectTextOnFocusDirective
+    , StoGridDirective
+    , StoGridColumnDirective
+    , StoGridSpacerDirective
   ],
   exports: [
     QuickKeysDirective
@@ -26,6 +30,10 @@ import { StoSelectTextOnFocusDirective } from './sto-select-text-on-focus.direct
     , StoMenuFocusDirective
     , DateFormFieldClickDirective
     , StoSelectTextOnFocusDirective
+    , StoGridDirective
+    , StoGridColumnDirective
+    , StoGridSpacerDirective
   ]
 })
-export class StoDirectivesModule {}
+export class StoDirectivesModule {
+}

@@ -5,7 +5,7 @@
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
-    "@ngx-stoui/core": "^5.0.0",
+    "@ngx-stoui/core": "^6.0.0",
     "@types/adal-angular": "^1.0.1",
     "adal-angular": "^1.0.17"
   }
