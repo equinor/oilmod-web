@@ -64,6 +64,13 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
     }
   }
 
+  &__header-group {
+    &__cell {
+      position: absolute;
+      overflow: hidden;
+    }
+  }
+
   &__body {
     &--scrollbar-h {
       .cdk-virtual-scroll-content-wrapper {

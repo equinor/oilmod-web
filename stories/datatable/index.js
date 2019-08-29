@@ -1,7 +1,7 @@
 import {storiesOf} from '@storybook/angular';
 import {boolean, number, withKnobs} from "@storybook/addon-knobs";
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
-import {columns, manyColumns, rows} from './rows';
+import {columns, fixedColumns, rows} from './rows';
 import {action} from "@storybook/addon-actions";
 
 const stories = storiesOf('Datatable - StoDatatable', module)
@@ -15,6 +15,7 @@ stories
     },
     template: `<div>
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
+[columnGroups]="columnGroups"
 [rowHeight]="rowHeight"
 [scrollbarH]="horizontalScroll"
 [footerRow]="showFooter ? footerRow : null"
@@ -25,7 +26,7 @@ stories
 </div>`,
     props: {
       rows,
-      columns: manyColumns,
+      columns: fixedColumns,
       select: action('Selection made'),
       contextMenu: action('Context menu'),
       selected: null,
@@ -36,6 +37,11 @@ stories
       height: number('Height', 400),
       rowHeight: number('Rowheight', 40),
       headerHeight: number('Headerheight', 22),
+      columnGroups: [
+        {name: 'Firstgroup', columnStart: 1, columnEnd: 3},
+        {name: 'Firstgroup', columnStart: 4, columnEnd: 6},
+        {name: 'Firstgroup', columnStart: 7, columnEnd: 9},
+      ]
     }
   }));
 

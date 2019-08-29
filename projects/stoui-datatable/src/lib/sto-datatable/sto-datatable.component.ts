@@ -13,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Column } from './columns';
+import { Column, ColumnGroup } from './columns';
 import { HeaderContextMenu, RowActivation, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { fromEvent, Observable, of } from 'rxjs';
@@ -66,9 +66,11 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     }
     const hasHeader = !this.responsive || ( this.responsive && !this.smallScreen );
     const hasFooter = this.footerRow && ( !this.responsive || ( this.responsive && !this.smallScreen ) );
+    const hasHeaderGroup = ( !this.responsive || ( this.responsive && !this.smallScreen ) ) && this.columnGroups;
     const headerOffset = hasHeader ? this.headerHeight : 0;
     const footerOffset = hasFooter && !this.body.horizontalScrollActive ? this.rowHeight : 0;
-    return this.height - headerOffset - footerOffset;
+    const groupOffset = hasHeaderGroup ? this.headerHeight : 0;
+    return this.height - headerOffset - footerOffset - groupOffset;
   }
 
   @Input()
@@ -123,6 +125,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
         } ));
     }
   }
+
+  @Input()
+  columnGroups: ColumnGroup[];
 
   private _columns: Column[];
   @Output()

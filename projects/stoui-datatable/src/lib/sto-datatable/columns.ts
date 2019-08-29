@@ -15,4 +15,11 @@ export class Column {
   headerClass?: string | ClassFunction;
 }
 
+export class ColumnGroup {
+  name: string;
+  columnStart: number;
+  columnEnd: number;
+  transform?: string;
+}
+
 type ClassFunction = <T = any, U = any>(value: T, row: U, column: Column) => string | string[];

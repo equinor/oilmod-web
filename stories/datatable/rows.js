@@ -640,6 +640,10 @@ export const columns = [
     cellClass: 'a-cell-class'
   }
 ];
+export const fixedColumns = [...columns.map(col => ({...col, flexGrow: 0})), ...columns.map(col => ({
+  ...col,
+  flexGrow: 0
+}))];
 
 export const manyColumns = [...columns, ...columns, ...columns];
 

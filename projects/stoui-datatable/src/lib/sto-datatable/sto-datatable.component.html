@@ -1,5 +1,11 @@
 <div class="sto-mdl-table"
      [style.height.px]="height$ | async">
+  <sto-datatable-header-group *ngIf="(!responsive || (responsive && !smallScreen)) && columnGroups && this.scrollbarH"
+                              [width]="width"
+                              [height]="headerHeight"
+                              [transform]="scrollLeft"
+                              [columns]="columns"
+                              [groups]="columnGroups"></sto-datatable-header-group>
   <div class="sto-mdl-table__header"
        [style.overflow-y]="'hidden'"
        [style.overflowX]="'hidden'"
