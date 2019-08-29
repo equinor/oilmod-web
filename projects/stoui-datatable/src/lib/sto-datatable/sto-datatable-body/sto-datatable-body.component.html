@@ -1,5 +1,5 @@
 <cdk-virtual-scroll-viewport [itemSize]="(!smallView || !responsive) ? rowHeight : 80"
-                             *ngIf="virtualScroll; else noScroll"
+                             *ngIf="virtualScroll"
                              [style.height.px]="(height || 500) "
                              (scroll)="scrollHeader.emit($event)"
                              [class.sto-mdl-table__body--selectable]="selectable"
@@ -25,62 +25,61 @@
   </sto-datatable-body-row>
 </cdk-virtual-scroll-viewport>
 
-<ng-template #noScroll>
-  <div class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
-       (scroll)="scrollHeader.emit($event)"
-       #scroller
-       [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
-       [class.sto-mdl-table__body--selectable]="selectable"
-       [style.padding-bottom.px]="horizontalScrollActive && hasFooter ? rowHeight : 0"
-       [style.height]="height ? (height + 'px') : 'auto'">
+<div class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
+     *ngIf="!virtualScroll"
+     (scroll)="scrollHeader.emit($event)"
+     #scroller
+     [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
+     [class.sto-mdl-table__body--selectable]="selectable"
+     [style.padding-bottom.px]="horizontalScrollActive && hasFooter ? rowHeight : 0"
+     [style.height]="height ? (height + 'px') : 'auto'">
 
-    <sto-datatable-body-row *ngFor="let row of rows; let i = index; trackBy: trackBy"
-                            [style.min-width]="width"
-                            [tabindex]="0"
-                            [columns]="columns"
-                            [row]="row"
-                            [responsiveView]="responsiveView"
-                            [rowIndex]="i"
-                            [rowClass]="rowClass"
-                            #rowEl
-                            (keydown)="onKeyDownHandler($event, rowEl.element, {index: i, event: $event, row: row})"
-                            [isSelected]="selected === row"
-                            [compressedView]="smallView && responsive"
-                            (rowContextMenu)="rowContextMenu.emit($event)"
-                            (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
-                            (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
-                            [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
-    </sto-datatable-body-row>
-    <!--<div *ngFor="let row of rows; let i = index; trackBy: trackBy"
-         [tabindex]="0"
-         #rowEl
-         (keydown)="onKeyDownHandler($event, rowEl, {index: i, event: $event, row: row})"
-         [ngClass]="_rowClass | exec:row"
-         [class.sto-mdl-table__body__row&#45;&#45;selected]="selected === row"
-         (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl})"
-         [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
-      <ng-container *ngIf="smallView && responsive; else regular">
-        <ng-template [ngTemplateOutlet]="responsiveView"
-                     [ngTemplateOutletContext]="{row: row}">
-        </ng-template>
-      </ng-container>
-      <ng-template #regular>
-        <div class="sto-mdl-table__body__row__cell"
-             [ngClass]="column.cellClass | exec:row[column.prop]:row:column"
-             [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
-             [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
-             [style.flex-basis]="(column.flexBasis || 80) + 'px'"
-             (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: i})"
-             *ngFor="let column of columns;">
-          <span *ngIf="!column.cellTemplate"
-                [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
-          <ng-template #cellTemplate
-                       *ngIf="column.cellTemplate"
-                       [ngTemplateOutlet]="column.cellTemplate"
-                       [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: i}">
-          </ng-template>
-        </div>
+  <sto-datatable-body-row *ngFor="let row of rows; let i = index; trackBy: trackBy"
+                          [style.min-width]="width"
+                          [tabindex]="0"
+                          [columns]="columns"
+                          [row]="row"
+                          [responsiveView]="responsiveView"
+                          [rowIndex]="i"
+                          [rowClass]="rowClass"
+                          #rowEl
+                          (keydown)="onKeyDownHandler($event, rowEl.element, {index: i, event: $event, row: row})"
+                          [isSelected]="selected === row"
+                          [compressedView]="smallView && responsive"
+                          (rowContextMenu)="rowContextMenu.emit($event)"
+                          (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
+  </sto-datatable-body-row>
+  <!--<div *ngFor="let row of rows; let i = index; trackBy: trackBy"
+       [tabindex]="0"
+       #rowEl
+       (keydown)="onKeyDownHandler($event, rowEl, {index: i, event: $event, row: row})"
+       [ngClass]="_rowClass | exec:row"
+       [class.sto-mdl-table__body__row&#45;&#45;selected]="selected === row"
+       (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl})"
+       [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
+    <ng-container *ngIf="smallView && responsive; else regular">
+      <ng-template [ngTemplateOutlet]="responsiveView"
+                   [ngTemplateOutletContext]="{row: row}">
       </ng-template>
-    </div>-->
-  </div>
-</ng-template>
+    </ng-container>
+    <ng-template #regular>
+      <div class="sto-mdl-table__body__row__cell"
+           [ngClass]="column.cellClass | exec:row[column.prop]:row:column"
+           [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
+           [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
+           [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+           (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: i})"
+           *ngFor="let column of columns;">
+        <span *ngIf="!column.cellTemplate"
+              [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
+        <ng-template #cellTemplate
+                     *ngIf="column.cellTemplate"
+                     [ngTemplateOutlet]="column.cellTemplate"
+                     [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: i}">
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>-->
+</div>

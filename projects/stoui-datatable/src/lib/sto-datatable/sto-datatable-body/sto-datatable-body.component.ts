@@ -149,6 +149,9 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   }
 
   private horzScrollPosition() {
+    if ( !this.scroller ) {
+      return;
+    }
     const elRef = this.scroller.nativeElement;
     const cb = (entries) => {
       if ( !this.hasFooter ) {

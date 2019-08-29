@@ -33,8 +33,8 @@ export class StoDatatableHeaderGroupComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ( changes.groups || changes.columns ) {
-      const groups: ColumnGroup[] = changes.groups.currentValue || this.groups;
-      const columns = changes.columns.currentValue || this.columns;
+      const groups: ColumnGroup[] = changes.groups ? changes.groups.currentValue : this.groups;
+      const columns = changes.columns ? changes.columns.currentValue : this.columns;
       if ( groups && columns ) {
         groups.forEach(group => {
           group.transform = this.testOffset(group);
