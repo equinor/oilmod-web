@@ -17,6 +17,7 @@ stories
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
 [rowHeight]="rowHeight"
+[sortable]="sortable"
 [scrollbarH]="horizontalScroll"
 [footerRow]="showFooter ? footerRow : null"
 [headerHeight]="headerHeight"
@@ -37,6 +38,7 @@ stories
       height: number('Height', 400),
       rowHeight: number('Rowheight', 40),
       headerHeight: number('Headerheight', 22),
+      sortable: boolean('Sortable', true),
       columnGroups: [
         {name: 'First group', columnStart: 1, columnEnd: 3},
         {name: 'Second group', columnStart: 4, columnEnd: 6},

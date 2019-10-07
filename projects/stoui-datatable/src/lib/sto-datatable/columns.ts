@@ -13,6 +13,7 @@ export class Column {
   footerTemplate?: TemplateRef<any>;
   cellClass?: string | ClassFunction;
   headerClass?: string | ClassFunction;
+  sortFn?: SortFunction;
 }
 
 export class ColumnGroup {
@@ -23,3 +24,4 @@ export class ColumnGroup {
 }
 
 type ClassFunction = <T = any, U = any>(value: T, row: U, column: Column) => string | string[];
+type SortFunction = <T = any>(a: T, b: T, column: Column) => number;

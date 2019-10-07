@@ -605,10 +605,18 @@ export const rows = [
 export const columns = [
   {
     prop: 'invoiceNo',
-    name: 'Invoice#',
+    name: 'Invoice# (randsort)',
     flexBasis: 200,
     flexShrink: 1,
-    flexGrow: 1
+    flexGrow: 1,
+    // random sort
+    sortFn: (a, b, column) => {
+      let n = Math.round(Math.random() * 1000);
+      if (n < 500) {
+        n = -n;
+      }
+      return n;
+    }
   },
   {
     prop: 'voyageNo',

@@ -10,6 +10,8 @@ import { StoDatatableBodyRowComponent } from './sto-datatable-body/sto-datatable
 import { columns, rows } from '../../testing/utils';
 import { SelectionModes } from './selection-modes';
 import { MaterialModule } from '@testing/material.module';
+import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
+import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
 
 let comp: StoDatatableComponent;
 let fixture: ComponentFixture<StoDatatableComponent>;
@@ -55,6 +57,8 @@ describe('StoDatatableComponent', () => {
           , StoDatatableBodyComponent
           , ExecPipe
           , StoDatatableBodyRowComponent
+          , StoDatatableHeaderComponent
+          , StoDatatableHeaderGroupComponent
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
@@ -173,6 +177,8 @@ describe('StoDatatableComponent with automatic height', () => {
           , StoDatatableBodyComponent
           , ExecPipe
           , StoDatatableBodyRowComponent
+          , StoDatatableHeaderComponent
+          , StoDatatableHeaderGroupComponent
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
@@ -236,6 +242,8 @@ describe('StoDatatableComponent with responsive template height', () => {
           , ExecPipe
           , StoDatatableBodyRowComponent
           , WrapperComponent
+          , StoDatatableHeaderComponent
+          , StoDatatableHeaderGroupComponent
         ],
       })
       .compileComponents()

@@ -42,6 +42,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   headerHeight = 24;
   @Input()
   selectionMode: SelectionModes = SelectionModes.Click;
+  @Input()
+  sortable: boolean;
 
   @Input()
   get height() {
@@ -79,7 +81,17 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   autoSizeOffset = 0;
 
   @Input()
-  rows: T[];
+  set rows(rows: T[]) {
+    this._rows = rows;
+    this._internalRows = [ ...rows ];
+  }
+
+  get rows() {
+    return this._internalRows;
+  }
+
+  private _rows: T[];
+  private _internalRows: T[];
   @Input()
   selected: T;
   @Input('footerRow')
@@ -119,9 +131,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   set columns(columns: Column[]) {
     if ( columns ) {
       this._columns = columns
-        .map(column => ( {
+        .map((column, index) => ( {
           ...column,
-          $$id: btoa(`${column.prop}${column.name}`)
+          $$id: btoa(`${column.prop}${column.name}${index}`)
         } ));
     }
   }
@@ -152,6 +164,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
+  public activeSortId: string;
+
+
   @Input()
   trackBy = (item: T, index: number) => {
     return index;
@@ -245,5 +260,39 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     const str = `translate3d(-${left}px, 0px, 0px)`;
     this.scrollLeft = str;
     this.cdr.detectChanges();
+  }
+
+  sort({ column, sortDir }: { column: Column, sortDir: 'asc' | 'desc' | null }) {
+    if ( sortDir === null ) {
+      this._internalRows = [ ...this._rows ];
+      this.activeSortId = null;
+      return;
+    }
+    this.activeSortId = column.$$id;
+    let rows: T[];
+    if ( column.sortFn ) {
+      rows = [ ...this._rows ].sort((a, b) => column.sortFn(a, b, column));
+    } else {
+      rows = [ ...this._rows ].sort((a, b) => this.defaultSortFn(a, b, column));
+    }
+    if ( sortDir === 'asc' ) {
+      rows.reverse();
+    }
+    this._internalRows = rows;
+    this.cdr.detectChanges();
+    this.cdr.markForCheck();
+  }
+
+  private defaultSortFn(a: T, b: T, col: Column) {
+    const aValue = a[ col.prop ];
+    const bValue = b[ col.prop ];
+    switch ( typeof aValue ) {
+      case 'string':
+        return aValue.localeCompare(bValue);
+      case 'number':
+        return aValue - bValue;
+      default:
+        return 0;
+    }
   }
 }
