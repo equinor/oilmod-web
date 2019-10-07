@@ -19,7 +19,8 @@ export class AdalConfigService {
       clientId: this.config.clientId,
       redirectUri: this.config.redirectUri,
       postLogoutRedirectUri: this.logoutUrl ? this.logoutUrl : window.location.origin,
-      navigateToLoginRequestUrl: this.navigateToLoginRequestUrl
+      navigateToLoginRequestUrl: this.navigateToLoginRequestUrl,
+      cacheLocation: this.config.cacheLocation || 'sessionStorage'
     };
   }
 }
