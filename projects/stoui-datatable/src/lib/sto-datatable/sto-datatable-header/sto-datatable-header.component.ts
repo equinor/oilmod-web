@@ -49,7 +49,7 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
   }
 
   sortByColumn(column: Column) {
-    if ( !this.sortable ) {
+    if ( !this.sortable || column.disableSort ) {
       return;
     }
     if ( column.$$id === this.activeSortId && this.sortDirection === 'asc' ) {

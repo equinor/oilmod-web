@@ -14,6 +14,7 @@ export class Column {
   cellClass?: string | ClassFunction;
   headerClass?: string | ClassFunction;
   sortFn?: SortFunction;
+  disableSort?: boolean;
 }
 
 export class ColumnGroup {

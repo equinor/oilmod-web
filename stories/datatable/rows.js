@@ -622,6 +622,7 @@ export const columns = [
     prop: 'voyageNo',
     flexBasis: 200,
     name: 'Voyage#',
+    disableSort: true,
     headerClass: 'aclass',
     cellClass: (value) => {
       return 'a-cell-class';
