@@ -83,7 +83,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
-    this._internalRows = [ ...rows ];
+    this.activeSortId = null;
+    this._internalRows = [ ...( rows || [] ) ];
   }
 
   get rows() {

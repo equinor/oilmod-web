@@ -1,11 +1,24 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Column } from '../columns';
 import { HeaderContextMenu } from '../events';
+import { animate, state, style, transition, trigger, } from '@angular/animations';
 
 @Component({
   selector: 'sto-datatable-header',
   templateUrl: './sto-datatable-header.component.html',
-  styleUrls: [ './sto-datatable-header.component.scss' ]
+  styleUrls: [ './sto-datatable-header.component.scss' ],
+  animations: [
+    trigger('sort', [
+      state('open', style({ width: '24px', opacity: 1 })),
+      transition('void => *', [
+        style({ width: 0, overflow: 'hidden', opacity: 0 }),
+        animate(150)
+      ]),
+      transition('* => void', [
+        animate(150, style({ width: 0, overflow: 'hidden', opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class StoDatatableHeaderComponent<T = any> implements OnInit {
   @Input()
