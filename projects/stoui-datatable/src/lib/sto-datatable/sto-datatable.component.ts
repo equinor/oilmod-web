@@ -276,7 +276,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     } else {
       rows = [ ...this._rows ].sort((a, b) => this.defaultSortFn(a, b, column));
     }
-    if ( sortDir === 'asc' ) {
+    if ( sortDir === 'desc' ) {
       rows.reverse();
     }
     this._internalRows = rows;

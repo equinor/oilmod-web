@@ -18,8 +18,9 @@
          [style.flex-basis]="(column.flexBasis || 80) + 'px'"
          *ngFor="let column of columns; trackBy: trackColumnsFn">
       <mat-icon [@sort]="activeSortId === column.$$id ? 'open' : 'close'"
+                [title]="sortDirection === 'desc' ? 'DESC' : 'ASC'"
                 *ngIf="activeSortId === column.$$id">
-        {{ activeSortId === column.$$id && sortDirection === 'desc' ? 'arrow_upward' : 'arrow_downward' }}
+        {{ activeSortId === column.$$id && sortDirection === 'desc' ? 'arrow_downward' : 'arrow_upward' }}
       </mat-icon>
       <!--      <mat-icon [class.mat-icon&#45;&#45;active-sort]="activeSortId === column.$$id"
                       *ngIf="activeSortId === column.$$id && sortDirection === 'asc'">arrow_downward

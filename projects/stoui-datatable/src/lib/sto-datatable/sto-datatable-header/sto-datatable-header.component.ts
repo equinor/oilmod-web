@@ -9,7 +9,7 @@ import { animate, state, style, transition, trigger, } from '@angular/animations
   styleUrls: [ './sto-datatable-header.component.scss' ],
   animations: [
     trigger('sort', [
-      state('open', style({ width: '24px', opacity: 1 })),
+      state('open', style({ width: '16px', opacity: 1 })),
       transition('void => *', [
         style({ width: 0, overflow: 'hidden', opacity: 0 }),
         animate(150)
@@ -65,12 +65,12 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
     if ( !this.sortable || column.disableSort ) {
       return;
     }
-    if ( column.$$id === this.activeSortId && this.sortDirection === 'asc' ) {
+    if ( column.$$id === this.activeSortId && this.sortDirection === 'desc' ) {
       this.sortDirection = null;
-    } else if ( column.$$id === this.activeSortId && this.sortDirection === 'desc' ) {
-      this.sortDirection = 'asc';
-    } else {
+    } else if ( column.$$id === this.activeSortId && this.sortDirection === 'asc' ) {
       this.sortDirection = 'desc';
+    } else {
+      this.sortDirection = 'asc';
     }
     this.sort.emit({ column, sortDir: this.sortDirection });
   }
