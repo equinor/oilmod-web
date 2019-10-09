@@ -6,17 +6,20 @@ export class AdalConfig {
   resource: string;
   tenantId: string;
   redirectUri: string;
+  cacheLocation: 'localStorage' | 'sessionStorage' = 'sessionStorage';
 
   constructor(apiEndpoint: string,
               clientId: string,
               resource: string,
               tenantId: string,
-              redirectUri: string) {
+              redirectUri: string,
+              cacheLocation = 'sessionStorage' as any) {
     this.apiEndpoint = apiEndpoint;
     this.clientId = clientId;
     this.resource = resource;
     this.tenantId = tenantId;
     this.redirectUri = redirectUri;
+    this.cacheLocation = cacheLocation;
   }
 }
 

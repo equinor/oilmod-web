@@ -3,6 +3,7 @@ import {boolean, number, withKnobs} from "@storybook/addon-knobs";
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
 import {columns, fixedColumns, rows} from './rows';
 import {action} from "@storybook/addon-actions";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const stories = storiesOf('Datatable - StoDatatable', module)
   .addDecorator(withKnobs);
@@ -11,12 +12,13 @@ stories
   .add('Basic usage', () => ({
     moduleMetadata: {
       declarations: [],
-      imports: [StoDatatableModule]
+      imports: [StoDatatableModule, BrowserAnimationsModule]
     },
     template: `<div>
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
 [rowHeight]="rowHeight"
+[sortable]="sortable"
 [scrollbarH]="horizontalScroll"
 [footerRow]="showFooter ? footerRow : null"
 [headerHeight]="headerHeight"
@@ -37,6 +39,7 @@ stories
       height: number('Height', 400),
       rowHeight: number('Rowheight', 40),
       headerHeight: number('Headerheight', 22),
+      sortable: boolean('Sortable', true),
       columnGroups: [
         {name: 'First group', columnStart: 1, columnEnd: 3},
         {name: 'Second group', columnStart: 4, columnEnd: 6},

@@ -10,6 +10,8 @@ import { StoDatatableBodyRowComponent } from './sto-datatable-body/sto-datatable
 import { columns, rows } from '../../testing/utils';
 import { SelectionModes } from './selection-modes';
 import { MaterialModule } from '@testing/material.module';
+import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
+import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
 
 let comp: StoDatatableComponent;
 let fixture: ComponentFixture<StoDatatableComponent>;
@@ -55,6 +57,8 @@ describe('StoDatatableComponent', () => {
           , StoDatatableBodyComponent
           , ExecPipe
           , StoDatatableBodyRowComponent
+          , StoDatatableHeaderComponent
+          , StoDatatableHeaderGroupComponent
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
@@ -140,6 +144,37 @@ describe('StoDatatableComponent', () => {
     expect(comp.rowContextMenu.emit).toHaveBeenCalledWith(expected);
   }));
 
+  it('should sort when the header emits', () => {
+    comp.sortable = true;
+    fixture.detectChanges();
+    const first = comp.rows[ 0 ];
+    expect(comp.rows.indexOf(first)).toEqual(0);
+    page.header.sortByColumn(comp.columns[ 0 ]);
+    expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
+  });
+
+  it('should not mutate the original rows when sorting', () => {
+    comp.sortable = true;
+    fixture.detectChanges();
+    const first = comp.rows[ 0 ];
+    expect(comp.rows.indexOf(first)).toEqual(0);
+    expect(comp[ '_rows' ].indexOf(first)).toEqual(0);
+    page.header.sortByColumn(comp.columns[ 0 ]);
+    expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
+    expect(comp[ '_rows' ].indexOf(first)).toEqual(0);
+  });
+
+  it('should reset sort when new rows are passed in', () => {
+    comp.sortable = true;
+    fixture.detectChanges();
+    const first = comp.rows[ 0 ];
+    expect(comp.rows.indexOf(first)).toEqual(0);
+    page.header.sortByColumn(comp.columns[ 0 ]);
+    expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
+    comp.rows = [ ...rows ];
+    expect(comp.rows.indexOf(first)).toEqual(0);
+  });
+
 });
 
 function createComponent() {
@@ -173,6 +208,8 @@ describe('StoDatatableComponent with automatic height', () => {
           , StoDatatableBodyComponent
           , ExecPipe
           , StoDatatableBodyRowComponent
+          , StoDatatableHeaderComponent
+          , StoDatatableHeaderGroupComponent
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
@@ -236,6 +273,8 @@ describe('StoDatatableComponent with responsive template height', () => {
           , ExecPipe
           , StoDatatableBodyRowComponent
           , WrapperComponent
+          , StoDatatableHeaderComponent
+          , StoDatatableHeaderGroupComponent
         ],
       })
       .compileComponents()
@@ -272,6 +311,7 @@ function createResponsiveComponent() {
 
 class Page {
   public body: StoDatatableBodyComponent;
+  public header: StoDatatableHeaderComponent;
   public scroller: CdkVirtualScrollViewport;
   public rowElements: HTMLElement[];
 
@@ -287,5 +327,7 @@ class Page {
     const rowDeElements = bodyDe.queryAll(By.directive(StoDatatableBodyRowComponent));
     this.rowElements = rowDeElements.map(el => el.nativeElement);
     this.scroller = this.body.vScroller;
+    const headerDe = tableDebugElement.query(By.directive(StoDatatableHeaderComponent));
+    this.header = headerDe.componentInstance;
   }
 }

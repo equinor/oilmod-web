@@ -6,7 +6,20 @@
                               [transform]="scrollLeft"
                               [columns]="columns"
                               [groups]="columnGroups"></sto-datatable-header-group>
-  <div class="sto-mdl-table__header"
+  <sto-datatable-header [responsive]="responsive"
+                        [smallScreen]="smallScreen"
+                        [headerHeight]="headerHeight"
+                        [width]="width"
+                        [scrollLeft]="scrollLeft"
+                        [bodyHeight]="bodyHeight"
+                        [rows]="rows"
+                        [rowHeight]="rowHeight"
+                        [columns]="columns"
+                        [activeSortId]="activeSortId"
+                        [sortable]="sortable"
+                        (sort)="sort($event)"
+                        (headerContextMenu)="headerContextMenu.emit($event)"></sto-datatable-header>
+  <!--<div class="sto-mdl-table__header"
        [style.overflow-y]="'hidden'"
        [style.overflowX]="'hidden'"
        *ngIf="!responsive || (responsive && !smallScreen)">
@@ -15,7 +28,7 @@
          [style.min-width]="width"
          [style.transform]="scrollLeft"
          [style.overflow-y]="'hidden'"
-         [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
+         [class.sto-mdl-table__row&#45;&#45;scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
       <div class="sto-mdl-table__header__row__cell"
            (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
            [ngClass]="column.headerClass | exec:column"
@@ -32,7 +45,7 @@
         </ng-template>
       </div>
     </div>
-  </div>
+  </div>-->
   <div class="sto-mdl-table__progress-bar"
        *ngIf="loading"
        role="progressbar">
@@ -45,7 +58,7 @@
     {{ emptyMessage }}
   </div>
   <sto-datatable-body #body
-                      [selectable]="select.observers.length"
+                      [selectable]="!!select.observers.length"
                       [rows]="rows"
                       [rowClass]="rowClass"
                       [selectionMode]="selectionMode"
