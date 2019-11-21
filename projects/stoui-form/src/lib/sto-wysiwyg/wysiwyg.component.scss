@@ -1,0 +1,53 @@
+@import "stoui-core/style/colors";
+
+$form-field-bg: $ship-cove-10;
+
+.sto-wysiwyg {
+  min-height: 100px;
+  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 2px;
+  padding: 4px 0 8px;
+  display: flex;
+  flex-direction: column;
+
+  &__buttons {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__editor {
+    &:focus {
+      border-bottom: 2px solid #3f51b5;
+    }
+
+    transition: border-color 300ms ease, background-color 200ms ease, height 200ms ease;
+    border-radius: 2px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+    outline: none;
+    margin-top: 4px;
+    padding: 12px 4px 4px;
+    background: $form-field-bg;
+    flex: 1 1 auto;
+    line-height: 18px;
+    overflow: auto;
+
+    &--readonly {
+      background: transparent;
+      border-width: 0;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.mat-button-toggle.mat-button-toggle-standalone {
+  background: white;
+  border-radius: 0;
+  border: solid 1px rgba(0, 0, 0, 0.12);
+  color: black;
+}
