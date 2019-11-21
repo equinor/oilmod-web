@@ -10,7 +10,14 @@ FROM node:alpine as builder
 COPY package.json yarn.lock ./
 #RUN yarn config set proxy $HTTP_PROXY
 #RUN yarn config set https-proxy $HTTP_PROXY
-RUN yarn
+
+
+RUN apk --no-cache --virtual build-dependencies add \
+    python \
+    make \
+    g++ \
+    && yarn \
+    && apk del build-dependencies
 
 RUN mkdir /client && cp -R ./node_modules ./client
 
