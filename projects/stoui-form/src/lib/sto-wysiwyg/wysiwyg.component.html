@@ -1,0 +1,9 @@
+<div class="sto-wysiwyg">
+  <sto-wysiwyg-actions *ngIf="!disabled"
+                       [active]="active"
+                       (modifier)="execute($event)"></sto-wysiwyg-actions>
+  <sto-wysiwyg-editor [readonly]="disabled"
+                      [content]="value"
+                      (valueChanged)="valueChanged($event)"
+                      (keydown)="onKeyDownHandleTab($event)"></sto-wysiwyg-editor>
+</div>

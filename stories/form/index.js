@@ -20,9 +20,38 @@ import {MatSelectModule} from "@angular/material/select";
 import {CommonModule} from "@angular/common";
 import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
 import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.md'
+import {StoWysiwygModule} from "../../projects/stoui-form/src/lib/sto-wysiwyg/wysiwyg.module";
+import {MatCardModule} from "@angular/material/card";
 
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
+
+stories
+  .add('WYSIWYG', () => ({
+    moduleMetadata: {
+      declarations: [],
+      imports: [StoWysiwygModule, ReactiveFormsModule, MatCardModule]
+    },
+    template: `
+<button (click)="change(control.value)">Log value</button>
+<button (click)="disabled = !disabled">Toggle disabled state</button>
+<!--boolean('Disabled', true)-->
+    <mat-card class="sto-card" style="height: 600px">
+        <sto-wysiwyg [readonly]="disabled" [formControl]="control"></sto-wysiwyg>
+    </mat-card>
+    
+Resulting HTML
+<pre>
+{{control.value}}
+</pre>
+<br>
+    `,
+    props: {
+      control: new FormControl(),
+      disabled: false,
+      change: action('Value changed'),
+    },
+  }));
 
 stories
   .add('Daterange', () => ({
