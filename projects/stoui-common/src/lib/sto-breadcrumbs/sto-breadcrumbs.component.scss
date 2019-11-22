@@ -13,14 +13,26 @@ $breadcrumb-font-size: 20px;
   width: 100%;
 }
 
-.sto-breadcrumb__home{
-  padding: 20px 14px;
+.sto-breadcrumb__home__title {
+  font-size: 20px;
+  margin-right: 16px;
+}
+
+.sto-breadcrumb__home__icon {
+  margin: auto 16px;
+}
+
+.sto-breadcrumb__home {
   height: 64px;
-  width: 52px;
-  color: rgba(255,255,255,0.38);
+  min-width: 52px;
+  justify-content: space-around;
+  color: rgba(255, 255, 255, 0.38);
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  &:hover{
-    color: rgba(255,255,255,0.86);
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.86);
   }
 }
 
@@ -59,9 +71,6 @@ li {
   margin:0 0 0 -11px;
   -webkit-transform:rotate(45deg) skew(25deg,25deg);
 }
-
-
-
 
 
 .sto-breadcrumb__item {

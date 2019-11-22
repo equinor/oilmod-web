@@ -1,8 +1,18 @@
-<mat-icon class="sto-breadcrumb__home" (click)="itemClick($event, home)">apps</mat-icon>
+<div class="sto-breadcrumb__home"
+     (click)="itemClick($event, home)">
+  <mat-icon class="sto-breadcrumb__home__icon"
+            [svgIcon]="iconConfig.svgIcon">{{ iconConfig.icon }}
+  </mat-icon>
+  <span class="sto-breadcrumb__home__title"
+        *ngIf="iconConfig.text">{{iconConfig.text}}</span>
+</div>
 <ul style="position: relative">
-	<li class="sto-breadcrumb__list-item" role="menuitem" *ngFor="let item of model; let index = index; let last = last">
-		<a class="sto-breadcrumb__item" (click)="itemClick($event, item)">
-			{{ item.label}}
-		</a>
-	</li>
+  <li class="sto-breadcrumb__list-item"
+      role="menuitem"
+      *ngFor="let item of model; let index = index; let last = last">
+    <a class="sto-breadcrumb__item"
+       (click)="itemClick($event, item)">
+      {{ item.label}}
+    </a>
+  </li>
 </ul>

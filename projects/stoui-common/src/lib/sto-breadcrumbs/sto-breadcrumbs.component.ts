@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, Optional } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { NAVIGATION_HOME_ICON } from './breadcrumb';
 
 /**
  * Breadcrumbs is the navigation scheme that reveals the user's location on the web application.
@@ -8,14 +10,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'sto-breadcrumbs',
   templateUrl: './sto-breadcrumbs.component.html',
-  styleUrls: ['./sto-breadcrumbs.component.scss']
+  styleUrls: [ './sto-breadcrumbs.component.scss' ]
 })
 export class StoBreadcrumbsComponent implements OnDestroy {
 
- /**
-  * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
-  */
+  /**
+   * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
+   */
   @Input() model: any[];
+
+  @Input()
+  homeicon = 'apps';
+  @Input()
+  svgIcon = false;
 
   /**
    * An object that can contain a url segment or a command.
@@ -36,19 +43,20 @@ export class StoBreadcrumbsComponent implements OnDestroy {
    *  {string}
    */
   @Input() homeIcon = 'home';
+  public iconConfig: { icon?: string; svgIcon?: string; text?: string; };
 
   itemClick(event, item: any) {
-    if (item.disabled) {
+    if ( item.disabled ) {
       event.preventDefault();
       return;
     }
 
-    if (!item.url) {
+    if ( !item.url ) {
       event.preventDefault();
     }
 
-    if (item.command) {
-      if (!item.eventEmitter) {
+    if ( item.command ) {
+      if ( !item.eventEmitter ) {
         item.eventEmitter = new EventEmitter();
         item.eventEmitter.subscribe(item.command);
       }
@@ -57,28 +65,29 @@ export class StoBreadcrumbsComponent implements OnDestroy {
         originalEvent: event,
         item: item
       });
-    } else if (item.segment) {
-      this.router.navigate([item.segment], {queryParamsHandling: 'preserve'})
+    } else if ( item.segment ) {
+      this.router.navigate([ item.segment ], { queryParamsHandling: 'preserve' })
         .catch(console.error);
     }
   }
 
   onHomeClick(event) {
-    if (this.home) {
+    if ( this.home ) {
       this.itemClick(event, this.home);
     }
   }
 
   ngOnDestroy() {
-    if (this.model) {
-      for (const item of this.model) {
-        if (item.eventEmitter) {
+    if ( this.model ) {
+      for ( const item of this.model ) {
+        if ( item.eventEmitter ) {
           item.eventEmitter.unsubscribe();
         }
       }
     }
   }
-  constructor(private router: Router) {
 
+  constructor(private router: Router, @Inject(NAVIGATION_HOME_ICON) @Optional() iconConfig) {
+    this.iconConfig = iconConfig || { icon: 'apps' };
   }
 }

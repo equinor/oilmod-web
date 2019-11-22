@@ -14,6 +14,7 @@ import filterReadme from "../../projects/stoui-common/src/lib/sto-filter/sto-fil
 import messagePanelReadme from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.component.md";
 import appHeaderReadme from "../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.component.md";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClientModule} from "@angular/common/http";
 
 const stories = storiesOf('Common', module)
   .addDecorator(withKnobs);
@@ -41,9 +42,10 @@ stories
 
 stories.add('AppHeader & BreadCrumbs', () => ({
     moduleMetadata: {
-      imports: [StoAppHeaderModule, RouterTestingModule],
+      imports: [StoAppHeaderModule, RouterTestingModule, HttpClientModule],
       providers: [
-        {provide: APP_BASE_HREF, useValue: '/'}
+        {provide: APP_BASE_HREF, useValue: '/'},
+        // {provide: NAVIGATION_HOME_ICON, useValue: {svgIcon: 'lcs', text: 'EIMS'}}
       ]
     },
     template: `<sto-app-header [testEnvironment]="test"
