@@ -14,3 +14,4 @@ export * from './lib/sto-select-filter/sto-select-filter.component';
 export * from './lib/sto-select-filter/sto-select-filter.module';
 export * from './lib/sto-slide-toggle/sto-slide-toggle.component';
 export * from './lib/sto-form/sto-form.module';
+export * from './lib/sto-wysiwyg/wysiwyg.module';
