@@ -8,11 +8,17 @@
 @import "./theme/daterange";
 @import "./theme/input-overrides";
 @import "./theme/select-filter";
+@import "./theme/card";
+@import "./theme/action-footer";
 
 // Include theme styles for core and each component used in your app.
 @include angular-material-theme($sto-theme);
+body {
+  background-color: #F7F7F7;
+}
 
-.sto-dark-theme {
+body.sto-dark-theme {
+  background-color: #262626;
   @include angular-material-theme($sto-dark-theme);
 }
 
@@ -28,3 +34,4 @@
 .mat-typography.sto-l-typography {
   @include mat-core($sto-l-typography);
 }
+

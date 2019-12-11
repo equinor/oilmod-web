@@ -44,16 +44,29 @@ export class StoAppHeaderComponent implements AfterViewInit {
   toggleTheme() {
     document.body.classList.toggle('sto-dark-theme');
     this.nightmode = document.body.classList.contains('sto-dark-theme');
+    if ( this.nightmode ) {
+      localStorage.setItem('tops__theme', 'sto-dark-theme');
+    }
   }
 
   toggleTypography(className?: string) {
     document.body.classList.remove('sto-sm-typography', 'sto-l-typography');
+    localStorage.removeItem('tops__typography');
     if ( className ) {
       document.body.classList.add(className);
+      localStorage.setItem('tops__typography', className);
     }
   }
 
   ngAfterViewInit(): void {
+    const theme = localStorage.getItem('tops__theme');
+    if ( theme ) {
+      document.body.classList.add(theme);
+    }
+    const typography = localStorage.getItem('tops__typography');
+    if ( typography ) {
+      this.toggleTypography(typography);
+    }
     this.nightmode = document.body.classList.contains('sto-dark-theme');
   }
 }

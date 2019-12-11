@@ -6,22 +6,18 @@
 @import "_ngx-datatable-mixins";
 
 .ngx-datatable.sto-datatable {
-  background: $datatable-background-color;
-  font-size: $datatable-font-size;
+  //font-size: $datatable-font-size;
   border-radius: 2px;
   margin-bottom: 4px;
 
   .datatable-header {
-    border-bottom: 1px solid $border-color-dark;
-
 
     .datatable-header-cell {
       padding: $space-4x $space-2x $space $space-2x;
       line-height: 13px;
       font-weight: 400;
-      color: $black-54;
       vertical-align: baseline;
-      font-size: $datatable-header-font-size;
+      //font-size: $datatable-header-font-size;
       -webkit-user-select: none; /* Safari */
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+/Edge */
@@ -177,8 +173,8 @@
         border-top: 0;
         color: $datatable-cell-color;
         transition: width 0.3s ease, box-shadow 250ms linear;
-        font-size: $font-size;
-        font-weight: $font-weight-normal;
+        //font-size: $font-size;
+        //font-weight: $font-weight-normal;
         &.date-cell {
           padding: 0;
           small {
@@ -218,8 +214,8 @@
         border-top: 0;
         color: $datatable-cell-color;
         transition: width 0.3s ease;
-        font-size: $font-size;
-        font-weight: $font-weight-normal;
+        //font-size: $font-size;
+        //font-weight: $font-weight-normal;
       }
     }
 
@@ -299,7 +295,7 @@
 
   .datatable-footer {
     border-top: 1px solid $border-color-dark;
-    font-size: 12px;
+    //font-size: 12px;
     font-weight: 400;
     color: $black-54;
 

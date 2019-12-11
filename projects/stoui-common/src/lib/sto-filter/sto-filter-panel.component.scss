@@ -10,10 +10,6 @@ $sto-filter-header-elevation: 2;
   .mat-button-toggle {
     &-standalone.mat-button-toggle-appearance-standard {
       border: 0;
-
-      &:not(.mat-button-toggle-checked) {
-        background: transparent;
-      }
     }
   }
 
@@ -36,10 +32,6 @@ $sto-filter-header-elevation: 2;
     &.mat-expanded {
       border-bottom: solid 1px transparent;
     }
-
-    // TODO Typography
-    font-size: $sto-filter-header-font-size;
-    line-height: $sto-filter-header-line-height;
 
     &-title {
       align-items: center;

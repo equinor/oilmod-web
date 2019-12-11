@@ -10,6 +10,7 @@ function loadStories() {
   require('../stories/form/index.js');
   require('../stories/drawer/index.js');
   require('../stories/datatable/index.js');
+  require('../stories/datatable/complex.js');
   require('../stories/error-handler/index.js');
   // You can require as many stories as you need.
 }

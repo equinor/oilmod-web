@@ -20,6 +20,7 @@ stories.add('StoCard', () => ({
     imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule, BrowserAnimationsModule, CommonModule, MatButtonModule, StoFormModule, StoUserPreferenceModule.forRoot()]
   },
   template: `<mat-card [class.sto-card]="withClasses">
+<mat-card-subtitle [class.sto-card__subtitle]="withClasses">Card subtitle</mat-card-subtitle>
 <mat-card-title [class.sto-card__title]="withClasses">
 Card title
 <button mat-button color="primary">Action</button>

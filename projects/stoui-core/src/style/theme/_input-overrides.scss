@@ -13,6 +13,14 @@
   .sto-form__field, .sto-form__field.mat-form-field {
     .mat-form-field-flex {
       background-color: $form-field-bg;
+
+      .mat-input {
+        color: $color;
+      }
+    }
+
+    .mat-form-field-label-wrapper {
+      top: -1.3em;
     }
 
     &.mat-focused .mat-form-field-infix .mat-form-field-label {
@@ -38,8 +46,25 @@
   @include sto-input-override-theme($sto-dark-theme, $dark-variables);
 }
 
+@import "typography";
 
-.sto-form__field.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  transform: translateY(-1em) perspective(100px) translateZ(0.001px) !important;
-  font-size: 11px;
+@mixin sto-input-typography($config) {
+  $base: mat-font-size($config, body-1);
+  .sto-form__field.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1em) perspective(100px) translateZ(0.001px) !important;
+    font-size: $base - 2px;
+  }
+}
+
+.mat-typography {
+  @include sto-input-typography($sto-typography);
+}
+
+
+.mat-typography.sto-sm-typography {
+  @include sto-input-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-input-typography($sto-l-typography);
 }

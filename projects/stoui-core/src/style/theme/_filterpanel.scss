@@ -13,6 +13,14 @@
     .mat-expansion-panel-header {
       background-color: $background-color;
 
+      .mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
+        background-color: transparent;
+      }
+
+      .mat-button-toggle-standalone.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+        background-color: $selected-color;
+      }
+
       &:not(.mat-expanded) {
         border-bottom: solid 1px $border-color;
       }
@@ -42,4 +50,25 @@
 
 .sto-dark-theme {
   @include sto-filterpanel-theme($sto-dark-theme, $dark-variables);
+}
+
+@mixin sto-filter-panel-typography($config) {
+  .sto-filter {
+    .mat-expansion-panel-header {
+      font-size: mat-font-size($config, subheading-2);
+      line-height: mat-line-height($config, subheading-2);
+    }
+  }
+}
+
+.mat-typography {
+  @include sto-filter-panel-typography($sto-typography);
+}
+
+.mat-typography.sto-sm-typography {
+  @include sto-filter-panel-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-filter-panel-typography($sto-l-typography);
 }
