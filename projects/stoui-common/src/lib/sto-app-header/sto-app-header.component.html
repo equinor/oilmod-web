@@ -18,26 +18,37 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item
+              class="dense"
               (click)="toggleTheme()">
         <mat-icon>{{ nightmode ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
         {{nightmode ? 'Disable' : 'Enable'}} night mode
       </button>
       <button mat-menu-item
-              (click)="toggleTypography('sto-sm-typography')">
+              class="dense"
+              [matMenuTriggerFor]="fontMenu">
         <mat-icon>format_size</mat-icon>
+        Font size
+      </button>
+    </mat-menu>
+    <mat-menu #fontMenu="matMenu">
+      <button mat-menu-item
+              class="dense"
+              style="font-size: 10px"
+              (click)="toggleTypography('sto-sm-typography')">
         Smaller
       </button>
       <button mat-menu-item
+              class="dense"
+              style="font-size: 13px"
               (click)="toggleTypography()">
-        <mat-icon>format_size</mat-icon>
         Regular
       </button>
       <button mat-menu-item
+              class="dense"
+              style="font-size: 16px"
               (click)="toggleTypography('sto-l-typography')">
-        <mat-icon>format_size</mat-icon>
         Larger
       </button>
-
     </mat-menu>
   </div>
 </div>

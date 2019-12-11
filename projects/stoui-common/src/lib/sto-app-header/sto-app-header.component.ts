@@ -42,6 +42,7 @@ export class StoAppHeaderComponent implements AfterViewInit {
   public nightmode: boolean;
 
   toggleTheme() {
+    localStorage.removeItem('tops__theme');
     document.body.classList.toggle('sto-dark-theme');
     this.nightmode = document.body.classList.contains('sto-dark-theme');
     if ( this.nightmode ) {
