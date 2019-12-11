@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, Optional } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Optional, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NAVIGATION_HOME_ICON } from './breadcrumb';
@@ -10,9 +10,12 @@ import { NAVIGATION_HOME_ICON } from './breadcrumb';
 @Component({
   selector: 'sto-breadcrumbs',
   templateUrl: './sto-breadcrumbs.component.html',
-  styleUrls: [ './sto-breadcrumbs.component.scss' ]
+  styleUrls: [ './sto-breadcrumbs.component.scss' ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class StoBreadcrumbsComponent implements OnDestroy {
+  @HostBinding('class.sto-breadcrumb')
+  css = true;
 
   /**
    * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .

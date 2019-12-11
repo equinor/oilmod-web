@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 export type PaneType = 'left' | 'right';
@@ -8,6 +8,7 @@ export type PaneType = 'left' | 'right';
   styleUrls: ['./navigation-part.component.scss'],
   templateUrl: './navigation-part.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('slide', [
       state('left', style({transform: 'translateX(0)'})),

@@ -1,0 +1,64 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-datatable-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $color: map_get($variables, color);
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, background);
+  $hover-color: map_get($variables, hover-bg);
+  $selected-color: map_get($variables, selected-bg);
+
+  .sto-mdl-table {
+    background-color: $background-color;
+    color: $color;
+
+    &__header__row {
+      border-bottom: 1px solid $border-color;
+
+      &__cell {
+        color: $color;
+      }
+    }
+
+    &__body, &__footer {
+      &__row {
+        border-bottom: 1px solid $border-color;
+
+        &--selected {
+          background-color: $selected-color;
+        }
+
+        &:not(.sto-mdl-table__body__row--selected) {
+          &:hover, &:focus {
+            background-color: $hover-color;
+          }
+        }
+      }
+    }
+
+    &__footer__row {
+      border-top: 1px solid $border-color;
+    }
+  }
+
+}
+
+@mixin sto-datatable-typography($config) {
+  .sto-mdl-table {
+    font: {
+      family: mat-font-family($config, body-1);
+      size: mat-font-size($config, body-1);
+      weight: mat-font-weight($config, body-1);
+    }
+  }
+}
+
+@include sto-datatable-typography($sto-typography);
+
+// Include theme styles for your custom components.
+@include sto-datatable-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-datatable-theme($sto-dark-theme, $dark-variables);
+}

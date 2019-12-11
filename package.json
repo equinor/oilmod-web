@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "start-storybook -s dist/stoui-core/style",
-    "build-storybook": "build-storybook -c .storybook -o .out"
+    "build-storybook": "build-storybook -c .storybook -o .out",
+    "token:typography": "ts-node eds-tokens/typography.ts"
   },
   "private": true,
   "dependencies": {

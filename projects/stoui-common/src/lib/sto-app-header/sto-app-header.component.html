@@ -10,4 +10,34 @@
   </div>
   <span class="spacer"></span>
   <ng-content></ng-content>
+  <div class="sto-header__actions">
+    <button mat-icon-button
+            title="Accessibility"
+            [matMenuTriggerFor]="menu">
+      <mat-icon>accessibility</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+              (click)="toggleTheme()">
+        <mat-icon>{{ nightmode ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+        {{nightmode ? 'Disable' : 'Enable'}} night mode
+      </button>
+      <button mat-menu-item
+              (click)="toggleTypography('sto-sm-typography')">
+        <mat-icon>format_size</mat-icon>
+        Smaller
+      </button>
+      <button mat-menu-item
+              (click)="toggleTypography()">
+        <mat-icon>format_size</mat-icon>
+        Regular
+      </button>
+      <button mat-menu-item
+              (click)="toggleTypography('sto-l-typography')">
+        <mat-icon>format_size</mat-icon>
+        Larger
+      </button>
+
+    </mat-menu>
+  </div>
 </div>

@@ -70,14 +70,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * Default '25vw'
    */
   @Input() @HostBinding('style.width') width = '25vw';
-  /**
-   * @deprecated Use selector sto-drawer-header instead
-   */
-  @Input() header: string;
-  /**
-   * @deprecated Use selector sto-drawer-header instead
-   */
-  @Input() headerIcon: string;
 
   /**
    * Emits true if opened, false if closed.

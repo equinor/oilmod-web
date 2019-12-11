@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { USE_HASH_ROUTING } from '../../tokens';
 
 @Component({
   selector: 'sto-navigation-menu-item',
   templateUrl: './navigation-menu-item.component.html',
-  styles: []
+  styles: [],
+  encapsulation: ViewEncapsulation.None
 })
 export class NavigationMenuItemComponent {
   @Input() item: any;

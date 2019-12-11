@@ -1,0 +1,85 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-drawer-theme($theme, $variables) {
+  $color: map_get($variables, color);
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, background);
+  $header-color: map_get($variables, app-bar);
+  $hover-bg-color: map_get($variables, hover-bg);
+  $selected-color: map_get($variables, selected-bg);
+  $icon-color: map_get($variables, icon);
+  $hover-color: map_get($variables, hover-color);
+
+  .sto-drawer {
+    background-color: $background-color;
+
+    &__footer {
+      border-top: 1px solid $border-color;
+      background-color: $header-color;
+      color: $color;
+    }
+
+    &__content {
+      background-color: $background-color;
+      color: $color;
+    }
+
+    &__header {
+      &__wrapper {
+        background-color: $header-color;
+        color: $color;
+      }
+    }
+
+    // navigation, TODO Rename
+    .sto-slide-panel {
+      color: $color;
+      background-color: $background-color;
+
+      .mat-list.sto-navigation {
+        .mat-list-item {
+          color: $color;
+
+          .mat-icon {
+            color: $icon-color;
+          }
+
+          .sto-navigation__item__text {
+            color: $color;
+
+            a {
+              color: $color;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@mixin sto-drawer-typography($config) {
+  .sto-drawer .sto-drawer__header {
+    &__title, h1, h2, h3, h4, h5 {
+      font-size: mat-font-size($config, subheading-1);
+    }
+  }
+}
+
+// Include theme styles for your custom components.
+@include sto-drawer-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-drawer-theme($sto-dark-theme, $dark-variables);
+}
+
+@include sto-drawer-typography($sto-typography);
+
+.mat-typography.sto-sm-typography {
+  @include sto-drawer-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-drawer-typography($sto-l-typography);
+}

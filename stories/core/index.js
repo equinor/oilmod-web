@@ -9,6 +9,7 @@ import {StoUserPreferenceModule} from "@ngx-stoui/core";
 import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.module";
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
 import {columns, rows} from '../datatable/rows';
+import {MatIconModule} from "@angular/material/icon";
 
 const stories = storiesOf('Core (styling)', module)
   .addDecorator(withKnobs);
@@ -16,7 +17,7 @@ const stories = storiesOf('Core (styling)', module)
 stories.add('StoCard', () => ({
   moduleMetadata: {
     declarations: [],
-    imports: [MatCardModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, CommonModule, MatButtonModule, StoFormModule, StoUserPreferenceModule.forRoot()]
+    imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule, BrowserAnimationsModule, CommonModule, MatButtonModule, StoFormModule, StoUserPreferenceModule.forRoot()]
   },
   template: `<mat-card [class.sto-card]="withClasses">
 <mat-card-title [class.sto-card__title]="withClasses">
@@ -29,6 +30,7 @@ Card title
 <mat-form-field #ff="stoFormField" stoFormField>
 <mat-label>Input label</mat-label>
 <input [readonly]="readonly" [disabled]="disabled" matInput value="Input value">
+<mat-icon matSuffix>check</mat-icon>
 </mat-form-field>
 </mat-card-content>
 </mat-card>`,

@@ -7,4 +7,49 @@
     font-family: "statoilsans_medium";
     src: url("/statoil-sansmedium-webfont.woff") format("woff")
   }
+
+  @font-face {
+    font-family: 'Equinor';
+    src: url('/fonts/Equinor-Regular.woff2') format('woff2'),
+    url('/fonts/Equinor-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'EquinorMedium';
+    src: url('/fonts/Equinor-Medium.woff2') format('woff2'),
+    url('/fonts/Equinor-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'EquinorBold';
+    src: url('/fonts/Equinor-Bold.woff2') format('woff2'),
+    url('/fonts/Equinor-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
 </style>
+<script>
+    function listen() {
+        document.body.addEventListener('keyup', event => {
+            if (event.ctrlKey && event.key.toUpperCase() === 'Y') {
+                document.body.classList.toggle('sto-dark-theme');
+            }
+        });
+    }
+
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }
+
+    docReady(listen);
+</script>

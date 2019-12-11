@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
 
 /**
@@ -17,7 +17,7 @@ import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StoAppHeaderComponent {
+export class StoAppHeaderComponent implements AfterViewInit {
   /**
    * testEnvironment tells the header whether or not to style itself defining a test-environment
    */
@@ -38,4 +38,22 @@ export class StoAppHeaderComponent {
    */
   @Input()
   breadCrumbs: Breadcrumb[];
+
+  public nightmode: boolean;
+
+  toggleTheme() {
+    document.body.classList.toggle('sto-dark-theme');
+    this.nightmode = document.body.classList.contains('sto-dark-theme');
+  }
+
+  toggleTypography(className?: string) {
+    document.body.classList.remove('sto-sm-typography', 'sto-l-typography');
+    if ( className ) {
+      document.body.classList.add(className);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.nightmode = document.body.classList.contains('sto-dark-theme');
+  }
 }

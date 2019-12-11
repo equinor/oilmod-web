@@ -24,18 +24,8 @@ $height: 72px;
 
 
 %sto-form__field--focused {
-  .mat-form-field-suffix {
-    .mat-icon-button {
-      .mat-icon {
-        color: $black-84;
-      }
-    }
-    .mat-icon {
-      color: $black-84;
-    }
-  }
   .mat-form-field-underline {
-    bottom: 16px;
+    //bottom: 16px;
     height: 2px;
     background-color: transparent;
     -webkit-transition-property: background-color, width, left;
@@ -138,14 +128,10 @@ $height: 72px;
       .mat-icon-button {
         .mat-icon, .mat-datepicker-toggle-default-icon {
           font-size: 1rem;
-          color: $black-54;
         }
         .mat-datepicker-toggle-default-icon{
           margin-top: -2px;
         }
-      }
-      .mat-icon {
-        color: $black-54;
       }
 
 
@@ -167,7 +153,6 @@ $height: 72px;
       > span {
         display: inline-block;
         margin-top: 0.8em;
-        color: $black-54;
       }
     }
 
@@ -194,7 +179,7 @@ $height: 72px;
   }
 
   .mat-form-field-wrapper .mat-form-field-underline {
-    bottom: 16px;
+    //bottom: 16px;
     height: 2px;
     width: calc(100% - 2px);
     left: 1px;
@@ -330,20 +315,12 @@ $height: 72px;
     color: $warning-color;
   }
 }
-//Don't know how to overwrite this without important O_o
-.sto-form__field.mat-form-field-can-float.mat-form-field-should-float {
-  .mat-form-field-placeholder, .mat-form-field-label {
-    -webkit-transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
-    transform: translateY(-1.28125em) scale(0.8461538461538462) perspective(100px) translateZ(0.001px)  !important;;
-    -ms-transform: translateY(-1.28125em) scale(0.8461538461538462) !important;
-  }
-}
 
 .sto-field--display {
   border-width: 0;
   border-style: none;
 }
 
-.mat-form-field.mat-form-field-appearance-legacy .mat-form-field-underline {
+.mat-form-field .mat-form-field-underline {
   height: 2px;
 }

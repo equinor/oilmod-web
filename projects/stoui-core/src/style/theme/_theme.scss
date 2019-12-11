@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+@import "./theme-variables";
+@import "colors";
+
+// Material color palettes
+$primary: mat-palette($sto-primary, main, lighter, darker);
+$accent: mat-palette($sto-accent, main, lighter, darker);
+$indicators: mat-palette($sto-indicator, custom);
+
+// The warn palette is optional (defaults to red).
+$sto-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$sto-theme: mat-light-theme($primary, $accent, $sto-warn);
+$sto-theme: map_merge($sto-theme, (indicators: $indicators));
+$sto-dark-theme: mat-dark-theme($primary, $accent, $sto-warn);
+$sto-dark-theme: map_merge($sto-dark-theme, (indicators: $indicators));
+
+$variables: theme_variables($sto-theme);
+$dark-variables: theme_variables($sto-dark-theme);
+
+// We need to override these with !important, otherwise they may not get applied due to specific selectors.
+.mat-success {
+  background-color: mat-color($indicators, success) !important;
+  color: mat-color($indicators, success-contrast) !important;
+  // For some reason, mat-icons require explicit colors.. TODO: Investigate y tho
+  .mat-icon {
+    color: mat-color($indicators, success-contrast) !important;
+  }
+}
+
+.mat-danger {
+  background-color: mat-color($indicators, danger) !important;
+  color: mat-color($indicators, danger-contrast) !important;
+  // For some reason, mat-icons require explicit colors.. TODO: Investigate y tho
+  .mat-icon {
+    color: mat-color($indicators, danger-contrast) !important;
+  }
+}
+
+.mat-warning {
+  background-color: mat-color($indicators, warning) !important;
+  color: mat-color($indicators, warning-contrast) !important;
+  // For some reason, mat-icons require explicit colors.. TODO: Investigate y tho
+  .mat-icon {
+    color: mat-color($indicators, warning-contrast) !important;
+  }
+}

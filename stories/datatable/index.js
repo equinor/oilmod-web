@@ -15,6 +15,7 @@ stories
       imports: [StoDatatableModule, BrowserAnimationsModule]
     },
     template: `<div>
+<button (click)="theme()">Theme</button>
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
 [rowHeight]="rowHeight"
@@ -40,12 +41,13 @@ stories
       rowHeight: number('Rowheight', 40),
       headerHeight: number('Headerheight', 22),
       sortable: boolean('Sortable', true),
+      theme: () => document.body.classList.toggle('sto-dark-theme'),
       columnGroups: [
         {name: 'First group', columnStart: 1, columnEnd: 3},
         {name: 'Second group', columnStart: 4, columnEnd: 6},
         {name: 'Third group', columnStart: 7, columnEnd: 9},
       ],
-      showGroups: boolean('Show groups (only with horz scroll and fixed column width)', true)
+      showGroups: boolean('Show groups (only with horz scroll and fixed column width)', false)
     }
   }));
 

@@ -1,0 +1,45 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-filterpanel-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $color: map_get($variables, color);
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, app-bar);
+  $hover-color: map_get($variables, hover-bg);
+  $selected-color: map_get($variables, selected-bg);
+
+  .sto-filter {
+    .mat-expansion-panel-header {
+      background-color: $background-color;
+
+      &:not(.mat-expanded) {
+        border-bottom: solid 1px $border-color;
+      }
+
+      &.mat-expanded:hover {
+        // Y THO? Looks shit.
+        //background-color: $hover-color;
+        background-color: $background-color;
+      }
+
+      &.mat-expanded:focus {
+        // Y THO? Looks shit.
+        //background-color: $selected-color;
+        background-color: $background-color;
+      }
+    }
+
+    .separator {
+      background-color: $border-color;
+    }
+  }
+
+}
+
+// Include theme styles for your custom components.
+@include sto-filterpanel-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-filterpanel-theme($sto-dark-theme, $dark-variables);
+}
