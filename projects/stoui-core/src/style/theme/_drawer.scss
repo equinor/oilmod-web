@@ -3,6 +3,7 @@
 
 @mixin sto-drawer-theme($theme, $variables) {
   $color: map_get($variables, color);
+  $secondary: map_get($variables, secondary);
   $border-color: map_get($variables, border-color);
   $background-color: map_get($variables, background);
   $header-color: map_get($variables, app-bar);
@@ -26,6 +27,15 @@
     }
 
     &__header {
+      &__infix {
+        a, mat-icon {
+          color: $secondary;
+
+          &:hover {
+            color: $hover-color;
+          }
+        }
+      }
       &__wrapper {
         background-color: $header-color;
         color: $color;

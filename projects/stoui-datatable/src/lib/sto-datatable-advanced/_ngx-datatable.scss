@@ -145,11 +145,6 @@
       border-top: solid 1px $black-15;
     }
 
-    .datatable-body-row:focus:not(.active) {
-      @include datatable-row-border($datatable-row-focus-border-color);
-      @include datatable-row-group((background-color: $datatable-row-focus-color));
-    }
-
     .datatable-body-row {
 
 

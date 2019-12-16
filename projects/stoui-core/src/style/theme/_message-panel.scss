@@ -6,15 +6,9 @@
   $accent: map_get($variables, accent);
   $primary-contrast: map_get($variables, primary-contrast);
   $accent-contrast: map_get($variables, accent-contrast);
-  //$warning-color: map_get($variables, warning);
-  //$success-color: map_get($variables, success);
   $color: map_get($variables, color);
   $border-color: map_get($variables, border-color);
-  //$background-color: map_get($variables, app-bar);
-  //$hover-bg-color: map_get($variables, hover-bg);
-  //$selected-color: map_get($variables, selected-bg);
   $icon-color: map_get($variables, icon);
-  //$hover-color: map_get($variables, hover-color);
 
   .sto-message-panel {
     color: $color;

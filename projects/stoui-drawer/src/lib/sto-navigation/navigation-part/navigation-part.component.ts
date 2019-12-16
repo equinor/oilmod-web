@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 export type PaneType = 'left' | 'right';
@@ -19,4 +19,6 @@ export type PaneType = 'left' | 'right';
 })
 export class NavigationPartComponent {
   @Input() activePane: PaneType;
+  @HostBinding('class.sto-slide-panel')
+  baseClass = true;
 }

@@ -23,7 +23,7 @@ stories.add('StoCard', () => ({
 <mat-card-subtitle [class.sto-card__subtitle]="withClasses">Card subtitle</mat-card-subtitle>
 <mat-card-title [class.sto-card__title]="withClasses">
 Card title
-<button mat-button color="primary">Action</button>
+<button mat-raised-button color="primary">Action</button>
 </mat-card-title>
 
 <mat-card-subtitle [class.sto-card__subtitle]="withClasses">Card subtitle</mat-card-subtitle>

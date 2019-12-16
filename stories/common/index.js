@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {StoMessagePanelModule} from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.module";
 import {MatCardModule} from "@angular/material/card";
+import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
 
 const stories = storiesOf('Common', module)
   .addDecorator(withKnobs);
@@ -51,7 +52,7 @@ stories
 
 stories.add('AppHeader & BreadCrumbs', () => ({
     moduleMetadata: {
-      imports: [StoAppHeaderModule, RouterTestingModule, HttpClientModule, BrowserAnimationsModule],
+      imports: [StoAppHeaderModule, RouterTestingModule, HttpClientModule, MatButtonModule, MatIconModule, BrowserAnimationsModule],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
         // {provide: NAVIGATION_HOME_ICON, useValue: {svgIcon: 'lcs', text: 'EIMS'}}
@@ -60,7 +61,12 @@ stories.add('AppHeader & BreadCrumbs', () => ({
     template: `<sto-app-header [testEnvironment]="test"
 [environmentName]="envName"
 [breadCrumbs]="breadCrumbs"
-[homeBreadCrumbConfig]="home"></sto-app-header>`,
+[homeBreadCrumbConfig]="home">
+<button mat-button>
+    <mat-icon>add</mat-icon>
+    Custom Button
+</button>
+</sto-app-header>`,
     props: {
       test: boolean('Style as test environment', false),
       envName: 'Systemtest',
@@ -97,14 +103,14 @@ stories.add('ActionFooter', () => ({
 
 stories.add('Filter Panel', () => ({
   moduleMetadata: {
-    imports: [StoFilterPanelModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule]
+    imports: [StoFilterPanelModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, StoFormModule]
   },
   template: `<sto-filter-panel class="sto-form" [expandable]="true" (toggled)="toggled()">
 <sto-filter-title>{{ title }}</sto-filter-title>
 <sto-filter-table-actions>
 <button mat-icon-button><mat-icon>add</mat-icon></button>
 </sto-filter-table-actions>
-<mat-form-field floatLabel="always" class="sto-form__field">
+<mat-form-field floatLabel="always" stoFormField>
 <mat-label>Input label</mat-label>
 <input matInput>
 </mat-form-field>

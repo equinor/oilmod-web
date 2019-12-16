@@ -8,10 +8,20 @@
   $background-color: map_get($variables, background);
   $hover-color: map_get($variables, hover-bg);
   $selected-color: map_get($variables, selected-bg);
+  $icon-color: map_get($variables, icon);
+  $icon-hover: map_get($variables, icon-hover);
 
   .sto-mdl-table {
     background-color: $background-color;
     color: $color;
+
+    .mat-icon-button {
+      color: $icon-color;
+
+      &:hover {
+        color: $color;
+      }
+    }
 
     &__header__row {
       border-bottom: 1px solid $border-color;
@@ -66,6 +76,13 @@
       background-color: $hover-color;
     }
 
+
+    .datatable-body .datatable-body-row:focus:not(.active) .datatable-row-group {
+      &.datatable-row-left, &.datatable-row-right, &.datatable-row-center {
+        background-color: $selected-color !important;
+      }
+    }
+
     .datatable-body .datatable-body-row.active {
       .datatable-row-left, .datatable-row-right, .datatable-row-center {
         background-color: $selected-color;
@@ -96,6 +113,7 @@
       size: mat-font-size($config, body-1);
       weight: mat-font-weight($config, body-1);
     }
+    font-feature-settings: 'tnum', 'lnum';
   }
 
   .ngx-datatable.sto-datatable {
@@ -106,6 +124,8 @@
         weight: mat-font-weight($config, body-1);
       }
     }
+
+    font-feature-settings: 'tnum', 'lnum';
   }
 }
 

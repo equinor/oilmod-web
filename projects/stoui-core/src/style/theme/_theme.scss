@@ -6,6 +6,7 @@
 $primary: mat-palette($sto-primary, main, lighter, darker);
 $accent: mat-palette($sto-accent, main, lighter, darker);
 $indicators: mat-palette($sto-indicator, custom);
+$primary-dark: mat-palette($sto-primary-dark, main, lighter, darker);
 
 // The warn palette is optional (defaults to red).
 $sto-warn: mat-palette($mat-red);
@@ -13,7 +14,7 @@ $sto-warn: mat-palette($mat-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $sto-theme: mat-light-theme($primary, $accent, $sto-warn);
 $sto-theme: map_merge($sto-theme, (indicators: $indicators));
-$sto-dark-theme: mat-dark-theme($primary, $accent, $sto-warn);
+$sto-dark-theme: mat-dark-theme($primary-dark, $accent, $sto-warn);
 $sto-dark-theme: map_merge($sto-dark-theme, (indicators: $indicators));
 
 $variables: theme_variables($sto-theme);

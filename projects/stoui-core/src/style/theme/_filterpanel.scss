@@ -4,14 +4,29 @@
 @mixin sto-filterpanel-theme($theme, $variables) {
   $primary: map_get($variables, primary);
   $color: map_get($variables, color);
+  $secondary: map_get($variables, secondary);
   $border-color: map_get($variables, border-color);
   $background-color: map_get($variables, app-bar);
+  $icon-color: map_get($variables, icon);
+  $icon-hover: map-get($variables, icon-hover);
   $hover-color: map_get($variables, hover-bg);
   $selected-color: map_get($variables, selected-bg);
 
-  .sto-filter {
+  .sto-filter.mat-expansion-panel {
     .mat-expansion-panel-header {
       background-color: $background-color;
+
+      &[aria-disabled=true] {
+        color: $color;
+      }
+
+      .mat-icon-button, .mat-button {
+        color: $icon-color;
+
+        &:hover {
+          color: $icon-hover;
+        }
+      }
 
       .mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
         background-color: transparent;

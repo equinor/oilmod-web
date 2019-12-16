@@ -13,6 +13,18 @@ $sto-primary: (
   )
 );
 
+$sto-primary-dark: (
+  main: #00bfce,
+  lighter: #b3ecf0,
+  darker: #00a9bc,
+  200: 00 bfce,
+  contrast: (
+    main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
 $sto-accent: (
   main: #d5eaf4,
   lighter: #d7d7d7,
