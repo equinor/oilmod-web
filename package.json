@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "release": "ng build --project ngx-stoui --prod && gulp",
-    "test": "ng test",
+    "test": "node builder --project core && node builder --project form && ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "start-storybook -s dist/stoui-core/style",
