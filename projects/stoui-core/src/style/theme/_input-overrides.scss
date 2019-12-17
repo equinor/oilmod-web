@@ -20,6 +20,16 @@
       }
     }
 
+    &.sto-form__field--readonly, &.sto-form__field--disabled {
+      .mat-form-field-flex {
+        background-color: transparent;
+
+        .mat-select-value {
+          color: $color;
+        }
+      }
+    }
+
     &.sto-form__field--readonly .mat-form-field-flex {
       background-color: transparent;
     }
