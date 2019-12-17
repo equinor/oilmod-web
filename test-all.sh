@@ -3,6 +3,8 @@
 node builder.js --project core
 node builder.js --project form
 
-projects=(core common datatable drawer form)
-
-for i in "${projects[@]}"; do yarn test "stoui-$i"; done
+yarn test stoui-core
+yarn test stoui-common
+yarn test stoui-datatable
+yarn test stoui-drawer
+yarn test stoui-form
