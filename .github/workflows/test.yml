@@ -13,4 +13,4 @@ jobs:
       - name: Test
         uses: ianwalter/puppeteer@v2.0.0
         with:
-          args: yarn test stoui-core
+          args: sh test-all.sh
