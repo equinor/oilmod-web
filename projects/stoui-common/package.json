@@ -1,11 +1,11 @@
 {
   "name": "@ngx-stoui/common",
-  "version": "7.0.0-BETA.4",
+  "version": "7.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
-    "@ngx-stoui/core": "^6.0.0",
+    "@ngx-stoui/core": "^7.0.0",
     "@types/adal-angular": "^1.0.1",
     "adal-angular": "^1.0.17"
   }

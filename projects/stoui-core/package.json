@@ -1,13 +1,12 @@
 {
   "name": "@ngx-stoui/core",
-  "version": "7.0.0-BETA.4",
+  "version": "7.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0"
   },
   "dependencies": {
-    "date-fns": "^1.29.0",
-    "typeface-roboto": "^0.0.43"
+    "date-fns": "^1.29.0"
   }
 }
