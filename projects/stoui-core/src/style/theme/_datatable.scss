@@ -56,6 +56,12 @@
     background-color: $background-color;
     color: $color;
 
+    .datatable-body, .datatable-header {
+      mat-icon {
+        color: $icon-color;
+      }
+    }
+
     .datatable-header {
       border-bottom: 1px solid $border-color;
     }
@@ -72,7 +78,6 @@
       .datatable-row-left, .datatable-row-right, .datatable-row-center {
         background-color: $hover-color;
       }
-
       background-color: $hover-color;
     }
 

@@ -3,10 +3,7 @@
 
 $header-height: 64px;
 $header-z-index: 50; //move to own z-index
-$header-bg-color: $black-84;
-$header-color: $white-light;
 $header-font-size: 20px;
-$environment-color: #FFC000;
 
 .sto-header {
   @include mat-elevation(3);
@@ -24,11 +21,10 @@ $environment-color: #FFC000;
   top: 0;
   width: 100%;
   z-index: $header-z-index;
-  //color: $header-color;
 
   mat-icon {
     cursor: pointer;
-    margin: auto .2em;
+    margin: auto 16px;
   }
 
   &__environment {
@@ -38,7 +34,6 @@ $environment-color: #FFC000;
     top: 0;
     pointer-events: none;
     &--label {
-      //background: $environment-color;
       text-transform: uppercase;
       white-space: nowrap;
       height: 40px;
@@ -47,7 +42,6 @@ $environment-color: #FFC000;
       line-height: 24px;
       padding: 8px 16px;
       border-radius: 2px;
-      //color: #000000;
       position: relative;
       margin: 8px auto;
     }

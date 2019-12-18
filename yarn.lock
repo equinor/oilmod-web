@@ -7761,10 +7761,6 @@ normalize-url@^4.1.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/normalize-url/-/normalize-url-4.3.0.tgz#9c49e10fc1876aeb76dba88bf1b2b5d9fa57b2ee"
 
-nouislider@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/nouislider/-/nouislider-9.1.0.tgz#f477a7cfd34b418bf4a5d34fcdb6123ac30e0b2d"
-
 now-and-later@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/now-and-later/-/now-and-later-2.0.1.tgz#8e579c8685764a7cc02cb680380e94f43ccb1f7c"
@@ -10959,10 +10955,6 @@ typed-styles@^0.0.7:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
-
-typeface-roboto@^0.0.43:
-  version "0.0.43"
-  resolved "https://registry.npmjs.org/typeface-roboto/-/typeface-roboto-0.0.43.tgz#204b8b18f052f14c09862b6f5b7f1fd24d4f1b3a"
 
 typescript@3.4.4:
   version "3.4.4"
