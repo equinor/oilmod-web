@@ -32,7 +32,7 @@ module.exports = function (config) {
       {pattern: '../../testing/material-icons.css', watched: true},
     ],
     reporters: ['progress', 'kjhtml'],
-    port: 9876,
+    port: 9877,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,

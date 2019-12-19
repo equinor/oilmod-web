@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 
 /**
  * Message panel to display inline info boxes.
@@ -13,18 +25,21 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, O
  *    (dismissed)="err = null" severity="warning">{{ err }}</sto-message-panel>
  */
 
+const COLORS = [
+  'primary', 'accent', 'warning', 'danger', 'success'
+];
+
 @Component({
   selector: 'sto-message-panel',
   templateUrl: './sto-message-panel.component.html',
   styleUrls: [ './sto-message-panel.component.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
-export class StoMessagePanelComponent {
+export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
+  @Input()
+  color: 'primary' | 'accent' | 'warning' | 'danger' | 'success' = 'primary';
 
-  /**
-   * Binds the severity-input to the host elements class
-   * TODO: We need to refactor this when possible. Currently the usage disallows class="other-class"
-   */
   @HostBinding('class.warning')
   get warning() {
     return this.severity === 'warning';
@@ -40,7 +55,14 @@ export class StoMessagePanelComponent {
     return this.severity === 'error';
   }
 
-  @Input() severity: 'info' | 'warning' | 'error' = 'info';
+  /**
+   * @deprecated
+   * severity was used to signify behaviour. Now you should use icon + color.
+   */
+  @Input()
+  severity: 'info' | 'warning' | 'error' = 'info';
+  @Input()
+  icon: 'info' | 'warning' | 'error' = 'info';
   /**
    * Emits an event on (dismissed) when the user clicks the dismiss icon
    */
@@ -49,4 +71,33 @@ export class StoMessagePanelComponent {
    * Determines if the message can be dismissed - typically used for showing and hiding errors.
    */
   @Input() dismissable: boolean;
+
+  constructor(private elRef: ElementRef<HTMLElement>) {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const el = this.elRef.nativeElement;
+    if ( changes.color ) {
+      el.classList.remove(...COLORS.map(c => `mat-${c}`));
+      el.classList.add(`mat-${changes.color.currentValue}`);
+    }
+    if ( changes.dismissable ) {
+      const dismissable = changes.dismissable.currentValue;
+      this.setDismissableClass(dismissable, el);
+    }
+  }
+
+  private setDismissableClass(dismissable, el) {
+    if ( dismissable ) {
+      el.classList.add('sto-message-panel--dismissable');
+    } else {
+      el.classList.remove('sto-message-panel--dismissable');
+    }
+  }
+
+  ngAfterViewInit(): void {
+    const color = this.color;
+    this.elRef.nativeElement.classList.add(`mat-${color}`, 'sto-message-panel');
+    this.setDismissableClass(this.dismissable, this.elRef.nativeElement);
+  }
 }

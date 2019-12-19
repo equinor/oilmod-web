@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'sto-navigation-menu',
-  templateUrl: './navigation-menu.component.html'
+  templateUrl: './navigation-menu.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class NavigationMenuComponent implements OnInit {
 

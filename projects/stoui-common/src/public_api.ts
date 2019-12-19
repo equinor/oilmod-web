@@ -17,3 +17,4 @@ export * from './lib/sto-authentication/adal-config.service';
 export * from './lib/sto-authentication/authentication.guard';
 export * from './lib/sto-authentication/callback/sto-callback.component';
 export * from './lib/sto-breadcrumbs/sto-breadcrumbs.module';
+export * from './lib/sto-breadcrumbs/breadcrumb';

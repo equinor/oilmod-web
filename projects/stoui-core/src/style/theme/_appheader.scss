@@ -1,0 +1,70 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-appheader-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $color: map_get($variables, color);
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, app-bar);
+  $hover-bg-color: map_get($variables, hover-bg);
+  $selected-color: map_get($variables, selected-bg);
+  $warning-color: map_get($variables, warning);
+  $icon-color: map_get($variables, icon);
+  $hover-color: map_get($variables, hover-color);
+
+  .sto-header {
+    background-color: $background-color !important;
+    color: $color !important;
+
+    &--test-environment {
+      border: 4px solid $warning-color;
+    }
+
+    &__environment--label {
+      background: $warning-color;
+    }
+
+    button {
+      &:focus {
+        background-color: $selected-color;
+      }
+
+      &:hover {
+        background-color: $hover-bg-color;
+      }
+    }
+  }
+
+  .sto-breadcrumb {
+    &__home {
+      color: $icon-color;
+
+      &:hover {
+        color: $hover-color;
+      }
+    }
+
+    &__list__item {
+      &:before {
+        border-top: 2px solid $border-color;
+        border-right: 2px solid $border-color;
+      }
+
+      &__link {
+        color: $color;
+
+        &:hover {
+          color: $hover-color;
+        }
+      }
+    }
+  }
+
+}
+
+// Include theme styles for your custom components.
+@include sto-appheader-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-appheader-theme($sto-dark-theme, $dark-variables);
+}

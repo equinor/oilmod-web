@@ -1,0 +1,142 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-datatable-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $color: map_get($variables, color);
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, background);
+  $hover-color: map_get($variables, hover-bg);
+  $selected-color: map_get($variables, selected-bg);
+  $icon-color: map_get($variables, icon);
+  $icon-hover: map_get($variables, icon-hover);
+
+  .sto-mdl-table {
+    background-color: $background-color;
+    color: $color;
+
+    .mat-icon-button {
+      color: $icon-color;
+
+      &:hover {
+        color: $color;
+      }
+    }
+
+    &__header__row {
+      border-bottom: 1px solid $border-color;
+
+      &__cell {
+        color: $color;
+      }
+    }
+
+    &__body, &__footer {
+      &__row {
+        border-bottom: 1px solid $border-color;
+
+        &--selected {
+          background-color: $selected-color;
+        }
+
+        &:not(.sto-mdl-table__body__row--selected) {
+          &:hover, &:focus {
+            background-color: $hover-color;
+          }
+        }
+      }
+    }
+
+    &__footer__row {
+      border-top: 1px solid $border-color;
+    }
+  }
+
+  .ngx-datatable.sto-datatable {
+    background-color: $background-color;
+    color: $color;
+
+    .datatable-header {
+      border-bottom: 1px solid $border-color;
+    }
+
+    .datatable-header .datatable-header-cell {
+      color: $color;
+    }
+
+    .datatable-body .datatable-body-row .datatable-body-cell {
+      color: $color;
+    }
+
+    .datatable-body .datatable-body-row:not(.active):hover {
+      .datatable-row-left, .datatable-row-right, .datatable-row-center {
+        background-color: $hover-color;
+      }
+
+      background-color: $hover-color;
+    }
+
+
+    .datatable-body .datatable-body-row:focus:not(.active) .datatable-row-group {
+      &.datatable-row-left, &.datatable-row-right, &.datatable-row-center {
+        background-color: $selected-color !important;
+      }
+    }
+
+    .datatable-body .datatable-body-row.active {
+      .datatable-row-left, .datatable-row-right, .datatable-row-center {
+        background-color: $selected-color;
+      }
+
+      background-color: $selected-color;
+    }
+
+    .datatable-body .datatable-body-row:not(.active):not(:hover) {
+      .datatable-row-left, .datatable-row-right, .datatable-row-center {
+        background-color: $background-color;
+      }
+    }
+  }
+
+}
+
+@include sto-datatable-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-datatable-theme($sto-dark-theme, $dark-variables);
+}
+
+@mixin sto-datatable-typography($config) {
+  .sto-mdl-table {
+    font: {
+      family: mat-font-family($config, body-1);
+      size: mat-font-size($config, body-1);
+      weight: mat-font-weight($config, body-1);
+    }
+    font-feature-settings: 'tnum', 'lnum';
+  }
+
+  .ngx-datatable.sto-datatable {
+    .datatable-body, .datatable-header {
+      font: {
+        family: mat-font-family($config, body-1);
+        size: mat-font-size($config, body-1);
+        weight: mat-font-weight($config, body-1);
+      }
+    }
+
+    font-feature-settings: 'tnum', 'lnum';
+  }
+}
+
+.mat-typography {
+  @include sto-datatable-typography($sto-typography);
+}
+
+.mat-typography.sto-sm-typography {
+  @include sto-datatable-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-datatable-typography($sto-l-typography);
+}

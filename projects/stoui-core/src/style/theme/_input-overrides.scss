@@ -1,0 +1,107 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-input-override-theme($theme, $variables) {
+  $color: map_get($variables, color);
+  $accent: map_get($variables, primary);
+  $form-field-bg: $ship-cove-10;
+  $underline-color: $black-12;
+  $hover-bg: map_get($variables, hover-color);
+  $border-radius: 4px;
+  $icon-color: map_get($variables, icon);
+  $icon-hover: map_get($variables, icon-hover);
+
+  .sto-form__field, .sto-form__field.mat-form-field {
+    .mat-form-field-flex {
+      background-color: $form-field-bg;
+
+      .mat-input {
+        color: $color;
+      }
+    }
+
+    &.sto-form__field--readonly, &.sto-form__field--disabled {
+      .mat-form-field-flex {
+        background-color: transparent;
+
+        .mat-select-value {
+          color: $color;
+        }
+      }
+    }
+
+    &.sto-form__field--readonly .mat-form-field-flex {
+      background-color: transparent;
+    }
+
+    .mat-form-field-flex:hover + .mat-form-field-underline {
+      background-color: $hover-bg;
+    }
+
+    &.mat-focused .mat-form-field-infix .mat-form-field-label {
+      color: $color;
+    }
+
+    .mat-form-field-flex:hover {
+      .mat-form-field-suffix > .mat-icon {
+        color: $icon-hover;
+      }
+    }
+
+    .mat-form-field-suffix > .mat-icon {
+      color: $icon-color;
+    }
+  }
+}
+
+// Include theme styles for your custom components.
+@include sto-input-override-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-input-override-theme($sto-dark-theme, $dark-variables);
+}
+
+@import "typography";
+
+@mixin sto-input-typography($config) {
+  $base: mat-font-size($config, body-1);
+
+
+  .sto-form__field.mat-form-field-can-float.mat-form-field-should-float {
+
+    .mat-form-field-label-wrapper {
+      top: -1.3em;
+    }
+
+    .mat-form-field-label {
+      transform: translateY(-1em) perspective(100px) translateZ(0.001px) !important;
+      @if $base = 16px {
+        font-size: $base - 3px;
+      } @else {
+        font-size: $base - 2px;
+      }
+    }
+
+    .cdk-overlay-container .mat-option {
+      font-size: mat-font-size($config, body-1);
+      line-height: mat-line-height($config, body-1);
+    }
+  }
+
+  .mat-option, .mat-option .mat-option-text {
+    font-size: $base;
+  }
+}
+
+.mat-typography {
+  @include sto-input-typography($sto-typography);
+}
+
+
+.mat-typography.sto-sm-typography {
+  @include sto-input-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-input-typography($sto-l-typography);
+}

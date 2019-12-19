@@ -7,8 +7,6 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeCustom: {
         base: 'ChromeHeadless',
-        // We must disable the Chrome sandbox when running Chrome inside Docker (Chrome's sandbox needs
-        // more permissions than Docker allows by default)
         flags: isDocker ? ['--no-sandbox'] : []
       }
     },
@@ -28,7 +26,7 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml'],
-    port: 9876,
+    port: 9880,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,

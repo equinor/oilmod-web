@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/unsaved-changes",
-  "version": "6.0.0",
+  "version": "7.0.0-BETA.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^8.0.0",

@@ -102,6 +102,7 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   writeValue(value: string): void {
     if ( value ) {
       this.value = this.domSanitizer.bypassSecurityTrustHtml(value);
+      this.cdr.detectChanges();
     }
   }
 
@@ -115,6 +116,7 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    this.cdr.detectChanges();
   }
 
   valueChanged(value: string) {

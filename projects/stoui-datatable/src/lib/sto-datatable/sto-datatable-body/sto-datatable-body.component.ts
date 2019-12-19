@@ -60,7 +60,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
     if ( this.resizeObserver ) {
       this.resizeObserver.disconnect();
     }
-    if ( scrollbarH && this.virtualScroll ) {
+    if ( scrollbarH && this.virtualScroll && this.vScroller ) {
       this.virtHorzScrollPosition();
     } else if ( scrollbarH ) {
       this.horzScrollPosition();

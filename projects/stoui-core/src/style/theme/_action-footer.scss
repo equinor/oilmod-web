@@ -1,0 +1,21 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-action-footer-theme($theme, $variables) {
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, app-bar);
+
+  .sto-action-footer {
+    background-color: $background-color;
+    border-top: 1px solid $border-color;
+  }
+
+}
+
+// Include theme styles for your custom components.
+@include sto-action-footer-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-action-footer-theme($sto-dark-theme, $dark-variables);
+}
+

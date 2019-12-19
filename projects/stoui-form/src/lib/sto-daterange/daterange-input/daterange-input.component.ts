@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -17,6 +17,7 @@ export class DateRange {
   templateUrl: './daterange-input.component.html',
   styleUrls: [ './daterange-input.component.scss' ],
   providers: [ { provide: MatFormFieldControl, useExisting: DaterangeInputComponent } ],
+  encapsulation: ViewEncapsulation.None
 })
 export class DaterangeInputComponent implements MatFormFieldControl<DateRange>, OnDestroy {
 

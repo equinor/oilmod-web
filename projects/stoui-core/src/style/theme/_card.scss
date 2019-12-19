@@ -1,0 +1,25 @@
+@import "typography";
+
+@mixin sto-card-typography($config) {
+  .mat-card.sto-card {
+    .mat-card-title, .mat-card-title.sto-card__title {
+      line-height: mat-line-height($config, headline);
+    }
+
+    .mat-card-subtitle, .mat-card-subtitle.sto-card__subtitle {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.mat-typography {
+  @include sto-card-typography($sto-typography);
+}
+
+.mat-typography.sto-sm-typography {
+  @include sto-card-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-card-typography($sto-l-typography);
+}

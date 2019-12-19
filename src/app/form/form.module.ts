@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { StoDirectivesModule } from '@ngx-stoui/core';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ import { StoDirectivesModule } from '@ngx-stoui/core';
     StoDirectivesModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule,
+    MatInputModule, MatCardModule,
   ],
   declarations: [ FormComponent ],
 })

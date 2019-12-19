@@ -46,4 +46,8 @@ gulp.task('sass:form', function() {
     .pipe(gulp.dest(formCssOutput))
 });
 
+gulp.task('watch', function () {
+  return gulp.watch([`${srcDir}/**/*.scss`, formScss], gulp.series(['sass', 'copy', 'sass:form']));
+});
+
 gulp.task('default', gulp.series('sass', 'copy'));

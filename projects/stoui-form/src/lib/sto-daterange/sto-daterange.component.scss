@@ -3,7 +3,6 @@
 .sto-daterange {
   @include mat-elevation(8);
   border-radius: 2px;
-  background-color: $white-light;
   width: 744px;
   max-height: 332px;
   padding: 0px;
@@ -46,7 +45,6 @@
         display: flex;
         align-items: center;
         margin-bottom: 1rem;
-        background-color: $red-light;
         height: 48px;
         border-radius: 2px;
         opacity: 0.9;
@@ -54,7 +52,6 @@
           line-height: 24px;
         }
         .mat-icon {
-          color: $red-medium;
           margin-right: 8px;
           margin-left: 8px;
         }
@@ -68,9 +65,6 @@
     height: 42px;
     .mat-form-field-flex {
       padding: 6px 6px 0;
-    }
-    input {
-      color: #000000;
     }
     .mat-error {
       margin-left: 6px;
@@ -109,12 +103,5 @@
 .sto-daterange{
   .mat-calendar-controls{
     margin: 0 calc(33% / 7 - 16px)
-  }
-}
-
-// Line height date range picker
-.sto-daterange-wrapper {
-  .mat-form-field-infix {
-    line-height: 1;
   }
 }

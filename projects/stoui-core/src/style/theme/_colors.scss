@@ -1,0 +1,49 @@
+@import '~@angular/material/theming';
+@import "../colors";
+
+$sto-primary: (
+  main: #007079,
+  lighter: #b3d4d7,
+  darker: #00535c,
+  200: #007079, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$sto-primary-dark: (
+  main: #00bfce,
+  lighter: #b3ecf0,
+  darker: #00a9bc,
+  200: 00 bfce,
+  contrast: (
+    main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$sto-accent: (
+  main: #d5eaf4,
+  lighter: #d7d7d7,
+  darker: #5c5c5c,
+  200: #d5eaf4, // For slide toggle,
+  contrast : (
+    main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$sto-indicator: (
+  warning : #FFE7D6,
+  success : #358132,
+  danger: #EB0000,
+  contrast: (
+    warning : $dark-primary-text,
+    success : $light-primary-text,
+    danger: $light-primary-text,
+  )
+);

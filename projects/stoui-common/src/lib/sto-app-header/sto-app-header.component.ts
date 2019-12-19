@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
 
 /**
@@ -17,7 +17,7 @@ import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StoAppHeaderComponent {
+export class StoAppHeaderComponent implements AfterViewInit {
   /**
    * testEnvironment tells the header whether or not to style itself defining a test-environment
    */
@@ -38,4 +38,36 @@ export class StoAppHeaderComponent {
    */
   @Input()
   breadCrumbs: Breadcrumb[];
+
+  public nightmode: boolean;
+
+  toggleTheme() {
+    localStorage.removeItem('tops__theme');
+    document.body.classList.toggle('sto-dark-theme');
+    this.nightmode = document.body.classList.contains('sto-dark-theme');
+    if ( this.nightmode ) {
+      localStorage.setItem('tops__theme', 'sto-dark-theme');
+    }
+  }
+
+  toggleTypography(className?: string) {
+    document.body.classList.remove('sto-sm-typography', 'sto-l-typography');
+    localStorage.removeItem('tops__typography');
+    if ( className ) {
+      document.body.classList.add(className);
+      localStorage.setItem('tops__typography', className);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    const theme = localStorage.getItem('tops__theme');
+    if ( theme ) {
+      document.body.classList.add(theme);
+    }
+    const typography = localStorage.getItem('tops__typography');
+    if ( typography ) {
+      this.toggleTypography(typography);
+    }
+    this.nightmode = document.body.classList.contains('sto-dark-theme');
+  }
 }

@@ -57,15 +57,15 @@ stories
   .add('Daterange', () => ({
     moduleMetadata: {
       declarations: [],
-      imports: [StoDaterangeModule, ReactiveFormsModule, BrowserAnimationsModule]
+      imports: [StoDaterangeModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule]
     },
-    template: `<div style="width: 250px" class="sto-form mat-typography">
+    template: `<mat-card style="width: 250px" class="sto-form ">
 <sto-daterange
 [label]="label"
 [showPickersOnFocus]="singlePickers"
 [formControl]="control"></sto-daterange>
 Value: {{ control.value | json }}
-</div>`,
+</mat-card>`,
     props: {
       control: new FormControl(),
       label: text('Label', 'Date range'),
@@ -77,12 +77,12 @@ Value: {{ control.value | json }}
 
 stories.add('Number input', () => ({
   moduleMetadata: {
-    imports: [StoNumberInputModule, BrowserAnimationsModule],
+    imports: [StoNumberInputModule, BrowserAnimationsModule, MatCardModule],
     schemas: [NO_ERRORS_SCHEMA]
   },
-  template: `<div *ngIf="group" style="width: 250px" class="sto-form mat-typography">
+  template: `<mat-card *ngIf="group" style="width: 250px" class="sto-form mat-typography">
 <sto-number-input [textAlign]="textAlign" [forceValue]="value" [readonly]="readonly" [label]="label" [suffix]="suffix" [fractionSize]="fractionSize"></sto-number-input>
-</div>`,
+</mat-card>`,
   props: {
     group: new FormGroup({nmbr: new FormControl()}),
     label: text('Label', 'Number input'),
@@ -98,16 +98,16 @@ stories.add('Number input', () => ({
 
 stories.add('Monthpicker', () => ({
   moduleMetadata: {
-    imports: [MatNativeDateModule, BrowserAnimationsModule, StoDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+    imports: [MatNativeDateModule, MatCardModule, BrowserAnimationsModule, StoDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
   },
-  template: `<div class="sto-form" style="width: 200px">
+  template: `<mat-card class="sto-form" style="width: 200px">
 <mat-form-field class="sto-form__field" [stoMonthFormFieldClick]="picker">
 <mat-label>Month</mat-label>
 <input matInput [formControl]="ctrl" [mdMonthpicker]="picker">
 <md-monthpicker-toggle matSuffix [for]="picker"></md-monthpicker-toggle>
 <md-monthpicker #picker></md-monthpicker>
 </mat-form-field>
-</div>`,
+</mat-card>`,
   props: {
     ctrl: new FormControl(new Date())
   }
@@ -117,11 +117,11 @@ stories.add('Monthpicker', () => ({
 
 stories.add('Autocomplete', () => ({
   moduleMetadata: {
-    imports: [StoAutocompleteModule, BrowserAnimationsModule, ReactiveFormsModule]
+    imports: [StoAutocompleteModule, BrowserAnimationsModule, ReactiveFormsModule, MatCardModule]
   },
-  template: `<div style="width: 200px">
+  template: `<mat-card style="width: 200px">
 <sto-autocomplete class="sto-form" [displayFn]="displayValue === 'name' ? displayFn : displayLongName" (ngModelChange)="changed($event)" label="Autocomplete" [valueKey]="valueKey" [searchForKey]="searchKey" [unfiltered]="items" [formControl]="ctrl"></sto-autocomplete>
-</div>`,
+</mat-card>`,
   props: {
     ctrl: new FormControl(),
     items,
@@ -138,11 +138,11 @@ stories.add('Autocomplete', () => ({
 
 stories.add('Slide toggle', () => ({
   moduleMetadata: {
-    imports: [StoSlideToggleModule, ReactiveFormsModule, BrowserAnimationsModule]
+    imports: [StoSlideToggleModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule]
   },
-  template: `<div style="width: 200px" class="sto-form">
+  template: `<mat-card style="width: 200px" class="sto-form">
 <sto-slide-toggle (ngModelChange)="valueChange($event)" [formControl]="ctrl" label="Slide toggle"></sto-slide-toggle>
-</div>`,
+</mat-card>`,
   props: {
     ctrl: new FormControl(),
     valueChange: action('Value changed')
@@ -151,10 +151,10 @@ stories.add('Slide toggle', () => ({
 
 stories.add('MatSelect filter', () => ({
   moduleMetadata: {
-    imports: [StoSelectFilterModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule]
+    imports: [StoSelectFilterModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule, MatCardModule]
   },
   template: `
-<div style="width: 300px" class="sto-form" (click)="flip()">
+<mat-card style="width: 300px" class="sto-form" (click)="flip()">
 <mat-form-field *ngIf="multi" class="sto-form__field" floatLabel="always" >
 <mat-label>Multiselect with filter</mat-label>
   <mat-select [multiple]="true" [value]="selected">
@@ -172,7 +172,7 @@ stories.add('MatSelect filter', () => ({
     <mat-option *ngFor="let opt of filteredItems" [value]="opt">{{opt.name}}</mat-option>
 </mat-select>
 </mat-form-field>
-</div>
+</mat-card>
   `,
   props: {
     filter: (event, all) => {
@@ -192,10 +192,10 @@ stories.add('MatSelect filter', () => ({
 
 stories.add('StoFormField', () => ({
   moduleMetadata: {
-    imports: [MatFormFieldModule, MatInputModule, StoFormModule, MatSelectModule, BrowserAnimationsModule],
+    imports: [MatFormFieldModule, MatInputModule, StoFormModule, MatSelectModule, BrowserAnimationsModule, MatCardModule],
     providers: [{provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}]
   },
-  template: `<div class="sto-form">
+  template: `<mat-card class="sto-form">
 <mat-form-field stoFormField *ngIf="withClasses">
 <mat-label>Form field with styles</mat-label>
 <input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
@@ -208,7 +208,7 @@ stories.add('StoFormField', () => ({
 <mat-label>Form field without styles</mat-label>
 <input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
 </mat-form-field>
-</div>`,
+</mat-card>`,
   props: {
     withClasses: boolean('Use styling', true),
     readonly: boolean('Readonly', false),

@@ -70,10 +70,11 @@ stories.add('Navigation', () => ({
           <mat-icon>arrow_back</mat-icon>
         </button>
         <ng-template #topIcon>
-          <a href="#" mat-icon-button (click)="$event.preventDefault(); topsNav()">
-            <mat-icon class="sto-main-icon"
-                      [class.sto-main-icon--test-environment]="testEnvironment">settings</mat-icon>
-          </a>
+          <button mat-icon-button
+          type="button" 
+          (click)="topsNav()">
+            <mat-icon [class.sto-main-icon--test-environment]="testEnvironment">settings</mat-icon>
+          </button>
         </ng-template>
       </div>
 <div class="sto-drawer__header__title">

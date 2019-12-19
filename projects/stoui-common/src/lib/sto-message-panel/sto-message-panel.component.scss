@@ -1,55 +1,25 @@
-@import 'stoui-core/style/colors';
 @import "stoui-core/style/functions";
 
-//colors: datatable
-
-$info-color: $purple-dark;
-$info-background-color: $blue-light;
-
-:host {
+.sto-message-panel {
   width: 100%;
   border: 1px solid;
   display: flex;
+  border-radius: 2px;
   padding: spacer(3);
+
+  &--dismissable {
+    padding: spacer(1) spacer(3);
+  }
+
+  position: relative;
   font-weight: 500;
   font-size: 13px;
-}
 
-:host(.warning) {
-  background-color: $warning-color-background;
-  border-color: $warning-color-border;
-
-  .mat-icon {
-    color: $warning-color;
+  &__content-wrapper {
+    align-items: center;
   }
 }
 
-:host(.error) {
-  background-color: $error-color-background;
-  border-color: $error-color-border;
-
-  .mat-icon {
-    color: $error-color;
-  }
-}
-
-:host(.info) {
-  background-color: $success-color-background;
-  border-color: $success-color-border;
-
-  .mat-icon {
-    color: $success-color;
-  }
-}
-
-:host(.success) {
-  background-color: $success-color-background;
-  border-color: $success-color-border;
-
-  .mat-icon {
-    color: $success-color;
-  }
-}
 
 .sto-message-panel {
   &__icon-wrapper {

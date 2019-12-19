@@ -5,7 +5,6 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
-  HostBinding,
   Input,
   KeyValueDiffers,
   Output,
@@ -210,7 +209,7 @@ export class StoComplexDatatableComponent extends DatatableComponent {
 
 
   //data-bind to the host element's style property
-  @HostBinding('style.backgroundColor') color = 'white'; //default color
+  // @HostBinding('style.backgroundColor') color = 'white'; //default color
 
   @Input() set summaryRow(val: any) {
 

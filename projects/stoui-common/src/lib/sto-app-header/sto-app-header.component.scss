@@ -12,10 +12,10 @@ $environment-color: #FFC000;
   @include mat-elevation(3);
 
   &--test-environment {
-    border: 4px solid $environment-color;
+    //border: 4px solid $environment-color;
   }
 
-  background-color: $header-bg-color;
+  //background-color: $header-bg-color;
   display: flex;
   flex: auto;
   flex-direction: row;
@@ -24,29 +24,11 @@ $environment-color: #FFC000;
   top: 0;
   width: 100%;
   z-index: $header-z-index;
-  color: $header-color;
+  //color: $header-color;
 
   mat-icon {
     cursor: pointer;
     margin: auto .2em;
-  }
-
-  button {
-    color: $header-color;
-    height: 100%;
-    border: 0;
-    font-size: $header-font-size;
-    line-height: $header-height;
-
-    position: relative;
-    outline: none;
-
-    &:focus {
-      background-color: $content-bg-color-highlight;
-    }
-    &:hover {
-      background-color: $content-bg-color-highlight;
-    }
   }
 
   &__environment {
@@ -56,7 +38,7 @@ $environment-color: #FFC000;
     top: 0;
     pointer-events: none;
     &--label {
-      background: $environment-color;
+      //background: $environment-color;
       text-transform: uppercase;
       white-space: nowrap;
       height: 40px;
@@ -65,9 +47,15 @@ $environment-color: #FFC000;
       line-height: 24px;
       padding: 8px 16px;
       border-radius: 2px;
-      color: #000000;
+      //color: #000000;
       position: relative;
       margin: 8px auto;
     }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
   }
 }
