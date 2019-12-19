@@ -8,11 +8,6 @@ $header-font-size: 20px;
 .sto-header {
   @include mat-elevation(3);
 
-  &--test-environment {
-    //border: 4px solid $environment-color;
-  }
-
-  //background-color: $header-bg-color;
   display: flex;
   flex: auto;
   flex-direction: row;
@@ -25,6 +20,10 @@ $header-font-size: 20px;
   mat-icon {
     cursor: pointer;
     margin: auto 16px;
+  }
+
+  .sto-header__actions mat-icon {
+    margin: auto;
   }
 
   &__environment {
