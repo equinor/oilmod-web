@@ -26,8 +26,7 @@ const exec = promisify(execCb);
       {component: '@ngx-stoui/form', result: tableForm[1].stdout},
     ];
   } catch (ex) {
-    console.error(ex);
-    throw new Error('There were errors executing the test suite');
+    throw new Error(ex.stdout);
   }
 
   console.log('Test suite completed OK, see results below!');
