@@ -16,7 +16,9 @@ interface TestSafeHtml extends SafeHtml {
 @Component({
   selector: 'sto-wrap',
   template: `
-      <sto-wysiwyg [formControl]="ctrl"></sto-wysiwyg>`
+      <sto-wysiwyg [formControl]="ctrl">
+          <button id="submit">SaveButton</button>
+      </sto-wysiwyg>`
 })
 class WrapperComponent {
   public ctrl = new FormControl();
@@ -153,6 +155,12 @@ describe('WysiwygComponent integration tests', () => {
     expect(page.editable.getAttribute('contenteditable')).toEqual('true');
   });
 
+  it('should project a button', () => {
+    expect(page.projectedButton).toBeTruthy();
+    // Test that it was projected correctly.
+    expect(page.projectedButton.parentElement.classList.contains('user-buttons')).toBeTruthy();
+  });
+
   function createComponent() {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapper = fixture.componentInstance;
@@ -173,6 +181,7 @@ class Page {
   public editable: HTMLDivElement;
   public editorDe: DebugElement;
   public wysiwygDe: DebugElement;
+  public projectedButton: HTMLButtonElement;
 
   constructor(fixture: ComponentFixture<WrapperComponent>) {
     const wysiwygDe = fixture.debugElement.query(By.directive(WysiwygComponent));
@@ -185,5 +194,6 @@ class Page {
     this.editor = editorDe.componentInstance;
     const editableDe = editorDe.query(By.css('.sto-wysiwyg__editor'));
     this.editable = editableDe.nativeElement;
+    this.projectedButton = wysiwygDe.query(By.css('#submit')).nativeElement;
   }
 }

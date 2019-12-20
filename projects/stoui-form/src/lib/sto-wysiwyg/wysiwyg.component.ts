@@ -43,7 +43,11 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   public propagateChange: any;
   public onTouched: any;
 
-  constructor(private domSanitizer: DomSanitizer, private zone: NgZone, private cdr: ChangeDetectorRef) {
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngAfterViewInit() {

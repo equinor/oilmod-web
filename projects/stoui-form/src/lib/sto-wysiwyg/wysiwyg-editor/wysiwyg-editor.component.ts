@@ -63,7 +63,7 @@ export class WysiwygEditorComponent implements AfterViewInit {
     const hasImage: boolean = /\<img/.test(html);
     if ( hasImage ) {
       event.preventDefault();
-      this.warning = `Adding images embedded in text is blocked by the browser - please copy/paste or drag/drop the image separately.`;
+      this.warning = `Some images were not included due to browser security around mixed content. Try to paste the image separately.`;
       const stripped = this.stripImageSection(html);
       const el = document.createElement('div');
       el.innerHTML = stripped;
@@ -87,14 +87,6 @@ export class WysiwygEditorComponent implements AfterViewInit {
         while ( el.parentElement !== div ) {
           el = el.parentElement;
         }
-        // Adds broken image icon showing where the image was previously. Probably not necessary, but fun!
-        // const placeholder = document.createElement('mat-icon');
-        // placeholder.classList.add('mat-icon', 'notranslate', 'material-icons', 'mat-icon-no-color');
-        // placeholder.style.fontSize = '64px';
-        // placeholder.style.height = '64px';
-        // placeholder.style.width = '64px';
-        // placeholder.innerText = 'broken_image';
-        // div.replaceChild(placeholder, el);
         div.removeChild(el);
       });
     return div.innerHTML;

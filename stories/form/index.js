@@ -22,6 +22,7 @@ import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form
 import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.md'
 import {StoWysiwygModule} from "../../projects/stoui-form/src/lib/sto-wysiwyg/wysiwyg.module";
 import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
 
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
@@ -30,14 +31,17 @@ stories
   .add('WYSIWYG', () => ({
     moduleMetadata: {
       declarations: [],
-      imports: [StoWysiwygModule, ReactiveFormsModule, MatCardModule]
+      imports: [StoWysiwygModule, ReactiveFormsModule, MatCardModule, MatButtonModule]
     },
     template: `
 <button (click)="change(control.value)">Log value</button>
 <button (click)="disabled = !disabled">Toggle disabled state</button>
 <!--boolean('Disabled', true)-->
     <mat-card class="sto-card" style="height: 600px">
-        <sto-wysiwyg [readonly]="disabled" [formControl]="control"></sto-wysiwyg>
+        <sto-wysiwyg [readonly]="disabled" [formControl]="control">
+        <button mat-flat-button color="primary">Save</button>
+        <button mat-flat-button color="primary">Cancel</button>
+</sto-wysiwyg>
     </mat-card>
     
 Resulting HTML
