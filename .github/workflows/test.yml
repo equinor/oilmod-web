@@ -27,6 +27,7 @@ jobs:
       - name: Install
         run: yarn
       - name: Test
-        uses: ianwalter/puppeteer@v2.0.0
+        uses: actions/setup-node@v1
         with:
-          args: sh test-all.sh
+          node-version: 12.x
+      - run: node test-all.js
