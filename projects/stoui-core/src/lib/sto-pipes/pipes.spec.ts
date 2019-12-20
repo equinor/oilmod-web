@@ -34,7 +34,7 @@ describe('NumberFormatPipe', () => {
 
   it('should append unit', () => {
     const transformed = pipe.transform(value, 'M3');
-    expect(transformed).toEqual('1 234,320 BBL');
+    expect(transformed).toEqual('1 234,320 M3');
   });
 
   it('should convert a negative number and format', () => {
