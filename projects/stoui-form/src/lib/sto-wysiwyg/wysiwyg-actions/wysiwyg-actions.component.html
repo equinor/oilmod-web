@@ -1,50 +1,52 @@
 <div class="sto-wysiwyg__actions">
   <div class="sto-wysiwyg__buttons">
-    <mat-button-toggle-group [multiple]="true"
-                             [value]="active">
-      <mat-button-toggle value="bold"
-                         title="Bold (ctrl + b)"
-                         (change)="modifier.emit($event.value)">
-        <mat-icon>format_bold</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="italic"
-                         title="Italic (ctrl + i)"
-                         (change)="modifier.emit($event.value)">
-        <mat-icon>format_italic</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="underline"
-                         title="Underline (ctrl + u)"
-                         (change)="modifier.emit($event.value)">
-        <mat-icon>format_underline</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-    <div class="divider"></div>
-    <button mat-flat-button
-            title="Insert hyperlink"
-            (click)="modifier.emit('createLink')"
-            class="sto-wysiwyg__editor__button">
-      <mat-icon>link</mat-icon>
-    </button>
-    <div class="divider"></div>
-    <button mat-flat-button
-            title="Create unordered list"
-            (click)="modifier.emit('insertUnorderedList')"
-            class="sto-wysiwyg__editor__button">
-      <mat-icon>format_list_bulleted</mat-icon>
-    </button>
-    <button mat-flat-button
-            title="Create ordered list"
-            (click)="modifier.emit('insertOrderedList')"
-            class="sto-wysiwyg__editor__button">
-      <mat-icon>format_list_numbered</mat-icon>
-    </button>
-    <div class="divider"></div>
-    <button mat-flat-button
-            title="Clear formatting on selection"
-            (click)="modifier.emit('removeFormat')"
-            class="sto-wysiwyg__editor__button">
-      <mat-icon>format_clear</mat-icon>
-    </button>
+    <ng-container *ngIf="!disabled">
+      <mat-button-toggle-group [multiple]="true"
+                               [value]="active">
+        <mat-button-toggle value="bold"
+                           title="Bold (ctrl + b)"
+                           (change)="modifier.emit($event.value)">
+          <mat-icon>format_bold</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="italic"
+                           title="Italic (ctrl + i)"
+                           (change)="modifier.emit($event.value)">
+          <mat-icon>format_italic</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="underline"
+                           title="Underline (ctrl + u)"
+                           (change)="modifier.emit($event.value)">
+          <mat-icon>format_underline</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <div class="divider"></div>
+      <button mat-flat-button
+              title="Insert hyperlink"
+              (click)="modifier.emit('createLink')"
+              class="sto-wysiwyg__editor__button">
+        <mat-icon>link</mat-icon>
+      </button>
+      <div class="divider"></div>
+      <button mat-flat-button
+              title="Create unordered list"
+              (click)="modifier.emit('insertUnorderedList')"
+              class="sto-wysiwyg__editor__button">
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+      <button mat-flat-button
+              title="Create ordered list"
+              (click)="modifier.emit('insertOrderedList')"
+              class="sto-wysiwyg__editor__button">
+        <mat-icon>format_list_numbered</mat-icon>
+      </button>
+      <div class="divider"></div>
+      <button mat-flat-button
+              title="Clear formatting on selection"
+              (click)="modifier.emit('removeFormat')"
+              class="sto-wysiwyg__editor__button">
+        <mat-icon>format_clear</mat-icon>
+      </button>
+    </ng-container>
   </div>
   <div class="user-buttons">
     <ng-content></ng-content>

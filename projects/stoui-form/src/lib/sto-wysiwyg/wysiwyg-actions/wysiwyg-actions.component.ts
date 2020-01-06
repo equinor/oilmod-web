@@ -8,6 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class WysiwygActionsComponent implements OnInit {
   @Input()
   active: string[];
+  @Input()
+  disabled: boolean;
   @Output()
   modifier = new EventEmitter<string>();
 

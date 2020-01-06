@@ -1,6 +1,6 @@
 <div class="sto-wysiwyg">
-  <sto-wysiwyg-actions *ngIf="!disabled"
-                       [active]="active"
+  <sto-wysiwyg-actions [active]="active"
+                       [disabled]="disabled"
                        (modifier)="execute($event)">
     <ng-content></ng-content>
   </sto-wysiwyg-actions>

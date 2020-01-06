@@ -13,12 +13,7 @@
 
 // Include theme styles for core and each component used in your app.
 @include angular-material-theme($sto-theme);
-body {
-  background-color: #F7F7F7;
-}
-
 body.sto-dark-theme {
-  background-color: #262626;
   @include angular-material-theme($sto-dark-theme);
 }
 

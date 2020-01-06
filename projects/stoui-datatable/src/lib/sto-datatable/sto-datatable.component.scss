@@ -21,6 +21,7 @@
       align-items: center;
 
       &__cell {
+        height: 100%;
         font-weight: 400;
         flex: 1 0 50px;
         overflow: hidden;

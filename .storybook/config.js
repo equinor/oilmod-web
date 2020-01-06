@@ -2,7 +2,7 @@ import {configure} from '@storybook/angular';
 import '../src/styles.scss';
 
 function loadStories() {
-  document.body.classList.add('mat-typography');
+  document.body.classList.add('mat-typography', 'mat-app-background');
   // document.body.style.padding = '30px';
 
   require('../stories/core/index.js');

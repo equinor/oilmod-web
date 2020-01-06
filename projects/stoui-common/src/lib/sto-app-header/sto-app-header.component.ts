@@ -60,6 +60,7 @@ export class StoAppHeaderComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    document.body.classList.add('mat-app-background');
     const theme = localStorage.getItem('tops__theme');
     if ( theme ) {
       document.body.classList.add(theme);

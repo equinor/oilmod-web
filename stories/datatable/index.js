@@ -4,6 +4,7 @@ import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-dat
 import {columns, fixedColumns, rows} from './rows';
 import {action} from "@storybook/addon-actions";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatCardModule} from "@angular/material/card";
 
 const stories = storiesOf('Datatable - StoDatatable', module)
   .addDecorator(withKnobs);
@@ -12,9 +13,9 @@ stories
   .add('Basic usage', () => ({
     moduleMetadata: {
       declarations: [],
-      imports: [StoDatatableModule, BrowserAnimationsModule]
+      imports: [StoDatatableModule, BrowserAnimationsModule, MatCardModule]
     },
-    template: `<div>
+    template: `<mat-card class="sto-card">
 <button (click)="theme()">Theme</button>
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
@@ -26,7 +27,7 @@ stories
 (rowContextMenu)="$event.event.preventDefault(); contextMenu($event)"
 (select)="select($event); selected = $event.row" [autoSize]="false"
 [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
-</div>`,
+</mat-card>`,
     props: {
       rows,
       columns: fixedColumns,

@@ -5,7 +5,8 @@
   $primary: map_get($variables, primary);
   $color: map_get($variables, color);
   $border-color: map_get($variables, border-color);
-  $background-color: map_get($variables, background);
+  $background-color: transparent;
+  $header-background-color: map_get($variables, background);
   $hover-color: map_get($variables, hover-bg);
   $selected-color: map_get($variables, selected-bg);
   $icon-color: map_get($variables, icon);
@@ -25,9 +26,14 @@
 
     &__header__row {
       border-bottom: 1px solid $border-color;
+      background-color: $header-background-color;
 
       &__cell {
         color: $color;
+
+        &:hover {
+          background-color: $hover-color;
+        }
       }
     }
 
