@@ -17,6 +17,10 @@ import {HttpClientModule} from "@angular/common/http";
 import {StoMessagePanelModule} from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.module";
 import {MatCardModule} from "@angular/material/card";
 import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {FilterPanelComponent} from "./filter-panel";
+import {MatSelectModule} from "@angular/material/select";
+import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
 
 const stories = storiesOf('Common', module)
   .addDecorator(withKnobs);
@@ -103,7 +107,7 @@ stories.add('ActionFooter', () => ({
 
 stories.add('Filter Panel', () => ({
   moduleMetadata: {
-    imports: [StoFilterPanelModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, StoFormModule]
+    imports: [StoFilterPanelModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, StoFormModule,]
   },
   template: `<sto-filter-panel class="sto-form" [expandable]="true" (toggled)="toggled()">
 <sto-filter-title>{{ title }}</sto-filter-title>
@@ -115,6 +119,21 @@ stories.add('Filter Panel', () => ({
 <input matInput>
 </mat-form-field>
 </sto-filter-panel>`,
+  props: {
+    toggled: action('Toggled filter panel'),
+    title: text('Title', 'Filter title')
+  }
+}), {
+  notes: {markdown: filterReadme}
+});
+
+
+stories.add('Filter Form Panel', () => ({
+  moduleMetadata: {
+    declarations: [FilterPanelComponent],
+    imports: [StoFilterPanelModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, StoFormModule, ReactiveFormsModule, MatSelectModule, StoDirectivesModule]
+  },
+  template: `<filter-panel></filter-panel>`,
   props: {
     toggled: action('Toggled filter panel'),
     title: text('Title', 'Filter title')

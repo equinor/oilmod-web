@@ -12,9 +12,10 @@ import {
   StoFilterTableActions,
   StoFilterTitle
 } from './sto-filter-panel.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  imports: [CommonModule, MatExpansionModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatTooltipModule],
+  imports: [ CommonModule, MatExpansionModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatTooltipModule, MatChipsModule ],
   exports: [StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterTableActions],
   declarations: [StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterActionsBar, StoFilterTableActions]
 })

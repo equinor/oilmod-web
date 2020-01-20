@@ -8,6 +8,7 @@ export * from './lib/sto-confirm-dialog/sto-confirm-dialog.component';
 export * from './lib/sto-confirm-dialog/sto-confirm-dialog.module';
 export * from './lib/sto-confirm-dialog/sto-confirm-dialog.service';
 export * from './lib/sto-filter/sto-filter-panel.module';
+export * from './lib/sto-filter/filter';
 export * from './lib/sto-message-panel/sto-message-panel.module';
 export * from './lib/sto-app-header/sto-app-header.module';
 export * from './lib/sto-authentication/authentication.module';

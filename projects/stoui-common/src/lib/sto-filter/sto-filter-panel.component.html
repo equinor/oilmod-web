@@ -1,11 +1,27 @@
 <mat-expansion-panel [disabled]="true"
                      [expanded]="expanded"
+                     #panel
                      [hideToggle]="true"
                      [ngClass]="{'sto-filter' : true}">
   <mat-expansion-panel-header [expandedHeight]="'40px'"
                               [collapsedHeight]="'40px'">
     <mat-panel-title>
       <ng-content select="sto-filter-title"></ng-content>
+      <mat-chip-list [style.opacity]="panel.expanded ? 0 : 1"
+                     *ngIf="filterList"
+                     style="margin-left: 16px">
+        <mat-chip (removed)="host.clearFilter(f.key, f.index)"
+                  *ngFor="let f of filterList"
+                  [removable]="true"
+                  [selected]="true"
+                  [value]="f.key"
+                  color="primary"
+                  style="margin: 2px 4px">
+          {{ f.value }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+
+        </mat-chip>
+      </mat-chip-list>
     </mat-panel-title>
     <span class="content-wrapper"
           #tableActions>

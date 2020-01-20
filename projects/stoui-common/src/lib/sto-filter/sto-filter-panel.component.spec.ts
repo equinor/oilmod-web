@@ -15,6 +15,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FilterForm, FilterList } from './filter';
+import { OperatorFunction } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MatChipList, MatChipsModule } from '@angular/material/chips';
 
 let comp: StoFilterPanelComponent;
 let fixture: ComponentFixture<StoFilterPanelComponent>;
@@ -24,29 +29,42 @@ let page: Page;
 @Component({
   selector: 'sto-spec-wrap',
   template: `
-    <div style="background: white">
-      <sto-filter-panel [expandable]="true">
-        <sto-filter-title>Filter Title</sto-filter-title>
-        <sto-filter-table-actions>
-          <button mat-button>
-            New
-            <mat-icon>add</mat-icon>
-          </button>
-        </sto-filter-table-actions>
-        <sto-filter-actions>
-          <button mat-icon-button>
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </sto-filter-actions>
-        <form class="sto-form sto-grid sto-grid--6">
-          <div class="sto-grid__column">
-            Content
-          </div>
-        </form>
-      </sto-filter-panel>
-    </div>`
+      <div style="background: white">
+          <sto-filter-panel [expandable]="true"
+                            [filterList]="filter$ | async">
+              <sto-filter-title>Filter Title</sto-filter-title>
+              <sto-filter-table-actions>
+                  <button mat-button>
+                      New
+                      <mat-icon>add</mat-icon>
+                  </button>
+              </sto-filter-table-actions>
+              <sto-filter-actions>
+                  <button mat-icon-button>
+                      <mat-icon>refresh</mat-icon>
+                  </button>
+              </sto-filter-actions>
+              <div class="sto-form sto-grid sto-grid--6"
+                   [formGroup]="form">
+                  <div class="sto-grid__column">
+                      <input formControlName="field">
+                  </div>
+              </div>
+          </sto-filter-panel>
+      </div>`
 })
-class WrapperComponent {
+class WrapperComponent extends FilterForm<{ field: string }> {
+  formConfig = { field: [] };
+  serializer: OperatorFunction<{ field: string; }, FilterList[]> = map(val => {
+    if ( val.field ) {
+      return [ { value: 'Field1 has a value', key: 'field' } ];
+    }
+    return [];
+  });
+
+  constructor(fb: FormBuilder) {
+    super(fb);
+  }
 }
 
 describe('StoFilterPanelComponent', () => {
@@ -61,6 +79,8 @@ describe('StoFilterPanelComponent', () => {
           , MatButtonModule
           , MatButtonToggleModule
           , MatTooltipModule
+          , ReactiveFormsModule
+          , MatChipsModule
         ],
         declarations: [
           StoFilterPanelComponent
@@ -89,6 +109,16 @@ describe('StoFilterPanelComponent', () => {
 
   it('should render a mat-button', () => {
     expect(page.newButton).toBeTruthy();
+  });
+
+  it('should render chips when value is set, and panel is closed', () => {
+    const wrap = wrapFixture.componentInstance;
+    wrap.form.get('field').setValue('A value!');
+    wrapFixture.detectChanges();
+    page.stoFilterPanel.expanded = false;
+    wrapFixture.detectChanges();
+    const chips = wrapFixture.debugElement.query(By.directive(MatChipList));
+    expect(chips).toBeDefined();
   });
 
 });

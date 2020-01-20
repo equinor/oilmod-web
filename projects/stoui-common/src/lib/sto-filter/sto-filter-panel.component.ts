@@ -8,8 +8,10 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
+import { FilterForm, FilterList } from './filter';
 
 /**
  * Sto filter panel is an extentiong
@@ -18,7 +20,7 @@ import {
   selector: 'sto-filter-panel',
   templateUrl: './sto-filter-panel.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./sto-filter-panel.component.scss']
+  styleUrls: [ './sto-filter-panel.component.scss' ]
 })
 export class StoFilterPanelComponent implements OnInit, AfterViewInit {
 
@@ -31,6 +33,12 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    * If the filter panel should be expanded by default. Default false.
    */
   @Input() public expanded;
+
+  /**
+   * List of active filters.
+   */
+  @Input()
+  filterList: FilterList[];
 
   /**
    * Emits {isExpanded: boolean, contentHeight: number } where
@@ -50,6 +58,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('filterActions', { static: true }) contentWrapper2;
   @ViewChild('filterForm', { static: true }) filterForm;
 
+  public readonly host: FilterForm<any>;
   private _contentHeight: number;
   set contentHeight(contentHeight: number) {
     this._contentHeight = contentHeight;
@@ -64,12 +73,12 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   public toggle() {
     this.expanded = !this.expanded;
     this.setContentHeight();
-    this.toggled.emit({isExpanded: this.expanded, contentHeight: this.contentHeight});
+    this.toggled.emit({ isExpanded: this.expanded, contentHeight: this.contentHeight });
   }
 
   ngOnInit() {
-    if (this.expandable) {
-      if (this.expanded === undefined) {
+    if ( this.expandable ) {
+      if ( this.expanded === undefined ) {
         this.expanded = true;
       }
     } else {
@@ -86,7 +95,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
 
   private setContentHeight() {
     const element = this.filterForm.nativeElement;
-    if (element) {
+    if ( element ) {
       const contentArea = element.parentElement;
       this.contentHeight = contentArea.offsetHeight;
     }
@@ -94,16 +103,15 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
 
   public needSeperator() {
     this.hasSeperator = false;
-    if (this.contentWrapper && this.contentWrapper2) {
+    if ( this.contentWrapper && this.contentWrapper2 ) {
       const el1 = this.contentWrapper.nativeElement;
       const el2 = this.contentWrapper2.nativeElement;
-      if (el1.children && el2.children) {
-        if (el1.children.length > 0 && el2.children.length > 0) {
-          const hasActionButtons = el1.children[0].children.length > 0;
-          const hasTableButtons = el2.children[0].children.length > 0;
+      if ( el1.children && el2.children ) {
+        if ( el1.children.length > 0 && el2.children.length > 0 ) {
+          const hasActionButtons = el1.children[ 0 ].children.length > 0;
+          const hasTableButtons = el2.children[ 0 ].children.length > 0;
 
           this.hasSeperator = hasActionButtons && hasTableButtons;
-          console.log('separator', this.hasSeperator);
           this.cdr.detectChanges();
         }
       }
@@ -112,7 +120,11 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
 
   }
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private vcRef: ViewContainerRef) {
+    const parentComponent = ( <any>this.vcRef )._view.context;
+    this.host = parentComponent;
   }
 
 }
@@ -151,16 +163,16 @@ export class StoFilterActions {
   },
 
   template: `
-    <ng-content></ng-content>
-    <mat-button-toggle class="icon"
-                       *ngIf="expandable"
-                       style="box-shadow:none"
-                       [checked]="expanded"
-                       (change)="onChange($event)"
-                       title="Toggle filter panel"
-                       (click)="toggle.emit()">
-      <mat-icon>filter_list</mat-icon>
-    </mat-button-toggle>
+      <ng-content></ng-content>
+      <mat-button-toggle class="icon"
+                         *ngIf="expandable"
+                         style="box-shadow:none"
+                         [checked]="expanded"
+                         (change)="onChange($event)"
+                         title="Toggle filter panel"
+                         (click)="toggle.emit()">
+          <mat-icon>filter_list</mat-icon>
+      </mat-button-toggle>
 
   `
 })
