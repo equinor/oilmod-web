@@ -40,9 +40,12 @@ export abstract class FilterForm<T> implements OnInit, OnDestroy {
     this.form.reset(this.value || {});
     this.filter$ = this.form
       .valueChanges
+      // tslint:disable-next-line:deprecation
       .pipe(startWith(this.form.value), this.serializer);
     this.form.valueChanges
       .pipe(
+        // tslint:disable-next-line:deprecation
+        startWith(this.form.value),
         debounceTime(250),
         takeUntil(this.destroyed$)
       ).subscribe(value => this.filterChanged.emit(value));
@@ -61,7 +64,7 @@ export abstract class FilterForm<T> implements OnInit, OnDestroy {
    */
   public clearFilter(key: string, index?: number) {
     if ( index || index === 0 ) {
-      const val = this.form.get(key).value;
+      const val = [...this.form.get(key).value];
       val.splice(index, 1);
       this.form.get(key).reset(val);
     } else {
