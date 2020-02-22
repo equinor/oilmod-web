@@ -8,6 +8,7 @@ import {
   Input,
   NgZone,
   OnDestroy,
+  SecurityContext,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -105,7 +106,8 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
 
   writeValue(value: string): void {
     if ( value ) {
-      this.value = this.domSanitizer.bypassSecurityTrustHtml(value);
+      const sanitized = this.domSanitizer.sanitize(SecurityContext.HTML, value);
+      this.value = this.domSanitizer.bypassSecurityTrustHtml(sanitized);
       this.cdr.detectChanges();
     }
   }
