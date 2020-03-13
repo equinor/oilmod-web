@@ -4,6 +4,7 @@ import { WysiwygActionsComponent } from './wysiwyg-actions.component';
 import { MaterialModule } from '@testing/material.module';
 import { By } from '@angular/platform-browser';
 import { MatButtonToggle } from '@angular/material/button-toggle';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 describe('WysiwygActionsComponent', () => {
   let component: WysiwygActionsComponent;
@@ -13,14 +14,16 @@ describe('WysiwygActionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [ MaterialModule ],
-        declarations: [ WysiwygActionsComponent ]
+        declarations: [ WysiwygActionsComponent ],
       })
+      .overrideComponent(WysiwygActionsComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WysiwygActionsComponent);
     component = fixture.componentInstance;
+    component.disabled = false;
     const de = fixture.debugElement.queryAll(By.directive(MatButtonToggle));
     toggleButtons = de.map(d => d.componentInstance);
     fixture.detectChanges();
@@ -28,17 +31,6 @@ describe('WysiwygActionsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should update selected (highlighted) buttons when active changes', () => {
-    component.active = [];
-    fixture.detectChanges();
-    let active = toggleButtons.filter(btn => btn.checked);
-    expect(active.length).toBe(0);
-    component.active = [ 'bold', 'italic' ];
-    fixture.detectChanges();
-    active = toggleButtons.filter(btn => btn.checked);
-    expect(active.length).toBe(2);
   });
 
   it('should emit a single string to apply formatting', () => {
