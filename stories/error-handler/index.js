@@ -4,6 +4,8 @@ import {HttpErrorHandlerModule} from "../../projects/stoui-error-handler/src/lib
 import {WrapperModule} from "./wrapper";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ErrorHandlerModule} from "../../projects/stoui-error-handler/src/lib/error-handler/error-handler.module";
+import readme from "../../projects/stoui-error-handler/src/lib/error-handler/README.md";
+
 
 const stories = storiesOf('StoErrorHandler', module)
   .addDecorator(withKnobs);
@@ -39,4 +41,6 @@ stories.add('Error handler (next)', () => ({
     disabled: boolean('disabled', false),
     readonly: boolean('readonly', false),
   }
-}), {});
+}), {
+  notes: {markdown: readme}
+});
