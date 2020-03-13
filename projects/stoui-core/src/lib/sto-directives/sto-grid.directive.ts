@@ -80,7 +80,9 @@ export class StoGridDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.observer.disconnect();
+    if ( this.observer ) {
+      this.observer.disconnect();
+    }
   }
 
 }
