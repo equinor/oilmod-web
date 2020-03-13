@@ -19,11 +19,13 @@ const exec = promisify(execCb);
   try {
     const coreCommon = await Promise.all([exec('yarn test stoui-core'), exec('yarn test stoui-common')]);
     const tableForm = await Promise.all([exec('yarn test stoui-datatable'), exec('yarn test stoui-form')]);
+    const errorHandler = await exec('yarn test stoui-error-handler');
     output = [
       {component: '@ngx-stoui/core', result: coreCommon[0].stdout},
       {component: '@ngx-stoui/common', result: coreCommon[1].stdout},
       {component: '@ngx-stoui/datatable', result: tableForm[0].stdout},
       {component: '@ngx-stoui/form', result: tableForm[1].stdout},
+      {component: '@ngx-stoui/error-handler', result: errorHandler.stdout}
     ];
   } catch (ex) {
     console.error(ex.stdout);
