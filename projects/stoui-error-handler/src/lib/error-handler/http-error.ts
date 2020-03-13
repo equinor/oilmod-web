@@ -1,14 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
+/**
+ * Internal HttpError format
+ */
 export class HttpError {
+  // Status code
   status: number;
+  // Dialog title
   title: string;
+  // Dialog body
   text: string;
-  actions: Action[];
+  // Action list.
+  actions: Action[] = [];
 
   constructor(public readonly error: HttpErrorResponse) {
     this.status = error.status;
-    this.actions = [];
   }
 }
 

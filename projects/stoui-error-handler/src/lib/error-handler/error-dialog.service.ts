@@ -11,6 +11,7 @@ export class ErrorDialogService {
   constructor(private dialog: MatDialog) {
   }
 
+  // Opens a dialog, and returns the reference with the close results.
   open(err: HttpError): MatDialogRef<DialogComponent, any> {
     return this.dialog.open(DialogComponent, {
       data: err,

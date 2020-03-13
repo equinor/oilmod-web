@@ -8,35 +8,52 @@ import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER } from './token';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service used to handle errors across our applications. Replaces the previous HttpErrorHandler
+ */
 export class ErrorHandlerService implements ErrorHandler {
 
   constructor(
     private errorDialogService: ErrorDialogService,
+    // Optional custom error handler.
     @Optional() @Inject(CUSTOM_ERROR_HANDLER) private customHandler: ErrorHandler,
+    // Optional logger. Nothing is logged if logger is not provided.
     @Optional() @Inject(ERROR_LOGGER) private logger: ErrorLogger,
   ) {
   }
 
+  /**
+   * Global handler. This method will try (in order): passed in handler -> custom handler -> default handler for code -> defaultHandler
+   * All errors are passed to a dialog to be displayed there, and will by default have a simple "OK" button to close.
+   * @param err
+   * @param handler
+   */
   handler(err: HttpErrorResponse, handler?: Handler) {
     let fn: Handler;
     let actions = [];
-    if ( this.customHandler ) {
+    fn = handler;
+    if ( !fn && this.customHandler ) {
       fn = this.customHandler[ err.status ] || this.customHandler.defaultHandler;
     }
     if ( !fn ) {
-      fn = handler || this[ err.status ] || this.defaultHandler as Handler;
+      fn = this[ err.status ] || this.defaultHandler as Handler;
       actions = [
         { label: 'OK' }
       ];
     }
+    // Ensure we bind the function to the correct context.
     const error = fn.bind(this)(err);
+    // Add a default "OK" action, but only if the global handlers are used.
+    // OK is also shown if no actions are passed in.
     error.actions = [ ...actions, ...error.actions ];
     if ( this.logger ) {
+      // Apply logger if available.
       this.logger.log(error);
     }
     this.errorDialogService.open(error);
   }
 
+  // Fallback handler if unknown code
   defaultHandler(err: HttpErrorResponse) {
     const error = new HttpError(err);
     error.title = `Application error`;
@@ -141,6 +158,12 @@ export class ErrorHandlerService implements ErrorHandler {
     return this[ 500 ](err);
   }
 
+  /**
+   * Uses the getErrorText from the provided custom handler, if available.
+   * Otherwise, return the error message, if available in our desired format
+   * Expected err.error -> { message: 'A message', ... }
+   * Also handles text as a fallback.
+   * */
   getErrorText(err: HttpErrorResponse) {
     if ( this.customHandler && this.customHandler.getErrorText ) {
       return this.customHandler.getErrorText(err);
