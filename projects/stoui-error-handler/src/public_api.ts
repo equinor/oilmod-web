@@ -6,5 +6,4 @@ export * from './lib/sto-http-error-handler/format-error-message';
 export * from './lib/sto-http-error-handler/http-error-handler.module';
 export * from './lib/sto-http-error-handler/http-error-handler.service';
 export * from './lib/sto-http-error-handler/unexcepted-dialog/exception-dialog.component';
-export * from './lib/error-handler/error-handler.module';
-export * from './lib/error-handler/token';
+export * from './lib/error-handler';
