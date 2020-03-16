@@ -14,7 +14,12 @@ export class DialogComponent {
 
   handleEvent(action: Function | Object) {
     if ( typeof action === 'function' ) {
-      action(this.data);
+      try {
+        action(this.data);
+      } catch ( ex ) {
+        console.warn('Failed to execute function.');
+        console.warn(ex);
+      }
     }
     this.ref.close(action || this.data);
   }

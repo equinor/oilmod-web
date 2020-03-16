@@ -15,6 +15,10 @@ import { ErrorFormatter } from './error-formatter';
   declarations: [ExceptionDialogComponent],
   entryComponents: [ExceptionDialogComponent],
 })
+/**
+ * @deprecated
+ * HttpErrorHandlerModule has been deprecated and will be removed at a later time. Migrate to {@link ErrorHandlerModule}
+ */
 export class HttpErrorHandlerModule {
   static forRoot(): ModuleWithProviders {
     return {
