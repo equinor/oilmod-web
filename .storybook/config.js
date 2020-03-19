@@ -1,5 +1,8 @@
-import {configure} from '@storybook/angular';
+import {configure, setAddon} from '@storybook/angular';
 import '../src/styles.scss';
+import storySourceAddon from '@storybook/addon-storysource';
+
+setAddon(storySourceAddon);
 
 function loadStories() {
   document.body.classList.add('mat-typography', 'mat-app-background');
