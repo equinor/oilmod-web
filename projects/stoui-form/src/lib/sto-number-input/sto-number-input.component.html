@@ -1,5 +1,6 @@
 <mat-form-field
   stoFormField
+  *ngIf="renderDone"
   [floatLabel]="floatLabel"
   [class.sto-form__field--float-right]="textAlign === 'right'"
   [class.sto-form__field--without-placeholder]="withoutPlaceHolder"

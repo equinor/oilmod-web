@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 const PADDING = '000000000';
 
@@ -12,6 +12,7 @@ export class StoNumberInputPipe implements PipeTransform {
     }
 
     private handleIntegerAndFractions(integer: string, fraction: string, fractionSize: number) {
+      const negative = integer.startsWith('-');
         if ((integer === '' && fraction === '') || integer === 'NaN') {
             return {integer : null, fraction : null};
         } else if (integer === '') {
@@ -26,21 +27,21 @@ export class StoNumberInputPipe implements PipeTransform {
             integer = parseInt(integer, 10) + '';
         }
 
-
         if (fraction.length > fractionSize) {
             const number = parseFloat('0.' + fraction);
             const exp = Math.pow(10, fractionSize);
             const rounded = Math.round(number * exp) / exp;
             if (rounded === 1) {
-                integer = (parseInt(integer || '0', 10) + 1) + '';
-                fraction = '';
+              const addValue = negative ? -1 : 1;
+              integer = ( parseInt(integer || '0', 10) + addValue ) + '';
+              fraction = '';
             } else {
                 fraction = (rounded + '').split('.')[1] || '';
             }
 
         }
 
-        return {integer: integer, fraction: fraction};
+      return { integer, fraction };
     }
 
     transform(value: number | string, fractionSize: number = 5): string {
