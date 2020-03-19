@@ -1,5 +1,6 @@
 import { AbstractControl, ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   forwardRef,
@@ -33,11 +34,11 @@ import { StoUserPreferenceService } from '@ngx-stoui/core';
         multi: true
       }
     ],
-    styleUrls: ['./sto-number-input.component.scss'],
+    styleUrls: [ './sto-number-input.component.scss' ],
     encapsulation: ViewEncapsulation.None,
   }
 )
-export class StoNumberInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class StoNumberInputComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
   /**
    Syncs a FormControl in an existing FormGroup to a form control element by name.
@@ -86,6 +87,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
    * When a forceValue is used, no other values will be propagated.
    */
   private _forceValue: any;
+  public renderDone: boolean;
   @Input() set forceValue(forceValue) {
     this._forceValue = forceValue;
     this.writeValue(forceValue);
@@ -200,6 +202,12 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
 
   }
 
+  ngAfterViewInit() {
+    requestAnimationFrame(() => {
+      this.renderDone = true;
+    });
+  }
+
   ngOnInit() {
     let control: FormControl;
     if ( this.controlContainer && this.formControlName ) {
@@ -207,7 +215,7 @@ export class StoNumberInputComponent implements ControlValueAccessor, OnInit, On
     } else {
       control = null;
     }
-    if (control) {
+    if ( control ) {
       control.registerOnDisabledChange((isDisabled: boolean) => {
         if (isDisabled) {
           this.control.disable();
