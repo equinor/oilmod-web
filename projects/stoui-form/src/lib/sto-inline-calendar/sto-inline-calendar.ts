@@ -107,7 +107,7 @@ export class StoInlineCalendarComponent extends MatCalendar<Date> {
   @Input() startDate: Date;
   @Input()
   month = false;
-  @ViewChild(StoDatepickerMonthviewComponent, { static: false }) monthView: StoDatepickerMonthviewComponent;
+  @ViewChild(StoDatepickerMonthviewComponent) monthView: StoDatepickerMonthviewComponent;
   private dateAdapterOwn: DateAdapter<Date>;
   private dateFormats: MatDateFormats;
   private __intl;

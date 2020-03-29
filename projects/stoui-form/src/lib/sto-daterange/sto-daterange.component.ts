@@ -117,7 +117,7 @@ export class StoDaterangeComponent implements ControlValueAccessor, OnInit, Afte
   monthRange = false;
 
   @ViewChild('datepicker', { static: true }) overlayViewChild: ElementRef;
-  @ViewChild('inputfield', { static: false }) inputfield: ElementRef;
+  @ViewChild('inputfield') inputfield: ElementRef;
   private initValues;
 
   get dateFormat() {

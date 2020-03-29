@@ -127,7 +127,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
-  @ViewChild(ScrollerComponent, { static: false }) scroller: ScrollerComponent;
+  @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
 
   /**
    * Returns if selection is enabled.

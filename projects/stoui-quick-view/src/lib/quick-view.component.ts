@@ -104,8 +104,8 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() closed = new EventEmitter();
   @Output() opened = new EventEmitter();
 
-  @ViewChild('dialog', { static: false }) dialog: ElementRef;
-  @ViewChild('footer', { static: false }) footer: ElementRef;
+  @ViewChild('dialog') dialog: ElementRef;
+  @ViewChild('footer') footer: ElementRef;
 
   public offsetY: number;
   public isOpened: boolean;
