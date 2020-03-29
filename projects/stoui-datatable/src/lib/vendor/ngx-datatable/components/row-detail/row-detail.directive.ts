@@ -10,7 +10,6 @@ export class DatatableRowDetailDirective {
    */
   @Input() rowHeight: (number | ((row?: any, index?: number) => number)) = 0;
 
-  @Input()
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef, static: true })
   template: TemplateRef<any>;
 

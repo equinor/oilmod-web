@@ -12,7 +12,6 @@ export class DatatableFooterDirective {
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
 
-  @Input()
   @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef, static: true })
   template: TemplateRef<any>;
 
