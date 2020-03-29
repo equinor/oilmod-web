@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "gulp": "gulp",
     "build": "ng build",
     "release": "ng build --project ngx-stoui --prod && gulp",
     "test": "ng test --codeCoverage=true --watch=false --progress=false",
