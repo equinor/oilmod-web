@@ -1,26 +1,28 @@
 import {storiesOf} from '@storybook/angular';
 import {MatIconModule} from "@angular/material/icon";
-import {boolean, select, text, withKnobs} from "@storybook/addon-knobs";
+import {boolean, select, text, withKnobs} from "@storybook/addon-knobs/angular";
 import {action} from '@storybook/addon-actions';
 import {StoAppHeaderModule} from "../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.module";
 import {APP_BASE_HREF} from "@angular/common";
 import {RouterTestingModule} from "@angular/router/testing";
 import {StoActionFooterModule} from "../../projects/stoui-common/src/lib/sto-action-footer/sto-action-footer.module";
 import footerReadme from "../../projects/stoui-common/src/lib/sto-action-footer/sto-action-footer.component.md";
-import {MatButtonModule, MatFormFieldModule, MatInputModule} from "@angular/material";
-import {StoFilterPanelModule} from "../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.module";
+import {MatButtonModule} from "@angular/material/button";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {StoFilterPanelModule} from "../../projects/stoui-common/src/public_api";
 import filterReadme from "../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.component.md";
 import messagePanelReadme from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.component.md";
 import appHeaderReadme from "../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.component.md";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
-import {StoMessagePanelModule} from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.module";
+import {StoMessagePanelModule} from "../../projects/stoui-common/src/public_api";
 import {MatCardModule} from "@angular/material/card";
-import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
+import {StoFormModule} from "../../projects/stoui-form/src/public_api";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FilterPanelComponent} from "./filter-panel";
 import {MatSelectModule} from "@angular/material/select";
-import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
+import {StoDirectivesModule} from "../../projects/stoui-core/src/public_api";
 
 const stories = storiesOf('Common', module)
   .addDecorator(withKnobs);

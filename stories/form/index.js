@@ -1,26 +1,28 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, radios, select, text, withKnobs} from "@storybook/addon-knobs";
+import {boolean, number, radios, select, text, withKnobs} from "@storybook/addon-knobs/angular";
 import {action} from '@storybook/addon-actions'
-import {StoDaterangeModule} from "../../projects/stoui-form/src/lib/sto-daterange/sto-daterange.module";
+import {StoDaterangeModule} from "../../projects/stoui-form/src/public_api";
 import dateRangeReadme from "../../projects/stoui-form/src/lib/sto-daterange/sto-daterange.component.md";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.module";
+import {StoNumberInputModule} from "../../projects/stoui-form/src/public_api";
 import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.component.md";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {StoDatepickerModule} from "../../projects/stoui-form/src/lib/sto-monthpicker";
+import {StoDatepickerModule} from "../../projects/stoui-form/src/public_api";
 import monthPickerReadme from "../../projects/stoui-form/src/lib/sto-monthpicker/sto-monthpicker.md";
-import {MAT_LABEL_GLOBAL_OPTIONS, MatFormFieldModule, MatInputModule, MatNativeDateModule} from "@angular/material";
-import {StoAutocompleteModule} from "../../projects/stoui-form/src/lib/sto-autocomplete/sto-autocomplete.module";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MAT_LABEL_GLOBAL_OPTIONS, MatNativeDateModule} from '@angular/material/core';
+import {MatInputModule} from "@angular/material/input";
+import {StoAutocompleteModule} from "../../projects/stoui-form/src/public_api";
 import autocompleteReadme from "../../projects/stoui-form/src/lib/sto-autocomplete/sto-autocomplete.component.md";
 import {items} from "./item-list";
-import {StoSlideToggleModule} from "../../projects/stoui-form/src/lib/sto-slide-toggle/sto-slide-toggle.component";
-import {StoSelectFilterModule} from "../../projects/stoui-form/src/lib/sto-select-filter/sto-select-filter.module";
+import {StoSlideToggleModule} from "../../projects/stoui-form/src/public_api";
+import {StoSelectFilterModule} from "../../projects/stoui-form/src/public_api";
 import {MatSelectModule} from "@angular/material/select";
 import {CommonModule} from "@angular/common";
-import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
+import {StoFormModule} from "../../projects/stoui-form/src/public_api";
 import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.md'
-import {StoWysiwygModule} from "../../projects/stoui-form/src/lib/sto-wysiwyg/wysiwyg.module";
+import {StoWysiwygModule} from "../../projects/stoui-form/src/public_api";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 
@@ -111,7 +113,7 @@ stories.add('Number input', () => ({
     fractionSize: number('Fraction size', 3),
     readonly: boolean('Readonly', false),
     value: number('Value', 100),
-    textAlign: radios('Align', ['left', 'right'], 'left')
+    // textAlign: radios('Align', ['left', 'right'], 'left')
   }
 }), {
   notes: {markdown: numberInputReadme}

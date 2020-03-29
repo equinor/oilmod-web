@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, withKnobs} from "@storybook/addon-knobs";
+import {boolean, number, withKnobs} from "@storybook/addon-knobs/angular";
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
 import {columns, fixedColumns, rows} from './rows';
 import {action} from "@storybook/addon-actions";

@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, withKnobs} from '@storybook/addon-knobs';
+import {boolean, withKnobs} from '@storybook/addon-knobs/angular';
 import {HttpErrorHandlerModule} from "../../projects/stoui-error-handler/src/lib/sto-http-error-handler/http-error-handler.module";
 import {WrapperModule} from "./wrapper";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";

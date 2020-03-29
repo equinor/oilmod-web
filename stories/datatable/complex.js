@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, withKnobs} from "@storybook/addon-knobs";
+import {boolean, number, withKnobs} from "@storybook/addon-knobs/angular";
 import {fixedColumns, rows} from './rows';
 import {action} from "@storybook/addon-actions";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";

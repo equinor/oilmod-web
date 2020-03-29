@@ -1,11 +1,14 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, object, withKnobs} from '@storybook/addon-knobs';
-import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule} from "@angular/material";
+import {boolean, object, withKnobs} from '@storybook/addon-knobs/angular';
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import {StoFormModule} from "../../projects/stoui-form/src/lib/sto-form/sto-form.module";
 import {StoDirectivesModule} from "../../projects/stoui-core/src/lib/sto-directives/directives.module";
-import {StoUserPreferenceModule} from "@ngx-stoui/core";
+import {StoUserPreferenceModule} from "../../projects/stoui-core/src/public_api";
 import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.module";
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
 import {columns, rows} from '../datatable/rows';
