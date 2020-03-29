@@ -524,8 +524,8 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss",
-      "spec": true
+      "style": "scss",
+      "skipTests": false
     }
   }
 }
