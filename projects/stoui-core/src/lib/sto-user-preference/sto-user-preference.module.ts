@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [StoUserPreferenceComponent]
 })
 export class StoUserPreferenceModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<StoUserPreferenceModule> {
     return {
       ngModule: StoUserPreferenceModule,
       providers: [StoUserPreferenceService]

@@ -20,7 +20,7 @@ import { ErrorFormatter } from './error-formatter';
  * HttpErrorHandlerModule has been deprecated and will be removed at a later time. Migrate to {@link ErrorHandlerModule}
  */
 export class HttpErrorHandlerModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<HttpErrorHandlerModule> {
     return {
       ngModule: HttpErrorHandlerModule,
       providers: [ HttpErrorHandlerService, ErrorFormatter ]
