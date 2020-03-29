@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/ngx-stoui-cli",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -36,6 +37,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -146,7 +153,12 @@
             "tsConfig": "projects/stoui-datatable/tsconfig.lib.json",
             "project": "projects/stoui-datatable/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-datatable/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -188,7 +200,12 @@
             "tsConfig": "projects/stoui-core/tsconfig.lib.json",
             "project": "projects/stoui-core/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-core/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -230,7 +247,12 @@
             "tsConfig": "projects/stoui-form/tsconfig.lib.json",
             "project": "projects/stoui-form/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-form/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -272,7 +294,12 @@
             "tsConfig": "projects/stoui-common/tsconfig.lib.json",
             "project": "projects/stoui-common/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-common/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -314,7 +341,12 @@
             "tsConfig": "projects/stoui-drawer/tsconfig.lib.json",
             "project": "projects/stoui-drawer/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-drawer/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -356,7 +388,12 @@
             "tsConfig": "projects/stoui-error-handler/tsconfig.lib.json",
             "project": "projects/stoui-error-handler/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-error-handler/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -398,7 +435,12 @@
             "tsConfig": "projects/stoui-quick-view/tsconfig.lib.json",
             "project": "projects/stoui-quick-view/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-quick-view/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -440,7 +482,12 @@
             "tsConfig": "projects/stoui-unsaved-changes/tsconfig.lib.json",
             "project": "projects/stoui-unsaved-changes/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/stoui-unsaved-changes/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {

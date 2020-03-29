@@ -32,7 +32,8 @@
     "highlight.js": "^9.13.1",
     "node-sass": "^4.11.0",
     "rxjs": "^6.5.4",
-    "zone.js": "~0.10.3"
+    "tslib": "^1.10.0",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.0",
@@ -50,10 +51,10 @@
     "@types/adal-angular": "^1.0.1",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "^12.11.1",
     "adal-angular": "^1.0.17",
     "babel-loader": "^8.0.6",
-    "codelyzer": "^5.0.1",
+    "codelyzer": "^5.1.2",
     "concurrently": "^4.0.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
@@ -67,14 +68,12 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-scss-preprocessor": "^4.0.0",
-    "ng-packagr": "^9.1.0",
+    "ng-packagr": "^9.0.0",
     "node-sass-tilde-importer": "^1.0.2",
     "protractor": "~5.4.0",
     "run-sequence": "^2.2.1",
     "showdown": "^1.8.7",
     "ts-node": "~5.0.1",
-    "tsickle": "^0.38.1",
-    "tslib": "^1.11.1",
     "tslint": "~5.9.1",
     "typescript": "~3.8.3"
   }
