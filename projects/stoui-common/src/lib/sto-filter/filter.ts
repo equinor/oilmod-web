@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { EventEmitter, Input, OnDestroy, OnInit, Output, Directive } from '@angular/core';
 import { Observable, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, startWith, takeUntil } from 'rxjs/operators';
 
@@ -14,6 +14,7 @@ export interface FilterList {
  * Given that most filters are identical in their base setup (a reactive form, using sto-filter-panel etc), this simplify writing filters.
  * It also allows you to have filter chips in your filter title with a base implementation (only needs a formConfig & serializer fn)
  */
+@Directive()
 export abstract class FilterForm<T> implements OnInit, OnDestroy {
   // FormBuilder config
   abstract formConfig: { [ key: string ]: any };

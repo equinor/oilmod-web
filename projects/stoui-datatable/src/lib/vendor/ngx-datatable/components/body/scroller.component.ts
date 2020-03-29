@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2, Directive } from '@angular/core';
 
 
+@Directive()
 export class ScrollerComponent implements OnInit, OnDestroy {
 
   @Input() scrollbarV = false;

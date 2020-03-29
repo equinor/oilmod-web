@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
     '[class.resizeable]': 'resizeEnabled'
   }
 })*/
+@Directive()
 export class ResizeableDirective implements OnDestroy, AfterViewInit {
 
   @Input() resizeEnabled = true;

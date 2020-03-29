@@ -1,6 +1,4 @@
-import {
-  ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges
-} from '@angular/core';
+import { ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges, Directive } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -14,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
  *
  */
 // @Directive({ selector: '[draggable]' })
+@Directive()
 export class DraggableDirective implements OnDestroy, OnChanges {
 
   @Input() dragEventTarget: any;
