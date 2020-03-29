@@ -6,3 +6,6 @@ export * from './lib/sto-drawer/sto-drawer.component';
 export * from './lib/sto-drawer/sto-drawer.module';
 export * from './lib/sto-navigation/sto-navigation.module';
 export * from './lib/sto-navigation/tokens';
+export * from './lib/sto-navigation/navigation-part/navigation-part.component';
+export * from './lib/sto-navigation/navigation-menu/navigation-menu.component';
+export * from './lib/sto-navigation/navigation-menu/navigation-menu-item/navigation-menu-item.component';
