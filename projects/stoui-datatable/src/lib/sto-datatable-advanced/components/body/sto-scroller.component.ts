@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2 } from '@angular/core';
 import { ScrollerComponent } from '../../../vendor/ngx-datatable/components/body/scroller.component';
 
 @Component({
@@ -18,7 +18,7 @@ export class StoScrollerComponent extends ScrollerComponent {
     this._scrollHeight = val + this.offset;
   }
 
-  constructor(element: ElementRef, renderer: Renderer) {
+  constructor(element: ElementRef, renderer: Renderer2) {
     super(element, renderer);
   }
 }
