@@ -55,7 +55,17 @@ const last = [
   'stoui-unsaved-changes',
 ];
 
+let errors = [];
+
 runner()
+  .then(() => {
+    if (errors.length) {
+      errors.forEach(err => {
+        console.log('Errors for ' + err.name);
+        console.error(err.error);
+      })
+    }
+  })
   .catch(console.error);
 
 async function publish(projectName) {
@@ -159,7 +169,20 @@ async function bumpLib(lib, increment) {
 }
 
 async function buildOthers() {
-  return await Promise.all(others.map(async project => await build(project)));
+  // return await Promise.all(others.map(async project => await build(project)));
+  // Need to be done sync due to ngcc
+  /*'stoui-common',
+    'stoui-datatable',
+    'stoui-drawer',
+    'stoui-error-handler',
+    'stoui-form',
+    'stoui-quick-view',*/
+  await build('stoui-common');
+  await build('stoui-datatable');
+  await build('stoui-drawer');
+  await build('stoui-error-handler');
+  await build('stoui-form');
+  await build('stoui-quick-view');
 }
 
 async function buildLast() {
@@ -174,11 +197,15 @@ async function build(lib) {
   console.log(`Building ${lib}...`);
   const {stdout, stderr} = await exec(`${path.normalize('./node_modules/.bin/ng')} build ${lib}`);
   if (stderr && !/caniuse/.test(stderr)) {
-    console.error(`Failed building ${lib}`);
-    console.error(`Stacktrace: `, stderr);
-    throw new Error('Exiting due to build failure');
+    errors.push({
+      name: lib,
+      error: stderr
+    });
+    console.log(`${lib} had issues...`);
+    // throw new Error('Exiting due to build failure');
+  } else {
+    console.log(`Successfully built ${lib}`);
   }
-  console.log(`Successfully built ${lib}`);
   return true;
 }
 

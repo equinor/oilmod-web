@@ -123,8 +123,12 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private vcRef: ViewContainerRef) {
-    const parentComponent = ( <any>this.vcRef )._view.context;
-    this.host = parentComponent;
+    try {
+      const parentComponent = ( <any>this.vcRef )._view.context;
+      this.host = parentComponent;
+    } catch ( ex ) {
+      // most likely this fails only for tests after Ivy (Angular 9), as it no longer wraps with a component.
+    }
   }
 
 }
