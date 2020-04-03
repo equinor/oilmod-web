@@ -55,7 +55,6 @@ export * from './lib/vendor/ngx-datatable/components/row-detail/row-detail.direc
 export * from './lib/vendor/ngx-datatable/directives/draggable.directive';
 export * from './lib/vendor/ngx-datatable/directives/orderable.directive';
 export * from './lib/vendor/ngx-datatable/directives/visibility.directive';
-export * from './lib/vendor/ngx-datatable/events';
 export * from './lib/vendor/ngx-datatable/services/scrollbar-helper.service';
 export * from './lib/vendor/ngx-datatable/types/click.type';
 export * from './lib/vendor/ngx-datatable/types/column-mode.type';

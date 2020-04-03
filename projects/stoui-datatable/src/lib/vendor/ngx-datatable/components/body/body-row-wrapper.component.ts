@@ -1,8 +1,15 @@
 import {
-  Component, Input, Output, EventEmitter, HostListener, DoCheck,
-  ChangeDetectionStrategy, KeyValueDiffer, ChangeDetectorRef, KeyValueDiffers
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  EventEmitter,
+  HostListener,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  Output
 } from '@angular/core';
-import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',

@@ -1,10 +1,15 @@
 import {
-  Component, Input, EventEmitter, Output, HostBinding,
-  HostListener, ChangeDetectionStrategy, ChangeDetectorRef
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  Output
 } from '@angular/core';
-import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
+import { SelectionType, SortDirection, SortType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
-import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-header-cell',

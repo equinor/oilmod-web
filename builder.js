@@ -195,7 +195,7 @@ async function sharedFormCss() {
 
 async function build(lib) {
   console.log(`Building ${lib}...`);
-  const {stdout, stderr} = await exec(`${path.normalize('./node_modules/.bin/ng')} build ${lib}`);
+  const {stdout, stderr} = await exec(`${path.normalize('./node_modules/.bin/ng')} build --prod ${lib}`);
   if (stderr && !/caniuse/.test(stderr)) {
     errors.push({
       name: lib,
