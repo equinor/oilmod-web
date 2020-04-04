@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { USE_HASH_ROUTING } from '../../tokens';
+import { MenuItem, MenuItemTypes, NavigateCommand } from '../menu';
 
 @Component({
   selector: 'sto-navigation-menu-item',
@@ -8,8 +9,9 @@ import { USE_HASH_ROUTING } from '../../tokens';
   encapsulation: ViewEncapsulation.None
 })
 export class NavigationMenuItemComponent {
-  @Input() item: any;
-  @Output() onCommand = new EventEmitter<any>();
+  @Input() item: MenuItem;
+  @Output() onCommand = new EventEmitter<NavigateCommand>();
+  public menuItemTypes = MenuItemTypes;
   public urlPrefix: string;
 
   public navigate($event, command, item) {

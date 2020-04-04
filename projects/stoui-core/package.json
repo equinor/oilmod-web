@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/core",
-  "version": "9.0.0-BETA.1",
+  "version": "9.0.0-BETA.2",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^9.0.0",
