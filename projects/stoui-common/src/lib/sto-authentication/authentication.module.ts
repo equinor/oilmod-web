@@ -15,7 +15,7 @@ import { ADAL_DISABLED } from './adal.config';
   exports: [ StoCallbackComponent ]
 })
 export class StoAuthenticationModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<StoAuthenticationModule> {
     return {
       ngModule: StoAuthenticationModule,
       providers: [

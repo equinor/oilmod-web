@@ -1,7 +1,7 @@
 import {storiesOf} from '@storybook/angular';
 import {StoMessagePanelComponent} from "../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.component";
 import {MatIconModule} from "@angular/material/icon";
-import {boolean, select, text, withKnobs} from "@storybook/addon-knobs";
+import {boolean, select, text, withKnobs} from "@storybook/addon-knobs/angular";
 import {action} from '@storybook/addon-actions';
 
 storiesOf('Message panel', module)

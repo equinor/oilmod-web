@@ -91,10 +91,10 @@ export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
   @Output() _userSelection = new EventEmitter<void>();
 
   /** Reference to the current month view component. */
-  @ViewChild(MatMonthView, { static: false }) monthView: MatMonthView<D>;
+  @ViewChild(MatMonthView) monthView: MatMonthView<D>;
 
   /** Reference to the current year view component. */
-  @ViewChild(MatYearView, { static: false }) yearView: MatYearView<D>;
+  @ViewChild(MatYearView) yearView: MatYearView<D>;
 
   /** Date filter for the month and year views. */
   _dateFilterForViews = (date: D) => {

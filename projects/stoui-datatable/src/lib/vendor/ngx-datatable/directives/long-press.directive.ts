@@ -1,12 +1,10 @@
-import {
-  Input, Output, EventEmitter, HostBinding,
-  HostListener, OnDestroy
-} from '@angular/core';
+import { Input, Output, EventEmitter, HostBinding, HostListener, OnDestroy, Directive } from '@angular/core';
 import { Observable ,  Subscription, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 
 // @Directive({ selector: '[long-press]' })
+@Directive()
 export class LongPressDirective implements OnDestroy {
 
   @Input() pressEnabled = true;

@@ -10,7 +10,6 @@ export class DatatableGroupHeaderDirective {
    */
   @Input() rowHeight: (number | ((group?: any, index?: number) => number)) = 0;
 
-  @Input()
   @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef, static: true })
   template: TemplateRef<any>;
 

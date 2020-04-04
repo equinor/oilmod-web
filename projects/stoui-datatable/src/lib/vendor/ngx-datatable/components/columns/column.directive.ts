@@ -25,11 +25,9 @@ export class DataTableColumnDirective {
   @Input() headerClass: string | ((data: any) => string|any);
   @Input() cellClass: string | ((data: any) => string|any);
 
-  @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
   cellTemplate: TemplateRef<any>;
 
-  @Input()
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
   headerTemplate: TemplateRef<any>;
 

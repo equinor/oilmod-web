@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Menu, NavigateCommand } from './menu';
 
 @Component({
   selector: 'sto-navigation-menu',
@@ -7,8 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 })
 export class NavigationMenuComponent implements OnInit {
 
-  @Input() menu: any;
-  @Output() onCommand = new EventEmitter<any>();
+  @Input() menu: Menu;
+  @Output() onCommand = new EventEmitter<NavigateCommand>();
 
   ngOnInit() {
 

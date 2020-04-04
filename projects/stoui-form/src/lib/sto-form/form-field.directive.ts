@@ -10,7 +10,7 @@ import {
   QueryList
 } from '@angular/core';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
-import { MatInput } from '@angular/material';
+import { MatInput } from '@angular/material/input';
 import { StoUserPreferenceService } from '@ngx-stoui/core';
 import { Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';

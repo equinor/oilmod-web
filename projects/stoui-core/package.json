@@ -1,10 +1,10 @@
 {
   "name": "@ngx-stoui/core",
-  "version": "7.0.2",
+  "version": "9.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0"
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0"
   },
   "dependencies": {
     "date-fns": "^1.29.0"

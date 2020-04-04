@@ -1,5 +1,6 @@
 import { MatDateFormats, NativeDateAdapter } from '@angular/material/core';
 import { format, isValid } from 'date-fns';
+import { Injectable } from "@angular/core";
 
 export const DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -13,6 +14,7 @@ export const DATE_FORMATS: MatDateFormats = {
   }
 };
 
+@Injectable()
 export class DateRangeAdapter extends NativeDateAdapter {
   getFirstDayOfWeek() {
     return 1;

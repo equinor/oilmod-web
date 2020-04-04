@@ -2,7 +2,7 @@ import { Component, Injectable, NgModule } from '@angular/core';
 import { HttpErrorHandlerService } from '../../projects/stoui-error-handler/src/lib/sto-http-error-handler/http-error-handler.service';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { ErrorHandlerService } from '../../projects/stoui-error-handler/src/lib/error-handler/error-handler.service';
 import { Handler, StoErrorHandler } from '../../projects/stoui-error-handler/src/lib/error-handler/error-handler';
 import { HttpError } from '../../projects/stoui-error-handler/src/lib/error-handler/http-error';

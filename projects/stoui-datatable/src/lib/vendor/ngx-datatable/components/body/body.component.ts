@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, Directive } from '@angular/core';
 import { columnGroupWidths, columnsByPin, RowHeightCache, translateXY } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 
+@Directive()
 export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() scrollbarV: boolean;
@@ -127,7 +128,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
-  @ViewChild(ScrollerComponent, { static: false }) scroller: ScrollerComponent;
+  @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
 
   /**
    * Returns if selection is enabled.

@@ -1,21 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  ContentChild,
-  ContentChildren,
-  DoCheck,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  KeyValueDiffer,
-  KeyValueDiffers,
-  OnInit,
-  Output,
-  QueryList,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, ContentChild, ContentChildren, DoCheck, ElementRef, EventEmitter, HostBinding, HostListener, Input, KeyValueDiffer, KeyValueDiffers, OnInit, Output, QueryList, ViewChild, Directive } from '@angular/core';
 
 import { adjustColumnWidths, forceFillColumnWidths, setColumnDefaults, sortRows, throttleable, translateTemplates } from '../utils';
 import { ScrollbarHelper } from '../services/scrollbar-helper.service';
@@ -27,6 +10,7 @@ import { DatatableFooterDirective } from './footer/footer.directive';
 import { DataTableBodyComponent } from './body/body.component';
 
 
+@Directive()
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   /**

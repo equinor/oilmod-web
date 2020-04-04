@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, radios, text, withKnobs} from '@storybook/addon-knobs';
+import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs/angular';
 import {action} from '@storybook/addon-actions';
 import {StoDrawerModule} from "../../projects/stoui-drawer/src/lib/sto-drawer/sto-drawer.module";
 import {MatCardModule} from "@angular/material/card";
@@ -7,10 +7,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
-import {StoNavigationModule} from "../../projects/stoui-drawer/src/lib/sto-navigation/sto-navigation.module";
+import {StoNavigationModule} from "../../projects/stoui-drawer/src/public_api";
 import {navigation, subNavigation} from './navigation';
-import {MatIconModule} from "@angular/material";
-import {USE_HASH_ROUTING} from "../../projects/stoui-drawer/src/lib/sto-navigation/tokens";
+import {MatIconModule} from "@angular/material/icon";
+import {USE_HASH_ROUTING} from "../../projects/stoui-drawer/src/public_api";
 import readmeDrawer from '../../projects/stoui-drawer/src/lib/sto-drawer/sto-drawer.component.md';
 
 const stories = storiesOf('Drawer', module)
@@ -39,7 +39,7 @@ stories.add('Drawer', () => ({
 </sto-drawer-footer>
 </sto-drawer>`,
     props: {
-      position: radios('Position', ['left', 'right'], 'left'),
+      // position: radios('Position', ['left', 'right'], 'left'),
       width: number('Width', 500),
       title: text('Drawer title', 'New drawer'),
       ignoreEscKey: boolean('Ignore escape', false),
@@ -99,6 +99,7 @@ stories.add('Navigation', () => ({
 </sto-drawer-header>
 <sto-slide-panel class="sto-slide-panel"
                      [activePane]="activePane">
+                     {{activePane}}
 <sto-navigation-menu [menu]="subNavigation"
 *ngIf="activePane === 'right'"
                          (onCommand)="handleCommand('internal', $event.command)"
@@ -116,7 +117,8 @@ stories.add('Navigation', () => ({
     topsNav: action('Open tops landing'),
     toggle: action('Switch side'),
     closeMenu: action('Close menu'),
-    activePane: radios('Active pane', ['right', 'left'], 'right'),
+    activePane: 'right',
+    // activePane: select('Active pane', {right: 'Right', left: 'Left'}, 'right'),
     rightMenu: {
       name: 'Application 2'
     },

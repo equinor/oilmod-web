@@ -1,17 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  Renderer
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2, Directive } from '@angular/core';
 
 
+@Directive()
 export class ScrollerComponent implements OnInit, OnDestroy {
 
   @Input() scrollbarV = false;
@@ -42,7 +32,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(element: ElementRef, private renderer: Renderer) {
+  constructor(element: ElementRef, private renderer: Renderer2) {
     this.element = element.nativeElement;
   }
 
@@ -50,8 +40,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     // manual bind so we don't always listen
     if (this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
-      this.onScrollListener = this.renderer.listen(
-        this.parentElement, 'scroll', this.onScrolled.bind(this));
+      this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
     }
   }
 

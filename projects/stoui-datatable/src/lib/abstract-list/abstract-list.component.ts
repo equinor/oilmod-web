@@ -1,9 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, ElementRef, HostListener, OnDestroy, ViewChild, Directive } from '@angular/core';
 import { ListAutoResizeService } from './list-auto-resize.service';
 import { Subscription } from 'rxjs';
 import { throttleable } from '../vendor/ngx-datatable/utils/throttle';
 
 
+@Directive()
 export abstract class AbstractListComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('table', { read: ElementRef, static: true }) public table: ElementRef;

@@ -1,8 +1,9 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output, Directive } from '@angular/core';
 import { SelectionType, SortType } from '../../types';
 import { columnGroupWidths, columnsByPin, columnsByPinArr, columnTotalWidth, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns/column.directive';
 
+@Directive()
 export class DataTableHeaderComponent {
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;

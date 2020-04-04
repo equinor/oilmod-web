@@ -65,17 +65,19 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
         takeUntil(this.destroyed$)
       ).subscribe(
       (x) => {
-        const {opt, i} = x as any;
-        this._matSelect._keyManager.setActiveItem(i);
+        const { opt, i } = x as any;
+        if ( this._matSelect ) {
+          this._matSelect._keyManager.setActiveItem(i);
+        }
       }
     );
   }
 
   ngOnInit(): void {
     try {
-      this._matSelect = (<any>this._view)._data.componentView.component;
+      const parentComponent = ( <any>this.vcRef )._view.context;
+      this._matSelect = parentComponent;
       this.listenForSelectStateChange();
-
     } catch (e) {
       console.error('This StoSelectDirective was build on undocumented features, and now it has failed. Remove or' +
         ' fix the directive.', e);
@@ -110,7 +112,7 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
     this.destroyed$.complete();
   }
 
-  constructor(private _view: ViewContainerRef) {
+  constructor(private vcRef: ViewContainerRef) {
 
   }
 
