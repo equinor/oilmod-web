@@ -14,6 +14,11 @@
     "build-storybook": "build-storybook -c .storybook -o .out"
   },
   "private": true,
+  "resolutions": {
+    "lodash": "^4.17.12",
+    "minimist": "^0.2.1",
+    "chokidar": "^3.3.1"
+  },
   "dependencies": {
     "@angular/animations": "^9.1.0",
     "@angular/cdk": "^9.2.0",
