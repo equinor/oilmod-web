@@ -16,12 +16,13 @@ stories
       imports: [NgxDatatableModule, MatCardModule, BrowserAnimationsModule]
     },
     template: `<mat-card>
-<sto-complex-datatable [selectionType]="'single'" class="sto-datatable" [rows]="rows" [columns]="columns"></sto-complex-datatable>
+<sto-complex-datatable [loadingIndicator]="loading" [selectionType]="'single'" class="sto-datatable" [rows]="rows" [columns]="columns"></sto-complex-datatable>
 <!--<sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
 [rowHeight]="rowHeight"
 [sortable]="sortable"
 [scrollbarH]="horizontalScroll"
+[loadingIndicator]="loading"
 [footerRow]="showFooter ? footerRow : null"
 [headerHeight]="headerHeight"
 (rowContextMenu)="$event.event.preventDefault(); contextMenu($event)"
@@ -34,6 +35,7 @@ stories
       select: action('Selection made'),
       contextMenu: action('Context menu'),
       selected: null,
+      loading: boolean('Loading', false),
       vScroll: boolean('Virtual scroll', true),
       horizontalScroll: boolean('Horizontal scroll', false),
       footerRow: {allocated: 'Over 9000'},

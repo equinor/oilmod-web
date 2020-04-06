@@ -17,11 +17,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumberFormatPipe implements PipeTransform {
 
   transform(value: number, unit: string = '', abs?: boolean, appendDecimals = true, numberOfDecimals = 3): string {
+    if ( value !== 0 && !value ) {
+      return '';
+    }
     if ( abs ) {
       value = Math.abs(value);
-    }
-    if ( value !== 0 && !value ) {
-      return value as any;
     }
     if ( typeof value === 'string' ) {
       const newValue = parseFloat(value);

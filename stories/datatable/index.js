@@ -20,6 +20,7 @@ stories
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
 [rowHeight]="rowHeight"
+[loading]="loading"
 [sortable]="sortable"
 [scrollbarH]="horizontalScroll"
 [footerRow]="showFooter ? footerRow : null"
@@ -34,6 +35,7 @@ stories
       select: action('Selection made'),
       contextMenu: action('Context menu'),
       selected: null,
+      loading: boolean('Loading', false),
       vScroll: boolean('Virtual scroll', true),
       horizontalScroll: boolean('Horizontal scroll', false),
       footerRow: {allocated: 'Over 9000'},
