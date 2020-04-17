@@ -1,30 +1,33 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, radios, select, text, withKnobs} from "@storybook/addon-knobs/angular";
+import {boolean, number, select, text, withKnobs} from "@storybook/addon-knobs/angular";
 import {action} from '@storybook/addon-actions'
-import {StoDaterangeModule} from "../../projects/stoui-form/src/public_api";
+import {
+  StoAutocompleteModule,
+  StoDatepickerModule,
+  StoDaterangeModule,
+  StoFormModule,
+  StoNumberInputModule,
+  StoSelectFilterModule,
+  StoSlideToggleModule,
+  StoWysiwygModule
+} from "../../projects/stoui-form/src/public_api";
 import dateRangeReadme from "../../projects/stoui-form/src/lib/sto-daterange/sto-daterange.component.md";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {StoNumberInputModule} from "../../projects/stoui-form/src/public_api";
 import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.component.md";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {StoDatepickerModule} from "../../projects/stoui-form/src/public_api";
 import monthPickerReadme from "../../projects/stoui-form/src/lib/sto-monthpicker/sto-monthpicker.md";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MAT_LABEL_GLOBAL_OPTIONS, MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from "@angular/material/input";
-import {StoAutocompleteModule} from "../../projects/stoui-form/src/public_api";
 import autocompleteReadme from "../../projects/stoui-form/src/lib/sto-autocomplete/sto-autocomplete.component.md";
 import {items} from "./item-list";
-import {StoSlideToggleModule} from "../../projects/stoui-form/src/public_api";
-import {StoSelectFilterModule} from "../../projects/stoui-form/src/public_api";
 import {MatSelectModule} from "@angular/material/select";
 import {CommonModule} from "@angular/common";
-import {StoFormModule} from "../../projects/stoui-form/src/public_api";
 import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.md'
-import {StoWysiwygModule} from "../../projects/stoui-form/src/public_api";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
+import {TextFieldModule} from "@angular/cdk/text-field";
 
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
@@ -215,7 +218,7 @@ stories.add('MatSelect filter', () => ({
 
 stories.add('StoFormField', () => ({
   moduleMetadata: {
-    imports: [MatFormFieldModule, MatInputModule, StoFormModule, MatSelectModule, BrowserAnimationsModule, MatCardModule],
+    imports: [MatFormFieldModule, MatInputModule, StoFormModule, MatSelectModule, BrowserAnimationsModule, MatCardModule, TextFieldModule],
     providers: [{provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}]
   },
   template: `<mat-card class="sto-form">
@@ -230,6 +233,14 @@ stories.add('StoFormField', () => ({
 <mat-form-field appearance="fill" *ngIf="!withClasses">
 <mat-label>Form field without styles</mat-label>
 <input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
+</mat-form-field>
+<mat-form-field stoFormField *ngIf="withClasses">
+<mat-label>Text area with styles</mat-label>
+<textarea matInput [cdkTextareaAutosize]="true">
+Some Text Content
+
+Should not select all on click
+</textarea>
 </mat-form-field>
 </mat-card>`,
   props: {

@@ -89,7 +89,8 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
     if ( this.userPreference ) {
       shouldSelect = this.userPreference.preferences.hasSelectTextOnFocusEnabled;
     }
-    if ( shouldSelect ) {
+    const textarea = el.nativeElement.tagName.toLowerCase() === 'textarea';
+    if ( shouldSelect && !textarea ) {
       el.nativeElement.focus();
       el.nativeElement.select();
     }
