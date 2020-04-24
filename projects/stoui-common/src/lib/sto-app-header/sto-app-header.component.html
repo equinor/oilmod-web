@@ -16,6 +16,12 @@
             [matMenuTriggerFor]="menu">
       <mat-icon>accessibility</mat-icon>
     </button>
+    <button mat-icon-button
+            title="Account"
+            *ngIf="userMenu"
+            [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item
               class="dense"

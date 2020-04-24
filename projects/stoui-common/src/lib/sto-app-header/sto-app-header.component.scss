@@ -4,6 +4,7 @@
 $header-height: 64px;
 $header-z-index: 50; //move to own z-index
 $header-font-size: 20px;
+$button-spacing: 4px;
 
 .sto-header {
   @include mat-elevation(3);
@@ -50,5 +51,17 @@ $header-font-size: 20px;
     display: flex;
     align-items: center;
     margin-right: 8px;
+
+    button {
+      margin: $button-spacing;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
+import { MatMenuPanel } from '@angular/material/menu';
 
 /**
  * StoAppHeaderComponent is used to create an App header toolbar with a common look / feel across our portfolio
@@ -28,6 +29,11 @@ export class StoAppHeaderComponent implements AfterViewInit {
    */
   @Input()
   environmentName: string;
+  /**
+   * Input for user information menu.
+   */
+  @Input()
+  userMenu: MatMenuPanel;
   /**
    * Configuration that determines what to do when clicking the top-level menu icon
    */

@@ -10,19 +10,19 @@ import footerReadme from "../../projects/stoui-common/src/lib/sto-action-footer/
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {StoFilterPanelModule} from "../../projects/stoui-common/src/public_api";
+import {StoFilterPanelModule, StoMessagePanelModule} from "../../projects/stoui-common/src/public_api";
 import filterReadme from "../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.component.md";
 import messagePanelReadme from "../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.component.md";
 import appHeaderReadme from "../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.component.md";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
-import {StoMessagePanelModule} from "../../projects/stoui-common/src/public_api";
 import {MatCardModule} from "@angular/material/card";
 import {StoFormModule} from "../../projects/stoui-form/src/public_api";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FilterPanelComponent} from "./filter-panel";
 import {MatSelectModule} from "@angular/material/select";
 import {StoDirectivesModule} from "../../projects/stoui-core/src/public_api";
+import {MatMenuModule} from "@angular/material/menu";
 
 const stories = storiesOf('Common', module)
   .addDecorator(withKnobs);
@@ -58,7 +58,7 @@ stories
 
 stories.add('AppHeader & BreadCrumbs', () => ({
     moduleMetadata: {
-      imports: [StoAppHeaderModule, RouterTestingModule, HttpClientModule, MatButtonModule, MatIconModule, BrowserAnimationsModule],
+      imports: [StoAppHeaderModule, RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
         // {provide: NAVIGATION_HOME_ICON, useValue: {svgIcon: 'lcs', text: 'EIMS'}}
@@ -67,12 +67,16 @@ stories.add('AppHeader & BreadCrumbs', () => ({
     template: `<sto-app-header [testEnvironment]="test"
 [environmentName]="envName"
 [breadCrumbs]="breadCrumbs"
+[userMenu]="menuUser"
 [homeBreadCrumbConfig]="home">
-<button mat-button>
-    <mat-icon>add</mat-icon>
-    Custom Button
+<button mat-icon-button>
+  <mat-icon>account_circle</mat-icon>
 </button>
-</sto-app-header>`,
+</sto-app-header>
+<mat-menu #menuUser="matMenu">
+<button mat-menu-item class="dense">User Name</button>
+</mat-menu>
+`,
     props: {
       test: boolean('Style as test environment', false),
       envName: 'Systemtest',
