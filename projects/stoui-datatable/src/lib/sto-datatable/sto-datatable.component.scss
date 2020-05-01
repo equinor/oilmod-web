@@ -31,6 +31,23 @@
         vertical-align: bottom;
         text-overflow: ellipsis;
         box-sizing: border-box;
+
+        &__content {
+          flex: 1 1 auto;
+        }
+
+        &__resize-handle {
+          margin-right: -8px; // padding
+          flex: 0 0 1px;
+          padding: 0 4px;
+          visibility: hidden;
+          cursor: col-resize;
+          position: relative;
+        }
+
+        &:hover &__resize-handle {
+          visibility: visible;
+        }
       }
     }
   }
@@ -74,6 +91,7 @@
         position: relative;
         vertical-align: middle;
         box-sizing: border-box;
+        transition: flex-basis 100ms linear;
 
         span {
           overflow: hidden;

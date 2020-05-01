@@ -15,7 +15,8 @@ stories
       declarations: [],
       imports: [StoDatatableModule, BrowserAnimationsModule, MatCardModule]
     },
-    template: `<mat-card class="sto-card">
+    template: `
+<mat-card class="sto-card">
 <button (click)="theme()">Theme</button>
 <sto-datatable [virtualScroll]="vScroll" [selected]="selected"
 [columnGroups]="showGroups ? columnGroups : null"
@@ -25,6 +26,7 @@ stories
 [scrollbarH]="horizontalScroll"
 [footerRow]="showFooter ? footerRow : null"
 [headerHeight]="headerHeight"
+[resizeable]="resizeable"
 (rowContextMenu)="$event.event.preventDefault(); contextMenu($event)"
 (select)="select($event); selected = $event.row" [autoSize]="false"
 [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
@@ -36,6 +38,7 @@ stories
       contextMenu: action('Context menu'),
       selected: null,
       loading: boolean('Loading', false),
+      resizeable: boolean('Resizeable', false),
       vScroll: boolean('Virtual scroll', true),
       horizontalScroll: boolean('Horizontal scroll', false),
       footerRow: {allocated: 'Over 9000'},

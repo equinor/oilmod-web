@@ -15,6 +15,7 @@ export class Column {
   headerClass?: string | ClassFunction;
   sortFn?: SortFunction;
   disableSort?: boolean;
+  disableResize?: boolean;
 }
 
 export class ColumnGroup {

@@ -7,8 +7,11 @@
                               [columns]="columns"
                               [groups]="columnGroups"></sto-datatable-header-group>
   <sto-datatable-header [responsive]="responsive"
+                        (resized)="onResize($event)"
+                        [resizeable]="resizeable && scrollbarH"
                         [smallScreen]="smallScreen"
                         [headerHeight]="headerHeight"
+                        [offset]="bodyHeight && rowTotalHeight > bodyHeight ? 12 : 0"
                         [width]="width"
                         [scrollLeft]="scrollLeft"
                         [bodyHeight]="bodyHeight"
@@ -58,6 +61,7 @@
     {{ emptyMessage }}
   </div>
   <sto-datatable-body #body
+                      [width]="scrollbarH ? columnTotalWidth + 'px' : 'auto'"
                       [selectable]="!!select.observers.length"
                       [rows]="rows"
                       [rowClass]="rowClass"

@@ -61,6 +61,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Input()
   loading: boolean;
   public height$: Observable<number>;
+  public rowTotalHeight: number;
 
   get bodyHeight() {
     if ( !this.height ) {
@@ -84,7 +85,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   set rows(rows: T[]) {
     this._rows = rows;
     this.activeSortId = null;
-    this._internalRows = [ ...( rows || [] ) ];
+    this.rowTotalHeight = ( rows || [] ).length * this.rowHeight;
+    this._internalRows = [...( rows || [] )];
   }
 
   get rows() {
@@ -136,6 +138,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
           ...column,
           $$id: btoa(`${column.prop}${column.name}${index}`)
         } ));
+      this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
     }
   }
 
@@ -151,14 +154,16 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
   @Output()
   rowActivate = new EventEmitter<RowActivation<T>>();
+  @Input()
+  resizeable: boolean;
 
   private resizeTimeout;
+  private columnTotalWidth: number;
 
   get width() {
     if ( this.scrollbarH && this.columns ) {
-      const widthOffset = this.bodyHeight && ( this.rows || [] ).length * this.rowHeight > this.bodyHeight ? 12 : 0;
-      const width = this.columns.map(col => col.flexBasis || 80).reduce((a, b) => a + b, 0);
-      return `${width + widthOffset}px`;
+      const widthOffset = this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
+      return `${this.columnTotalWidth + widthOffset}px`;
     }
     return 'auto';
   }
@@ -295,5 +300,9 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
       default:
         return 0;
     }
+  }
+
+  onResize(columns: Column[]) {
+    this.columns = [...columns];
   }
 }

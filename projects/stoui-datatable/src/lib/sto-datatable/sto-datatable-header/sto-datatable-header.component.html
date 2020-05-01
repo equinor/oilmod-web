@@ -3,9 +3,10 @@
      [style.overflowX]="'hidden'"
      *ngIf="!responsive || (responsive && !smallScreen)">
   <div class="sto-mdl-table__header__row"
+       (dragover)="$event.preventDefault()"
        [style.cursor]="sortable ? 'pointer' : 'auto'"
        [style.height]="headerHeight + 'px'"
-       [style.min-width]="width"
+       [style.min-width]="tempWidth || width"
        [style.transform]="scrollLeft"
        [style.overflow-y]="'hidden'"
        [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
@@ -15,18 +16,22 @@
          [ngClass]="column.headerClass | exec:column"
          [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
          [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
-         [style.flex-basis]="(column.flexBasis || 80) + 'px'"
-         *ngFor="let column of columns; trackBy: trackColumnsFn">
+         [style.flex-basis.px]="headerWidthMap[i] || (column.flexBasis || 80)"
+         *ngFor="let column of columns; let i = index; trackBy: trackColumnsFn">
       <mat-icon [@sort]="activeSortId === column.$$id ? 'open' : 'close'"
                 [title]="sortDirection === 'desc' ? 'DESC' : 'ASC'"
                 *ngIf="activeSortId === column.$$id">
         {{ activeSortId === column.$$id && sortDirection === 'desc' ? 'arrow_downward' : 'arrow_upward' }}
       </mat-icon>
-      <!--      <mat-icon [class.mat-icon&#45;&#45;active-sort]="activeSortId === column.$$id"
-                      *ngIf="activeSortId === column.$$id && sortDirection === 'asc'">arrow_downward
-            </mat-icon>-->
       <span *ngIf="!column.headerTemplate"
+            class="sto-mdl-table__header__row__cell__content"
             [title]="column.name">{{ column.name || '' }}</span>
+      <span [style.height.px]="headerHeight - 4"
+            stoDatatableResize
+            [column]="column"
+            [style.display]="resizeable && !column.disableResize ? 'inherit' : 'none'"
+            (resizeEnd)="onResizeEnd(column, $event)"
+            (resize)="onResize(column, $event)"></span>
       <ng-template #headerTemplate
                    *ngIf="column.headerTemplate"
                    [ngTemplateOutlet]="column.headerTemplate"

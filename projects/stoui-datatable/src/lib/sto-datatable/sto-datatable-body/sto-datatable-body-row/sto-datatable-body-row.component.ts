@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DoCheck,
@@ -17,7 +18,8 @@ import { RowContextMenu } from '../../events';
 @Component({
   selector: 'sto-datatable-body-row',
   templateUrl: './sto-datatable-body-row.component.html',
-  styleUrls: [ './sto-datatable-body-row.component.scss' ]
+  styleUrls: ['./sto-datatable-body-row.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StoDatatableBodyRowComponent<T = any> implements DoCheck {
   @Input()

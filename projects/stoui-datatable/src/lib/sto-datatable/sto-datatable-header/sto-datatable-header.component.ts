@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Column } from '../columns';
 import { HeaderContextMenu } from '../events';
 import { animate, state, style, transition, trigger, } from '@angular/animations';
@@ -6,7 +6,8 @@ import { animate, state, style, transition, trigger, } from '@angular/animations
 @Component({
   selector: 'sto-datatable-header',
   templateUrl: './sto-datatable-header.component.html',
-  styleUrls: [ './sto-datatable-header.component.scss' ],
+  styleUrls: ['./sto-datatable-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('sort', [
       state('open', style({ width: '16px', opacity: 1 })),
@@ -28,7 +29,11 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
   @Input()
   headerHeight: number;
   @Input()
+  resizeable: boolean;
+  @Input()
   width: string;
+  @Input()
+  offset: number;
   @Input()
   scrollLeft: string;
   @Input()
@@ -43,6 +48,13 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
   sortable: boolean;
   @Input()
   activeSortId: string;
+  public tempWidth: string;
+
+  public headerWidthMap = {};
+
+  @Output()
+  resized = new EventEmitter<Column[]>();
+
   public sortDirection: 'asc' | 'desc' | null;
 
 
@@ -73,5 +85,35 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
       this.sortDirection = 'asc';
     }
     this.sort.emit({ column, sortDir: this.sortDirection });
+  }
+
+  public onResize(column: Column, flexBasis: number): void {
+    let width = 0;
+    const cols = this.columns
+      .map(c => {
+        if ( c === column ) {
+          c.flexBasis = flexBasis;
+        }
+        width = width + c.flexBasis;
+        return c;
+      });
+    this.tempWidth = ( this.offset + width ) + 'px';
+    this.columns = [...cols];
+  }
+
+  onResizeEnd(column: Column, flexBasis: number) {
+    // this.onResize(column, flexBasis);
+    const cols = this.columns
+      .map(c => {
+        if ( c === column ) {
+          return {
+            ...c,
+            flexBasis
+          };
+        }
+        return c;
+      });
+    this.tempWidth = null;
+    this.resized.emit(cols);
   }
 }

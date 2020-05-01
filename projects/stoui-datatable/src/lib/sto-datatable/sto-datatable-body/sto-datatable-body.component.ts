@@ -42,6 +42,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   @Input()
   selectable: boolean;
   @Input()
+  width: string;
+  @Input()
   rowHeight: number;
   @Input()
   selected: T;
@@ -49,6 +51,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   columns: Column[];
   @Input()
   virtualScroll: boolean;
+
   @Input()
   get scrollbarH(): boolean {
     return this._scrollbarH;
@@ -87,14 +90,6 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   vScroller: CdkVirtualScrollViewport;
   @ViewChild('scroller')
   scroller: ElementRef<HTMLDivElement>;
-
-  get width() {
-    if ( this.scrollbarH ) {
-      const width = this.columns.map(col => col.flexBasis || 80).reduce((a, b) => a + b, 0);
-      return `${width}px`;
-    }
-    return 'auto';
-  }
 
   private destroyed$ = new Subject<boolean>();
   private rowDiffer: KeyValueDiffer<T, T>;
