@@ -31,7 +31,9 @@
             [column]="column"
             [style.display]="resizeable && !column.disableResize ? 'inherit' : 'none'"
             (resizeEnd)="onResizeEnd(column, $event)"
-            (resize)="onResize(column, $event)"></span>
+            (resize)="onResize(column, $event)">
+        <span style="width: 1px; height: 100%; margin: auto"></span>
+      </span>
       <ng-template #headerTemplate
                    *ngIf="column.headerTemplate"
                    [ngTemplateOutlet]="column.headerTemplate"

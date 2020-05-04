@@ -149,6 +149,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Output()
   select = new EventEmitter<RowSelection<T>>();
   @Output()
+  resized = new EventEmitter<Column>();
+  @Output()
   rowContextMenu = new EventEmitter<RowContextMenu<T>>();
   @Output()
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
@@ -158,7 +160,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   resizeable: boolean;
 
   private resizeTimeout;
-  private columnTotalWidth: number;
+  public columnTotalWidth: number;
 
   get width() {
     if ( this.scrollbarH && this.columns ) {
@@ -176,7 +178,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Input()
   trackBy = (item: T, index: number) => {
     return index;
-  };
+  }
 
   rowClick(row: T, index: number, event: MouseEvent) {
     this.selected = row;
@@ -263,8 +265,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   setHeaderScroll(event: any) {
     const left = event.target.scrollLeft;
-    const str = `translate3d(-${left}px, 0px, 0px)`;
-    this.scrollLeft = str;
+    this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
     this.cdr.detectChanges();
   }
 
@@ -302,7 +303,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     }
   }
 
-  onResize(columns: Column[]) {
+  onResize({ columns, column }: { columns: Column[], column: Column }) {
     this.columns = [...columns];
+    this.resized.emit(column);
   }
 }

@@ -24,6 +24,7 @@ stories
 [loading]="loading"
 [sortable]="sortable"
 [scrollbarH]="horizontalScroll"
+(resized)="resize($event)"
 [footerRow]="showFooter ? footerRow : null"
 [headerHeight]="headerHeight"
 [resizeable]="resizeable"
@@ -36,6 +37,7 @@ stories
       columns: fixedColumns,
       select: action('Selection made'),
       contextMenu: action('Context menu'),
+      resize: action('Resize'),
       selected: null,
       loading: boolean('Loading', false),
       resizeable: boolean('Resizeable', false),

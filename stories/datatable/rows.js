@@ -626,7 +626,8 @@ export const columns = [
   {
     prop: 'voyageNo',
     flexBasis: 200,
-    name: 'Voyage#',
+    disableResize: true,
+    name: 'Voyage# (no resize)',
     disableSort: true,
     headerClass: 'aclass',
     cellClass: (value) => {

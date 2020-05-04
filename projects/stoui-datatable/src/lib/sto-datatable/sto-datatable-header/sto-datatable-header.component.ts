@@ -53,7 +53,7 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
   public headerWidthMap = {};
 
   @Output()
-  resized = new EventEmitter<Column[]>();
+  resized = new EventEmitter<{ columns: Column[], column: Column }>();
 
   public sortDirection: 'asc' | 'desc' | null;
 
@@ -103,7 +103,7 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
 
   onResizeEnd(column: Column, flexBasis: number) {
     // this.onResize(column, flexBasis);
-    const cols = this.columns
+    const columns = this.columns
       .map(c => {
         if ( c === column ) {
           return {
@@ -114,6 +114,6 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
         return c;
       });
     this.tempWidth = null;
-    this.resized.emit(cols);
+    this.resized.emit({ columns, column });
   }
 }

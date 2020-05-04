@@ -12,6 +12,7 @@ import { SelectionModes } from './selection-modes';
 import { MaterialModule } from '@testing/material.module';
 import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
 import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
+import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
 
 let comp: StoDatatableComponent;
 let fixture: ComponentFixture<StoDatatableComponent>;
@@ -59,6 +60,7 @@ describe('StoDatatableComponent', () => {
           , StoDatatableBodyRowComponent
           , StoDatatableHeaderComponent
           , StoDatatableHeaderGroupComponent
+          , StoDatatableResizeDirective
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })

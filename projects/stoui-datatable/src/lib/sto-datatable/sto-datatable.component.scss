@@ -37,9 +37,7 @@
         }
 
         &__resize-handle {
-          margin-right: -8px; // padding
-          flex: 0 0 1px;
-          padding: 0 4px;
+          flex: 0 0 9px;
           visibility: hidden;
           cursor: col-resize;
           position: relative;

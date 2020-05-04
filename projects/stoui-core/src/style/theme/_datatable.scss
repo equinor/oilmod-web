@@ -32,10 +32,10 @@
         color: $color;
 
         &__resize-handle {
-          border-right: 1px solid $border-color;
+          span {
+            background: $border-color;
+          }
         }
-
-
         &:hover {
           background-color: $hover-color;
         }

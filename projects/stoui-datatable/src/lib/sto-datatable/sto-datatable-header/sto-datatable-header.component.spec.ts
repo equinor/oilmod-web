@@ -7,10 +7,10 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ExecPipe } from '../exec.pipe';
 import { columns } from '../../../testing/utils';
 import { StoDatatableHeaderComponent } from './sto-datatable-header.component';
+import { StoDatatableResizeDirective } from '@ngx-stoui/datatable';
 
 let comp: StoDatatableHeaderComponent;
 let fixture: ComponentFixture<StoDatatableHeaderComponent>;
-let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
 @Component({
@@ -25,7 +25,7 @@ describe('StoDatatableHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [ CommonModule, MaterialModule, ScrollingModule ],
-        declarations: [ StoDatatableHeaderComponent, WrapperComponent, ExecPipe ]
+        declarations: [StoDatatableHeaderComponent, WrapperComponent, ExecPipe, StoDatatableResizeDirective]
       })
       .overrideComponent(StoDatatableHeaderComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
