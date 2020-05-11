@@ -47,12 +47,9 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
       .subscribe(() => {
         const { disabled } = this.input.first;
 
-        let readOnly = false;
+        let readOnly = ( this.input.first as any ).readonly || false;
         if ( this.input.first instanceof MatInput ) {
           readOnly = this.input.first.readonly;
-
-        } else if ( this.input.first.hasOwnProperty('readonly') ) {
-          readOnly = ( this.input.first as any ).readonly;
         }
 
         const el = this.el.nativeElement;

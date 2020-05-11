@@ -5,7 +5,6 @@
       <mat-form-field class="sto-form__field sto-grid__column">
         <mat-label>Single select</mat-label>
         <mat-select
-          stoIgnoreMenuBackdrop
           formControlName="select">
           <mat-option [value]="1">1</mat-option>
           <mat-option [value]="2">2</mat-option>
@@ -15,7 +14,6 @@
       <mat-form-field class="sto-form__field sto-grid__column">
         <mat-label>Multi select w/filter</mat-label>
         <mat-select panelClass="sto-select sto-select--has-filter"
-                    stoIgnoreMenuBackdrop
                     [multiple]="true"
                     [compareWith]="compareSelection"
                     formControlName="multi">
@@ -34,11 +32,17 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <sto-number-input class="sto-grid__column"
+      <mat-form-field class="sto-grid__column"
+                      stoFormField>
+        <mat-label>Number</mat-label>
+        <sto-number-input formControlName="number"
+                          placeholder="Formatted numbers"></sto-number-input>
+      </mat-form-field>
+      <!--<sto-number-input class="sto-grid__column"
                         label="Number"
                         textAlign="left"
                         placeholder="Formatted numbers"
-                        formControlName="number"></sto-number-input>
+                        formControlName="number"></sto-number-input>-->
       <div class="sto-grid__column">
         <sto-daterange inputStyleClass="sto-form__field"
                        [showPickersOnFocus]="true"

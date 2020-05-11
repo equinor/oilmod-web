@@ -1,0 +1,9 @@
+<input numberInput
+       class="sto-number-input"
+       (focus)="onTouched()"
+       [fractionSize]="fractionSize"
+       [placeholder]="placeholder"
+       [readonly]="readonly"
+       [tabindex]="(readonly || disabled) ? -1 : 0"
+       type="text"
+       [formControl]="ctrl">

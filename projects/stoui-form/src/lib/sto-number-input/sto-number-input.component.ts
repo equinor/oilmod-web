@@ -23,6 +23,9 @@ import { StoUserPreferenceService } from '@ngx-stoui/core';
  * E.g. 1303200.32 is default formatted to 1 303 200,320
  * Tries to interpret pasted values and export the numberic value to the clipboard.
  * Should handle most common keystrokes as a normal input field.
+ *
+ * @deprecated This input has been deprecated. Use the number input from NumberInputModule instead.
+ * It conforms to standards, and is used inside a storybook.
  */
 @Component({
     selector: 'sto-number-input',
@@ -38,11 +41,17 @@ import { StoUserPreferenceService } from '@ngx-stoui/core';
     encapsulation: ViewEncapsulation.None,
   }
 )
+/**
+ * @deprecated This input has been deprecated. Use the number input from NumberInputModule instead.
+ * It conforms to standards, and is used inside a storybook.
+ */
 export class StoNumberInputComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
   /**
-   Syncs a FormControl in an existing FormGroup to a form control element by name.
-   Is used to sync the input with the Form.
+   * Syncs a FormControl in an existing FormGroup to a form control element by name.
+   * Is used to sync the input with the Form.
+   * @deprecated This input has been deprecated. Use the number input from NumberInputModule instead.
+   * It conforms to standards, and is used inside a storybook.
    */
   @Input() formControlName: string;
   /**

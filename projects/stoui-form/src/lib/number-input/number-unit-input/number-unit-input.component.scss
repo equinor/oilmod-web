@@ -1,0 +1,89 @@
+@import "../../../../../stoui-core/src/style/theme/theme";
+@import "../../../../../stoui-core/src/style/theme/typography";
+
+@mixin sto-number-unit-input-theme($theme, $variables) {
+  $border-color: map_get($variables, border-color);
+  $color: map_get($variables, color);
+  $disabled: map_get($variables, disabled);
+  $secondary-color: map_get($variables, secondary);
+
+  .mat-form-field.sto-form__field {
+    sto-number-unit-input {
+      .number-unit-input-spacer {
+        background: $border-color;
+      }
+
+      .number-unit-input-element {
+        color: $color;
+
+        &::placeholder {
+          color: $secondary-color;
+        }
+      }
+
+    }
+  }
+}
+
+// Include theme styles for your custom components.
+@include sto-number-unit-input-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-number-unit-input-theme($sto-dark-theme, $dark-variables);
+}
+
+
+.mat-form-field.sto-form__field {
+  sto-number-unit-input {
+    .number-unit-input-container {
+      display: grid;
+      grid-template-columns: 20fr 45px;
+      grid-column-gap: 8px;
+    }
+
+    .number-unit-input-element {
+      border: none;
+      background: none;
+      padding: 0;
+      outline: none;
+      font: inherit;
+
+      .mat-select-placeholder {
+        transition: none;
+      }
+
+      .mat-select-value-text span {
+        pointer-events: none;
+      }
+
+
+    }
+
+
+    &.floating .number-unit-input-spacer {
+    }
+
+    .number-unit-input-spacer {
+      height: 44px;
+      width: 1px;
+      position: absolute;
+      right: 55px;
+      top: -19px;
+    }
+  }
+
+  &:not(.sto-form__field--readonly) {
+    .number-unit-input-element {
+      &:focus, &:focus .mat-select-placeholder {
+        font-weight: bold;
+      }
+    }
+  }
+
+  &.sto-form__field--readonly {
+    .mat-select-arrow {
+      opacity: 0;
+    }
+  }
+}
+

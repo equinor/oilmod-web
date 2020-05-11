@@ -34,3 +34,8 @@ export * from './lib/sto-monthpicker/month-view';
 export * from './lib/sto-monthpicker/public-api';
 export * from './lib/sto-monthpicker/sto-monthformfield-click.directive';
 export * from './lib/sto-monthpicker/year-view';
+export * from './lib/number-input/number-input.module';
+export * from './lib/number-input/number-input.pipe';
+export * from './lib/number-input/number-input.directive';
+export * from './lib/number-input/number-unit-input/number-unit-input.component';
+export * from './lib/number-input/number-input/number-input.component';

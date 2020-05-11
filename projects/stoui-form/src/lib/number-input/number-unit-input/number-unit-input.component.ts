@@ -1,12 +1,26 @@
-import { Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, Optional, Self, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Self,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { NumberInputPipe } from '../number-input.pipe';
+import { MatSelect } from '@angular/material/select';
 
 class NumberUnit {
-  value: number;
+  value: number | string;
   unit: string;
 }
 
@@ -17,7 +31,8 @@ class NumberUnit {
   providers: [
     { provide: MatFormFieldControl, useExisting: NumberUnitInputComponent }
   ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
   static nextId = 0;
@@ -25,6 +40,9 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   public form: FormGroup;
   readonly autofilled: boolean;
   controlType = 'number-unit-input';
+  private numberFormatterPipe = new NumberInputPipe();
+  @ViewChild(MatSelect)
+  select: MatSelect;
 
   @Input()
   get disabled(): boolean {
@@ -38,6 +56,42 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   }
 
   private _disabled = false;
+
+  @Input()
+  get readonly(): boolean {
+    return this._readonly;
+  }
+
+  set readonly(value: boolean) {
+    this._readonly = coerceBooleanProperty(value);
+    this.stateChanges.next();
+  }
+
+  private _readonly = false;
+
+  @Input()
+  get list(): any[] {
+    return this._list;
+  }
+
+  set list(value: any[]) {
+    this._list = value;
+    this.stateChanges.next();
+  }
+
+  private _list = [];
+
+  @Input()
+  get fractionSize() {
+    return this._fractionSize || 3;
+  }
+
+  set fractionSize(fractionSize) {
+    this._fractionSize = fractionSize;
+    this.stateChanges.next();
+  }
+
+  private _fractionSize: number;
 
   get empty() {
     const n = this.form.value;
@@ -57,7 +111,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   }
 
   set placeholder(plh) {
-    this._placeholder = plh;
+    this._placeholder = plh || 'Quantity';
     this.stateChanges.next();
   }
 
@@ -69,7 +123,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   }
 
   set unitPlaceholder(plh) {
-    this._unitPlaceholder = plh;
+    this._unitPlaceholder = plh || 'Unit';
     this.stateChanges.next();
   }
 
@@ -97,7 +151,13 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   }
 
   set value(value: NumberUnit | null) {
-    this._value = value;
+    if ( value ) {
+      const parsedValue = this.numberFormatterPipe.transform(value.value, this.fractionSize);
+      this._value = { ...value, value: parsedValue };
+    } else {
+      this._value = value;
+    }
+    this.form.patchValue(this._value || {});
     this.stateChanges.next();
   }
 
@@ -105,43 +165,51 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   @HostBinding('attr.aria-describedby') describedBy = '';
 
+  private sub: Subscription;
+
 
   constructor(private fb: FormBuilder,
               @Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
               private elRef: ElementRef<HTMLElement>) {
+    this.form = this.fb.group({
+      value: [],
+      unit: []
+    });
     if ( this.ngControl != null ) {
       this.ngControl.valueAccessor = this;
     }
     fm.monitor(elRef.nativeElement, true).subscribe(origin => {
       this.focused = !!origin;
-      console.log(this.focused);
       this.stateChanges.next();
     });
-
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      value: [],
-      unit: []
-    });
+    this.sub = this.form.valueChanges
+      .subscribe((value: NumberUnit) => {
+        const valueAsString = value.value as string;
+        let numberValue = parseFloat(this.numberFormatterPipe.parse(valueAsString, this.fractionSize));
+        numberValue = !isNaN(numberValue) ? numberValue : null;
+        this.onChange({ ...value, value: numberValue });
+      });
   }
 
   ngOnDestroy(): void {
     this.stateChanges.complete();
     this.fm.stopMonitoring(this.elRef.nativeElement);
+    this.sub.unsubscribe();
   }
-
-  onChange = (_: any) => {
-  };
-  onTouched = () => {
-  };
 
 
   onContainerClick(event: MouseEvent) {
-    if ( ( event.target as Element ).tagName.toLowerCase() != 'input' ) {
+    const rect = this.elRef.nativeElement.getBoundingClientRect();
+    const offset = rect.right - 55 - 16;
+    const isInputFocus = event.offsetX < offset;
+    if ( isInputFocus ) {
       this.elRef.nativeElement.querySelector('input').focus();
+    } else {
+      this.select.open();
     }
   }
 
@@ -150,6 +218,11 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
     this.describedBy = ids.join(' ');
   }
 
+
+  onChange = (_: any) => {
+  };
+  onTouched = () => {
+  };
 
   writeValue(value: NumberUnit | null): void {
     this.value = value;

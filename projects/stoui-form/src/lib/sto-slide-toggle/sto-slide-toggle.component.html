@@ -21,11 +21,12 @@
          [disabled]="disabled"
   >
   <mat-slide-toggle
-		class="sto-slide-toggle"
-		[formControl]="control"
-		tabindex="-1"
-		#slider
-		[disabled]="disabled"
+    color="primary"
+    class="sto-slide-toggle"
+    [formControl]="control"
+    tabindex="-1"
+    #slider
+    [disabled]="disabled"
   >
   </mat-slide-toggle>
 	<mat-hint [class.mat-error]="touched && errors.length > 0">

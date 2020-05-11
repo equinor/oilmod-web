@@ -28,6 +28,8 @@ import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.m
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {TextFieldModule} from "@angular/cdk/text-field";
+import {NumberInputModule} from "../../projects/stoui-form/src/lib/number-unit-input/number-input.module";
+import {MatIconModule} from "@angular/material/icon";
 
 const stories = storiesOf('Forms', module)
   .addDecorator(withKnobs);
@@ -213,6 +215,68 @@ stories.add('MatSelect filter', () => ({
     multi: boolean('Multiple', false),
     filteredItems: items,
     allItems: items
+  }
+}));
+
+stories.add('StoValueUnitInput', () => ({
+  moduleMetadata: {
+    imports: [BrowserAnimationsModule, MatIconModule, MatFormFieldModule, NumberInputModule, MatCardModule, StoFormModule, ReactiveFormsModule]
+  },
+  template: `
+  <mat-card class="sto-form" style="width: 600px">
+  <button (click)="control.disabled ? control.enable() : control.disable()">Toggle disabled</button><br>
+    <mat-form-field stoFormField floatLabel="always">
+      <mat-label>{{label}}</mat-label>
+      <sto-number-unit-input (ngModelChange)="change($event)"
+      [fractionSize]="fractionSize"
+      [list]="units"
+      [readonly]="readonly"
+      [formControl]="control"
+      [unitPlaceholder]="unitPlaceholder"
+      [placeholder]="placeholder">
+      </sto-number-unit-input>
+    </mat-form-field><br>
+    {{control.value | json}}
+  </mat-card>
+  `,
+  props: {
+    control: new FormControl({value: 123.45, unit: 'C'}),
+    fractionSize: number('Fraction size', 3),
+    label: text('Label', 'Value Unit Input'),
+    units: [{value: 'C', title: 'C°'}, {value: 'F', title: 'F°'}],
+    placeholder: text('Quantity placeholder', 'Quantity'),
+    unitPlaceholder: text('Unit placeholder', 'Unit'),
+    change: action('Value changed'),
+    readonly: boolean('Readonly', false)
+  }
+}));
+
+stories.add('NumberInput', () => ({
+  moduleMetadata: {
+    imports: [BrowserAnimationsModule, MatIconModule, MatFormFieldModule, NumberInputModule, MatCardModule, StoFormModule, ReactiveFormsModule]
+  },
+  template: `
+  <mat-card class="sto-form" style="width: 600px">
+  <button (click)="control.disabled ? control.enable() : control.disable()">Toggle disabled</button><br>
+    <mat-form-field stoFormField floatLabel="always">
+      <mat-label>{{label}}</mat-label>
+      <sto-number-input (ngModelChange)="change($event)"
+      [fractionSize]="fractionSize"
+      [readonly]="readonly"
+      [formControl]="control"
+      [placeholder]="placeholder">
+      </sto-number-input>
+    </mat-form-field><br>
+    {{control.value}}
+  </mat-card>
+  `,
+  props: {
+    control: new FormControl(123.45),
+    fractionSize: number('Fraction size', 3),
+    label: text('Label', 'Label'),
+    placeholder: text('Placeholder', 'Value'),
+    change: action('Value changed'),
+    readonly: boolean('Readonly', false)
   }
 }));
 
