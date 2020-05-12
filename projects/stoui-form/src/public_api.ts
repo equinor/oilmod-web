@@ -39,3 +39,5 @@ export * from './lib/number-input/number-input.pipe';
 export * from './lib/number-input/number-input.directive';
 export * from './lib/number-input/number-unit-input/number-unit-input.component';
 export * from './lib/number-input/number-input/number-input.component';
+export * from './lib/slide-toggle/slide-toggle.module';
+export * from './lib/slide-toggle/slide-toggle.component';

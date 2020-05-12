@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/form",
-  "version": "9.1.1",
+  "version": "9.2.1",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^9.0.0",

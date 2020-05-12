@@ -2,6 +2,7 @@ import {storiesOf} from '@storybook/angular';
 import {boolean, number, select, text, withKnobs} from "@storybook/addon-knobs/angular";
 import {action} from '@storybook/addon-actions'
 import {
+  SlideToggleModule,
   StoAutocompleteModule,
   StoDatepickerModule,
   StoDaterangeModule,
@@ -28,7 +29,7 @@ import stoFormReadme from '../../projects/stoui-form/src/lib/sto-form/sto-form.m
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {TextFieldModule} from "@angular/cdk/text-field";
-import {NumberInputModule} from "../../projects/stoui-form/src/lib/number-unit-input/number-input.module";
+import {NumberInputModule} from "../../projects/stoui-form/src/lib/number-input/number-input.module";
 import {MatIconModule} from "@angular/material/icon";
 
 const stories = storiesOf('Forms', module)
@@ -164,7 +165,7 @@ stories.add('Autocomplete', () => ({
   notes: {markdown: autocompleteReadme}
 });
 
-stories.add('Slide toggle', () => ({
+stories.add('Slide toggle (deprecated)', () => ({
   moduleMetadata: {
     imports: [StoSlideToggleModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule]
   },
@@ -174,6 +175,26 @@ stories.add('Slide toggle', () => ({
   props: {
     ctrl: new FormControl(),
     valueChange: action('Value changed')
+  }
+}));
+
+stories.add('Slide toggle', () => ({
+  moduleMetadata: {
+    imports: [SlideToggleModule, MatFormFieldModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule, StoFormModule],
+  },
+  template: `
+<mat-card style="width: 300px" class="sto-form">
+  <button (click)="ctrl.disabled ? ctrl.enable() : ctrl.disable()">Toggle disabled</button><br>
+<mat-form-field stoFormField floatLabel="always">
+    <mat-label>Slide toggle</mat-label>
+    <sto-slide-toggle [color]="color" [readonly]="readonly" [formControl]="ctrl" (ngModelChange)="valueChange($event)"></sto-slide-toggle>
+</mat-form-field>
+</mat-card>`,
+  props: {
+    ctrl: new FormControl(true),
+    valueChange: action('Value changed'),
+    readonly: boolean('Readonly', false),
+    color: select('Color', ['primary', 'accent', 'warn'], 'primary'),
   }
 }));
 

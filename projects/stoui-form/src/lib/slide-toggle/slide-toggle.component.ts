@@ -8,46 +8,49 @@ import {
   OnInit,
   Optional,
   Self,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { NumberInputPipe } from '../number-input.pipe';
+import { Subject, Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ThemePalette } from '@angular/material/core';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
-  selector: 'sto-number-input',
-  templateUrl: './number-input.component.html',
-  styleUrls: [ './number-input.component.scss' ],
+  selector: 'sto-slide-toggle',
+  templateUrl: './slide-toggle.component.html',
+  styleUrls: [ './slide-toggle.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: MatFormFieldControl, useExisting: NumberInputComponent }
+    { provide: MatFormFieldControl, useExisting: SlideToggleComponent }
   ]
 })
-export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<number> {
+export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<boolean> {
   static nextId = 0;
   stateChanges = new Subject<void>();
-  private numberFormatter = new NumberInputPipe();
   errorState: boolean;
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
   ctrl = new FormControl();
   public sub: Subscription;
+  @HostBinding()
+  id = `value-unit-input-${SlideToggleComponent.nextId++}`;
+  @HostBinding('attr.aria-describedby')
+  describedBy = '';
+  @ViewChild(MatSlideToggle)
+  slideToggle: MatSlideToggle;
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
     return this.focused || !this.empty;
   }
 
-  @HostBinding()
-  id = `value-unit-input-${NumberInputComponent.nextId++}`;
-  @HostBinding('attr.aria-describedby')
-  describedBy = '';
-
+  private _disabled = false;
 
   @Input()
   get disabled(): boolean {
@@ -60,7 +63,19 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
     this.stateChanges.next();
   }
 
-  private _disabled = false;
+  @Input()
+  get color(): ThemePalette {
+    return this._color || 'primary';
+  }
+
+  set color(color) {
+    this._color = color || 'primary';
+    this.stateChanges.next();
+  }
+
+  private _color: ThemePalette;
+
+  private _readonly = false;
 
   @Input()
   get readonly(): boolean {
@@ -69,43 +84,18 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
 
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
+    value ? this.ctrl.disable() : this.ctrl.enable();
     this.stateChanges.next();
   }
-
-  private _readonly = false;
-
-  @Input()
-  get fractionSize() {
-    return this._fractionSize;
-  }
-
-  set fractionSize(fractionSize) {
-    if ( !fractionSize && fractionSize !== 0 ) {
-      fractionSize = 3;
-    }
-    this._fractionSize = fractionSize;
-    this.value = this._value;
-    this.stateChanges.next();
-  }
-
-  private _fractionSize: number;
 
   get empty() {
     const value = this.ctrl.value;
     return !( value && value !== 0 );
   }
 
-  @Input()
-  get placeholder() {
-    return this._placeholder || '';
-  }
+  placeholder: string; // Required by material control, but not used.
 
-  set placeholder(plh) {
-    this._placeholder = plh;
-    this.stateChanges.next();
-  }
-
-  private _placeholder: string;
+  private _required = false;
 
   @Input()
   get required() {
@@ -117,7 +107,7 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
     this.stateChanges.next();
   }
 
-  private _required = false;
+  private _value: boolean | null;
 
   @Input()
   get value() {
@@ -126,12 +116,9 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
 
   set value(value) {
     this._value = value;
-    const valueAsString = this.numberFormatter.transform(value, this.fractionSize);
-    this.ctrl.setValue(valueAsString, { emitEvent: false });
+    this.ctrl.setValue(value, { emitEvent: false });
     this.stateChanges.next();
   }
-
-  private _value: number | null;
 
   constructor(@Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
@@ -147,10 +134,8 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
 
   ngOnInit(): void {
     this.sub = this.ctrl.valueChanges
-      .subscribe((value: string) => {
-        let numericValue = parseFloat(this.numberFormatter.parse(value, this.fractionSize));
-        numericValue = isNaN(numericValue) ? null : numericValue;
-        this.onChange(numericValue);
+      .subscribe((value: boolean) => {
+        this.onChange(value);
       });
   }
 
@@ -161,7 +146,10 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   onContainerClick(event: MouseEvent): void {
-    this.elRef.nativeElement.querySelector('input').focus();
+    if ( !this.disabled && !this.readonly ) {
+      this.slideToggle.focus();
+      this.ctrl.setValue(!this.ctrl.value);
+    }
   }
 
   setDescribedByIds(ids: string[]): void {
@@ -173,7 +161,7 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   onTouched = () => {
   };
 
-  writeValue(value: number): void {
+  writeValue(value: boolean): void {
     this.value = value;
   }
 

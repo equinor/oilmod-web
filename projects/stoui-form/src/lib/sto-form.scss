@@ -1,7 +1,65 @@
-@import "stoui-core/style/colors";
+@import "../../../stoui-core/src/style/colors";
+@import "../../../stoui-core/src/style/theme/theme";
+@import "../../../stoui-core/src/style/theme/typography";
+
+@mixin mat-input-hover-effect($background-color, $underline-color) {
+  .mat-form-field-flex {
+    &:hover {
+      background-color: $background-color;
+    }
+
+    &:hover + .mat-form-field-underline {
+      background-color: $underline-color;
+    }
+  }
+}
+
+@mixin sto-form-theme($theme, $variables) {
+  $color: map_get($variables, color);
+  $secondary-color: map_get($variables, secondary);
+  $disabled-color: map_get($variables, disabled);
+  $border-hover: map_get($variables, hover-bg-color);
+  $border: map_get($variables, border-color);
+  $selected-color: map_get($variables, selected-color);
+
+  .sto-form {
+    &__field {
+      @include mat-input-hover-effect($ship-cove-15, $border-hover);
+
+      .mat-form-field-wrapper .mat-form-field-underline {
+        background-color: rgba($color, 0.12);
+      }
+    }
+
+    &__field--readonly {
+      @include mat-input-hover-effect(transparent, transparent);
+    }
+
+    &__field--disabled {
+      @include mat-input-hover-effect($disabled-color, transparent);
+      color: $disabled-color;
+
+      .mat-form-field-flex {
+        color: $disabled-color;
+      }
+
+      .mat-select.mat-select-disabled {
+        .mat-select-arrow {
+          color: $black-38;
+        }
+      }
+    }
+  }
+}
+
+// Include theme styles for your custom components.
+@include sto-form-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-form-theme($sto-dark-theme, $dark-variables);
+}
 
 $form-field-bg: $ship-cove-10;
-$underline-color: $black-12;
 $border-radius: 4px;
 $height: 72px;
 
@@ -9,6 +67,7 @@ $height: 72px;
   width: 100%;
   min-height: $height;
   outline: none;
+
   .mat-input-element {
     cursor: pointer;
     overflow: hidden;
@@ -80,17 +139,6 @@ $height: 72px;
 
 }
 
-@mixin mat-input-hover-effect($background-color, $underline-color){
-    .mat-form-field-flex{
-        &:hover {
-           background-color: $background-color;
-        }
-        &:hover + .mat-form-field-underline{
-                background-color: $underline-color;
-        }
-    }
-}
-
 .sto-form {
   &__field {
     cursor: pointer;
@@ -107,14 +155,11 @@ $height: 72px;
        }
     }
 
-   @include mat-input-hover-effect($ship-cove-15, $black-26);
    &.sto-form__field--readonly{
       cursor: default;
-      @include mat-input-hover-effect(transparent, transparent);
    }
    &.sto-form__field--disabled{
      cursor: default;
-     @include mat-input-hover-effect($black-8, transparent);
         .mat-input-element{
             cursor: default;
         }
@@ -185,7 +230,6 @@ $height: 72px;
     left: 1px;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
-    background-color: $underline-color;
 
      .mat-form-field-ripple {
           height: 2px;
@@ -244,23 +288,17 @@ $height: 72px;
     .mat-select-trigger{
       user-select: all;
     }
-    .mat-select-arrow{
-      color: $black-38;
-    }
   }
 
   .mat-form-field-underline{
        display: block;
        visibility: hidden;
-       background-color: $black-12;
    }
 
 
 
   .mat-form-field-flex {
     cursor: default;
-    color: $black-38;
-    background-color: $black-8;
   }
 }
 
