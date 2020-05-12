@@ -1,0 +1,75 @@
+import { NumberInputComponent } from './number-input.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '@testing/material.module';
+import { NumberInputPipe } from '../number-input.pipe';
+import { StoFormModule } from '../../sto-form/sto-form.module';
+import { NumberInputDirective } from '../number-input.directive';
+
+describe('NumberInputComponent', () => {
+  let component: NumberInputComponent;
+  let fixture: ComponentFixture<NumberInputComponent>;
+  let formControlSpy: jasmine.SpyObj<NgControl>;
+  formControlSpy = jasmine.createSpyObj('NgControl', [ 'value' ]);
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+        imports: [ MaterialModule, ReactiveFormsModule, StoFormModule ],
+        declarations: [ NumberInputPipe, NumberInputDirective, NumberInputComponent ],
+        providers: [ NumberInputPipe, { provide: NgControl, useValue: formControlSpy } ]
+      })
+      .compileComponents()
+      .then(createComponent);
+  }));
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should update the control value', () => {
+    component.writeValue(123.456);
+    fixture.detectChanges();
+    expect(component.ctrl.value).toBe('123,456');
+  });
+
+  it('should trigger statechanges when attributes are set', () => {
+    const spy = spyOn(component.stateChanges, 'next').and.callThrough();
+    component.placeholder = 'Placeholder';
+    component.required = true;
+    component.setDisabledState(true);
+    component.readonly = true;
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledTimes(4);
+  });
+
+  it('should call onChange with a parsed number', () => {
+    const spy = spyOn(component, 'onChange');
+    component.writeValue(123.456);
+    component.ctrl.updateValueAndValidity();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledWith(123.456);
+  });
+
+  it('should clean up after calling ngOnDestroy', () => {
+    component.ngOnDestroy();
+    fixture.detectChanges();
+    expect(component.stateChanges.isStopped).toBeTruthy();
+    expect(component.sub.closed).toBeTruthy();
+  });
+
+
+  function createComponent() {
+    fixture = TestBed.createComponent(NumberInputComponent);
+    component = fixture.componentInstance;
+    ( fixture.componentInstance as any ).ngControl = new FormControl();
+    component.fractionSize = 3;
+    fixture.detectChanges();
+
+    return fixture.whenStable().then(() => {
+      fixture.detectChanges();
+    });
+
+  }
+
+});
+

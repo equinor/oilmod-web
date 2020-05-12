@@ -64,6 +64,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
+    value ? this.form.get('unit').disable() : this.form.get('unit').enable();
     this.stateChanges.next();
   }
 
@@ -157,7 +158,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
     } else {
       this._value = value;
     }
-    this.form.patchValue(this._value || {});
+    this.form.patchValue(this._value || {}, { emitEvent: false });
     this.stateChanges.next();
   }
 
@@ -165,7 +166,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   @HostBinding('attr.aria-describedby') describedBy = '';
 
-  private sub: Subscription;
+  public sub: Subscription;
 
 
   constructor(private fb: FormBuilder,

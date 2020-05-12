@@ -36,7 +36,7 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   autofilled: boolean;
   controlType = 'number-input';
   ctrl = new FormControl();
-  private sub: Subscription;
+  public sub: Subscription;
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {

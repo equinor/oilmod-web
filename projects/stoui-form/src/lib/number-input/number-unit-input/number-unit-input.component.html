@@ -11,7 +11,6 @@
          formControlName="value"/>
   <mat-select formControlName="unit"
               (focus)="onTouched()"
-              [disabled]="readonly || disabled"
               [placeholder]="unitPlaceholder"
               class="number-unit-input-element number-unit-input-unit">
     <mat-option *ngIf="form.get('unit').value"
