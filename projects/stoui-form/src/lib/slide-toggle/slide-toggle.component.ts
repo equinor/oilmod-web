@@ -59,7 +59,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
-    this._disabled ? this.ctrl.disable() : this.ctrl.enable();
+    const opts = { onlySelf: true, emitEvent: false };
+    this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }
 
@@ -84,7 +85,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
-    value ? this.ctrl.disable() : this.ctrl.enable();
+    const opts = { onlySelf: true, emitEvent: false };
+    value ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }
 

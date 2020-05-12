@@ -51,7 +51,8 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
-    this._disabled ? this.form.disable() : this.form.enable();
+    const opts = { onlySelf: true, emitEvent: false };
+    value ? this.form.get('unit').disable(opts) : this.form.get('unit').enable(opts);
     this.stateChanges.next();
   }
 
@@ -64,7 +65,8 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
-    value ? this.form.get('unit').disable() : this.form.get('unit').enable();
+    const opts = { onlySelf: true, emitEvent: false };
+    value ? this.form.get('unit').disable(opts) : this.form.get('unit').enable(opts);
     this.stateChanges.next();
   }
 
@@ -108,27 +110,27 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   @Input()
   get placeholder() {
-    return this._placeholder;
+    return this._placeholder || '';
   }
 
   set placeholder(plh) {
-    this._placeholder = plh || 'Quantity';
+    this._placeholder = plh;
     this.stateChanges.next();
   }
 
-  private _placeholder = 'Quantity';
+  private _placeholder: string;
 
   @Input()
   get unitPlaceholder() {
-    return this._unitPlaceholder;
+    return this._unitPlaceholder || '';
   }
 
   set unitPlaceholder(plh) {
-    this._unitPlaceholder = plh || 'Unit';
+    this._unitPlaceholder = plh;
     this.stateChanges.next();
   }
 
-  private _unitPlaceholder = 'Unit';
+  private _unitPlaceholder: string;
 
   @Input()
   get required() {
@@ -186,6 +188,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
     });
   }
 
+
   ngOnInit(): void {
     this.sub = this.form.valueChanges
       .subscribe((value: NumberUnit) => {
@@ -239,10 +242,6 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-  }
-
-  _handleInput(): void {
-    this.onChange(this.value);
   }
 
 }

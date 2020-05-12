@@ -56,7 +56,8 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
 
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
-    this._disabled ? this.ctrl.disable() : this.ctrl.enable();
+    const opts = { onlySelf: true, emitEvent: false };
+    this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }
 
