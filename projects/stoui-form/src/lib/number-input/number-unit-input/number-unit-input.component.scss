@@ -81,6 +81,12 @@
   }
 
   &.sto-form__field--readonly {
+    .number-unit-input-spacer {
+      opacity: 0;
+    }
+  }
+
+  &.sto-form__field--readonly {
     .mat-select-arrow {
       opacity: 0;
     }
