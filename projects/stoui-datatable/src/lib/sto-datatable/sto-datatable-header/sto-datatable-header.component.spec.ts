@@ -7,7 +7,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ExecPipe } from '../exec.pipe';
 import { columns } from '../../../testing/utils';
 import { StoDatatableHeaderComponent } from './sto-datatable-header.component';
-import { StoDatatableResizeDirective } from '@ngx-stoui/datatable';
+import { StoDatatableResizeDirective } from './sto-datatable-resize.directive';
 
 let comp: StoDatatableHeaderComponent;
 let fixture: ComponentFixture<StoDatatableHeaderComponent>;

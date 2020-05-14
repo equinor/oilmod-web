@@ -167,7 +167,7 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
       this.sub.add(this.ngControl.statusChanges
         .subscribe(status => {
           this.errorState = status === 'INVALID';
-        }, console.error, () => console.log('done')));
+        }));
     }
   }
 
