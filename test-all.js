@@ -13,13 +13,46 @@ const exec = promisify(execCb);
     console.log('--ci not present, skip pre-requisite build.')
   }
 
-  let output;
+  let output = [];
 
   console.log('Running tests...');
   try {
-    /*    const coreCommon = await Promise.all([exec('yarn test stoui-core'), exec('yarn test stoui-common')]);
-        const tableForm = await Promise.all([exec('yarn test stoui-datatable'), exec('yarn test stoui-form')]);
-        const errorHandler = await exec('yarn test stoui-error-handler');*/
+    console.log('Testing core');
+    const res = await task('core');
+    output = [...output, res];
+    console.log('Testing core complete');
+  } catch {
+  }
+  try {
+    console.log('Testing common');
+    const res = await task('common');
+    output = [...output, res];
+    console.log('Testing common complete');
+  } catch {
+  }
+  try {
+    console.log('Testing datatable');
+    const res = await task('datatable');
+    output = [...output, res];
+    console.log('Testing datatable complete');
+  } catch {
+  }
+  try {
+    console.log('Testing form');
+    const res = await task('form');
+    output = [...output, res];
+    console.log('Testing form complete');
+  } catch {
+  }
+  try {
+    console.log('Testing error-handler');
+    const res = await task('error-handler');
+    output = [...output, res];
+    console.log('Testing error-handler complete');
+  } catch {
+  }
+
+  /*try {
     const core = await exec('yarn test stoui-core');
     const common = await exec('yarn test stoui-common');
     const table = await exec('yarn test stoui-datatable');
@@ -35,7 +68,7 @@ const exec = promisify(execCb);
   } catch (ex) {
     console.error(ex.stdout);
     process.exit(1);
-  }
+  }*/
 
   console.log('Test suite completed OK, see results below!');
   output.forEach(op => {
@@ -44,3 +77,8 @@ const exec = promisify(execCb);
     console.log(op.result);
   });
 })();
+
+async function task(project) {
+  const run = await exec(`yarn test stoui-${project}`)
+  return {component: `@ngx-stoui/${project}`, result: run.stdout};
+}
