@@ -196,7 +196,7 @@ function createComponent() {
   });
 }
 
-describe('StoDatatableComponent with automatic height', () => {
+/*describe('StoDatatableComponent with automatic height', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -311,7 +311,7 @@ function createResponsiveComponent() {
     wrapFixture.detectChanges();
     page = new Page(wrapFixture);
   });
-}
+}*/
 
 class Page {
   public body: StoDatatableBodyComponent;

@@ -17,6 +17,13 @@ const exec = promisify(execCb);
 
   console.log('Running tests...');
   try {
+    console.log('Testing datatable');
+    const res = await task('datatable');
+    output = [...output, res];
+    console.log('Testing datatable complete');
+  } catch {
+  }
+  try {
     console.log('Testing core');
     const res = await task('core');
     output = [...output, res];
@@ -28,13 +35,6 @@ const exec = promisify(execCb);
     const res = await task('common');
     output = [...output, res];
     console.log('Testing common complete');
-  } catch {
-  }
-  try {
-    console.log('Testing datatable');
-    const res = await task('datatable');
-    output = [...output, res];
-    console.log('Testing datatable complete');
   } catch {
   }
   try {
