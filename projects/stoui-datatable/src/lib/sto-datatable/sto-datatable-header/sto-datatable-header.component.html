@@ -26,6 +26,11 @@
       <span *ngIf="!column.headerTemplate"
             class="sto-mdl-table__header__row__cell__content"
             [title]="column.name">{{ column.name || '' }}</span>
+      <ng-template #headerTemplate
+                   *ngIf="column.headerTemplate"
+                   [ngTemplateOutlet]="column.headerTemplate"
+                   [ngTemplateOutletContext]="{column: column}">
+      </ng-template>
       <span [style.height.px]="headerHeight - 4"
             stoDatatableResize
             [column]="column"
@@ -34,11 +39,6 @@
             (resize)="onResize(column, $event)">
         <span style="width: 1px; height: 100%; margin: auto"></span>
       </span>
-      <ng-template #headerTemplate
-                   *ngIf="column.headerTemplate"
-                   [ngTemplateOutlet]="column.headerTemplate"
-                   [ngTemplateOutletContext]="{column: column}">
-      </ng-template>
     </div>
   </div>
 </div>
