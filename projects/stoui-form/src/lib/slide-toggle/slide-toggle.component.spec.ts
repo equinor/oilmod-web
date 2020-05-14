@@ -2,7 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SlideToggleComponent } from './slide-toggle.component';
 import { MaterialModule } from '@testing/material.module';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NgControl, ReactiveFormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
+
+const ngControl = {
+  statusChanges: new Subject()
+};
 
 describe('SlideToggleComponent', () => {
   let component: SlideToggleComponent;
@@ -10,8 +15,14 @@ describe('SlideToggleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule, ReactiveFormsModule ],
-        declarations: [ SlideToggleComponent ]
+      imports: [ MaterialModule, ReactiveFormsModule ],
+      declarations: [ SlideToggleComponent ]
+    }).overrideComponent(SlideToggleComponent, {
+        set: {
+          providers: [
+            { provide: NgControl, useValue: ngControl }
+          ]
+        }
       })
       .compileComponents()
       .then(createComponent);
@@ -52,11 +63,22 @@ describe('SlideToggleComponent', () => {
     expect(component.sub.closed).toBeTruthy();
   });
 
+  it('should update error state', () => {
+    expect(component.errorState).toBeFalsy();
+    ngControl.statusChanges.next('INVALID');
+    fixture.detectChanges();
+    expect(component.errorState).toBeTruthy();
+  });
+
+  it('should set component as control value accessor', () => {
+    expect(component.ngControl.valueAccessor).toBe(component);
+  });
+
+
   function createComponent() {
     fixture = TestBed.createComponent(SlideToggleComponent);
     component = fixture.componentInstance;
     component.ctrl.setValue(false);
-    ( fixture.componentInstance as any ).ngControl = new FormControl();
     fixture.detectChanges();
 
     return fixture.whenStable().then(() => {
