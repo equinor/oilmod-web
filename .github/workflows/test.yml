@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Tests
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -30,4 +31,4 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: node test-all.js --ci
+        run: node test-all.js --ci
