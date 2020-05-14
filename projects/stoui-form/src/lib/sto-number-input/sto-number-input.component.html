@@ -13,7 +13,7 @@
   <input *ngIf="!readonly"
          [ngStyle]="{textAlign : textAlign}"
          matInput
-         stoNumberInput
+         numberInput
          (blur)="onModelTouched($event)"
          [fractionSize]="fractionSize"
          [hasSelectAllEnabled]="$hasSelectAllEnabled | async"

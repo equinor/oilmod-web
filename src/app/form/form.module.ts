@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormRoutingModule } from './form-routing.module';
 import { FormComponent } from './form.component';
 import {
+  NumberInputModule,
   StoAutocompleteModule,
   StoDatepickerModule,
   StoDaterangeModule,
-  StoNumberInputModule,
+  StoFormModule,
   StoSelectFilterModule,
-  StoSlideToggleModule,
+  StoSlideToggleModule
 } from '@ngx-stoui/form';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -24,13 +25,14 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     FormRoutingModule,
     FormsModule,
+    NumberInputModule,
     ReactiveFormsModule,
-    StoAutocompleteModule, StoDatepickerModule, StoNumberInputModule, StoSelectFilterModule, StoDaterangeModule, StoSlideToggleModule,
+    StoAutocompleteModule, StoDatepickerModule, StoSelectFilterModule, StoDaterangeModule, StoSlideToggleModule,
     MatSelectModule,
     StoDirectivesModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule, MatCardModule,
+    MatInputModule, MatCardModule, StoFormModule,
   ],
   declarations: [ FormComponent ],
 })

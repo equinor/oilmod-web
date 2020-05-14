@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../dist/stoui-core/ngx-stoui.css";
+@import "../dist/stoui-form/sto-form.css";
+
 @import "../dist/stoui-core/variables";
 
-@import "../dist/stoui-form/sto-form.css";
 @import "~highlight.js/styles/darcula.css";
 
 .mat-button-toggle-label-content {

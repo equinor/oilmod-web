@@ -1,0 +1,25 @@
+<div [formGroup]="form"
+     class="number-unit-input-container">
+  <input numberInput
+         class="number-unit-input-element number-unit-input-value"
+         (focus)="onTouched()"
+         [fractionSize]="fractionSize"
+         [placeholder]="placeholder"
+         [readonly]="readonly"
+         [tabindex]="(readonly || disabled) ? -1 : 0"
+         type="text"
+         formControlName="value"/>
+  <mat-select formControlName="unit"
+              (focus)="onTouched()"
+              [placeholder]="unitPlaceholder"
+              class="number-unit-input-element number-unit-input-unit">
+    <mat-option *ngIf="form.get('unit').value"
+                [value]="null">Clear
+    </mat-option>
+    <mat-option *ngFor="let el of list"
+                [value]="el.value">
+      {{ el.title || el.value }}
+    </mat-option>
+  </mat-select>
+</div>
+<span class="number-unit-input-spacer"></span>

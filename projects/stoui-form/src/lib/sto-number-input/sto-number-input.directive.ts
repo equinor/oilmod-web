@@ -1,26 +1,28 @@
-import {Directive, ElementRef, HostListener, Input} from '@angular/core';
-import {Key} from '@ngx-stoui/core';
-import {StoNumberInputPipe} from './sto-number-input.pipe';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Key } from '@ngx-stoui/core';
+import { StoNumberInputPipe } from './sto-number-input.pipe';
 
 
-@Directive({selector: '[stoNumberInput]'})
-export class StoNumberInputDirective  {
+@Directive({ selector: '[numberInput]' })
+export class StoNumberInputDirective {
 
-    private _el: HTMLInputElement;
+  private _el: HTMLInputElement;
 
-    @Input() fractionSize = 5;
-    private _hasSelectAllEnabled = true;
-    @Input() set hasSelectAllEnabled(hasSelectAllEnabled: boolean) {
-        this._hasSelectAllEnabled = hasSelectAllEnabled;
-    }
-    get hasSelectAllEnabled(): boolean {
-        return this._hasSelectAllEnabled;
-    }
-    /**
-     * List of keys ignored, to work as default.
-     *  {Key[]}
-     */
-    private ignoredKeys = [
+  @Input() fractionSize = 5;
+  private _hasSelectAllEnabled = true;
+  @Input() set hasSelectAllEnabled(hasSelectAllEnabled: boolean) {
+    this._hasSelectAllEnabled = hasSelectAllEnabled;
+  }
+
+  get hasSelectAllEnabled(): boolean {
+    return this._hasSelectAllEnabled;
+  }
+
+  /**
+   * List of keys ignored, to work as default.
+   *  {Key[]}
+   */
+  private ignoredKeys = [
         Key.Dash,
         Key.Backspace,
         Key.Delete,
@@ -226,9 +228,6 @@ export class StoNumberInputDirective  {
         }
         const value = $event.target.value;
         this._el.value = (this.numberFormatPipe.parse(value, this.fractionSize) + '').replace('.', ',');
-        if (this.hasSelectAllEnabled) {
-          this._el.setSelectionRange(0, this._el.value.length);
-        }
     }
 
     @HostListener('blur', ['$event.target.value'])

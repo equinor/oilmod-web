@@ -27,6 +27,9 @@ import { Subject } from 'rxjs';
     }
   ]
 })
+/**
+ * @deprecated Use SlideToggleComponent instead
+ */
 export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   private destroyed$ = new Subject();
@@ -46,9 +49,6 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   @Input() readonly: boolean;
   @Input() disabled: boolean;
   @Input() floatLabel = 'always';
-  /**
-   * @deprecated
-   */
   @Input() floatPlaceholder = 'always';
   @Input() withoutPlaceHolder: boolean;
 
@@ -171,7 +171,9 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
 
   }
 
+
   ngOnInit() {
+    console.warn('StoSlideToggleModule has been deprecated. Use SlideToggleModule instead.');
     let control;
     if ( this.formControl ) {
       control = this.formControl;
@@ -274,6 +276,9 @@ export class StoSlideToggleComponent implements ControlValueAccessor, OnInit {
   declarations: [ StoSlideToggleComponent ]
 
 })
+/**
+ * @deprecated StoSlideToggleModule has been deprecated. Use SlideToggleModule instead.
+ */
 export class StoSlideToggleModule {
 }
 

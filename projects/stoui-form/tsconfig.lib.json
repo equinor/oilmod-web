@@ -27,5 +27,61 @@
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
-  ]
+  ],
+  "paths": {
+    "@ngx-stoui/datatable": [
+      "../stoui-datatable"
+    ],
+    "@ngx-stoui/datatable/*": [
+      "../stoui-datatable/*"
+    ],
+    "@ngx-stoui/core": [
+      "../stoui-core"
+    ],
+    "@ngx-stoui/core/*": [
+      "../stoui-core"
+    ],
+    "@ngx-stoui/form": [
+      "./"
+    ],
+    "@ngx-stoui/form/*": [
+      "./*"
+    ],
+    "@ngx-stoui/common": [
+      "../stoui-common"
+    ],
+    "@ngx-stoui/common/*": [
+      "../stoui-common/*"
+    ],
+    "@ngx-stoui/drawer": [
+      "../stoui-drawer"
+    ],
+    "@ngx-stoui/drawer/*": [
+      "../stoui-drawer/*"
+    ],
+    "@ngx-stoui/error-handler": [
+      "../stoui-error-handler"
+    ],
+    "@ngx-stoui/error-handler/*": [
+      "../stoui-error-handler/*"
+    ],
+    "@ngx-stoui/quick-view": [
+      "../stoui-quick-view"
+    ],
+    "@ngx-stoui/quick-view/*": [
+      "../stoui-quick-view/*"
+    ],
+    "@ngx-stoui/unsaved-changes": [
+      "../stoui-unsaved-changes"
+    ],
+    "@ngx-stoui/unsaved-changes/*": [
+      "../stoui-unsaved-changes/*"
+    ],
+    "@testing": [
+      "testing"
+    ],
+    "@testing/*": [
+      "testing/*"
+    ]
+  }
 }

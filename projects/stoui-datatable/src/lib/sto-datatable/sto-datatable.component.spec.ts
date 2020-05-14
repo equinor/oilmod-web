@@ -212,6 +212,7 @@ describe('StoDatatableComponent with automatic height', () => {
           , StoDatatableBodyRowComponent
           , StoDatatableHeaderComponent
           , StoDatatableHeaderGroupComponent
+          , StoDatatableResizeDirective
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
@@ -277,6 +278,7 @@ describe('StoDatatableComponent with responsive template height', () => {
           , WrapperComponent
           , StoDatatableHeaderComponent
           , StoDatatableHeaderGroupComponent
+          , StoDatatableResizeDirective
         ],
       })
       .compileComponents()
