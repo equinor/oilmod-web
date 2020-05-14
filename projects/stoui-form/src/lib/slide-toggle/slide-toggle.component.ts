@@ -32,12 +32,11 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<boolean> {
   static nextId = 0;
   stateChanges = new Subject<void>();
-  errorState: boolean;
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
   ctrl = new FormControl();
-  public sub: Subscription;
+  public sub = new Subscription();
   @HostBinding()
   id = `value-unit-input-${SlideToggleComponent.nextId++}`;
   @HostBinding('attr.aria-describedby')
@@ -49,6 +48,17 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   get shouldLabelFloat() {
     return this.focused || !this.empty;
   }
+
+  get errorState() {
+    return this._errorState;
+  }
+
+  set errorState(errorState) {
+    this._errorState = errorState;
+    this.stateChanges.next();
+  }
+
+  private _errorState: boolean;
 
   private _disabled = false;
 
@@ -135,10 +145,15 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   ngOnInit(): void {
-    this.sub = this.ctrl.valueChanges
+    const sub = this.ctrl.valueChanges
       .subscribe((value: boolean) => {
         this.onChange(value);
       });
+    this.sub.add(sub);
+    if ( this.ngControl ) {
+      this.sub.add(this.ngControl.statusChanges
+        .subscribe(state => this.errorState = state === 'INVALID'));
+    }
   }
 
   ngOnDestroy(): void {

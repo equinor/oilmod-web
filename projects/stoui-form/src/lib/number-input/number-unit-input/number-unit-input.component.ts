@@ -44,6 +44,17 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   @ViewChild(MatSelect)
   select: MatSelect;
 
+  get errorState() {
+    return this._errorState;
+  }
+
+  set errorState(errorState) {
+    this._errorState = errorState;
+    this.stateChanges.next();
+  }
+
+  private _errorState: boolean;
+
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -101,7 +112,6 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
     return !n.value && !n.unit;
   }
 
-  readonly errorState: boolean;
   public focused: boolean;
 
 
@@ -168,7 +178,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
   @HostBinding('attr.aria-describedby') describedBy = '';
 
-  public sub: Subscription;
+  public sub = new Subscription();
 
 
   constructor(private fb: FormBuilder,
@@ -190,13 +200,19 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
 
 
   ngOnInit(): void {
-    this.sub = this.form.valueChanges
+    const sub = this.form.valueChanges
       .subscribe((value: NumberUnit) => {
         const valueAsString = value.value as string;
         let numberValue = parseFloat(this.numberFormatterPipe.parse(valueAsString, this.fractionSize));
         numberValue = !isNaN(numberValue) ? numberValue : null;
         this.onChange({ ...value, value: numberValue });
       });
+
+    this.sub.add(sub);
+    if ( this.ngControl ) {
+      this.sub.add(this.ngControl.statusChanges
+        .subscribe(state => this.errorState = state === 'INVALID'));
+    }
   }
 
   ngOnDestroy(): void {

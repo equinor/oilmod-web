@@ -13,7 +13,7 @@ import {
   StoWysiwygModule
 } from "../../projects/stoui-form/src/public_api";
 import dateRangeReadme from "../../projects/stoui-form/src/lib/sto-daterange/sto-daterange.component.md";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.component.md";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
@@ -279,20 +279,30 @@ stories.add('NumberInput', () => ({
   template: `
   <mat-card class="sto-form" style="width: 600px">
   <button (click)="control.disabled ? control.enable() : control.disable()">Toggle disabled</button><br>
+  <button (click)="toggleValidator(control)">Toggle validator</button><br>
     <mat-form-field stoFormField floatLabel="always">
       <mat-label>{{label}}</mat-label>
       <sto-number-input (ngModelChange)="change($event)"
-      [fractionSize]="fractionSize"
-      [readonly]="readonly"
-      [formControl]="control"
-      [placeholder]="placeholder">
+                        [fractionSize]="fractionSize"
+                        [readonly]="readonly"
+                        [formControl]="control"
+                        [placeholder]="placeholder">
       </sto-number-input>
+      <mat-error *ngIf="control.hasError('required')">{{ control.getError('required') }}</mat-error>
     </mat-form-field><br>
     {{control.value}}
   </mat-card>
   `,
   props: {
-    control: new FormControl(123.45),
+    control: new FormControl(123.45, Validators.required),
+    toggleValidator: (control) => {
+      if (control.validator) {
+        control.clearValidators();
+      } else {
+        control.setValidators(Validators.required)
+      }
+      control.updateValueAndValidity();
+    },
     fractionSize: number('Fraction size', 3),
     label: text('Label', 'Label'),
     placeholder: text('Placeholder', 'Value'),

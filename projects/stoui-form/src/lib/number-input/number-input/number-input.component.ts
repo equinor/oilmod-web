@@ -31,12 +31,11 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   static nextId = 0;
   stateChanges = new Subject<void>();
   private numberFormatter = new NumberInputPipe();
-  errorState: boolean;
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
   ctrl = new FormControl();
-  public sub: Subscription;
+  public sub = new Subscription();
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
@@ -48,6 +47,16 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   @HostBinding('attr.aria-describedby')
   describedBy = '';
 
+  get errorState() {
+    return this._errorState;
+  }
+
+  set errorState(errorState) {
+    this._errorState = errorState;
+    this.stateChanges.next();
+  }
+
+  private _errorState: boolean;
 
   @Input()
   get disabled(): boolean {
@@ -147,12 +156,19 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   ngOnInit(): void {
-    this.sub = this.ctrl.valueChanges
+    const sub = this.ctrl.valueChanges
       .subscribe((value: string) => {
         let numericValue = parseFloat(this.numberFormatter.parse(value, this.fractionSize));
         numericValue = isNaN(numericValue) ? null : numericValue;
         this.onChange(numericValue);
       });
+    this.sub.add(sub);
+    if ( this.ngControl ) {
+      this.sub.add(this.ngControl.statusChanges
+        .subscribe(status => {
+          this.errorState = status === 'INVALID';
+        }, console.error, () => console.log('done')));
+    }
   }
 
   ngOnDestroy(): void {
