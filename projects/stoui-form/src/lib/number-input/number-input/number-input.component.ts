@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DoCheck,
   ElementRef,
   HostBinding,
   Input,
@@ -10,12 +11,27 @@ import {
   Self,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { NumberInputPipe } from '../number-input.pipe';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { startWith } from 'rxjs/operators';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { FormFieldBase } from '../../sto-form/form-field.base';
+
+/*
+class NumberInputBase {
+  constructor(public _elementRef: ElementRef,
+              public _defaultErrorStateMatcher: ErrorStateMatcher,
+              public _parentForm: NgForm,
+              public _parentFormGroup: FormGroupDirective,
+              public ngControl: NgControl) {}
+}
+const _NumberInputBase: CanUpdateErrorStateCtor = mixinErrorState(NumberInputBase.constructor);
+*/
+
 
 @Component({
   selector: 'sto-number-input',
@@ -27,7 +43,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
     { provide: MatFormFieldControl, useExisting: NumberInputComponent }
   ]
 })
-export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<number> {
+export class NumberInputComponent extends FormFieldBase implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<number> {
   static nextId = 0;
   stateChanges = new Subject<void>();
   private numberFormatter = new NumberInputPipe();
@@ -47,16 +63,18 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   @HostBinding('attr.aria-describedby')
   describedBy = '';
 
-  get errorState() {
-    return this._errorState;
-  }
+  errorState: boolean;
 
-  set errorState(errorState) {
-    this._errorState = errorState;
-    this.stateChanges.next();
-  }
+  /*  get errorState() {
+      return this._errorState && (this.ngControl ? this.ngControl.touched : false);
+    }
 
-  private _errorState: boolean;
+    set errorState(errorState) {
+      this._errorState = errorState;
+      this.stateChanges.next();
+    }
+
+    private _errorState: boolean;*/
 
   @Input()
   get disabled(): boolean {
@@ -145,7 +163,11 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
 
   constructor(@Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
+              @Optional() _parentForm: NgForm,
+              @Optional() _parentFormGroup: FormGroupDirective,
+              _defaultErrorStateMatcher: ErrorStateMatcher,
               private elRef: ElementRef<HTMLElement>) {
+    super(elRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
     if ( this.ngControl != null ) {
       this.ngControl.valueAccessor = this;
     }
@@ -153,6 +175,12 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
       this.focused = !!origin;
       this.stateChanges.next();
     });
+  }
+
+  ngDoCheck(): void {
+    if ( this.ngControl ) {
+      this.updateErrorState();
+    }
   }
 
   ngOnInit(): void {
@@ -165,8 +193,9 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
     this.sub.add(sub);
     if ( this.ngControl ) {
       this.sub.add(this.ngControl.statusChanges
+        .pipe(startWith(this.ngControl.status))
         .subscribe(status => {
-          this.errorState = status === 'INVALID';
+          this.updateErrorState();
         }));
     }
   }
@@ -189,6 +218,10 @@ export class NumberInputComponent implements OnInit, OnDestroy, ControlValueAcce
   };
   onTouched = () => {
   };
+
+  matOnTouched() {
+    this.stateChanges.next();
+  }
 
   writeValue(value: number): void {
     this.value = value;

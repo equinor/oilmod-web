@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DoCheck,
   ElementRef,
   HostBinding,
   Input,
@@ -11,13 +12,15 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormGroup, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NumberInputPipe } from '../number-input.pipe';
 import { MatSelect } from '@angular/material/select';
+import { FormFieldBase } from '../../sto-form/form-field.base';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 class NumberUnit {
   value: number | string;
@@ -34,7 +37,8 @@ class NumberUnit {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
+export class NumberUnitInputComponent extends FormFieldBase
+  implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
   static nextId = 0;
   stateChanges = new Subject<any>();
   public form: FormGroup;
@@ -44,16 +48,7 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   @ViewChild(MatSelect)
   select: MatSelect;
 
-  get errorState() {
-    return this._errorState;
-  }
-
-  set errorState(errorState) {
-    this._errorState = errorState;
-    this.stateChanges.next();
-  }
-
-  private _errorState: boolean;
+  errorState: boolean;
 
   @Input()
   get disabled(): boolean {
@@ -181,10 +176,14 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
   public sub = new Subscription();
 
 
-  constructor(private fb: FormBuilder,
-              @Optional() @Self() public ngControl: NgControl,
+  constructor(@Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
+              private fb: FormBuilder,
+              @Optional() _parentForm: NgForm,
+              @Optional() _parentFormGroup: FormGroupDirective,
+              _defaultErrorStateMatcher: ErrorStateMatcher,
               private elRef: ElementRef<HTMLElement>) {
+    super(elRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
     this.form = this.fb.group({
       value: [],
       unit: []
@@ -196,6 +195,12 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
       this.focused = !!origin;
       this.stateChanges.next();
     });
+  }
+
+  ngDoCheck(): void {
+    if ( this.ngControl ) {
+      this.updateErrorState();
+    }
   }
 
 
@@ -211,7 +216,8 @@ export class NumberUnitInputComponent implements OnInit, OnDestroy, ControlValue
     this.sub.add(sub);
     if ( this.ngControl ) {
       this.sub.add(this.ngControl.statusChanges
-        .subscribe(state => this.errorState = state === 'INVALID'));
+        .subscribe(state => this.updateErrorState())
+      );
     }
   }
 

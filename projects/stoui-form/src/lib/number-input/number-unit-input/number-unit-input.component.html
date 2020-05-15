@@ -2,7 +2,7 @@
      class="number-unit-input-container">
   <input numberInput
          class="number-unit-input-element number-unit-input-value"
-         (focus)="onTouched()"
+         (blur)="onTouched()"
          [fractionSize]="fractionSize"
          [placeholder]="placeholder"
          [readonly]="readonly"
@@ -10,7 +10,7 @@
          type="text"
          formControlName="value"/>
   <mat-select formControlName="unit"
-              (focus)="onTouched()"
+              (blur)="onTouched()"
               [placeholder]="unitPlaceholder"
               class="number-unit-input-element number-unit-input-unit">
     <mat-option *ngIf="form.get('unit').value"

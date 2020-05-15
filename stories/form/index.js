@@ -261,7 +261,7 @@ stories.add('StoValueUnitInput', () => ({
   </mat-card>
   `,
   props: {
-    control: new FormControl({value: 123.45, unit: 'C'}),
+    control: new FormControl(null, Validators.required),
     fractionSize: number('Fraction size', 3),
     label: text('Label', 'Value Unit Input'),
     units: [{value: 'C', title: 'C°'}, {value: 'F', title: 'F°'}],
@@ -280,6 +280,7 @@ stories.add('NumberInput', () => ({
   <mat-card class="sto-form" style="width: 600px">
   <button (click)="control.disabled ? control.enable() : control.disable()">Toggle disabled</button><br>
   <button (click)="toggleValidator(control)">Toggle validator</button><br>
+  <button (click)="control.markAsTouched()">Touched</button><br>
     <mat-form-field stoFormField floatLabel="always">
       <mat-label>{{label}}</mat-label>
       <sto-number-input (ngModelChange)="change($event)"
@@ -288,13 +289,14 @@ stories.add('NumberInput', () => ({
                         [formControl]="control"
                         [placeholder]="placeholder">
       </sto-number-input>
+      <span matSuffix>$</span>
       <mat-error *ngIf="control.hasError('required')">{{ control.getError('required') }}</mat-error>
     </mat-form-field><br>
     {{control.value}}
   </mat-card>
   `,
   props: {
-    control: new FormControl(123.45, Validators.required),
+    control: new FormControl(null, Validators.required),
     toggleValidator: (control) => {
       if (control.validator) {
         control.clearValidators();
