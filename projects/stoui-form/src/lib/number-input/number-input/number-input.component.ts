@@ -136,6 +136,18 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   private _placeholder: string;
 
   @Input()
+  get tabIndex() {
+    return this._tabIndex;
+  }
+
+  set tabIndex(tabIndex) {
+    this._tabIndex = tabIndex;
+    this.stateChanges.next();
+  }
+
+  private _tabIndex: number;
+
+  @Input()
   get required() {
     return this._required;
   }

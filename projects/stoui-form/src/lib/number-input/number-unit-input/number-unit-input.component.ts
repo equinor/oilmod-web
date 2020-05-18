@@ -47,6 +47,8 @@ export class NumberUnitInputComponent extends FormFieldBase
   private numberFormatterPipe = new NumberInputPipe();
   @ViewChild(MatSelect)
   select: MatSelect;
+  @ViewChild('input')
+  input: ElementRef<HTMLInputElement>;
 
   errorState: boolean;
 
@@ -229,9 +231,8 @@ export class NumberUnitInputComponent extends FormFieldBase
 
 
   onContainerClick(event: MouseEvent) {
-    const rect = this.elRef.nativeElement.getBoundingClientRect();
-    const offset = rect.right - 55 - 16;
-    const isInputFocus = event.offsetX < offset;
+    const rect = this.input.nativeElement.getBoundingClientRect();
+    const isInputFocus = rect.right >= event.clientX;
     if ( isInputFocus ) {
       this.elRef.nativeElement.querySelector('input').focus();
     } else {

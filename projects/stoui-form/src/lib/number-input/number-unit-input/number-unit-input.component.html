@@ -1,6 +1,7 @@
 <div [formGroup]="form"
      class="number-unit-input-container">
   <input numberInput
+         #input
          class="number-unit-input-element number-unit-input-value"
          (blur)="onTouched()"
          [fractionSize]="fractionSize"
