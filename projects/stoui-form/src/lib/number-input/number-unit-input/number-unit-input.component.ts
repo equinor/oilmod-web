@@ -236,6 +236,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     if ( isInputFocus ) {
       this.elRef.nativeElement.querySelector('input').focus();
     } else {
+      this.select.focus();
       this.select.open();
     }
   }
