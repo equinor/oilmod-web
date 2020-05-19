@@ -53,6 +53,11 @@ export class NumberUnitInputComponent extends FormFieldBase
   errorState: boolean;
 
   @Input()
+  unitOptional = true;
+  @Input()
+  unitClearText = '(none)';
+
+  @Input()
   get disabled(): boolean {
     return this._disabled;
   }
@@ -81,16 +86,16 @@ export class NumberUnitInputComponent extends FormFieldBase
   private _readonly = false;
 
   @Input()
-  get list(): any[] {
+  get list() {
     return this._list;
   }
 
-  set list(value: any[]) {
+  set list(value) {
     this._list = value;
     this.stateChanges.next();
   }
 
-  private _list = [];
+  private _list: { value: any; title?: string; }[] = [];
 
   @Input()
   get fractionSize() {

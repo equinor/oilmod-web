@@ -239,6 +239,8 @@ stories.add('MatSelect filter', () => ({
   }
 }));
 
+const numberUnitCtrl = new FormControl({value: 32.123, unit: null}, Validators.required);
+
 stories.add('StoValueUnitInput', () => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, MatIconModule, MatFormFieldModule, NumberInputModule, MatCardModule, StoFormModule, ReactiveFormsModule]
@@ -254,6 +256,8 @@ stories.add('StoValueUnitInput', () => ({
       [readonly]="readonly"
       [formControl]="control"
       [unitPlaceholder]="unitPlaceholder"
+      [unitClearText]="unitClearText"
+      [unitOptional]="unitOptional"
       [placeholder]="placeholder">
       </sto-number-unit-input>
     </mat-form-field><br>
@@ -261,14 +265,16 @@ stories.add('StoValueUnitInput', () => ({
   </mat-card>
   `,
   props: {
-    control: new FormControl(null, Validators.required),
+    control: numberUnitCtrl,
     fractionSize: number('Fraction size', 3),
     label: text('Label', 'Value Unit Input'),
     units: [{value: 'C', title: 'C°'}, {value: 'F', title: 'F°'}],
     placeholder: text('Quantity placeholder', 'Quantity'),
     unitPlaceholder: text('Unit placeholder', 'Unit'),
     change: action('Value changed'),
-    readonly: boolean('Readonly', false)
+    readonly: boolean('Readonly', true),
+    unitOptional: boolean('Unit optional', true),
+    unitClearText: text('Clear text', '(none)')
   }
 }));
 

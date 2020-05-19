@@ -67,13 +67,6 @@ describe('NumberInputComponent', () => {
     expect(component.sub.closed).toBeTruthy();
   });
 
-  it('should update error state', () => {
-    expect(component.errorState).toBeFalsy();
-    ngControl.statusChanges.next('INVALID');
-    fixture.detectChanges();
-    expect(component.errorState).toBeTruthy();
-  });
-
   it('should set component as control value accessor', () => {
     expect(component.ngControl.valueAccessor).toBe(component);
   });

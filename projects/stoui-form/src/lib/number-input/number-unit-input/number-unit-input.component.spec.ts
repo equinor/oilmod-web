@@ -74,13 +74,6 @@ describe('NumberUnitInputComponent', () => {
     expect(component.sub.closed).toBeTruthy();
   });
 
-  it('should update error state', () => {
-    expect(component.errorState).toBeFalsy();
-    ngControl.statusChanges.next('INVALID');
-    fixture.detectChanges();
-    expect(component.errorState).toBeTruthy();
-  });
-
   it('should set component as control value accessor', () => {
     expect(component.ngControl.valueAccessor).toBe(component);
   });
@@ -101,10 +94,25 @@ describe('NumberUnitInputComponent', () => {
     expect(selectSpyOpen).toHaveBeenCalled();
   });
 
+  it('should have a display value with the unit in readonly mode', () => {
+    component.writeValue({ value: 123, unit: 'C' });
+    expect(component.input.nativeElement.value).toBe('123,000');
+    component.readonly = true;
+    fixture.detectChanges();
+    expect(component.input.nativeElement.value).toBe('123,000 C');
+    component.readonly = false;
+    fixture.detectChanges();
+    expect(component.input.nativeElement.value).toBe('123,000');
+  });
+
   function createComponent() {
     fixture = TestBed.createComponent(NumberUnitInputComponent);
     component = fixture.componentInstance;
     component.fractionSize = 3;
+    component.list = [
+      { value: 'C', title: 'C' },
+      { value: 'F', title: 'F' },
+    ];
     fixture.detectChanges();
 
     return fixture.whenStable().then(() => {

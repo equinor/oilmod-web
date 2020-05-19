@@ -1,10 +1,14 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
 import { NumberInputPipe } from './number-input.pipe';
 
 
 @Directive({ selector: '[numberInput]' })
-export class NumberInputDirective {
+export class NumberInputDirective implements OnChanges {
+  @Input()
+  unit: string;
+  @Input()
+  readonly: boolean;
 
   private _el: HTMLInputElement;
 
@@ -24,6 +28,17 @@ export class NumberInputDirective {
     Key.Tab,
     Key.Subtract
   ];
+
+  private setDisplayValue(readonly: boolean) {
+    const val = ( this._el.value || '' ).replace(` ${this.unit}`, '');
+    if ( this.unit ) {
+      if ( readonly ) {
+        this._el.value = val + ` ${this.unit}`;
+      } else {
+        this._el.value = val;
+      }
+    }
+  }
 
   /**
    * Listens for the paste events.
@@ -234,5 +249,11 @@ export class NumberInputDirective {
               private numberFormatPipe: NumberInputPipe,
   ) {
     this._el = this.elementRef.nativeElement;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ( changes.readonly || changes.unit ) {
+      this.setDisplayValue(this.readonly);
+    }
   }
 }
