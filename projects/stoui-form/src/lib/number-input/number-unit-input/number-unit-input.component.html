@@ -5,7 +5,7 @@
          class="number-unit-input-element number-unit-input-value"
          (blur)="onTouched()"
          [fractionSize]="fractionSize"
-         [unit]="select?.selected?.viewValue"
+         [unit]="select?.triggerValue"
          [placeholder]="placeholder"
          [readonly]="readonly"
          [tabindex]="(readonly || disabled) ? -1 : 0"

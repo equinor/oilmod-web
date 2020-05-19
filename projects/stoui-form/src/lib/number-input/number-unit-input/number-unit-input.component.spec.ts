@@ -99,7 +99,7 @@ describe('NumberUnitInputComponent', () => {
     expect(component.input.nativeElement.value).toBe('123,000');
     component.readonly = true;
     fixture.detectChanges();
-    expect(component.input.nativeElement.value).toBe('123,000 C');
+    expect(component.input.nativeElement.value).toBe('123,000 Ce');
     component.readonly = false;
     fixture.detectChanges();
     expect(component.input.nativeElement.value).toBe('123,000');
@@ -110,8 +110,8 @@ describe('NumberUnitInputComponent', () => {
     component = fixture.componentInstance;
     component.fractionSize = 3;
     component.list = [
-      { value: 'C', title: 'C' },
-      { value: 'F', title: 'F' },
+      { value: 'C', title: 'Ce' },
+      { value: 'F', title: 'Fa' },
     ];
     fixture.detectChanges();
 
