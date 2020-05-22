@@ -67,11 +67,8 @@ stories.add('AppHeader & BreadCrumbs', () => ({
     template: `<sto-app-header [testEnvironment]="test"
 [environmentName]="envName"
 [breadCrumbs]="breadCrumbs"
-[userMenu]="menuUser"
+[userMenu]="userMenu ? menuUser : null"
 [homeBreadCrumbConfig]="home">
-<button mat-icon-button>
-  <mat-icon>account_circle</mat-icon>
-</button>
 </sto-app-header>
 <mat-menu #menuUser="matMenu">
 <button mat-menu-item class="dense">User Name</button>
@@ -79,6 +76,7 @@ stories.add('AppHeader & BreadCrumbs', () => ({
 `,
     props: {
       test: boolean('Style as test environment', false),
+      userMenu: boolean('Show user menu button', true),
       envName: 'Systemtest',
       home: {command: () => action('Clicked home')},
       breadCrumbs: [
