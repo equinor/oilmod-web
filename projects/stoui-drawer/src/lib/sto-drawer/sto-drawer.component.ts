@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ContentChild,
   ElementRef,
   EventEmitter,
   HostBinding,
@@ -13,6 +14,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
+import { animate, group, state, style, transition, trigger } from '@angular/animations';
+import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 
 /**
  * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
@@ -20,8 +23,25 @@ import { Key } from '@ngx-stoui/core';
 @Component({
   selector: 'sto-drawer',
   templateUrl: './sto-drawer.component.html',
-  styleUrls: ['./sto-drawer.component.scss', '../sto-navigation/_sto-navigation.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: [ './sto-drawer.component.scss', '../sto-navigation/_sto-navigation.scss' ],
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('drawerAnimations', [
+      state('open', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('regular', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(-100%)', opacity: 0 })),
+      transition('* => closed', [
+        group([
+          animate('400ms ease-in-out', style({ transform: 'translateX(-100%)' })),
+          animate('1ms 400ms ease', style({ opacity: 0 }))
+        ])
+      ]),
+      transition('* => open', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('400ms ease-in-out')
+      ]),
+    ])
+  ]
 })
 
 export class StoDrawerComponent implements OnInit, AfterViewInit {
@@ -33,10 +53,10 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   @Input() offset = '0';
   /**
-  * Offset (space) between the viewPanel top and the drawer in pixels.
+   * Offset (space) between the viewPanel top and the drawer in pixels.
    * Binds to the top style property.
    * Default 0.
-  */
+   */
   @Input() padding = '0px';
   /**
    * Position of the drawer as a string
@@ -61,15 +81,36 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   /**
    * If the drawer is opened.
    */
-  @Input() get open() {
+  @Input()
+  @HostBinding('class.open')
+  get open() {
     return this._open;
   }
+
+  private _open;
+  private documentClickListener;
 
   /**
    * The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
    * Default '25vw'
    */
-  @Input() @HostBinding('style.width') width = '25vw';
+  @Input() @HostBinding('style.width')
+  width = '25vw';
+
+  // I don't see what harm this can do, the drawer should always be full height..
+  @HostBinding('style.height.vh')
+  h = 100;
+
+  @Input()
+  animation: boolean;
+
+  @HostBinding('@drawerAnimations')
+  get slideInOut() {
+    if ( !this.animation ) {
+      return 'regular';
+    }
+    return this.open ? 'open' : 'closed';
+  }
 
   /**
    * Emits true if opened, false if closed.
@@ -96,42 +137,44 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   @Output() submit = new EventEmitter();
 
-  @ViewChild('footer', { static: true }) footerRef: ElementRef;
+  public height = '100%';
+
   @ViewChild('header', { static: true }) headerRef: ElementRef;
+  @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
+  footer: ElementRef<HTMLElement>;
 
 
   @HostBinding('style.display') display = 'block';
 
-  @HostListener('document:keydown', ['$event'])
+  @HostListener('document:keydown', [ '$event' ])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.ctrlKey || event.altKey || event.shiftKey) {
+    if ( event.ctrlKey || event.altKey || event.shiftKey ) {
       this.testKeyCombos(event);
     } else {
       this.testSingleKeys(event);
     }
   }
 
-  public height = '100%';
 
   private testKeyCombos(ev: KeyboardEvent) {
-    const path: HTMLElement[] = event['path'];
+    const path: HTMLElement[] = event[ 'path' ];
     // Test to ensure we have focus inside the drawer
-    if (!(path && path.includes(this.el.nativeElement))) {
+    if ( !( path && path.includes(this.el.nativeElement) ) ) {
       return;
     }
-    if (ev.ctrlKey && ev.keyCode === Key.Enter) {
+    if ( ev.ctrlKey && ev.keyCode === Key.Enter ) {
       this.submit.emit();
     }
   }
 
   private testSingleKeys(ev: KeyboardEvent) {
-    if (ev.keyCode !== Key.Escape || this.ignoreEscKey) {
-        return;
+    if ( ev.keyCode !== Key.Escape || this.ignoreEscKey ) {
+      return;
     }
     const isNotInsideADatePicker = !this.isKeyPressInDaterangePicker(ev);
-    if (isNotInsideADatePicker) {
+    if ( isNotInsideADatePicker ) {
       const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
-      if (isNotInsideAMenu) {
+      if ( isNotInsideAMenu ) {
         this.closeDrawer();
         this.cancel.emit();
       }
@@ -148,7 +191,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       .filter(overlay => !!overlay)
       .filter(overlay => overlay.children.length > 0)
       .map(overlay => overlay.children)
-      .reduce((a, b) => [...a, ...Array.from(b)], []);
+      .reduce((a, b) => [ ...a, ...Array.from(b) ], []);
     const overlaysActive = overlays
       .map(el => el.innerHTML)
       .filter(content => !!content || content !== '');
@@ -161,25 +204,25 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * true if inside sto-daterange false if else
    */
   private isKeyPressInDaterangePicker(ev: KeyboardEvent): boolean {
-    const path: Array<HTMLElement> = ev['path'];
+    const path: Array<HTMLElement> = ev[ 'path' ];
     return !!path
       .filter(el => !!el.tagName)
       .map(el => el.tagName.toLowerCase())
       .find(tagname => tagname === 'sto-daterange');
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   onWindowResize(e) {
     this.resizeContent();
   }
 
   set open(open: boolean) {
     this._open = open;
-    if (this.closeOnClick) {
+    if ( this.closeOnClick ) {
       setTimeout(() => {
-        if (open) {
+        if ( open ) {
           this.bindDocumentClickListener();
-        } else if (this.documentClickListener) {
+        } else if ( this.documentClickListener ) {
           this.documentClickListener();
           this.documentClickListener = null;
         }
@@ -187,13 +230,12 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private _open;
 
   public toggle(emit = true) {
-    if (emit) {
+    if ( emit ) {
       this.onToggle.emit(!this.open);
     }
-    if (!this.open) {
+    if ( !this.open ) {
       this.openDrawer(emit);
     } else {
       this.closeDrawer(emit);
@@ -202,34 +244,29 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   public closeDrawer(emit = true) {
     this.open = false;
-    if (emit) {
+    if ( emit ) {
       this.onClose.emit();
     }
   }
 
   public openDrawer(emit = true) {
     this.open = true;
-    if (emit) {
+    if ( emit ) {
       this.onOpen.emit();
     }
   }
 
-  private documentClickListener;
 
-  public style = {
-    [this.position]: this.open ? 0 : `-${this.width}`
-  };
-
-  //Move to polyfill?
+  // Move to polyfill?
   private eventPathPolyfill = function (element) {
 
-    const pathArr = [element];
+    const pathArr = [ element ];
 
-    if (element === null || element.parentElement === null) {
+    if ( element === null || element.parentElement === null ) {
       return [];
     }
 
-    while (element.parentElement !== null) {
+    while ( element.parentElement !== null ) {
       element = element.parentElement;
       pathArr.unshift(element);
     }
@@ -238,18 +275,18 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   };
 
   private bindDocumentClickListener() {
-    if (!this.documentClickListener) {
+    if ( !this.documentClickListener ) {
       this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
-        const path = event.path || (event.composedPath && event.composedPath() || this.eventPathPolyfill(event.target));
+        const path = event.path || ( event.composedPath && event.composedPath() || this.eventPathPolyfill(event.target) );
 
         let doNothing = false;
-        for (const el of path) {
-          if (el.tagName && el.tagName.toLowerCase().match(/drawer$/i)) {
+        for ( const el of path ) {
+          if ( el.tagName && el.tagName.toLowerCase().match(/drawer$/i) ) {
             doNothing = true;
             break;
           }
         }
-        if (!doNothing && this.open) {
+        if ( !doNothing && this.open ) {
           this.closeDrawer();
         }
       });
@@ -257,25 +294,24 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   }
 
   private resizeContent() {
+    if ( this.open ) {
+      const hasFooter = this.footer;
+      const totalHeight: number = this.el?.nativeElement.offsetHeight;
+      let footerHeight = 0;
 
-    const hasFooter = this.footerRef.nativeElement.children.length > 0;
-    const totalHeight: number = this.el.nativeElement.firstElementChild.offsetHeight;
-    let footerHeight = 0;
-
-    const headerHeight = this.headerRef.nativeElement.offsetHeight;
-    if (hasFooter) {
-      footerHeight = this.footerRef.nativeElement.offsetHeight;
-    } else {
-      this.footerRef.nativeElement.style = 'display: none';
+      const headerHeight = this.headerRef?.nativeElement.offsetHeight;
+      if ( hasFooter ) {
+        footerHeight = this.footer?.nativeElement.offsetHeight;
+      }
+      this.height = `${totalHeight - footerHeight - headerHeight}px`;
     }
-    this.height = `${totalHeight - footerHeight - headerHeight}px`;
   }
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
 
   ngOnInit() {
-    if (!this.position) {
+    if ( !this.position ) {
       this.position = 'left';
     }
   }
@@ -283,30 +319,4 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => this.resizeContent());
   }
-}
-
-@Component({
-  selector: 'sto-drawer-header',
-  template: `
-	  <ng-content></ng-content>`,
-  styleUrls: ['./sto-drawer.component.scss']
-})
-export class StoDrawerHeaderComponent {
-  @HostBinding('class.sto-drawer__header') class = true;
-}
-
-@Component({
-  selector: 'sto-drawer-footer',
-  template: `
-	  <ng-content></ng-content>`
-})
-export class StoDrawerFooterComponent {
-}
-
-@Component({
-  selector: 'sto-drawer-wrapper',
-  templateUrl: './sto-drawer-wrapper.component.html',
-  styleUrls: ['./sto-drawer-wrapper.component.scss']
-})
-export class StoDrawerWrapperComponent {
 }

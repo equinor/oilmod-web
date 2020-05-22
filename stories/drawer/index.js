@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs/angular';
+import {boolean, number, text, withKnobs} from '@storybook/addon-knobs/angular';
 import {action} from '@storybook/addon-actions';
 import {StoDrawerModule} from "../../projects/stoui-drawer/src/lib/sto-drawer/sto-drawer.module";
 import {MatCardModule} from "@angular/material/card";
@@ -7,10 +7,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
-import {StoNavigationModule} from "../../projects/stoui-drawer/src/public_api";
+import {StoNavigationModule, USE_HASH_ROUTING} from "../../projects/stoui-drawer/src/public_api";
 import {navigation, subNavigation} from './navigation';
 import {MatIconModule} from "@angular/material/icon";
-import {USE_HASH_ROUTING} from "../../projects/stoui-drawer/src/public_api";
 import readmeDrawer from '../../projects/stoui-drawer/src/lib/sto-drawer/sto-drawer.component.md';
 
 const stories = storiesOf('Drawer', module)
@@ -26,6 +25,41 @@ stories.add('Drawer', () => ({
 <sto-drawer-header>
 <h2>{{ title }}</h2>
 </sto-drawer-header>
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<mat-form-field class="sto-form__field">
+<mat-label>Input</mat-label>
+<input matInput value="Test input">
+</mat-form-field>
+</mat-card>
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<mat-form-field class="sto-form__field">
+<mat-label>Input</mat-label>
+<input matInput value="Test input">
+</mat-form-field>
+</mat-card>
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<mat-form-field class="sto-form__field">
+<mat-label>Input</mat-label>
+<input matInput value="Test input">
+</mat-form-field>
+</mat-card>
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<mat-form-field class="sto-form__field">
+<mat-label>Input</mat-label>
+<input matInput value="Test input">
+</mat-form-field>
+</mat-card>
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<mat-form-field class="sto-form__field">
+<mat-label>Input</mat-label>
+<input matInput value="Test input">
+</mat-form-field>
+</mat-card>
 <mat-card class="sto-card sto-form">
 <mat-card-title class="sto-card__title">Content title</mat-card-title>
 <mat-form-field class="sto-form__field">
@@ -60,7 +94,7 @@ stories.add('Navigation', () => ({
     imports: [StoDrawerModule, StoNavigationModule, MatIconModule, MatButtonModule, BrowserAnimationsModule],
     providers: [{provide: USE_HASH_ROUTING, useValue: false}]
   },
-  template: `<sto-drawer>
+  template: `<sto-drawer [open]="open" [animation]="true">
 <sto-drawer-header>
 <div class="sto-drawer__header__infix">
         <button *ngIf="activePane === 'right'; else topIcon"
@@ -71,7 +105,7 @@ stories.add('Navigation', () => ({
         </button>
         <ng-template #topIcon>
           <button mat-icon-button
-          type="button" 
+          type="button"
           (click)="topsNav()">
             <mat-icon [class.sto-main-icon--test-environment]="testEnvironment">settings</mat-icon>
           </button>
@@ -92,7 +126,7 @@ stories.add('Navigation', () => ({
       <div class="sto-drawer__header__suffix">
         <button type="button"
                 mat-icon-button
-                (click)="closeMenu()">
+                (click)="closeMenu(); open = false">
           <mat-icon>close</mat-icon>
         </button>
       </div>
@@ -113,6 +147,7 @@ stories.add('Navigation', () => ({
   props: {
     navigation: navigation,
     subNavigation,
+    open: boolean('Open', true),
     handleCommand: action('Link pressed'),
     topsNav: action('Open tops landing'),
     toggle: action('Switch side'),

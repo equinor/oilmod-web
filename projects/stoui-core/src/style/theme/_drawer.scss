@@ -72,7 +72,8 @@
 @mixin sto-drawer-typography($config) {
   .sto-drawer .sto-drawer__header {
     &__title, h1, h2, h3, h4, h5 {
-      font-size: mat-font-size($config, subheading-1);
+      // Per Christian needs to look at what size this should be.
+      // font-size: mat-font-size($config, subheading-1);
     }
   }
 }
