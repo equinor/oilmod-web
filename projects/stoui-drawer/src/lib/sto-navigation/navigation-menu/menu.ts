@@ -13,6 +13,7 @@ export interface MenuGroup {
 }
 
 export interface MenuItem {
+  id?: string;
   name?: string;
   icon?: string;
   svgIcon?: boolean;
@@ -22,6 +23,10 @@ export interface MenuItem {
 
 export interface MenuItemCommand {
   type: MenuItemTypes;
+  /**
+   * For internal urls: RouterCommands.
+   * For external urls, should just be array with one element (the full url)
+   */
   arguments: Array<string | number>;
 }
 

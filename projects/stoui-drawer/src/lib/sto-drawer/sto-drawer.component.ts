@@ -1,5 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   ElementRef,
@@ -9,7 +11,6 @@ import {
   Input,
   OnInit,
   Output,
-  Renderer2,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -25,6 +26,7 @@ import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
   templateUrl: './sto-drawer.component.html',
   styleUrls: [ './sto-drawer.component.scss', '../sto-navigation/_sto-navigation.scss' ],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('drawerAnimations', [
       state('open', style({ transform: 'translateX(0)', opacity: 1 })),
@@ -37,7 +39,7 @@ import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
         ])
       ]),
       transition('* => open', [
-        style({ transform: 'translateX(-100%)' }),
+        style({ transform: 'translateX(-100%)', opacity: 1 }),
         animate('400ms ease-in-out')
       ]),
     ])
@@ -87,15 +89,20 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     return this._open;
   }
 
+  set open(open: boolean) {
+    this._open = open;
+    this.onOpen.emit(open);
+    this.cdr.detectChanges();
+  }
+
   private _open;
-  private documentClickListener;
 
   /**
    * The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
    * Default '25vw'
    */
   @Input() @HostBinding('style.width')
-  width = '25vw';
+  width = '300px';
 
   // I don't see what harm this can do, the drawer should always be full height..
   @HostBinding('style.height.vh')
@@ -216,20 +223,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     this.resizeContent();
   }
 
-  set open(open: boolean) {
-    this._open = open;
-    if ( this.closeOnClick ) {
-      setTimeout(() => {
-        if ( open ) {
-          this.bindDocumentClickListener();
-        } else if ( this.documentClickListener ) {
-          this.documentClickListener();
-          this.documentClickListener = null;
-        }
-      });
-    }
-  }
-
 
   public toggle(emit = true) {
     if ( emit ) {
@@ -244,6 +237,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   public closeDrawer(emit = true) {
     this.open = false;
+    this.cdr.detectChanges();
     if ( emit ) {
       this.onClose.emit();
     }
@@ -253,43 +247,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     this.open = true;
     if ( emit ) {
       this.onOpen.emit();
-    }
-  }
-
-
-  // Move to polyfill?
-  private eventPathPolyfill = function (element) {
-
-    const pathArr = [ element ];
-
-    if ( element === null || element.parentElement === null ) {
-      return [];
-    }
-
-    while ( element.parentElement !== null ) {
-      element = element.parentElement;
-      pathArr.unshift(element);
-    }
-
-    return pathArr;
-  };
-
-  private bindDocumentClickListener() {
-    if ( !this.documentClickListener ) {
-      this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
-        const path = event.path || ( event.composedPath && event.composedPath() || this.eventPathPolyfill(event.target) );
-
-        let doNothing = false;
-        for ( const el of path ) {
-          if ( el.tagName && el.tagName.toLowerCase().match(/drawer$/i) ) {
-            doNothing = true;
-            break;
-          }
-        }
-        if ( !doNothing && this.open ) {
-          this.closeDrawer();
-        }
-      });
     }
   }
 
@@ -307,7 +264,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {
+  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {

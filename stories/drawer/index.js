@@ -91,10 +91,12 @@ stories.add('Drawer', () => ({
 stories.add('Navigation', () => ({
   moduleMetadata: {
     declarations: [],
-    imports: [StoDrawerModule, StoNavigationModule, MatIconModule, MatButtonModule, BrowserAnimationsModule],
+    imports: [StoDrawerModule, StoNavigationModule, MatIconModule, MatButtonModule, BrowserAnimationsModule, MatCardModule],
     providers: [{provide: USE_HASH_ROUTING, useValue: false}]
   },
-  template: `<sto-drawer [open]="open" [animation]="true">
+  template: `
+  <div>
+  <sto-drawer [open]="open" [animation]="true">
 <sto-drawer-header>
 <div class="sto-drawer__header__infix">
         <button *ngIf="activePane === 'right'; else topIcon"
@@ -143,7 +145,17 @@ stories.add('Navigation', () => ({
                          (onCommand)="activePane = 'right'; handleCommand('root', $event.command)"
                          leftPane></sto-navigation-menu>
                          </sto-slide-panel>
-</sto-drawer>`,
+</sto-drawer>
+
+
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+</mat-card>
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+</mat-card>
+</div>
+`,
   props: {
     navigation: navigation,
     subNavigation,

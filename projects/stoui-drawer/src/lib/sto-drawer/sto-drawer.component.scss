@@ -10,10 +10,16 @@ $header-size: 20px;
   .sto-drawer__content {
     height: calc(100% - calc(#{$large-header-height} + #{$footer-height}));
   }
+
   .sto-drawer__header {
     line-height: 30px;
     height: $large-header-height;
   }
+}
+
+sto-drawer {
+  z-index: 60;
+  position: fixed;
 }
 
 .sto-drawer {
@@ -53,13 +59,11 @@ $header-size: 20px;
   &__footer {
     @include mat-elevation(4);
     position: absolute;
-    //border-top: solid 1px $silver;
     bottom: 0;
     left: 0;
     padding: spacer(2);
     width: 100%;
 
-    //background-color: $alto;
     height: calc(#{$footer-height} - spacer(4));
 
     button {
@@ -102,18 +106,10 @@ $header-size: 20px;
 
     button.mat-icon-button {
       margin: 0 8px;
-      //height: $header-height;
-      //width: 56px;
-      //line-height: $header-height;
-      //background-color: transparent;
-
       border: 0;
       outline: none;
       cursor: pointer;
 
-      &:hover {
-        //color: #ccc;
-      }
     }
 
     &__wrapper {
@@ -122,8 +118,6 @@ $header-size: 20px;
       top: 0;
       z-index: 1;
       padding: 0;
-      //color: $white;
-      //background-color: $black-84;
       display: flex;
       box-sizing: border-box;
       width: 100%;
@@ -151,11 +145,12 @@ $header-size: 20px;
 }
 
 .sto-drawer__overlay {
-  position: absolute;
-  height: 100%;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
   z-index: 100;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 @import "sto-drawer-tabs.component";
