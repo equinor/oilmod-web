@@ -28,5 +28,5 @@
 <div @overlay
      class="sto-drawer__overlay"
      [style.left]="0"
-     *ngIf="open && animation"
+     *ngIf="open && animation && backdrop"
      (click)="closeDrawer()"></div>

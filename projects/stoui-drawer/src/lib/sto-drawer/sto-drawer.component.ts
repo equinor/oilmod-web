@@ -30,7 +30,8 @@ import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
   animations: [
     trigger('drawerAnimations', [
       state('open', style({ transform: 'translateX(0)', opacity: 1 })),
-      state('regular', style({ transform: 'translateX(0)' })),
+      state('openImmediate', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('closedImmediate', style({ transform: 'translateX(-100%)', opacity: 0 })),
       state('closed', style({ transform: 'translateX(-100%)', opacity: 0 })),
       transition('* => closed', [
         group([
@@ -119,11 +120,13 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   @Input()
   animation: boolean;
+  @Input()
+  backdrop: boolean;
 
   // @HostBinding('@drawerAnimations')
   get slideInOut() {
     if ( !this.animation ) {
-      return 'regular';
+      return this.open ? 'openImmediate' : 'closedImmediate';
     }
     return this.open ? 'open' : 'closed';
   }

@@ -105,7 +105,7 @@ stories.add('Navigation', () => ({
   },
   template: `
   <div>
-  <sto-drawer [open]="open" [animation]="true">
+  <sto-drawer [open]="open" [animation]="animation" [backdrop]="backdrop">
 <sto-drawer-header>
 <div class="sto-drawer__header__infix">
         <button *ngIf="activePane === 'right'; else topIcon"
@@ -169,6 +169,8 @@ stories.add('Navigation', () => ({
     navigation: navigation,
     subNavigation,
     open: boolean('Open', true),
+    animation: boolean('Animations', true),
+    backdrop: boolean('Backdrop (overlay)', true),
     handleCommand: action('Link pressed'),
     topsNav: action('Open tops landing'),
     toggle: action('Switch side'),
