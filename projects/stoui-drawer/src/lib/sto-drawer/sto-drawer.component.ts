@@ -42,6 +42,15 @@ import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
         style({ transform: 'translateX(-100%)', opacity: 1 }),
         animate('400ms ease-in-out')
       ]),
+    ]),
+    trigger('overlay', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('400ms', style({ opacity: 0.08 })),
+      ]),
+      transition(':leave', [
+        animate('400ms', style({ opacity: 0 }))
+      ])
     ])
   ]
 })
@@ -111,7 +120,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @Input()
   animation: boolean;
 
-  @HostBinding('@drawerAnimations')
+  // @HostBinding('@drawerAnimations')
   get slideInOut() {
     if ( !this.animation ) {
       return 'regular';
@@ -150,8 +159,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
   footer: ElementRef<HTMLElement>;
 
-
-  @HostBinding('style.display') display = 'block';
 
   @HostListener('document:keydown', [ '$event' ])
   handleKeyboardEvent(event: KeyboardEvent) {

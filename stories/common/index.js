@@ -82,8 +82,7 @@ stories.add('AppHeader & BreadCrumbs', () => ({
       envName: 'Systemtest',
       home: {command: () => action('Clicked home')},
       breadCrumbs: [
-        {label: 'Home', segment: 'home'},
-        {label: 'Step 2', segment: 'step2'}
+        {label: 'Home', segment: 'home'}
       ]
     }
   }),

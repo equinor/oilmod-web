@@ -4,6 +4,7 @@
   [style.top]="padding"
   [style.zIndex]="position === 'left' ? 60 : 58"
   [style.right]="offset"
+  [@drawerAnimations]="slideInOut"
   class="sto-drawer">
   <div class="sto-drawer__header__wrapper"
        #header>
@@ -23,3 +24,9 @@
   </div>
 
 </div>
+
+<div @overlay
+     class="sto-drawer__overlay"
+     [style.left]="0"
+     *ngIf="open && animation"
+     (click)="closeDrawer()"></div>

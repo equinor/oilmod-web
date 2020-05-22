@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, text, withKnobs} from '@storybook/addon-knobs/angular';
+import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs/angular';
 import {action} from '@storybook/addon-actions';
 import {StoDrawerModule} from "../../projects/stoui-drawer/src/lib/sto-drawer/sto-drawer.module";
 import {MatCardModule} from "@angular/material/card";
@@ -71,9 +71,18 @@ stories.add('Drawer', () => ({
 <button mat-raised-button color="primary" (click)="submit()">Save</button>
 <button mat-button (click)="cancel()">Cancel</button>
 </sto-drawer-footer>
-</sto-drawer>`,
+</sto-drawer>
+
+<mat-card class="sto-card sto-form">
+<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<mat-form-field class="sto-form__field">
+<mat-label>Input</mat-label>
+<input matInput value="Test input">
+</mat-form-field>
+</mat-card>
+`,
     props: {
-      // position: radios('Position', ['left', 'right'], 'left'),
+      position: select('Position', ['left', 'right'], 'left'),
       width: number('Width', 500),
       title: text('Drawer title', 'New drawer'),
       ignoreEscKey: boolean('Ignore escape', false),
