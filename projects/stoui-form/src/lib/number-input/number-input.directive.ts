@@ -8,7 +8,7 @@ export class NumberInputDirective implements OnChanges {
   @Input()
   unit: string;
   @Input()
-  readonly: boolean;
+  appendUnit: boolean;
 
   private _el: HTMLInputElement;
 
@@ -252,8 +252,8 @@ export class NumberInputDirective implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ( changes.readonly || changes.unit ) {
-      this.setDisplayValue(this.readonly);
+    if ( changes.appendUnit || changes.unit ) {
+      this.setDisplayValue(this.appendUnit);
     }
   }
 }
