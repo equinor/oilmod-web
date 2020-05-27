@@ -4,6 +4,6 @@
        [fractionSize]="fractionSize"
        [placeholder]="placeholder"
        [readonly]="readonly"
-       [tabindex]="(readonly || disabled) ? -1 : (tabIndex || 0)"
+       [tabindex]="readonly ? -1 : (tabIndex || 0)"
        type="text"
        [formControl]="ctrl">
