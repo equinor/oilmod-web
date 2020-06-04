@@ -13,9 +13,11 @@ import {StoNumberInputModule} from "../../projects/stoui-form/src/lib/sto-number
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
 import {columns, rows} from '../datatable/rows';
 import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {action} from "@storybook/addon-actions/";
 
 const stories = storiesOf('Core (styling)', module)
-  .addDecorator(withKnobs);
+  .addDecorator(withKnobs)
 
 stories.add('StoCard', () => ({
   moduleMetadata: {
@@ -54,27 +56,27 @@ stories.add('StoGrid', () => ({
   },
   template: `
 <div class="sto-grid sto-grid--2" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>
 </div>
 <div class="sto-grid sto-grid--3" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>
 </div>
 <div class="sto-grid sto-grid--4" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
 </div>
 <div class="sto-grid sto-grid--6" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>  
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
+  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
 </div>
   `,
   props: {
@@ -127,3 +129,42 @@ stories.add('StoGridDirective', () => ({
 }), {
   notes: 'StoGridDirective is designed to be a responsive grid, which bases itself on the container size to determine how big each column should be. NOTE: Will only function in Chrome / Chromium'
 });
+
+stories.add('MenuDirectives', () => ({
+  moduleMetadata: {
+    declarations: [],
+    imports: [BrowserAnimationsModule, MatMenuModule, MatButtonModule, CommonModule, StoDirectivesModule, StoNumberInputModule, MatCardModule, StoDatatableModule]
+  },
+  template: `
+<mat-card>
+  <button
+#overlay="stoMenuOverlay"
+[matMenuTriggerRestoreFocus]="false"
+mat-button stoMenuOverlay #trigger="matMenuTrigger" [matMenuTriggerFor]="menu">Menu trigger button</button>
+<br>
+<br>
+<p>
+  Active Menu Index {{ activeMenuInfo }}
+</p>
+<br>
+<br>
+<div style="width: 500px; display: flex; justify-content: space-between">
+<span [menuContext]="{index: 0}" [overlayDirective]="overlay" [menuTrigger]="trigger" stoContextMenu>Context 0</span>
+<span [menuContext]="{index: 1}" [overlayDirective]="overlay" [menuTrigger]="trigger" stoContextMenu>Context 1</span>
+<span [menuContext]="{index: 2}" [overlayDirective]="overlay" [menuTrigger]="trigger" stoContextMenu>Context 2</span>
+<span [menuContext]="{index: 3}" [overlayDirective]="overlay" [menuTrigger]="trigger" stoContextMenu>Context 3</span>
+</div>
+
+<mat-menu [backdropClass]="'backdrop-remove'" [hasBackdrop]="false" #menu="matMenu">
+  <ng-template matMenuContent let-index="index">
+    <button mat-menu-item (click)="activeMenuInfo = index; log('index', index, $event)">Index {{ index }}</button>
+    <button mat-menu-item (click)="activeMenuInfo = index; log(1, $event)">Item 1</button>
+    <button mat-menu-item (click)="activeMenuInfo = index; log(2, $event)">Item 2</button>
+  </ng-template>
+</mat-menu>
+</mat-card>
+  `,
+  props: {
+    log: action('Menu item clicked'),
+  }
+}));
