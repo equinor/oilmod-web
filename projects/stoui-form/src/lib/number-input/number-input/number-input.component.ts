@@ -3,11 +3,13 @@ import {
   Component,
   DoCheck,
   ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   Self,
   ViewEncapsulation
 } from '@angular/core';
@@ -75,6 +77,9 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
     }
 
     private _errorState: boolean;*/
+
+  @Output()
+  ngModelChange = new EventEmitter<number>();
 
   @Input()
   get disabled(): boolean {
@@ -201,6 +206,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
         let numericValue = parseFloat(this.numberFormatter.parse(value, this.fractionSize));
         numericValue = isNaN(numericValue) ? null : numericValue;
         this.onChange(numericValue);
+        this.ngModelChange.emit(numericValue);
       });
     this.sub.add(sub);
     if ( this.ngControl ) {

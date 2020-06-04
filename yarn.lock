@@ -1702,6 +1702,11 @@
     telejson "^3.2.0"
     util-deprecate "^1.0.2"
 
+"@swimlane/ngx-datatable@^17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-datatable/-/ngx-datatable-17.0.0.tgz#76b63fa93635f1fb89107bee901f87588b27a2a7"
+  integrity sha512-6ydjOL3hIGIdDHgseCNalrFac3I3fFUwxbKjVw0dCL0ZrET4A3P+uIOg9vK4XKL/a19Eg8ivEJ7bBg0W/6dxQw==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"

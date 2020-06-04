@@ -1,5 +1,7 @@
 import {configure, setAddon} from '@storybook/angular';
 import '../src/styles.scss';
+import '../projects/stoui-core/src/style/datatable/ngx-datatable.scss';
+
 import storySourceAddon from '@storybook/addon-storysource';
 
 setAddon(storySourceAddon);

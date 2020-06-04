@@ -97,5 +97,11 @@ import { DatatableGroupHeaderTemplateDirective } from '../vendor/ngx-datatable/c
     StoDataTableNumberColumnComponent
   ]
 })
+/**
+ * @deprecated NgxDatatableModule is deprecated and will be removed in the next major release (Angular 10).
+ * Migrate to using swimlanes table which serves as a drop-in replacement
+ * https://swimlane.github.io/ngx-datatable
+ * Include the css from ~@ngx-stoui/core/lib/ngx-datatable.css and use the sto-datatable class.
+ */
 export class NgxDatatableModule {
 }

@@ -3,6 +3,7 @@
 
 @mixin sto-datatable-theme($theme, $variables) {
   $primary: map_get($variables, primary);
+  $accent: map_get($variables, accent);
   $color: map_get($variables, color);
   $border-color: map_get($variables, border-color);
   $background-color: transparent;
@@ -36,6 +37,7 @@
             background: $border-color;
           }
         }
+
         &:hover {
           background-color: $hover-color;
         }
@@ -81,17 +83,32 @@
       color: $color;
     }
 
+    .datatable-body .progress-linear {
+      .container {
+        background-color: $accent;
+
+        .bar {
+          background-color: $primary;
+        }
+      }
+    }
+
     .datatable-body .datatable-body-row .datatable-body-cell {
       color: $color;
+      border-bottom: 1px solid $border-color;
     }
 
     .datatable-body .datatable-body-row:not(.active):hover {
       .datatable-row-left, .datatable-row-right, .datatable-row-center {
         background-color: $hover-color;
       }
+
       background-color: $hover-color;
     }
 
+    .datatable-header .datatable-header-column-group .datatable-header-cell {
+      border-left: 1px solid $border-color;
+    }
 
     .datatable-body .datatable-body-row:focus:not(.active) .datatable-row-group {
       &.datatable-row-left, &.datatable-row-right, &.datatable-row-center {
@@ -100,9 +117,6 @@
     }
 
     .datatable-body .datatable-body-row.active {
-      .datatable-row-left, .datatable-row-right, .datatable-row-center {
-        background-color: $selected-color;
-      }
 
       background-color: $selected-color;
     }

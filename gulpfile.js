@@ -19,8 +19,16 @@ const copyFiles = [
   'vendor/material-icons/**/*'
 ].map(file => `${srcDir}/${file}`);
 
-gulp.task('sass', function() {
+gulp.task('sass', function () {
   return gulp.src(`${srcDir}/ngx-stoui.scss`)
+    .pipe(sass({
+      importer: tildeImporter
+    }).on('error', sass.logError))
+    .pipe(gulp.dest(distDir))
+});
+
+gulp.task('sass:table', function () {
+  return gulp.src(`${srcDir}/style/datatable/ngx-datatable.scss`)
     .pipe(sass({
       importer: tildeImporter
     }).on('error', sass.logError))
@@ -30,7 +38,7 @@ gulp.task('sass', function() {
 gulp.task('copy', function () {
   const outDir = path.join(__dirname, distDir);
   return gulp.src(copyFiles)
-    .pipe(gulp.dest(function(file) {
+    .pipe(gulp.dest(function (file) {
       const base = path.relative(srcDir, file.base);
       const out = path.join(outDir, base);
       return out;
@@ -47,7 +55,7 @@ gulp.task('sass:form', function() {
 });
 
 gulp.task('watch', function () {
-  return gulp.watch([`${srcDir}/**/*.scss`, formScss], gulp.series(['sass', 'copy', 'sass:form']));
+  return gulp.watch([`${srcDir}/**/*.scss`, formScss], gulp.series(['sass', 'copy', 'sass:form', 'sass:table']));
 });
 
-gulp.task('default', gulp.series('sass', 'copy'));
+gulp.task('default', gulp.series('sass', 'sass:table', 'sass:form', 'copy'));

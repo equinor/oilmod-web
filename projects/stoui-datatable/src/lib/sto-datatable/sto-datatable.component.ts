@@ -97,8 +97,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   private _internalRows: T[];
   @Input()
   selected: T;
+
   @Input('footerRow')
-  _footerRow: T;
   get footerRow() {
     if ( this._footerRow && typeof this._footerRow === 'object' ) {
       if ( this._footerRow instanceof Array ) {
@@ -107,6 +107,13 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
       return [ this._footerRow ];
     }
   }
+
+  set footerRow(row: any) {
+    this._footerRow = row;
+  }
+
+  private _footerRow: T;
+
 
   @Input()
   virtualScroll = true;
