@@ -1,11 +1,11 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NumberInputModule } from '../../projects/stoui-form/src/lib/number-unit-input/number-input.module';
 import { MatCardModule } from '@angular/material/card';
 import { StoFormModule } from '../../projects/stoui-form/src/lib/sto-form/sto-form.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { NumberInputModule } from '../../projects/stoui-form/src/lib/number-input/number-input.module';
 
 @Component({
   selector: 'wrapper',
