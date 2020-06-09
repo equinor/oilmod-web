@@ -54,6 +54,8 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   controlType = 'number-input';
   ctrl = new FormControl();
   public sub = new Subscription();
+  @Input()
+  dynamicFractionSize: boolean;
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
@@ -171,7 +173,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
 
   set value(value) {
     this._value = value;
-    const valueAsString = this.numberFormatter.transform(value, this.fractionSize);
+    const valueAsString = this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize);
     this.ctrl.setValue(valueAsString, { emitEvent: false });
     this.stateChanges.next();
   }
@@ -203,7 +205,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   ngOnInit(): void {
     const sub = this.ctrl.valueChanges
       .subscribe((value: string) => {
-        let numericValue = parseFloat(this.numberFormatter.parse(value, this.fractionSize));
+        let numericValue = parseFloat(this.numberFormatter.parse(value, this.fractionSize, this.dynamicFractionSize));
         numericValue = isNaN(numericValue) ? null : numericValue;
         this.onChange(numericValue);
         this.ngModelChange.emit(numericValue);

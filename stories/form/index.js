@@ -290,6 +290,7 @@ stories.add('NumberInput', () => ({
     <mat-form-field stoFormField floatLabel="always">
       <mat-label>{{label}}</mat-label>
       <sto-number-input (ngModelChange)="change($event)"
+            [dynamicFractionSize]="dynamicFractionSize"
                         [fractionSize]="fractionSize"
                         [readonly]="readonly"
                         [formControl]="control"
@@ -312,6 +313,7 @@ stories.add('NumberInput', () => ({
       control.updateValueAndValidity();
     },
     fractionSize: number('Fraction size', 3),
+    dynamicFractionSize: boolean('Dynamic fraction size', false),
     label: text('Label', 'Label'),
     placeholder: text('Placeholder', 'Value'),
     change: action('Value changed'),

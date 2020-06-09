@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
   templateUrl: './wysiwyg-editor.component.html',
   styleUrls: [ './wysiwyg-editor.component.scss' ]
 })
-export class WysiwygEditorComponent implements AfterViewInit {
+export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
   @Input()
   content: SafeHtml;
   @Input()
@@ -37,7 +37,7 @@ export class WysiwygEditorComponent implements AfterViewInit {
   private listenForValueChange() {
     fromEvent(this.editor.nativeElement, 'input')
       .pipe(
-        debounceTime(300),
+        debounceTime(100),
         takeUntil(this.destroyed$)
       ).subscribe(ev => {
       this.warning = null;

@@ -11,7 +11,7 @@ export class NumberInputPipe implements PipeTransform {
   constructor() {
   }
 
-  private handleIntegerAndFractions(integer: string, fraction: string, fractionSize: number) {
+  private handleIntegerAndFractions(integer: string, fraction: string, fractionSize: number, dynamicFractionSize = false) {
     const negative = integer.startsWith('-');
     if ( ( integer === '' && fraction === '' ) || integer === 'NaN' ) {
       return { integer: null, fraction: null };
@@ -27,7 +27,7 @@ export class NumberInputPipe implements PipeTransform {
       integer = parseInt(integer, 10) + '';
     }
 
-    if ( fraction.length > fractionSize ) {
+    if ( fraction.length > fractionSize && !dynamicFractionSize ) {
       const number = parseFloat('0.' + fraction);
       const exp = Math.pow(10, fractionSize);
       const rounded = Math.round(number * exp) / exp;
@@ -38,13 +38,12 @@ export class NumberInputPipe implements PipeTransform {
       } else {
         fraction = ( rounded + '' ).split('.')[ 1 ] || '';
       }
-
     }
 
     return { integer, fraction };
   }
 
-  transform(value: number | string, fractionSize: number = 5): string {
+  transform(value: number | string, fractionSize: number = 5, dynamicFractionSize = false): string {
     if ( !value && value !== 0 ) {
       return null;
     }
@@ -52,16 +51,20 @@ export class NumberInputPipe implements PipeTransform {
     const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
     value = value.replace(re, '');
 
-
     value = value.replace('.', this.DECIMAL_SEPARATOR);
     const [ integerSplit, fractionSplit = '' ] = value.split(this.DECIMAL_SEPARATOR);
-    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize);
+    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
     if ( integer === null ) {
       return null;
     }
-    fraction = fractionSize > 0
-      ? this.DECIMAL_SEPARATOR + ( fraction + PADDING ).substring(0, fractionSize)
-      : '';
+    if ( dynamicFractionSize ) {
+      fraction = fraction ? this.DECIMAL_SEPARATOR + ( fraction ) : '';
+    } else {
+      fraction = fractionSize > 0
+        ? this.DECIMAL_SEPARATOR + ( fraction + PADDING ).substring(0, fractionSize)
+        : '';
+    }
+
     integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
 
@@ -69,7 +72,7 @@ export class NumberInputPipe implements PipeTransform {
   }
 
 
-  parse(value: string, fractionSize: number = 5): string {
+  parse(value: string, fractionSize: number = 5, dynamicFractionSize = false): string {
     value = value + '';
     const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
     value = value.replace(re, '');
@@ -77,11 +80,16 @@ export class NumberInputPipe implements PipeTransform {
     let [ integerSplit, fractionSplit = '' ] = ( value || '' ).split(this.DECIMAL_SEPARATOR);
 
     integerSplit = integerSplit.replace(new RegExp(this.THOUSANDS_SEPARATOR, 'g'), '');
-    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize);
+    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
 
-    fraction = fractionSize > 0
-      ? '.' + ( fraction + PADDING ).substring(0, fractionSize)
-      : '';
+    if ( dynamicFractionSize ) {
+      fraction = fraction ? `.${fraction}` : '';
+    } else {
+      fraction = fractionSize > 0
+        ? '.' + ( fraction + PADDING ).substring(0, fractionSize)
+        : '';
+    }
+
 
     if ( !integer ) {
       return '';

@@ -21,21 +21,21 @@ $variables: theme_variables($sto-theme);
 $dark-variables: theme_variables($sto-dark-theme);
 
 div, .mat-card, .mat-button, .sto-message-panel {
-  .mat-success {
+  &.mat-success {
     background-color: mat-color($indicators, success);
     color: mat-color($indicators, success-contrast);
   }
 }
 
 div, .mat-card, .mat-button, .sto-message-panel {
-  .mat-danger {
+  &.mat-danger {
     background-color: mat-color($indicators, danger) !important;
     color: mat-color($indicators, danger-contrast) !important;
   }
 }
 
 div, .mat-card, .mat-button, .sto-message-panel {
-  .mat-warning {
+  &.mat-warning {
     background-color: mat-color($indicators, warning) !important;
     color: mat-color($indicators, warning-contrast) !important;
   }
@@ -43,19 +43,19 @@ div, .mat-card, .mat-button, .sto-message-panel {
 
 
 .mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon {
-  .mat-success {
+  &.mat-success {
     color: mat-color($indicators, success);
   }
 }
 
 .mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon {
-  .mat-danger {
+  &.mat-danger {
     color: mat-color($indicators, danger) !important;
   }
 }
 
 .mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon {
-  .mat-warning {
+  &.mat-warning {
     color: mat-color($indicators, warning) !important;
   }
 }

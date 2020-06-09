@@ -6,6 +6,7 @@ import { NumberInputPipe } from '../number-input.pipe';
 import { StoFormModule } from '../../sto-form/sto-form.module';
 import { NumberInputDirective } from '../number-input.directive';
 import { Subject } from 'rxjs';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 const ngControl = {
   statusChanges: new Subject()
@@ -25,7 +26,8 @@ describe('NumberInputComponent', () => {
         set: {
           providers: [
             { provide: NgControl, useValue: ngControl }
-          ]
+          ],
+          changeDetection: ChangeDetectionStrategy.Default
         }
       })
       .compileComponents()
@@ -58,6 +60,27 @@ describe('NumberInputComponent', () => {
     component.ctrl.updateValueAndValidity();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalledWith(123.456);
+  });
+
+  it('should allow a dynamic number of decimal places', () => {
+    component.dynamicFractionSize = true;
+    const spy = spyOn(component, 'onChange');
+    fixture.detectChanges();
+    component.writeValue(123.4567);
+    component.ctrl.updateValueAndValidity();
+    fixture.detectChanges();
+    component.writeValue(1323.4567890);
+    component.ctrl.updateValueAndValidity();
+    fixture.detectChanges();
+    component.dynamicFractionSize = false;
+    fixture.detectChanges();
+    component.writeValue(1323.4567890);
+    component.ctrl.updateValueAndValidity();
+    fixture.detectChanges();
+
+    expect(spy).toHaveBeenCalledWith(123.4567);
+    expect(spy).toHaveBeenCalledWith(1323.4567890);
+    expect(spy).toHaveBeenCalledWith(1323.457); // Rounded
   });
 
   it('should clean up after calling ngOnDestroy', () => {

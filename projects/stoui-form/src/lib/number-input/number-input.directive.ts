@@ -12,7 +12,10 @@ export class NumberInputDirective implements OnChanges {
 
   private _el: HTMLInputElement;
 
-  @Input() fractionSize = 5;
+  @Input()
+  fractionSize = 5;
+  @Input()
+  dynamicFractionSize: boolean;
   /**
    * List of keys ignored, to work as default.
    *  {Key[]}
@@ -55,7 +58,7 @@ export class NumberInputDirective implements OnChanges {
     let pasted = e.clipboardData.getData('text') || '';
     pasted = pasted.replace('—', '-'); // long dash, sometime used in Excel and Word
     pasted = this.handleMixedCommasAndDecimals(pasted);
-    let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize);
+    let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize, this.dynamicFractionSize);
 
     if ( !this.hasInvalidValues(parsedValue) ) {
 
@@ -176,7 +179,7 @@ export class NumberInputDirective implements OnChanges {
    * {boolean}
    */
   private isCopyPaste(e) {
-    return e.ctrlKey && ( e.which === Key.C || e.which === Key.V || e.which === Key.X );
+    return ( e.ctrlKey || e.metaKey ) && ( e.which === Key.C || e.which === Key.V || e.which === Key.X );
   }
 
   /**
@@ -185,7 +188,7 @@ export class NumberInputDirective implements OnChanges {
    * {boolean}
    */
   private isCtrlA(e) {
-    return e.ctrlKey && ( e.which === Key.A );
+    return ( e.ctrlKey || e.metaKey ) && ( e.which === Key.A );
   }
 
   /**
@@ -233,7 +236,7 @@ export class NumberInputDirective implements OnChanges {
     }
     const value = $event.target.value;
     this._el.select();
-    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize) + '' ).replace('.', ',');
+    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize, this.dynamicFractionSize) + '' ).replace('.', ',');
   }
 
   @HostListener('blur', [ '$event.target.value' ])
@@ -241,7 +244,7 @@ export class NumberInputDirective implements OnChanges {
     if ( this._el.readOnly || this._el.disabled ) {
       return;
     }
-    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize);
+    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize, this.dynamicFractionSize);
   }
 
 
