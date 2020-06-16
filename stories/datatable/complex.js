@@ -19,6 +19,7 @@ stories
     template: `<mat-card>
 <mat-card-title><h2>This replaces StoComplexDatatable and is only here for CSS</h2></mat-card-title>
 <ngx-datatable [loadingIndicator]="loading"
+[footerHeight]="40"
 [selectionType]="'single'"
 [scrollbarV]="true"
 [scrollbarH]="horizontalScroll"

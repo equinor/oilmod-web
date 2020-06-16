@@ -126,6 +126,36 @@
         background-color: $background-color;
       }
     }
+
+    .datatable-footer {
+      overflow: hidden;
+
+      .datatable-pager {
+        a {
+          color: $primary;
+          padding: 0 2px;
+          text-decoration: none;
+
+          &:hover {
+            background: $hover-color;
+          }
+        }
+
+        .pager li.pages {
+          margin: 0 2px;
+
+          &.active {
+            background: $selected-color;
+          }
+
+          &.disabled {
+            a {
+              color: $border-color;
+            }
+          }
+        }
+      }
+    }
   }
 
 }
@@ -148,6 +178,14 @@
 
   .ngx-datatable.sto-datatable {
     .datatable-body, .datatable-header {
+      font: {
+        family: mat-font-family($config, body-1);
+        size: mat-font-size($config, body-1);
+        weight: mat-font-weight($config, body-1);
+      }
+    }
+
+    .datatable-footer {
       font: {
         family: mat-font-family($config, body-1);
         size: mat-font-size($config, body-1);
