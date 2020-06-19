@@ -7,6 +7,7 @@
   $color: map_get($variables, color);
   $border-color: map_get($variables, border-color);
   $background-color: transparent;
+  $footer-bg: map_get($variables, background);
   $header-background-color: map_get($variables, background);
   $hover-color: map_get($variables, hover-bg);
   $selected-color: map_get($variables, selected-bg);
@@ -44,7 +45,7 @@
       }
     }
 
-    &__body, &__footer {
+    &__body {
       &__row {
         border-bottom: 1px solid $border-color;
 
@@ -60,9 +61,14 @@
       }
     }
 
-    &__footer__row {
-      border-top: 1px solid $border-color;
+    &__footer {
+      &__row {
+        border-bottom: 1px solid $border-color;
+        border-top: 1px solid $border-color;
+        background: $footer-bg;
+      }
     }
+
   }
 
   .ngx-datatable.sto-datatable {
@@ -190,6 +196,10 @@
         family: mat-font-family($config, body-1);
         size: mat-font-size($config, body-1);
         weight: mat-font-weight($config, body-1);
+      }
+
+      .pager li a[role="button"] {
+        line-height: mat-font-size($config, body-1);
       }
     }
 
