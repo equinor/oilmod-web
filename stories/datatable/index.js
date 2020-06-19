@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/angular';
-import {boolean, number, withKnobs} from "@storybook/addon-knobs/angular";
+import {boolean, number, select, withKnobs} from "@storybook/addon-knobs/angular";
 import {StoDatatableModule} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.module";
 import {columns, fixedColumns, rows} from './rows';
 import {action} from "@storybook/addon-actions";
@@ -40,6 +40,7 @@ stories
       select: action('Selection made'),
       contextMenu: action('Context menu'),
       resize: action('Resize'),
+      columnMode: select('Display mode', ['flex', 'force']),
       selected: null,
       loading: boolean('Loading', false),
       resizeable: boolean('Resizeable', false),

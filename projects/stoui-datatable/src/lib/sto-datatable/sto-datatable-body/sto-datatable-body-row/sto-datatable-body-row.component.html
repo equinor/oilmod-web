@@ -7,13 +7,12 @@
 <ng-template #regular>
   <div class="sto-mdl-table__body__row__cell"
        [ngClass]="column.cellClass | exec:row[column.prop]:row:column"
-       [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
-       [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
-       [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+       [ngStyle]="column | columnStyle:columnMode"
+
        (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: rowIndex})"
        *ngFor="let column of columns;">
     <span *ngIf="!column.cellTemplate"
-          [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
+          [title]="row[column.prop] || ''">{{ row[column.prop] }} {{ column.flexBasis }}</span>
     <ng-template #cellTemplate
                  *ngIf="column.cellTemplate"
                  [ngTemplateOutlet]="column.cellTemplate"

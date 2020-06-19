@@ -9,6 +9,7 @@ import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/s
 import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
+import { ColumnStylePipe } from './column-style.pipe';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatabl
     , StoDatatableBodyRowComponent
     , StoDatatableHeaderGroupComponent
     , StoDatatableHeaderComponent
-    , StoDatatableResizeDirective
+    , StoDatatableResizeDirective, ColumnStylePipe
   ],
   exports: [StoDatatableComponent],
 })

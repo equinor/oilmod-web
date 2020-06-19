@@ -12,7 +12,7 @@ import {
   Output,
   TemplateRef
 } from '@angular/core';
-import { Column } from '../../columns';
+import { Column, ColumnDisplay } from '../../columns';
 import { RowContextMenu } from '../../events';
 
 @Component({
@@ -38,6 +38,8 @@ export class StoDatatableBodyRowComponent<T = any> implements DoCheck {
   isSelected: boolean;
   @Output()
   rowContextMenu = new EventEmitter<RowContextMenu<T>>();
+  @Input()
+  columnMode: ColumnDisplay;
 
   public element: HTMLDivElement;
 

@@ -1,4 +1,5 @@
 <div class="sto-mdl-table"
+     [class.sto-mdl-table--force-width]="columnMode === ColumnDisplay.Force"
      [style.height.px]="height$ | async">
   <sto-datatable-header-group *ngIf="(!responsive || (responsive && !smallScreen)) && columnGroups && this.scrollbarH"
                               [width]="width"
@@ -7,6 +8,7 @@
                               [columns]="columns"
                               [groups]="columnGroups"></sto-datatable-header-group>
   <sto-datatable-header [responsive]="responsive"
+                        [columnMode]="columnMode"
                         (resized)="onResize($event)"
                         [resizeable]="resizeable && scrollbarH"
                         [smallScreen]="smallScreen"
@@ -22,33 +24,6 @@
                         [sortable]="sortable"
                         (sort)="sort($event)"
                         (headerContextMenu)="headerContextMenu.emit($event)"></sto-datatable-header>
-  <!--<div class="sto-mdl-table__header"
-       [style.overflow-y]="'hidden'"
-       [style.overflowX]="'hidden'"
-       *ngIf="!responsive || (responsive && !smallScreen)">
-    <div class="sto-mdl-table__header__row"
-         [style.height]="headerHeight + 'px'"
-         [style.min-width]="width"
-         [style.transform]="scrollLeft"
-         [style.overflow-y]="'hidden'"
-         [class.sto-mdl-table__row&#45;&#45;scroll-offset]="!!bodyHeight && rows?.length * rowHeight > bodyHeight">
-      <div class="sto-mdl-table__header__row__cell"
-           (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
-           [ngClass]="column.headerClass | exec:column"
-           [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
-           [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
-           [style.flex-basis]="(column.flexBasis || 80) + 'px'"
-           *ngFor="let column of columns; trackBy: trackColumnsFn">
-        <span *ngIf="!column.headerTemplate"
-              [title]="column.name">{{ column.name || '' }}</span>
-        <ng-template #headerTemplate
-                     *ngIf="column.headerTemplate"
-                     [ngTemplateOutlet]="column.headerTemplate"
-                     [ngTemplateOutletContext]="{column: column}">
-        </ng-template>
-      </div>
-    </div>
-  </div>-->
   <div class="sto-mdl-table__progress-bar"
        *ngIf="loading"
        role="progressbar">
@@ -61,6 +36,7 @@
     {{ emptyMessage }}
   </div>
   <sto-datatable-body #body
+                      [columnMode]="columnMode"
                       [width]="scrollbarH ? columnTotalWidth + 'px' : 'auto'"
                       [selectable]="!!select.observers.length"
                       [rows]="rows"
@@ -95,9 +71,7 @@
          [style.overflowY]="'hidden'"
          [style.height]="rowHeight + 'px'">
       <div class="sto-mdl-table__footer__row__cell"
-           [style.flex-grow]="(column.flexGrow || column.flexGrow === 0) ? column.flexGrow : 1"
-           [style.flex-shrink]="(column.flexShrink || column.flexShrink === 0) ? column.flexShrink : 1"
-           [style.flex-basis]="(column.flexBasis || 80) + 'px'"
+           [ngStyle]="column | columnStyle:columnMode"
            *ngFor="let column of columns; trackBy: trackColumnsFn">
         <span *ngIf="!column.footerTemplate">
           {{ row[column.prop] }}

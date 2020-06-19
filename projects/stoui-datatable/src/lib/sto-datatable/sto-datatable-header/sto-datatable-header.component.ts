@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Column } from '../columns';
+import { Column, ColumnDisplay } from '../columns';
 import { HeaderContextMenu } from '../events';
 import { animate, state, style, transition, trigger, } from '@angular/animations';
 
@@ -48,6 +48,9 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
   sortable: boolean;
   @Input()
   activeSortId: string;
+  @Input()
+  columnMode: ColumnDisplay;
+  ColumnDisplay = ColumnDisplay;
   public tempWidth: string;
 
   public headerWidthMap = {};
@@ -89,16 +92,19 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
 
   public onResize(column: Column, flexBasis: number): void {
     let width = 0;
-    const cols = this.columns
-      .map(c => {
-        if ( c === column ) {
-          c.flexBasis = flexBasis;
-        }
-        width = width + c.flexBasis;
-        return c;
-      });
+    const colIndex = this.columns.indexOf(column);
+    this.headerWidthMap[ colIndex ] = flexBasis;
+    console.log(this.headerWidthMap[ colIndex ]);
+    /*    const cols = this.columns
+          .map(c => {
+            if ( c === column ) {
+              c.flexBasis = flexBasis;
+            }
+            width = width + c.flexBasis;
+            return c;
+          });*/
     this.tempWidth = ( this.offset + width ) + 'px';
-    this.columns = [...cols];
+    // this.columns = [...cols];
   }
 
   onResizeEnd(column: Column, flexBasis: number) {

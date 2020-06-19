@@ -25,5 +25,10 @@ export class ColumnGroup {
   transform?: string;
 }
 
+export enum ColumnDisplay {
+  Flex = 'flex',
+  Force = 'force'
+}
+
 type ClassFunction = <T = any, U = any>(value: T, row: U, column: Column) => string | string[];
 type SortFunction = <T = any>(a: T, b: T, column: Column) => number;

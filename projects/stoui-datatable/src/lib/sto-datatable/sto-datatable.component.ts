@@ -13,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Column, ColumnGroup } from './columns';
+import { Column, ColumnDisplay, ColumnGroup } from './columns';
 import { HeaderContextMenu, RowActivation, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { fromEvent, Observable, of } from 'rxjs';
@@ -44,6 +44,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   selectionMode: SelectionModes = SelectionModes.Click;
   @Input()
   sortable: boolean;
+
+  ColumnDisplay = ColumnDisplay;
 
   @Input()
   get height() {
@@ -114,9 +116,19 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   private _footerRow: T;
 
-
   @Input()
   virtualScroll = true;
+
+  @Input()
+  get columnMode(): ColumnDisplay {
+    return this._columnMode || ColumnDisplay.Flex;
+  }
+
+  set columnMode(columnMode: ColumnDisplay) {
+    this._columnMode = columnMode;
+  }
+
+  private _columnMode: ColumnDisplay;
 
   @Input()
   responsive: boolean;
@@ -311,7 +323,13 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   }
 
   onResize({ columns, column }: { columns: Column[], column: Column }) {
-    this.columns = [...columns];
+    this.columns = [ ...columns ]
+      .map(c => {
+        // Disallow grow/shrink if resizing
+        c.flexGrow = 0;
+        c.flexShrink = 0;
+        return c;
+      });
     this.resized.emit(column);
   }
 }

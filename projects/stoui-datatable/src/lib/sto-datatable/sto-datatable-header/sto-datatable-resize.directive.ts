@@ -1,8 +1,11 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Column } from '../columns';
+import { fromEvent, ReplaySubject, Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[stoDatatableResize]'
+  selector: '[stoDatatableResize]',
+  exportAs: 'stoDatatableResize'
 })
 export class StoDatatableResizeDirective implements AfterViewInit {
   @Input()
@@ -11,45 +14,59 @@ export class StoDatatableResizeDirective implements AfterViewInit {
   resize = new EventEmitter<number>();
   @Output()
   resizeEnd = new EventEmitter<number>();
-  @HostBinding('draggable')
-  draggable = true;
+  // @HostBinding('draggable')
+  // draggable = true;
   private startOffset: number;
-  @HostBinding('style.opacity')
-  opacity = 1;
+  private initial: number;
+  private sub: Subscription;
+  public width$ = new ReplaySubject<number>();
+  private width: number;
+  private moveComplete$ = new Subject<boolean>();
 
-  @HostListener('dragstart', ['$event'])
-  onDragStart(event: DragEvent) {
-    this.startOffset = 0;
-    this.opacity = 0;
-    event.dataTransfer.dropEffect = 'none';
+  @HostListener('mousedown', [ '$event' ])
+  onMouseDown(event: MouseEvent) {
+    event.stopPropagation();
+    this.startOffset = event.screenX;
+    this.initial = this.column.flexBasis || 80;
+    this.sub = fromEvent(document, 'mousemove')
+      .pipe(takeUntil(this.moveComplete$))
+      .subscribe((ev: MouseEvent) => this.move(ev), console.error, () => console.log('Close'));
   }
 
-  @HostListener('drop', ['$event'])
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-  }
-
-  @HostListener('drag', ['$event'])
-  onDrag(event: DragEvent) {
-    if ( event.screenX !== 0 ) {
-      this.resize.emit(( this.startOffset || 0 ) + event.offsetX + ( this.column.flexBasis || 80 ));
+  @HostListener('document:mouseup', [ '$event' ])
+  onMouseUp(event: MouseEvent) {
+    if ( this.sub ) {
+      event.stopPropagation();
+      this.moveComplete$.next(true);
+      this.width$.next(null);
+      this.resizeEnd.emit(this.width);
     }
   }
 
-  @HostListener('dragend', ['$event'])
-  onDragEnd(event: DragEvent) {
-    if ( event.screenX !== 0 ) {
-      this.resizeEnd.emit(( this.startOffset || 0 ) + event.offsetX + ( this.column.flexBasis || 80 ));
-    }
-    this.startOffset = 0;
-    this.opacity = 1;
+  @HostListener('contextmenu', [ '$event' ])
+  ctxMenu(event: MouseEvent) {
+    event.stopPropagation();
   }
+
+  private move(event: MouseEvent) {
+    const move = event.screenX - this.startOffset;
+    const width = this.initial + move < 40 ? 40 : this.initial + move;
+    this.width$.next(width);
+    this.width = width;
+  }
+
 
   constructor(private el: ElementRef<HTMLElement>) {
   }
 
   ngAfterViewInit(): void {
     this.el.nativeElement.classList.add('sto-mdl-table__header__row__cell__resize-handle');
+  }
+
+  ngOnDestroy() {
+    this.moveComplete$.next(true);
+    this.moveComplete$.complete();
+    this.width$.complete();
   }
 
 }

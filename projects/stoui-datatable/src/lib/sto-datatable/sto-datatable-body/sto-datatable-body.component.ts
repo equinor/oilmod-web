@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { RowActivation, RowContextMenu, RowSelection } from '../events';
-import { Column } from '../columns';
+import { Column, ColumnDisplay } from '../columns';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Key } from '@ngx-stoui/core';
 import { SelectionModes } from '../selection-modes';
@@ -51,6 +51,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   columns: Column[];
   @Input()
   virtualScroll: boolean;
+  @Input()
+  columnMode: ColumnDisplay;
 
   @Input()
   get scrollbarH(): boolean {
