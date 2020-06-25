@@ -1,13 +1,13 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
 import { Column } from '../columns';
 import { fromEvent, ReplaySubject, Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[stoDatatableResize]',
   exportAs: 'stoDatatableResize'
 })
-export class StoDatatableResizeDirective implements AfterViewInit {
+export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   @Input()
   column: Column;
   @Output()
@@ -28,19 +28,19 @@ export class StoDatatableResizeDirective implements AfterViewInit {
     event.stopPropagation();
     this.startOffset = event.screenX;
     this.initial = this.column.flexBasis || 80;
-    this.sub = fromEvent(document, 'mousemove')
+    fromEvent(document, 'mouseup')
+      .pipe(take(1))
+      .subscribe((ev: MouseEvent) => this.onMouseUp(ev));
+    fromEvent(document, 'mousemove')
       .pipe(takeUntil(this.moveComplete$))
-      .subscribe((ev: MouseEvent) => this.move(ev), console.error, () => console.log('Close'));
+      .subscribe((ev: MouseEvent) => this.move(ev));
   }
 
-  @HostListener('document:mouseup', [ '$event' ])
   onMouseUp(event: MouseEvent) {
-    if ( this.sub ) {
       event.stopPropagation();
       this.moveComplete$.next(true);
       this.width$.next(null);
       this.resizeEnd.emit(this.width);
-    }
   }
 
   @HostListener('contextmenu', [ '$event' ])
