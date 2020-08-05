@@ -5,14 +5,12 @@ import {
   SlideToggleModule,
   StoAutocompleteModule,
   StoDatepickerModule,
-  StoDaterangeModule,
   StoFormModule,
   StoNumberInputModule,
   StoSelectFilterModule,
   StoSlideToggleModule,
   StoWysiwygModule
 } from "../../projects/stoui-form/src/public_api";
-import dateRangeReadme from "../../projects/stoui-form/src/lib/sto-daterange/sto-daterange.component.md";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.component.md";
@@ -81,28 +79,6 @@ As HTML:
       change: action('Value changed'),
     },
   }));
-
-stories
-  .add('Daterange', () => ({
-    moduleMetadata: {
-      declarations: [],
-      imports: [StoDaterangeModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule]
-    },
-    template: `<mat-card style="width: 250px" class="sto-form ">
-<sto-daterange
-[label]="label"
-[showPickersOnFocus]="singlePickers"
-[formControl]="control"></sto-daterange>
-Value: {{ control.value | json }}
-</mat-card>`,
-    props: {
-      control: new FormControl(),
-      label: text('Label', 'Date range'),
-      singlePickers: boolean('Use single pickers', false)
-    }
-  }), {
-    notes: dateRangeReadme
-  });
 
 stories.add('Number input', () => ({
   moduleMetadata: {

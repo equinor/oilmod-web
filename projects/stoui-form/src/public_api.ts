@@ -4,12 +4,6 @@
 
 export * from './lib/sto-autocomplete/sto-autocomplete.module';
 export * from './lib/sto-autocomplete/sto-autocomplete.component';
-export * from './lib/sto-daterange/sto-daterange.module';
-export * from './lib/sto-daterange/sto-daterange.component';
-export * from './lib/sto-inline-calendar/sto-inline-calendar.module';
-export * from './lib/sto-inline-calendar/sto-inline-calendar';
-export * from './lib/sto-inline-calendar/sto-inline-calendar-month-view';
-export * from './lib/sto-inline-calendar/sto-inline-calendar-body';
 export * from './lib/sto-number-input/sto-number-input.component';
 export * from './lib/sto-number-input/sto-number-input.directive';
 export * from './lib/sto-number-input/sto-number-input.module';

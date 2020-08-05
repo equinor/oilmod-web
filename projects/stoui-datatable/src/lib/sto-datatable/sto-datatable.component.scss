@@ -1,13 +1,21 @@
-@import "../sto-datatable-advanced/ngx-datatable-variables";
-@import "../sto-datatable-advanced/ngx-datatable-mixins";
 @import "./sto-datatable-mixins";
 @import '~@angular/material/theming';
+
+@import "stoui-core/variables";
+
+
+$datatable-header-vertical-padding: $space-2x;
+$datatable-header-horizontal-padding: $space-2x;
+$datatable-header-font-size: 11px;
+$datatable-vertical-padding: $space-2x;
+$datatable-horizontal-padding: $space-2x;
+
+$content-height: 20px;
 
 .sto-mdl-table {
   transition: height 225ms cubic-bezier(0.4, 0.0, 0.2, 1);
   position: relative;
   width: 100%;
-  //border: 1px solid $border-color-light;
   border-collapse: collapse;
   white-space: nowrap;
 
