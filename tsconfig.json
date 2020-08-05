@@ -1,81 +1,68 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "downlevelIteration": true,
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "paths": {
-      "@ngx-stoui/datatable": [
-        "dist/stoui-datatable"
-      ],
-      "@ngx-stoui/datatable/*": [
-        "dist/stoui-datatable/*"
-      ],
-      "@ngx-stoui/core": [
-        "dist/stoui-core"
-      ],
-      "@ngx-stoui/core/*": [
-        "dist/stoui-core"
-      ],
-      "@ngx-stoui/form": [
-        "dist/stoui-form"
-      ],
-      "@ngx-stoui/form/*": [
-        "dist/stoui-form/*"
-      ],
-      "@ngx-stoui/common": [
-        "dist/stoui-common"
-      ],
-      "@ngx-stoui/common/*": [
-        "dist/stoui-common/*"
-      ],
-      "@ngx-stoui/drawer": [
-        "dist/stoui-drawer"
-      ],
-      "@ngx-stoui/drawer/*": [
-        "dist/stoui-drawer/*"
-      ],
-      "@ngx-stoui/error-handler": [
-        "dist/stoui-error-handler"
-      ],
-      "@ngx-stoui/error-handler/*": [
-        "dist/stoui-error-handler/*"
-      ],
-      "@ngx-stoui/quick-view": [
-        "dist/stoui-quick-view"
-      ],
-      "@ngx-stoui/quick-view/*": [
-        "dist/stoui-quick-view/*"
-      ],
-      "@ngx-stoui/unsaved-changes": [
-        "dist/stoui-unsaved-changes"
-      ],
-      "@ngx-stoui/unsaved-changes/*": [
-        "dist/stoui-unsaved-changes/*"
-      ],
-      "@testing": [
-        "testing"
-      ],
-      "@testing/*": [
-        "testing/*"
-      ]
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./src/tsconfig.spec.json"
+    },
+    {
+      "path": "./e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./projects/stoui-datatable/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-datatable/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-core/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-form/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-form/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-common/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-common/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-drawer/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-drawer/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-error-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-error-handler/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-quick-view/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-quick-view/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stoui-unsaved-changes/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/stoui-unsaved-changes/tsconfig.spec.json"
     }
-  },
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
+  ]
 }
