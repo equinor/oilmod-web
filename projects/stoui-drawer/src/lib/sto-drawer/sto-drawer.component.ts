@@ -158,7 +158,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   public height = '100%';
 
-  @ViewChild('header', { static: true }) headerRef: ElementRef;
+  @ViewChild('header') headerRef: ElementRef;
   @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
   footer: ElementRef<HTMLElement>;
 

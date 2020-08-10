@@ -84,7 +84,7 @@ export const MAT_DATEPICKER_SCROLL_STRATEGY_PROVIDER = {
 export class MatDatepickerContent<D> implements AfterContentInit {
   datepicker: MatMonthPicker<D>;
 
-  @ViewChild(MatCalendar, { static: true }) _calendar: MatCalendar<D>;
+  @ViewChild(MatCalendar) _calendar: MatCalendar<D>;
 
   ngAfterContentInit() {
     this._calendar._focusActiveCell();

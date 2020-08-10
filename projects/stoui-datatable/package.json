@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/datatable",
-  "version": "9.2.3",
+  "version": "10.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^9.0.0",

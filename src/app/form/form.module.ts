@@ -7,7 +7,6 @@ import {
   NumberInputModule,
   StoAutocompleteModule,
   StoDatepickerModule,
-  StoDaterangeModule,
   StoFormModule,
   StoSelectFilterModule,
   StoSlideToggleModule
@@ -27,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
     FormsModule,
     NumberInputModule,
     ReactiveFormsModule,
-    StoAutocompleteModule, StoDatepickerModule, StoSelectFilterModule, StoDaterangeModule, StoSlideToggleModule,
+    StoAutocompleteModule, StoDatepickerModule, StoSelectFilterModule, StoSlideToggleModule,
     MatSelectModule,
     StoDirectivesModule,
     MatFormFieldModule,

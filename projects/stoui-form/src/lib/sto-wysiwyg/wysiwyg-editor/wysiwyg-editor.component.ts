@@ -13,7 +13,7 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
   content: SafeHtml;
   @Input()
   readonly: boolean;
-  @ViewChild('editor', { static: true })
+  @ViewChild('editor')
   editor: ElementRef<HTMLDivElement>;
   @Output()
   valueChanged = new EventEmitter<string>();

@@ -37,7 +37,7 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   @Input('readonly')
   disabled: boolean;
   private destroyed$ = new Subject<boolean>();
-  @ViewChild(WysiwygEditorComponent, { static: true, read: ElementRef })
+  @ViewChild(WysiwygEditorComponent, { read: ElementRef })
   editor: ElementRef<HTMLDivElement>;
   public value: SafeHtml;
   public active = [];

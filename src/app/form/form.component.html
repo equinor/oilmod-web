@@ -43,12 +43,6 @@
                         textAlign="left"
                         placeholder="Formatted numbers"
                         formControlName="number"></sto-number-input>-->
-      <div class="sto-grid__column">
-        <sto-daterange inputStyleClass="sto-form__field"
-                       [showPickersOnFocus]="true"
-                       formControlName="dateRange"
-                       placeholder="Date range"></sto-daterange>
-      </div>
       <mat-form-field class="sto-form__field sto-grid__column"
                       [stoMonthFormFieldClick]="monthPicker">
         <input matInput
@@ -63,11 +57,6 @@
                         formControlName="slideToggle"
                         label="Slide toggle"></sto-slide-toggle>
       <div class="sto-grid__column">
-        <sto-daterange [minDate]="minDate"
-                       [maxDate]="maxDate"
-                       placeholder="Month range"
-                       [monthRange]="true"
-                       formControlName="monthRange"></sto-daterange>
       </div>
     </form>
   </div>

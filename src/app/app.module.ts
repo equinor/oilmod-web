@@ -6,9 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoAppHeaderModule, StoFilterPanelModule } from '@ngx-stoui/common';
 import { RouterModule, Routes } from '@angular/router';
 import { RootComponent } from './root.component';
-import { StoDateAdapter } from '@ngx-stoui/form';
 import { MatButtonModule } from '@angular/material/button';
-import { DateAdapter, MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
+import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -49,7 +48,6 @@ const routes: Routes = [
     MatSelectModule
   ],
   providers: [
-    { provide: DateAdapter, useClass: StoDateAdapter },
     { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'always' } },
   ],
   bootstrap: [AppComponent]

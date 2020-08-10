@@ -51,12 +51,12 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   /**
    * Buttons and actions on the left side of the separator if both table and filter actions is present.
    */
-  @ViewChild('tableActions', { static: true }) contentWrapper;
+  @ViewChild('tableActions') contentWrapper;
   /**
    * Buttons and actions on the right side of the separator if both table and filter actions is present.
    */
-  @ViewChild('filterActions', { static: true }) contentWrapper2;
-  @ViewChild('filterForm', { static: true }) filterForm;
+  @ViewChild('filterActions') contentWrapper2;
+  @ViewChild('filterForm') filterForm;
 
   public readonly host: FilterForm<any>;
   private _contentHeight: number;

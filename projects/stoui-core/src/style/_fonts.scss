@@ -1,23 +1,2 @@
-$font-folder: "~@ngx-stoui/core/style/";
-@font-face {
-  font-family: 'statoilsans_medium';
-  src: url($font-folder + 'statoil-sansmedium-webfont.woff2') format('woff2'),
-  url($font-folder + 'statoil-sansmedium-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-// Ensure backwards compatibility
-//$font-folder-eq: "~@ngx-stoui/core/style/fonts/";
-//
-//@font-face {
-//  font-family: 'Equinor';
-//  src: url($font-folder-eq + 'Equinor-Regular.woff2') format('woff2'),
-//  url($font-folder-eq + 'Equinor-Regular.woff') format('woff');
-//  font-weight: normal;
-//  font-style: normal;
-//}
-
 @import url("https://eds-static.equinor.com/font/equinor-font.css");
-
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");

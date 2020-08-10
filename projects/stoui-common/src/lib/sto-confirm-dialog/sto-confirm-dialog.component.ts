@@ -19,7 +19,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['sto-confirm-dialog.component.scss']
 })
 export class ConfirmComponent {
-  @ViewChild('ok', { static: true })
+  @ViewChild('ok')
   ok: ElementRef<HTMLButtonElement>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ConfirmComponent>) {

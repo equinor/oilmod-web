@@ -10,7 +10,7 @@ import {
   StoSelectFilterModule,
   StoSlideToggleModule,
   StoWysiwygModule
-} from "../../projects/stoui-form/src/public_api";
+} from "../../dist/stoui-form";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.component.md";

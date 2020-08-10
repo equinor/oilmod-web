@@ -1,13 +1,12 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "exclude": [
-    "../src/test.ts",
+    "../src/**/*",
     "../src/**/*.spec.ts",
     "../projects/**/*.spec.ts",
     "../projects/stoui-datatable/src/lib/vendor/**/index.ts"
   ],
   "include": [
-    "../src/**/*",
     "../projects/**/*"
   ]
 }

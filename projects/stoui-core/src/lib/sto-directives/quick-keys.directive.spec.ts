@@ -17,7 +17,7 @@ let page: Page;
   </mat-form-field>`
 })
 class WrapperComponent {
-  @ViewChild('input', { static: true })
+  @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
 
   submit() {
