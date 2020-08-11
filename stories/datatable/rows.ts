@@ -1,4 +1,4 @@
-import {NumberFormatPipe} from "../../projects/stoui-core/src/lib/sto-pipes";
+import { NumberFormatPipe } from '../../projects/stoui-core/src/lib/sto-pipes';
 
 const pipe = new NumberFormatPipe();
 

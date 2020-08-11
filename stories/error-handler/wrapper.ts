@@ -1,5 +1,4 @@
 import { Component, Injectable, NgModule } from '@angular/core';
-import { HttpErrorHandlerService } from '../../projects/stoui-error-handler/src/lib/sto-http-error-handler/http-error-handler.service';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,44 +6,6 @@ import { ErrorHandlerService } from '../../projects/stoui-error-handler/src/lib/
 import { Handler, StoErrorHandler } from '../../projects/stoui-error-handler/src/lib/error-handler/error-handler';
 import { HttpError } from '../../projects/stoui-error-handler/src/lib/error-handler/http-error';
 import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER } from '../../projects/stoui-error-handler/src/lib/error-handler/token';
-
-@Component({
-  selector: 'wrapper',
-  template: `
-    <button mat-button
-            (click)="showError(s)"
-            *ngFor="let s of errors">{{s}}</button>
-  `,
-  providers: []
-})
-export class WrapperComponent {
-  public errors = [
-    0,
-    400,
-    401,
-    403,
-    404,
-    409,
-    500,
-    501,
-    503
-  ];
-
-  constructor(private httpErrorService: HttpErrorHandlerService) {
-  }
-
-  public showError(status: number) {
-    const err = new HttpErrorResponse({
-      status,
-      error: {
-        message: 'server error message'
-      },
-      statusText: 'Error',
-      url: 'http://errorhandler/api'
-    });
-    this.httpErrorService.globalHandler(err);
-  }
-}
 
 @Component({
   selector: 'next-wrapper',
@@ -133,9 +94,9 @@ function LoggerFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [ WrapperComponent, NextWrapperComponent ],
+  declarations: [ NextWrapperComponent ],
   imports: [ CommonModule, MatButtonModule, HttpClientModule ],
-  exports: [ WrapperComponent, NextWrapperComponent ],
+  exports: [ NextWrapperComponent ],
   providers: [
     { provide: CUSTOM_ERROR_HANDLER, useClass: ErrorHandlerImpl },
     { provide: ERROR_LOGGER, useFactory: LoggerFactory, deps: [ HttpClient ] }

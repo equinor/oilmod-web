@@ -5,10 +5,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StoDrawerComponent, StoDrawerModule, StoNavigationModule } from '../../projects/stoui-drawer/src/public_api';
+import { action } from '@storybook/addon-actions';
+import { navigation, subNavigation } from './navigation';
 
 export default {
   title: 'Drawer/Navigation',
-  component: StoDrawerComponent,
   decorators: [
     moduleMetadata({
       imports: [
@@ -19,9 +20,15 @@ export default {
 } as Meta;
 
 const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
+  const actions = {
+    handleCommand: action('Link pressed'),
+    topsNav: action('Open tops landing'),
+    toggle: action('Switch side'),
+    closeMenu: action('Close menu'),
+  };
   return {
     component: StoDrawerComponent,
-    props: args,
+    props: { ...args, ...actions, navigation, subNavigation },
     template: `<div>
   <sto-drawer [open]="open" [animation]="animation" [backdrop]="backdrop">
 <sto-drawer-header>
@@ -86,6 +93,18 @@ const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
 };
 
 export const NormalUse = Template.bind({});
-NormalUse.args = {};
+NormalUse.args = {
+  open: true,
+  animation: true,
+  backdrop: true,
+
+  activePane: 'right',
+  rightMenu: {
+    name: 'Application 2'
+  },
+  leftMenu: {
+    name: 'Application list'
+  }
+};
 
 

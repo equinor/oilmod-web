@@ -87,7 +87,7 @@ export class MatDatepickerContent<D> implements AfterContentInit {
   @ViewChild(MatCalendar) _calendar: MatCalendar<D>;
 
   ngAfterContentInit() {
-    this._calendar._focusActiveCell();
+    // this._calendar._focusActiveCell();
   }
 
   /**
