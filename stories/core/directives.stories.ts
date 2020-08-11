@@ -8,13 +8,33 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
+
+import ctxMenuMarkdown from '../../projects/stoui-core/src/lib/sto-directives/sto-ignore-contextmenu-backdrop.directive.md';
+import selectTextOnFocusMarkdown from '../../projects/stoui-core/src/lib/sto-directives/sto-select-text-on-focus.directive.md';
+import quickKeysMarkdown from '../../projects/stoui-core/src/lib/sto-directives/quick-keys.directive.md';
+import ignoreMenuBackdropMarkdown from '../../projects/stoui-core/src/lib/sto-directives/sto-ignore-menu-backdrop.directive.md';
+import menuFocusMarkdown from '../../projects/stoui-core/src/lib/sto-directives/menu-focus.directive.md';
+import dateFormFieldClickMarkdown from '../../projects/stoui-core/src/lib/sto-directives/date-form-field-click.directive.md';
+
 export default {
   title: 'core/Directives',
   decorators: [
     moduleMetadata({
       imports: [ BrowserAnimationsModule, CommonModule, StoDirectivesModule, MatCardModule, MatMenuModule, MatButtonModule ],
     })
-  ]
+  ],
+  parameters: {
+    notes: {
+      markdown: [ ctxMenuMarkdown,
+        selectTextOnFocusMarkdown,
+        quickKeysMarkdown,
+        ignoreMenuBackdropMarkdown,
+        menuFocusMarkdown,
+        dateFormFieldClickMarkdown ].join(`
+## .
+`)
+    }
+  }
 } as Meta;
 
 const Template: Story<any> = (args) => {

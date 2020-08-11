@@ -7,9 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { StoDirectivesModule } from '../../projects/stoui-core/src/lib/sto-directives/directives.module';
+import { StoDirectivesModule } from '../../projects/stoui-core/src/public_api';
 import { MatSelectModule } from '@angular/material/select';
-import { StoFormModule } from '../../projects/stoui-form/src/lib/sto-form/sto-form.module';
+import { StoFormModule } from '../../projects/stoui-form/src/public_api';
+import markdown from '../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.component.md';
 
 export default {
   title: 'common/Filter Panel',
@@ -29,6 +30,9 @@ export default {
       ],
     })
   ],
+  parameters: {
+    notes: { markdown }
+  },
 } as Meta;
 
 const Template: Story<StoFilterPanelComponent> = (args: StoFilterPanelComponent) => {

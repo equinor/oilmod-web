@@ -9,6 +9,8 @@ This needs to be applied from the host component, and needs to be via ViewChildr
 
 If we just pass in the actual trigger, we can't subscribe to change events, meaning any triggers added *after*
 the view is initialized, will not be checked
+
+
 ```typescript
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
@@ -17,6 +19,8 @@ export class MenuComponent {
     @ViewChildren(MatMenuTrigger) triggers: QueryList<MatMenuTrigger>;
 }
 ```
+
+
 ```html
 <mat-menu #actionsMenu="matMenu" stoMenuFocus [triggers]="triggers">
       <button (click)="duplicate()"

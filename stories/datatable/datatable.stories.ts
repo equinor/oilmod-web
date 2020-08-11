@@ -23,9 +23,8 @@ export default {
 
 const Template: Story<StoDatatableComponent> = (args: StoDatatableComponent) => {
   return {
-    component: args.component ? args.component() : null,
+    component: StoDatatableComponent,
     props: args,
-    template: args.template ? args.template() : null
   };
 };
 

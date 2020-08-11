@@ -17,9 +17,8 @@ export default {
 
 const Template: Story<WysiwygComponent> = (args) => {
   return {
-    component: WysiwygComponent,
     props: args,
-    template: args.template ? args.template() : null
+    template: `<sto-wysiwyg></sto-wysiwyg>`
   };
 };
 

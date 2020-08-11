@@ -4,6 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { StoActionFooterComponent, StoActionFooterModule } from '../../projects/stoui-common/src/public_api';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import markdown from '../../projects/stoui-common/src/lib/sto-action-footer/sto-action-footer.component.md';
 
 export default {
   title: 'common/Action footer',
@@ -15,6 +16,9 @@ export default {
         MatButtonModule, BrowserAnimationsModule ],
     })
   ],
+  parameters: {
+    notes: { markdown }
+  },
 } as Meta;
 
 const Template: Story<StoActionFooterComponent> = (args: StoActionFooterComponent) => {

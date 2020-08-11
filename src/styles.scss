@@ -7,11 +7,24 @@
 
 @import "~highlight.js/styles/darcula.css";
 
+body {
+  background-color: #fafafa;
+}
+
+#root {
+  padding: 16px;
+
+  .sto-header {
+    margin-right: 0 !important;
+    width: calc(100% - 32px);
+  }
+}
+
 .mat-button-toggle-label-content {
   //padding: 0 !important;
 }
 
-h1,h2,h3,h4,h5 {
+h1, h2, h3, h4, h5 {
   display: inline-block;
 }
 

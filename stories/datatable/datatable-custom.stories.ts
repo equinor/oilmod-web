@@ -10,7 +10,6 @@ import { MatCardModule } from '@angular/material/card';
 
 export default {
   title: 'Datatable/StoDatatable/Specific usecases',
-  component: StoDatatableComponent,
   decorators: [
     moduleMetadata({
       imports: [
@@ -23,9 +22,8 @@ export default {
 
 const Template: Story<StoDatatableComponent> = (args: StoDatatableComponent) => {
   return {
-    component: null,
     props: args,
-    template: args.template ? args.template() : null
+    template: args.template()
   };
 };
 
