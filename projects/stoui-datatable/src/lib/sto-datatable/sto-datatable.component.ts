@@ -66,7 +66,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   public rowTotalHeight: number;
 
   get bodyHeight() {
-    if ( !this.height ) {
+    if ( !this.height || !this.body ) {
       return null;
     }
     const hasHeader = !this.responsive || ( this.responsive && !this.smallScreen );

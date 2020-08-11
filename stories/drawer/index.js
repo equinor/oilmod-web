@@ -21,7 +21,7 @@ stories.add('Drawer', () => ({
       imports: [StoDrawerModule, MatCardModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatButtonModule]
     },
     template: `
-<sto-drawer [ignoreEscKey]="ignoreEscKey" (submit)="submitKey()" (cancel)="cancelKey()" [position]="position" [width]="width + 'px'">
+<sto-drawer [ignoreEscKey]="ignoreEscKey" (submit)="submitKey()" [open]="open" (cancel)="cancelKey()" [position]="position" [width]="width + 'px'">
 <sto-drawer-header>
 <h2>{{ title }}</h2>
 </sto-drawer-header>
@@ -85,6 +85,7 @@ stories.add('Drawer', () => ({
       position: select('Position', ['left', 'right'], 'left'),
       width: number('Width', 500),
       title: text('Drawer title', 'New drawer'),
+      open: boolean('Open', true),
       ignoreEscKey: boolean('Ignore escape', false),
       submit: action('Submit'),
       cancel: action('Cancel'),

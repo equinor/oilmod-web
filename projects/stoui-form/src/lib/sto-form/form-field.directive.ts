@@ -1,17 +1,6 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  ContentChildren,
-  Directive,
-  ElementRef,
-  HostListener,
-  OnDestroy,
-  Optional,
-  QueryList
-} from '@angular/core';
+import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostListener, OnDestroy, QueryList } from '@angular/core';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { StoUserPreferenceService } from '@ngx-stoui/core';
 import { Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -26,8 +15,7 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
 
   constructor(
     private el: ElementRef<HTMLElement>
-    , private host: MatFormField
-    , @Optional() private userPreference: StoUserPreferenceService) {
+    , private host: MatFormField) {
   }
 
   ngAfterViewInit(): void {
@@ -83,9 +71,6 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
       return;
     }
     let shouldSelect = true;
-    if ( this.userPreference ) {
-      shouldSelect = this.userPreference.preferences.hasSelectTextOnFocusEnabled;
-    }
     const textarea = el.nativeElement.tagName.toLowerCase() === 'textarea';
     if ( shouldSelect && !textarea ) {
       el.nativeElement.focus();

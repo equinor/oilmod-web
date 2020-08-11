@@ -6,15 +6,11 @@ import {
   StoAutocompleteModule,
   StoDatepickerModule,
   StoFormModule,
-  StoNumberInputModule,
   StoSelectFilterModule,
-  StoSlideToggleModule,
   StoWysiwygModule
 } from "../../dist/stoui-form";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import numberInputReadme from "../../projects/stoui-form/src/lib/sto-number-input/sto-number-input.component.md";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
 import monthPickerReadme from "../../projects/stoui-form/src/lib/sto-monthpicker/sto-monthpicker.md";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MAT_LABEL_GLOBAL_OPTIONS, MatNativeDateModule} from '@angular/material/core';
@@ -80,27 +76,6 @@ As HTML:
     },
   }));
 
-stories.add('Number input', () => ({
-  moduleMetadata: {
-    imports: [StoNumberInputModule, BrowserAnimationsModule, MatCardModule],
-    schemas: [NO_ERRORS_SCHEMA]
-  },
-  template: `<mat-card *ngIf="group" style="width: 250px" class="sto-form mat-typography">
-<sto-number-input [textAlign]="textAlign" [forceValue]="value" [readonly]="readonly" [label]="label" [suffix]="suffix" [fractionSize]="fractionSize"></sto-number-input>
-</mat-card>`,
-  props: {
-    group: new FormGroup({nmbr: new FormControl()}),
-    label: text('Label', 'Number input'),
-    suffix: text('Suffix', '$'),
-    fractionSize: number('Fraction size', 3),
-    readonly: boolean('Readonly', false),
-    value: number('Value', 100),
-    // textAlign: radios('Align', ['left', 'right'], 'left')
-  }
-}), {
-  notes: {markdown: numberInputReadme}
-});
-
 stories.add('Monthpicker', () => ({
   moduleMetadata: {
     imports: [MatNativeDateModule, MatCardModule, BrowserAnimationsModule, StoDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
@@ -140,19 +115,6 @@ stories.add('Autocomplete', () => ({
 }), {
   notes: {markdown: autocompleteReadme}
 });
-
-stories.add('Slide toggle (deprecated)', () => ({
-  moduleMetadata: {
-    imports: [StoSlideToggleModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule]
-  },
-  template: `<mat-card style="width: 200px" class="sto-form">
-<sto-slide-toggle (ngModelChange)="valueChange($event)" [formControl]="ctrl" label="Slide toggle"></sto-slide-toggle>
-</mat-card>`,
-  props: {
-    ctrl: new FormControl(),
-    valueChange: action('Value changed')
-  }
-}));
 
 stories.add('Slide toggle', () => ({
   moduleMetadata: {

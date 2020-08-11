@@ -1,12 +1,20 @@
 {
   "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ]
+  },
   "exclude": [
-    "../src/**/*",
+    "../src/test.ts",
     "../src/**/*.spec.ts",
-    "../projects/**/*.spec.ts",
-    "../projects/stoui-datatable/src/lib/vendor/**/index.ts"
+    "../projects/**/*.spec.ts"
   ],
   "include": [
+    "../src/**/*",
     "../projects/**/*"
+  ],
+  "files": [
+    "./typings.d.ts"
   ]
 }

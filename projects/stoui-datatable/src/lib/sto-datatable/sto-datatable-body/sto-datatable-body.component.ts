@@ -16,7 +16,6 @@ import { Subject } from 'rxjs';
 import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { Column, ColumnDisplay } from '../columns';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Key } from '@ngx-stoui/core';
 import { SelectionModes } from '../selection-modes';
 
 declare var ResizeObserver: any;
@@ -245,20 +244,20 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
     this.activate.emit({ event, rowEl, row: activationData.row, index: activationData.index });
     const next = rowEl.nextSibling as HTMLDivElement;
     const prev = rowEl.previousSibling as HTMLDivElement;
-    switch ( event.keyCode ) {
-      case Key.DownArrow:
+    switch ( event.key ) {
+      case 'ArrowDown':
         if ( next && next instanceof HTMLElement ) {
           next.focus();
           event.preventDefault();
         }
         break;
-      case Key.UpArrow:
+      case 'ArrowUp':
         if ( prev && prev instanceof HTMLElement ) {
           prev.focus();
           event.preventDefault();
         }
         break;
-      case Key.Enter:
+      case 'Enter':
         this.rowSelected.emit(activationData);
         break;
     }

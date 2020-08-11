@@ -6,6 +6,7 @@ import {action} from "@storybook/addon-actions";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatCardModule} from "@angular/material/card";
 import {StoDatatableComponent} from "../../projects/stoui-datatable/src/lib/sto-datatable/sto-datatable.component";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 const stories = storiesOf('Datatable - StoDatatable', module)
   .addDecorator(withKnobs);
@@ -92,6 +93,34 @@ stories.add('Automatic height adjustment', () => ({
     columns,
     autosizeOffset: number('Bottom offset', 10),
     resize: () => document.dispatchEvent(new Event('resize'))
+  }
+}));
+
+
+stories.add('Paging, using mat-paginator', () => ({
+  moduleMetadata: {
+    declarations: [],
+    imports: [StoDatatableModule, MatPaginatorModule, MatCardModule]
+  },
+  template: `<mat-card class="sto-card" (resize)="resize()">
+<sto-datatable [virtualScroll]="false" [height]="600" [rows]="visibleRows" [columns]="columns">
+    <mat-paginator (page)="setPage($event, this); page($event)" [showFirstLastButtons]="true" [length]="rows.length" [hidePageSize]="true" [pageSize]="30" [pageIndex]="activePage"></mat-paginator>
+</sto-datatable>
+</mat-card>`,
+  props: {
+    rows,
+    visibleRows: rows.slice(0, 30),
+    columns,
+    activePage: number(0),
+    autosizeOffset: number('Bottom offset', 10),
+    resize: () => document.dispatchEvent(new Event('resize')),
+    page: action('Page change'),
+    setPage: (pageEvent, that) => {
+      console.log(pageEvent);
+      const startAt = pageEvent.pageIndex * 30;
+      const endAt = (pageEvent.pageIndex + 1) * 30 - 1
+      that.visibleRows = [...rows].slice(startAt, endAt)
+    }
   }
 }));
 

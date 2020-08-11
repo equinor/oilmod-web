@@ -126,14 +126,20 @@ $height: 72px;
   .mat-card-subtitle.sto-card__subtitle {
     padding-left: 8px;
   }
+
   .sto-card__button-row {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    .mat-button{
+
+    .mat-button {
       margin-top: -8px;
     }
 
+  }
+
+  .sto-card__content {
+    padding-left: 8px;
   }
 
 }
