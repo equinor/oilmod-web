@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { Meta } from '@storybook/angular/types-6-0';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,17 +41,10 @@ export default {
   }
 } as Meta;
 
-const Template: Story<any> = (args) => {
-  return {
-    props: args,
-    template: args.template()
-  };
-};
 
-
-export const StoGrid = Template.bind({});
-StoGrid.args = {
-  template: () => `<mat-card class="sto-card">
+export const StoGrid = (args) => ( {
+  props: { ...args },
+  template: `<mat-card class="sto-card">
 <div style="background: white;" stoGrid [maxWidth]="1000" [breakpoints]="breakpoints">
 <div stoGridColumn style="background: lightblue;">1 (col)</div>
 <div stoGridColumn style="background: lightblue;">2 (col)</div>
@@ -70,13 +63,15 @@ StoGrid.args = {
 <div stoGridColumn stoGridSpacer style="background: lightblue;" [stoGridColumnDouble]="true" >14 (double spacer, hidden on 2-col)</div>
 </div>
 </mat-card>`
-};
+} );
 
-export const StoMenu = Template.bind({});
-StoMenu.args = {
-  closed: action('Menu closed'),
-  log: action('Active menu info'),
-  template: () => `<mat-card>
+export const StoContextMenu = () => ( {
+  props: {
+    closed: action('Menu closed'),
+    log: action('Active menu info')
+  },
+  template: `<mat-card>
+<mat-card-title>Context menu</mat-card-title>
   <button
 #overlay="stoMenuOverlay"
 [matMenuTriggerRestoreFocus]="false"
@@ -104,4 +99,4 @@ mat-button stoMenuOverlay #trigger="matMenuTrigger" [matMenuTriggerFor]="menu">M
   </ng-template>
 </mat-menu>
 </mat-card>`
-};
+} );

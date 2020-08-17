@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// @ts-ignore
 import markdown from '../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.component.md';
 
 export default {
@@ -20,9 +21,9 @@ export default {
     })
   ],
   argTypes: {
-    breadCrumbs: { control: { disable: true } },
-    homeBreadCrumbConfig: { control: { disable: true } },
-    userMenu: { control: { disable: true } },
+    breadCrumbs: { table: { disable: true } },
+    homeBreadCrumbConfig: { table: { disable: true } },
+    userMenu: { table: { disable: true } },
   },
   parameters: {
     notes: { markdown }
@@ -50,13 +51,15 @@ AppHeader.argTypes = {
 export const AsTestEnvironment: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
   return {
     props: {
-      breadCrumbs: [ { label: 'Root' }, { label: 'SubModule' }, ],
       environmentName: 'Systemtest',
       testEnvironment: true,
       ...args
     },
-    template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`
+    template: `<sto-app-header [breadCrumbs]="[ { label: 'Root' }, { label: 'SubModule' } ]" [environmentName]="environmentName" [testEnvironment]="true"></sto-app-header>`
   };
+};
+AsTestEnvironment.argTypes = {
+  testEnvironment: { table: { disable: true } }
 };
 
 
@@ -69,8 +72,12 @@ export const WithUserMenu: Story<StoAppHeaderComponent> = (args: StoAppHeaderCom
       ...args
     },
     template: `
-<sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>
+<sto-app-header [userMenu]="menu" [breadCrumbs]="[ { label: 'Root' }, { label: 'SubModule' } ]"></sto-app-header>
 <mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
 `
   };
+};
+WithUserMenu.argTypes = {
+  testEnvironment: { table: { disable: true } },
+  environmentName: { table: { disable: true } }
 };

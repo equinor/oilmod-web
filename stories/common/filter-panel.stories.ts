@@ -31,6 +31,9 @@ export default {
       ],
     })
   ],
+  argTypes: {
+    filterList: { table: { disable: true } }
+  },
   parameters: {
     notes: { markdown }
   },
@@ -41,8 +44,7 @@ const Template: Story<StoFilterPanelComponent> = (args: StoFilterPanelComponent)
     component: StoFilterPanelComponent,
     props: args,
     template: `
-      <sto-filter-panel [filterList]="filter$ | async"
-                        class="sto-form"
+      <sto-filter-panel class="sto-form"
                         [expandable]="expandable"
                         [expanded]="expanded"
                         (toggled)="toggled()">

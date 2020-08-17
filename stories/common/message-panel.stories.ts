@@ -14,6 +14,9 @@ export default {
       imports: [ MatIconModule, StoMessagePanelModule ],
     })
   ],
+  argTypes: {
+    severity: { table: { disable: true } }
+  },
   parameters: {
     notes: { markdown }
   },
@@ -22,13 +25,13 @@ export default {
 const Template: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
   return {
     component: StoMessagePanelComponent,
-    props: args,
-    template: '<sto-message-panel>{{ contents }}</sto-message-panel>'
+    props: { ...args, dismissed: action('Dismissed') },
+    template: '<sto-message-panel [color]="color" [dismissable]="dismissable" [icon]="icon" (dismissed)="dismissed()">{{ contents }}</sto-message-panel>'
   };
 };
 
-export const UsageWithoutInput = Template.bind({});
-UsageWithoutInput.args = {
+export const UsageWithInput = Template.bind({});
+UsageWithInput.args = {
   contents: 'Message panel contents',
 };
 

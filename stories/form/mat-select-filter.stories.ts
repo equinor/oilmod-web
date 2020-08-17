@@ -14,50 +14,85 @@ export default {
   component: StoSelectFilterComponent,
   decorators: [
     moduleMetadata({
-      imports: [ StoSelectFilterModule, StoFormModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule, MatCardModule ],
+      imports: [ StoSelectFilterModule,
+        StoFormModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule, MatCardModule ],
     })
   ],
+  argTypes: {
+    filteredItems: { table: { disable: true } },
+    allItems: { table: { disable: true } },
+    selected: { control: { disable: true } },
+    total: { control: { disable: true } },
+    isFilter: { control: { disable: true } },
+    value: { control: { disable: true } },
+    isMulti: { control: { disable: true } }
+  }
 } as Meta;
 
-const Template: Story<StoSelectFilterComponent> = (args) => {
-  return {
-    component: StoSelectFilterComponent,
-    props: {
-      ...args,
-      valueChange: action('Value changed'),
-      selectAll: action('Select all'),
-    },
-    template: `
-<mat-card style="width: 300px" class="sto-form" (click)="flip()">
-<mat-form-field *ngIf="multi" class="sto-form__field" floatLabel="always" >
-<mat-label>Multiselect with filter</mat-label>
-  <mat-select [multiple]="true" [value]="selected">
-    <sto-select-filter (keydown.space)="$event.stopPropagation()" [isFilter]="true" [isMulti]="true" (valueChanges)="filteredItems = filter($event, allItems)"
-    (selectAll)="selected = $event ? filteredItems :[]; selectAll($event)"></sto-select-filter>
-    <mat-option *ngFor="let opt of filteredItems" [value]="opt">{{opt.name}}</mat-option>
-</mat-select>
-</mat-form-field>
-
-<mat-form-field *ngIf="!multi" class="sto-form__field" floatLabel="always">
-<mat-label>Select with filter</mat-label>
-  <mat-select [multiple]="false" [value]="selected">
-    <sto-select-filter (keydown.space)="$event.stopPropagation()" [isFilter]="true" [isMulti]="false" (valueChanges)="filteredItems = filter($event, allItems)"
-    (selectAll)="selected = $event ? filteredItems :[]; selectAll($event)"></sto-select-filter>
-    <mat-option *ngFor="let opt of filteredItems" [value]="opt">{{opt.name}}</mat-option>
-</mat-select>
-</mat-form-field>
+export const SingleSelect: Story<any> = (args) => ( {
+  props: { ...args },
+  template: `
+<mat-card style="width: 300px" class="sto-form" >
+    <mat-form-field  class="sto-form__field" floatLabel="always">
+    <mat-label>Select with filter</mat-label>
+      <mat-select [multiple]="false" [value]="selected">
+        <sto-select-filter (keydown.space)="$event.stopPropagation()"
+                           [isFilter]="isFilter"
+                           [isMulti]="false"
+                           (valueChanges)="filteredItems = filter($event, allItems)"></sto-select-filter>
+        <mat-option *ngFor="let opt of filteredItems"
+                    [value]="opt">{{opt.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 </mat-card>`
-  };
-};
-
-export const Usage = Template.bind({});
-Usage.args = {
+} );
+SingleSelect.args = {
   filter: (event, all) => {
     const re = new RegExp(event || '');
     return all.filter(el => re.test(el.name));
   },
+  isFilter: true,
+  filteredItems: [ ...items ],
+  allItems: [ ...items ],
+  total: items.length,
+  valueChange: action('Value changed'),
+  selectAll: action('Select all'),
+};
+
+export const MultiSelect: Story<any> = (args) => ( {
+  props: { ...args }, template: `
+<mat-card style="width: 300px" class="sto-form" >
+  <mat-form-field class="sto-form__field"
+                  floatLabel="always" >
+    <mat-label>Multiselect with filter</mat-label>
+    <mat-select [multiple]="true"
+                (selectionChange)="valueChange($event)"
+                [value]="selected">
+      <sto-select-filter (keydown.space)="$event.stopPropagation()"
+                         [selected]="select?.length"
+                         [isFilter]="true"
+                         [isMulti]="true"
+                         (valueChanges)="filteredItems = filter($event, allItems)"
+                         (selectAll)="selected = $event ? filteredItems :[]; selectAll($event)"></sto-select-filter>
+      <mat-option *ngFor="let opt of filteredItems"
+                  [value]="opt">{{opt.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-card>`
+} );
+MultiSelect.args = {
+  filter: (event, all) => {
+    const re = new RegExp(event || '');
+    return all.filter(el => re.test(el.name));
+  },
+  selectAll: (selectAll) => {
+    this.filteredItems = selectAll ? [ ...items ] : [];
+    action('Select all')(selectAll);
+  },
   selected: [],
-  multi: false,
-  filteredItems: items,
-  allItems: items
+  isFilter: true,
+  filteredItems: [ ...items ],
+  allItems: [ ...items ],
+  total: items.length,
+  valueChange: action('Value changed'),
 };

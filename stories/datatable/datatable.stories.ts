@@ -37,24 +37,17 @@ export default {
   }
 } as Meta;
 
-const Template: Story<StoDatatableComponent> = (args: StoDatatableComponent) => {
+export const NormalUse: Story<StoDatatableComponent> = (args: StoDatatableComponent) => {
   return {
     component: StoDatatableComponent,
-    props: args,
+    props: {
+      ...args, columns: columns,
+      rows: rows,
+      headerContextMenu: action('Header context menu'),
+      rowContextMenu: action('Row context menu'),
+      rowActivate: action('Keyboard-activation on row'),
+      select: action('Row selected'),
+      resized: action('Resize')
+    },
   };
 };
-
-export const NormalUse = Template.bind({});
-NormalUse.args = {
-  columns: columns,
-  rows: rows,
-  headerContextMenu: action('Header context menu'),
-  rowContextMenu: action('Row context menu'),
-  rowActivate: action('Keyboard-activation on row'),
-  select: action('Row selected'),
-  resized: action('Resize')
-  // save: action('Save'),
-  // cancel: action('Cancel'),
-};
-
-

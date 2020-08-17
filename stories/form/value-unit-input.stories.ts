@@ -19,7 +19,7 @@ export default {
   ],
 } as Meta;
 
-const control = new FormControl({ value: 32.123, unit: null }, Validators.required);
+const control = new FormControl({ value: 32.123, unit: 'C' }, Validators.required);
 
 const Template: Story<NumberUnitInputComponent> = (args) => {
   return {
