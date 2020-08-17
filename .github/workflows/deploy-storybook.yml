@@ -32,8 +32,7 @@ jobs:
         run: node builder
       - name: Build storybook
         run: yarn build-storybook
-      - uses: actions/checkout@v2
       - uses: kheiakiyama/install-azcopy-action@v1
         with:
           version: 'v10'
-      - run: azcopy_v10 --source './dist/storybook/*' --destination 'https://topstorybook.blob.core.windows.net/$web/' --dest-key ${{ secrets.STORAGE_KEY }} --recursive --set-content-type
+      - run: azcopy_v10 './dist/storybook/*' 'https://topstorybook.blob.core.windows.net/$web/${{ secrets.SAS }}' --recursive
