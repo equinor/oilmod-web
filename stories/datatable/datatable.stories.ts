@@ -19,6 +19,22 @@ export default {
       ],
     })
   ],
+  argTypes: {
+    rows: { table: { disable: true } },
+    columns: { table: { disable: true } },
+    component: { table: { disable: true } },
+    headerContextMenu: { table: { disable: true } },
+    rowContextMenu: { table: { disable: true } },
+    rowActivate: { table: { disable: true } },
+    select: { table: { disable: true } },
+    resized: { table: { disable: true } },
+    columnGroups: { table: { disable: true } },
+    columnMode: { table: { disable: true } },
+    footerRow: { table: { disable: true } },
+    responsiveView: { table: { disable: true } },
+    selected: { table: { disable: true } },
+    trackBy: { table: { disable: true } },
+  }
 } as Meta;
 
 const Template: Story<StoDatatableComponent> = (args: StoDatatableComponent) => {
@@ -32,7 +48,6 @@ export const NormalUse = Template.bind({});
 NormalUse.args = {
   columns: columns,
   rows: rows,
-  component: () => StoDatatableComponent,
   headerContextMenu: action('Header context menu'),
   rowContextMenu: action('Row context menu'),
   rowActivate: action('Keyboard-activation on row'),

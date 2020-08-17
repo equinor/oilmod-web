@@ -9,6 +9,9 @@ export default {
       imports: [ MatCardModule ],
     })
   ],
+  argTypes: {
+    template: { control: { disable: true } }
+  }
 } as Meta;
 
 const Template: Story<any> = (args) => {

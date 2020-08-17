@@ -7,13 +7,17 @@ import { StoDirectivesModule } from '../../projects/stoui-core/src/public_api';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-
-
+// @ts-ignore
 import ctxMenuMarkdown from '../../projects/stoui-core/src/lib/sto-directives/sto-ignore-contextmenu-backdrop.directive.md';
+// @ts-ignore
 import selectTextOnFocusMarkdown from '../../projects/stoui-core/src/lib/sto-directives/sto-select-text-on-focus.directive.md';
+// @ts-ignore
 import quickKeysMarkdown from '../../projects/stoui-core/src/lib/sto-directives/quick-keys.directive.md';
+// @ts-ignore
 import ignoreMenuBackdropMarkdown from '../../projects/stoui-core/src/lib/sto-directives/sto-ignore-menu-backdrop.directive.md';
+// @ts-ignore
 import menuFocusMarkdown from '../../projects/stoui-core/src/lib/sto-directives/menu-focus.directive.md';
+// @ts-ignore
 import dateFormFieldClickMarkdown from '../../projects/stoui-core/src/lib/sto-directives/date-form-field-click.directive.md';
 
 export default {

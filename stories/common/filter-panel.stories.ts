@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { StoDirectivesModule } from '../../projects/stoui-core/src/public_api';
 import { MatSelectModule } from '@angular/material/select';
 import { StoFormModule } from '../../projects/stoui-form/src/public_api';
+// @ts-ignore
 import markdown from '../../projects/stoui-common/src/lib/sto-filter/sto-filter-panel.component.md';
 
 export default {

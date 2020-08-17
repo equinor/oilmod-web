@@ -19,6 +19,11 @@ export default {
         RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule ],
     })
   ],
+  argTypes: {
+    breadCrumbs: { control: { disable: true } },
+    homeBreadCrumbConfig: { control: { disable: true } },
+    userMenu: { control: { disable: true } },
+  },
   parameters: {
     notes: { markdown }
   },
@@ -39,12 +44,33 @@ AppHeader.args = {
 AppHeader.argTypes = {
   homeBreadCrumbConfig: { control: { disable: true } },
   userMenu: { control: { disable: true } },
+  breadCrumbs: { control: { disable: false } },
 };
 
-export const AsTestEnvironment = Template.bind({});
-AsTestEnvironment.args = {
-  title: 'Usage',
-  breadCrumbs: [ { label: 'Root' }, { label: 'SubModule' }, ],
-  environmentName: 'Systemtest',
-  testEnvironment: true
+export const AsTestEnvironment: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
+  return {
+    props: {
+      breadCrumbs: [ { label: 'Root' }, { label: 'SubModule' }, ],
+      environmentName: 'Systemtest',
+      testEnvironment: true,
+      ...args
+    },
+    template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`
+  };
+};
+
+
+export const WithUserMenu: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
+  return {
+    props: {
+      breadCrumbs: [ { label: 'Root' }, { label: 'SubModule' }, ],
+      environmentName: 'Systemtest',
+      testEnvironment: true,
+      ...args
+    },
+    template: `
+<sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>
+<mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
+`
+  };
 };

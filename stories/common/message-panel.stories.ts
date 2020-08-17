@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
 import { StoMessagePanelComponent, StoMessagePanelModule } from '../../projects/stoui-common/src/public_api';
 import { MatIconModule } from '@angular/material/icon';
+// @ts-ignore
 import markdown from '../../projects/stoui-common/src/lib/sto-message-panel/sto-message-panel.component.md';
 
 export default {
@@ -22,15 +23,13 @@ const Template: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponen
   return {
     component: StoMessagePanelComponent,
     props: args,
-    template: '<sto-message-panel (dismissed)="dismiss()" [color]="color" [dismissable]="dismissable" [icon]="icon" [severity]="severity">{{ contents }}</sto-message-panel>'
+    template: '<sto-message-panel>{{ contents }}</sto-message-panel>'
   };
 };
 
-export const WithTemplate = Template.bind({});
-WithTemplate.args = {
+export const UsageWithoutInput = Template.bind({});
+UsageWithoutInput.args = {
   contents: 'Message panel contents',
-  dismiss: action('Dismiss'),
-  title: 'Usage',
 };
 
 
@@ -71,5 +70,5 @@ const argTypes = {
 
 Primary.argTypes = argTypes;
 Warning.argTypes = argTypes;
-Error.argTypes = argTypes;
+Danger.argTypes = argTypes;
 Dismissable.argTypes = argTypes;

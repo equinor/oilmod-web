@@ -14,7 +14,7 @@ import {
 import { FilterForm, FilterList } from './filter';
 
 /**
- * Sto filter panel is an extentiong
+ * Sto filter panel is an extension of mat-accordion
  */
 @Component({
   selector: 'sto-filter-panel',
