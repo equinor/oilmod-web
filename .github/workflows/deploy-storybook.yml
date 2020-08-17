@@ -35,4 +35,4 @@ jobs:
       - uses: kheiakiyama/install-azcopy-action@v1
         with:
           version: 'v10'
-      - run: azcopy_v10 './dist/storybook/*' 'https://topstorybook.blob.core.windows.net/$web/${{ secrets.SAS }}' --recursive
+      - run: azcopy_v10 copy './dist/storybook/*' 'https://topstorybook.blob.core.windows.net/$web/${{ secrets.SAS }}' --recursive
