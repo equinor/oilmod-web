@@ -9,6 +9,7 @@ import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datat
 import { ExecPipe } from '../exec.pipe';
 import { columns, rows } from '../../../testing/utils';
 import { SelectionModes } from '../selection-modes';
+import { ColumnStylePipe } from '../column-style.pipe';
 
 let comp: StoDatatableBodyComponent;
 let fixture: ComponentFixture<StoDatatableBodyComponent>;
@@ -27,7 +28,7 @@ describe('StoDatatableBodyComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [ CommonModule, MaterialModule, ScrollingModule ],
-        declarations: [ StoDatatableBodyComponent, StoDatatableBodyRowComponent, WrapperComponent, ExecPipe ]
+        declarations: [ StoDatatableBodyComponent, StoDatatableBodyRowComponent, WrapperComponent, ExecPipe, ColumnStylePipe ]
       })
       .overrideComponent(StoDatatableBodyComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()

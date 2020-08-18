@@ -13,6 +13,7 @@ import { MaterialModule } from '@testing/material.module';
 import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
 import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
 import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
+import { ColumnStylePipe } from './column-style.pipe';
 
 let comp: StoDatatableComponent;
 let fixture: ComponentFixture<StoDatatableComponent>;
@@ -61,9 +62,10 @@ describe('StoDatatableComponent', () => {
           , StoDatatableHeaderComponent
           , StoDatatableHeaderGroupComponent
           , StoDatatableResizeDirective
+          , ColumnStylePipe
         ],
       })
-      .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
+      // .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createComponent);
   }));
@@ -111,6 +113,7 @@ describe('StoDatatableComponent', () => {
 
   it('should emit on dblclick if configured, but not on single click', fakeAsync(() => {
     comp.selectionMode = SelectionModes.DoubleClick;
+    comp.body.selectionMode = comp.selectionMode;
     fixture.detectChanges();
 
     spyOn(comp.select, 'emit');
@@ -148,6 +151,7 @@ describe('StoDatatableComponent', () => {
 
   it('should sort when the header emits', () => {
     comp.sortable = true;
+    page.header.sortable = true;
     fixture.detectChanges();
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
@@ -157,6 +161,7 @@ describe('StoDatatableComponent', () => {
 
   it('should not mutate the original rows when sorting', () => {
     comp.sortable = true;
+    page.header.sortable = true;
     fixture.detectChanges();
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
@@ -168,6 +173,7 @@ describe('StoDatatableComponent', () => {
 
   it('should reset sort when new rows are passed in', () => {
     comp.sortable = true;
+    page.header.sortable = true;
     fixture.detectChanges();
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
@@ -213,6 +219,7 @@ describe('StoDatatableComponent with automatic height', () => {
           , StoDatatableHeaderComponent
           , StoDatatableHeaderGroupComponent
           , StoDatatableResizeDirective
+          , ColumnStylePipe
         ],
       })
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
@@ -279,6 +286,7 @@ describe('StoDatatableComponent with responsive template height', () => {
           , StoDatatableHeaderComponent
           , StoDatatableHeaderGroupComponent
           , StoDatatableResizeDirective
+          , ColumnStylePipe
         ],
       })
       .compileComponents()
@@ -308,7 +316,7 @@ function createResponsiveComponent() {
   wrapFixture.detectChanges();
 
   return wrapFixture.whenStable().then(() => {
-    wrapFixture.detectChanges();
+    // wrapFixture.detectChanges();
     page = new Page(wrapFixture);
   });
 }

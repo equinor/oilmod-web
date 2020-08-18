@@ -8,6 +8,7 @@ import { ExecPipe } from '../exec.pipe';
 import { columns } from '../../../testing/utils';
 import { StoDatatableHeaderComponent } from './sto-datatable-header.component';
 import { StoDatatableResizeDirective } from './sto-datatable-resize.directive';
+import { ColumnStylePipe } from '../column-style.pipe';
 
 let comp: StoDatatableHeaderComponent;
 let fixture: ComponentFixture<StoDatatableHeaderComponent>;
@@ -25,7 +26,7 @@ describe('StoDatatableHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [ CommonModule, MaterialModule, ScrollingModule ],
-        declarations: [StoDatatableHeaderComponent, WrapperComponent, ExecPipe, StoDatatableResizeDirective]
+        declarations: [ StoDatatableHeaderComponent, WrapperComponent, ExecPipe, StoDatatableResizeDirective, ColumnStylePipe ]
       })
       .overrideComponent(StoDatatableHeaderComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()

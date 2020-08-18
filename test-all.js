@@ -21,54 +21,51 @@ const exec = promisify(execCb);
     const res = await task('datatable');
     output = [...output, res];
     console.log('Testing datatable complete');
-  } catch {
+  } catch (ex) {
+    console.log('Datatable test failures');
+    console.error(ex);
+    process.exit(1);
   }
   try {
     console.log('Testing core');
     const res = await task('core');
     output = [...output, res];
     console.log('Testing core complete');
-  } catch {
+  } catch (ex) {
+    console.log('Core test failures');
+    console.error(ex);
+    process.exit(1);
   }
   try {
     console.log('Testing common');
     const res = await task('common');
     output = [...output, res];
     console.log('Testing common complete');
-  } catch {
+  } catch (ex) {
+    console.log('Common test failures');
+    console.error(ex);
+    process.exit(1);
   }
   try {
     console.log('Testing form');
     const res = await task('form');
     output = [...output, res];
     console.log('Testing form complete');
-  } catch {
+  } catch (ex) {
+    console.log('Form test failures');
+    console.error(ex);
+    process.exit(1);
   }
   try {
     console.log('Testing error-handler');
     const res = await task('error-handler');
     output = [...output, res];
     console.log('Testing error-handler complete');
-  } catch {
-  }
-
-  /*try {
-    const core = await exec('yarn test stoui-core');
-    const common = await exec('yarn test stoui-common');
-    const table = await exec('yarn test stoui-datatable');
-    const form = await exec('yarn test stoui-form');
-    const errorHandler = await exec('yarn test stoui-error-handler');
-    output = [
-      {component: '@ngx-stoui/core', result: core.stdout},
-      {component: '@ngx-stoui/common', result: common.stdout},
-      {component: '@ngx-stoui/datatable', result: table.stdout},
-      {component: '@ngx-stoui/form', result: form.stdout},
-      {component: '@ngx-stoui/error-handler', result: errorHandler.stdout}
-    ];
   } catch (ex) {
-    console.error(ex.stdout);
+    console.log('Error handler test failures');
+    console.error(ex);
     process.exit(1);
-  }*/
+  }
 
   console.log('Test suite completed OK, see results below!');
   output.forEach(op => {

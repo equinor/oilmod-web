@@ -1,6 +1,5 @@
 import { StoDatatableResizeDirective } from './sto-datatable-resize.directive';
 import { ElementRef } from '@angular/core';
-import { Column } from '../columns';
 
 class MockElementRef extends ElementRef {
   constructor() {
@@ -28,36 +27,19 @@ describe('StoDatatableResizeDirective', () => {
     expect(spy).toHaveBeenCalledWith('sto-mdl-table__header__row__cell__resize-handle');
   });
 
-  it('should trigger onDragStart', () => {
-    const event = {} as DragEvent;
-    ( event as any ).dataTransfer = {
-      dropEffect: null
+  it('should trigger onMouseUp after mouseup event is dispatched', () => {
+    const directive = new StoDatatableResizeDirective(new MockElementRef());
+    const spy = spyOn(directive, 'onMouseUp');
+    directive.column = { prop: '', name: '', flexBasis: 80 };
+    const event = {} as MouseEvent;
+    ( event as any ).type = 'mousedown';
+    ( event as any ).screenX = 200;
+    ( event as any ).stopPropagation = () => {
     };
-    const directive = new StoDatatableResizeDirective(new MockElementRef());
-    directive.onDragStart(event);
-    expect(event.dataTransfer.dropEffect).toBe('none');
-    expect(directive.opacity).toBe(0);
-  });
-
-  it('should trigger onDrag', () => {
-    const event = {} as DragEvent;
-    ( event as any ).screenX = 30;
-    ( event as any ).offsetX = 100;
-    const directive = new StoDatatableResizeDirective(new MockElementRef());
-    directive.column = {} as Column;
-    const spy = spyOn(directive.resize, 'emit');
-    directive.onDrag(event);
-    expect(spy).toHaveBeenCalledWith(180);
-  });
-
-  it('should trigger onDragEnd', () => {
-    const event = {} as DragEvent;
-    ( event as any ).offsetX = 100;
-    const directive = new StoDatatableResizeDirective(new MockElementRef());
-    directive.column = {} as Column;
-    const spy = spyOn(directive.resizeEnd, 'emit');
-    directive.onDragEnd(event);
-    expect(directive.opacity).toBe(1);
-    expect(spy).toHaveBeenCalledWith(180);
+    const upEvent = new Event('mouseup');
+    directive.onMouseDown(event);
+    expect(spy).toHaveBeenCalledTimes(0);
+    document.dispatchEvent(upEvent);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
