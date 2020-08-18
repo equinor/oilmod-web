@@ -3,9 +3,9 @@
   "version": "10.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
-    "@ngx-stoui/core": "^9.0.0"
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
+    "@ngx-stoui/core": "^10.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
