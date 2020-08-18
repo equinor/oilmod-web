@@ -18,7 +18,8 @@
   "resolutions": {
     "lodash": "^4.17.12",
     "minimist": "^0.2.1",
-    "chokidar": "^3.3.1"
+    "chokidar": "^3.3.1",
+    "prismjs": "^1.21.0"
   },
   "dependencies": {
     "@angular/animations": "^10.0.8",
