@@ -13,8 +13,6 @@ export class ConfirmService {
 
   confirm(message: string, title = 'Confirm', confirmText = 'OK'): Observable<any> {
     this.ref = this.dialog.open(ConfirmComponent, {
-      width: '300px',
-      panelClass: 'sto-dialog',
       data: { message, title, confirmText }
     });
 
