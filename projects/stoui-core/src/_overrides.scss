@@ -43,7 +43,8 @@ Below styles overrides Angular Material defaults
 .mat-tooltip {
   line-height: 13px;
 }
-.mat-button, .mat-raised-button {
+
+.mat-button, .mat-raised-button, .mat-flat-button, .mat-stroked-button {
   text-transform: uppercase;
 }
 

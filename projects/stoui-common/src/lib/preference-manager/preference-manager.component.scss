@@ -1,0 +1,106 @@
+// Add theme
+$hover-color: rgba(0, 0, 0, 0.04);
+$secondary-color: rgba(0, 0, 0, 0.52);
+sto-preference-manager {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .filter-title {
+    small {
+      color: $secondary-color;
+      font-style: italic;
+    }
+  }
+
+  .mat-progress-spinner {
+    display: inline-block;
+  }
+
+  .filter-title-icon {
+    height: 14px;
+    width: 14px;
+    line-height: 14px;
+    margin-right: 8px;
+  }
+}
+
+.mat-menu-panel.preference-manager-list {
+  width: 350px;
+  min-height: 32px;
+
+  .mat-menu-content:not(:empty) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .preference-manager-list-item {
+    display: flex;
+    padding: 0 8px;
+
+    &.edit {
+      padding-left: 0;
+    }
+
+    &.selected {
+      background-color: $hover-color;
+    }
+
+    .preference-manager-list-item-title {
+      flex: 1 1 auto;
+
+      small {
+        color: $secondary-color;
+      }
+
+      .mat-form-field {
+        min-height: 32px;
+        height: 32px;
+
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+
+          .mat-form-field-flex {
+            padding: 8px;
+
+            .mat-form-field-infix {
+              border-top: 0;
+              padding-top: 0;
+            }
+          }
+
+          .mat-form-field-subscript-wrapper {
+            display: none;
+          }
+
+          .mat-form-field-underline {
+            bottom: 1px;
+          }
+        }
+      }
+    }
+
+    .preference-manager-list-item-actions {
+      display: flex;
+      justify-content: flex-end;
+      flex: 0 0 50px;
+
+      .mat-icon {
+        margin-right: 0;
+      }
+
+      .mat-icon-button {
+        height: 32px;
+        width: 32px;
+        line-height: 32px;
+      }
+    }
+  }
+
+  .preference-manager-list-footer {
+    border-top: 1px solid silver;
+    height: 53px;
+    padding: 8px;
+    background: $hover-color;
+  }
+}
