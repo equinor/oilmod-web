@@ -41,7 +41,7 @@ export const NormalUse: Story<StoDatatableComponent> = (args: StoDatatableCompon
   return {
     component: StoDatatableComponent,
     props: {
-      ...args, columns: columns,
+      ...args, columns: args.scrollbarH ? [ ...columns, ...columns, ...columns ] : columns,
       rows: rows,
       headerContextMenu: action('Header context menu'),
       rowContextMenu: action('Row context menu'),

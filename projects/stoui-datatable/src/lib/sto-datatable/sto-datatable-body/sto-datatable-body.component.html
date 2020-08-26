@@ -8,6 +8,7 @@
                              class="sto-mdl-table__body">
   <sto-datatable-body-row *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; let last = last; trackBy: trackBy"
                           [style.min-width]="width"
+                          [style.transform]="scrollLeft"
                           [columnMode]="columnMode"
                           [tabindex]="0"
                           [columns]="columns"
