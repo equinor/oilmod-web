@@ -32,7 +32,7 @@ export class PreferenceManagerComponent implements OnInit {
    * List of the available preferences
    */
   @Input()
-  preferences: Preference[];
+  preferences: Preference[] = [];
   /**
    * The preference identifier (typically application area).
    * If missing, will be set to null
@@ -174,5 +174,9 @@ export class PreferenceManagerComponent implements OnInit {
    */
   cancelNewPreference() {
     this.newPreference = null;
+  }
+
+  overwrite(pref: Preference) {
+    this.editPreference.emit(pref);
   }
 }

@@ -1,6 +1,4 @@
 // Add theme
-$hover-color: rgba(0, 0, 0, 0.04);
-$secondary-color: rgba(0, 0, 0, 0.52);
 sto-preference-manager {
   display: flex;
   align-items: center;
@@ -8,7 +6,6 @@ sto-preference-manager {
 
   .filter-title {
     small {
-      color: $secondary-color;
       font-style: italic;
     }
   }
@@ -42,16 +39,8 @@ sto-preference-manager {
       padding-left: 0;
     }
 
-    &.selected {
-      background-color: $hover-color;
-    }
-
     .preference-manager-list-item-title {
       flex: 1 1 auto;
-
-      small {
-        color: $secondary-color;
-      }
 
       .mat-form-field {
         min-height: 32px;
@@ -98,9 +87,7 @@ sto-preference-manager {
   }
 
   .preference-manager-list-footer {
-    border-top: 1px solid silver;
     height: 53px;
     padding: 8px;
-    background: $hover-color;
   }
 }

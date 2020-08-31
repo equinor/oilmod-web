@@ -10,6 +10,7 @@
 @import "./theme/select-filter";
 @import "./theme/card";
 @import "./theme/action-footer";
+@import "./theme/preference-manager";
 
 // Include theme styles for core and each component used in your app.
 @include angular-material-theme($sto-theme);

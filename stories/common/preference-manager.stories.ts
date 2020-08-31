@@ -54,8 +54,10 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
         const index = this.preferences.findIndex(p => p.id === pref.id);
         const prefs = [ ...this.preferences ];
         prefs[ index ] = pref;
+        // Set preference in payload
         this.loadingIndicator = true;
-        action('Edit preference name')(pref.name);
+        this.filterForm.markAsPristine();
+        action('Edit preference')(`${pref.name} with id ${pref.id}`);
 
         setTimeout(() => {
           this.preferences = prefs;
@@ -90,6 +92,16 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
   <input [formControl]="filterForm" placeholder="Write stuff here to trigger modified">
   <button (click)="filterForm.reset(); filterForm.markAsPristine()">And click to clear</button>
 </sto-filter-panel>
+
+<sto-preference-manager [loadingIndicator]="loadingIndicator"
+                                            (editPreference)="onEdit($event)"
+                                            (addNewPreference)="onAdd($event)"
+                                            [dirty]="filterForm.dirty"
+                                            (deletePreference)="onDeletePreference($event)"
+                                            (selectPreference)="onSelect($event)"
+                                            (setDefaultPreference)="onSetDefault($event)"
+                                            [activePreferenceId]="activePreferenceId"
+                                            [preferences]="preferences"></sto-preference-manager>
 `
   };
 };

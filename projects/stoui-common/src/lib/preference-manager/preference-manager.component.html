@@ -42,14 +42,22 @@
       </div>
       <div class="preference-manager-list-item-actions">
         <button *ngIf="editIndex === index"
+                title="Save new name"
                 (click)="$event.stopPropagation(); saveRename()"
                 mat-icon-button>
           <mat-icon>save</mat-icon>
         </button>
         <button *ngIf="editIndex === index"
+                title="Cancel rename"
                 (click)="$event.stopPropagation(); cancelRename()"
                 mat-icon-button>
           <mat-icon>close</mat-icon>
+        </button>
+        <button (click)="$event.stopPropagation(); overwrite(pref)"
+                title="Overwrite with current values"
+                *ngIf="!editIndex && editIndex !== 0 && dirty && (activePreferenceId ? pref.id === activePreferenceId : pref.default)"
+                mat-icon-button>
+          <mat-icon>save</mat-icon>
         </button>
         <button (click)="$event.stopPropagation();"
                 *ngIf="!editIndex && editIndex !== 0"

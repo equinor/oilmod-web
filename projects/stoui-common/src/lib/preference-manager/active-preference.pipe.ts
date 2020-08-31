@@ -8,6 +8,9 @@ export class ActivePreferencePipe implements PipeTransform {
 
   transform(preferences: Preference[], activePreferenceId: string): Preference {
     let active: Preference;
+    if ( !preferences ) {
+      return null;
+    }
     if ( activePreferenceId ) {
       active = preferences.find(p => p.id === activePreferenceId);
     } else {
