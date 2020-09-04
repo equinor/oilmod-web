@@ -83,7 +83,7 @@
     "protractor": "~7.0.0",
     "react-is": "^16.13.1",
     "run-sequence": "^2.2.1",
-    "showdown": "^1.8.7",
+    "showdown": "^1.9.1",
     "ts-node": "~5.0.1",
     "tslint": "~6.1.0",
     "typescript": "~3.9.7"
