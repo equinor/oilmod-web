@@ -29,18 +29,31 @@ import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('drawerAnimations', [
-      state('open', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('open-left', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('open-right', style({ transform: 'translateX(0)', opacity: 1 })),
       state('openImmediate', style({ transform: 'translateX(0)', opacity: 1 })),
-      state('closedImmediate', style({ transform: 'translateX(-100%)', opacity: 0 })),
-      state('closed', style({ transform: 'translateX(-100%)', opacity: 0 })),
-      transition('* => closed', [
+      state('closedImmediate-left', style({ transform: 'translateX(-100%)', opacity: 0 })),
+      state('closedImmediate-right', style({ transform: 'translateX(100%)', opacity: 0 })),
+      state('closed-left', style({ transform: 'translateX(-100%)', opacity: 0 })),
+      state('closed-right', style({ transform: 'translateX(100%)', opacity: 0 })),
+      transition('* => closed-left', [
         group([
           animate('400ms ease-in-out', style({ transform: 'translateX(-100%)' })),
           animate('1ms 400ms ease', style({ opacity: 0 }))
         ])
       ]),
-      transition('* => open', [
+      transition('* => closed-right', [
+        group([
+          animate('400ms ease-in-out', style({ transform: 'translateX(100%)' })),
+          animate('1ms 400ms ease', style({ opacity: 0 }))
+        ])
+      ]),
+      transition('* => open-left', [
         style({ transform: 'translateX(-100%)', opacity: 1 }),
+        animate('400ms ease-in-out')
+      ]),
+      transition('* => open-right', [
+        style({ transform: 'translateX(100%)', opacity: 1 }),
         animate('400ms ease-in-out')
       ]),
     ]),
@@ -126,9 +139,9 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   // @HostBinding('@drawerAnimations')
   get slideInOut() {
     if ( !this.animation ) {
-      return this.open ? 'openImmediate' : 'closedImmediate';
+      return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
     }
-    return this.open ? 'open' : 'closed';
+    return this.open ? `open-${this.position}` : `closed-${this.position}`;
   }
 
   /**
