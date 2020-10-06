@@ -1,7 +1,7 @@
-import { Meta } from '@storybook/angular/types-6-0';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { StoDatatableModule } from '../../projects/stoui-datatable/src/public_api';
+import { StoDatatableComponent, StoDatatableModule } from '../../projects/stoui-datatable/src/public_api';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { columns, rows } from './rows';
@@ -26,7 +26,7 @@ export default {
   }
 } as Meta;
 
-export const ResponsiveMode = (args) => ( {
+export const ResponsiveMode: Story = (args) => ( {
   props: args,
   template: `
 <h3>Responsive mode will make the grid break into a list, allowing for a simpler view</h3>
@@ -48,7 +48,7 @@ ResponsiveMode.args = {
   rows: rows,
 };
 
-export const Paging = (args) => ( {
+export const Paging: Story = (args) => ( {
   props: args,
   template: `
 <h3>Paging is done by using <a href="https://material.angular.io/components/paginator/overview" target="_blank">mat-paginator</a></h3>
@@ -72,7 +72,7 @@ Paging.args = {
   columns,
 };
 
-export const AutoSize = (args) => ( {
+export const AutoSize: Story = (args) => ( {
   props: args,
   template: `<h3>Autosize will ensure the table always uses all available height top-down</h3>
 <sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
@@ -81,4 +81,19 @@ AutoSize.args = {
   rows,
   columns,
   autosizeOffset: 10,
+};
+
+export const MultilineFooter: Story<Partial<StoDatatableComponent>> = args => ( {
+  props: args,
+  template: `<h3>The table takes in a list of footer rows</h3>
+<sto-datatable [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+} );
+MultilineFooter.args = {
+  rows,
+  columns: [ ...columns, ...columns, ...columns ],
+  footerRow: [ { invoiceNo: 'Import', voyageNo: '9001' }, { invoiceNo: 'Export', voyageNo: '9002' }, {
+    invoiceNo: 'Import',
+    voyageNo: '9001'
+  }, { invoiceNo: 'Export', voyageNo: '9002' }, ],
+  autoSizeOffset: 10,
 };
