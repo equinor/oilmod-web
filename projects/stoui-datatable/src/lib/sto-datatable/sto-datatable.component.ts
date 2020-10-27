@@ -86,9 +86,25 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
-    this.activeSortId = null;
+    let sortedRows = [...rows];
+    if (this.activeSort) {
+      const column = this.columns.find(col => col.$$id === this.activeSort.id);
+      const sortDir = this.activeSort.sortDir;
+      if (column) {
+        if ( column.sortFn ) {
+          sortedRows = [ ...rows ].sort((a, b) => column.sortFn(a, b, column));
+        } else {
+          sortedRows = [ ...rows ].sort((a, b) => this.defaultSortFn(a, b, column));
+        }
+        if ( sortDir === 'desc' ) {
+          sortedRows.reverse();
+        }
+      }
+    }
+
+    this._internalRows = sortedRows;
     this.rowTotalHeight = ( rows || [] ).length * this.rowHeight;
-    this._internalRows = [...( rows || [] )];
+    this._internalRows = [...( sortedRows || [] )];
   }
 
   get rows() {
@@ -191,7 +207,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
-  public activeSortId: string;
+  public activeSort: {id: string, sortDir: 'asc' | 'desc' | null};
 
 
   @Input()
@@ -291,10 +307,10 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   sort({ column, sortDir }: { column: Column, sortDir: 'asc' | 'desc' | null }) {
     if ( sortDir === null ) {
       this._internalRows = [ ...this._rows ];
-      this.activeSortId = null;
+      this.activeSort = null;
       return;
     }
-    this.activeSortId = column.$$id;
+    this.activeSort = { id: column.$$id, sortDir };
     let rows: T[];
     if ( column.sortFn ) {
       rows = [ ...this._rows ].sort((a, b) => column.sortFn(a, b, column));

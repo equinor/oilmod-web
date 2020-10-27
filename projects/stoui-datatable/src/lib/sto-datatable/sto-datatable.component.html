@@ -20,7 +20,7 @@
                         [rows]="rows"
                         [rowHeight]="rowHeight"
                         [columns]="columns"
-                        [activeSortId]="activeSortId"
+                        [activeSortId]="activeSort?.id"
                         [sortable]="sortable"
                         (sort)="sort($event)"
                         (headerContextMenu)="headerContextMenu.emit($event)"></sto-datatable-header>
