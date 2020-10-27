@@ -107,11 +107,11 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
     // this.columns = [...cols];
   }
 
-  onResizeEnd(column: Column, flexBasis: number) {
+  onResizeEnd(col: Column, flexBasis: number) {
     // this.onResize(column, flexBasis);
     const columns = this.columns
       .map(c => {
-        if ( c === column ) {
+        if ( c === col ) {
           return {
             ...c,
             flexBasis
@@ -120,6 +120,7 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
         return c;
       });
     this.tempWidth = null;
+    const column = { ...col, flexBasis };
     this.resized.emit({ columns, column });
   }
 }

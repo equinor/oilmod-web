@@ -47,6 +47,11 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    *  {EventEmitter<{isExpanded: boolean, contentHeight: number }>}
    */
   @Output() toggled = new EventEmitter<{ isExpanded: boolean, contentHeight: number }>();
+  /**
+   * Emits when a filter should be cleared (if applicable)
+   */
+  @Output()
+  clearFilter = new EventEmitter();
 
   /**
    * Buttons and actions on the left side of the separator if both table and filter actions is present.
@@ -58,7 +63,8 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('filterActions') contentWrapper2;
   @ViewChild('filterForm') filterForm;
 
-  public readonly host: FilterForm<any>;
+  @Input()
+  public host: FilterForm<any>;
   private _contentHeight: number;
   set contentHeight(contentHeight: number) {
     this._contentHeight = contentHeight;
@@ -131,6 +137,13 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     }
   }
 
+  _clearFilter(key: string, index: number) {
+    try {
+      this.host.clearFilter(key, index);
+    } catch {
+      this.clearFilter.emit({ key, index });
+    }
+  }
 }
 
 /**
