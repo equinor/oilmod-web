@@ -56,7 +56,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   @Input()
   get scrollbarH(): boolean {
     return this._scrollbarH;
-  };
+  }
 
   set scrollbarH(scrollbarH: boolean) {
     this._scrollbarH = scrollbarH;
@@ -78,6 +78,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   @Input()
   selectionMode: SelectionModes;
   @Input()
+  scrollLeft: string;
+  @Input()
   hasFooter: boolean;
   @Output()
   rowSelected = new EventEmitter<RowSelection<T>>();
@@ -97,7 +99,7 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   private timeout;
   private resizeObserver: any;
   public horizontalScrollActive: boolean;
-  public verticalScrollOffset: number = 0;
+  public verticalScrollOffset = 0;
 
   @HostListener('window:resize', [ '$event' ])
   onresize(event) {
@@ -115,14 +117,14 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   @Input()
   trackBy = (item: T, index: number) => {
     return index;
-  };
+  }
   _rowClass = (row: T) => {
     let userDefinedClass = '';
     if ( this.rowClass ) {
       userDefinedClass = this.rowClass.bind(this)(row);
     }
     return `${userDefinedClass} sto-mdl-table__body__row`;
-  };
+  }
 
   constructor(private differs: KeyValueDiffers) {
     this.rowDiffer = differs.find({}).create();

@@ -77,7 +77,8 @@ async function publish(projectName) {
   if (!release) {
     return;
   }
-  const {stdout, stderr} = await exec(`cd ${path.join(__dirname, 'dist', project.name)} && yarn publish --non-interactive && cd ${__dirname}`);
+  const tags = process.argv.includes('--next') ? '--tag next' : '';
+  const {stdout, stderr} = await exec(`cd ${path.join(__dirname, 'dist', project.name)} && yarn publish --non-interactive ${tags} && cd ${__dirname}`);
   if (stderr) {
     console.error('Failed to publish', stderr);
     return;

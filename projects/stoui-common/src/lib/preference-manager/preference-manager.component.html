@@ -55,7 +55,7 @@
         </button>
         <button (click)="$event.stopPropagation(); overwrite(pref)"
                 title="Overwrite with current values"
-                *ngIf="!editIndex && editIndex !== 0 && dirty && (activePreferenceId ? pref.id === activePreferenceId : pref.default)"
+                *ngIf="pref.external || (!editIndex && editIndex !== 0 && dirty && (activePreferenceId ? pref.id === activePreferenceId : pref.default))"
                 mat-icon-button>
           <mat-icon>save</mat-icon>
         </button>
@@ -123,6 +123,7 @@
             mat-menu-item>Delete
     </button>
     <button class="dense"
+            (click)="$event.stopPropagation(); trigger.closeMenu(); sharePreference.emit(preference.id)"
             mat-menu-item>Share
     </button>
   </ng-template>

@@ -74,7 +74,12 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     const hasFooter = this.footerRow && ( !this.responsive || ( this.responsive && !this.smallScreen ) );
     const hasHeaderGroup = ( !this.responsive || ( this.responsive && !this.smallScreen ) ) && this.columnGroups;
     const headerOffset = hasHeader ? this.headerHeight : 0;
-    const footerOffset = hasFooter && !this.body.horizontalScrollActive ? this.rowHeight : 0;
+    let footerOffset = 0;
+    if ( hasFooter && this.footerRow instanceof Array ) {
+      footerOffset = this.rowHeight * this.footerRow.length;
+    } else if ( hasFooter ) {
+      footerOffset = this.rowHeight;
+    }
     const groupOffset = hasHeaderGroup ? this.headerHeight : 0;
     return this.height - headerOffset - footerOffset - groupOffset;
   }
@@ -308,6 +313,11 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     const left = event.target.scrollLeft;
     this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
     this.cdr.detectChanges();
+  }
+
+  scrollBodyAndHeader(event: any) {
+    const left = event.target.scrollLeft;
+    this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
   }
 
   sort({ column, sortDir }: { column: Column, sortDir: 'asc' | 'desc' | null }) {

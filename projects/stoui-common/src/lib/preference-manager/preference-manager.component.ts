@@ -81,6 +81,12 @@ export class PreferenceManagerComponent implements OnInit {
    */
   @Output()
   addNewPreference = new EventEmitter<Preference>();
+  /**
+   * sharePreference emits when the user clicks the "share" button.
+   * Each application needs to implement this functionality for themselves.
+   */
+  @Output()
+  sharePreference = new EventEmitter<string>();
 
 
   /**

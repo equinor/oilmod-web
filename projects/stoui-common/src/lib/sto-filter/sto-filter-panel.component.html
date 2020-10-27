@@ -10,7 +10,7 @@
       <mat-chip-list [style.opacity]="panel.expanded ? 0 : 1"
                      *ngIf="filterList"
                      style="margin-left: 16px">
-        <mat-chip (removed)="host.clearFilter(f.key, f.index)"
+        <mat-chip (removed)="_clearFilter(f.key, f.index)"
                   *ngFor="let f of filterList"
                   [removable]="true"
                   [selected]="true"
