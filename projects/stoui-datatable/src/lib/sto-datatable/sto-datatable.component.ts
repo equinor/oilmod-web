@@ -82,11 +82,17 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   autoSize: boolean;
   @Input()
   autoSizeOffset = 0;
+  @Input()
+  preserveSort: boolean;
 
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
     let sortedRows = [...rows];
+    if (!this.preserveSort) {
+      this.activeSort = null;
+    }
+
     if (this.activeSort) {
       const column = this.columns.find(col => col.$$id === this.activeSort.id);
       const sortDir = this.activeSort.sortDir;
