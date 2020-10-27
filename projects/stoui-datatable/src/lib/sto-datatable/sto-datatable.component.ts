@@ -102,7 +102,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
       }
     }
 
-    this._internalRows = sortedRows;
     this.rowTotalHeight = ( rows || [] ).length * this.rowHeight;
     this._internalRows = [...( sortedRows || [] )];
   }
