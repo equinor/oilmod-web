@@ -19,6 +19,7 @@ import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-bo
 import { fromEvent, Observable, of } from 'rxjs';
 import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 import { SelectionModes } from './selection-modes';
+import { SortColumn } from './models';
 
 declare var ResizeObserver: any;
 
@@ -212,7 +213,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
-  public activeSort: {id: string, sortDir: 'asc' | 'desc' | null};
+  public activeSort: SortColumn;
 
 
   @Input()
