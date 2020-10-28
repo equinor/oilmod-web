@@ -19,6 +19,7 @@ import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-bo
 import { fromEvent, Observable, of } from 'rxjs';
 import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 import { SelectionModes } from './selection-modes';
+import { SortColumn } from './models';
 
 declare var ResizeObserver: any;
 
@@ -87,13 +88,34 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   autoSize: boolean;
   @Input()
   autoSizeOffset = 0;
+  @Input()
+  preserveSort: boolean;
 
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
-    this.activeSortId = null;
+    let sortedRows = [...rows];
+    if (!this.preserveSort) {
+      this.activeSort = null;
+    }
+
+    if (this.activeSort) {
+      const column = this.columns.find(col => col.$$id === this.activeSort.id);
+      const sortDir = this.activeSort.sortDir;
+      if (column) {
+        if ( column.sortFn ) {
+          sortedRows = [ ...rows ].sort((a, b) => column.sortFn(a, b, column));
+        } else {
+          sortedRows = [ ...rows ].sort((a, b) => this.defaultSortFn(a, b, column));
+        }
+        if ( sortDir === 'desc' ) {
+          sortedRows.reverse();
+        }
+      }
+    }
+
     this.rowTotalHeight = ( rows || [] ).length * this.rowHeight;
-    this._internalRows = [ ...( rows || [] ) ];
+    this._internalRows = [...( sortedRows || [] )];
   }
 
   get rows() {
@@ -196,7 +218,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
-  public activeSortId: string;
+  public activeSort: SortColumn;
 
 
   @Input()
@@ -301,10 +323,10 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   sort({ column, sortDir }: { column: Column, sortDir: 'asc' | 'desc' | null }) {
     if ( sortDir === null ) {
       this._internalRows = [ ...this._rows ];
-      this.activeSortId = null;
+      this.activeSort = null;
       return;
     }
-    this.activeSortId = column.$$id;
+    this.activeSort = { id: column.$$id, sortDir };
     let rows: T[];
     if ( column.sortFn ) {
       rows = [ ...this._rows ].sort((a, b) => column.sortFn(a, b, column));

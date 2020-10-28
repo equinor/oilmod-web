@@ -171,7 +171,7 @@ describe('StoDatatableComponent', () => {
     expect(comp[ '_rows' ].indexOf(first)).toEqual(0);
   });
 
-  it('should reset sort when new rows are passed in', () => {
+  it('should reset sort when new rows are passed in and preserveSort is false', () => {
     comp.sortable = true;
     page.header.sortable = true;
     fixture.detectChanges();
@@ -181,6 +181,20 @@ describe('StoDatatableComponent', () => {
     expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
     comp.rows = [ ...rows ];
     expect(comp.rows.indexOf(first)).toEqual(0);
+  });
+
+  it('should preserve sort when new rows are passed in and preserveSort is true', () => {
+    comp.sortable = true;
+    comp.preserveSort = true;
+    page.header.sortable = true;
+    fixture.detectChanges();
+    const first = comp.rows[ 0 ];
+    expect(comp.rows.indexOf(first)).toEqual(0);
+    page.header.sortByColumn(comp.columns[ 0 ]);
+    const index = comp.rows.indexOf(first);
+    expect(index).toBeGreaterThan(0);
+    comp.rows = [ ...rows ];
+    expect(comp.rows.indexOf(first)).toEqual(index);
   });
 
 });
