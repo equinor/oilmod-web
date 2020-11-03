@@ -94,7 +94,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
-    let sortedRows = [...rows];
+    let sortedRows = [...(rows || [])];
     if (!this.preserveSort) {
       this.activeSort = null;
     }
