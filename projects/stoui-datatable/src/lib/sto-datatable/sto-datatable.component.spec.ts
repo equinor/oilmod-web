@@ -74,6 +74,12 @@ describe('StoDatatableComponent', () => {
     expect(comp).toBeTruthy();
   });
 
+  it('should handle rows to be null', () => {
+    comp.rows = null;
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  });
+
   it('should render a table', () => {
     expect(page.body).toBeTruthy();
     expect(page.body.rows.length).toEqual(rows.length);
