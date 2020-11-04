@@ -16,7 +16,7 @@ export class ActivePreferencePipe implements PipeTransform {
     } else {
       active = preferences.find(p => p.default);
     }
-    return active ? active : preferences.find(p => p.name);
+    return active ? active : null;
   }
 
 }
