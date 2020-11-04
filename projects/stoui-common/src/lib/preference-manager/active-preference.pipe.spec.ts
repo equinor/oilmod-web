@@ -24,14 +24,8 @@ describe('ActivePreferencePipe', () => {
     expect(pipe.transform(prefs, activeId)).toBe(prefs[ 0 ]);
   });
 
-  it('should return the default preference', () => {
+  it('should return null if no id', () => {
     const pipe = new ActivePreferencePipe();
-    expect(pipe.transform(prefs, null)).toBe(prefs[ 1 ]);
-  });
-
-  it('should return null if no id & no default preference', () => {
-    const pipe = new ActivePreferencePipe();
-    prefs[ 1 ].default = false;
     expect(pipe.transform(prefs, null)).toBeNull();
   });
 });
