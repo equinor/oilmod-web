@@ -27,3 +27,4 @@ export interface ErrorLogger {
 
 // Expected signature for error handlers.
 export type Handler = (err: HttpErrorResponse) => HttpError;
+

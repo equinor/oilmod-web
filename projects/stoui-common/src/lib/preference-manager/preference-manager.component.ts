@@ -12,7 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Preference } from './preference';
-import { _MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -149,7 +149,7 @@ export class PreferenceManagerComponent implements OnInit {
   /**
    * @internal
    */
-  focusActiveItem(menu: _MatMenu) {
+  focusActiveItem(menu: MatMenu) {
     menu._allItems.changes.pipe(take(1))
       .subscribe((l: QueryList<MatMenuItem>) => {
         l.forEach(it => {

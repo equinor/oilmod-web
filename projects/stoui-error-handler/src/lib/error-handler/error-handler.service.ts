@@ -173,7 +173,7 @@ export class ErrorHandlerService implements ErrorHandler {
       const e = err.error instanceof Object ? err.error : JSON.parse(err.error);
       errorText = e.message;
     } catch ( ex ) {
-      errorText = err.error;
+      errorText = typeof err.error === 'string' ? err.error : '';
     }
     return errorText;
   }
