@@ -9,11 +9,15 @@
 @import "./theme/input-overrides";
 @import "./theme/select-filter";
 @import "./theme/card";
+@import "./theme/wysiwyg";
 @import "./theme/action-footer";
 @import "./theme/preference-manager";
 
 // Include theme styles for core and each component used in your app.
-@include angular-material-theme($sto-theme);
+body:not(.sto-dark-theme) {
+  @include angular-material-theme($sto-theme);
+}
+
 body.sto-dark-theme {
   @include angular-material-theme($sto-dark-theme);
 }
@@ -22,10 +26,14 @@ body, .sto-header, .mat-card {
   transition: background-color 200ms ease;
 }
 
-@include mat-core($sto-typography);
-@include mat-base-typography($sto-typography, '.mat-typography')
+@include mat-base-typography($sto-typography, '.mat-typography:not(.sto-sm-typography):not(.sto-l-typography)')
 @include mat-base-typography($sto-sm-typography, '.mat-typography.sto-sm-typography')
 @include mat-base-typography($sto-l-typography, '.mat-typography.sto-l-typography')
+
+
+.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
+  @include mat-core($sto-typography);
+}
 
 .mat-typography.sto-sm-typography {
   @include mat-core($sto-sm-typography);

@@ -1,7 +1,3 @@
-@import 'stoui-core/variables';
-@import "stoui-core/style/functions";
-
-
 .sto-drawer {
   .sto-slide-panel {
     margin: -8px;
@@ -48,11 +44,9 @@
 
           .mat-icon {
             padding: 0px 32px 0px 16px;
-            //color: $black-light;
             line-height: 24px;
 
             svg {
-              //color: rgba(0,0,0,1);
               opacity: 0.54;
             }
           }
@@ -102,7 +96,6 @@
 
         &:after {
           padding: 4px;
-          //color: rgba(0, 0, 0, 0.38);
         }
       }
 
@@ -118,7 +111,6 @@
       .sto-navigation__prefix {
         display: inline-block;
         padding: 12px 35px 0 16px;
-        //color: rgba(0, 0, 0, 0.54);
         line-height: 0;
       }
     }
@@ -138,10 +130,8 @@
     }
 
     .mat-icon-button.sto-list__navigation__button {
-      //color: $black-38;
 
       &:hover {
-        //color: $black-54;
       }
     }
 
@@ -156,6 +146,4 @@
   margin: 0;
   line-height: 48px;
   cursor: pointer;
-  color: $black-medium;
-
 }

@@ -6,14 +6,17 @@
   <span class="sto-breadcrumb__home__title"
         *ngIf="iconConfig.text">{{iconConfig.text}}</span>
 </div>
-<ul class="sto-breadcrumb__list"
-    style="position: relative">
-  <li class="sto-breadcrumb__list__item"
-      role="menuitem"
-      *ngFor="let item of model; let index = index; let last = last">
-    <a class="sto-breadcrumb__list__item__link"
+<div class="sto-breadcrumb__list"
+     [title]="title"
+     style="position: relative">
+  <ng-container *ngFor="let item of model; let index = index; let last = last">
+    <a class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
+       [title]="item.label"
        (click)="itemClick($event, item)">
       {{ item.label}}
     </a>
-  </li>
-</ul>
+    <span class="separator"
+          *ngIf="!last"> /
+    </span>
+  </ng-container>
+</div>

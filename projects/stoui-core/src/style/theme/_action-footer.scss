@@ -13,9 +13,11 @@
 }
 
 // Include theme styles for your custom components.
-@include sto-action-footer-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include sto-action-footer-theme($sto-theme, $variables);
+}
 
-.sto-dark-theme {
+body.sto-dark-theme {
   @include sto-action-footer-theme($sto-dark-theme, $dark-variables);
 }
 

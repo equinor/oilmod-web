@@ -12,7 +12,7 @@
   }
 }
 
-.mat-typography {
+.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
   @include sto-card-typography($sto-typography);
 }
 

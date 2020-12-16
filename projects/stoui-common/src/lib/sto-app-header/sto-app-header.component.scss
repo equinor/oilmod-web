@@ -1,10 +1,4 @@
-@import "stoui-core/variables";
-@import "stoui-core/vendor/material_angular_variables";
-
-$header-height: 64px;
-$header-z-index: 50; //move to own z-index
-$header-font-size: 20px;
-$button-spacing: 4px;
+@import "~@angular/material/theming";
 
 .sto-header {
   @include mat-elevation(3);
@@ -12,16 +6,11 @@ $button-spacing: 4px;
   display: flex;
   flex: auto;
   flex-direction: row;
-  height: $header-height;
+  align-items: center;
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: $header-z-index;
-
-  mat-icon {
-    cursor: pointer;
-    margin: auto 16px;
-  }
+  z-index: 50;
 
   .sto-header__actions mat-icon {
     margin: auto;
@@ -32,19 +21,22 @@ $button-spacing: 4px;
     width: 100%;
     left: 0;
     top: 0;
+    display: flex;
     pointer-events: none;
+
     &--label {
+      padding: 4px 8px;
       text-transform: uppercase;
       white-space: nowrap;
-      height: 40px;
       width: fit-content;
-      font-size: 20px;
-      line-height: 24px;
-      padding: 8px 16px;
       border-radius: 2px;
       position: relative;
-      margin: 8px auto;
+      margin: auto;
     }
+  }
+
+  .small-toggle {
+    margin-right: 6px;
   }
 
   &__actions {
@@ -52,8 +44,38 @@ $button-spacing: 4px;
     align-items: center;
     margin-right: 8px;
 
+    &--small {
+      flex-direction: column;
+      width: 48px;
+      height: auto;
+      //max-height: 0;
+      transform: scale(0);
+      opacity: 0;
+      transform-origin: top right;
+      overflow: hidden;
+      position: absolute;
+      right: -4px;
+      top: 50px;
+      z-index: 100;
+      border-radius: 2px;
+      transition: opacity 200ms linear;
+      @include mat-elevation(4);
+
+      button {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      &--open {
+        transform: scale(1);
+        opacity: 1;
+        //height: auto;
+        //max-height: 200px;
+      }
+    }
+
     button {
-      margin: $button-spacing;
+      margin: 4px;
 
       &:first-of-type {
         margin-left: 0;

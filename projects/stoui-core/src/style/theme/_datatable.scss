@@ -166,7 +166,9 @@
 
 }
 
-@include sto-datatable-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include sto-datatable-theme($sto-theme, $variables);
+}
 
 .sto-dark-theme {
   @include sto-datatable-theme($sto-dark-theme, $dark-variables);
@@ -207,7 +209,7 @@
   }
 }
 
-.mat-typography {
+.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
   @include sto-datatable-typography($sto-typography);
 }
 

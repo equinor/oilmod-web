@@ -25,15 +25,27 @@ $sto-primary-dark: (
   )
 );
 
-$sto-accent: (
-  main: #d5eaf4,
-  lighter: #d7d7d7,
-  darker: #5c5c5c,
+$sto-dark-accent: (
+  highlight: rgba(255, 255, 255, 0.1),
+  resting: #DEE5E7,
+  hover: #FFFFFF,
   200: #d5eaf4, // For slide toggle,
   contrast : (
-    main: $dark-primary-text,
-    lighter: $dark-primary-text,
-    darker: $light-primary-text,
+    highlight: $light-primary-text,
+    resting: $dark-primary-text,
+    hover: $dark-primary-text,
+  )
+);
+
+$sto-accent: (
+  highlight: #d5eaf4,
+  resting: #243746,
+  hover: #18252F,
+  200: #243746, // For slide toggle,
+  contrast : (
+    highlight: $dark-primary-text,
+    resting: $dark-primary-text,
+    hover: $light-primary-text,
   )
 );
 

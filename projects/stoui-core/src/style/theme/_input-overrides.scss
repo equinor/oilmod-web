@@ -62,7 +62,9 @@
 }
 
 // Include theme styles for your custom components.
-@include sto-input-override-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include sto-input-override-theme($sto-theme, $variables);
+}
 
 .sto-dark-theme {
   @include sto-input-override-theme($sto-dark-theme, $dark-variables);
@@ -108,7 +110,7 @@
   }
 }
 
-.mat-typography {
+.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
   @include sto-input-typography($sto-typography);
 }
 
