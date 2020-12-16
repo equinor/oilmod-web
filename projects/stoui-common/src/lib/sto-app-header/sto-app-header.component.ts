@@ -1,6 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
 import { MatMenuPanel } from '@angular/material/menu';
+import { StoThemeService } from '../theme/theme.service';
+import { typography, TypographyName } from '../theme/models';
+import { fromEvent, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 /**
  * StoAppHeaderComponent is used to create an App header toolbar with a common look / feel across our portfolio
@@ -18,7 +23,7 @@ import { MatMenuPanel } from '@angular/material/menu';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StoAppHeaderComponent implements AfterViewInit {
+export class StoAppHeaderComponent implements OnInit {
   /**
    * testEnvironment tells the header whether or not to style itself defining a test-environment
    */
@@ -45,36 +50,64 @@ export class StoAppHeaderComponent implements AfterViewInit {
   @Input()
   breadCrumbs: Breadcrumb[];
 
-  public nightmode: boolean;
+  public darkmode$: Observable<boolean>;
+  public isSmall$: Observable<boolean>;
+  public menuOpen: boolean;
+
+  constructor(
+    private themeService: StoThemeService,
+    private breakpointObserver: BreakpointObserver,
+    private cdr: ChangeDetectorRef
+  ) {
+  }
 
   toggleTheme() {
-    localStorage.removeItem('tops__theme');
-    document.body.classList.toggle('sto-dark-theme');
-    this.nightmode = document.body.classList.contains('sto-dark-theme');
-    if ( this.nightmode ) {
-      localStorage.setItem('tops__theme', 'sto-dark-theme');
-    }
+    const themeName = document.body.classList.contains('sto-dark-theme') ? 'light' : 'dark';
+    this.themeService.setTheme(themeName);
   }
 
   toggleTypography(className?: string) {
-    document.body.classList.remove('sto-sm-typography', 'sto-l-typography');
-    localStorage.removeItem('tops__typography');
-    if ( className ) {
-      document.body.classList.add(className);
-      localStorage.setItem('tops__typography', className);
+    const small = className === typography.get('small');
+    const large = className === typography.get('large');
+    const typographyName: TypographyName = small ? 'small' : large ? 'large' : 'medium';
+    this.themeService.setTypography(typographyName);
+  }
+
+  toggleMenu(event: MouseEvent) {
+    this.menuOpen = !this.menuOpen;
+    if ( this.menuOpen ) {
+      fromEvent(document, 'click')
+        .pipe(
+          filter(e => e !== event),
+          filter(e => {
+            const t = e.target as HTMLElement;
+            if ( !t || !t.parentElement ) {
+              return true;
+            }
+            let parent = t;
+            let iterations = 0;
+            while ( parent.parentElement && iterations < 5 ) {
+              if ( parent.classList.contains('mat-menu-trigger') ) {
+                parent = null;
+                return false;
+              }
+              iterations = iterations + 1;
+              parent = parent?.parentElement;
+            }
+            return true;
+          }),
+          take(1)
+        )
+        .subscribe((e) => {
+          this.menuOpen = false;
+          this.cdr.markForCheck();
+        });
     }
   }
 
-  ngAfterViewInit(): void {
-    document.body.classList.add('mat-app-background');
-    const theme = localStorage.getItem('tops__theme');
-    if ( theme ) {
-      document.body.classList.add(theme);
-    }
-    const typography = localStorage.getItem('tops__typography');
-    if ( typography ) {
-      this.toggleTypography(typography);
-    }
-    this.nightmode = document.body.classList.contains('sto-dark-theme');
+  ngOnInit(): void {
+    this.darkmode$ = this.themeService.getActiveTheme()
+      .pipe(map(theme => theme && theme.name === 'dark'));
+    this.isSmall$ = this.breakpointObserver.observe([ '(max-width: 500px)' ]).pipe(map(r => r.matches));
   }
 }

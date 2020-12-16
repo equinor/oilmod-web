@@ -63,7 +63,7 @@ class Page {
   public elements: HTMLAnchorElement[];
 
   constructor() {
-    const debugElements = fixture.debugElement.queryAll(By.css('li'));
-    this.elements = debugElements.map(el => el.query(By.css('a'))).map(de => de.nativeElement);
+    const debugElements = fixture.debugElement.queryAll(By.css('a'));
+    this.elements = debugElements.map(de => de.nativeElement);
   }
 }

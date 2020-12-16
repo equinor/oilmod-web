@@ -61,7 +61,9 @@
 }
 
 // Include theme styles for your custom components.
-@include sto-filterpanel-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include sto-filterpanel-theme($sto-theme, $variables);
+}
 
 .sto-dark-theme {
   @include sto-filterpanel-theme($sto-dark-theme, $dark-variables);
@@ -76,7 +78,7 @@
   }
 }
 
-.mat-typography {
+.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
   @include sto-filter-panel-typography($sto-typography);
 }
 

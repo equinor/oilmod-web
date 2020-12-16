@@ -1,115 +1,87 @@
-@import "stoui-core/style/colors";
-//@import "~@ngx-stoui/core/style/theme/theme";
-@import "stoui-core/style/theme/theme";
+.sto-wysiwyg {
+  .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 36px;
+    padding: 0 6px;
+  }
 
-$form-field-bg: $ship-cove-10;
-
-@mixin wysiwyg-theme($theme, $variables) {
-  $primary: map_get($variables, primary);
-  $border-color: map_get($variables, border-color);
-
-  .sto-wysiwyg {
-    .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
-      line-height: 36px;
-      padding: 0 6px;
+  &__editor {
+    &__button {
+      min-width: 40px;
+      width: 40px;
+      padding: 0;
     }
+  }
 
-    &__editor {
-      &__button {
-        min-width: 40px;
-        width: 40px;
-        padding: 0;
-      }
-    }
-
-    &__actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      min-height: 44px;
-      padding-bottom: 2px;
-      border-bottom: 1px solid $border-color;
-
-      .divider {
-        height: 36px;
-        width: 0;
-        border-left: 1px solid $border-color;
-        margin: 0 4px;
-      }
-
-      .mat-button-toggle-group {
-        border: none;
-
-        .mat-button-toggle {
-          border-left: none;
-          margin-left: 2px;
-
-          &:first-of-type {
-            margin-left: 0;
-          }
-        }
-      }
-    }
-
-
-    min-height: 100px;
-    max-height: 100%;
-    overflow: hidden;
-    height: 100%;
-    border-radius: 2px;
-    padding: 4px 0 8px;
+  &__actions {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    min-height: 44px;
+    padding-bottom: 2px;
 
-    &__buttons {
-      flex: 1 1 auto;
-      display: flex;
-      justify-content: flex-start;
+    .divider {
+      height: 36px;
+      width: 0;
+      margin: 0 4px;
     }
 
-    &__actions {
-      .user-buttons {
-        button {
-          margin: 8px 4px 0;
+    .mat-button-toggle-group {
+      border: none;
+
+      .mat-button-toggle {
+        border-left: none;
+        margin-left: 2px;
+
+        &:first-of-type {
+          margin-left: 0;
         }
       }
     }
+  }
 
-    &__editor {
-      &:focus {
-        border-bottom: 2px solid $primary;
-      }
 
-      transition: border-color 300ms ease, background-color 200ms ease, height 200ms ease;
-      border-radius: 2px;
-      border-bottom: 2px solid $border-color;
-      outline: none;
-      margin-top: 4px;
-      padding: 12px 4px 4px;
-      background: $form-field-bg;
-      flex: 1 1 auto;
-      line-height: 18px;
-      overflow: auto;
+  min-height: 100px;
+  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 2px;
+  padding: 4px 0 8px;
+  display: flex;
+  flex-direction: column;
 
-      &--readonly {
-        background: transparent;
-        border-width: 0;
-      }
+  &__buttons {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-start;
+  }
 
-      p {
-        margin-bottom: 0;
+  &__actions {
+    .user-buttons {
+      button {
+        margin: 8px 4px 0;
       }
     }
   }
-}
 
-body {
-  @include wysiwyg-theme($sto-theme, $variables);
+  &__editor {
 
-  &.sto-dark-theme {
-    @include wysiwyg-theme($sto-dark-theme, $dark-variables);
+    transition: border-color 300ms ease, background-color 200ms ease, height 200ms ease;
+    border-radius: 2px;
+    outline: none;
+    margin-top: 4px;
+    padding: 12px 4px 4px;
+    flex: 1 1 auto;
+    line-height: 18px;
+    overflow: auto;
+
+    &--readonly {
+      background: transparent;
+      border-width: 0;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
   }
 }
-
-

@@ -1,5 +1,4 @@
-@import 'stoui-core/variables';
-@import 'stoui-core/style/functions';
+@import "~@angular/material/theming";
 
 $sto-filter-header-font-size: 18px;
 $sto-filter-header-line-height: 24px;
@@ -24,7 +23,7 @@ $sto-filter-header-elevation: 2;
 
   .mat-expansion-panel-header {
     @include mat-elevation($sto-filter-header-elevation);
-    padding: 0 $space-2x;
+    padding: 0 8px;
     cursor: default;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -44,7 +43,7 @@ $sto-filter-header-elevation: 2;
   }
 
   .mat-expansion-panel-body {
-    padding: $space-6x $space-4x 0 $space-4x;
+    padding: 24px 16px 0 16px;
     margin: 0;
   }
 
@@ -55,12 +54,12 @@ $sto-filter-header-elevation: 2;
 
   .sto-filter-table-actions {
 
-    padding: 0 $space-2x;
+    padding: 0 8px;
 
   }
 
   .sto-filter-actions {
-    padding: 0 0 0 $space-2x;
+    padding: 0 0 0 8px;
 
 
   }
@@ -81,16 +80,6 @@ $sto-filter-header-elevation: 2;
     }
   }
 
-
-  /*.sto-filter-form {
-    .mat-select, .mat-form-field:not(.sto-grid__column) {
-      width: 100%;
-    }
-
-    .mat-select-trigger {
-      height: inherit;
-    }
-  }*/
 
   .mat-expansion-panel-header {
     border-radius: 2px;
@@ -117,7 +106,7 @@ $sto-filter-header-elevation: 2;
     display: inline-block;
     width: 1px;
     height: 24px;
-    margin: spacer(2) spacer(1);
+    margin: 8px 4px;
   }
 
   .content-wrapper {

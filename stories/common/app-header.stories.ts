@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // @ts-ignore
 import markdown from '../../projects/stoui-common/src/lib/sto-app-header/sto-app-header.component.md';
+import { StoThemeModule } from '../../projects/stoui-common/src/lib/theme/theme.module';
+import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'common/Application Header',
@@ -17,7 +19,8 @@ export default {
     moduleMetadata({
       imports: [
         StoAppHeaderModule,
-        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule ],
+        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule,
+        StoThemeModule.forRoot() ],
     })
   ],
   argTypes: {
@@ -66,13 +69,23 @@ AsTestEnvironment.argTypes = {
 export const WithUserMenu: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
   return {
     props: {
-      breadCrumbs: [ { label: 'Root' }, { label: 'SubModule' }, ],
+      breadCrumbs: [
+        { label: 'Root', command: action('Root clicked'), segment: '' },
+        { label: 'SubModule', command: action('SubModule clicked'), segment: 'submodule' },
+        { label: 'Third level!', command: action('Third clicked'), segment: 'third' }
+      ],
       environmentName: 'Systemtest',
+      homeConfig: { command: action('Home clicked') },
       testEnvironment: true,
       ...args
     },
+    styles: [
+      '::ng-deep body .sto-header { left: 0; width: 100% !important; }'
+    ],
     template: `
-<sto-app-header [userMenu]="menu" [breadCrumbs]="[ { label: 'Root' }, { label: 'SubModule' } ]"></sto-app-header>
+<sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [homeBreadCrumbConfig]="homeConfig">
+<button mat-icon-button><mat-icon>home</mat-icon></button>
+</sto-app-header>
 <mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
 `
   };

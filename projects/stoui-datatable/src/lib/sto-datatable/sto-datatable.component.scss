@@ -1,8 +1,8 @@
 @import "./sto-datatable-mixins";
 @import '~@angular/material/theming';
 
-@import "stoui-core/variables";
-
+$space: 4px;
+$space-2x: $space * 2;
 
 $datatable-header-vertical-padding: $space-2x;
 $datatable-header-horizontal-padding: $space-2x;

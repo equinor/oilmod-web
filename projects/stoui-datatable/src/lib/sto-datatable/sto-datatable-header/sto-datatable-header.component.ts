@@ -94,7 +94,6 @@ export class StoDatatableHeaderComponent<T = any> implements OnInit {
     let width = 0;
     const colIndex = this.columns.indexOf(column);
     this.headerWidthMap[ colIndex ] = flexBasis;
-    console.log(this.headerWidthMap[ colIndex ]);
     /*    const cols = this.columns
           .map(c => {
             if ( c === column ) {

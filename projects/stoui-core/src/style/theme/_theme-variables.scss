@@ -5,7 +5,7 @@
   $primary: mat-color($primary-palette);
   $primary-contrast: mat-contrast($primary-palette, main);
   $accent-palette: map-get($theme, accent);
-  $accent: mat-color($accent-palette);
+  $accent: mat-color($accent-palette, highlight);
   $accent-contrast: mat-contrast($accent-palette, main);
   $warn-palette: map-get($theme, warn);
   $warn: mat-color($warn-palette);
@@ -25,6 +25,7 @@
 
   $background: map-get($theme, background);
   $background-color: map-get($background, background);
+  $card-bg: map_get($background, card);
   $hover-bg-color: mat-color($background, 'hover');
   $hover-color: mat-color($foreground, slider-off-active);
   $selected-color: mat-color($background, hover, 0.12);
@@ -51,6 +52,7 @@
     app-bar: $app-bar,
     icon: $icon,
     icon-hover: $icon-hover,
-    hover-color: $hover-color
+    hover-color: $hover-color,
+    card-bg: $card-bg
   )
 }

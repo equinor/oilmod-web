@@ -43,9 +43,23 @@ export const Primary: Story<StoMessagePanelComponent> = (args: StoMessagePanelCo
 };
 
 
+export const Accent: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
+  return {
+    template: '<sto-message-panel (dismissed)="dismiss()" color="accent" [dismissable]="false" icon="info">Accent Text Content</sto-message-panel>'
+  };
+};
+
+
 export const Warning: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
   return {
     template: '<sto-message-panel (dismissed)="dismiss()" color="warning" [dismissable]="false" icon="warning">Warning Text Content</sto-message-panel>'
+  };
+};
+
+
+export const Warn: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
+  return {
+    template: '<sto-message-panel (dismissed)="dismiss()" color="warn" [dismissable]="false" icon="warning">Warn Text Content</sto-message-panel>'
   };
 };
 

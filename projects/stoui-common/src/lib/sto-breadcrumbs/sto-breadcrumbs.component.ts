@@ -20,7 +20,17 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   /**
    * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
    */
-  @Input() model: any[];
+  @Input() get model(): any[] {
+    return this._model;
+  }
+
+  set model(model: any[]) {
+    this.title = ( model || [] ).map(e => e.label || '').join(' / ');
+    this._model = model;
+  }
+
+  private _model: any[];
+  public title: string;
 
   @Input()
   homeicon = 'apps';
@@ -49,6 +59,9 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   public iconConfig: { icon?: string; svgIcon?: string; text?: string; };
 
   itemClick(event, item: any) {
+    if ( !item ) {
+      return;
+    }
     if ( item.disabled ) {
       event.preventDefault();
       return;

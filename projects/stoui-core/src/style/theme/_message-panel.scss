@@ -34,7 +34,9 @@
 }
 
 // Include theme styles for your custom components.
-@include sto-message-panel-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include sto-message-panel-theme($sto-theme, $variables);
+}
 
 .sto-dark-theme {
   @include sto-message-panel-theme($sto-dark-theme, $dark-variables);

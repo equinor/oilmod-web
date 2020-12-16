@@ -21,7 +21,6 @@ export class StoDatatableHeaderGroupComponent implements OnChanges {
 
   testOffset(group: ColumnGroup) {
     if ( !this.columns ) {
-      console.log(this.columns);
       return '';
     }
     const { columnStart } = group;

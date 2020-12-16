@@ -45,7 +45,9 @@
 }
 
 // Include theme styles for your custom components.
-@include preference-manager-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include preference-manager-theme($sto-theme, $variables);
+}
 
 .sto-dark-theme {
   @include preference-manager-theme($sto-dark-theme, $dark-variables);

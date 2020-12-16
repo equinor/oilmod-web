@@ -5,6 +5,7 @@ import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.module'
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
     StoBreadcrumbsModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    LayoutModule
   ],
   declarations: [ StoAppHeaderComponent ],
   exports: [ StoAppHeaderComponent ],

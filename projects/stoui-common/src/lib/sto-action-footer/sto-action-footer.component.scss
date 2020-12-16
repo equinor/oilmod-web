@@ -1,5 +1,5 @@
-@import 'stoui-core/variables';
-@import "stoui-core/style/functions";
+@import "~@angular/material/theming";
+
 $footer-height: 69px;
 
 .sto-action-footer {
@@ -15,14 +15,16 @@ $footer-height: 69px;
   button {
     text-transform: uppercase;
   }
+
   &__message {
     line-height: 2.9;
   }
-  &__content{
-    padding: spacer(4) spacer(6);
+
+  &__content {
+    padding: 16px 24px;
   }
 
-  .mat-progress-bar{
+  .mat-progress-bar {
     margin-top: -5px;
   }
 
