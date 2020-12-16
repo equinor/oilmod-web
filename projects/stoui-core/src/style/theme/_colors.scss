@@ -38,11 +38,11 @@ $sto-accent: (
 );
 
 $sto-indicator: (
-  warning : #FFE7D6,
+  warning : #FF9200,
   success : #358132,
   danger: #EB0000,
   contrast: (
-    warning : $dark-primary-text,
+    warning : $light-primary-text,
     success : $light-primary-text,
     danger: $light-primary-text,
   )
