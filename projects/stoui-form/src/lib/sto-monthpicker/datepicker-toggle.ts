@@ -16,10 +16,10 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatMonthPicker} from './datepicker';
-import {MatDatepickerIntl} from './datepicker-intl';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {Subscription, merge, of as observableOf} from 'rxjs';
+import { MatMonthPicker } from './datepicker';
+import { MatDatepickerIntl } from './datepicker-intl';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { merge, of as observableOf, Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,7 +27,7 @@ import {Subscription, merge, of as observableOf} from 'rxjs';
   selector: 'md-monthpicker-toggle',
   templateUrl: 'datepicker-toggle.html',
   host: {
-    'class': 'mat-datepicker-toggle',
+    class: 'mat-datepicker-toggle',
   },
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,

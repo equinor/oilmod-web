@@ -15,6 +15,13 @@ export class FormFieldBase {
 
   errorStateMatcher: ErrorStateMatcher;
 
+  constructor(public _elementRef: ElementRef,
+              public _defaultErrorStateMatcher: ErrorStateMatcher,
+              public _parentForm: NgForm,
+              public _parentFormGroup: FormGroupDirective,
+              public ngControl: NgControl) {
+  }
+
   updateErrorState() {
     const oldState = this.errorState;
     const parent = this._parentFormGroup || this._parentForm;
@@ -26,12 +33,5 @@ export class FormFieldBase {
       this.errorState = newState;
       this.stateChanges.next();
     }
-  }
-
-  constructor(public _elementRef: ElementRef,
-              public _defaultErrorStateMatcher: ErrorStateMatcher,
-              public _parentForm: NgForm,
-              public _parentFormGroup: FormGroupDirective,
-              public ngControl: NgControl) {
   }
 }

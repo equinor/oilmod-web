@@ -1,4 +1,4 @@
-import {AbstractControl, FormGroup} from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -7,18 +7,20 @@ import { takeUntil } from 'rxjs/operators';
  * Used to simplify the {@link UnsavedChangesGuard} and improve usage (not showing a modal if form is same as original)
  */
 export class FormSerializeValidator {
-  private monkeypatchMarkAsPristine(control: AbstractControl) {
-    if (control) {
-      const self = this;
-      const origFunc = control.markAsPristine;
-      control.markAsPristine = function () {
-        origFunc.apply(this, arguments);
-        self.orginalValue = self._form;
-      };
+
+  public get originalValue(): any {
+    return this._originalValue;
+  }
+
+  public set orginalValue(form: any) {
+    if ( form && !form.dirty ) {
+      this._originalValue = this.replaceEmptyStringsWithNull(form.value);
     }
   }
 
-  constructor( private _form: FormGroup, private destroyed$: Subject<boolean> ) {
+  private _originalValue: any;
+
+  constructor(private _form: FormGroup, private destroyed$: Subject<boolean>) {
     this.monkeypatchMarkAsPristine(this._form);
     this.orginalValue = this._form;
 
@@ -28,31 +30,30 @@ export class FormSerializeValidator {
      */
     this._form.valueChanges
       .pipe(
-        takeUntil( this.destroyed$ )
-      ).subscribe( changedValue => {
+        takeUntil(this.destroyed$)
+      ).subscribe(changedValue => {
       if ( this._form.dirty ) {
-        const current_value = this.replaceEmptyStringsWithNull( this._form.value );
+        const current_value = this.replaceEmptyStringsWithNull(this._form.value);
         if ( this.originalValue == current_value ) {
           this._form.markAsPristine();
         }
       }
-    } );
+    });
   }
 
-  private _originalValue: any;
-
-  public get originalValue(): any {
-    return this._originalValue;
-  }
-
-  public set orginalValue( form: any ) {
-    if ( form && !form.dirty ) {
-      this._originalValue = this.replaceEmptyStringsWithNull( form.value );
+  private monkeypatchMarkAsPristine(control: AbstractControl) {
+    if ( control ) {
+      const self = this;
+      const origFunc = control.markAsPristine;
+      control.markAsPristine = function () {
+        origFunc.apply(this, arguments);
+        self.orginalValue = self._form;
+      };
     }
   }
 
-  private replaceEmptyStringsWithNull( value ) {
-    return JSON.stringify( value ).replace( /""/g, 'null' );
+  private replaceEmptyStringsWithNull(value) {
+    return JSON.stringify(value).replace(/""/g, 'null');
   }
 
 }

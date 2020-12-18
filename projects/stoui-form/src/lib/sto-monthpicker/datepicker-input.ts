@@ -1,3 +1,4 @@
+/* tslint:disable:member-ordering */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -6,8 +7,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {DOWN_ARROW} from '@angular/cdk/keycodes';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { DOWN_ARROW } from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
   Directive,
@@ -31,12 +32,12 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
-import {MatFormField} from '@angular/material/form-field';
-import {Subscription} from 'rxjs';
-import {coerceDateProperty} from './coerce-date-property';
-import {MatMonthPicker} from './datepicker';
-import {createMissingDateImplError} from './datepicker-errors';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { MatFormField } from '@angular/material/form-field';
+import { Subscription } from 'rxjs';
+import { coerceDateProperty } from './coerce-date-property';
+import { MatMonthPicker } from './datepicker';
+import { createMissingDateImplError } from './datepicker-errors';
 import { format } from 'date-fns';
 
 export const MAT_MONTHPICKER_VALUE_ACCESSOR: any = {
@@ -86,32 +87,24 @@ export class MatDatepickerInputEvent<D> {
   exportAs: 'mdMonthpickerInput',
 })
 export class MatMonthpickerInput<D> implements AfterContentInit, ControlValueAccessor, OnDestroy,
-    Validator {
+  Validator {
   /** The datepicker that this input is associated with. */
   @Input()
   set mdMonthpicker(value: MatMonthPicker<D>) {
     this.registerDatepicker(value);
-  }
-  _datepicker: MatMonthPicker<D>;
-
-  private registerDatepicker(value: MatMonthPicker<D>) {
-    if (value) {
-      this._datepicker = value;
-      this._datepicker._registerInput(this);
-    }
   }
 
   @Input() set matDatepickerFilter(filter: (date: D | null) => boolean) {
     this._dateFilter = filter;
     this._validatorOnChange();
   }
-  _dateFilter: (date: D | null) => boolean;
 
   /** The value of the input. */
   @Input()
   get value(): D | null {
     return this._value;
   }
+
   set value(value: D | null) {
     value = coerceDateProperty(this._dateAdapter, value);
     this._lastValueValid = !value || this._dateAdapter.isValid(value);
@@ -120,42 +113,50 @@ export class MatMonthpickerInput<D> implements AfterContentInit, ControlValueAcc
     const oldDate = this.value;
     this._value = value;
     this._renderer.setProperty(this._elementRef.nativeElement, 'value',
-        value ? format(value as any, 'MMM YYYY') : ''); //DIRTY!
-    if (!this._dateAdapter.sameDate(oldDate, value)) {
+      value ? format(value as any, 'MMM YYYY') : ''); // DIRTY!
+    if ( !this._dateAdapter.sameDate(oldDate, value) ) {
       this._valueChange.emit(value);
     }
   }
-  private _value: D | null;
 
   /** The minimum valid date. */
   @Input()
   get min(): D | null { return this._min; }
+
   set min(value: D | null) {
     this._min = coerceDateProperty(this._dateAdapter, value);
     this._validatorOnChange();
   }
-  private _min: D | null;
 
   /** The maximum valid date. */
   @Input()
   get max(): D | null { return this._max; }
+
   set max(value: D | null) {
     this._max = coerceDateProperty(this._dateAdapter, value);
     this._validatorOnChange();
   }
-  private _max: D | null;
 
   /** Whether the datepicker-input is disabled. */
   @Input()
-  get disabled() { return this._disabled; }
+  get disabled() {
+    return this._disabled;
+  }
+
   set disabled(value: any) {
     const newValue = coerceBooleanProperty(value);
 
-    if (this._disabled !== newValue) {
+    if ( this._disabled !== newValue ) {
       this._disabled = newValue;
       this._disabledChange.emit(newValue);
     }
   }
+
+  _datepicker: MatMonthPicker<D>;
+  _dateFilter: (date: D | null) => boolean;
+  private _value: D | null;
+  private _min: D | null;
+  private _max: D | null;
   private _disabled: boolean;
 
   /** Emits when a `change` event is fired on this `<input>`. */
@@ -165,68 +166,63 @@ export class MatMonthpickerInput<D> implements AfterContentInit, ControlValueAcc
   @Output() dateInput = new EventEmitter<MatDatepickerInputEvent<D>>();
 
   /** Emits when the value changes (either due to user input or programmatic change). */
-  _valueChange = new EventEmitter<D|null>();
+  _valueChange = new EventEmitter<D | null>();
 
   /** Emits when the disabled state has changed */
   _disabledChange = new EventEmitter<boolean>();
-
-  _onTouched = () => {};
-
-  private _cvaOnChange: (value: any) => void = () => {};
-
-  private _validatorOnChange = () => {};
 
   private _datepickerSubscription = Subscription.EMPTY;
 
   private _localeSubscription = Subscription.EMPTY;
 
+  /** The combined form control validator for this input. */
+
   /** The form control validator for whether the input parses. */
   private _parseValidator: ValidatorFn = (): ValidationErrors | null => {
     return this._lastValueValid ?
-        null : {'matDatepickerParse': {'text': this._elementRef.nativeElement.value}};
-  }
+      null : { matDatepickerParse: { text: this._elementRef.nativeElement.value } };
+  };
 
   /** The form control validator for the min date. */
   private _minValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const controlValue = coerceDateProperty(this._dateAdapter, control.value);
-    return (!this.min || !controlValue ||
-        this._dateAdapter.compareDate(this.min, controlValue) <= 0) ?
-        null : {'matDatepickerMin': {'min': this.min, 'actual': controlValue}};
-  }
+    return ( !this.min || !controlValue ||
+      this._dateAdapter.compareDate(this.min, controlValue) <= 0 ) ?
+      null : { matDatepickerMin: { min: this.min, actual: controlValue } };
+  };
 
   /** The form control validator for the max date. */
   private _maxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const controlValue = coerceDateProperty(this._dateAdapter, control.value);
-    return (!this.max || !controlValue ||
-        this._dateAdapter.compareDate(this.max, controlValue) >= 0) ?
-        null : {'matDatepickerMax': {'max': this.max, 'actual': controlValue}};
-  }
+    return ( !this.max || !controlValue ||
+      this._dateAdapter.compareDate(this.max, controlValue) >= 0 ) ?
+      null : { matDatepickerMax: { max: this.max, actual: controlValue } };
+  };
 
   /** The form control validator for the date filter. */
   private _filterValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const controlValue = coerceDateProperty(this._dateAdapter, control.value);
     return !this._dateFilter || !controlValue || this._dateFilter(controlValue) ?
-        null : {'matDatepickerFilter': true};
-  }
+      null : { matDatepickerFilter: true };
+  };
 
-  /** The combined form control validator for this input. */
   private _validator: ValidatorFn | null =
-      Validators.compose(
-          [this._parseValidator, this._minValidator, this._maxValidator, this._filterValidator]);
+    Validators.compose(
+      [ this._parseValidator, this._minValidator, this._maxValidator, this._filterValidator ]);
 
   /** Whether the last value set on the input was valid. */
   private _lastValueValid = false;
 
   constructor(
-      private _elementRef: ElementRef,
-      private _renderer: Renderer2,
-      @Optional() private _dateAdapter: DateAdapter<D>,
-      @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
-      @Optional() private _formField: MatFormField) {
+    private _elementRef: ElementRef,
+    private _renderer: Renderer2,
+    @Optional() private _dateAdapter: DateAdapter<D>,
+    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() private _formField: MatFormField) {
     if (!this._dateAdapter) {
       throw createMissingDateImplError('DateAdapter');
     }
-    if (!this._dateFormats) {
+    if ( !this._dateFormats ) {
       throw createMissingDateImplError('MAT_DATE_FORMATS');
     }
 
@@ -236,16 +232,33 @@ export class MatMonthpickerInput<D> implements AfterContentInit, ControlValueAcc
     });
   }
 
+  private registerDatepicker(value: MatMonthPicker<D>) {
+    if ( value ) {
+      this._datepicker = value;
+      this._datepicker._registerInput(this);
+    }
+  }
+
+  _onTouched = () => {
+  };
+
+  private _cvaOnChange: (value: any) => void = () => {
+  };
+
+  private _validatorOnChange = () => {
+  };
+
+
   ngAfterContentInit() {
-    if (this._datepicker) {
+    if ( this._datepicker ) {
       this._datepickerSubscription =
-          this._datepicker.selectedChanged.subscribe((selected: D) => {
-            this.value = selected;
-            this._cvaOnChange(selected);
-            this._onTouched();
-            this.dateInput.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
-            this.dateChange.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
-          });
+        this._datepicker.selectedChanged.subscribe((selected: D) => {
+          this.value = selected;
+          this._cvaOnChange(selected);
+          this._onTouched();
+          this.dateInput.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
+          this.dateChange.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
+        });
     }
   }
 

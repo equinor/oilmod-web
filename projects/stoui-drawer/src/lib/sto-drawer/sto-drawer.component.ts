@@ -70,6 +70,30 @@ import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 })
 
 export class StoDrawerComponent implements OnInit, AfterViewInit {
+
+  /**
+   * If the drawer is opened.
+   */
+  @Input()
+  @HostBinding('class.open')
+  get open() {
+    return this._open;
+  }
+
+  set open(open: boolean) {
+    this._open = open;
+    this.onOpen.emit(open);
+    this.cdr.detectChanges();
+  }
+
+  // @HostBinding('@drawerAnimations')
+  get slideInOut() {
+    if ( !this.animation ) {
+      return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
+    }
+    return this.open ? `open-${this.position}` : `closed-${this.position}`;
+  }
+
   /**
    * Offset (space) between the viewPanel right and the drawer in pixels
    * Binds to the right style property.
@@ -103,21 +127,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   @Input() ignoreEscKey = false;
 
-  /**
-   * If the drawer is opened.
-   */
-  @Input()
-  @HostBinding('class.open')
-  get open() {
-    return this._open;
-  }
-
-  set open(open: boolean) {
-    this._open = open;
-    this.onOpen.emit(open);
-    this.cdr.detectChanges();
-  }
-
   private _open;
 
   /**
@@ -135,14 +144,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   animation: boolean;
   @Input()
   backdrop: boolean;
-
-  // @HostBinding('@drawerAnimations')
-  get slideInOut() {
-    if ( !this.animation ) {
-      return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
-    }
-    return this.open ? `open-${this.position}` : `closed-${this.position}`;
-  }
 
   /**
    * Emits true if opened, false if closed.
@@ -175,6 +176,9 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
   footer: ElementRef<HTMLElement>;
 
+  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
+  }
+
 
   @HostListener('document:keydown', [ '$event' ])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -187,7 +191,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
 
   private testKeyCombos(ev: KeyboardEvent) {
-    const path: HTMLElement[] = event[ 'path' ];
+    const path: HTMLElement[] = ( ev as any ).path;
     // Test to ensure we have focus inside the drawer
     if ( !( path && path.includes(this.el.nativeElement) ) ) {
       return;
@@ -201,13 +205,10 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     if ( ev.keyCode !== Key.Escape || this.ignoreEscKey ) {
       return;
     }
-    const isNotInsideADatePicker = !this.isKeyPressInDaterangePicker(ev);
-    if ( isNotInsideADatePicker ) {
-      const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
-      if ( isNotInsideAMenu ) {
-        this.closeDrawer();
-        this.cancel.emit();
-      }
+    const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
+    if ( isNotInsideAMenu ) {
+      this.closeDrawer();
+      this.cancel.emit();
     }
   }
 
@@ -226,19 +227,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       .map(el => el.innerHTML)
       .filter(content => !!content || content !== '');
     return overlaysActive.length !== 0;
-  }
-
-  /**
-   * Test if a keypress is inside a sto-daterange picker by the tagnamne
-   * @param ev
-   * true if inside sto-daterange false if else
-   */
-  private isKeyPressInDaterangePicker(ev: KeyboardEvent): boolean {
-    const path: Array<HTMLElement> = ev[ 'path' ];
-    return !!path
-      .filter(el => !!el.tagName)
-      .map(el => el.tagName.toLowerCase())
-      .find(tagname => tagname === 'sto-daterange');
   }
 
   @HostListener('window:resize', [ '$event' ])
@@ -285,9 +273,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
     }
-  }
-
-  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {

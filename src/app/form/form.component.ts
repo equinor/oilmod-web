@@ -5,7 +5,7 @@ import { parse } from 'date-fns';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],
+  styleUrls: [ './form.component.scss' ],
   encapsulation: ViewEncapsulation.None
 })
 export class FormComponent implements OnInit {
@@ -13,16 +13,22 @@ export class FormComponent implements OnInit {
   public maxDate = parse('2018-07-30');
   public form: FormGroup;
   public filterText: string;
-  public opts: string[] = ['AB', 'BC', 'CD', 'DE', 'EF'];
-  public filterOpts: string[] = ['AB', 'BC', 'CD', 'DE', 'EF'];
+  public opts: string[] = [ 'AB', 'BC', 'CD', 'DE', 'EF' ];
+  public filterOpts: string[] = [ 'AB', 'BC', 'CD', 'DE', 'EF' ];
+
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  }
+
   compareSelection(a: string, b: string) {
     return a === b;
   }
+
   onSelectFilterChange(value) {
     this.filterText = value;
     this.filterOpts = this.opts
       .filter(v => new RegExp(value || '', 'i').test(v));
   }
+
   onSelectAll(all: boolean) {
     const o = all ? this.filterOpts : [];
     this.form.get('multi').setValue(o);
@@ -30,8 +36,6 @@ export class FormComponent implements OnInit {
     this.cdr.markForCheck();
     this.cdr.detectChanges();
   }
-
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.fb.group({

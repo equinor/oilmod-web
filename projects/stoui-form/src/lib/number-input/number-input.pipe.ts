@@ -21,7 +21,7 @@ export class NumberInputPipe implements PipeTransform {
       if ( integer === '-' ) {
         integer = '-0';
       } else {
-        integer = '-' + parseInt(integer, 10) * -1; //To handle -0.123
+        integer = '-' + parseInt(integer, 10) * -1; // To handle -0.123
       }
     } else {
       integer = parseInt(integer, 10) + '';

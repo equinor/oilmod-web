@@ -14,8 +14,6 @@ import { NAVIGATION_HOME_ICON } from './breadcrumb';
   encapsulation: ViewEncapsulation.None,
 })
 export class StoBreadcrumbsComponent implements OnDestroy {
-  @HostBinding('class.sto-breadcrumb')
-  css = true;
 
   /**
    * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
@@ -28,6 +26,9 @@ export class StoBreadcrumbsComponent implements OnDestroy {
     this.title = ( model || [] ).map(e => e.label || '').join(' / ');
     this._model = model;
   }
+
+  @HostBinding('class.sto-breadcrumb')
+  css = true;
 
   private _model: any[];
   public title: string;
@@ -58,6 +59,10 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   @Input() homeIcon = 'home';
   public iconConfig: { icon?: string; svgIcon?: string; text?: string; };
 
+  constructor(private router: Router, @Inject(NAVIGATION_HOME_ICON) @Optional() iconConfig) {
+    this.iconConfig = iconConfig || { icon: 'apps' };
+  }
+
   itemClick(event, item: any) {
     if ( !item ) {
       return;
@@ -79,7 +84,7 @@ export class StoBreadcrumbsComponent implements OnDestroy {
 
       item.eventEmitter.emit({
         originalEvent: event,
-        item: item
+        item
       });
     } else if ( item.segment ) {
       this.router.navigate([ item.segment ], { queryParamsHandling: 'preserve' })
@@ -101,9 +106,5 @@ export class StoBreadcrumbsComponent implements OnDestroy {
         }
       }
     }
-  }
-
-  constructor(private router: Router, @Inject(NAVIGATION_HOME_ICON) @Optional() iconConfig) {
-    this.iconConfig = iconConfig || { icon: 'apps' };
   }
 }

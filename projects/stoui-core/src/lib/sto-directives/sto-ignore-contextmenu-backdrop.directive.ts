@@ -22,6 +22,10 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit, OnDestroy 
   private _matMenu: MatMenuPanel;
   private destroyed$ = new Subject();
 
+  constructor(private _view: ViewContainerRef) {
+
+  }
+
   /**
    * closeMenu finds the relevant overlay, and if the click event is outside the menu, it gets closed.
    * @param event
@@ -29,7 +33,7 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit, OnDestroy 
   private closeMenu = (event) => {
     const path = event.path || [];
     const isClickOutside = !path.find(el => {
-      if (!el.classList) {
+      if ( !el.classList ) {
         return false;
       } else {
         return el.classList.contains('cdk-overlay-pane');
@@ -78,7 +82,7 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit, OnDestroy 
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(() => {
-      const _overlay = (<any>this._matMenuTrigger)._overlayRef.backdropElement;
+      const _overlay = ( this._matMenuTrigger as any )._overlayRef.backdropElement;
       if (_overlay) {
         _overlay.style.pointerEvents = 'none';
       }
@@ -92,10 +96,6 @@ export class StoIgnoreContextmenuBackdropDirective implements OnInit, OnDestroy 
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-  }
-
-  constructor(private _view: ViewContainerRef) {
-
   }
 
 }

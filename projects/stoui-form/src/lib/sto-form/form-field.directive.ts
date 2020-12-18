@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostListener, OnDestroy, QueryList } from '@angular/core';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -14,8 +15,8 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
   private destroyed$ = new Subject();
 
   constructor(
-    private el: ElementRef<HTMLElement>
-    , private host: MatFormField) {
+    private el: ElementRef<HTMLElement>,
+    private host: MatFormField) {
   }
 
   ngAfterViewInit(): void {
@@ -70,7 +71,7 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
     if ( el.nativeElement.readOnly || el.nativeElement.disabled ) {
       return;
     }
-    let shouldSelect = true;
+    const shouldSelect = true;
     const textarea = el.nativeElement.tagName.toLowerCase() === 'textarea';
     if ( shouldSelect && !textarea ) {
       el.nativeElement.focus();

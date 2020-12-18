@@ -174,9 +174,9 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   onChange = (_: any) => {
-  };
+  }
   onTouched = () => {
-  };
+  }
 
   writeValue(value: boolean): void {
     this.value = value;

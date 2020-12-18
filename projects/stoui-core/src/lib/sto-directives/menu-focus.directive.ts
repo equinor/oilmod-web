@@ -12,15 +12,6 @@ import { DOWN_ARROW, LEFT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
   selector: '[stoMenuFocus]'
 })
 export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
-  /**
-   * Element created on the dom (and removed on host destroy), use to have an inivisible initial focus
-   */
-  private focusElement: HTMLElement;
-  private destroyed$ = new Subject();
-  /**
-   * QueryList<Menuitem> contains all the menu items for the given directive
-   */
-  @ContentChildren(MatMenuItem) menuItems: QueryList<MatMenuItem>;
 
   /**
    * triggers is a QueryList of all the triggers pointing to this menu
@@ -31,11 +22,24 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
    */
   @Input()
   set triggers(triggers: QueryList<MatMenuTrigger>) {
-    if (triggers) {
+    if ( triggers ) {
       this.createHiddenFocusElement();
       this.setFocusFromElement(this.focusElement);
       this.listenOnMenuOpened(triggers);
     }
+  }
+
+  /**
+   * Element created on the dom (and removed on host destroy), use to have an inivisible initial focus
+   */
+  private focusElement: HTMLElement;
+  private destroyed$ = new Subject();
+  /**
+   * QueryList<Menuitem> contains all the menu items for the given directive
+   */
+  @ContentChildren(MatMenuItem) menuItems: QueryList<MatMenuItem>;
+
+  constructor(@Host() @Self() private menu: MatMenu) {
   }
 
   /**
@@ -91,7 +95,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
         .reverse()[0];
       const i = this.menuItems.toArray().findIndex(item => item === last);
       last.focus();
-      (<any>this.menu)._keyManager.setActiveItem(i);
+      ( this.menu as any )._keyManager.setActiveItem(i);
     }
     if (e.keyCode === LEFT_ARROW && this.menu.parentMenu) {
       this.menu._handleKeydown(e);
@@ -139,7 +143,7 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
       ).subscribe(({el, i}) => {
       try {
         el.focus();
-        (<any>this.menu)._keyManager.setActiveItem(i);
+        ( this.menu as any )._keyManager.setActiveItem(i);
       } catch (ex) {
         console.error('Menu focus directive relies on private methods. If you are seeing this, it broke.', ex);
       }
@@ -160,9 +164,6 @@ export class StoMenuFocusDirective implements AfterContentInit, OnDestroy {
     if (this.focusElement) {
       document.body.removeChild(this.focusElement);
     }
-  }
-
-  constructor(@Host() @Self() private menu: MatMenu) {
   }
 
 }

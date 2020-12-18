@@ -51,6 +51,22 @@ import { AutoCompleteValidator } from './sto-autocomplete.validate';
  * ensuring the value set exists in the list
  */
 export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnDestroy {
+
+  /**
+   * @deprecated inheritedErrors are now being retrieved from the host control, rendering this moot.
+   * {ValidationErrors | null}
+   */
+  @Input() get inheritedErrors(): ValidationErrors | null {
+    return this._inheritedErrors;
+  }
+
+  set inheritedErrors(errors: ValidationErrors | null) {
+    this._inheritedErrors = errors;
+    if ( errors ) {
+      this.searchControl.markAsTouched();
+    }
+  }
+
   @Input() formControlName: string;
   @ViewChild(MatAutocompleteTrigger) searchInput: MatAutocompleteTrigger;
   /**
@@ -102,21 +118,6 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
    */
   @Input() helpText: string;
 
-  /**
-   * @deprecated inheritedErrors are now being retrieved from the host control, rendering this moot.
-   * {ValidationErrors | null}
-   */
-  @Input() get inheritedErrors(): ValidationErrors | null {
-    return this._inheritedErrors;
-  }
-
-  set inheritedErrors(errors: ValidationErrors | null) {
-    this._inheritedErrors = errors;
-    if ( errors ) {
-      this.searchControl.markAsTouched();
-    }
-  }
-
   public elementHasFocus: boolean;
   private destroyed$ = new Subject();
   private _inheritedErrors: ValidationErrors | null;
@@ -124,19 +125,19 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
   public searchControl = new FormControl();
   public errors: ValidationErrors | null;
 
-  public markAsTouched() {
-    if ( this.searchControl ) {
-      this.searchControl.markAsTouched();
-      this.searchControl.markAsDirty();
-    }
-  }
-
   public parent: AbstractControl;
 
   constructor(private cdr: ChangeDetectorRef,
               private fb: FormBuilder,
               @Optional() @Host() @SkipSelf()
               private controlContainer: ControlContainer,) {
+  }
+
+  public markAsTouched() {
+    if ( this.searchControl ) {
+      this.searchControl.markAsTouched();
+      this.searchControl.markAsDirty();
+    }
   }
 
   onEnter(event?: KeyboardEvent) {
@@ -183,7 +184,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
   }
 
   propagateChange = (_: any) => {
-  };
+  }
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -218,7 +219,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
     const filtered = this.filterSearch([ ...this.unfiltered ], search);
     const sorted = this.sortSearchByRelevance(filtered, search);
     return sorted;
-  });
+  })
 
   public emitSearchChanged = (): MonoTypeOperatorFunction<string> => tap((value: string) => {
     if ( typeof value === 'string' ) {
@@ -227,7 +228,7 @@ export class StoAutocompleteComponent implements OnInit, ControlValueAccessor, A
       }
       this.beforePropagateChange(value);
     }
-  });
+  })
 
   private beforePropagateChange(value) {
     if ( this.controlContainer ) {

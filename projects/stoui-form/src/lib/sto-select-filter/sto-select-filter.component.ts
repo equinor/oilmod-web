@@ -1,21 +1,7 @@
-import {
-  Component,
-  OnInit,
-  forwardRef,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  HostBinding,
-  ViewEncapsulation
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { Component, EventEmitter, forwardRef, HostBinding, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
@@ -50,15 +36,6 @@ import {takeUntil} from 'rxjs/operators';
   ]
 })
 export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValueAccessor {
-
-  @HostBinding('class.sto-select-filter') cssClass: boolean = true;
-
-  public checkboxControl = new FormControl();
-  public inputControl = new FormControl();
-
-  public indeterminate: boolean;
-
-  private _value: any;
   /**
    * Initial value of the filter
    */
@@ -69,10 +46,7 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
   get value(): any {
     return this._value;
-  };
-
-
-  private _total: number;
+  }
   /**
    * Length of unfiltered Array
    * @param total
@@ -83,10 +57,7 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
   get total(): number {
     return this._total;
-  };
-
-
-  private _selected: number;
+  }
   /**
    * Determines the checkbox state. Can be checked, indeterminate or unchecked
    * @param selected
@@ -108,13 +79,22 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
   get selected(): number {
     return this._selected;
-  };
-
-
-  public isChecked(isChecked: boolean) {
-    ;
-    this.checkboxControl.setValue(isChecked, {emitEvent: false});
   }
+
+  @HostBinding('class.sto-select-filter') cssClass = true;
+
+  public checkboxControl = new FormControl();
+  public inputControl = new FormControl();
+
+  public indeterminate: boolean;
+
+  private _value: any;
+
+
+  private _total: number;
+
+
+  private _selected: number;
 
   /**
    * Emits when selectAll checkbox changes
@@ -135,8 +115,18 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   @Input() isFilter: boolean;
   private destroyed$ = new Subject();
 
+
+  constructor() {
+  }
+
+
+  public isChecked(isChecked: boolean) {
+
+    this.checkboxControl.setValue(isChecked, { emitEvent: false });
+  }
+
   writeValue(value: any) {
-    if (value || value === '') {
+    if ( value || value === '' ) {
       this.inputControl.setValue(value);
     }
   }
@@ -150,10 +140,6 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   }
 
   registerOnTouched(fn: any): void {
-  }
-
-
-  constructor() {
   }
 
   ngOnDestroy() {

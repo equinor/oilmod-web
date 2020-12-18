@@ -41,7 +41,7 @@ export class NumberFormatPipe implements PipeTransform {
     if ( !isNaN(value) && appendDecimals ) {
       value = parseFloat(this.toFixed(value, numberOfDecimals));
     }
-    //Turn negative numbers back, but only if value is not -0
+    // Turn negative numbers back, but only if value is not -0
     if ( isNegativeNumber && value !== -0 ) {
       value = value * -1;
     }
@@ -63,7 +63,7 @@ export class NumberFormatPipe implements PipeTransform {
     return localized;
   }
 
-  //Normal toFixed has some issues: https://stackoverflow.com/questions/10015027/javascript-tofixed-not-rounding
+  // Normal toFixed has some issues: https://stackoverflow.com/questions/10015027/javascript-tofixed-not-rounding
   private toFixed(num, precision) {
     // This method also has some issues - namely, it's unable to parse negative numbers with huge floating points
     // -8.185452315956354e-12 becomes NaN

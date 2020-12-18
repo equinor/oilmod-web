@@ -26,13 +26,17 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
   private _matSelect: MatSelect;
   private _overlayRef: OverlayRef;
 
+  constructor(private vcRef: ViewContainerRef) {
+
+  }
+
   /**
    * closeMenu checks if the click event is outside the select list, and closes the select
    * @param event
    */
   private closeMenu = (event) => {
-  const target = this._overlayRef.overlayElement;
-    if (!target || !target.contains((<any>event.target))) {
+    const target = this._overlayRef.overlayElement;
+    if ( !target || !target.contains(( event.target as any )) ) {
       this._matSelect.close();
     }
   }
@@ -75,7 +79,7 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
 
   ngOnInit(): void {
     try {
-      const parentComponent = ( <any>this.vcRef )._view.context;
+      const parentComponent = ( this.vcRef as any )._view.context;
       this._matSelect = parentComponent;
       this.listenForSelectStateChange();
     } catch (e) {
@@ -110,10 +114,6 @@ export class StoIgnoreMenuBackdropDirective implements AfterContentInit, OnInit,
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-  }
-
-  constructor(private vcRef: ViewContainerRef) {
-
   }
 
 }

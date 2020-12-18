@@ -33,19 +33,19 @@ export class StoActionFooterComponent implements OnInit, OnDestroy  {
    */
   @HostBinding('style.position') @Input() position = 'fixed';
 
+  constructor(private renderer: Renderer2) {
+  }
+
   ngOnDestroy(): void {
-    if (this.shouldAddClass) {
+    if ( this.shouldAddClass ) {
       this.renderer.removeClass(document.body, 'sto-has-action-footer');
     }
   }
 
   ngOnInit(): void {
-    if (this.shouldAddClass) {
+    if ( this.shouldAddClass ) {
       this.renderer.addClass(document.body, 'sto-has-action-footer');
     }
-  }
-
-  constructor(private renderer: Renderer2) {
   }
 
 }

@@ -111,11 +111,14 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   public isOpened: boolean;
   private destroy$ = new Subject<any>();
 
-  @HostListener('document:click', ['$event'])
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  }
+
+  @HostListener('document:click', [ '$event' ])
   onDocumentClick(event) {
-    if (this.dialog) {
+    if ( this.dialog ) {
       const isOption = event.path.map(el => el.tagName).includes('MAT-OPTION');
-      if (isOption) {
+      if ( isOption ) {
         return;
       }
       const overlayOriginEl = this.overlayOrigin.elementRef.nativeElement;
@@ -187,8 +190,5 @@ export class QuickViewComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
   }
 }

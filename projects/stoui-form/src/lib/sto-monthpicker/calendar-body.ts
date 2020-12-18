@@ -6,14 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 
 /**
@@ -38,7 +31,7 @@ export class MatCalendarCell {
   templateUrl: 'calendar-body.html',
   styleUrls: ['calendar-body.scss'],
   host: {
-    'class': 'mat-calendar-body',
+    class: 'mat-calendar-body',
   },
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,

@@ -23,6 +23,10 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   private width: number;
   private moveComplete$ = new Subject<boolean>();
 
+
+  constructor(private el: ElementRef<HTMLElement>) {
+  }
+
   @HostListener('mousedown', [ '$event' ])
   onMouseDown(event: MouseEvent) {
     event.stopPropagation();
@@ -53,10 +57,6 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
     const width = this.initial + move < 40 ? 40 : this.initial + move;
     this.width$.next(width);
     this.width = width;
-  }
-
-
-  constructor(private el: ElementRef<HTMLElement>) {
   }
 
   ngAfterViewInit(): void {
