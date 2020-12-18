@@ -4,8 +4,8 @@
 @import "../../../../stoui-core/src/style/theme/typography";
 
 $header-height: 74px;
-$large-header-height: spacer(24);
-$footer-height: spacer(16);
+$large-header-height: 24 * 4px;
+$footer-height: 16 * 4px;
 $header-size: 20px;
 
 @mixin drawer-theme($theme, $variables) {
@@ -60,7 +60,7 @@ $header-size: 20px;
   }
 
   &__content {
-    padding: spacer(2);
+    padding: 2 * 4px;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -74,10 +74,10 @@ $header-size: 20px;
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: spacer(2);
+    padding: 2 * 4px;
     width: 100%;
 
-    height: calc(#{$footer-height} - spacer(4));
+    height: calc(#{$footer-height} - 4 * 4px);
 
     button {
       text-transform: uppercase;

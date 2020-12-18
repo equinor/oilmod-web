@@ -26,7 +26,7 @@ body, .sto-header, .mat-card {
   transition: background-color 200ms ease;
 }
 
-@include mat-base-typography($sto-typography, '.mat-typography:not(.sto-sm-typography):not(.sto-l-typography)')
+@include mat-base-typography($sto-typography, '.mat-typography')
 @include mat-base-typography($sto-sm-typography, '.mat-typography.sto-sm-typography')
 @include mat-base-typography($sto-l-typography, '.mat-typography.sto-l-typography')
 

@@ -80,15 +80,15 @@ Below styles overrides Angular Material defaults
 button, a {
   &.mat-button, &.mat-raised-button {
     min-width: 88px;
-    margin: 0 spacer(1);
-    padding: 0 spacer(2);
+    margin: 0 1 * 4px;
+    padding: 0 2 * 4px;
   }
   &.dense {
     min-width: 72px;
     line-height: 32px;
     &.breadcrumbs__button {
       margin-top: spacer(-1);
-      margin-right: spacer(2);
+      margin-right: 2 * 4px;
     }
   }
 }
