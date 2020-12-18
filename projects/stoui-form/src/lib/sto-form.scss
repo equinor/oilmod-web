@@ -53,9 +53,11 @@
 }
 
 // Include theme styles for your custom components.
-@include sto-form-theme($sto-theme, $variables);
+body:not(.sto-dark-theme) {
+  @include sto-form-theme($sto-theme, $variables);
+}
 
-.sto-dark-theme {
+body.sto-dark-theme {
   @include sto-form-theme($sto-dark-theme, $dark-variables);
 }
 

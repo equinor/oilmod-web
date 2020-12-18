@@ -1,6 +1,11 @@
 @import "theme";
 @import "typography";
-
+$ship-cove: #6687B8;
+$ship-cove-10: rgba($ship-cove, 0.1);
+$black: #000000;
+$black-4: rgba($black, 0.04);
+$black-8: rgba($black, 0.08);
+$black-12: rgba($black, 0.12);
 @mixin sto-input-override-theme($theme, $variables) {
   $color: map_get($variables, color);
   $accent: map_get($variables, primary);
@@ -42,7 +47,7 @@
     }
 
     .mat-form-field-flex:hover + .mat-form-field-underline {
-      background-color: $hover-bg;
+      background-color: $black-12;
     }
 
     &.mat-focused .mat-form-field-infix .mat-form-field-label {

@@ -10,8 +10,8 @@
     "test": "ng test --codeCoverage=true --watch=false --progress=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "storybook": "yarn docs:json && start-storybook -p 6006",
-    "build-storybook": "yarn docs:json && build-storybook -o dist/storybook",
+    "storybook": "yarn docs:json && start-storybook  --quiet -p 6006",
+    "build-storybook": "yarn docs:json && build-storybook --quiet -o dist/storybook",
     "docs:json": "compodoc -p ./tsconfig.base.json -e json -d ./dist"
   },
   "private": true,
