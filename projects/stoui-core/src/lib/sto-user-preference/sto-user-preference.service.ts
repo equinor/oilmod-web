@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 const preferenceKey = 'TOPS_IM:UserPreferences';
@@ -13,6 +12,19 @@ export class StoUserPreferenceService {
     hasSelectTextOnFocusEnabled: true
   };
 
+
+  constructor() {
+    let sessionPreferences = {};
+    const sessionPreferencesString = this.getPreferences();
+    try {
+      sessionPreferences = JSON.parse(sessionPreferencesString);
+    } catch ( e ) {
+      console.error('Unable to parse the preferences from local storage. Loading default');
+    }
+    this.preferences = { ...this.default, ...sessionPreferences };
+    this.setHasSelectTextOnFocusEnabled(this.preferences.hasSelectTextOnFocusEnabled);
+  }
+
   public setHasSelectTextOnFocusEnabled(value: boolean) {
     this.hasSelectTextOnFocusEnabled.next(value);
     this.preferences.hasSelectTextOnFocusEnabled = value;
@@ -25,18 +37,5 @@ export class StoUserPreferenceService {
 
   public setPreferences(value) {
     sessionStorage.setItem(preferenceKey, JSON.stringify(value));
-  }
-
-
-  constructor() {
-      let sessionPreferences = {};
-      const sessionPreferencesString = this.getPreferences();
-      try {
-        sessionPreferences = JSON.parse(sessionPreferencesString);
-      } catch (e) {
-        console.error('Unable to parse the preferences from local storage. Loading default');
-      }
-      this.preferences = {...this.default, ...sessionPreferences};
-      this.setHasSelectTextOnFocusEnabled(this.preferences.hasSelectTextOnFocusEnabled);
   }
 }

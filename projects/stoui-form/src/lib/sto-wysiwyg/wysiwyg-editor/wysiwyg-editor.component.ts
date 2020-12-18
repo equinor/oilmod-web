@@ -21,13 +21,13 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
 
   private destroyed$ = new Subject<boolean>();
 
+  constructor(private zone: NgZone) {
+  }
+
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-  }
-
-  constructor(private zone: NgZone) {
   }
 
   ngAfterViewInit() {

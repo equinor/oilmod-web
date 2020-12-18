@@ -102,7 +102,7 @@ export class MatYearView<D> implements AfterContentInit {
      this.selectedChange.emit(this._dateAdapter.createDate(
         this._dateAdapter.getYear(this.activeDate), month, 1));
 
-    this._userSelection.emit();
+     this._userSelection.emit();
   }
 
   /** Initializes this month view. */

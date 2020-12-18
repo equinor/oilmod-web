@@ -31,6 +31,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   };
   public selected: any;
 
+  constructor(private cdr: ChangeDetectorRef) {
+  }
+
   getRowClass(row) {
     return row.checked ? 'checked-row' : 'unchecked-row';
   }
@@ -53,16 +56,13 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.comp.scrollTo(item);
   }
 
-  constructor(private cdr: ChangeDetectorRef) {
-  }
-
   ngOnInit() {
     // this.rows = [data[0], data[1]];
     // const rows = [
     //   ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data
     // ];
     // this.rows = JSON.parse(JSON.stringify(rows));
-    this.rows = [ ...data ];//.slice(0, 5);
+    this.rows = [ ...data ]; // .slice(0, 5);
     const allocated = this.rows.map(r => r.allocated).reduce((a, b) => a + b, 0);
     const total = this.rows.map(r => r.total).reduce((a, b) => a + b, 0);
     this.footer = {

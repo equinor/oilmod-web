@@ -16,12 +16,14 @@ export class StoThemeService implements OnDestroy {
   private destroyed$ = new Subject<boolean>();
   private themeObserver: MutationObserver;
   private typographyObserver: MutationObserver;
+  private readonly document: Document;
 
-  constructor(@Inject(DOCUMENT) private document: Document,
+  constructor(@Inject(DOCUMENT) document: any,
               @Optional() @Inject(THEME_SAVER) private readonly saver: ThemeSaver<Observable<ThemeModel>>) {
     if ( !this.saver ) {
       this.saver = new ThemeSaverService();
     }
+    this.document = document as Document;
     this.listenForBodyClassChangesToTheme();
     this.listenForBodyClassChangesToTypography();
     this.setThemeClass();

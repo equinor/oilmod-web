@@ -31,22 +31,6 @@ declare var ResizeObserver: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy {
-  @ViewChild(StoDatatableBodyComponent)
-  body: StoDatatableBodyComponent;
-  @Input()
-  rowHeight = 36;
-  @Input()
-  scrollbarH: boolean;
-  @Input()
-  emptyMessage = `No records in set`;
-  @Input()
-  headerHeight = 24;
-  @Input()
-  selectionMode: SelectionModes = SelectionModes.Click;
-  @Input()
-  sortable: boolean;
-
-  ColumnDisplay = ColumnDisplay;
 
   @Input()
   get height() {
@@ -59,12 +43,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
       this.height$ = of(height);
     }
   }
-
-  private _height: number;
-  @Input()
-  loading: boolean;
-  public height$: Observable<number>;
-  public rowTotalHeight: number;
 
   get bodyHeight() {
     if ( !this.height || !this.body ) {
@@ -83,13 +61,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     const groupOffset = hasHeaderGroup ? this.headerHeight : 0;
     return this.height - headerOffset - footerOffset - groupOffset;
   }
-
-  @Input()
-  autoSize: boolean;
-  @Input()
-  autoSizeOffset = 0;
-  @Input()
-  preserveSort: boolean;
 
   @Input()
   set rows(rows: T[]) {
@@ -122,11 +93,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     return this._internalRows;
   }
 
-  private _rows: T[];
-  private _internalRows: T[];
-  @Input()
-  selected: T;
-
   @Input('footerRow')
   get footerRow() {
     if ( this._footerRow && typeof this._footerRow === 'object' ) {
@@ -141,11 +107,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     this._footerRow = row;
   }
 
-  private _footerRow: T;
-
-  @Input()
-  virtualScroll = true;
-
   @Input()
   get columnMode(): ColumnDisplay {
     return this._columnMode || ColumnDisplay.Flex;
@@ -154,6 +115,70 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   set columnMode(columnMode: ColumnDisplay) {
     this._columnMode = columnMode;
   }
+
+  @Input()
+  get columns(): Column[] {
+    return this._columns;
+  }
+
+  set columns(columns: Column[]) {
+    if ( columns ) {
+      this._columns = columns
+        .map((column, index) => ( {
+          ...column,
+          $$id: btoa(`${column.prop}${column.name}${index}`)
+        } ));
+      this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
+    }
+  }
+
+  get width() {
+    if ( this.scrollbarH && this.columns ) {
+      const widthOffset = this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
+      return `${this.columnTotalWidth + widthOffset}px`;
+    }
+    return 'auto';
+  }
+
+  @ViewChild(StoDatatableBodyComponent)
+  body: StoDatatableBodyComponent;
+  @Input()
+  rowHeight = 36;
+  @Input()
+  scrollbarH: boolean;
+  @Input()
+  emptyMessage = `No records in set`;
+  @Input()
+  headerHeight = 24;
+  @Input()
+  selectionMode: SelectionModes = SelectionModes.Click;
+  @Input()
+  sortable: boolean;
+
+  ColumnDisplay = ColumnDisplay;
+
+  private _height: number;
+  @Input()
+  loading: boolean;
+  public height$: Observable<number>;
+  public rowTotalHeight: number;
+
+  @Input()
+  autoSize: boolean;
+  @Input()
+  autoSizeOffset = 0;
+  @Input()
+  preserveSort: boolean;
+
+  private _rows: T[];
+  private _internalRows: T[];
+  @Input()
+  selected: T;
+
+  private _footerRow: T;
+
+  @Input()
+  virtualScroll = true;
 
   private _columnMode: ColumnDisplay;
 
@@ -171,22 +196,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   @HostBinding('class.mat-elevation-z3')
   @Input()
   elevation = true;
-
-  @Input()
-  get columns(): Column[] {
-    return this._columns;
-  }
-
-  set columns(columns: Column[]) {
-    if ( columns ) {
-      this._columns = columns
-        .map((column, index) => ( {
-          ...column,
-          $$id: btoa(`${column.prop}${column.name}${index}`)
-        } ));
-      this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
-    }
-  }
 
   @Input()
   columnGroups: ColumnGroup[];
@@ -208,23 +217,18 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   private resizeTimeout;
   public columnTotalWidth: number;
 
-  get width() {
-    if ( this.scrollbarH && this.columns ) {
-      const widthOffset = this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
-      return `${this.columnTotalWidth + widthOffset}px`;
-    }
-    return 'auto';
-  }
-
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
   public activeSort: SortColumn;
+
+  constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
+  }
 
 
   @Input()
   trackBy = (item: T, index: number) => {
     return index;
-  }
+  };
 
   rowClick(row: T, index: number, event: MouseEvent) {
     this.selected = row;
@@ -233,9 +237,6 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   trackColumnsFn(index: number, item: Column) {
     return item.$$id;
-  }
-
-  constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
   }
 
   ngAfterViewInit() {

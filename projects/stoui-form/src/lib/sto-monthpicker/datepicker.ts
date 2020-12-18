@@ -73,7 +73,7 @@ export const MAT_DATEPICKER_SCROLL_STRATEGY_PROVIDER = {
   templateUrl: 'datepicker-content.html',
   styleUrls: ['datepicker-content.scss'],
   host: {
-    'class': 'mat-datepicker-content',
+    class: 'mat-datepicker-content',
     '[class.mat-datepicker-content-touch]': 'datepicker.touchUi',
     '(keydown)': '_handleKeydown($event)',
   },

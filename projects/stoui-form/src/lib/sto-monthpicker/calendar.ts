@@ -45,64 +45,33 @@ import { MatYearView } from './year-view';
   templateUrl: 'calendar.html',
   styleUrls: ['calendar.scss'],
   host: {
-    'class': 'mat-calendar',
+    class: 'mat-calendar',
   },
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
-  private _intlChanges: Subscription;
 
   /** A date representing the period (month or year) to start the calendar in. */
   @Input()
   get startAt(): D | null { return this._startAt; }
   set startAt(value: D | null) { this._startAt = coerceDateProperty(this._dateAdapter, value); }
-  private _startAt: D | null;
-
-  /** Whether the calendar should be started in month or year view. */
-  @Input() startView: 'month' | 'year' = 'month';
 
   /** The currently selected date. */
   @Input()
   get selected(): D | null { return this._selected; }
   set selected(value: D | null) { this._selected = coerceDateProperty(this._dateAdapter, value); }
-  private _selected: D | null;
 
   /** The minimum selectable date. */
   @Input()
   get minDate(): D | null { return this._minDate; }
   set minDate(value: D | null) { this._minDate = coerceDateProperty(this._dateAdapter, value); }
-  private _minDate: D | null;
 
   /** The maximum selectable date. */
   @Input()
   get maxDate(): D | null { return this._maxDate; }
   set maxDate(value: D | null) { this._maxDate = coerceDateProperty(this._dateAdapter, value); }
-  private _maxDate: D | null;
-
-  /** A function used to filter which dates are selectable. */
-  @Input() dateFilter: (date: D) => boolean;
-
-  /** Emits when the currently selected date changes. */
-  @Output() selectedChange = new EventEmitter<D>();
-
-  /** Emits when any date is selected. */
-  @Output() _userSelection = new EventEmitter<void>();
-
-  /** Reference to the current month view component. */
-  @ViewChild(MatMonthView) monthView: MatMonthView<D>;
-
-  /** Reference to the current year view component. */
-  @ViewChild(MatYearView) yearView: MatYearView<D>;
-
-  /** Date filter for the month and year views. */
-  _dateFilterForViews = (date: D) => {
-    return !!date &&
-        (!this.dateFilter || this.dateFilter(date)) &&
-        (!this.minDate || this._dateAdapter.compareDate(date, this.minDate) >= 0) &&
-        (!this.maxDate || this._dateAdapter.compareDate(date, this.maxDate) <= 0);
-  }
 
   /**
    * The current active date. This determines which time period is shown and which date is
@@ -112,10 +81,6 @@ export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
   set _activeDate(value: D) {
     this._clampedActiveDate = this._dateAdapter.clampDate(value, this.minDate, this.maxDate);
   }
-  private _clampedActiveDate: D;
-
-  /** Whether the calendar is in month view. */
-  _monthView: boolean;
 
   /** The label for the current calendar view. */
   get _periodButtonText(): string {
@@ -139,6 +104,34 @@ export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
     return this._monthView ? this._intl.nextMonthLabel : this._intl.nextYearLabel;
   }
 
+  private _intlChanges: Subscription;
+  private _startAt: D | null;
+
+  /** Whether the calendar should be started in month or year view. */
+  @Input() startView: 'month' | 'year' = 'month';
+  private _selected: D | null;
+  private _minDate: D | null;
+  private _maxDate: D | null;
+
+  /** A function used to filter which dates are selectable. */
+  @Input() dateFilter: (date: D) => boolean;
+
+  /** Emits when the currently selected date changes. */
+  @Output() selectedChange = new EventEmitter<D>();
+
+  /** Emits when any date is selected. */
+  @Output() _userSelection = new EventEmitter<void>();
+
+  /** Reference to the current month view component. */
+  @ViewChild(MatMonthView) monthView: MatMonthView<D>;
+
+  /** Reference to the current year view component. */
+  @ViewChild(MatYearView) yearView: MatYearView<D>;
+  private _clampedActiveDate: D;
+
+  /** Whether the calendar is in month view. */
+  _monthView: boolean;
+
   constructor(private _elementRef: ElementRef,
               private _intl: MatDatepickerIntl,
               private _ngZone: NgZone,
@@ -146,16 +139,24 @@ export class MatCalendar<D> implements AfterContentInit, OnDestroy, OnChanges {
               @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
               changeDetectorRef: ChangeDetectorRef) {
 
-    if (!this._dateAdapter) {
+    if ( !this._dateAdapter ) {
       throw createMissingDateImplError('DateAdapter');
     }
 
-    if (!this._dateFormats) {
+    if ( !this._dateFormats ) {
       throw createMissingDateImplError('MAT_DATE_FORMATS');
     }
 
     this._intlChanges = _intl.changes.subscribe(() => changeDetectorRef.markForCheck());
   }
+
+  /** Date filter for the month and year views. */
+  _dateFilterForViews = (date: D) => {
+    return !!date &&
+      ( !this.dateFilter || this.dateFilter(date) ) &&
+      ( !this.minDate || this._dateAdapter.compareDate(date, this.minDate) >= 0 ) &&
+      ( !this.maxDate || this._dateAdapter.compareDate(date, this.maxDate) <= 0 );
+  };
 
   ngAfterContentInit() {
     this._activeDate = this.startAt || this._dateAdapter.today();

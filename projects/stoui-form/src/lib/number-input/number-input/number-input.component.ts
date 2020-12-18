@@ -235,9 +235,9 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   }
 
   onChange = (_: any) => {
-  };
+  }
   onTouched = () => {
-  };
+  }
 
   matOnTouched() {
     this.stateChanges.next();

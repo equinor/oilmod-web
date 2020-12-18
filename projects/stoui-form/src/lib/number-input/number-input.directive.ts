@@ -32,6 +32,13 @@ export class NumberInputDirective implements OnChanges {
     Key.Subtract
   ];
 
+
+  constructor(private elementRef: ElementRef,
+              private numberFormatPipe: NumberInputPipe,
+  ) {
+    this._el = this.elementRef.nativeElement;
+  }
+
   private setDisplayValue(readonly: boolean) {
     const val = ( this._el.value || '' ).replace(` ${this.unit}`, '');
     if ( this.unit ) {
@@ -245,13 +252,6 @@ export class NumberInputDirective implements OnChanges {
       return;
     }
     this._el.value = this.numberFormatPipe.transform(value, this.fractionSize, this.dynamicFractionSize);
-  }
-
-
-  constructor(private elementRef: ElementRef,
-              private numberFormatPipe: NumberInputPipe,
-  ) {
-    this._el = this.elementRef.nativeElement;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

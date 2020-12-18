@@ -26,6 +26,26 @@ declare var ResizeObserver: any;
   styleUrls: [ './sto-datatable-body.component.scss' ]
 })
 export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewInit {
+
+  @Input()
+  get scrollbarH(): boolean {
+    return this._scrollbarH;
+  }
+
+  set scrollbarH(scrollbarH: boolean) {
+    this._scrollbarH = scrollbarH;
+    this.horizontalScrollActive = false;
+    if ( this.resizeObserver ) {
+      this.resizeObserver.disconnect();
+    }
+    if ( scrollbarH && this.virtualScroll && this.vScroller ) {
+      this.virtHorzScrollPosition();
+    } else if ( scrollbarH ) {
+      this.horzScrollPosition();
+    }
+    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  }
+
   @ViewChild('scrollViewport', { read: ElementRef })
   scrollElement: ElementRef<HTMLElement>;
   @Input()
@@ -52,25 +72,6 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   virtualScroll: boolean;
   @Input()
   columnMode: ColumnDisplay;
-
-  @Input()
-  get scrollbarH(): boolean {
-    return this._scrollbarH;
-  }
-
-  set scrollbarH(scrollbarH: boolean) {
-    this._scrollbarH = scrollbarH;
-    this.horizontalScrollActive = false;
-    if ( this.resizeObserver ) {
-      this.resizeObserver.disconnect();
-    }
-    if ( scrollbarH && this.virtualScroll && this.vScroller ) {
-      this.virtHorzScrollPosition();
-    } else if ( scrollbarH ) {
-      this.horzScrollPosition();
-    }
-    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
-  }
 
   private _scrollbarH: boolean;
   @Input()
@@ -101,6 +102,10 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   public horizontalScrollActive: boolean;
   public verticalScrollOffset = 0;
 
+  constructor(private differs: KeyValueDiffers) {
+    this.rowDiffer = differs.find({}).create();
+  }
+
   @HostListener('window:resize', [ '$event' ])
   onresize(event) {
     if ( !this.vScroller ) {
@@ -124,10 +129,6 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
       userDefinedClass = this.rowClass.bind(this)(row);
     }
     return `${userDefinedClass} sto-mdl-table__body__row`;
-  }
-
-  constructor(private differs: KeyValueDiffers) {
-    this.rowDiffer = differs.find({}).create();
   }
 
   ngOnDestroy(): void {

@@ -8,13 +8,15 @@ import { MatMonthPicker } from './datepicker';
   selector: '[stoMonthFormFieldClick]'
 })
 export class StoMonthFormFieldClickDirective implements OnInit {
-  constructor() { }
 
-  @Input() stoMonthFormFieldClick: MatMonthPicker<any>; //calendar
+  @Input() stoMonthFormFieldClick: MatMonthPicker<any>; // calendar
+  constructor() {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
-  @HostListener('click', ['$event'])
+  @HostListener('click', [ '$event' ])
   clickEvent(event) {
     this.stoMonthFormFieldClick.open();
   }

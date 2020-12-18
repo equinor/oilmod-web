@@ -12,7 +12,7 @@ import hljs from 'highlight.js';
 showdown.extension('highlight', function () {
   return [ {
     type: 'output',
-    filter: function (text, converter, options) {
+    filter(text, converter, options) {
       const left = '<pre><code\\b[^>]*>',
         right = '</code></pre>',
         flags = 'g';
@@ -43,6 +43,14 @@ export class CommonComponent implements OnInit {
   converter: any;
   severity: 'error' | 'info' | 'warning' = 'warning';
   loading: boolean;
+
+  constructor(
+    private confirmSvc: ConfirmService
+    , private http: HttpClient
+    , private docService: DocsService
+    , private sanitizer: DomSanitizer
+  ) {
+  }
 
   onTabChange(event: MatTabChangeEvent) {
     const i = event.index;
@@ -78,14 +86,6 @@ export class CommonComponent implements OnInit {
         map(doc => doc.replace(/&amp;/g, '&')),
         map(doc => this.sanitizer.bypassSecurityTrustHtml(doc))
       );
-  }
-
-  constructor(
-    private confirmSvc: ConfirmService
-    , private http: HttpClient
-    , private docService: DocsService
-    , private sanitizer: DomSanitizer
-  ) {
   }
 
   ngOnInit() {

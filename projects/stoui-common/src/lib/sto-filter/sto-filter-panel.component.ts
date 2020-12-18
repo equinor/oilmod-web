@@ -23,6 +23,13 @@ import { FilterForm, FilterList } from './filter';
   styleUrls: [ './sto-filter-panel.component.scss' ]
 })
 export class StoFilterPanelComponent implements OnInit, AfterViewInit {
+  set contentHeight(contentHeight: number) {
+    this._contentHeight = contentHeight;
+  }
+
+  get contentHeight(): number {
+    return this._contentHeight;
+  }
 
   /**
    * If the filter panel should be expandable. Default true.
@@ -66,15 +73,19 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @Input()
   public host: FilterForm<any>;
   private _contentHeight: number;
-  set contentHeight(contentHeight: number) {
-    this._contentHeight = contentHeight;
-  }
-
-  get contentHeight(): number {
-    return this._contentHeight;
-  }
 
   public hasSeperator = false;
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private vcRef: ViewContainerRef) {
+    try {
+      const parentComponent = ( this.vcRef as any )._view.context;
+      this.host = parentComponent;
+    } catch ( ex ) {
+      // most likely this fails only for tests after Ivy (Angular 9), as it no longer wraps with a component.
+    }
+  }
 
   public toggle() {
     this.expanded = !this.expanded;
@@ -124,17 +135,6 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     }
 
 
-  }
-
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private vcRef: ViewContainerRef) {
-    try {
-      const parentComponent = ( <any>this.vcRef )._view.context;
-      this.host = parentComponent;
-    } catch ( ex ) {
-      // most likely this fails only for tests after Ivy (Angular 9), as it no longer wraps with a component.
-    }
   }
 
   _clearFilter(key: string, index: number) {
@@ -194,8 +194,6 @@ export class StoFilterActions {
   `
 })
 export class StoFilterActionsBar {
-  @Input() expandable: boolean;
-  private _expanded: boolean;
 
   @Input() set expanded(expanded: boolean) {
     this._expanded = expanded;
@@ -205,11 +203,14 @@ export class StoFilterActionsBar {
     return this._expanded;
   }
 
+  @Input() expandable: boolean;
+  private _expanded: boolean;
+
+  @Output() toggle = new EventEmitter<void>();
+
   onChange($event) {
     // console.log($event);
   }
-
-  @Output() toggle = new EventEmitter<void>();
 
 
 }

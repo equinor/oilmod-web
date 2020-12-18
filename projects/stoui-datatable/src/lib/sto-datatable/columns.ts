@@ -7,7 +7,7 @@ export class Column {
   flexGrow?: number;
   flexBasis?: number;
   flexShrink?: number;
-  sortable? = false;
+  sortable ? = false;
   headerTemplate?: TemplateRef<any>;
   cellTemplate?: TemplateRef<any>;
   footerTemplate?: TemplateRef<any>;

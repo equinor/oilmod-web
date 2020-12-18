@@ -17,20 +17,20 @@ export class StoSelectTextOnFocusDirective implements OnInit, OnDestroy {
   private _hasSelectTextOnFocusEnabled: boolean;
   private _el: HTMLInputElement;
 
+  constructor(private elementRef: ElementRef, @Optional() private userPreferenceService: StoUserPreferenceService) {
+    this._el = this.elementRef.nativeElement;
+  }
+
   /**
    * Listens for focus events on the host (input) element, and focuses if applicable
    */
   @HostListener('focus')
   @HostListener('dblclick')
   onFocus() {
-    if (this._hasSelectTextOnFocusEnabled && this._el.readOnly === false) {
+    if ( this._hasSelectTextOnFocusEnabled && this._el.readOnly === false ) {
       this._el.select();
     }
 
-  }
-
-  constructor(private elementRef: ElementRef, @Optional() private userPreferenceService: StoUserPreferenceService) {
-    this._el = this.elementRef.nativeElement;
   }
 
   /**

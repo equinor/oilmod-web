@@ -23,6 +23,9 @@ export class HttpErrorHandlerService {
   private errorMessageSubject = new ReplaySubject<FormattedError>();
   public errorMessage$: Observable<FormattedError> = this.errorMessageSubject.asObservable();
 
+  constructor(private dialog: MatDialog, private errorFormatter: ErrorFormatter) {
+  }
+
   /**
    * Exposed method that takes in a {@link FormattedError} and handles it according to design specs.
    * Will either emit a message to any subscribers listening for messages, or open a dialog.
@@ -79,9 +82,6 @@ export class HttpErrorHandlerService {
     if ( action === 'replace' ) {
       window.location.reload();
     }
-  }
-
-  constructor(private dialog: MatDialog, private errorFormatter: ErrorFormatter) {
   }
 
 }

@@ -253,9 +253,9 @@ export class NumberUnitInputComponent extends FormFieldBase
 
 
   onChange = (_: any) => {
-  };
+  }
   onTouched = () => {
-  };
+  }
 
   writeValue(value: NumberUnit | null): void {
     this.value = value;
