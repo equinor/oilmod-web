@@ -56,6 +56,12 @@ export const Warning: Story<StoMessagePanelComponent> = (args: StoMessagePanelCo
   };
 };
 
+export const Success: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
+  return {
+    template: '<sto-message-panel (dismissed)="dismiss()" color="success" [dismissable]="false" icon="info">Warning Text Content</sto-message-panel>'
+  };
+};
+
 
 export const Warn: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
   return {

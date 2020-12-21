@@ -9,12 +9,27 @@
   $warn-contrast: map_get($variables, warn-contrast);
   $accent-contrast: map_get($variables, accent-contrast);
   $color: map_get($variables, color);
-  $border-color: map_get($variables, border-color);
-  $icon-color: map_get($variables, icon);
+
+  $success-palette: map-get($theme, success);
+  $success: mat-color($success-palette, highlight);
+  $success-contrast: mat-color($success-palette, highlight-contrast);
+  $success-icon: mat-color($success-palette, resting);
+  $success-border: $success-icon;
+
+  $danger-palette: map-get($theme, danger);
+  $danger: mat-color($danger-palette, highlight);
+  $danger-contrast: mat-color($danger-palette, highlight-contrast);
+  $danger-icon: mat-color($danger-palette, resting);
+  $danger-border: $danger-icon;
+
+  $warning-palette: map-get($theme, warning);
+  $warning: mat-color($warning-palette, highlight);
+  $warning-contrast: mat-color($warning-palette, highlight-contrast);
+  $warning-icon: mat-color($warning-palette, resting);
+  $warning-border: $warning-icon;
 
   .sto-message-panel {
     color: $color;
-    border-color: $border-color;
 
     &.mat-primary {
       background-color: $primary;
@@ -30,8 +45,40 @@
       background-color: $warn;
       color: $warn-contrast;
     }
+
+    &.mat-success {
+      background-color: $success;
+      color: $success-contrast;
+      border-color: $success-border;
+
+      .mat-icon {
+        color: $success-icon;
+      }
+    }
+
+    &.mat-danger {
+      background-color: $danger;
+      color: $danger-contrast;
+      border-color: $danger-border;
+
+      .mat-icon {
+        color: $danger-icon;
+      }
+    }
+
+    &.mat-warning {
+      background-color: $warning;
+      color: $warning-contrast;
+      border-color: $warning-border;
+
+      .mat-icon {
+        color: $warning-icon;
+      }
+    }
+
   }
 }
+
 
 // Include theme styles for your custom components.
 body:not(.sto-dark-theme) {

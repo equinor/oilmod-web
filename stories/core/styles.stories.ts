@@ -6,6 +6,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-dialog-demo',
@@ -73,7 +75,7 @@ export default {
   title: 'core/Styles',
   decorators: [
     moduleMetadata({
-      imports: [ MatCardModule, MatDialogModule, CommonModule, BrowserAnimationsModule, MatButtonModule ],
+      imports: [ MatCardModule, MatTabsModule, MatDialogModule, CommonModule, BrowserAnimationsModule, MatButtonModule, MatIconModule ],
       declarations: [ DialogDemoComponent ]
     })
   ],
@@ -129,3 +131,33 @@ export const StoDialog: Story<{}> = (args) => ( {
 StoDialog.args = {
   separatorLines: false
 };
+
+export const StoTheme: Story<{}> = args => ( {
+  props: { ...args, colors: [ 'primary', 'accent', 'warn', 'warning', 'success', 'danger' ] },
+  template: `
+  <mat-tab-group>
+  <mat-tab label="Buttons">
+    <mat-card class="sto-card">
+    <div *ngFor="let color of colors">
+      <mat-card-subtitle class="sto-card__subtitle">
+    <h2>{{ color }}</h2>
+</mat-card-subtitle>
+    <button mat-button [color]="color">Mat Button</button>
+    <button mat-stroked-button [color]="color">Mat stroked Button</button>
+    <button mat-flat-button [color]="color">Mat flat Button</button>
+    <button mat-raised-button [color]="color">Mat raised Button</button>
+    <button mat-icon-button [color]="color"><mat-icon>home</mat-icon></button>
+</div>
+</mat-card>
+  </mat-tab>
+  <mat-tab label="Cards">
+  <mat-card *ngFor="let c of colors" [ngClass]="'mat-' + c">
+  <mat-card-title>{{ c }}</mat-card-title>
+</mat-card>
+</mat-tab>
+</mat-tab-group>
+  `,
+} );
+/*StoTheme.argTypes = {
+  color: { control: { type: 'select', options: [ 'primary', 'accent', 'warn', 'warning', 'success', 'danger' ] }, defaultValue: 'primary' },
+};*/

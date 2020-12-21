@@ -14,50 +14,12 @@ $sto-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $sto-theme: mat-light-theme($primary, $accent, $sto-warn);
-$sto-theme: map_merge($sto-theme, (indicators: $indicators));
+$sto-theme: map_merge($sto-theme, map_merge((indicators: $indicators), $sto-indicators));
 $sto-dark-theme: mat-dark-theme($primary-dark, $accent-dark, $sto-warn);
-$sto-dark-theme: map_merge($sto-dark-theme, (indicators: $indicators));
+$sto-dark-theme: map_merge($sto-dark-theme, map_merge((indicators: $indicators), $sto-dark-indicators));
 
 $variables: theme_variables($sto-theme);
 $dark-variables: theme_variables($sto-dark-theme);
 
-div, .mat-card, .mat-button, .sto-message-panel {
-  &.mat-success {
-    background-color: mat-color($indicators, success);
-    color: mat-color($indicators, success-contrast);
-  }
-}
 
-div, .mat-card, .mat-button, .sto-message-panel {
-  &.mat-danger {
-    background-color: mat-color($indicators, danger) !important;
-    color: mat-color($indicators, danger-contrast) !important;
-  }
-}
-
-div, .mat-card, .mat-button, .sto-message-panel {
-  &.mat-warning {
-    background-color: mat-color($indicators, warning) !important;
-    color: mat-color($indicators, warning-contrast) !important;
-  }
-}
-
-
-.mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon {
-  &.mat-success {
-    color: mat-color($indicators, success);
-  }
-}
-
-.mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon {
-  &.mat-danger {
-    color: mat-color($indicators, danger) !important;
-  }
-}
-
-.mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon {
-  &.mat-warning {
-    color: mat-color($indicators, warning) !important;
-  }
-}
 
