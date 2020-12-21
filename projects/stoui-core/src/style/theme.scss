@@ -32,7 +32,7 @@ body, .sto-header, .mat-card {
 @include mat-base-typography($sto-l-typography, '.mat-typography.sto-l-typography')
 
 
-.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
+.mat-typography {
   @include mat-core($sto-typography);
 }
 
