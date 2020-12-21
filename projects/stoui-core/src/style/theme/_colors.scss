@@ -49,13 +49,108 @@ $sto-accent: (
   )
 );
 
-$sto-indicator: (
-  warning : #FF9200,
-  success : #358132,
-  danger: #EB0000,
+$sto-warning-map: (
+  highlight: #FFE7D6,
+  resting: #FF9200,
+  hover: #AD6200,
+  text: #AD6200,
   contrast: (
-    warning : $light-primary-text,
+    highlight: $dark-primary-text,
+    resting: $dark-primary-text,
+    hover: $light-primary-text,
+    text: $light-primary-text
+  )
+);
+
+$sto-warning: mat-palette($sto-warning-map, highlight, resting, hover, text);
+
+$sto-dark-warning-map: (
+  highlight: #FFE7D6, //rgba(255, 198, 122, 0.1),
+  resting: #FF9200,
+  hover: #FFDAA8,
+  text: #FFC67A,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $dark-primary-text,
+    hover: $dark-primary-text,
+    text: $dark-primary-text
+  )
+);
+
+$sto-dark-warning: mat-palette($sto-dark-warning-map, highlight, resting, hover, text);
+
+$sto-danger-map: (
+  highlight: #FFC1C1,
+  resting: #EB0000,
+  hover: #B30D2F,
+  text: #B30D2F,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $light-primary-text,
+    hover: $light-primary-text,
+  )
+);
+$sto-danger: mat-palette($sto-danger-map, highlight, resting, hover, text);
+
+$sto-dark-danger-map: (
+  highlight: #FFC1C1, //rgba(255, 102, 112, 0.1),
+  resting: #EB0000,
+  hover: #FF949B,
+  text: #FF6670,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $light-primary-text,
+    hover: $dark-primary-text,
+  )
+);
+$sto-dark-danger: mat-palette($sto-dark-danger-map, highlight, resting, hover, text);
+
+$sto-success-map: (
+  highlight: #E6FAEC,
+  resting: #4BB748,
+  hover: #358132,
+  text: #358132,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $dark-primary-text,
+    hover: $light-primary-text,
+  )
+);
+$sto-success: mat-palette($sto-success-map, highlight, resting, hover, text);
+$sto-dark-success-map: (
+  highlight: #E6FAEC, // rgba(161, 218, 160, 0.1),
+  resting: #4BB748,
+  hover: #C1E7C1,
+  text: #A1DAA0,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $light-primary-text,
+    hover: $dark-primary-text,
+  )
+);
+$sto-dark-success: mat-palette($sto-dark-success-map, highlight, resting, hover, text);
+$sto-indicators: (
+  success: $sto-success,
+  warning: $sto-warning,
+  danger: $sto-danger
+);
+
+$sto-dark-indicators: (
+  success: $sto-dark-success,
+  warning: $sto-dark-warning,
+  danger: $sto-dark-danger
+);
+
+$sto-indicator: (
+  success : #358132,
+  contrast: (
     success : $light-primary-text,
-    danger: $light-primary-text,
+  )
+);
+
+$sto-dark-indicator: (
+  success : #358132,
+  contrast: (
+    success : $light-primary-text,
   )
 );
