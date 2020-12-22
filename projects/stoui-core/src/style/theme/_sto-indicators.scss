@@ -14,14 +14,14 @@
   $color: map_get($variables, color);
   $border-color: map_get($variables, border-color);
   $icon-color: map_get($variables, icon);
-  $sto-indicators: map-get($theme, indicators);
-  $success-palette: map_get($theme, success);
+  $indicators: map_get($theme, indicators);
+  $success-palette: map_get($indicators, success);
   $success-highlight-bg: mat-color($success-palette, highlight);
   $success-highlight-contrast: map-get(map-get($success-palette, contrast), highlight); // mat-color($success-palette, highlight-contrast);
-  $danger-palette: map-get($theme, danger);
+  $danger-palette: map-get($indicators, danger);
   $danger-highlight-bg: mat-color($danger-palette, highlight);
   $danger-highlight-contrast: map-get(map-get($danger-palette, contrast), highlight); //mat-color($danger-palette, highlight-contrast);
-  $warning-palette: map-get($theme, warning);
+  $warning-palette: map-get($indicators, warning);
   $warning-highlight-bg: mat-color($warning-palette, highlight);
   $warning-highlight-contrast: mat-color($warning-palette, highlight-contrast);
   $warning-text: mat-color($warning-palette, text);

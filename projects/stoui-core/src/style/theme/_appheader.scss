@@ -10,7 +10,8 @@
   $background-color: map_get($variables, card-bg);
   $hover-bg-color: map_get($variables, hover-bg);
   $selected-color: map_get($variables, selected-bg);
-  $warning-palette: map_get($theme, warning);
+  $indicators: map-get($theme, indicators);
+  $warning-palette: map_get($indicators, warning);
   $warning-color: mat-color($warning-palette, resting);
   $icon-color: map_get($variables, icon);
   $hover-color: map_get($variables, hover-color);

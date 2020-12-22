@@ -11,11 +11,11 @@
   $warn: mat-color($warn-palette);
   $warn-contrast: mat-contrast($warn-palette, main);
   $indicators: map-get($theme, indicators);
-  $danger-palette: map-get($theme, danger);
+  $danger-palette: map-get($indicators, danger);
   $error: mat-color($danger-palette, resting);
-  $warning-palette: map-get($theme, warning);
+  $warning-palette: map-get($indicators, warning);
   $warning: mat-color($indicators, resting);
-  $success-palette: map-get($theme, success);
+  $success-palette: map-get($indicators, success);
   $success: mat-color($indicators, resting);
 
 
