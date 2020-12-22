@@ -1,53 +1,5 @@
 @import '~@angular/material/theming';
 
-$sto-primary: (
-  main: #007079,
-  lighter: #b3d4d7,
-  darker: #00535c,
-  200: #007079, // For slide toggle,
-  contrast : (
-    main: $light-primary-text,
-    lighter: $dark-primary-text,
-    darker: $light-primary-text,
-  )
-);
-
-$sto-primary-dark: (
-  main: #00bfce,
-  lighter: #b3ecf0,
-  darker: #00a9bc,
-  200: 00 bfce,
-  contrast: (
-    main: $dark-primary-text,
-    lighter: $dark-primary-text,
-    darker: $light-primary-text,
-  )
-);
-
-$sto-dark-accent: (
-  highlight: rgba(255, 255, 255, 0.1),
-  resting: #DEE5E7,
-  hover: #FFFFFF,
-  200: #d5eaf4, // For slide toggle,
-  contrast : (
-    highlight: $light-primary-text,
-    resting: $dark-primary-text,
-    hover: $dark-primary-text,
-  )
-);
-
-$sto-accent: (
-  highlight: #d5eaf4,
-  resting: #243746,
-  hover: #18252F,
-  200: #243746, // For slide toggle,
-  contrast : (
-    highlight: $dark-primary-text,
-    resting: $dark-primary-text,
-    hover: $light-primary-text,
-  )
-);
-
 $sto-warning-map: (
   highlight: #FFE7D6,
   resting: #FF9200,
@@ -128,6 +80,38 @@ $sto-dark-success-map: (
   )
 );
 $sto-dark-success: mat-palette($sto-dark-success-map, highlight, resting, hover, text);
+
+
+$sto-primary: (
+  highlight: #E6FAEC,
+  selected-hover: #C3F3D2,
+  resting: #007079,
+  hover: #004F55,
+  hover-alt: #DEEDEE,
+  text: #007079,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $light-primary-text,
+    hover: $light-primary-text
+  )
+);
+
+$sto-primary-dark: (
+  highlight: #007079,
+  selected-hover: #004F55,
+  resting: #97CACE,
+  hover: #ADE2E6,
+  hover-alt: #DEEDEE,
+  text: #E6FAEC,
+  contrast: (
+    highlight: $dark-primary-text,
+    resting: $dark-primary-text,
+    hover: $light-primary-text
+  )
+);
+$primary: mat-palette($sto-primary, resting, highlight, hover, text);
+$primary-dark: mat-palette($sto-primary-dark, resting, highlight, hover, text);
+
 $sto-indicators-map: (
   success: $sto-success,
   warning: $sto-warning,
@@ -146,8 +130,32 @@ $sto-dark-indicators-map: (
 $sto-dark-indicators: (
   indicators: $sto-dark-indicators-map
 );
-$primary: mat-palette($sto-primary, main, lighter, darker);
+
+$sto-accent: (
+  highlight: #d5eaf4,
+  resting: #243746,
+  hover: #18252F,
+  200: #243746, // For slide toggle,
+  contrast : (
+    highlight: $dark-primary-text,
+    resting: $dark-primary-text,
+    hover: $light-primary-text,
+  )
+);
+
+$sto-dark-accent: (
+  highlight: rgba(255, 255, 255, 0.1),
+  resting: #DEE5E7,
+  hover: #FFFFFF,
+  200: #d5eaf4, // For slide toggle,
+  contrast : (
+    highlight: $light-primary-text,
+    resting: $dark-primary-text,
+    hover: $dark-primary-text,
+  )
+);
+
 $accent: mat-palette($sto-accent, highlight, resting, hover);
-$primary-dark: mat-palette($sto-primary-dark, main, lighter, darker);
 $accent-dark: mat-palette($sto-dark-accent, highlight, resting, hover);
+
 $sto-warn: mat-palette($mat-red);
