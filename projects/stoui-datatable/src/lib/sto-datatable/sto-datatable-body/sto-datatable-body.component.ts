@@ -51,6 +51,8 @@ export class StoDatatableBodyComponent<T = any> implements OnDestroy, AfterViewI
   @Input()
   responsive: boolean;
   @Input()
+  disableRipple: boolean;
+  @Input()
   smallView: boolean;
   @Input()
   responsiveView: TemplateRef<any>;

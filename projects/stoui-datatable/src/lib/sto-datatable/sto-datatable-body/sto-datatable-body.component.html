@@ -7,6 +7,9 @@
                              [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
                              class="sto-mdl-table__body">
   <sto-datatable-body-row *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; let last = last; trackBy: trackBy"
+                          matRipple
+                          [matRippleDisabled]="disableRipple"
+                          [matRippleUnbounded]="false"
                           [style.min-width]="width"
                           [style.transform]="scrollLeft"
                           [columnMode]="columnMode"
@@ -23,6 +26,7 @@
                           (rowContextMenu)="rowContextMenu.emit($event)"
                           (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
                           (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          [style.overflow]="disableRipple ? 'visible' : 'hidden'"
                           [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
   </sto-datatable-body-row>
   <sto-datatable-body-row [style.height.px]="rowHeight"
