@@ -2,15 +2,6 @@
 @import "./theme-variables";
 @import "colors";
 
-// Material color palettes
-$primary: mat-palette($sto-primary, main, lighter, darker);
-$accent: mat-palette($sto-accent, highlight, resting, hover);
-$primary-dark: mat-palette($sto-primary-dark, main, lighter, darker);
-$accent-dark: mat-palette($sto-dark-accent, highlight, resting, hover);
-
-// The warn palette is optional (defaults to red).
-$sto-warn: mat-palette($mat-red);
-
 // Create the theme object (a Sass map containing all of the palettes).
 $sto-theme: mat-light-theme($primary, $accent, $sto-warn);
 $sto-theme: map_merge($sto-theme, $sto-indicators);
@@ -19,6 +10,3 @@ $sto-dark-theme: map_merge($sto-dark-theme, $sto-dark-indicators);
 
 $variables: theme_variables($sto-theme);
 $dark-variables: theme_variables($sto-dark-theme);
-
-
-

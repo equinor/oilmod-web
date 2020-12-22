@@ -1,5 +1,4 @@
 @import '~@angular/material/theming';
-@import "../colors";
 
 $sto-primary: (
   main: #007079,
@@ -147,3 +146,8 @@ $sto-dark-indicators-map: (
 $sto-dark-indicators: (
   indicators: $sto-dark-indicators-map
 );
+$primary: mat-palette($sto-primary, main, lighter, darker);
+$accent: mat-palette($sto-accent, highlight, resting, hover);
+$primary-dark: mat-palette($sto-primary-dark, main, lighter, darker);
+$accent-dark: mat-palette($sto-dark-accent, highlight, resting, hover);
+$sto-warn: mat-palette($mat-red);
