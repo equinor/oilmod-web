@@ -37,7 +37,7 @@
     "caniuse-lite": "^1.0.30000975",
     "core-js": "^3.1.0",
     "date-fns": "^1.29.0",
-    "highlight.js": "^9.13.1",
+    "highlight.js": "^10.4.1",
     "node-sass": "^4.11.0",
     "rxjs": "^6.5.4",
     "tslib": "^2.0.0",
