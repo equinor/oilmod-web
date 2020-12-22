@@ -129,28 +129,21 @@ $sto-dark-success-map: (
   )
 );
 $sto-dark-success: mat-palette($sto-dark-success-map, highlight, resting, hover, text);
-$sto-indicators: (
+$sto-indicators-map: (
   success: $sto-success,
   warning: $sto-warning,
   danger: $sto-danger
 );
+$sto-indicators: (
+  indicators: $sto-indicators-map
+);
 
-$sto-dark-indicators: (
+$sto-dark-indicators-map: (
   success: $sto-dark-success,
   warning: $sto-dark-warning,
   danger: $sto-dark-danger
 );
 
-$sto-indicator: (
-  success : #358132,
-  contrast: (
-    success : $light-primary-text,
-  )
-);
-
-$sto-dark-indicator: (
-  success : #358132,
-  contrast: (
-    success : $light-primary-text,
-  )
+$sto-dark-indicators: (
+  indicators: $sto-dark-indicators-map
 );
