@@ -6,7 +6,8 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-storysource",
-    '@storybook/addon-notes/register'
+    '@storybook/addon-notes/register',
+    'storybook-dark-mode',
   ],
   performance: {
     maxAssetSize: 10000000,
