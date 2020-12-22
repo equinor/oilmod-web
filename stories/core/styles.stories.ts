@@ -134,6 +134,15 @@ StoDialog.args = {
 
 export const StoTheme: Story<{}> = args => ( {
   props: { ...args, colors: [ 'primary', 'accent', 'warn', 'warning', 'success', 'danger' ] },
+  styles: [
+    `
+    .container { display: flex; }
+    .container > div {
+     flex: 0 1 auto;
+     padding-left: 16px;
+     }
+    `
+  ],
   template: `
   <mat-tab-group>
   <mat-tab label="Buttons">
@@ -153,6 +162,25 @@ export const StoTheme: Story<{}> = args => ( {
   <mat-tab label="Cards">
   <mat-card *ngFor="let c of colors" [ngClass]="'mat-' + c">
   <mat-card-title>{{ c }}</mat-card-title>
+</mat-card>
+</mat-tab>
+<mat-tab label="Text">
+<mat-card class="sto-card">
+    <div class="container">
+    <div>
+    <p *ngFor="let color of colors" [ngClass]="'mat-' + color">&lt;p&gt; {{ color }}</p>
+</div>
+<div>
+    <span *ngFor="let color of colors" style="display: block" [ngClass]="'mat-' + color">
+    &lt;span&gt; {{ color }}
+</span>
+</div>
+<div>
+    <h2 *ngFor="let color of colors" style="display: block" [ngClass]="'mat-' + color">
+    &lt;h[1|2|3|4|5]&gt; {{ color }}
+</h2>
+</div>
+</div>
 </mat-card>
 </mat-tab>
 </mat-tab-group>
