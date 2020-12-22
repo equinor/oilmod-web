@@ -154,6 +154,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
   selectionMode: SelectionModes = SelectionModes.Click;
   @Input()
   sortable: boolean;
+  @Input()
+  disableRipple: boolean;
 
   ColumnDisplay = ColumnDisplay;
 

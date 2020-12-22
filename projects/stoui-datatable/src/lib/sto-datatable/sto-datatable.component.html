@@ -36,6 +36,7 @@
     {{ emptyMessage }}
   </div>
   <sto-datatable-body #body
+                      [disableRipple]="disableRipple || select.observers.length === 0"
                       [columnMode]="columnMode"
                       [width]="scrollbarH ? columnTotalWidth + 'px' : 'auto'"
                       [selectable]="!!select.observers.length"
