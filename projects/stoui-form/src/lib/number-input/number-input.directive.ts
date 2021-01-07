@@ -242,8 +242,8 @@ export class NumberInputDirective implements OnChanges {
       return;
     }
     const value = $event.target.value;
-    this._el.select();
     this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize, this.dynamicFractionSize) + '' ).replace('.', ',');
+    this._el.select();
   }
 
   @HostListener('blur', [ '$event.target.value' ])
