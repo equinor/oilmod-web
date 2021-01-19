@@ -21,3 +21,7 @@ export * from './lib/preference-manager/preference-manager.component';
 export * from './lib/preference-manager/active-preference.pipe';
 export * from './lib/preference-manager/preference-manager.module';
 export * from './lib/preference-manager/preference';
+export * from './lib/theme/theme-saver.service';
+export * from './lib/theme/theme.module';
+export * from './lib/theme/theme.service';
+export * from './lib/theme/models';
