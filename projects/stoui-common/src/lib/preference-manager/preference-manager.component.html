@@ -4,7 +4,7 @@
         [matMenuTriggerFor]="menu"
         #trigger="matMenuTrigger"
         [matMenuTriggerData]="{ preferences: preferences }">
-  {{ (preferences | activePreference:activePreferenceId)?.name || 'No filter selected' }}
+  {{ (preferences | activePreference:activePreferenceId)?.name || placeholder }}
   <small *ngIf="dirty">(modified)</small>
   <mat-icon class="filter-title-icon">keyboard_arrow_down</mat-icon>
   <mat-progress-spinner *ngIf="loadingIndicator"

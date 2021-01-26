@@ -54,6 +54,11 @@ export class PreferenceManagerComponent implements OnInit {
    */
   @Input()
   dirty: boolean;
+  /**
+   * Text to display when no preference is selected
+   */
+  @Input()
+  placeholder = 'No filter selected';
 
   /**
    * selectPreference emits whenever a preference is selected

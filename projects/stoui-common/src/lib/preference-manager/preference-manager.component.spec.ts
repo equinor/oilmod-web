@@ -43,6 +43,11 @@ describe('PreferenceManagerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('can handle placeholder being null', () => {
+    component.placeholder = null;
+    expect(component).toBeTruthy();
+  });
+
   // This needs more tests - need to look into how to use ComponentHarnesses from @angular/material
   // https://material.angular.io/components/menu/api#MatMenuHarness
 
