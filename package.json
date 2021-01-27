@@ -34,7 +34,7 @@
     "@angular/platform-server": "^10.0.8",
     "@angular/router": "^10.0.8",
     "@types/nouislider": "^9.0.4",
-    "caniuse-lite": "^1.0.30000975",
+    "caniuse-lite": "^1.0.30001173",
     "core-js": "^3.1.0",
     "date-fns": "^1.29.0",
     "highlight.js": "^9.13.1",
