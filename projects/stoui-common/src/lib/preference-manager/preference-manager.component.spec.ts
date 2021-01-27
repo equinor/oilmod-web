@@ -11,6 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivePreferencePipe } from './active-preference.pipe';
 import { Preference } from './preference';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 const preferences: Preference[] = [
   { name: 'A filter', id: 'uuid', identifierKey: 'reports_filter', user: 'Bobby B', payload: {} },
@@ -46,6 +47,16 @@ describe('PreferenceManagerComponent', () => {
   it('can handle placeholder being null', () => {
     component.placeholder = null;
     expect(component).toBeTruthy();
+  });
+
+  it('should have default value for placeholder which can be changed', () => {
+    const debugElementButton = fixture.debugElement.query(By.css('button.filter-title'));
+    const buttonEl = debugElementButton.nativeElement;
+    expect(component.placeholder).toBe('No filter selected');
+    expect(buttonEl.innerText).toContain('No filter selected');
+    component.placeholder = 'Test';
+    fixture.detectChanges();
+    expect(buttonEl.innerText).toContain('Test');
   });
 
   // This needs more tests - need to look into how to use ComponentHarnesses from @angular/material
