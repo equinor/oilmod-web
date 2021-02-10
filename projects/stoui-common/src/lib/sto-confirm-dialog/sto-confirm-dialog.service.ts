@@ -11,9 +11,9 @@ export class ConfirmService {
   constructor(private dialog: MatDialog) {
   }
 
-  confirm(message: string, title = 'Confirm', confirmText = 'OK'): Observable<any> {
+  confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true): Observable<any> {
     this.ref = this.dialog.open(ConfirmComponent, {
-      data: { message, title, confirmText }
+      data: { message, title, confirmText, showCancel }
     });
 
     const subject = new ReplaySubject();

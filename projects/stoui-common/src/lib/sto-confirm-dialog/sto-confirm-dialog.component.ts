@@ -14,6 +14,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     </div>
     <div mat-dialog-actions>
       <button #cancel
+              *ngIf="data.showCancel"
               title="Cancel (esc)"
               mat-button
               [mat-dialog-close]="false">Cancel
