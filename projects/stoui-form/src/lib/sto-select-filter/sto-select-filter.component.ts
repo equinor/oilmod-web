@@ -1,4 +1,15 @@
-import { Component, EventEmitter, forwardRef, HostBinding, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component, ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -36,6 +47,7 @@ import { takeUntil } from 'rxjs/operators';
   ]
 })
 export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValueAccessor {
+
   /**
    * Initial value of the filter
    */
@@ -82,6 +94,8 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   }
 
   @HostBinding('class.sto-select-filter') cssClass = true;
+  @ViewChild('inputElement')
+  public inputElement: ElementRef;
 
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
@@ -133,7 +147,7 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
 
   propagateChange = (value: any) => {
     this.valueChanges.emit(value);
-  };
+  }
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
