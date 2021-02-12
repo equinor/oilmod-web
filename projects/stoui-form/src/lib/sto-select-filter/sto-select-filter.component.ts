@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component, ElementRef,
   EventEmitter,
   forwardRef,
@@ -13,6 +14,7 @@ import {
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatSelect } from '@angular/material/select';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
@@ -46,7 +48,7 @@ import { takeUntil } from 'rxjs/operators';
     }
   ]
 })
-export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
 
   /**
    * Initial value of the filter
@@ -127,12 +129,15 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
    * isFilter determines if filtering is active
    */
   @Input() isFilter: boolean;
+  /**
+   * automatically focus input element if it's empty
+   */
+  @Input() focusIfNoValue: boolean;
   private destroyed$ = new Subject();
 
 
-  constructor() {
+  constructor(private select: MatSelect) {
   }
-
 
   public isChecked(isChecked: boolean) {
 
@@ -162,6 +167,16 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
     this.destroyed$.complete();
   }
 
+  ngAfterViewInit(): void {
+    if (this.select){
+      this.select.openedChange.pipe(takeUntil(this.destroyed$)).subscribe(open => {
+        if (open && this.focusIfNoValue){
+          this.inputElement.nativeElement.focus();
+        }
+      });
+    }
+  }
+
   ngOnInit() {
     this.checkboxControl.valueChanges
       .pipe(
@@ -173,7 +188,11 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
     this.inputControl.valueChanges
       .pipe(
         takeUntil(this.destroyed$)
-      ).subscribe(value => this.propagateChange(value));
+      ).subscribe(value => {
+        if (!value && this.focusIfNoValue){
+          requestAnimationFrame(() => this.inputElement.nativeElement.focus() );
+        }
+        this.propagateChange(value);
+    });
   }
-
 }

@@ -38,6 +38,7 @@ export const SingleSelect: Story<any> = (args) => ( {
       <mat-select [multiple]="false" [value]="selected">
         <sto-select-filter (keydown.space)="$event.stopPropagation()"
                            [isFilter]="isFilter"
+                           [focusIfNoValue]="focusIfNoValue"
                            [isMulti]="false"
                            (valueChanges)="filteredItems = filter($event, allItems)"></sto-select-filter>
         <mat-option *ngFor="let opt of filteredItems"
@@ -52,6 +53,7 @@ SingleSelect.args = {
     return all.filter(el => re.test(el.name));
   },
   isFilter: true,
+  focusIfNoValue: false,
   filteredItems: [ ...items ],
   allItems: [ ...items ],
   total: items.length,
@@ -71,6 +73,7 @@ export const MultiSelect: Story<any> = (args) => ( {
       <sto-select-filter (keydown.space)="$event.stopPropagation()"
                          [selected]="select?.length"
                          [isFilter]="true"
+                         [focusIfNoValue]="focusIfNoValue"
                          [isMulti]="true"
                          (valueChanges)="filteredItems = filter($event, allItems)"
                          (selectAll)="selected = $event ? filteredItems :[]; selectAll($event)"></sto-select-filter>
@@ -91,6 +94,7 @@ MultiSelect.args = {
   },
   selected: [],
   isFilter: true,
+  focusIfNoValue: false,
   filteredItems: [ ...items ],
   allItems: [ ...items ],
   total: items.length,
