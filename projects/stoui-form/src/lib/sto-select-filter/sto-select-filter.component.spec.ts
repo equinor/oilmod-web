@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@testing/material.module.ts';
 import { StoSelectFilterComponent } from './sto-select-filter.component';
 import { MatSelect } from '@angular/material/select';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoFormModule } from '../sto-form/sto-form.module';
@@ -13,7 +13,7 @@ describe('StoSelectFilterComponent', () => {
   let comp: StoSelectFilterComponent;
   let fixture: ComponentFixture<StoSelectFilterComponent>;
 
-  class MockedSelectClass{
+  class MockedSelectClass {
     openedChange = new Subject<boolean>();
   }
 
@@ -21,7 +21,7 @@ describe('StoSelectFilterComponent', () => {
     TestBed.configureTestingModule({
         imports: [ CommonModule, MaterialModule, ReactiveFormsModule, StoFormModule ],
         declarations: [ StoSelectFilterComponent, StoSelectFilterComponent ],
-        providers: [{provide: MatSelect, useClass: MockedSelectClass}]
+        providers: [ { provide: MatSelect, useClass: MockedSelectClass } ]
       })
       .compileComponents()
       .then(createComponent);

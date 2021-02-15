@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
-  Component, ElementRef,
+  Component,
+  ElementRef,
   EventEmitter,
   forwardRef,
   HostBinding,
@@ -38,7 +39,7 @@ import { MatSelect } from '@angular/material/select';
 @Component({
   selector: 'sto-select-filter',
   templateUrl: './sto-select-filter.component.html',
-  styleUrls: ['./sto-select-filter.component.scss'],
+  styleUrls: [ './sto-select-filter.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
@@ -61,6 +62,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   get value(): any {
     return this._value;
   }
+
   /**
    * Length of unfiltered Array
    * @param total
@@ -72,15 +74,16 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   get total(): number {
     return this._total;
   }
+
   /**
    * Determines the checkbox state. Can be checked, indeterminate or unchecked
    * @param selected
    */
   @Input() set selected(selected: number) {
-    if (this.total === selected) {
+    if ( this.total === selected ) {
       this.isChecked(true);
       this.indeterminate = false;
-    } else if (selected > 0) {
+    } else if ( selected > 0 ) {
       this.indeterminate = true;
       this.isChecked(false);
     } else {
@@ -151,7 +154,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
 
   propagateChange = (value: any) => {
     this.valueChanges.emit(value);
-  }
+  };
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -167,9 +170,9 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngAfterViewInit(): void {
-    if (this.select){
+    if ( this.select ) {
       this.select.openedChange.pipe(takeUntil(this.destroyed$)).subscribe(open => {
-        if (open && this.focusIfNoValue && this.isMulti){
+        if ( open && this.focusIfNoValue && this.isMulti ) {
           this.inputElement?.nativeElement.focus();
         }
       });
@@ -188,10 +191,10 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(value => {
-        if (!value && this.focusIfNoValue){
-          requestAnimationFrame(() => this.inputElement.nativeElement.focus() );
-        }
-        this.propagateChange(value);
+      if ( !value && this.focusIfNoValue ) {
+        requestAnimationFrame(() => this.inputElement.nativeElement.focus());
+      }
+      this.propagateChange(value);
     });
   }
 }
