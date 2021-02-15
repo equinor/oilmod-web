@@ -83,8 +83,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
     } else if (selected > 0) {
       this.indeterminate = true;
       this.isChecked(false);
-    }
-    else {
+    } else {
       this.indeterminate = false;
       this.isChecked(false);
     }
@@ -97,7 +96,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
 
   @HostBinding('class.sto-select-filter') cssClass = true;
   @ViewChild('inputElement')
-  public inputElement: ElementRef;
+  public inputElement: ElementRef<HTMLInputElement>;
 
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
@@ -136,7 +135,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   private destroyed$ = new Subject();
 
 
-  constructor(private select: MatSelect) {
+  constructor(public select: MatSelect) {
   }
 
   public isChecked(isChecked: boolean) {
@@ -170,8 +169,8 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   ngAfterViewInit(): void {
     if (this.select){
       this.select.openedChange.pipe(takeUntil(this.destroyed$)).subscribe(open => {
-        if (open && this.focusIfNoValue){
-          this.inputElement.nativeElement.focus();
+        if (open && this.focusIfNoValue && this.isMulti){
+          this.inputElement?.nativeElement.focus();
         }
       });
     }
