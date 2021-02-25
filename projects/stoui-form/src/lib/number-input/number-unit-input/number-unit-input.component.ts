@@ -65,7 +65,7 @@ export class NumberUnitInputComponent extends FormFieldBase
   set disabled(disable: boolean) {
     this._disabled = coerceBooleanProperty(disable);
     const opts = { onlySelf: true, emitEvent: false };
-    this.form.disable(opts);
+    disable ? this.form.disable(opts) : this.form.enable(opts);
     // disable ? this.form.get('unit').disable(opts) : this.form.get('unit').enable(opts);
     // disable ? this.form.get('value').disable(opts) : this.form.get('value').enable(opts);
     this.stateChanges.next();
