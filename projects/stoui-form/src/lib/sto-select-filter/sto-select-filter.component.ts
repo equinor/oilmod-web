@@ -1,7 +1,21 @@
-import { Component, EventEmitter, forwardRef, HostBinding, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatSelect } from '@angular/material/select';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
@@ -25,7 +39,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'sto-select-filter',
   templateUrl: './sto-select-filter.component.html',
-  styleUrls: ['./sto-select-filter.component.scss'],
+  styleUrls: [ './sto-select-filter.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
@@ -35,7 +49,8 @@ import { takeUntil } from 'rxjs/operators';
     }
   ]
 })
-export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+
   /**
    * Initial value of the filter
    */
@@ -47,6 +62,7 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   get value(): any {
     return this._value;
   }
+
   /**
    * Length of unfiltered Array
    * @param total
@@ -58,19 +74,19 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   get total(): number {
     return this._total;
   }
+
   /**
    * Determines the checkbox state. Can be checked, indeterminate or unchecked
    * @param selected
    */
   @Input() set selected(selected: number) {
-    if (this.total === selected) {
+    if ( this.total === selected ) {
       this.isChecked(true);
       this.indeterminate = false;
-    } else if (selected > 0) {
+    } else if ( selected > 0 ) {
       this.indeterminate = true;
       this.isChecked(false);
-    }
-    else {
+    } else {
       this.indeterminate = false;
       this.isChecked(false);
     }
@@ -82,6 +98,8 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
   }
 
   @HostBinding('class.sto-select-filter') cssClass = true;
+  @ViewChild('inputElement')
+  public inputElement: ElementRef<HTMLInputElement>;
 
   public checkboxControl = new FormControl();
   public inputControl = new FormControl();
@@ -113,12 +131,15 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
    * isFilter determines if filtering is active
    */
   @Input() isFilter: boolean;
+  /**
+   * automatically focus input element if it's empty
+   */
+  @Input() focusIfNoValue: boolean;
   private destroyed$ = new Subject();
 
 
-  constructor() {
+  constructor(public select: MatSelect) {
   }
-
 
   public isChecked(isChecked: boolean) {
 
@@ -148,6 +169,16 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
     this.destroyed$.complete();
   }
 
+  ngAfterViewInit(): void {
+    if ( this.select ) {
+      this.select.openedChange.pipe(takeUntil(this.destroyed$)).subscribe(open => {
+        if ( open && this.focusIfNoValue && this.isMulti ) {
+          this.inputElement?.nativeElement.focus();
+        }
+      });
+    }
+  }
+
   ngOnInit() {
     this.checkboxControl.valueChanges
       .pipe(
@@ -159,7 +190,11 @@ export class StoSelectFilterComponent implements OnInit, OnDestroy, ControlValue
     this.inputControl.valueChanges
       .pipe(
         takeUntil(this.destroyed$)
-      ).subscribe(value => this.propagateChange(value));
+      ).subscribe(value => {
+      if ( !value && this.focusIfNoValue ) {
+        requestAnimationFrame(() => this.inputElement.nativeElement.focus());
+      }
+      this.propagateChange(value);
+    });
   }
-
 }
