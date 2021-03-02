@@ -35,6 +35,7 @@
           <input matInput
                  autocomplete="off"
                  (focus)="nameTmpl.select()"
+                 (keydown)="$event.stopPropagation()"
                  [value]="pref.name"
                  name="name"
                  #nameTmpl>
@@ -81,6 +82,7 @@
           <input matInput
                  autocomplete="off"
                  (focus)="nameTmpl.select()"
+                 (keydown)="$event.stopPropagation()"
                  [value]="newPreference.name"
                  name="name"
                  #nameTmpl>
