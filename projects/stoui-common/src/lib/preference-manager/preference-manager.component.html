@@ -29,13 +29,14 @@
         </span>
         <mat-form-field *ngIf="editIndex === index"
                         (click)="$event.stopPropagation()"
+                        (keydown)="$event.stopPropagation()"
                         (keydown.enter)="saveRename()"
+                        (keydown.escape)="trigger.closeMenu()"
                         class="sto-form__field"
                         floatLabel="never">
           <input matInput
                  autocomplete="off"
                  (focus)="nameTmpl.select()"
-                 (keydown)="$event.stopPropagation()"
                  [value]="pref.name"
                  name="name"
                  #nameTmpl>
@@ -76,13 +77,14 @@
          class="dense preference-manager-list-item edit">
       <div class="preference-manager-list-item-title">
         <mat-form-field (click)="$event.stopPropagation()"
+                        (keydown)="$event.stopPropagation()"
                         (keydown.enter)="saveNewPreference()"
+                        (keydown.escape)="trigger.closeMenu()"
                         class="sto-form__field"
                         floatLabel="never">
           <input matInput
                  autocomplete="off"
                  (focus)="nameTmpl.select()"
-                 (keydown)="$event.stopPropagation()"
                  [value]="newPreference.name"
                  name="name"
                  #nameTmpl>
