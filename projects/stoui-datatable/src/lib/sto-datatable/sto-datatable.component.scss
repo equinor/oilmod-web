@@ -143,5 +143,12 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
   }
 }
 
+.sto-datatable-actions {
+  display: flex;
+
+  &__right {
+    margin-left: auto;
+  }
+}
 
 

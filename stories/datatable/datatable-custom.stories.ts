@@ -75,7 +75,12 @@ Paging.args = {
 export const AutoSize: Story = (args) => ( {
   props: args,
   template: `<h3>Autosize will ensure the table always uses all available height top-down</h3>
-<sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+<sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns">
+    <sto-datatable-actions>
+        <sto-datatable-actions-left><button mat-button>heloooo</button></sto-datatable-actions-left>
+        <sto-datatable-actions-right><button mat-button>right</button></sto-datatable-actions-right>
+    </sto-datatable-actions>
+</sto-datatable>`,
 } );
 AutoSize.args = {
   rows,

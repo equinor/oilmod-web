@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Directive,
   ElementRef,
   EventEmitter,
   HostBinding,
@@ -367,4 +368,28 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
       });
     this.resized.emit(column);
   }
+}
+
+@Directive({
+  selector: 'sto-datatable-actions',
+  host: {
+    class: 'sto-datatable-actions'
+  }
+})
+export class StoDataTableActions {
+}
+
+@Directive({
+  selector: 'sto-datatable-actions-left'
+})
+export class StoDataTableActionsLeft {
+}
+
+@Directive({
+  selector: 'sto-datatable-actions-right',
+  host: {
+    class: 'sto-datatable-actions__right'
+  }
+})
+export class StoDataTableActionsRight {
 }

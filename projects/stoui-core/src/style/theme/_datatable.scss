@@ -14,6 +14,10 @@
   $icon-color: map_get($variables, icon);
   $icon-hover: map_get($variables, icon-hover);
 
+  .sto-datatable-actions {
+    border-bottom: 1px solid $border-color;
+  }
+
   .sto-mdl-table {
     background-color: $background-color;
     color: $color;

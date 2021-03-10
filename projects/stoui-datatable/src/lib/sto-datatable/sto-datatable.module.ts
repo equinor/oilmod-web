@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoDatatableComponent } from './sto-datatable.component';
+import { StoDataTableActions, StoDataTableActionsLeft, StoDataTableActionsRight, StoDatatableComponent } from './sto-datatable.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { ExecPipe } from './exec.pipe';
@@ -17,7 +17,7 @@ import { MatRippleModule } from '@angular/material/core';
     CommonModule,
     ScrollingModule,
     MatIconModule,
-    MatRippleModule
+    MatRippleModule,
   ],
   declarations: [
     StoDatatableComponent
@@ -26,9 +26,13 @@ import { MatRippleModule } from '@angular/material/core';
     , StoDatatableBodyRowComponent
     , StoDatatableHeaderGroupComponent
     , StoDatatableHeaderComponent
-    , StoDatatableResizeDirective, ColumnStylePipe
+    , StoDatatableResizeDirective
+    , ColumnStylePipe
+    , StoDataTableActionsLeft
+    , StoDataTableActionsRight
+    , StoDataTableActions
   ],
-  exports: [StoDatatableComponent],
+  exports: [ StoDatatableComponent, StoDataTableActionsLeft, StoDataTableActionsRight, StoDataTableActions ],
 })
 export class StoDatatableModule {
 }
