@@ -373,7 +373,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 @Directive({
   selector: 'sto-datatable-actions',
   host: {
-    class: 'sto-datatable-actions'
+    class: 'sto-mdl-table__actions'
   }
 })
 export class StoDataTableActions {
@@ -388,7 +388,7 @@ export class StoDataTableActionsLeft {
 @Directive({
   selector: 'sto-datatable-actions-right',
   host: {
-    class: 'sto-datatable-actions__right'
+    class: 'sto-mdl-table__actions__right'
   }
 })
 export class StoDataTableActionsRight {
