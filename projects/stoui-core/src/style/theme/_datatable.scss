@@ -26,6 +26,10 @@
       }
     }
 
+    &__actions {
+      border-bottom: 1px solid $border-color;
+    }
+
     &__header__row {
       border-bottom: 1px solid $border-color;
       background-color: $header-background-color;

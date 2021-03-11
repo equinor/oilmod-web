@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   ElementRef,
   EventEmitter,
   HostBinding,
@@ -20,6 +21,7 @@ import { fromEvent, Observable, of } from 'rxjs';
 import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 import { SelectionModes } from './selection-modes';
 import { SortColumn } from './models';
+import { StoDatatableActionsComponent } from './sto-datatable-actions/sto-datatable-actions.component';
 
 declare var ResizeObserver: any;
 
@@ -52,6 +54,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
     const hasFooter = this.footerRow && ( !this.responsive || ( this.responsive && !this.smallScreen ) );
     const hasHeaderGroup = ( !this.responsive || ( this.responsive && !this.smallScreen ) ) && this.columnGroups;
     const headerOffset = hasHeader ? this.headerHeight : 0;
+    const actionsHeight = this.actions ? this.actions.height : 0;
     let footerOffset = 0;
     if ( hasFooter && this.footerRow instanceof Array ) {
       footerOffset = this.rowHeight * this.footerRow.length;
@@ -59,7 +62,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
       footerOffset = this.rowHeight;
     }
     const groupOffset = hasHeaderGroup ? this.headerHeight : 0;
-    return this.height - headerOffset - footerOffset - groupOffset;
+    return this.height - headerOffset - footerOffset - groupOffset - actionsHeight;
   }
 
   @Input()
@@ -142,6 +145,8 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
 
   @ViewChild(StoDatatableBodyComponent)
   body: StoDatatableBodyComponent;
+  @ContentChild(StoDatatableActionsComponent)
+  actions: StoDatatableActionsComponent;
   @Input()
   rowHeight = 36;
   @Input()
@@ -307,7 +312,7 @@ export class StoDatatableComponent<T = any> implements AfterViewInit, OnDestroy 
         debounceTime(20), // ~1 animation frame
         map(() => el.getBoundingClientRect()),
         map(rect => rect.top),
-        map(top => window.innerHeight - top - 16 - this.autoSizeOffset),
+        map(top => window.innerHeight - top - 16 - this.autoSizeOffset - ( this.actions ? 6 : 0 )),
         tap(height => this.height = height)
       );
   }

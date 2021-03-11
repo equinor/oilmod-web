@@ -1,6 +1,7 @@
 <div class="sto-mdl-table"
      [class.sto-mdl-table--force-width]="columnMode === ColumnDisplay.Force"
      [style.height.px]="height$ | async">
+  <ng-content select="sto-datatable-actions"></ng-content>
   <sto-datatable-header-group *ngIf="(!responsive || (responsive && !smallScreen)) && columnGroups && this.scrollbarH"
                               [width]="width"
                               [height]="headerHeight"

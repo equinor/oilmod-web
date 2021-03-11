@@ -23,6 +23,23 @@ $content-height: 20px;
     padding-right: 12px;
   }
 
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__left {
+      display: flex;
+      flex: 1 1 auto;
+    }
+
+    &__right {
+      display: flex;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+  }
+
   &__header {
     &__row {
       display: flex;
@@ -142,6 +159,5 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
     }
   }
 }
-
 
 

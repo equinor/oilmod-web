@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { columns, rows } from './rows';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 export default {
   title: 'Datatable/StoDatatable/Specific usecases',
@@ -14,7 +15,7 @@ export default {
     moduleMetadata({
       imports: [
         StoDatatableModule,
-        MatButtonModule, BrowserAnimationsModule, MatPaginatorModule, MatCardModule
+        MatButtonModule, BrowserAnimationsModule, MatPaginatorModule, MatCardModule, MatIconModule
       ],
     })
   ],
@@ -44,8 +45,8 @@ export const ResponsiveMode: Story = (args) => ( {
 ResponsiveMode.args = {
   emulateSmallElement: false,
   breakpoint: 500,
-  columns: columns,
-  rows: rows,
+  columns,
+  rows,
 };
 
 export const Paging: Story = (args) => ( {
@@ -75,7 +76,8 @@ Paging.args = {
 export const AutoSize: Story = (args) => ( {
   props: args,
   template: `<h3>Autosize will ensure the table always uses all available height top-down</h3>
-<sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+<sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns">
+</sto-datatable>`,
 } );
 AutoSize.args = {
   rows,
@@ -95,5 +97,26 @@ MultilineFooter.args = {
     invoiceNo: 'Import',
     voyageNo: '9001'
   }, { invoiceNo: 'Export', voyageNo: '9002' }, ],
+  autoSizeOffset: 10,
+};
+
+export const Actionbar: Story<Partial<StoDatatableComponent>> = args => ( {
+  props: args,
+  template: `<h3>With an actionbar on the top left and right side</h3>
+<sto-datatable [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns">
+  <sto-datatable-actions>
+      <sto-datatable-actions-left>
+        <button mat-icon-button><mat-icon>content_copy</mat-icon></button>
+        <button mat-icon-button><mat-icon>delete</mat-icon></button>
+       </sto-datatable-actions-left>
+      <sto-datatable-actions-right>
+        <button mat-icon-button><mat-icon>settings</mat-icon></button>
+      </sto-datatable-actions-right>
+  </sto-datatable-actions>
+</sto-datatable>`,
+} );
+Actionbar.args = {
+  rows,
+  columns: [ ...columns, ...columns, ...columns ],
   autoSizeOffset: 10,
 };
