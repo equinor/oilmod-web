@@ -13,8 +13,8 @@ import { ColumnStylePipe } from './column-style.pipe';
 import { MatRippleModule } from '@angular/material/core';
 import {
   StoDatatableActionsComponent,
-  StoDataTableActionsLeft,
-  StoDataTableActionsRight
+  StoDataTableActionsLeftComponent,
+  StoDataTableActionsRightComponent
 } from './sto-datatable-actions/sto-datatable-actions.component';
 
 @NgModule({
@@ -33,11 +33,11 @@ import {
     , StoDatatableHeaderComponent
     , StoDatatableResizeDirective
     , ColumnStylePipe
-    , StoDataTableActionsLeft
-    , StoDataTableActionsRight
+    , StoDataTableActionsLeftComponent
+    , StoDataTableActionsRightComponent
     , StoDatatableActionsComponent,
   ],
-  exports: [ StoDatatableComponent, StoDataTableActionsLeft, StoDataTableActionsRight, StoDatatableActionsComponent ],
+  exports: [ StoDatatableComponent, StoDataTableActionsLeftComponent, StoDataTableActionsRightComponent, StoDatatableActionsComponent ],
 })
 export class StoDatatableModule {
 }

@@ -1,4 +1,4 @@
-import { Component, Directive, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sto-datatable-actions',
@@ -8,6 +8,9 @@ import { Component, Directive, HostBinding, OnInit } from '@angular/core';
 
 export class StoDatatableActionsComponent implements OnInit {
   @HostBinding('class.sto-mdl-table__actions') true;
+  @HostBinding('style.height.px')
+  @Input()
+  height = 40;
 
   constructor() {
   }
@@ -17,16 +20,21 @@ export class StoDatatableActionsComponent implements OnInit {
 
 }
 
-@Directive({
-  selector: 'sto-datatable-actions-left'
+@Component({
+  selector: 'sto-datatable-actions-left',
+  template: `
+    <ng-content></ng-content>`
 })
-export class StoDataTableActionsLeft {
+export class StoDataTableActionsLeftComponent {
+  @HostBinding('class.sto-mdl-table__actions__left') true;
 }
 
-@Directive({
+@Component({
   selector: 'sto-datatable-actions-right',
+  template: `
+    <ng-content></ng-content>`
 })
-export class StoDataTableActionsRight {
+export class StoDataTableActionsRightComponent {
   @HostBinding('class.sto-mdl-table__actions__right') true;
 }
 
