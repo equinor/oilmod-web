@@ -14,9 +14,9 @@
   $danger-palette: map-get($indicators, danger);
   $error: mat-color($danger-palette, resting);
   $warning-palette: map-get($indicators, warning);
-  $warning: mat-color($indicators, resting);
+  $warning: mat-color($warning-palette, resting);
   $success-palette: map-get($indicators, success);
-  $success: mat-color($indicators, resting);
+  $success: mat-color($success-palette, resting);
 
 
   $foreground: map-get($theme, foreground);
