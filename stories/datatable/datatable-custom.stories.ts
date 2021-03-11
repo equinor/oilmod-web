@@ -45,8 +45,8 @@ export const ResponsiveMode: Story = (args) => ( {
 ResponsiveMode.args = {
   emulateSmallElement: false,
   breakpoint: 500,
-  columns: columns,
-  rows: rows,
+  columns,
+  rows,
 };
 
 export const Paging: Story = (args) => ( {

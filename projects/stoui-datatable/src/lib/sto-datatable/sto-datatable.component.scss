@@ -25,6 +25,7 @@ $content-height: 20px;
 
   &__actions {
     display: flex;
+    max-height: 40px;
 
     &__right {
       margin-left: auto;
