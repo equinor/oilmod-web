@@ -22,6 +22,11 @@ $form-field-bg: rgba(#6687B8, 0.1);
 
       border-bottom: 2px solid $border-color;
       background: $form-field-bg;
+
+      &--readonly {
+        background: transparent;
+        border: none;
+      }
     }
   }
 }

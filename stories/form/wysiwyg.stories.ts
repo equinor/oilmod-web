@@ -26,7 +26,7 @@ const Template: Story<WysiwygComponent> = (args) => {
   return {
     props: { ...args, ctrl, unsanitized },
     template: `
-<sto-wysiwyg #wysiwyg [formControl]="ctrl"></sto-wysiwyg>
+<sto-wysiwyg [readonly]="readonly" #wysiwyg [formControl]="ctrl"></sto-wysiwyg>
 <hr>
 <div>
 <p>The text we're sending in is</p>
