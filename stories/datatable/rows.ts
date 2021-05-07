@@ -606,6 +606,7 @@ export const rows = [
   }]
   .map(row => ({...row, total: pipe.transform(row.total)}));
 
+//
 
 export const columns = [
   {
