@@ -29,7 +29,8 @@
     "help": "nx help",
     "storybook:docs": "compodoc -p ./.storybook/tsconfig.json -e json -d ./apps/oilmod-web/.storybook",
     "storybook:serve": "nx run-many --target=storybook --projects=oilmod-web",
-    "storybook": "npm run storybook:docs && nx run-many --target=storybook --projects=oilmod-web"
+    "storybook": "npm run storybook:docs && nx run-many --target=storybook --projects=oilmod-web",
+    "storybook:build": "npm run storybook:docs && nx build-storybook"
   },
   "private": true,
   "resolutions": {

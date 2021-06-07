@@ -152,6 +152,35 @@
               "quiet": true
             }
           }
+        },
+        "build-all": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "$(npm bin)/nx build testing",
+              "$(npm bin)/nx build core",
+              "$(npm bin)/nx build form",
+              "$(npm bin)/nx build common",
+              "$(npm bin)/nx build datatable",
+              "$(npm bin)/nx build drawer",
+              "$(npm bin)/nx build error-handler"
+            ],
+            "parallel": false
+          }
+        },
+        "test-all": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "$(npm bin)/nx test core",
+              "$(npm bin)/nx test form",
+              "$(npm bin)/nx test common",
+              "$(npm bin)/nx test datatable",
+              "$(npm bin)/nx test drawer",
+              "$(npm bin)/nx test error-handler"
+            ],
+            "parallel": true
+          }
         }
       }
     },
