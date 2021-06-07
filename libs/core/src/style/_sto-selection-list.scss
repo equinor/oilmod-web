@@ -1,0 +1,32 @@
+.sto-selection-list.mat-selection-list{
+  padding-bottom: 8px;
+  .sto-selection-list__item.mat-list-item{
+    .mat-list-item-content.mat-list-item-content-reverse{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 16px;
+      position: relative;
+      height: inherit;
+    }
+
+    .mat-list-text:not(:nth-child(2)){
+      padding-left: 16px;
+      padding-right: 0;
+    }
+  }
+}
+
+.sto-selection-list.mat-selection-list .mat-list-option .mat-list-text{
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mat__icon--clickable{
+  color: $black-38;
+
+  &:hover{
+    color: $black-54;
+  }
+}

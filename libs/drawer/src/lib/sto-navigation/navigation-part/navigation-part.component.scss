@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  overflow: hidden;
+}
+
+.panes {
+  min-height: calc(100% - 40px);
+  width: 200%;
+
+  display: flex;
+  div {
+    flex: 1;
+  }
+}

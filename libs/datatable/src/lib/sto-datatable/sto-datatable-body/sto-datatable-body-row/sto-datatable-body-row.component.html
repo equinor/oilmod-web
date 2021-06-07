@@ -1,0 +1,23 @@
+<!--<div>-->
+<ng-container *ngIf="compressedView; else regular">
+  <ng-template [ngTemplateOutlet]="responsiveView"
+               [ngTemplateOutletContext]="{row: row}">
+  </ng-template>
+</ng-container>
+<ng-template #regular>
+  <div class="sto-mdl-table__body__row__cell"
+       [ngClass]="column.cellClass | exec:row[column.prop]:column:row"
+       [ngStyle]="column | columnStyle:columnMode"
+
+       (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: rowIndex})"
+       *ngFor="let column of columns;">
+    <span *ngIf="!column.cellTemplate"
+          [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
+    <ng-template #cellTemplate
+                 *ngIf="column.cellTemplate"
+                 [ngTemplateOutlet]="column.cellTemplate"
+                 [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: rowIndex}">
+    </ng-template>
+  </div>
+</ng-template>
+<!--</div>-->

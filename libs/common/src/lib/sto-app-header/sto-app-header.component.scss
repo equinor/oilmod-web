@@ -1,0 +1,89 @@
+@use '~@angular/material' as mat;
+
+.sto-header {
+  @include mat.elevation(3);
+
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+
+  .sto-header__actions mat-icon {
+    margin: auto;
+  }
+
+  &__environment {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    pointer-events: none;
+
+    &--label {
+      padding: 4px 8px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      width: fit-content;
+      border-radius: 2px;
+      position: relative;
+      margin: auto;
+    }
+  }
+
+  .small-toggle {
+    margin-right: 6px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+
+    &--small {
+      flex-direction: column;
+      width: 48px;
+      height: auto;
+      //max-height: 0;
+      transform: scale(0);
+      opacity: 0;
+      transform-origin: top right;
+      overflow: hidden;
+      position: absolute;
+      right: -4px;
+      top: 50px;
+      z-index: 100;
+      border-radius: 2px;
+      transition: opacity 200ms linear;
+      @include mat.elevation(4);
+
+      button {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      &--open {
+        transform: scale(1);
+        opacity: 1;
+        //height: auto;
+        //max-height: 200px;
+      }
+    }
+
+    button {
+      margin: 4px;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

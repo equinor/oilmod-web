@@ -1,0 +1,10 @@
+<div [style.height.px]="height"
+     [style.min-width]="width"
+     [style.transform]="transform"
+     class="sto-mdl-table__header-group">
+  <div *ngFor="let group of groups"
+       [style.transform]="group.transform"
+       class="sto-mdl-table__header-group__cell">
+    {{ group.name }}
+  </div>
+</div>

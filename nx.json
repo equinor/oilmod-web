@@ -1,0 +1,57 @@
+{
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "npmScope": "oilmod-web-nx",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "build-storybook"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "oilmod-web": {
+      "tags": []
+    },
+    "oilmod-web-e2e": {
+      "tags": [],
+      "implicitDependencies": ["oilmod-web"]
+    },
+    "core": {
+      "tags": []
+    },
+    "common": {
+      "tags": []
+    },
+    "datatable": {
+      "tags": []
+    },
+    "drawer": {
+      "tags": []
+    },
+    "error-handler": {
+      "tags": []
+    },
+    "form": {
+      "tags": []
+    },
+    "testing": {
+      "tags": []
+    }
+  }
+}

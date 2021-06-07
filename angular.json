@@ -1,0 +1,485 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "oilmod-web",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "oilmod-web": {
+      "projectType": "application",
+      "root": "apps/oilmod-web",
+      "sourceRoot": "apps/oilmod-web/src",
+      "prefix": "oilmod-web-nx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/oilmod-web",
+            "index": "apps/oilmod-web/src/index.html",
+            "main": "apps/oilmod-web/src/main.ts",
+            "polyfills": "apps/oilmod-web/src/polyfills.ts",
+            "tsConfig": "apps/oilmod-web/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/oilmod-web/src/favicon.ico",
+              "apps/oilmod-web/src/assets"
+            ],
+            "styles": ["apps/oilmod-web/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/oilmod-web/src/environments/environment.ts",
+                  "with": "apps/oilmod-web/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "oilmod-web:build:production"
+            },
+            "development": {
+              "browserTarget": "oilmod-web:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "oilmod-web:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/oilmod-web/src/**/*.ts",
+              "apps/oilmod-web/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/oilmod-web"],
+          "options": {
+            "jestConfig": "apps/oilmod-web/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/oilmod-web/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/oilmod-web",
+            "config": {
+              "configFolder": "apps/oilmod-web/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "oilmod-web-e2e": {
+      "root": "apps/oilmod-web-e2e",
+      "sourceRoot": "apps/oilmod-web-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/oilmod-web-e2e/cypress.json",
+            "tsConfig": "apps/oilmod-web-e2e/tsconfig.e2e.json",
+            "devServerTarget": "oilmod-web:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "oilmod-web:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/oilmod-web-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "sto",
+      "architect": {
+        "build-lib": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "$(npm bin)/nx build-lib core",
+              "$(npm bin)/nx post-build core"
+            ],
+            "parallel": false
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/core"],
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
+            ]
+          }
+        },
+        "post-build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "$(npm bin)/ts-node tools/scripts/build-scss.ts",
+              "$(npm bin)/ts-node tools/scripts/copy-assets.ts"
+            ],
+            "parallel": true
+          }
+        }
+      }
+    },
+    "common": {
+      "projectType": "library",
+      "root": "libs/common",
+      "sourceRoot": "libs/common/src",
+      "prefix": "sto",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/common/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/common/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/common"],
+          "options": {
+            "jestConfig": "libs/common/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/common/src/**/*.ts",
+              "libs/common/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "datatable": {
+      "projectType": "library",
+      "root": "libs/datatable",
+      "sourceRoot": "libs/datatable/src",
+      "prefix": "sto",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/datatable/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/datatable/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/datatable/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/datatable"],
+          "options": {
+            "jestConfig": "libs/datatable/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/datatable/src/**/*.ts",
+              "libs/datatable/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "drawer": {
+      "projectType": "library",
+      "root": "libs/drawer",
+      "sourceRoot": "libs/drawer/src",
+      "prefix": "sto",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/drawer/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/drawer/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/drawer/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/drawer"],
+          "options": {
+            "jestConfig": "libs/drawer/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/drawer/src/**/*.ts",
+              "libs/drawer/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "error-handler": {
+      "projectType": "library",
+      "root": "libs/error-handler",
+      "sourceRoot": "libs/error-handler/src",
+      "prefix": "sto",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/error-handler/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/error-handler/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/error-handler/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/error-handler"],
+          "options": {
+            "jestConfig": "libs/error-handler/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/error-handler/src/**/*.ts",
+              "libs/error-handler/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "form": {
+      "projectType": "library",
+      "root": "libs/form",
+      "sourceRoot": "libs/form/src",
+      "prefix": "sto",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/form/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/form/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/form/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/form"],
+          "options": {
+            "jestConfig": "libs/form/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/form/src/**/*.ts",
+              "libs/form/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "testing": {
+      "projectType": "library",
+      "root": "libs/testing",
+      "sourceRoot": "libs/testing/src",
+      "prefix": "oilmod-web-nx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:ng-packagr-lite",
+          "options": {
+            "project": "libs/testing/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/testing/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/testing/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/testing"],
+          "options": {
+            "jestConfig": "libs/testing/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/testing/src/**/*.ts",
+              "libs/testing/src/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

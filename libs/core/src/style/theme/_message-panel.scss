@@ -1,0 +1,93 @@
+@use '~@angular/material' as mat;
+@import "theme";
+@import "typography";
+
+@mixin sto-message-panel-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $warn: map_get($variables, warn);
+  $accent: map_get($variables, accent);
+  $primary-contrast: map_get($variables, primary-contrast);
+  $warn-contrast: map_get($variables, warn-contrast);
+  $accent-contrast: map_get($variables, accent-contrast);
+  $color: map_get($variables, color);
+
+  $indicators: map-get($theme, indicators);
+  $success-palette: map-get($indicators, success);
+  $success: mat.get-color-from-palette($success-palette, highlight);
+  $success-contrast: mat.get-color-from-palette($success-palette, highlight-contrast);
+  $success-icon: mat.get-color-from-palette($success-palette, resting);
+  $success-border: $success-icon;
+
+  $danger-palette: map-get($indicators, danger);
+  $danger: mat.get-color-from-palette($danger-palette, highlight);
+  $danger-contrast: mat.get-color-from-palette($danger-palette, highlight-contrast);
+  $danger-icon: mat.get-color-from-palette($danger-palette, resting);
+  $danger-border: $danger-icon;
+
+  $warning-palette: map-get($indicators, warning);
+  $warning: mat.get-color-from-palette($warning-palette, highlight);
+  $warning-contrast: mat.get-color-from-palette($warning-palette, highlight-contrast);
+  $warning-icon: mat.get-color-from-palette($warning-palette, resting);
+  $warning-border: $warning-icon;
+
+  .sto-message-panel {
+    color: $color;
+
+    &.mat-primary {
+      background-color: $primary;
+      color: $primary-contrast;
+    }
+
+    &.mat-accent {
+      background-color: $accent;
+      color: $accent-contrast;
+    }
+
+    &.mat-warn {
+      background-color: $warn;
+      color: $warn-contrast;
+    }
+
+    &.mat-success {
+      background-color: $success;
+      color: $success-contrast;
+      border-color: $success-border;
+
+      .mat-icon {
+        color: $success-icon;
+      }
+    }
+
+    &.mat-danger {
+      background-color: $danger;
+      color: $danger-contrast;
+      border-color: $danger-border;
+
+      .mat-icon {
+        color: $danger-icon;
+      }
+    }
+
+    &.mat-warning {
+      background-color: $warning;
+      color: $warning-contrast;
+      border-color: $warning-border;
+
+      .mat-icon {
+        color: $warning-icon;
+      }
+    }
+
+  }
+}
+
+
+// Include theme styles for your custom components.
+body:not(.sto-dark-theme) {
+  @include sto-message-panel-theme($sto-theme, $variables);
+}
+
+.sto-dark-theme {
+  @include sto-message-panel-theme($sto-dark-theme, $dark-variables);
+}
+

@@ -1,0 +1,42 @@
+@import "./theme";
+
+$form-field-bg: rgba(#6687B8, 0.1);
+
+@mixin wysiwyg-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $border-color: map_get($variables, border-color);
+
+  .sto-wysiwyg {
+    &__actions {
+      border-bottom: 1px solid $border-color;
+
+      .divider {
+        border-left: 1px solid $border-color;
+      }
+    }
+
+    &__editor {
+      &:focus {
+        border-bottom: 2px solid $primary;
+      }
+
+      border-bottom: 2px solid $border-color;
+      background: $form-field-bg;
+
+      &--readonly {
+        background: transparent;
+        border: none;
+      }
+    }
+  }
+}
+
+body {
+  @include wysiwyg-theme($sto-theme, $variables);
+
+  &.sto-dark-theme {
+    @include wysiwyg-theme($sto-dark-theme, $dark-variables);
+  }
+}
+
+

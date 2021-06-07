@@ -1,0 +1,26 @@
+<div class="sto-breadcrumb__home"
+     (click)="itemClick($event, home)">
+  <mat-icon class="sto-breadcrumb__home__icon"
+            *ngIf="iconConfig.svgIcon"
+            [svgIcon]="iconConfig.svgIcon">
+  </mat-icon>
+  <mat-icon class="sto-breadcrumb__home__icon"
+            *ngIf="!iconConfig.svgIcon">{{ iconConfig.icon }}
+  </mat-icon>
+  <span class="sto-breadcrumb__home__title"
+        *ngIf="iconConfig.text">{{iconConfig.text}}</span>
+</div>
+<div class="sto-breadcrumb__list"
+     [title]="title"
+     style="position: relative">
+  <ng-container *ngFor="let item of model; let index = index; let last = last">
+    <a class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
+       [title]="item.label"
+       (click)="itemClick($event, item)">
+      {{ item.label}}
+    </a>
+    <span class="separator"
+          *ngIf="!last"> /
+    </span>
+  </ng-container>
+</div>

@@ -1,0 +1,81 @@
+@use '~@angular/material' as mat;
+@import "../variables";
+@import "../style/functions";
+@import "./theme/typography";
+
+
+@mixin sto-dialog-typography($config) {
+  .sto-dialog {
+    .mat-dialog-title {
+      line-height: mat.line-height($config, body-1);
+    }
+  }
+}
+
+.mat-typography {
+  @include sto-dialog-typography($sto-typography);
+}
+
+.mat-typography.sto-sm-typography {
+  @include sto-dialog-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include sto-dialog-typography($sto-l-typography);
+}
+
+
+.sto-dialog {
+
+}
+
+.sto-dialog .mat-dialog-container {
+  padding: 0;
+
+  .mat-dialog-content {
+    margin: 0;
+    padding: 12px 24px 16px;
+
+    &.scroll-lines {
+      border-top: solid 1px $gray-light;
+      border-bottom: solid 1px $gray-light;
+    }
+
+    .sto-selection-list {
+      .sto-selection-list__item {
+        .mat-list-item-content.mat-list-item-content-reverse {
+          padding: 0 24px;
+        }
+      }
+
+      margin: -24px;
+    }
+
+    p {
+      white-space: pre-line;
+    }
+
+  }
+
+  .mat-dialog-title {
+    padding: 24px 24px 20px;
+    margin-bottom: -4px;
+  }
+
+  .mat-dialog-actions {
+    padding: 8px;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+  }
+
+  .mat-dialog-actions:last-child {
+    margin-bottom: 0;
+  }
+}
+
+sto-confirm {
+  .mat-dialog-content {
+    padding: 24px;
+  }
+}

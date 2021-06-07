@@ -1,0 +1,30 @@
+import * as sass from 'sass';
+import * as path from 'path';
+import {writeFile as writeFileCb} from 'fs';
+import {promisify} from 'util';
+const importer = require('node-sass-tilde-importer');
+
+const writeFile = promisify(writeFileCb);
+
+const root = path.join(__dirname, '../../');
+const out = path.join(root, 'dist', 'libs', 'core');
+
+const promises = [
+  processScss('./libs/core/src/ngx-stoui.scss', path.join(out, 'ngx-stoui.css')),
+  processScss('./libs/core/src/style/datatable/ngx-datatable.scss', path.join(out, 'ngx-datatable.css')),
+];
+
+Promise.all(promises)
+  .then(() => console.log('Done'))
+
+
+async function processScss(file: string, outFile: string): Promise<void> {
+
+  const result = sass.renderSync({
+    file,
+    importer
+  });
+
+  const css = result.css.toString();
+  await writeFile(path.join(outFile), css, 'utf8');
+}

@@ -1,0 +1,20 @@
+@import "theme";
+@import "typography";
+
+@mixin sto-input-override-theme($theme, $variables) {
+  $color: map_get($variables, color);
+  $background-color: map_get($variables, background);
+
+  .sto-select-filter {
+    background-color: $background-color;
+  }
+}
+
+// Include theme styles for your custom components.
+body:not(.sto-dark-theme) {
+  @include sto-input-override-theme($sto-theme, $variables);
+}
+
+.sto-dark-theme {
+  @include sto-input-override-theme($sto-dark-theme, $dark-variables);
+}

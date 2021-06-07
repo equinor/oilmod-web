@@ -1,0 +1,118 @@
+@use '~@angular/material' as mat;
+
+$sto-filter-header-font-size: 18px;
+$sto-filter-header-line-height: 24px;
+$sto-filter-header-elevation: 2;
+
+.sto-filter {
+
+  .mat-button-toggle {
+    &-standalone.mat-button-toggle-appearance-standard {
+      border: 0;
+    }
+  }
+
+  box-shadow: none !important;
+
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  .mat-expansion-panel {
+    border-radius: 2px;
+  }
+
+  .mat-expansion-panel-header {
+    @include mat.elevation($sto-filter-header-elevation);
+    padding: 0 8px;
+    cursor: default;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &.mat-expanded {
+      border-bottom: solid 1px transparent;
+    }
+
+    &-title {
+      align-items: center;
+    }
+  }
+
+  .mat-expansion-panel-content {
+
+    @include mat.elevation(1);
+  }
+
+  .mat-expansion-panel-body {
+    padding: 24px 16px 0 16px;
+    margin: 0;
+  }
+
+  .mat-expansion-panel-header[aria-disabled=true] {
+    color: inherit;
+  }
+
+
+  .sto-filter-table-actions {
+
+    padding: 0 8px;
+
+  }
+
+  .sto-filter-actions {
+    padding: 0 0 0 8px;
+
+
+  }
+
+  sto-filter-actions {
+    height: 32px;
+  }
+
+  .sto-filter-table-actions, .sto-filter-actions {
+    display: flex;
+    align-items: center;
+
+    .mat-icon {
+      cursor: pointer;
+    }
+
+    .mat-icon-button {
+    }
+  }
+
+
+  .mat-expansion-panel-header {
+    border-radius: 2px;
+  }
+
+
+  .mat-button-toggle-standalone {
+    width: 32px;
+    height: 32px;
+
+    .mat-button-toggle-label {
+      margin: 0;
+    }
+
+    .mat-button-toggle-label-content {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .separator {
+    display: inline-block;
+    width: 1px;
+    height: 24px;
+    margin: 8px 4px;
+  }
+
+  .content-wrapper {
+    display: flex;
+  }
+
+
+}
+

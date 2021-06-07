@@ -1,0 +1,161 @@
+@use '~@angular/material' as mat;
+
+$sto-warning-map: (
+  highlight: #FFE7D6,
+  resting: #FF9200,
+  hover: #AD6200,
+  text: #AD6200,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: rgba(black, 0.87),
+    hover: white,
+    text: white
+  )
+);
+
+$sto-warning: mat.define-palette($sto-warning-map, highlight, resting, hover, text);
+
+$sto-dark-warning-map: (
+  highlight: #FFE7D6, //rgba(255, 198, 122, 0.1),
+  resting: #FF9200,
+  hover: #FFDAA8,
+  text: #FFC67A,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: rgba(black, 0.87),
+    hover: rgba(black, 0.87),
+    text: rgba(black, 0.87)
+  )
+);
+
+$sto-dark-warning: mat.define-palette($sto-dark-warning-map, highlight, resting, hover, text);
+
+$sto-danger-map: (
+  highlight: #FFC1C1,
+  resting: #EB0000,
+  hover: #B30D2F,
+  text: #B30D2F,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: white,
+    hover: white,
+  )
+);
+$sto-danger: mat.define-palette($sto-danger-map, highlight, resting, hover, text);
+
+$sto-dark-danger-map: (
+  highlight: #FFC1C1, //rgba(255, 102, 112, 0.1),
+  resting: #EB0000,
+  hover: #FF949B,
+  text: #FF6670,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: white,
+    hover: rgba(black, 0.87),
+  )
+);
+$sto-dark-danger: mat.define-palette($sto-dark-danger-map, highlight, resting, hover, text);
+
+$sto-success-map: (
+  highlight: #E6FAEC,
+  resting: #4BB748,
+  hover: #358132,
+  text: #358132,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: rgba(black, 0.87),
+    hover: white,
+  )
+);
+$sto-success: mat.define-palette($sto-success-map, highlight, resting, hover, text);
+$sto-dark-success-map: (
+  highlight: #E6FAEC, // rgba(161, 218, 160, 0.1),
+  resting: #4BB748,
+  hover: #C1E7C1,
+  text: #A1DAA0,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: white,
+    hover: rgba(black, 0.87),
+  )
+);
+$sto-dark-success: mat.define-palette($sto-dark-success-map, highlight, resting, hover, text);
+
+
+$sto-primary: (
+  highlight: #E6FAEC,
+  selected-hover: #C3F3D2,
+  resting: #007079,
+  hover: #004F55,
+  hover-alt: #DEEDEE,
+  text: #007079,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: white,
+    hover: white
+  )
+);
+
+$sto-primary-dark: (
+  highlight: #007079,
+  selected-hover: #004F55,
+  resting: #97CACE,
+  hover: #ADE2E6,
+  hover-alt: #DEEDEE,
+  text: #D5EAF4,
+  contrast: (
+    highlight: rgba(black, 0.87),
+    resting: rgba(black, 0.87),
+    hover: white
+  )
+);
+$primary: mat.define-palette($sto-primary, resting, highlight, hover, text);
+$primary-dark: mat.define-palette($sto-primary-dark, resting, highlight, hover, text);
+
+$sto-indicators-map: (
+  success: $sto-success,
+  warning: $sto-warning,
+  danger: $sto-danger
+);
+$sto-indicators: (
+  indicators: $sto-indicators-map
+);
+
+$sto-dark-indicators-map: (
+  success: $sto-dark-success,
+  warning: $sto-dark-warning,
+  danger: $sto-dark-danger
+);
+
+$sto-dark-indicators: (
+  indicators: $sto-dark-indicators-map
+);
+
+$sto-accent: (
+  highlight: #d5eaf4,
+  resting: #243746,
+  hover: #18252F,
+  200: #243746, // For slide toggle,
+  contrast : (
+    highlight: rgba(black, 0.87),
+    resting: rgba(black, 0.87),
+    hover: white,
+  )
+);
+
+$sto-dark-accent: (
+  highlight: rgba(255, 255, 255, 0.1),
+  resting: #DEE5E7,
+  hover: #FFFFFF,
+  200: #d5eaf4, // For slide toggle,
+  contrast : (
+    highlight: white,
+    resting: rgba(black, 0.87),
+    hover: rgba(black, 0.87),
+  )
+);
+
+$accent: mat.define-palette($sto-accent, highlight, resting, hover);
+$accent-dark: mat.define-palette($sto-dark-accent, highlight, resting, hover);
+
+$sto-warn: mat.define-palette(mat.$red-palette);

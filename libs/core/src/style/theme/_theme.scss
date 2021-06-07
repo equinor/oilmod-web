@@ -1,0 +1,12 @@
+@use '~@angular/material' as mat;
+@import "./theme-variables";
+@import "colors";
+
+// Create the theme object (a Sass map containing all of the palettes).
+$sto-theme: mat.define-light-theme($primary, $accent, $sto-warn);
+$sto-theme: map_merge($sto-theme, $sto-indicators);
+$sto-dark-theme: mat.define-dark-theme($primary-dark, $accent-dark, $sto-warn);
+$sto-dark-theme: map_merge($sto-dark-theme, $sto-dark-indicators);
+
+$variables: theme_variables($sto-theme);
+$dark-variables: theme_variables($sto-dark-theme);

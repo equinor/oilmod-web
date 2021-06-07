@@ -1,0 +1,1520 @@
+{
+  "actions": [
+    {
+      "action": "review",
+      "module": "prismjs",
+      "resolves": [
+        {
+          "id": 1638,
+          "path": "@storybook/addon-notes>@storybook/components>react-syntax-highlighter>refractor>prismjs",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "postcss",
+      "resolves": [
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>autoprefixer>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>css-blank-pseudo>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>css-blank-pseudo>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>css-has-pseudo>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>css-has-pseudo>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>css-prefers-color-scheme>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>css-prefers-color-scheme>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-attribute-case-insensitive>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-attribute-case-insensitive>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-color-functional-notation>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-color-functional-notation>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-color-gray>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-color-gray>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-color-hex-alpha>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-color-hex-alpha>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-color-mod-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-color-mod-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-color-rebeccapurple>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-color-rebeccapurple>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-custom-media>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-custom-media>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-custom-properties>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-custom-properties>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-custom-selectors>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-custom-selectors>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-dir-pseudo-class>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-dir-pseudo-class>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-double-position-gradients>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-double-position-gradients>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-env-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-env-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-focus-visible>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-focus-visible>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-focus-within>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-focus-within>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-font-variant>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-font-variant>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-gap-properties>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-gap-properties>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-image-set-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-image-set-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-initial>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-initial>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-lab-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-lab-function>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-logical>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-logical>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-media-minmax>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-media-minmax>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-nesting>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-nesting>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-overflow-shorthand>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-overflow-shorthand>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-page-break>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-page-break>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-place>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-place>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-pseudo-class-any-link>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-pseudo-class-any-link>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-replace-overflow-wrap>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-replace-overflow-wrap>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-selector-matches>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-selector-matches>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>postcss-preset-env>postcss-selector-not>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "ng-packagr>postcss-preset-env>postcss-selector-not>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@angular-devkit/build-angular>resolve-url-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-scope>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1693,
+          "path": "@storybook/angular>postcss",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    }
+  ],
+  "advisories": {
+    "1638": {
+      "findings": [
+        {
+          "version": "1.17.1",
+          "paths": [
+            "@storybook/addon-notes>@storybook/components>react-syntax-highlighter>refractor>prismjs"
+          ]
+        }
+      ],
+      "id": 1638,
+      "created": "2021-03-01T19:55:37.985Z",
+      "updated": "2021-03-01T19:55:37.985Z",
+      "deleted": null,
+      "title": "Regular Expression Denial of Service",
+      "found_by": {
+        "link": "",
+        "name": "Anonymous",
+        "email": ""
+      },
+      "reported_by": {
+        "link": "",
+        "name": "Anonymous",
+        "email": ""
+      },
+      "module_name": "prismjs",
+      "cves": [
+        "CVE-2021-23341"
+      ],
+      "vulnerable_versions": "<1.23.0",
+      "patched_versions": ">=1.23.0",
+      "overview": "`prismjs` versions before 1.23.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the prism-asciidoc, prism-rest, prism-tap and prism-eiffel components.\n\n",
+      "recommendation": "Upgrade to version 1.23.0 or later",
+      "references": "- [Snyk Advisory](https://snyk.io/vuln/SNYK-JS-PRISMJS-1076581)\n- [GitHub Advisory](https://github.com/advisories/GHSA-h4hr-7fg3-h35w)\n- [CVE](https://nvd.nist.gov/vuln/detail/CVE-2021-23341)",
+      "access": "public",
+      "severity": "moderate",
+      "cwe": "CWE-400",
+      "metadata": {
+        "module_type": "",
+        "exploitability": 5,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/1638"
+    },
+    "1693": {
+      "findings": [
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>autoprefixer>postcss",
+            "ng-packagr>postcss-preset-env>autoprefixer>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>autoprefixer>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>autoprefixer>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>autoprefixer>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>autoprefixer>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>autoprefixer>postcss",
+            "@storybook/angular>autoprefixer>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>css-blank-pseudo>postcss",
+            "ng-packagr>postcss-preset-env>css-blank-pseudo>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>css-has-pseudo>postcss",
+            "ng-packagr>postcss-preset-env>css-has-pseudo>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>css-prefers-color-scheme>postcss",
+            "ng-packagr>postcss-preset-env>css-prefers-color-scheme>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss",
+            "ng-packagr>postcss-preset-env>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-attribute-case-insensitive>postcss",
+            "ng-packagr>postcss-preset-env>postcss-attribute-case-insensitive>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-color-functional-notation>postcss",
+            "ng-packagr>postcss-preset-env>postcss-color-functional-notation>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-color-gray>postcss",
+            "ng-packagr>postcss-preset-env>postcss-color-gray>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-color-hex-alpha>postcss",
+            "ng-packagr>postcss-preset-env>postcss-color-hex-alpha>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-color-mod-function>postcss",
+            "ng-packagr>postcss-preset-env>postcss-color-mod-function>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-color-rebeccapurple>postcss",
+            "ng-packagr>postcss-preset-env>postcss-color-rebeccapurple>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-custom-media>postcss",
+            "ng-packagr>postcss-preset-env>postcss-custom-media>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-custom-properties>postcss",
+            "ng-packagr>postcss-preset-env>postcss-custom-properties>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-custom-selectors>postcss",
+            "ng-packagr>postcss-preset-env>postcss-custom-selectors>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-dir-pseudo-class>postcss",
+            "ng-packagr>postcss-preset-env>postcss-dir-pseudo-class>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-double-position-gradients>postcss",
+            "ng-packagr>postcss-preset-env>postcss-double-position-gradients>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-env-function>postcss",
+            "ng-packagr>postcss-preset-env>postcss-env-function>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-focus-visible>postcss",
+            "ng-packagr>postcss-preset-env>postcss-focus-visible>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-focus-within>postcss",
+            "ng-packagr>postcss-preset-env>postcss-focus-within>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-font-variant>postcss",
+            "ng-packagr>postcss-preset-env>postcss-font-variant>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-gap-properties>postcss",
+            "ng-packagr>postcss-preset-env>postcss-gap-properties>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-image-set-function>postcss",
+            "ng-packagr>postcss-preset-env>postcss-image-set-function>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-initial>postcss",
+            "ng-packagr>postcss-preset-env>postcss-initial>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-lab-function>postcss",
+            "ng-packagr>postcss-preset-env>postcss-lab-function>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-logical>postcss",
+            "ng-packagr>postcss-preset-env>postcss-logical>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-media-minmax>postcss",
+            "ng-packagr>postcss-preset-env>postcss-media-minmax>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-nesting>postcss",
+            "ng-packagr>postcss-preset-env>postcss-nesting>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-overflow-shorthand>postcss",
+            "ng-packagr>postcss-preset-env>postcss-overflow-shorthand>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-page-break>postcss",
+            "ng-packagr>postcss-preset-env>postcss-page-break>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-place>postcss",
+            "ng-packagr>postcss-preset-env>postcss-place>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-pseudo-class-any-link>postcss",
+            "ng-packagr>postcss-preset-env>postcss-pseudo-class-any-link>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-replace-overflow-wrap>postcss",
+            "ng-packagr>postcss-preset-env>postcss-replace-overflow-wrap>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-selector-matches>postcss",
+            "ng-packagr>postcss-preset-env>postcss-selector-matches>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>postcss-preset-env>postcss-selector-not>postcss",
+            "ng-packagr>postcss-preset-env>postcss-selector-not>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@angular-devkit/build-angular>resolve-url-loader>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-scope>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>css-loader>postcss-modules-values>postcss",
+            "@storybook/addon-docs>@storybook/builder-webpack4>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@storybook/addon-docs>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+            "@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss-flexbugs-fixes>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>css-loader>postcss-modules-values>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/builder-webpack4>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/builder-webpack4>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>icss-utils>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-extract-imports>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-local-by-default>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-scope>postcss",
+            "@storybook/addon-essentials>@storybook/addon-docs>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>postcss",
+            "@storybook/angular>@storybook/core>@storybook/core-server>@storybook/manager-webpack4>css-loader>postcss-modules-values>postcss"
+          ]
+        },
+        {
+          "version": "7.0.35",
+          "paths": [
+            "@storybook/angular>postcss"
+          ]
+        }
+      ],
+      "id": 1693,
+      "created": "2021-05-10T15:38:31.238Z",
+      "updated": "2021-05-10T15:44:02.027Z",
+      "deleted": null,
+      "title": "Regular Expression Denial of Service",
+      "found_by": {
+        "link": "",
+        "name": "Anonymous",
+        "email": ""
+      },
+      "reported_by": {
+        "link": "",
+        "name": "Anonymous",
+        "email": ""
+      },
+      "module_name": "postcss",
+      "cves": [
+        "CVE-2021-23368"
+      ],
+      "vulnerable_versions": ">=7.0.0 <8.2.10",
+      "patched_versions": ">=8.2.10",
+      "overview": "`postcss` from 7.0.0 and before 8.2.10 are vulnerable to Regular Expression Denial of Service (ReDoS) during source map parsing.",
+      "recommendation": "Upgrade to version 8.2.10 or later",
+      "references": "- [CVE](https://nvd.nist.gov/vuln/detail/CVE-2021-23368)\n- [GitHub Advisory](https://github.com/advisories/GHSA-hwj9-h5mp-3pm3)\n",
+      "access": "public",
+      "severity": "moderate",
+      "cwe": "CWE-400",
+      "metadata": {
+        "module_type": "",
+        "exploitability": 5,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/1693"
+    }
+  },
+  "muted": [],
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 151,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 600,
+    "devDependencies": 3042,
+    "optionalDependencies": 55,
+    "totalDependencies": 3644
+  },
+  "runId": "f642411e-f3ca-4341-8b30-b9daf7cc929d"
+}

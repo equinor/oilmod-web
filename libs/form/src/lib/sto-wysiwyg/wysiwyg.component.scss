@@ -1,0 +1,87 @@
+.sto-wysiwyg {
+  .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 36px;
+    padding: 0 6px;
+  }
+
+  &__editor {
+    &__button {
+      min-width: 40px;
+      width: 40px;
+      padding: 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    min-height: 44px;
+    padding-bottom: 2px;
+
+    .divider {
+      height: 36px;
+      width: 0;
+      margin: 0 4px;
+    }
+
+    .mat-button-toggle-group {
+      border: none;
+
+      .mat-button-toggle {
+        border-left: none;
+        margin-left: 2px;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+
+  min-height: 100px;
+  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 2px;
+  padding: 4px 0 8px;
+  display: flex;
+  flex-direction: column;
+
+  &__buttons {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__actions {
+    .user-buttons {
+      button {
+        margin: 8px 4px 0;
+      }
+    }
+  }
+
+  &__editor {
+
+    transition: border-color 300ms ease, background-color 200ms ease, height 200ms ease;
+    border-radius: 2px;
+    outline: none;
+    margin-top: 4px;
+    padding: 12px 4px 4px;
+    flex: 1 1 auto;
+    line-height: 18px;
+    overflow: auto;
+
+    &--readonly {
+      background: transparent;
+      border-width: 0;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

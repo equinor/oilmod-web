@@ -1,0 +1,36 @@
+@mixin material-animation-default($duration:0.2s) {
+  transition-duration: $duration;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/**
+generates styles for a datatable-row-group. To avoid having to rewrite all the specific selectors, this mixin can be used
+$styles is just a sass map of styles, which will get iterated through and applied to the mixin.
+ */
+@mixin datatable-row-group($styles) {
+  .datatable-row-group {
+    &.datatable-row-left, &.datatable-row-center, &.datatable-row-right {
+      @each $prop, $value in $styles {
+        #{$prop}: $value;
+      }
+    }
+  }
+}
+
+@mixin datatable-row-border($color) {
+  .datatable-body-cell {
+    box-shadow: 0 1px 0 0 $color inset, 0 -1px 0 0 $color inset;
+  }
+  .datatable-row-left {
+    .datatable-body-cell:first-child {
+      box-shadow: 0 1px 0 0 $color inset, 1px -1px 0 0 $color inset;
+    }
+  }
+
+  .datatable-row-center {
+    .datatable-body-cell:last-child {
+      box-shadow: 0 1px 0 0 $color inset, -1px -1px 0 0 $color inset;
+    }
+  }
+  //box-shadow: 0 1px 0 0 $datatable-row-focus-border-color inset, -1px -1px 0 0 $datatable-row-focus-border-color inset;
+}

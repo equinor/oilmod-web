@@ -1,0 +1,11 @@
+<div class="sto-wysiwyg">
+  <sto-wysiwyg-actions [active]="active"
+                       [disabled]="disabled"
+                       (modifier)="execute($event)">
+    <ng-content></ng-content>
+  </sto-wysiwyg-actions>
+  <sto-wysiwyg-editor [readonly]="disabled"
+                      [content]="value"
+                      (valueChanged)="valueChanged($event)"
+                      (keydown)="onKeyDownHandleTab($event)"></sto-wysiwyg-editor>
+</div>

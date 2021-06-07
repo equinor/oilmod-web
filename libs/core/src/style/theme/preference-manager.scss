@@ -1,0 +1,54 @@
+@import "theme";
+@import "typography";
+
+@mixin preference-manager-theme($theme, $variables) {
+  $selected-color: map_get($variables, selected-bg);
+  $hover-color: map_get($variables, hover-bg);
+  $border-color: map_get($variables, border-color);
+  $secondary-color: map_get($variables, secondary);
+
+  sto-preference-manager {
+
+    .filter-title {
+      small {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  .mat-menu-panel.preference-manager-list {
+
+    .preference-manager-list-item {
+      &:hover:not(.selected) {
+        background-color: $hover-color !important; // Angular material has super strict rules we need to override.
+      }
+
+
+      &.selected {
+        background-color: $selected-color !important;
+      }
+
+      .preference-manager-list-item-title {
+
+        small {
+          color: $secondary-color;
+        }
+      }
+    }
+
+    .preference-manager-list-footer {
+      border-top: 1px solid $border-color;
+      background: $hover-color;
+    }
+  }
+
+}
+
+// Include theme styles for your custom components.
+body:not(.sto-dark-theme) {
+  @include preference-manager-theme($sto-theme, $variables);
+}
+
+.sto-dark-theme {
+  @include preference-manager-theme($sto-dark-theme, $dark-variables);
+}
