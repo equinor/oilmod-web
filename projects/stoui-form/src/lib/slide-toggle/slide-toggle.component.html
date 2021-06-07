@@ -1,8 +1,0 @@
-<div class="sto-slide-toggle">
-  <span class="sto-slide-toggle__label">{{ ctrl.value ? 'Yes' : 'No' }}</span>
-  <mat-slide-toggle (click)="$event.stopPropagation()"
-                    class="sto-slide-toggle__toggler"
-                    [class.sto-slide-toggle__toggler--hide]="readonly"
-                    [formControl]="ctrl"
-                    [color]="color"></mat-slide-toggle>
-</div>
