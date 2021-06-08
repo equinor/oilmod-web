@@ -1,0 +1,36 @@
+@import "./theme";
+@import "./typography";
+
+@mixin sto-number-unit-input-theme($theme, $variables) {
+  $border-color: map_get($variables, border-color);
+  $color: map_get($variables, color);
+  $disabled: map_get($variables, disabled);
+  $secondary-color: map_get($variables, secondary);
+
+  .mat-form-field.sto-form__field {
+    sto-number-unit-input {
+      .number-unit-input-spacer {
+        background: $border-color;
+      }
+
+      .number-unit-input-element {
+        color: $color;
+
+        &::placeholder {
+          color: $secondary-color;
+        }
+      }
+
+    }
+  }
+  .mat-option.sto-option--clear {
+    color: $secondary-color;
+  }
+}
+
+// Include theme styles for your custom components.
+@include sto-number-unit-input-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-number-unit-input-theme($sto-dark-theme, $dark-variables);
+}

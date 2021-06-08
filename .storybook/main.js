@@ -1,17 +1,11 @@
 module.exports = {
-  "stories": [
-    "../stories/**/*.stories.@(ts|tsx)",
-  ],
-  "addons": [
-    "@storybook/addon-links",
+  stories: [],
+  // addons: ['@storybook/addon-knobs/dist/register'],
+  addons: [
+    "@storybook/addon-actions",
     "@storybook/addon-essentials",
     "@storybook/addon-storysource",
-    '@storybook/addon-notes/register',
+    "@storybook/addon-links",
     'storybook-dark-mode',
-  ],
-  performance: {
-    maxAssetSize: 10000000,
-    maxEntrypointSize: 10000000,
-    hints: "false"
-  }
-}
+  ]
+};

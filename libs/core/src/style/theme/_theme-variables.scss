@@ -1,0 +1,61 @@
+@use '~@angular/material' as mat;
+
+@function theme_variables($theme) {
+  $primary-palette: map-get($theme, primary);
+  $primary: mat.get-color-from-palette($primary-palette);
+  $primary-contrast: mat.get-contrast-color-from-palette($primary-palette, main);
+  $accent-palette: map-get($theme, accent);
+  $accent: mat.get-color-from-palette($accent-palette, highlight);
+  $accent-contrast: mat.get-contrast-color-from-palette($accent-palette, main);
+  $warn-palette: map-get($theme, warn);
+  $warn: mat.get-color-from-palette($warn-palette);
+  $warn-contrast: mat.get-contrast-color-from-palette($warn-palette, main);
+  $indicators: map-get($theme, indicators);
+  $danger-palette: map-get($indicators, danger);
+  $error: mat.get-color-from-palette($danger-palette, resting);
+  $warning-palette: map-get($indicators, warning);
+  $warning: mat.get-color-from-palette($warning-palette, resting);
+  $success-palette: map-get($indicators, success);
+  $success: mat.get-color-from-palette($success-palette, resting);
+
+
+  $foreground: map-get($theme, foreground);
+  $color: mat.get-color-from-palette($foreground, text);
+  $secondary: mat.get-color-from-palette($foreground, secondary-text);
+  $disabled: mat.get-color-from-palette($foreground, disabled-text);
+  $icon: mat.get-color-from-palette($foreground, icon);
+  $icon-hover: rgba($icon, 0.8);
+
+  $background: map-get($theme, background);
+  $background-color: map-get($background, background);
+  $card-bg: map_get($background, card);
+  $hover-bg-color: mat.get-color-from-palette($background, 'hover');
+  $hover-color: mat.get-color-from-palette($foreground, slider-off-active);
+  $selected-color: mat.get-color-from-palette($background, hover, 0.12);
+  $border-color: mat.get-color-from-palette($foreground, divider);
+  $app-bar: mat.get-color-from-palette($background, 'app-bar');
+
+  @return (
+    primary: $primary,
+    accent: $accent,
+    primary-contrast: $primary-contrast,
+    accent-contrast: $accent-contrast,
+    warn: $warn,
+    warn-contrast: $warn-contrast,
+    color: $color,
+    secondary: $secondary,
+    disabled: $disabled,
+    background: $background-color,
+    hover-bg: $hover-bg-color,
+    selected-bg: $selected-color,
+    border-color: $border-color,
+    success: $success,
+    error: $error,
+    warning: $warning,
+    app-bar: $app-bar,
+    icon: $icon,
+    icon-hover: $icon-hover,
+    hover-color: $hover-color,
+    card-bg: $card-bg
+  )
+}

@@ -1,0 +1,70 @@
+<div class="sto-header"
+     [class.sto-header--test-environment]="testEnvironment">
+  <sto-breadcrumbs [home]="homeBreadCrumbConfig"
+                   [model]="breadCrumbs"></sto-breadcrumbs>
+  <div class="sto-header__environment"
+       *ngIf="testEnvironment && environmentName && (isSmall$ | async) === false">
+    <div class="sto-header__environment--label">
+      {{environmentName}}
+    </div>
+  </div>
+  <span class="spacer"></span>
+  <button mat-icon-button
+          class="small-toggle"
+          *ngIf="isSmall$ | async"
+          (click)="toggleMenu($event)">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <div class="sto-header__actions"
+       [class.sto-header__actions--small--open]="menuOpen"
+       [class.sto-header__actions--small]="isSmall$ | async">
+    <ng-content></ng-content>
+    <button mat-icon-button
+            title="Accessibility"
+            [matMenuTriggerFor]="menu">
+      <mat-icon>accessibility</mat-icon>
+    </button>
+    <button mat-icon-button
+            title="Account"
+            *ngIf="userMenu"
+            [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+</div>
+
+<mat-menu #menu="matMenu"
+          [yPosition]="(isSmall$ | async) ? 'above' : 'below'">
+  <button mat-menu-item
+          class="dense"
+          (click)="toggleTheme()">
+    <mat-icon>{{ (darkmode$ | async) ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+    {{(darkmode$ | async) ? 'Disable' : 'Enable'}} night mode
+  </button>
+  <button mat-menu-item
+          class="dense"
+          [matMenuTriggerFor]="fontMenu">
+    <mat-icon>format_size</mat-icon>
+    Font size
+  </button>
+</mat-menu>
+<mat-menu #fontMenu="matMenu">
+  <button mat-menu-item
+          class="dense"
+          style="font-size: 10px"
+          (click)="toggleTypography('sto-sm-typography')">
+    Smaller
+  </button>
+  <button mat-menu-item
+          class="dense"
+          style="font-size: 13px"
+          (click)="toggleTypography()">
+    Regular
+  </button>
+  <button mat-menu-item
+          class="dense"
+          style="font-size: 16px"
+          (click)="toggleTypography('sto-l-typography')">
+    Larger
+  </button>
+</mat-menu>

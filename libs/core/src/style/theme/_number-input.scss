@@ -1,0 +1,25 @@
+@import "./theme";
+@import "./typography";
+
+@mixin sto-number-input-theme($theme, $variables) {
+  $color: map_get($variables, color);
+  $secondary-color: map_get($variables, secondary);
+
+  .mat-form-field.sto-form__field {
+    .sto-number-input {
+      color: $color;
+
+      &::placeholder {
+        color: $secondary-color;
+      }
+    }
+
+  }
+}
+
+// Include theme styles for your custom components.
+@include sto-number-input-theme($sto-theme, $variables);
+
+.sto-dark-theme {
+  @include sto-number-input-theme($sto-dark-theme, $dark-variables);
+}

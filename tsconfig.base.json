@@ -1,81 +1,29 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "downlevelIteration": true,
-    "outDir": "./dist/out-tsc",
+    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "module": "es2020",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "strictPropertyInitialization": false,
     "paths": {
-      "@ngx-stoui/datatable": [
-        "dist/stoui-datatable"
-      ],
-      "@ngx-stoui/datatable/*": [
-        "dist/stoui-datatable/*"
-      ],
-      "@ngx-stoui/core": [
-        "dist/stoui-core"
-      ],
-      "@ngx-stoui/core/*": [
-        "dist/stoui-core"
-      ],
-      "@ngx-stoui/form": [
-        "dist/stoui-form"
-      ],
-      "@ngx-stoui/form/*": [
-        "dist/stoui-form/*"
-      ],
-      "@ngx-stoui/common": [
-        "dist/stoui-common"
-      ],
-      "@ngx-stoui/common/*": [
-        "dist/stoui-common/*"
-      ],
-      "@ngx-stoui/drawer": [
-        "dist/stoui-drawer"
-      ],
-      "@ngx-stoui/drawer/*": [
-        "dist/stoui-drawer/*"
-      ],
-      "@ngx-stoui/error-handler": [
-        "dist/stoui-error-handler"
-      ],
-      "@ngx-stoui/error-handler/*": [
-        "dist/stoui-error-handler/*"
-      ],
-      "@ngx-stoui/quick-view": [
-        "dist/stoui-quick-view"
-      ],
-      "@ngx-stoui/quick-view/*": [
-        "dist/stoui-quick-view/*"
-      ],
-      "@ngx-stoui/unsaved-changes": [
-        "dist/stoui-unsaved-changes"
-      ],
-      "@ngx-stoui/unsaved-changes/*": [
-        "dist/stoui-unsaved-changes/*"
-      ],
-      "@testing": [
-        "testing"
-      ],
-      "@testing/*": [
-        "testing/*"
-      ]
+      "@ngx-stoui/core": ["libs/core/src/index.ts"],
+      "@ngx-stoui/common": ["libs/common/src/index.ts"],
+      "@ngx-stoui/datatable": ["libs/datatable/src/index.ts"],
+      "@ngx-stoui/drawer": ["libs/drawer/src/index.ts"],
+      "@ngx-stoui/error-handler": ["libs/error-handler/src/index.ts"],
+      "@ngx-stoui/form": ["libs/form/src/index.ts"],
+      "@ngx-stoui/testing": ["libs/testing/src/index.ts"]
     }
   },
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
+  "exclude": ["node_modules", "tmp"]
 }

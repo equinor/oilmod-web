@@ -11,17 +11,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Use Node 12
+      - name: Use Node 14
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - name: Install
-        run: yarn
-      - name: Build components
-        run: node builder
+        run: npm ci
       - name: Build storybook
-        run: yarn build-storybook
+        run: npm run storybook:build
       - uses: kheiakiyama/install-azcopy-action@v1
         with:
           version: 'v10'
-      - run: azcopy_v10 copy './dist/storybook/*' 'https://topstorybook.blob.core.windows.net/$web/${{ secrets.SAS }}' --recursive
+      - run: azcopy_v10 copy './dist/storybook/oilmod-web/*' 'https://topstorybook.blob.core.windows.net/$web/${{ secrets.SAS }}' --recursive

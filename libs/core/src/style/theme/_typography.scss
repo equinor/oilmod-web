@@ -1,0 +1,41 @@
+@use '~@angular/material' as mat;
+
+$base-font-size: 13px;
+$sm-font-size: 10px;
+$l-font-size: 16px;
+
+$sto-typography: mat.define-typography-config(
+  $font-family: 'Equinor, Roboto',
+  $body-1: mat.define-typography-level(13px, 20px, 400),
+  $body-2: mat.define-typography-level(13px, 20px, 400),
+  $button: mat.define-typography-level(14px, 24px, 500),
+  $headline: mat.define-typography-level(28px, 44px, 400),
+  $title: mat.define-typography-level(24px, 32px, 400),
+  $subheading-2: mat.define-typography-level(20px, 28px, 400),
+  $subheading-1: mat.define-typography-level(16px, 24px, 400),
+  $input: mat.define-typography-level(13px, 1.333, 400, 0.025em)
+);
+
+$sto-sm-typography: mat.define-typography-config(
+  $font-family: 'Equinor, Roboto',
+  $body-1: mat.define-typography-level(10px, 16px, 400),
+  $body-2: mat.define-typography-level(10px, 16px, 400),
+  $button: mat.define-typography-level(10px, 16px, 500),
+  $headline: mat.define-typography-level(24px, 40px, 400),
+  $title: mat.define-typography-level(20px, 28px, 400),
+  $subheading-2: mat.define-typography-level(16px, 24px, 400),
+  $subheading-1: mat.define-typography-level(12px, 20px, 400),
+  $input: mat.define-typography-level(10px, 1.333, 400, 0.025em)
+);
+
+$sto-l-typography: mat.define-typography-config(
+  $font-family: 'Equinor, Roboto',
+  $body-1: mat.define-typography-level(16px, 24px, 400),
+  $body-2: mat.define-typography-level(18px, 24px, 400),
+  $button: mat.define-typography-level(14px, 24px, 500),
+  $headline: mat.define-typography-level(32px, 48px, 400),
+  $title: mat.define-typography-level(28px, 40px, 400),
+  $subheading-2: mat.define-typography-level(24px, 40px, 400),
+  $subheading-1: mat.define-typography-level(20px, 32px, 400),
+  $input: mat.define-typography-level(16px, 1.333, 400, 0.025em)
+);

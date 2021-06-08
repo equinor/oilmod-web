@@ -1,0 +1,63 @@
+@use '~@angular/material' as mat;
+.sto-list__item--hidden{
+  display: none !important;
+}
+
+
+
+.sto-drawer--with-tabs{
+
+  .sto-drawer__header__wrapper{
+    box-shadow: none;
+  }
+  .sto-drawer__content{
+    padding: 0;
+    overflow-y: hidden;
+  }
+
+
+
+
+  .mat-tab-group.sto-drawer__tab-group{
+    max-height: 100%;
+    position: relative;
+    padding-top: 48px;
+    .mat-tab-body-content {
+      overflow-y: auto;
+      height: 100%;
+      padding: 16px 8px;
+    }
+    .mat-tab-body-wrapper{
+
+      height: 100%;
+
+    }
+
+    &.mat-primary .mat-ink-bar {
+      background-color: white;
+    }
+
+    .mat-tab-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      border-bottom-width: 0;
+      z-index: 2;
+      @include mat.elevation(4);
+    }
+    .mat-tab-labels{
+      max-width: 99.5%; //fixed weird bug there arrow appear when selected.
+    }
+    .mat-tab-label, .mat-tab-link{
+      color: white;
+    }
+    .mat-tab-label-active{
+      opacity: 1;
+    }
+
+  }
+
+
+
+}
