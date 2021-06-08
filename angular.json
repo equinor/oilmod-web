@@ -181,6 +181,20 @@
             ],
             "parallel": true
           }
+        },
+        "lint-all": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "$(npm bin)/nx lint core",
+              "$(npm bin)/nx lint form",
+              "$(npm bin)/nx lint common",
+              "$(npm bin)/nx lint datatable",
+              "$(npm bin)/nx lint drawer",
+              "$(npm bin)/nx lint error-handler"
+            ],
+            "parallel": true
+          }
         }
       }
     },
