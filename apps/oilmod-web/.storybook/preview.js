@@ -1,17 +1,3 @@
-/*
-import { addDecorator } from '@storybook/angular';
-import { withKnobs } from '@storybook/addon-knobs';
-
-addDecorator(withKnobs);
-
-setTimeout(() => {
-  document.body.classList.add("mat-typography", "mat-app-background")
-  document.body.style.paddingLeft = '0';
-}, 0);
-
-*/
-
-
 import {setCompodocJson} from "@storybook/addon-docs/angular";
 import docJson from "./documentation.json";
 import darkTheme from './sto-dark';
