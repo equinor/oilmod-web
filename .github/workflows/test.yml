@@ -17,9 +17,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+      - name: Use Node 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
       - name: Install deps
         run: npm ci
-      - uses: mansagroup/nrwl-nx-action@v2.1.0
-        name: Run
-        with:
-          targets: test-all,lint-all
+      - name: Run tests
+        run: npm run test:all
+      - name: Run linter
+        run: npm run lint:all
