@@ -30,7 +30,7 @@ export interface MenuItemCommand {
 
 export interface NavigateCommand {
   $event: MouseEvent | KeyboardEvent;
-  command: Array<string | number>;
+  command?: Array<string | number>;
 }
 
 export enum MenuItemTypes {

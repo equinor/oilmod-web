@@ -90,7 +90,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   @Output()
   activate = new EventEmitter<RowActivation<T>>();
   @Output()
-  scrollHeader = new EventEmitter<unknown>();
+  scrollHeader = new EventEmitter<Event>();
   @ViewChild(CdkVirtualScrollViewport)
   vScroller: CdkVirtualScrollViewport;
   @ViewChild('scroller')

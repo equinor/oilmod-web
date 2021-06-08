@@ -20,7 +20,8 @@ export class NavigationMenuItemComponent {
     this.urlPrefix = useHash === false ? '/' : '#/';
   }
 
-  public navigate($event: KeyboardEvent | MouseEvent, command: Array<string | number>, item: { error?: string; }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public navigate($event: KeyboardEvent | MouseEvent, command: any, item: { error?: string; }) {
     if ( item.error ) {
       return;
     }
