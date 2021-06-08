@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@master
       - name: Install deps
         run: npm ci
-      - uses: mansagroup/nrwl-nx-action@v2
+      - uses: mansagroup/nrwl-nx-action@v2.1.0
         name: Run
         with:
           targets: test-all,lint-all
