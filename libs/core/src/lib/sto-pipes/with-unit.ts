@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'getUnit'})
 export class GetUnit implements PipeTransform {
-  transform(value: any, withParens?: boolean): any {
+  transform(value: string, withParens?: boolean): string {
     if (value) {
       const arr = value.split('(');
       if (arr.length > 0 ) {
@@ -19,7 +19,7 @@ export class GetUnit implements PipeTransform {
 }
 @Pipe({name: 'excludeUnit'})
 export class ExcludeUnit implements PipeTransform {
-  transform(value: any, args?: any): any {
+  transform(value: string): string {
     if (value) {
       const arr = value.split('(');
       if (arr.length > 0) {

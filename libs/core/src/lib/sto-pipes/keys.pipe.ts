@@ -14,7 +14,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class KeysPipe implements PipeTransform {
 
-  transform(value: any): any[] {
+  transform(value: Record<string, unknown>): Array<string> {
     if (value) {
       return Object.keys(value);
     }

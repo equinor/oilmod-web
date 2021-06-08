@@ -13,7 +13,7 @@ export class ErrorDialogService {
   }
 
   // Opens a dialog, and returns the reference with the close results.
-  open(err: HttpError): MatDialogRef<DialogComponent, any> {
+  open(err: HttpError): MatDialogRef<DialogComponent, unknown> {
     if ( this.ref ) {
       this.ref.close(null);
     }

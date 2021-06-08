@@ -18,7 +18,7 @@ export class StoThemeService implements OnDestroy {
   private typographyObserver: MutationObserver;
   private readonly document: Document;
 
-  constructor(@Inject(DOCUMENT) document: any,
+  constructor(@Inject(DOCUMENT) document: Document,
               @Optional() @Inject(THEME_SAVER) private readonly saver: ThemeSaver<Observable<ThemeModel>>) {
     if ( !this.saver ) {
       this.saver = new ThemeSaverService();

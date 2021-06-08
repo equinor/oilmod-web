@@ -4,7 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   Directive,
-  EventEmitter, HostBinding,
+  EventEmitter,
+  HostBinding,
   Input,
   OnInit,
   Output,
@@ -74,7 +75,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('filterForm') filterForm: { nativeElement: HTMLElement; };
 
   @Input()
-  public host: FilterForm<any>;
+  public host: FilterForm<Record<string, unknown>>;
   private _contentHeight: number;
 
   public hasSeperator = false;
@@ -83,8 +84,8 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private vcRef: ViewContainerRef) {
     try {
-      const parentComponent = ( this.vcRef as any )._view.context;
-      this.host = parentComponent;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.host = ( this.vcRef as any )._view.context;
     } catch ( ex ) {
       // most likely this fails only for tests after Ivy (Angular 9), as it no longer wraps with a component.
     }

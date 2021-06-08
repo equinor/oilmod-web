@@ -217,7 +217,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
     if ( this.ngControl && this.ngControl.statusChanges ) {
       this.sub.add(this.ngControl.statusChanges
         .pipe(startWith(this.ngControl.status))
-        .subscribe(status => {
+        .subscribe(() => {
           this.updateErrorState();
         }));
     }
@@ -229,6 +229,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
     this.sub.unsubscribe();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onContainerClick(event: MouseEvent): void {
     this.elRef.nativeElement.querySelector('input')?.focus();
   }
@@ -252,11 +253,11 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: never): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: never): void {
     this.onTouched = fn;
   }
 

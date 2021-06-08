@@ -40,7 +40,7 @@ class NumberUnit {
 export class NumberUnitInputComponent extends FormFieldBase
   implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
   static nextId = 0;
-  stateChanges = new Subject<any>();
+  stateChanges = new Subject<void>();
   public form: FormGroup;
   readonly autofilled: boolean;
   controlType = 'number-unit-input';
@@ -97,7 +97,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _list: { value: any; title?: string; }[] = [];
+  private _list: { value: unknown; title?: string; }[] = [];
 
   @Input()
   get fractionSize() {
@@ -225,7 +225,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.sub.add(sub);
     if ( this.ngControl && this.ngControl.statusChanges ) {
       this.sub.add(this.ngControl.statusChanges
-        .subscribe(state => this.updateErrorState())
+        .subscribe(() => this.updateErrorState())
       );
     }
   }
@@ -254,8 +254,8 @@ export class NumberUnitInputComponent extends FormFieldBase
   }
 
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange = (_: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  onChange = (_: unknown) => {
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {
@@ -265,11 +265,11 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: never): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: never): void {
     this.onTouched = fn;
   }
 

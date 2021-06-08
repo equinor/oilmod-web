@@ -12,7 +12,8 @@ export class DialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: HttpError, private ref: MatDialogRef<DialogComponent>) {
   }
 
-  handleEvent(action: ((...args: any[]) => unknown) | Object | undefined) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleEvent(action: ((...args: any[]) => unknown) | unknown | undefined) {
     if ( typeof action === 'function' ) {
       try {
         action(this.data);

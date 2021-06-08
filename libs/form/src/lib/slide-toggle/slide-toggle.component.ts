@@ -175,7 +175,7 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange = (_: any) => {
+  onChange = (_: unknown) => {
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {
@@ -185,11 +185,11 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: never): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: never): void {
     this.onTouched = fn;
   }
 

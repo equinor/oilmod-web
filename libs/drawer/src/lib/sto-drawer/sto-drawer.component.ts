@@ -192,6 +192,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
 
   private testKeyCombos(ev: KeyboardEvent) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const path: HTMLElement[] = ( ev as any ).path;
     // Test to ensure we have focus inside the drawer
     if ( !( path && path.includes(this.el.nativeElement) ) ) {

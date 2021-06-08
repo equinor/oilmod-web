@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Menu, NavigateCommand } from './menu';
 
 @Component({
@@ -6,14 +6,10 @@ import { Menu, NavigateCommand } from './menu';
   templateUrl: './navigation-menu.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class NavigationMenuComponent implements OnInit {
+export class NavigationMenuComponent {
 
   @Input() menu: Menu;
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onCommand = new EventEmitter<NavigateCommand>();
-
-  ngOnInit() {
-
-  }
-
 
 }

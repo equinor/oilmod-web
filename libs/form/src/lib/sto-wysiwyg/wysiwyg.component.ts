@@ -42,8 +42,7 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   editor: ElementRef<HTMLDivElement>;
   public value: SafeHtml;
   public active: string[] = [];
-  public propagateChange: any;
-  public onTouched: any;
+  public onTouched: unknown;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -69,7 +68,7 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
           filter((ev) => ( ev.ctrlKey && ev.key === 'A' ) || ( /Arrow/.test(ev.key) ))
         )
     ).pipe(debounceTime(200), takeUntil(this.destroyed$))
-      .subscribe(ev => {
+      .subscribe(() => {
         this.active = Modifiers.getActiveModifiers();
         this.cdr.detectChanges();
       });
@@ -112,12 +111,16 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
       this.cdr.detectChanges();
     }
   }
+  // eslint-disable-next-line
+  propagateChange = (value: unknown) => {
+    console.log(value); // To remove eslint warning..
+  };
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: never): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: unknown): void {
     this.onTouched = fn;
   }
 

@@ -2,7 +2,7 @@ import { EventEmitter, InjectionToken } from '@angular/core';
 
 export interface Breadcrumb {
   label: string;
-  command?: Function;
+  command?: (...args: Array<unknown>) => void;
   segment?: string;
   disabled?: boolean;
   eventEmitter?: EventEmitter<unknown>;

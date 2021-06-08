@@ -4,9 +4,6 @@ import { NumberFormatPipe } from './number-format.pipe';
 import { CurrencyFormatPipe } from './currency-format.pipe';
 import { KeysPipe } from './keys.pipe';
 import { DateFormatPipe } from './date-format.pipe';
-import { QualityNamePipe } from './quality-name.pipe';
-import { TankNamePipe } from './tank-name.pipe';
-import { TankStatePipe } from './tank-state.pipe';
 import { ExcludeUnit, GetUnit } from './with-unit';
 import { YesNoPipe } from './yes-no';
 
@@ -17,9 +14,6 @@ import { YesNoPipe } from './yes-no';
     KeysPipe,
     NumberFormatPipe,
     CurrencyFormatPipe,
-    QualityNamePipe,
-    TankNamePipe,
-    TankStatePipe,
     GetUnit,
     ExcludeUnit,
     YesNoPipe
@@ -29,9 +23,6 @@ import { YesNoPipe } from './yes-no';
     KeysPipe,
     NumberFormatPipe,
     CurrencyFormatPipe,
-    QualityNamePipe,
-    TankNamePipe,
-    TankStatePipe,
     GetUnit,
     ExcludeUnit,
     YesNoPipe

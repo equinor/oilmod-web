@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Optional, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 

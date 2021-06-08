@@ -10,12 +10,11 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnIn
   templateUrl: './sto-action-footer.component.html',
   styleUrls : ['./sto-action-footer.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  host: {
-    class: 'sto-action-footer'
-  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StoActionFooterComponent implements OnInit, OnDestroy  {
+  @HostBinding('class.sto-action-footer')
+  private actionFooterClass = true;
 
   /**
    * Triggers if the progressbar should be visible or not.

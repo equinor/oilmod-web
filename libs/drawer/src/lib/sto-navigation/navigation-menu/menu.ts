@@ -1,8 +1,6 @@
-export interface Menu {
+export type Menu = {
   groups: MenuGroup[];
-
-  [ key: string ]: any; // Other possible usages e.g for identifiers
-}
+} & Record<string, unknown>;
 
 export interface MenuGroup {
   hasDivider?: boolean;

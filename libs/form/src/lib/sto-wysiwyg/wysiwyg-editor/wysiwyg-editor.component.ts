@@ -41,7 +41,7 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
         takeUntil(this.destroyed$)
       ).subscribe(ev => {
       this.warning = null;
-      this.valueChanged.emit(( ev.target as any ).innerHTML);
+      this.valueChanged.emit(( ev.target as HTMLElement ).innerHTML);
     });
   }
 
@@ -105,7 +105,7 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
     const fr = new FileReader();
     fr.onloadend = (loadEvent) => {
       this.zone.runOutsideAngular(() => {
-        const res = ( loadEvent.currentTarget as any ).result;
+        const res = ( loadEvent.currentTarget as FileReader ).result as string;
         const el = document.createElement('img');
         el.title = `${img.name}`;
         el.src = res;

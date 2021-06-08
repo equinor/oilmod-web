@@ -3,7 +3,7 @@
   <sto-breadcrumbs [home]="homeBreadCrumbConfig"
                    [model]="breadCrumbs"></sto-breadcrumbs>
   <div class="sto-header__environment"
-       *ngIf="testEnvironment && environmentName && !(isSmall$ | async)">
+       *ngIf="testEnvironment && environmentName && (isSmall$ | async) === (false || null || undefined)">
     <div class="sto-header__environment--label">
       {{environmentName}}
     </div>

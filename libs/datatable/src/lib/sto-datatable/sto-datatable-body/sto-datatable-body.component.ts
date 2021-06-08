@@ -54,7 +54,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   @Input()
   smallView: boolean;
   @Input()
-  responsiveView: TemplateRef<any>;
+  responsiveView: TemplateRef<unknown>;
   @Input()
   height: number | null;
   @Input()
@@ -99,7 +99,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   private destroyed$ = new Subject<boolean>();
   private rowDiffer: KeyValueDiffer<T, T>;
   private timeout: number | undefined;
-  private resizeObserver: any;
+  private resizeObserver: ResizeObserver;
   public horizontalScrollActive: boolean;
   public verticalScrollOffset = 0;
 
@@ -121,6 +121,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   }
 
   @Input()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   trackBy = (index: number, item: T) => {
     return index;
   }

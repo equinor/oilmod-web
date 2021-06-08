@@ -29,16 +29,16 @@ export class Action {
   /**
    * A function to be called based on the given action (e.g window.location.reload to refresh the tab)
    */
-  action?: (...args: any[]) => unknown;
+  action?: (...args: unknown[]) => unknown;
   /**
    * The data to be returned when the dialog is closed.
    */
-  closeDialogData?: Object;
+  closeDialogData?: Record<string, unknown>;
 
   constructor(label: string);
   constructor(label: string, close: () => void);
-  constructor(label: string, close: Object);
-  constructor(label: string, close?: Object | (() => unknown)) {
+  constructor(label: string, close: Record<string, unknown>);
+  constructor(label: string, close?: Record<string, unknown> | (() => unknown)) {
     this.label = label;
     if ( typeof close === 'function' ) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { format as formatDate, parse } from 'date-fns';
+import { format as formatDate } from 'date-fns';
 
 /**
  * Pipe used to transform dates, based on our default formats.

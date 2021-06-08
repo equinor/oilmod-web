@@ -13,7 +13,6 @@ import {
   TemplateRef
 } from '@angular/core';
 import { Column, ColumnDisplay } from '../../columns';
-import { RowContextMenu } from '../../events';
 import { rowClassFn } from '../../models';
 
 @Component({

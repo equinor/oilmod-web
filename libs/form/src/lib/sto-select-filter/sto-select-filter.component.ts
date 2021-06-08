@@ -54,12 +54,12 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   /**
    * Initial value of the filter
    */
-  @Input() set value(value: any) {
+  @Input() set value(value: unknown) {
     this._value = value;
     this.writeValue(value);
   }
 
-  get value(): any {
+  get value(): unknown {
     return this._value;
   }
 
@@ -106,7 +106,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
 
   public indeterminate: boolean;
 
-  private _value: any;
+  private _value: unknown;
 
 
   private _total: number;
@@ -121,7 +121,7 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   /**
    * Emits when the search value changes
    */
-  @Output() valueChanges = new EventEmitter<boolean>();
+  @Output() valueChanges = new EventEmitter<unknown>();
 
   /**
    * isMulti determines if select all is available
@@ -146,21 +146,22 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
     this.checkboxControl.setValue(isChecked, { emitEvent: false });
   }
 
-  writeValue(value: any) {
+  writeValue(value: unknown) {
     if ( value || value === '' ) {
       this.inputControl.setValue(value);
     }
   }
 
-  propagateChange = (value: any) => {
+  propagateChange = (value: unknown) => {
     this.valueChanges.emit(value);
   };
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: never): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  // eslint-disable-next-line
+  registerOnTouched(fn: unknown): void {
   }
 
   ngOnDestroy() {

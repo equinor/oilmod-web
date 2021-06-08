@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Column, ColumnDisplay } from '../columns';
 import { HeaderContextMenu } from '../events';
 import { animate, state, style, transition, trigger, } from '@angular/animations';

@@ -11,12 +11,12 @@ export class ConfirmService {
   constructor(private dialog: MatDialog) {
   }
 
-  confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true): Observable<any> {
+  confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true): Observable<boolean> {
     this.ref = this.dialog.open(ConfirmComponent, {
       data: { message, title, confirmText, showCancel }
     });
 
-    const subject = new ReplaySubject();
+    const subject = new ReplaySubject<boolean>();
 
     this.ref.afterClosed()
       .subscribe(result => {

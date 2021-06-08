@@ -10,7 +10,9 @@ import { MenuItem, MenuItemTypes, NavigateCommand } from '../menu';
 })
 export class NavigationMenuItemComponent {
   @Input() item: MenuItem;
-  @Output() onCommand = new EventEmitter<NavigateCommand>();
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output()
+  onCommand = new EventEmitter<NavigateCommand>();
   public menuItemTypes = MenuItemTypes;
   public urlPrefix: string;
 
@@ -18,7 +20,7 @@ export class NavigationMenuItemComponent {
     this.urlPrefix = useHash === false ? '/' : '#/';
   }
 
-  public navigate($event: KeyboardEvent | MouseEvent, command: any, item: { error?: string; }) {
+  public navigate($event: KeyboardEvent | MouseEvent, command: Array<string | number>, item: { error?: string; }) {
     if ( item.error ) {
       return;
     }

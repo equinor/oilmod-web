@@ -21,7 +21,7 @@ export class Preference {
   /**
    * payload is the value of the preference (e.g the filters)
    */
-  payload: Object;
+  payload: Record<string, unknown>;
   /**
    * external determines if the preference is external, and if so, if it should be possible to save immediately.
    */

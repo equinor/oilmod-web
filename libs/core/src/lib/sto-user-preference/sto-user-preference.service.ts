@@ -7,7 +7,9 @@ const preferenceKey = 'TOPS_IM:UserPreferences';
 export class StoUserPreferenceService {
 
   public hasSelectTextOnFocusEnabled = new BehaviorSubject<boolean>(true);
-  public preferences: any;
+  public preferences: {
+    hasSelectTextOnFocusEnabled: boolean;
+  };
   public default = {
     hasSelectTextOnFocusEnabled: true
   };

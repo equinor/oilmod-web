@@ -1,6 +1,13 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+type Data = {
+  title: string;
+  message: string;
+  showCancel?: boolean;
+  confirmText: string;
+}
+
 /**
  * A confirm dialog that emits an observable.
  */
@@ -31,7 +38,7 @@ export class ConfirmComponent {
   @ViewChild('ok')
   ok: ElementRef<HTMLButtonElement>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ConfirmComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Data, public dialogRef: MatDialogRef<ConfirmComponent>) {
   }
 
 }

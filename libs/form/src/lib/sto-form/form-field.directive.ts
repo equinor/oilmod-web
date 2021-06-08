@@ -1,6 +1,6 @@
 /* tslint:disable:no-string-literal */
 import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostListener, OnDestroy, QueryList } from '@angular/core';
-import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -11,12 +11,11 @@ import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 })
 export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDestroy {
   @ContentChildren(MatFormFieldControl)
-  input: QueryList<MatFormFieldControl<any>>;
+  input: QueryList<MatFormFieldControl<unknown>>;
   private destroyed$ = new Subject();
 
   constructor(
-    private el: ElementRef<HTMLElement>,
-    private host: MatFormField) {
+    private el: ElementRef<HTMLElement>) {
   }
 
   ngAfterViewInit(): void {
@@ -35,7 +34,7 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
       )
       .subscribe(() => {
         const { disabled } = this.input.first;
-
+        // eslint-disable-next-line
         let readOnly = ( this.input.first as any ).readonly || false;
         if ( this.input.first instanceof MatInput ) {
           readOnly = this.input.first.readonly;

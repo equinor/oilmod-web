@@ -101,6 +101,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set footerRow(row: any) {
     this._footerRow = row;
   }
@@ -187,7 +188,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   @Input()
   responsive: boolean;
   @Input()
-  responsiveView: TemplateRef<any>;
+  responsiveView: TemplateRef<unknown>;
   @Input()
   responsiveBreakPoint = 400;
   public smallScreen: boolean;
@@ -229,6 +230,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
 
 
   @Input()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   trackBy = (index: number, item: T) => {
     return index;
   };
@@ -313,14 +315,14 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       );
   }
 
-  setHeaderScroll(event: any) {
-    const left = event.target.scrollLeft;
+  setHeaderScroll(event: Event) {
+    const left = (event.target as HTMLElement).scrollLeft;
     this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
     this.cdr.detectChanges();
   }
 
-  scrollBodyAndHeader(event: any) {
-    const left = event.target.scrollLeft;
+  scrollBodyAndHeader(event: Event) {
+    const left = (event.target as HTMLElement).scrollLeft;
     this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
   }
 

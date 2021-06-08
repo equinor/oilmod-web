@@ -97,7 +97,7 @@ export class StoAppHeaderComponent implements OnInit {
           }),
           take(1)
         )
-        .subscribe((e) => {
+        .subscribe(() => {
           this.menuOpen = false;
           this.cdr.markForCheck();
         });
