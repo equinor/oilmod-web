@@ -6,8 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// @ts-ignore
-import markdown from './sto-app-header.component.md';
 import { action } from '@storybook/addon-actions';
 import { StoAppHeaderComponent, StoAppHeaderModule, StoThemeModule } from '@ngx-stoui/common';
 
@@ -28,7 +26,6 @@ export default {
     userMenu: { table: { disable: true } },
   },
   parameters: {
-    notes: { markdown }
   },
 } as Meta;
 

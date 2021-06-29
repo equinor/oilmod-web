@@ -12,6 +12,17 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+const COLORS = [
+  'primary', 'accent', 'warning', 'danger', 'success'
+];
+
+@Component({
+  selector: 'sto-message-panel',
+  templateUrl: './sto-message-panel.component.html',
+  styleUrls: [ './sto-message-panel.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
+})
 /**
  * Message panel to display inline info boxes.
  * Can be of severity warning, error or info.
@@ -24,18 +35,6 @@ import {
  * <sto-message-panel *ngIf="err" [dismissable]="true"
  *    (dismissed)="err = null" severity="warning">{{ err }}</sto-message-panel>
  */
-
-const COLORS = [
-  'primary', 'accent', 'warning', 'danger', 'success'
-];
-
-@Component({
-  selector: 'sto-message-panel',
-  templateUrl: './sto-message-panel.component.html',
-  styleUrls: [ './sto-message-panel.component.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
-})
 export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
   @Input()
   color: 'primary' | 'accent' | 'warning' | 'danger' | 'success' = 'primary';
