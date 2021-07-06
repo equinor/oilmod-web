@@ -5,8 +5,7 @@ export const breadCrumbs: Breadcrumb[] = [
     label: 'One',
     command: () => {
       console.log('Wat?');
-    },
-    segment: '1',
+    }
   }, {
     label: 'Two',
     command: () => {

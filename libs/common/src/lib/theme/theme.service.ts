@@ -41,7 +41,8 @@ export class StoThemeService implements OnDestroy {
 
   setTheme(theme: ThemeName) {
     if ( !theme || !themes.has(theme) ) {
-      theme = 'light';
+      const preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      theme = preferDark ? 'dark' : 'light';
     }
     this.themeSubject$.next(theme);
     return this.saver.save({ type: 'theme', value: theme });
