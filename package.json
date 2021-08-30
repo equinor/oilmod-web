@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "nx",
     "preinstall": "npx npm-force-resolutions",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --create-ivy-entry-points",
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",

@@ -1,0 +1,18 @@
+<ng-template #linkContent >
+  <span>
+    {{ navigationItem.label }}
+  </span>
+  <mat-icon *ngIf="navigationItem.target && navigationItem.target === '_blank'">open_in_new</mat-icon>
+</ng-template>
+
+<a *ngIf="navigationItem.link"
+   [href]="navigationItem.link"
+   [attr.target]="navigationItem.target || null"
+   [routerLinkActive]="'active'">
+  <ng-container *ngTemplateOutlet="linkContent"></ng-container>
+</a>
+<a *ngIf="navigationItem.route" [routerLink]="navigationItem.route"
+   [attr.target]="navigationItem.target || null"
+   [routerLinkActive]="'active'">
+  <ng-container *ngTemplateOutlet="linkContent"></ng-container>
+</a>

@@ -1,7 +1,8 @@
 @use '~@angular/material' as mat;
 
 .sto-header {
-  @include mat.elevation(3);
+  // @include mat.elevation(3);
+  border-bottom: 1px solid #F7F7F7;
 
   display: flex;
   flex: auto;

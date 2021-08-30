@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { StoAppHeaderComponent, StoAppHeaderModule, StoThemeModule } from '@ngx-stoui/common';
+import { CommonModule } from '@angular/common';
 
 export default {
   title: 'common/Application Header',
@@ -15,7 +16,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        StoAppHeaderModule,
+        StoAppHeaderModule, CommonModule,
         RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule,
         StoThemeModule.forRoot() ],
     })

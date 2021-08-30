@@ -1,0 +1,127 @@
+$transition: width ease 250ms;
+
+.sto-nav-drawer {
+  height: 100vh;
+  position: fixed;
+  padding-top: 8px;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  transition: $transition;
+
+  div.sto-nav-drawer-items {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .expansion-button {
+    height: 48px;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+  }
+
+  &--collapsed {
+    .expansion-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    width: 48px;
+
+    > div.sto-nav-drawer-items {
+      width: 48px;
+
+      .sto-nav-drawer--collapsed__item {
+        height: 47px;
+        border-bottom-style: solid;
+        border-bottom-width: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  &--expanded {
+    width: 316px;
+
+    &__item {
+      cursor: pointer;
+      width: 316px;
+      padding: 12px 24px;
+      display: grid;
+      grid-template-columns: 24px 1fr 24px;
+      grid-column-gap: 20px;
+    }
+  }
+
+  sto-nav-drawer-item {
+    display: block;
+    line-height: 24px;
+  }
+
+  sto-nav-drawer-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 56px;
+    overflow: hidden;
+
+    a {
+      text-decoration: none;
+    }
+
+    sto-nav-drawer-list-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 48px;
+      border-left: 2px solid;
+      cursor: pointer;
+
+      a.active {
+        display: block;
+        margin-left: -2px;
+        font-weight: 700;
+
+        span {
+          border-left-width: 2px;
+          border-left-style: solid;
+        }
+      }
+
+      a {
+        line-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 24px;
+      }
+
+      a span {
+        line-height: 16px;
+        padding-left: 14px;
+      }
+    }
+
+  }
+}
+
+.sto-nav-drawer-menu + div {
+  left: 48px !important;
+
+  .active-menu-route {
+    font-weight: bold;
+  }
+
+  .mat-menu-content .mat-divider {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

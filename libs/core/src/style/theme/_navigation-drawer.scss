@@ -1,0 +1,81 @@
+@use '~@angular/material' as mat;
+@import "theme";
+@import "typography";
+
+@mixin navigation-drawer-theme($theme, $variables) {
+  $primary: map_get($variables, primary);
+  $color: map_get($variables, color);
+  $hover: map_get($variables, hover-bg);
+  $disabled: map_get($variables, disabled);
+  $bg-color: map_get($variables, card-bg);
+  $border-color: map_get($variables, border-color);
+
+
+  .sto-nav-drawer {
+    background-color: $bg-color;
+    button:not(.mat-button-disabled) .mat-icon {
+      color: $primary;
+    }
+    .sto-nav-drawer--expanded__item:not(.disabled) .mat-icon {
+      color: $primary;
+    }
+    sto-nav-drawer-list-item {
+      border-color: rgba($primary, 0.2);
+      a.active span {
+        border-color: $primary;
+      }
+      &:hover {
+        background-color: $hover;
+      }
+    }
+    .sto-nav-drawer--collapsed__item {
+      border-bottom-color: $border-color;
+    }
+    a:not(.disabled) {
+      color: $color;
+    }
+    a.active {
+      color: $primary;
+    }
+    .disabled {
+      color: $disabled;
+      a {
+        color: $disabled;
+      }
+    }
+  }
+}
+
+
+// Include theme styles for your custom components.
+body:not(.sto-dark-theme) {
+  @include navigation-drawer-theme($sto-theme, $variables);
+}
+
+.sto-dark-theme {
+  @include navigation-drawer-theme($sto-dark-theme, $dark-variables);
+}
+
+@mixin navigation-drawer-typography($config) {
+  .sto-nav-drawer {
+    sto-nav-drawer-item {
+      font-size: mat.font-size($config, subheading-1);
+      line-height: mat.line-height($config, subheading-1);
+    }
+  }
+  .sto-nav-drawer-menu + div .mat-menu-item {
+    font-size: mat.font-size($config, subheading-1);
+  }
+}
+
+.mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
+  @include navigation-drawer-typography($sto-typography);
+}
+
+.mat-typography.sto-sm-typography {
+  @include navigation-drawer-typography($sto-sm-typography);
+}
+
+.mat-typography.sto-l-typography {
+  @include navigation-drawer-typography($sto-l-typography);
+}

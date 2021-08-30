@@ -36,7 +36,7 @@ const Template: Story<FormFieldDirective & Record<string, unknown>> = (args) => 
 </mat-form-field>
 <mat-form-field stoFormField *ngIf="withClasses">
 <mat-label>Form field with styles</mat-label>
-<mat-select><mat-option>A</mat-option></mat-select>
+<mat-select><mat-option value="B">A</mat-option></mat-select>
 </mat-form-field>
 <mat-form-field appearance="fill" *ngIf="!withClasses">
 <mat-label>Form field without styles</mat-label>

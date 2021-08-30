@@ -3,5 +3,5 @@ import {create} from '@storybook/theming/create';
 export default create({
   base: 'light',
   brandTitle: 'TOPS',
-  mainBackground: '#fafafa'
+  mainBackground: '#F7F7F7'
 });

@@ -1,9 +1,20 @@
 /* tslint:disable:no-string-literal */
-import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostListener, OnDestroy, QueryList } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ContentChildren,
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  OnDestroy,
+  QueryList
+} from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { Subject } from 'rxjs';
-import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { MatSelect } from '@angular/material/select';
 
 @Directive({
   selector: 'mat-form-field[stoFormField]',
@@ -12,7 +23,10 @@ import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDestroy {
   @ContentChildren(MatFormFieldControl)
   input: QueryList<MatFormFieldControl<unknown>>;
+  @HostBinding('title')
+  title = '';
   private destroyed$ = new Subject();
+  private titleSub: Subscription;
 
   constructor(
     private el: ElementRef<HTMLElement>) {
@@ -35,6 +49,21 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
       .subscribe(() => {
         const { disabled } = this.input.first;
         // eslint-disable-next-line
+        if (this.titleSub) {
+          this.titleSub.unsubscribe();
+        }
+        this.titleSub = this.input.first.stateChanges
+          .pipe(
+            debounceTime(30),
+            startWith(0)
+          )
+          .subscribe(() => {
+          if (this.input.first instanceof MatSelect) {
+            this.title = this.input.first.triggerValue;
+          } else {
+            this.title = this.input.first.value as string || '';
+          }
+        })
         let readOnly = ( this.input.first as any ).readonly || false;
         if ( this.input.first instanceof MatInput ) {
           readOnly = this.input.first.readonly;

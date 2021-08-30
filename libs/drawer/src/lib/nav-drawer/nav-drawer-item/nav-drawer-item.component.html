@@ -1,0 +1,35 @@
+<div class="sto-nav-drawer--collapsed__item"
+     *ngIf="collapsed">
+  <button mat-icon-button
+          [matMenuTriggerFor]="menu"
+          [disabled]="navigationItem.disabled">
+    <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu"
+            xPosition="after"
+            [overlapTrigger]="true"
+            backdropClass="sto-nav-drawer-menu">
+    <span mat-menu-item
+          style="cursor: default">{{ navigationItem.label }}</span>
+    <mat-divider></mat-divider>
+    <a [routerLink]="item.route"
+       routerLinkActive="active-menu-route"
+       [href]="item.link"
+       mat-menu-item
+       *ngFor="let item of navigationItem.children">
+      {{ item.label }}
+    </a>
+  </mat-menu>
+</div>
+<div class="sto-nav-drawer--expanded__item"
+     *ngIf="!collapsed"
+     [class.disabled]="navigationItem.disabled"
+     (click)="toggleExpansionState()">
+  <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  <a>{{ navigationItem.label }}</a>
+  <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
+</div>
+<sto-nav-drawer-list [@bodyExpansion]="expansionState"
+                     [navigationItems]="navigationItem.children"></sto-nav-drawer-list>
+
+
