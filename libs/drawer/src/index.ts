@@ -14,6 +14,7 @@ export * from './lib/sto-navigation/navigation-menu/navigation-menu.component';
 export * from './lib/sto-navigation/navigation-menu/menu';
 export * from './lib/sto-navigation/navigation-menu/navigation-menu-item/navigation-menu-item.component';
 export * from './lib/nav-drawer/nav-drawer.component';
+export * from './lib/nav-drawer/navigation';
 export * from './lib/nav-drawer/nav-drawer.module';
 export * from './lib/nav-drawer/nav-drawer-list/nav-drawer-list.component';
 export * from './lib/nav-drawer/nav-drawer-item/nav-drawer-item.component';
