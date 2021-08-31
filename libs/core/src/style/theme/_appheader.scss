@@ -30,6 +30,8 @@
     }
 
     button {
+      color: $primary;
+
       &:focus {
         background-color: $selected-color;
       }
@@ -46,18 +48,18 @@
 
   .sto-breadcrumb {
     &__home {
-      color: $icon-color;
+      color: $primary;
 
       &:hover {
-        color: $hover-color;
+        color: $primary;
       }
     }
 
     &__list__item {
-      color: $accent;
+      color: $primary;
 
       &:hover {
-        color: $hover-accent;
+        color: $primary;
       }
     }
 
@@ -83,8 +85,8 @@ body:not(.sto-dark-theme) {
   }
   .sto-header {
     height: $height;
-    font-size: mat.font-size($config, subheading-2);
-    line-height: mat.line-height($config, subheading-2);
+    font-size: mat.font-size($config, subheading-1);
+    line-height: mat.line-height($config, subheading-1);
 
     .mat-icon {
       font-size: mat.font-size($config, title);
@@ -99,8 +101,8 @@ body:not(.sto-dark-theme) {
     }
   }
   .sto-breadcrumb {
-    font-size: mat.font-size($config, subheading-2);
-    line-height: mat.line-height($config, subheading-2);
+    font-size: mat.font-size($config, subheading-1);
+    line-height: mat.line-height($config, subheading-1);
 
     .mat-icon {
       font-size: mat.font-size($config, title);
