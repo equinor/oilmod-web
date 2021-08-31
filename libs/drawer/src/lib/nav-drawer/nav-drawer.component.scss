@@ -86,7 +86,6 @@ $transition: width ease 250ms;
       cursor: pointer;
 
       a.active {
-        display: block;
         margin-left: -2px;
         font-weight: 700;
 
@@ -98,6 +97,7 @@ $transition: width ease 250ms;
 
       a {
         line-height: 48px;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: space-between;

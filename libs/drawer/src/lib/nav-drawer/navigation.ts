@@ -34,3 +34,4 @@ export type NavigationChild = CommonNavigation & {
    */
   target?: string;
 }
+
