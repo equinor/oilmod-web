@@ -16,7 +16,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
-import { animate, group, state, style, transition, trigger } from '@angular/animations';
 import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 import { drawerAnimations } from '../animation';
 

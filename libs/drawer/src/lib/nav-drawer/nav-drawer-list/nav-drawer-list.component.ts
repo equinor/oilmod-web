@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { NavigationChild } from '../navigation';
 
 @Component({
@@ -7,13 +7,7 @@ import { NavigationChild } from '../navigation';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavDrawerListComponent implements OnInit {
+export class NavDrawerListComponent {
   @Input()
   navigationItems: Array<NavigationChild>;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }
