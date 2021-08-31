@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Navigation } from './navigation';
 import { StoThemeService } from '@ngx-stoui/common';
+import { overlayAnimation } from '../animation';
 
 @Component({
   selector: 'sto-nav-drawer',
@@ -8,6 +9,9 @@ import { StoThemeService } from '@ngx-stoui/common';
   styleUrls: [ './nav-drawer.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    overlayAnimation
+  ]
 })
 export class NavDrawerComponent implements AfterViewInit {
   @Input()

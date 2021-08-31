@@ -2,6 +2,7 @@ $transition: width ease 250ms;
 
 .sto-nav-drawer {
   position: fixed;
+  z-index: 50;
   padding-top: 8px;
   left: 0;
   top: 0;
@@ -110,6 +111,15 @@ $transition: width ease 250ms;
     }
 
   }
+}
+
+.sto-drawer__overlay {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 40;
+  opacity: 0.08;
 }
 
 .sto-nav-drawer-menu + div {
