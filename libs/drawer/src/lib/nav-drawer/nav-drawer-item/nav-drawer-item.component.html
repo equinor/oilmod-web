@@ -1,6 +1,10 @@
 <div class="sto-nav-drawer--collapsed__item"
      *ngIf="collapsed">
-  <button mat-icon-button
+  <button mat-button
+          style="min-width: 64px;
+    width: 64px;
+    margin: 0;
+    height: 63px;"
           [matMenuTriggerFor]="menu"
           [disabled]="navigationItem.disabled">
     <mat-icon>{{ navigationItem.icon }}</mat-icon>

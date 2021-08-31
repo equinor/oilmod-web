@@ -1,4 +1,5 @@
 $transition: width ease 250ms;
+$size: 64px;
 
 .sto-nav-drawer {
   position: fixed;
@@ -33,13 +34,13 @@ $transition: width ease 250ms;
       align-items: center;
     }
 
-    width: 48px;
+    width: $size;
 
     > div.sto-nav-drawer-items {
-      width: 48px;
+      width: $size;
 
       .sto-nav-drawer--collapsed__item {
-        height: 47px;
+        height: $size - 1px;
         border-bottom-style: solid;
         border-bottom-width: 2px;
         display: flex;
