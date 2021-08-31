@@ -12,13 +12,20 @@
     <span mat-menu-item
           style="cursor: default">{{ navigationItem.label }}</span>
     <mat-divider></mat-divider>
-    <a [routerLink]="item.route"
-       routerLinkActive="active-menu-route"
-       [href]="item.link"
-       mat-menu-item
-       *ngFor="let item of navigationItem.children">
-      {{ item.label }}
-    </a>
+    <ng-container *ngFor="let item of navigationItem.children">
+      <a [routerLink]="item.route"
+         routerLinkActive="active-menu-route"
+         mat-menu-item
+         *ngIf="item.route">
+        {{ item.label }}
+      </a>
+      <a [href]="item.link"
+         mat-menu-item
+         [attr.target]="item.target || null"
+         *ngIf="item.link">
+        {{ item.label }}
+      </a>
+    </ng-container>
   </mat-menu>
 </div>
 <div class="sto-nav-drawer--expanded__item"

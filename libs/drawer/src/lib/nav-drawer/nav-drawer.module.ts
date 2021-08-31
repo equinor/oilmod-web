@@ -15,7 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
     NavDrawerComponent,
     NavDrawerItemComponent,
     NavDrawerListComponent,
-    NavDrawerListItemComponent
+    NavDrawerListItemComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { MatDividerModule } from '@angular/material/divider';
     NavDrawerComponent,
     NavDrawerItemComponent,
     NavDrawerListComponent,
-    NavDrawerListItemComponent
+    NavDrawerListItemComponent,
   ]
 })
 export class NavDrawerModule { }
