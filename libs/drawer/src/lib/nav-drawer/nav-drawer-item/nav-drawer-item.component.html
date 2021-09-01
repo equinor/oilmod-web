@@ -1,10 +1,22 @@
 <div class="sto-nav-drawer--collapsed__item"
      *ngIf="collapsed">
+  <a mat-button
+     [title]="navigationItem.label"
+     routerLinkActive="active"
+     [href]="navigationItem.link"
+     *ngIf="navigationItem.link && !navigationItem.children">
+    <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  </a>
+  <a mat-button
+     [title]="navigationItem.label"
+     routerLinkActive="active"
+     [routerLink]="navigationItem.route"
+     *ngIf="navigationItem.route && !navigationItem.children">
+    <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  </a>
   <button mat-button
-          style="min-width: 64px;
-    width: 64px;
-    margin: 0;
-    height: 63px;"
+          [title]="navigationItem.label"
+          *ngIf="navigationItem.children"
           [matMenuTriggerFor]="menu"
           [disabled]="navigationItem.disabled">
     <mat-icon>{{ navigationItem.icon }}</mat-icon>
@@ -14,8 +26,10 @@
             [overlapTrigger]="true"
             backdropClass="sto-nav-drawer-menu">
     <span mat-menu-item
-          style="cursor: default">{{ navigationItem.label }}</span>
-    <mat-divider></mat-divider>
+          class="no-hover"
+          *ngIf="navigationItem.title"
+          style="cursor: default">{{ navigationItem.title }}</span>
+    <mat-divider *ngIf="navigationItem.title"></mat-divider>
     <ng-container *ngFor="let item of navigationItem.children">
       <a [routerLink]="item.route"
          routerLinkActive="active-menu-route"
@@ -33,13 +47,30 @@
   </mat-menu>
 </div>
 <div class="sto-nav-drawer--expanded__item"
-     *ngIf="!collapsed"
+     *ngIf="!collapsed && navigationItem.children"
      [class.disabled]="navigationItem.disabled"
      (click)="toggleExpansionState()">
   <mat-icon>{{ navigationItem.icon }}</mat-icon>
   <a>{{ navigationItem.label }}</a>
   <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
 </div>
+<a class="sto-nav-drawer--expanded__item"
+   [href]="navigationItem.link"
+   matRipple
+   *ngIf="!collapsed && !navigationItem.children && navigationItem.link"
+   [class.disabled]="navigationItem.disabled">
+  <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  <span>{{ navigationItem.label }}</span>
+</a>
+<a class="sto-nav-drawer--expanded__item"
+   [routerLink]="navigationItem.route"
+   routerLinkActive="active"
+   matRipple
+   *ngIf="!collapsed && !navigationItem.children && navigationItem.route"
+   [class.disabled]="navigationItem.disabled">
+  <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  <span>{{ navigationItem.label }}</span>
+</a>
 <sto-nav-drawer-list [@bodyExpansion]="expansionState"
                      [navigationItems]="navigationItem.children"></sto-nav-drawer-list>
 

@@ -8,7 +8,8 @@
                          *ngFor="let item of navigationItems"
                          [navigationItem]="item"></sto-nav-drawer-item>
   </div>
-  <div class="expansion-button">
+  <div class="expansion-button"
+       [style.width]="collapsed ? '100%' : 'auto'">
     <button mat-icon-button
             (click)="collapsed = !collapsed">
       <mat-icon>{{collapsed ? 'last_page' : 'first_page'}}</mat-icon>

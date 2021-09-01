@@ -1,5 +1,8 @@
 $transition: width ease 250ms;
 $size: 64px;
+.mat-menu-item.no-hover {
+  font-weight: bold;
+}
 
 .sto-nav-drawer {
   position: fixed;
@@ -46,6 +49,19 @@ $size: 64px;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        .mat-button {
+          min-width: 64px;
+          width: 64px;
+          margin: 0;
+          height: 63px;
+        }
+
+        a.mat-button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
   }

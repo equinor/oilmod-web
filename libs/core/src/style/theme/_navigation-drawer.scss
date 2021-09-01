@@ -9,21 +9,55 @@
   $disabled: map_get($variables, disabled);
   $bg-color: map_get($variables, card-bg);
   $border-color: map_get($variables, border-color);
+  $active-bg: map_get($variables, selected-bg);
 
+
+  .mat-menu-item.no-hover:hover:not([disabled]) {
+    background-color: $bg-color;
+  }
 
   .sto-nav-drawer {
     background-color: $bg-color;
+
+    a.mat-button {
+      color: $primary;
+
+      &.active {
+        background-color: $active-bg;
+      }
+
+      .mat-icon {
+        color: $primary;
+      }
+    }
+
     button:not(.mat-button-disabled) .mat-icon {
       color: $primary;
     }
+
+    a.sto-nav-drawer--expanded__item {
+      text-decoration: none;
+
+      &:hover {
+        background-color: $hover;
+      }
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+
     .sto-nav-drawer--expanded__item:not(.disabled) .mat-icon {
       color: $primary;
     }
+
     sto-nav-drawer-list-item {
       border-color: rgba($primary, 0.2);
+
       a.active span {
         border-color: $primary;
       }
+
       &:hover {
         background-color: $hover;
       }

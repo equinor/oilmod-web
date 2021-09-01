@@ -54,6 +54,11 @@ const Template: Story<NavDrawerComponent> = (args: NavDrawerComponent) => {
 
 const navigationItems = [
   {
+    label: 'Direct route',
+    route: [ '/', 'home' ],
+    icon: 'home'
+  },
+  {
     label: 'Internal route title',
     children: [
       {
@@ -81,7 +86,8 @@ const navigationItems = [
         label: 'Internal child route 6',
       },
     ],
-    icon: 'home'
+    icon: 'dashboard',
+    title: 'Dashboard'
   },
   {
     label: 'External',

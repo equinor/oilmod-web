@@ -7,6 +7,14 @@ type CommonNavigation = {
    * disabled determines if the link should be disabled or not.
    */
   disabled?: boolean;
+  /**
+   * route is used for internal routing in the same application
+   */
+  route?: Array<string | number>;
+  /**
+   * link is used for external links to different applications (reports or other micro-frontends)
+   */
+  link?: string;
 }
 
 export type Navigation = CommonNavigation & {
@@ -17,18 +25,14 @@ export type Navigation = CommonNavigation & {
   /**
    * chldren is a list of {@link NavigationChild} used to show collapse / expand icons or build a menu
    */
-  children: Array<NavigationChild>;
+  children?: Array<NavigationChild>;
+  /**
+   * title is shown in the expanded mat-menu. If not supplied, no top-level menu-item will be created.
+   */
+  title?: string;
 }
 
 export type NavigationChild = CommonNavigation & {
-  /**
-   * route is used for internal routing in the same application
-   */
-  route?: Array<string | number>;
-  /**
-   * link is used for external links to different applications (reports or other micro-frontends)
-   */
-  link?: string;
   /**
    * target is used for external links to determine how to open (new tab/window etc)
    */

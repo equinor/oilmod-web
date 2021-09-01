@@ -9,6 +9,7 @@ import { NavDrawerListItemComponent } from './nav-drawer-list-item/nav-drawer-li
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    MatRippleModule
   ],
   exports: [
     NavDrawerComponent,

@@ -39,7 +39,7 @@ export class NavDrawerItemComponent {
   }
 
   toggleExpansionState() {
-    if (this.navigationItem.children.length === 0) {
+    if ( !this.navigationItem.children || this.navigationItem.children.length === 0 ) {
       return;
     }
     this.expansionState = this.expansionState === 'collapsed' ? 'expanded' : 'collapsed';
