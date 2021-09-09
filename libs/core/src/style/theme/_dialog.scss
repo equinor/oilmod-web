@@ -1,0 +1,29 @@
+@import "theme";
+@import "typography";
+
+@mixin dialog-theme($theme, $variables) {
+  $border-color: map_get($variables, border-color);
+  $background-color: map_get($variables, app-bar);
+  $divider: map-get($variables, border-color);
+
+  .sto-dialog .mat-dialog-container {
+
+    .mat-dialog-content {
+      border-top: solid 1px $divider;
+
+      &.scroll-lines {
+        border-bottom: solid 1px $divider;
+      }
+    }
+  }
+}
+
+// Include theme styles for your custom components.
+body:not(.sto-dark-theme) {
+  @include dialog-theme($sto-theme, $variables);
+}
+
+body.sto-dark-theme {
+  @include dialog-theme($sto-dark-theme, $dark-variables);
+}
+

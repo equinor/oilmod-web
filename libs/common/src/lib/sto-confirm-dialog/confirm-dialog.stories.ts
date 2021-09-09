@@ -4,12 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // @ts-ignore
 import { Component, NgModule } from '@angular/core';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmModule, ConfirmService } from '@ngx-stoui/common';
-
-const dialogConfig = new MatDialogConfig();
-dialogConfig.width = '560px';
-dialogConfig.panelClass = 'sto-dialog';
 
 @Component({
   selector: 'app-confirm-demo',
@@ -42,7 +37,6 @@ export default {
       imports: [
         ConfirmModule, ConfirmerModule, BrowserAnimationsModule, MatButtonModule ],
       declarations: [  ],
-      providers: [ { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: dialogConfig } ]
     })
   ],
   parameters: {

@@ -117,9 +117,6 @@ $sto-indicators-map: (
   warning: $sto-warning,
   danger: $sto-danger
 );
-$sto-indicators: (
-  indicators: $sto-indicators-map
-);
 
 $sto-dark-indicators-map: (
   success: $sto-dark-success,
@@ -159,3 +156,40 @@ $accent: mat.define-palette($sto-accent, highlight, resting, hover);
 $accent-dark: mat.define-palette($sto-dark-accent, highlight, resting, hover);
 
 $sto-warn: mat.define-palette(mat.$red-palette);
+
+$eds-light-foreground: (
+  secondary: #565656,
+  primary: #3D3D3D,
+  tertiary: #6F6F6F,
+  disabled: #BEBEBE,
+  divider: #DCDCDC,
+);
+
+@function my-mat-light-theme-foreground() {
+  @return (
+    base: map-get($eds-light-foreground, primary),
+    divider: map-get($eds-light-foreground, divider),
+    dividers: map-get($eds-light-foreground, divider),
+    disabled: map-get($eds-light-foreground, disabled),
+    disabled-button: map-get($eds-light-foreground, disabled),
+    disabled-text: map-get($eds-light-foreground, disabled),
+    hint-text: map-get($eds-light-foreground, disabled),
+    secondary-text: map-get($eds-light-foreground, secondary),
+    icon: map-get($eds-light-foreground, secondary),
+    icons: map-get($eds-light-foreground, secondary),
+    text: map-get($eds-light-foreground, primary),
+    slider-min: map-get($eds-light-foreground, primary),
+    slider-off: map-get($eds-light-foreground, disabled),
+    slider-off-active: map-get($eds-light-foreground, disabled),
+  );
+}
+
+;
+
+$sto-light-fg: my-mat-light-theme-foreground();
+
+
+$sto-indicators: (
+  indicators: $sto-indicators-map,
+  foreground: $sto-light-fg
+);

@@ -3,7 +3,6 @@
 @import "../style/functions";
 @import "./theme/typography";
 
-
 @mixin sto-dialog-typography($config) {
   .sto-dialog {
     .mat-dialog-title {
@@ -35,11 +34,6 @@
   .mat-dialog-content {
     margin: 0;
     padding: 12px 24px 16px;
-
-    &.scroll-lines {
-      border-top: solid 1px $gray-light;
-      border-bottom: solid 1px $gray-light;
-    }
 
     .sto-selection-list {
       .sto-selection-list__item {

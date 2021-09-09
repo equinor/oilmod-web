@@ -2,28 +2,36 @@ import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { NavDrawerComponent, NavDrawerModule } from '@ngx-stoui/drawer';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { StoAppHeaderModule } from '@ngx-stoui/common';
 
 @Component({
   selector: 'wrapper',
   template: 'Hi'
 })
-class WrapperComponent {}
+class WrapperComponent {
+}
+
+@Injectable({ providedIn: 'root' })
+class IconService {
+  constructor(private iconReg: MatIconRegistry) {
+    this.iconReg.setDefaultFontSetClass('material-icons-outline');
+  }
+}
 
 export default {
   title: 'Navigation/Drawer',
   component: NavDrawerComponent,
-  parameters: {
-  },
+  parameters: {},
   decorators: [
     moduleMetadata({
-      declarations: [WrapperComponent],
+      declarations: [ WrapperComponent ],
+      providers: [ IconService ],
       imports: [
         NavDrawerModule,
         StoAppHeaderModule,
@@ -35,7 +43,7 @@ export default {
         ]),
         BrowserModule,
         CommonModule
-      ],
+      ]
     })
   ],
   argTypes: {

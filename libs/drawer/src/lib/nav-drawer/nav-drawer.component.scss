@@ -1,5 +1,6 @@
 $transition: width ease 250ms;
 $size: 64px;
+$height: 48px;
 .mat-menu-item.no-hover {
   font-weight: bold;
 }
@@ -23,44 +24,54 @@ $size: 64px;
   }
 
   .expansion-button {
-    height: 48px;
+    height: $height;
+    padding-left: 16px;
+
   }
 
   .disabled {
     cursor: not-allowed;
   }
 
+  .logo {
+    width: 100%;
+    padding-bottom: 8px;
+    padding-left: 20px;
+  }
+
+  div.sto-nav-drawer-items {
+    width: 100%;
+  }
+
   &--collapsed {
-    .expansion-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
     width: $size;
 
+    .expansion-button {
+      padding-left: 12px;
+    }
+
     > div.sto-nav-drawer-items {
-      width: $size;
 
       .sto-nav-drawer--collapsed__item {
-        height: $size - 1px;
+        height: $height - 1px;
         border-bottom-style: solid;
         border-bottom-width: 2px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        /*        display: flex;
+                justify-content: center;
+                align-items: center;*/
 
         .mat-button {
           min-width: 64px;
           width: 64px;
           margin: 0;
-          height: 63px;
+          height: $height - 1px;
         }
 
         a.mat-button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          /*          display: flex;
+                    justify-content: center;
+                    align-items: center;*/
         }
       }
     }
@@ -68,6 +79,9 @@ $size: 64px;
 
   &--expanded {
     width: 316px;
+
+    .expansion-button {
+    }
 
     &__item {
       cursor: pointer;
@@ -142,8 +156,8 @@ $size: 64px;
 .sto-nav-drawer-menu + div {
   left: 48px !important;
 
-  .active-menu-route {
-    font-weight: bold;
+  a.mat-menu-item:hover {
+    text-shadow: 0px 0px 1px black;
   }
 
   .mat-menu-content .mat-divider {

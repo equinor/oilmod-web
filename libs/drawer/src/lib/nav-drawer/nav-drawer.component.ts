@@ -6,7 +6,7 @@ import { overlayAnimation } from '../animation';
 @Component({
   selector: 'sto-nav-drawer',
   templateUrl: './nav-drawer.component.html',
-  styleUrls: [ './nav-drawer.component.scss' ],
+  styleUrls: [ './nav-drawer.component.scss', './nav-drawer.theme.scss' ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [

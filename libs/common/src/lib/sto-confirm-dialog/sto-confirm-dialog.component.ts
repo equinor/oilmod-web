@@ -20,16 +20,16 @@ type Data = {
       <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions>
+      <button #ok
+              color="primary"
+              mat-flat-button
+              [mat-dialog-close]="true">{{ data.confirmText }}</button>
       <button #cancel
               *ngIf="data.showCancel"
               title="Cancel (esc)"
               mat-button
               [mat-dialog-close]="false">Cancel
       </button>
-      <button #ok
-              color="primary"
-              mat-button
-              [mat-dialog-close]="true">{{ data.confirmText }}</button>
     </div>
   `,
   styleUrls: ['sto-confirm-dialog.component.scss']

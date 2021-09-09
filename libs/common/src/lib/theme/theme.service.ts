@@ -4,6 +4,9 @@ import { ThemeModel, ThemeName, themes, typography, TypographyName } from './mod
 import { map, take, takeUntil } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 import { THEME_SAVER, ThemeSaver, ThemeSaverService } from './theme-saver.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { iconMap } from './svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,8 @@ export class StoThemeService implements OnDestroy {
   private readonly document: Document;
 
   constructor(@Inject(DOCUMENT) document: Document,
+              private iconRegistry: MatIconRegistry,
+              private sanitizer: DomSanitizer,
               @Optional() @Inject(THEME_SAVER) private readonly saver: ThemeSaver<Observable<ThemeModel>>) {
     if ( !this.saver ) {
       this.saver = new ThemeSaverService();
@@ -30,6 +35,10 @@ export class StoThemeService implements OnDestroy {
     this.setTypographyClass();
     this.getInitialValuesFromStorage();
     this.document.body.classList.add('mat-app-background');
+    this.iconRegistry.setDefaultFontSetClass('material-icons-outlined');
+    const icon = this.sanitizer.bypassSecurityTrustHtml(iconMap.get('equinor') as string) as string;
+    console.log(icon);
+    this.iconRegistry.addSvgIconLiteral('equinor', icon);
   }
 
   ngOnDestroy() {

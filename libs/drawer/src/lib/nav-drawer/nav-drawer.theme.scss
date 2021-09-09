@@ -1,8 +1,6 @@
-// Trying to move this into drawer component
-/*
 @use '~@angular/material' as mat;
-@import "theme";
-@import "typography";
+@import "libs/core/src/style/theme/theme";
+@import "libs/core/src/style/theme/typography";
 
 @mixin navigation-drawer-theme($theme, $variables) {
   $primary: map_get($variables, primary);
@@ -26,29 +24,31 @@
 
   a.mat-menu-item.active-menu-route {
     background-color: $selected-bg;
+    color: $primary;
   }
   a.mat-menu-item:hover {
-    text-shadow:0 0 1px $color;
+    text-shadow: 0 0 1px $color;
   }
 
 
   .sto-nav-drawer {
     background-color: $bg-color;
+    border-right: 1px solid $border-color;
 
     a.mat-button {
-      color: $primary;
+      color: $secondary;
 
       &.active {
-        background-color: $active-bg;
+        background-color: $selected-bg;
       }
 
       .mat-icon {
-        color: $primary;
+        color: $secondary;
       }
     }
 
     button:not(.mat-button-disabled) .mat-icon {
-      color: $primary;
+      color: $secondary;
     }
 
     a.sto-nav-drawer--expanded__item {
@@ -64,31 +64,36 @@
     }
 
     .sto-nav-drawer--expanded__item:not(.disabled) .mat-icon {
-      color: $primary;
+      color: $secondary;
     }
 
     sto-nav-drawer-list-item {
       border-color: rgba($primary, 0.2);
 
       a.active span {
-        border-color: $primary;
+        color: $secondary;
       }
 
       &:hover {
         background-color: $hover;
       }
     }
+
     .sto-nav-drawer--collapsed__item {
       border-bottom-color: $border-color;
     }
+
     a:not(.disabled) {
       color: $color;
     }
+
     a.active {
-      color: $primary;
+      color: $secondary;
     }
+
     .disabled {
       color: $disabled;
+
       a {
         color: $disabled;
       }
@@ -129,4 +134,3 @@ body:not(.sto-dark-theme) {
 .mat-typography.sto-l-typography {
   @include navigation-drawer-typography($sto-l-typography);
 }
-*/

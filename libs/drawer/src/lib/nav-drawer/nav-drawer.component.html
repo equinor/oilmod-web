@@ -4,16 +4,19 @@
      [class.sto-nav-drawer--collapsed]="collapsed"
      [class.sto-nav-drawer--expanded]="!collapsed">
   <div class="sto-nav-drawer-items">
+    <div class="expansion-button"
+         [style.width]="collapsed ? '100%' : '100%'">
+      <button mat-icon-button
+              (click)="collapsed = !collapsed">
+        <mat-icon>{{collapsed ? 'last_page' : 'first_page'}}</mat-icon>
+      </button>
+    </div>
     <sto-nav-drawer-item [collapsed]="collapsed"
                          *ngFor="let item of navigationItems"
                          [navigationItem]="item"></sto-nav-drawer-item>
   </div>
-  <div class="expansion-button"
-       [style.width]="collapsed ? '100%' : 'auto'">
-    <button mat-icon-button
-            (click)="collapsed = !collapsed">
-      <mat-icon>{{collapsed ? 'last_page' : 'first_page'}}</mat-icon>
-    </button>
+  <div class="logo">
+    <mat-icon svgIcon="equinor"></mat-icon>
   </div>
 </nav>
 <div @overlay

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Observable, ReplaySubject } from 'rxjs';
 import { ConfirmComponent } from './sto-confirm-dialog.component';
 
+const dialogConfig = new MatDialogConfig();
+dialogConfig.width = '560px';
+dialogConfig.panelClass = 'sto-dialog';
 
 @Injectable()
 export class ConfirmService {
@@ -11,8 +14,9 @@ export class ConfirmService {
   constructor(private dialog: MatDialog) {
   }
 
-  confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true): Observable<boolean> {
+  confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true, options = dialogConfig): Observable<boolean> {
     this.ref = this.dialog.open(ConfirmComponent, {
+      ...options,
       data: { message, title, confirmText, showCancel }
     });
 

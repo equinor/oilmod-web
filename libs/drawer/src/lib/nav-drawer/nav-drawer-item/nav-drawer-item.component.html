@@ -27,8 +27,10 @@
             backdropClass="sto-nav-drawer-menu">
     <span mat-menu-item
           class="no-hover"
+          (click)="$event.stopPropagation()"
+          [disableRipple]="true"
           *ngIf="navigationItem.title"
-          style="cursor: default">{{ navigationItem.title }}</span>
+          style="cursor: default;">{{ navigationItem.title }}</span>
     <mat-divider *ngIf="navigationItem.title"></mat-divider>
     <ng-container *ngFor="let item of navigationItem.children">
       <a [routerLink]="item.route"
