@@ -183,16 +183,13 @@ export class StoFilterActions {
 @Component({
   selector: 'sto-filter-actions-bar',
   template: `
-      <ng-content></ng-content>
-      <mat-button-toggle class="icon"
-                         *ngIf="expandable"
-                         style="box-shadow:none"
-                         [checked]="expanded"
-                         (change)="onChange($event)"
-                         title="Toggle filter panel"
-                         (click)="toggle.emit()">
-          <mat-icon>filter_list</mat-icon>
-      </mat-button-toggle>
+    <ng-content></ng-content>
+    <button mat-icon-button
+            *ngIf="expandable"
+            title="Toggle filter panel"
+            (click)="toggle.emit()">
+      <mat-icon>filter_list</mat-icon>
+    </button>
 
   `
 })

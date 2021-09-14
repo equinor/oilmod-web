@@ -22,24 +22,14 @@ $sto-filter-header-elevation: 2;
   }
 
   .mat-expansion-panel-header {
-    @include mat.elevation($sto-filter-header-elevation);
     padding: 0 8px;
     cursor: default;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 
-    &.mat-expanded {
-      border-bottom: solid 1px transparent;
-    }
-
     &-title {
       align-items: center;
     }
-  }
-
-  .mat-expansion-panel-content {
-
-    @include mat.elevation(1);
   }
 
   .mat-expansion-panel-body {
