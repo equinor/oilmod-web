@@ -44,10 +44,6 @@ Below styles overrides Angular Material defaults
   line-height: 13px;
 }
 
-.mat-button, .mat-raised-button, .mat-flat-button, .mat-stroked-button {
-  text-transform: uppercase;
-}
-
 .mat-menu-item.active {
   color: $primary-color;
 }

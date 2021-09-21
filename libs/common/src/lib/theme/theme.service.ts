@@ -37,7 +37,6 @@ export class StoThemeService implements OnDestroy {
     this.document.body.classList.add('mat-app-background');
     this.iconRegistry.setDefaultFontSetClass('material-icons-outlined');
     const icon = this.sanitizer.bypassSecurityTrustHtml(iconMap.get('equinor') as string) as string;
-    console.log(icon);
     this.iconRegistry.addSvgIconLiteral('equinor', icon);
   }
 

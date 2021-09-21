@@ -1,4 +1,5 @@
 @use '~@angular/material' as mat;
+@use 'sass:map';
 
 $sto-warning-map: (
   highlight: #FFE7D6,
@@ -165,31 +166,68 @@ $eds-light-foreground: (
   divider: #DCDCDC,
 );
 
-@function my-mat-light-theme-foreground() {
+@function theme-foreground($foreground) {
   @return (
-    base: map-get($eds-light-foreground, primary),
-    divider: map-get($eds-light-foreground, divider),
-    dividers: map-get($eds-light-foreground, divider),
-    disabled: map-get($eds-light-foreground, disabled),
-    disabled-button: map-get($eds-light-foreground, disabled),
-    disabled-text: map-get($eds-light-foreground, disabled),
-    hint-text: map-get($eds-light-foreground, disabled),
-    secondary-text: map-get($eds-light-foreground, secondary),
-    icon: map-get($eds-light-foreground, secondary),
-    icons: map-get($eds-light-foreground, secondary),
-    text: map-get($eds-light-foreground, primary),
-    slider-min: map-get($eds-light-foreground, primary),
-    slider-off: map-get($eds-light-foreground, disabled),
-    slider-off-active: map-get($eds-light-foreground, disabled),
+    base: map-get($foreground, primary),
+    divider: map-get($foreground, divider),
+    dividers: map-get($foreground, divider),
+    disabled: map-get($foreground, disabled),
+    disabled-button: map-get($foreground, disabled),
+    disabled-text: map-get($foreground, disabled),
+    hint-text: map-get($foreground, disabled),
+    secondary-text: map-get($foreground, secondary),
+    icon: map-get($foreground, secondary),
+    icons: map-get($foreground, secondary),
+    text: map-get($foreground, primary),
+    slider-min: map-get($foreground, primary),
+    slider-off: map-get($foreground, disabled),
+    slider-off-active: map-get($foreground, disabled),
   );
 }
 
 ;
 
-$sto-light-fg: my-mat-light-theme-foreground();
+$eds-light-background: (
+  default: #FFFFFF,
+  semi-transparent: rgba(255, 255, 255, 0.2),
+  light: #F7F7F7,
+  medium: #DCDCDC,
+  info: #D5EAF4,
+  warning: #FFE7D6,
+  danger: #FFC1C1,
+  scrim: rgba(0, 0, 0, 0.4),
+  overlay: rgba(0, 0, 0, 0.8),
+  disabled: #EAEAEA,
+  hover: #EAEAEA,
+  focus: #007079
+);
+
+@function theme-background($background) {
+  @return (
+    app-bar: map-get($background, default),
+    background: map-get($background, default),
+    hover: map-get($background, hover),
+    card: map-get($background, default),
+    dialog: map-get($background, default),
+    disabled-button: map-get($background, disabled),
+    raised-button: map-get($background, default),
+    focused-button: map-get($background, focus),
+    selected-button: map.get($background, light),
+    selected-disabled-button: map-get($background, disabled),
+    disabled-button-toggle: map-get($background, disabled),
+    unselected-chip: map.get($background, light),
+    disabled-list-option: map-get($background, disabled),
+    tooltip: map.get($background, overlay),
+  )
+}
+
+;
+
+$sto-light-fg: theme-foreground($eds-light-foreground);
 
 
 $sto-indicators: (
   indicators: $sto-indicators-map,
-  foreground: $sto-light-fg
+  foreground: $sto-light-fg,
+  background: theme-background($eds-light-background)
 );

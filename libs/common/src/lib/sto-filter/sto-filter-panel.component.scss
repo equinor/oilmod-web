@@ -22,7 +22,7 @@ $sto-filter-header-elevation: 2;
   }
 
   .mat-expansion-panel-header {
-    padding: 0 8px;
+    padding: 0;
     cursor: default;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -33,7 +33,7 @@ $sto-filter-header-elevation: 2;
   }
 
   .mat-expansion-panel-body {
-    padding: 24px 16px 0 16px;
+    padding: 24px 0 0;
     margin: 0;
   }
 
@@ -44,7 +44,7 @@ $sto-filter-header-elevation: 2;
 
   .sto-filter-table-actions {
 
-    padding: 0 8px;
+    padding: 0;
 
   }
 

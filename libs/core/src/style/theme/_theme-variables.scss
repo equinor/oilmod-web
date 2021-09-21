@@ -31,7 +31,7 @@
   $card-bg: map_get($background, card);
   $hover-bg-color: mat.get-color-from-palette($background, 'hover');
   $hover-color: mat.get-color-from-palette($foreground, slider-off-active);
-  $selected-color: mat.get-color-from-palette($background, hover, 0.12);
+  $selected-color: mat.get-color-from-palette($background, selected-button);
   $border-color: mat.get-color-from-palette($foreground, divider);
   $app-bar: mat.get-color-from-palette($background, 'app-bar');
 

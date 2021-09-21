@@ -21,8 +21,12 @@
   }
 }
 
-.negative-number{
-  .mat-input-element:disabled{
+.negative-number {
+  .mat-input-element:disabled {
     color: $thunderbird;
   }
+}
+
+.mat-typography .mat-calendar-body-cell-content.mat-focus-indicator {
+  position: absolute !important; // for some reason this is needed due to typography.
 }
