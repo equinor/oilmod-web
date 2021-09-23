@@ -1,18 +1,10 @@
 @use "sass:map" as map;
 
-@import "style/functions";
 @import "style/fonts";
-@import "variables";
-@import "mixins";
 @import "style/theme";
-
-@import "style/animations";
 @import "style/sto-grid";
-@import "style/sto-list";
-@import "style/sto-selection-list";
+
 @import "style/sto-dialog";
-@import "style/sto-toolbar-panel";
-@import "style/sto-message-panel-sticky";
 @import "overrides";
 @import "style/form/sto-form";
 
@@ -140,12 +132,6 @@ body.sto-dark-theme {
 .sto-select {
   &.mat-select-panel {
     max-height: 265px;
-  }
-}
-
-.negative-number {
-  .mat-input-element:disabled {
-    color: $thunderbird;
   }
 }
 

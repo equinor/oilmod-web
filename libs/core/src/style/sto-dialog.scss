@@ -1,6 +1,4 @@
 @use '~@angular/material' as mat;
-@import "../variables";
-@import "../style/functions";
 @import "./theme/typography";
 
 @mixin sto-dialog-typography($config) {

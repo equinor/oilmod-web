@@ -96,34 +96,6 @@ StoCard.args = {
   withStyles: true
 };
 
-export const StoGrid: Story<unknown> = () => ( {
-  template: `
-<div class="sto-grid sto-grid--2" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--2</div>
-</div>
-<div class="sto-grid sto-grid--3" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--3</div>
-</div>
-<div class="sto-grid sto-grid--4" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--4</div>
-</div>
-<div class="sto-grid sto-grid--6" style="margin-bottom: 8px;">
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
-  <div class="sto-grid__column" style="border: 1px solid blue">sto-grid--6</div>
-</div>
-  `,
-} );
-
 export const StoDialog: Story<Record<string, unknown>> = (args) => ( {
   props: { ...args },
   template: `<app-dialog-demo [separatorLines]="separatorLines"></app-dialog-demo>`,

@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as path from 'path';
 import * as glob from 'glob';
 import * as fs from 'fs';
 
@@ -12,7 +12,6 @@ console.log('Running asset-copier')
 glob(scss, (err, files) => {
   const onlyLocalPath = [
     ...files,
-    path.join(src, '_variables.scss')
   ]
     .filter(file => !fs.lstatSync(file).isDirectory())
     .map(file => file.replace(`${src}/`, ''));
