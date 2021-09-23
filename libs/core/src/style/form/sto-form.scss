@@ -27,7 +27,7 @@
       @include mat-input-hover-effect($ship-cove-15, $border-hover);
 
       .mat-form-field-wrapper .mat-form-field-underline {
-        background-color: rgba($color, 0.12);
+        background-color: $border;
       }
     }
 
