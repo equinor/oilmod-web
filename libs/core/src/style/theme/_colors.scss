@@ -1,16 +1,17 @@
 @use '~@angular/material' as mat;
 @use 'sass:map';
 
+
 $sto-warning-map: (
-  highlight: #FFE7D6,
-  resting: #FF9200,
-  hover: #AD6200,
-  text: #AD6200,
+  highlight: var(--warning-highlight),
+  resting: var(--warning-resting),
+  hover: var(--warning-hover),
+  text: var(--warning-text),
   contrast: (
-    highlight: rgba(black, 0.87),
-    resting: rgba(black, 0.87),
-    hover: white,
-    text: white
+    highlight: var(--warning-highlight-contrast),
+    resting: var(--warning-resting-contrast),
+    hover: var(--warning-hover-contrast),
+    text: var(--warning-text-contrast),
   )
 );
 
@@ -31,15 +32,16 @@ $sto-dark-warning-map: (
 
 $sto-dark-warning: mat.define-palette($sto-dark-warning-map, highlight, resting, hover, text);
 
+
 $sto-danger-map: (
-  highlight: #FFC1C1,
-  resting: #EB0000,
-  hover: #B30D2F,
-  text: #B30D2F,
+  highlight: var(--danger-highlight),
+  resting: var(--danger-resting),
+  hover: var(--danger-hover),
+  text: var(--danger-text),
   contrast: (
-    highlight: rgba(black, 0.87),
-    resting: white,
-    hover: white,
+    highlight: var(--danger-highlight-contrast),
+    resting: var(--danger-resting-contrast),
+    hover: var(--danger-hover-contrast),
   )
 );
 $sto-danger: mat.define-palette($sto-danger-map, highlight, resting, hover, text);
@@ -57,15 +59,16 @@ $sto-dark-danger-map: (
 );
 $sto-dark-danger: mat.define-palette($sto-dark-danger-map, highlight, resting, hover, text);
 
+
 $sto-success-map: (
-  highlight: #E6FAEC,
-  resting: #4BB748,
-  hover: #358132,
-  text: #358132,
+  highlight: var(--success-highlight),
+  resting: var(--success-resting),
+  hover: var(--success-hover),
+  text: var(--success-text),
   contrast: (
-    highlight: rgba(black, 0.87),
-    resting: rgba(black, 0.87),
-    hover: white,
+    highlight: --success-highlight-contrast,
+    resting: --success-resting-contrast,
+    hover: --success-hover-contrast,
   )
 );
 $sto-success: mat.define-palette($sto-success-map, highlight, resting, hover, text);
@@ -83,17 +86,18 @@ $sto-dark-success-map: (
 $sto-dark-success: mat.define-palette($sto-dark-success-map, highlight, resting, hover, text);
 
 
+
 $sto-primary: (
-  highlight: #E6FAEC,
-  selected-hover: #C3F3D2,
-  resting: #007079,
-  hover: #004F55,
-  hover-alt: #DEEDEE,
-  text: #007079,
+  highlight: var(--primary-highlight),
+  selected-hover: var(--primary-selected-hover),
+  resting: var(--primary-resting),
+  hover: var(--primary-hover),
+  hover-alt: var(--primary-hover-alt),
+  text: var(--primary-text),
   contrast: (
-    highlight: rgba(black, 0.87),
-    resting: white,
-    hover: white
+    highlight: var(--primary-contrast-highlight),
+    resting: var(--primary-contrast-resting),
+    hover: var(--primary-contrast-hover),
   )
 );
 
@@ -129,15 +133,17 @@ $sto-dark-indicators: (
   indicators: $sto-dark-indicators-map
 );
 
+
 $sto-accent: (
-  highlight: #d5eaf4,
-  resting: #243746,
-  hover: #18252F,
-  200: #243746, // For slide toggle,
+  highlight: var(--accent-highlight),
+  resting: var(--accent-resting),
+  hover: var(--accent-hover),
+  text: var(--accent-text),
+  200: var(--accent-toggle), // For slide toggle,
   contrast : (
-    highlight: rgba(black, 0.87),
-    resting: rgba(black, 0.87),
-    hover: white,
+    highlight: var(--accent-highlight-contrast),
+    resting: var(--accent-resting-contrast),
+    hover: var(--accent-hover-contrast),
   )
 );
 
@@ -158,6 +164,31 @@ $accent-dark: mat.define-palette($sto-dark-accent, highlight, resting, hover);
 
 $sto-warn: mat.define-palette(mat.$red-palette);
 
+$eds-dark-foreground: (
+  secondary: #DEE5E7,
+  primary: #FFFFFF,
+  tertiary: #9CA6AC,
+  disabled: #637583,
+  divider: #3E4F5C,
+);
+
+
+$eds-dark-background: (
+  default: #333333,
+  semi-transparent: rgba(255, 255, 255, 0.16),
+  light: #2E3F4D,
+  medium: #243746,
+  info: #D5EAF4,
+  warning: rgba(255, 198, 122, 0.1),
+  danger: rgba(255, 102, 112, 0.1),
+  scrim: #132634,
+  overlay: #2E3F4D,
+  disabled: #344450,
+  hover: #324D62,
+  focus: #2E3F4D
+);
+
+
 $eds-light-foreground: (
   secondary: #565656,
   primary: #3D3D3D,
@@ -166,26 +197,6 @@ $eds-light-foreground: (
   divider: #DCDCDC,
 );
 
-@function theme-foreground($foreground) {
-  @return (
-    base: map-get($foreground, primary),
-    divider: map-get($foreground, divider),
-    dividers: map-get($foreground, divider),
-    disabled: map-get($foreground, disabled),
-    disabled-button: map-get($foreground, disabled),
-    disabled-text: map-get($foreground, disabled),
-    hint-text: map-get($foreground, disabled),
-    secondary-text: map-get($foreground, secondary),
-    icon: map-get($foreground, secondary),
-    icons: map-get($foreground, secondary),
-    text: map-get($foreground, primary),
-    slider-min: map-get($foreground, primary),
-    slider-off: map-get($foreground, disabled),
-    slider-off-active: map-get($foreground, disabled),
-  );
-}
-
-;
 
 $eds-light-background: (
   default: #FFFFFF,
@@ -202,26 +213,44 @@ $eds-light-background: (
   focus: #007079
 );
 
-@function theme-background($background) {
+
+@function theme-foreground($foreground) {
   @return (
-    app-bar: map-get($background, default),
-    background: map-get($background, default),
-    hover: map-get($background, hover),
-    card: map-get($background, default),
-    dialog: map-get($background, default),
-    disabled-button: map-get($background, disabled),
-    raised-button: map-get($background, default),
-    focused-button: map-get($background, focus),
-    selected-button: map.get($background, light),
-    selected-disabled-button: map-get($background, disabled),
-    disabled-button-toggle: map-get($background, disabled),
-    unselected-chip: map.get($background, light),
-    disabled-list-option: map-get($background, disabled),
-    tooltip: map.get($background, overlay),
-  )
+    base: var(--text),
+    divider: var(--divider),
+    dividers: var(--divider),
+    disabled: var(--text-disabled),
+    disabled-button: var(--text-disabled),
+    disabled-text: var(--text-disabled),
+    hint-text: var(--text-disabled),
+    secondary-text: var(--text-secondary),
+    icon: var(--text-secondary),
+    icons: var(--text-secondary),
+    text: var(--text),
+    slider-min: var(--text-secondary),
+    slider-off: var(--text-disabled),
+    slider-off-active: var(--text-disabled),
+  );
 }
 
-;
+@function theme-background($background) {
+  @return (
+    app-bar: var(--bg-default),
+    background: var(--bg-default),
+    hover: var(--bg-hover),
+    card: var(--bg-default),
+    dialog: var(--bg-default),
+    disabled-button: var(--bg-disabled),
+    raised-button: var(--bg-default),
+    focused-button: var(--bg-focus),
+    selected-button: var(--bg-light),
+    selected-disabled-button: var(--bg-disabled),
+    disabled-button-toggle: var(--bg-disabled),
+    unselected-chip: var(--bg-light),
+    disabled-list-option: var(--bg-disabled),
+    tooltip: var(--bg-overlay),
+  )
+}
 
 $sto-light-fg: theme-foreground($eds-light-foreground);
 

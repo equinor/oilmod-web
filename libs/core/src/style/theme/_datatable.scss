@@ -9,7 +9,7 @@
   $border-color: map_get($variables, border-color);
   $background-color: transparent;
   $footer-bg: map_get($variables, background);
-  $header-background-color: map_get($variables, background);
+  $header-background-color: map_get($variables, selected-bg);
   $hover-color: map_get($variables, hover-bg);
   $selected-color: map_get($variables, selected-bg);
   $icon-color: map_get($variables, icon);
@@ -44,9 +44,10 @@
           }
         }
 
-        &:hover {
+        &--sortable:hover {
           background-color: $hover-color;
         }
+
       }
     }
 
@@ -171,12 +172,8 @@
 
 }
 
-body:not(.sto-dark-theme) {
+body {
   @include sto-datatable-theme($sto-theme, $variables);
-}
-
-.sto-dark-theme {
-  @include sto-datatable-theme($sto-dark-theme, $dark-variables);
 }
 
 @mixin sto-datatable-typography($config) {

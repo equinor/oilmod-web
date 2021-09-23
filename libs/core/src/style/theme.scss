@@ -4,12 +4,8 @@
 @import "./theme/components";
 
 // Include theme styles for core and each component used in your app.
-body:not(.sto-dark-theme) {
+body {
   @include mat.all-component-themes($sto-theme);
-}
-
-body.sto-dark-theme {
-  @include mat.all-component-themes($sto-dark-theme);
 }
 
 body, .sto-header, .mat-card {

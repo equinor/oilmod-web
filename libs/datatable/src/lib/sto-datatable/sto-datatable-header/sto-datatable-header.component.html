@@ -4,7 +4,6 @@
      *ngIf="!responsive || (responsive && !smallScreen)">
   <div class="sto-mdl-table__header__row"
        (dragover)="$event.preventDefault()"
-       [style.cursor]="sortable ? 'pointer' : 'auto'"
        [style.display]="columnMode === ColumnDisplay.Flex ? 'flex' : 'block'"
        [style.height]="headerHeight + 'px'"
        [style.min-width]="tempWidth || width"
@@ -14,6 +13,7 @@
     <div class="sto-mdl-table__header__row__cell"
          (click)="sortByColumn(column)"
          (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
+         [class.sto-mdl-table__header__row__cell--sortable]="sortable && !column.disableSort"
          [ngClass]="column.headerClass | exec:column"
          [ngStyle]="column | columnStyle:columnMode:(resize.width$ | async)"
          *ngFor="let column of columns; let i = index; trackBy: trackColumnsFn">

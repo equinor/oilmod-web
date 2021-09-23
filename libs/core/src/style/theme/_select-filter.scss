@@ -11,10 +11,6 @@
 }
 
 // Include theme styles for your custom components.
-body:not(.sto-dark-theme) {
+body {
   @include sto-input-override-theme($sto-theme, $variables);
-}
-
-.sto-dark-theme {
-  @include sto-input-override-theme($sto-dark-theme, $dark-variables);
 }

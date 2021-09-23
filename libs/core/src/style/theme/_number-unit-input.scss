@@ -29,8 +29,6 @@
 }
 
 // Include theme styles for your custom components.
-@include sto-number-unit-input-theme($sto-theme, $variables);
-
-.sto-dark-theme {
-  @include sto-number-unit-input-theme($sto-dark-theme, $dark-variables);
+body {
+  @include sto-number-unit-input-theme($sto-theme, $variables);
 }

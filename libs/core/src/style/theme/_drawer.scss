@@ -84,12 +84,8 @@
 }
 
 // Include theme styles for your custom components.
-body:not(.sto-dark-theme) {
+body {
   @include sto-drawer-theme($sto-theme, $variables);
-}
-
-.sto-dark-theme {
-  @include sto-drawer-theme($sto-dark-theme, $dark-variables);
 }
 
 .mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {

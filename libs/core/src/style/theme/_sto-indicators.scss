@@ -82,12 +82,8 @@
 }
 
 // Include theme styles for your custom components.
-body:not(.sto-dark-theme) {
+body {
   @include indicators-theme($sto-theme, $variables);
-}
-
-.sto-dark-theme {
-  @include indicators-theme($sto-dark-theme, $dark-variables);
 }
 
 

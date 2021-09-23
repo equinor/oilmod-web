@@ -46,10 +46,6 @@
 }
 
 // Include theme styles for your custom components.
-body:not(.sto-dark-theme) {
+body {
   @include sto-daterange-theme($sto-theme, $variables);
-}
-
-.sto-dark-theme {
-  @include sto-daterange-theme($sto-dark-theme, $dark-variables);
 }

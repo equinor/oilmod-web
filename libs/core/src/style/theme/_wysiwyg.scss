@@ -33,10 +33,6 @@ $form-field-bg: rgba(#6687B8, 0.1);
 
 body {
   @include wysiwyg-theme($sto-theme, $variables);
-
-  &.sto-dark-theme {
-    @include wysiwyg-theme($sto-dark-theme, $dark-variables);
-  }
 }
 
 

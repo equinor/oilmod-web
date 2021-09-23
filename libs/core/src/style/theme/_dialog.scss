@@ -19,11 +19,7 @@
 }
 
 // Include theme styles for your custom components.
-body:not(.sto-dark-theme) {
+body {
   @include dialog-theme($sto-theme, $variables);
-}
-
-body.sto-dark-theme {
-  @include dialog-theme($sto-dark-theme, $dark-variables);
 }
 

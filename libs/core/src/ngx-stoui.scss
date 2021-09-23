@@ -1,3 +1,5 @@
+@use "sass:map" as map;
+
 @import "style/functions";
 @import "style/fonts";
 @import "variables";
@@ -15,8 +17,128 @@
 @import "style/form/sto-form";
 
 
-.sto-select{
-  &.mat-select-panel{
+body:not(.sto-dark-theme) {
+  --warning-highlight: #FFE7D6;
+  --warning-resting: #FF9200;
+  --warning-hover: #AD6200;
+  --warning-text: #AD6200;
+  --warning-highlight-contrast: rgba(black, 0.87);
+  --warning-resting-contrast: rgba(black, 0.87);
+  --warning-hover-contrast: white;
+  --warning-text-contrast: white;
+  --success-highlight: #E6FAEC;
+  --success-resting: #4BB748;
+  --success-hover: #358132;
+  --success-text: #358132;
+  --success-highlight-contrast: black;
+  --success-resting-contrast: black;
+  --success-hover-contrast: white;
+  --accent-highlight: #d5eaf4;
+  --accent-resting: #243746;
+  --accent-hover: #18252F;
+  --accent-text: #243746;
+  --accent-toggle: #243746;
+  --accent-highlight-contrast: black;
+  --accent-resting-contrast: black;
+  --accent-hover-contrast: white;
+  --primary-highlight: #E6FAEC;
+  --primary-selected-hover: #C3F3D2;
+  --primary-resting: #007079;
+  --primary-hover: #004F55;
+  --primary-hover-alt: #DEEDEE;
+  --primary-text: #007079;
+  --primary-contrast-highlight: rgba(black, 0.87);
+  --primary-contrast-resting: white;
+  --primary-contrast-hover: white;
+  --danger-highlight: #FFC1C1;
+  --danger-resting: #EB0000;
+  --danger-hover: #B30D2F;
+  --danger-text: #B30D2F;
+  --danger-highlight-contrast: black;
+  --danger-resting-contrast: white;
+  --danger-hover-contrast: white;
+  --text: #{map.get($eds-light-foreground, primary)};
+  --text-secondary: #{map.get($eds-light-foreground, secondary)};
+  --text-tertiary: #{map.get($eds-light-foreground, tertiary)};
+  --text-disabled: #{map.get($eds-light-foreground, disabled)};
+  --divider: #{map.get($eds-light-foreground, divider)};
+  --bg-default: #{map.get($eds-light-background, default)};
+  --bg-semi-transparent: #{map.get($eds-light-background, semi-transparent)};
+  --bg-light: #{map.get($eds-light-background, light)};
+  --bg-medium: #{map.get($eds-light-background, medium)};
+  --bg-info: #{map.get($eds-light-background, info)};
+  --bg-warning: #{map.get($eds-light-background, warning)};
+  --bg-danger: #{map.get($eds-light-background, danger)};
+  --bg-scrim: #{map.get($eds-light-background, scrim)};
+  --bg-overlay: #{map.get($eds-light-background, overlay)};
+  --bg-disabled: #{map.get($eds-light-background, disabled)};
+  --bg-hover: #{map.get($eds-light-background, hover)};
+  --bg-focus: #{map.get($eds-light-background, focus)};
+}
+
+
+body.sto-dark-theme {
+  --danger-highlight: #FFC1C1;
+  --danger-resting: #EB0000;
+  --danger-hover: #FF949B;
+  --danger-text: #FF6670;
+  --danger-highlight-contrast: black;
+  --danger-resting-contrast: white;
+  --danger-hover-contrast: black;
+  --warning-highlight: #FFE7D6;
+  --warning-resting: #FF9200;
+  --warning-hover: #FFDAA8;
+  --warning-text: #FFC67A;
+  --warning-highlight-contrast: black;
+  --warning-resting-contrast: black;
+  --warning-hover-contrast: black;
+  --warning-text-contrast: black;
+  --success-highlight: #E6FAEC;
+  --success-resting: #4BB748;
+  --success-hover: #C1E7C1;
+  --success-text: #A1DAA0;
+  --success-highlight-contrast: black;
+  --success-resting-contrast: white;
+  --success-hover-contrast: black;
+  --accent-highlight: rgba(255, 255, 255, 0.1);
+  --accent-resting: #DEE5E7;
+  --accent-hover: #FFFFFF;
+  --accent-text: #DEE5E7;
+  --accent-toggle: #d5eaf4;
+  --accent-highlight-contrast: white;
+  --accent-resting-contrast: black;
+  --accent-hover-contrast: black;
+  --primary-highlight: #007079;
+  --primary-selected-hover: #004F55;
+  --primary-resting: #97CACE;
+  --primary-hover: #ADE2E6;
+  --primary-hover-alt: #DEEDEE;
+  --primary-text: #D5EAF4;
+  --primary-contrast-highlight: black;
+  --primary-contrast-resting: black;
+  --primary-contrast-hover: white;
+  --text: #{map.get($eds-dark-foreground, primary)};
+  --text-secondary: #{map.get($eds-dark-foreground, secondary)};
+  --text-tertiary: #{map.get($eds-dark-foreground, tertiary)};
+  --text-disabled: #{map.get($eds-dark-foreground, disabled)};
+  --divider: #{map.get($eds-dark-foreground, divider)};
+  --bg-default: #{map.get($eds-dark-background, default)};
+  --bg-semi-transparent: #{map.get($eds-dark-background, semi-transparent)};
+  --bg-light: #{map.get($eds-dark-background, light)};
+  --bg-medium: #{map.get($eds-dark-background, medium)};
+  --bg-info: #{map.get($eds-dark-background, info)};
+  --bg-warning: #{map.get($eds-dark-background, warning)};
+  --bg-danger: #{map.get($eds-dark-background, danger)};
+  --bg-scrim: #{map.get($eds-dark-background, scrim)};
+  --bg-overlay: #{map.get($eds-dark-background, overlay)};
+  --bg-disabled: #{map.get($eds-dark-background, disabled)};
+  --bg-hover: #{map.get($eds-dark-background, hover)};
+  --bg-focus: #{map.get($eds-dark-background, focus)};
+}
+
+
+.sto-select {
+  &.mat-select-panel {
     max-height: 265px;
   }
 }
