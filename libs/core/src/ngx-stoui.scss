@@ -42,6 +42,7 @@ body:not(.sto-dark-theme) {
   --primary-contrast-highlight: rgba(black, 0.87);
   --primary-contrast-resting: white;
   --primary-contrast-hover: white;
+  --primary-fill-activated: #E6FAEC;
   --danger-highlight: #FFC1C1;
   --danger-resting: #EB0000;
   --danger-hover: #B30D2F;
@@ -109,6 +110,7 @@ body.sto-dark-theme {
   --primary-contrast-highlight: black;
   --primary-contrast-resting: black;
   --primary-contrast-hover: white;
+  --primary-fill-activated: #243746;
   --text: #{map.get($eds-dark-foreground, primary)};
   --text-secondary: #{map.get($eds-dark-foreground, secondary)};
   --text-tertiary: #{map.get($eds-dark-foreground, tertiary)};

@@ -2,60 +2,50 @@
 @import "libs/core/src/style/theme/theme";
 @import "libs/core/src/style/theme/typography";
 
-@mixin navigation-drawer-theme($theme, $variables) {
-  $primary: map_get($variables, primary);
-  $colors: mat.get-color-config($theme);
-  $primary-palette: map-get($colors, primary);
-  $selected-bg: map-get($primary-palette, highlight);
-  $color: map_get($variables, color);
-  $secondary: map_get($variables, secondary);
-  $hover: map_get($variables, hover-bg);
-  $disabled: map_get($variables, disabled);
-  $bg-color: map_get($variables, card-bg);
-  $border-color: map_get($variables, border-color);
-  $active-bg: map_get($variables, selected-bg);
 
+body {
   .mat-menu-item.no-hover {
-    color: $secondary;
+    color: var(--text-secondary);
   }
+
   .mat-menu-item.no-hover:hover:not([disabled]) {
-    background-color: $bg-color;
+    background-color: var(--bg-default);
   }
 
   a.mat-menu-item.active-menu-route {
-    background-color: $selected-bg;
-    color: $primary;
+    background-color: var(--primary-fill-activated);
+    color: var(--primary-resting);
   }
   a.mat-menu-item:hover {
-    text-shadow: 0 0 1px $color;
+    text-shadow: 0 0 1px var(--text);
   }
 
 
   .sto-nav-drawer {
-    background-color: $bg-color;
-    border-right: 1px solid $border-color;
+    background-color: var(--bg-default);
+    border-right: 1px solid var(--divider);
 
     a.mat-button {
-      color: $secondary;
+      color: var(--text-secondary);
 
       &.active {
-        background-color: $selected-bg;
+        background-color: var(--primary-fill-activated)
       }
 
       .mat-icon {
-        color: $secondary;
+        color: var(--text-secondary);
       }
     }
 
     button:not(.mat-button-disabled) .mat-icon {
-      color: $secondary;
+      color: var(--text-secondary);
     }
 
     a.sto-nav-drawer--expanded__item {
       text-decoration: none;
 
       &:hover {
-        background-color: $hover;
+        background-color: var(--bg-hover);
       }
 
       &.active {
@@ -64,52 +54,43 @@
     }
 
     .sto-nav-drawer--expanded__item:not(.disabled) .mat-icon {
-      color: $secondary;
+      color: var(--text-secondary);
     }
 
     sto-nav-drawer-list-item {
-      border-color: rgba($primary, 0.2);
+      border-color: var(--bg-primary);
 
       a.active span {
-        color: $secondary;
+        color: var(--text-secondary);
       }
 
       &:hover {
-        background-color: $hover;
+        background-color: var(--bg-hover);
       }
     }
 
     .sto-nav-drawer--collapsed__item {
-      border-bottom-color: $border-color;
+      border-bottom-color: var(--divider);
     }
 
     a:not(.disabled) {
-      color: $color;
+      color: var(--text);
     }
 
     a.active {
-      color: $secondary;
+      color: var(--text-secondary);
     }
 
     .disabled {
-      color: $disabled;
+      color: var(--text-disabled);
 
       a {
-        color: $disabled;
+        color: var(--text-disabled);
       }
     }
   }
 }
 
-
-// Include theme styles for your custom components.
-body:not(.sto-dark-theme) {
-  @include navigation-drawer-theme($sto-theme, $variables);
-}
-
-.sto-dark-theme {
-  @include navigation-drawer-theme($sto-dark-theme, $dark-variables);
-}
 
 @mixin navigation-drawer-typography($config) {
   .sto-nav-drawer {
