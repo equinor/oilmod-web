@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { NumberInputPipe } from '../number-input.pipe';
@@ -104,16 +104,18 @@ describe('NumberUnitInputComponent', () => {
     expect(selectSpyOpen).toHaveBeenCalled();
   });
 
-  it('should have a display value with the unit in readonly mode', () => {
+  it('should have a display value with the unit in readonly mode', fakeAsync(() => {
     component.writeValue({ value: 123, unit: 'C' });
     expect(component.input.nativeElement.value).toBe('123,000');
     component.readonly = true;
     fixture.detectChanges();
+    tick(60); // due to debounce(50) on stateChanges which updates displayvalue on input
     expect(component.input.nativeElement.value).toBe('123,000 Ce');
     component.readonly = false;
     fixture.detectChanges();
+    tick(60); // due to debounce(50) on stateChanges which updates displayvalue on input
     expect(component.input.nativeElement.value).toBe('123,000');
-  });
+  }));
 
   function createComponent() {
     fixture = TestBed.createComponent(NumberUnitInputComponent);
