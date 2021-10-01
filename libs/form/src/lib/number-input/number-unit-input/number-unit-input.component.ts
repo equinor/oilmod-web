@@ -226,7 +226,9 @@ export class NumberUnitInputComponent extends FormFieldBase
         this.onChange({ ...value, value: numberValue });
       });
 
-    this.sub.add(this.stateChanges.pipe(debounceTime(50)).subscribe(() => this.numberInputDirective?.setDisplayValue(this.readonly)));
+    this.sub.add(this.stateChanges.pipe(debounceTime(50)).subscribe(() => {
+      this.numberInputDirective?.setDisplayValue(this.readonly);
+    }));
     this.sub.add(sub);
     if ( this.ngControl && this.ngControl.statusChanges ) {
       this.sub.add(this.ngControl.statusChanges
