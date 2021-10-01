@@ -1,12 +1,12 @@
 /* eslint-disable no-empty */
-import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
 import { NumberInputPipe } from './number-input.pipe';
 
 
 // eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({ selector: '[numberInput]' })
-export class NumberInputDirective implements OnChanges {
+export class NumberInputDirective {
   @Input()
   unit: string | undefined;
   @Input()
@@ -41,7 +41,7 @@ export class NumberInputDirective implements OnChanges {
     this._el = this.elementRef.nativeElement;
   }
 
-  private setDisplayValue(readonly: boolean) {
+  public setDisplayValue(readonly: boolean) {
     const val = ( this._el.value || '' ).replace(` ${this.unit}`, '');
     if ( this.unit ) {
       if ( readonly ) {
@@ -275,9 +275,4 @@ export class NumberInputDirective implements OnChanges {
     this._el.value = this.numberFormatPipe.transform(value, this.fractionSize, this.dynamicFractionSize);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if ( changes.appendUnit || changes.unit ) {
-      this.setDisplayValue(this.appendUnit);
-    }
-  }
 }

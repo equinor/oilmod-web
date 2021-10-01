@@ -21,6 +21,8 @@ import { NumberInputPipe } from '../number-input.pipe';
 import { MatSelect } from '@angular/material/select';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { NumberInputDirective } from '@ngx-stoui/form';
+import { debounceTime } from 'rxjs/operators';
 
 class NumberUnit {
   value: number | string;
@@ -49,6 +51,8 @@ export class NumberUnitInputComponent extends FormFieldBase
   select: MatSelect;
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
+  @ViewChild(NumberInputDirective)
+  numberInputDirective: NumberInputDirective;
 
   errorState: boolean;
 
@@ -222,6 +226,7 @@ export class NumberUnitInputComponent extends FormFieldBase
         this.onChange({ ...value, value: numberValue });
       });
 
+    this.sub.add(this.stateChanges.pipe(debounceTime(50)).subscribe(() => this.numberInputDirective?.setDisplayValue(this.readonly)));
     this.sub.add(sub);
     if ( this.ngControl && this.ngControl.statusChanges ) {
       this.sub.add(this.ngControl.statusChanges
