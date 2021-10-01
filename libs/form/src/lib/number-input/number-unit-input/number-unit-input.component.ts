@@ -21,8 +21,8 @@ import { NumberInputPipe } from '../number-input.pipe';
 import { MatSelect } from '@angular/material/select';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { NumberInputDirective } from '@ngx-stoui/form';
 import { debounceTime } from 'rxjs/operators';
+import { NumberInputDirective } from '../number-input.directive';
 
 class NumberUnit {
   value: number | string;
