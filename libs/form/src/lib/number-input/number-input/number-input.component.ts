@@ -11,7 +11,6 @@ import {
   Optional,
   Output,
   Self,
-  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
@@ -20,10 +19,9 @@ import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { NumberInputPipe } from '../number-input.pipe';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { debounceTime, startWith } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormFieldBase } from '../../sto-form/form-field.base';
-import { NumberInputDirective } from '../number-input.directive';
 
 /*
 class NumberInputBase {
@@ -68,8 +66,6 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   id = `value-unit-input-${NumberInputComponent.nextId++}`;
   @HostBinding('attr.aria-describedby')
   describedBy = '';
-  @ViewChild(NumberInputDirective)
-  numberInputDirective: NumberInputDirective;
 
   errorState: boolean;
 
@@ -176,9 +172,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   }
 
   set value(value) {
-    if (!value && value !== 0) {
-      return;
-    }
+    value = value ?? 0;
     this._value = value;
     const valueAsString = this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize);
     this.ctrl.setValue(valueAsString, { emitEvent: false });
@@ -217,9 +211,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
         this.onChange(numericValue);
         this.ngModelChange.emit(numericValue);
       });
-    this.sub.add(this.stateChanges.pipe(debounceTime(50)).subscribe(() => {
-      this.numberInputDirective?.setDisplayValue(this.readonly);
-    }));
+
     this.sub.add(sub);
     if ( this.ngControl && this.ngControl.statusChanges ) {
       this.sub.add(this.ngControl.statusChanges
