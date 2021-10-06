@@ -88,7 +88,7 @@ describe('NumberInputComponent', () => {
     fixture.detectChanges();
     component.value = null;
     fixture.detectChanges();
-    expect(component.ctrl.value).toBe('0');
+    expect(component.ctrl.value).toBe('0,000');
   });
 
   it('should clean up after calling ngOnDestroy', () => {
