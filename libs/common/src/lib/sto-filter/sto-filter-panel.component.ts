@@ -185,6 +185,7 @@ export class StoFilterActions {
   template: `
     <ng-content></ng-content>
     <button mat-icon-button
+            class="toggle-expand-button"
             *ngIf="expandable"
             title="Toggle filter panel"
             (click)="toggle.emit()">

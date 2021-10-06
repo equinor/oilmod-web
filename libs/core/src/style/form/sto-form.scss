@@ -1,18 +1,6 @@
 @import "../theme/theme";
 @import "../theme/typography";
 
-@mixin mat-input-hover-effect($background-color, $underline-color) {
-  .mat-form-field-flex {
-    &:hover {
-      background-color: $background-color;
-    }
-
-    &:hover + .mat-form-field-underline {
-      background-color: $underline-color;
-    }
-  }
-}
-
 @mixin sto-form-theme($theme, $variables) {
   $color: map_get($variables, color);
   $secondary-color: map_get($variables, secondary);
@@ -23,19 +11,12 @@
 
   .sto-form {
     &__field {
-      @include mat-input-hover-effect(rgba(#6687B8, 0.15), $border-hover);
-
       .mat-form-field-wrapper .mat-form-field-underline {
         background-color: $border;
       }
     }
 
-    &__field--readonly {
-      @include mat-input-hover-effect(transparent, transparent);
-    }
-
     &__field--disabled {
-      @include mat-input-hover-effect($disabled-color, transparent);
       color: $disabled-color;
 
       .mat-form-field-flex {
@@ -56,7 +37,7 @@ body {
   @include sto-form-theme($sto-theme, $variables);
 }
 
-$form-field-bg: rgba(#6687B8, 0.1);
+$form-field-bg: var(--bg-light);
 $border-radius: 4px;
 $height: 72px;
 

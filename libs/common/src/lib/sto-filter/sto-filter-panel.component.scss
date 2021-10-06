@@ -2,7 +2,6 @@
 
 $sto-filter-header-font-size: 18px;
 $sto-filter-header-line-height: 24px;
-$sto-filter-header-elevation: 2;
 
 .sto-filter {
 
@@ -22,7 +21,9 @@ $sto-filter-header-elevation: 2;
   }
 
   .mat-expansion-panel-header {
-    padding: 0;
+    border-bottom: solid 1px var(--divider);
+
+    padding: 0 8px;
     cursor: default;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -33,7 +34,7 @@ $sto-filter-header-elevation: 2;
   }
 
   .mat-expansion-panel-body {
-    padding: 24px 0 0;
+    padding: 24px 16px 0 16px;
     margin: 0;
   }
 

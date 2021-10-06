@@ -10,7 +10,7 @@ import {
   StoFilterTitle
 } from './sto-filter-panel.component';
 import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatButtonToggle, MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -145,7 +145,7 @@ class Page {
   public newButton: MatButton;
 
   constructor() {
-    const toggleBtnDe = wrapFixture.debugElement.query(By.directive(MatButtonToggle));
+    const toggleBtnDe = wrapFixture.debugElement.query(By.css('button.toggle-expand-button'));
     this.toggleButton = toggleBtnDe.nativeElement;
     const panelDe = wrapFixture.debugElement.query(By.directive(StoFilterPanelComponent));
     this.stoFilterPanel = panelDe.componentInstance;

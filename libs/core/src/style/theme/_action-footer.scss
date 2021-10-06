@@ -3,7 +3,7 @@
 
 @mixin sto-action-footer-theme($theme, $variables) {
   $border-color: map_get($variables, border-color);
-  $background-color: map_get($variables, app-bar);
+  $background-color: map_get($variables, background);
 
   .sto-action-footer {
     background-color: $background-color;

@@ -55,7 +55,9 @@ body:not(.sto-dark-theme) {
   --text-tertiary: #{map.get($eds-light-foreground, tertiary)};
   --text-disabled: #{map.get($eds-light-foreground, disabled)};
   --divider: #{map.get($eds-light-foreground, divider)};
-  --bg-default: #{map.get($eds-light-background, default)};
+  --bg-default: #FFFFFF;
+  --bg-app: #{map.get($eds-light-background, light)};
+  --bg-card: #FFFFFF;
   --bg-semi-transparent: #{map.get($eds-light-background, semi-transparent)};
   --bg-light: #{map.get($eds-light-background, light)};
   --bg-medium: #{map.get($eds-light-background, medium)};
@@ -117,6 +119,8 @@ body.sto-dark-theme {
   --text-disabled: #{map.get($eds-dark-foreground, disabled)};
   --divider: #{map.get($eds-dark-foreground, divider)};
   --bg-default: #{map.get($eds-dark-background, default)};
+  --bg-app: #{map.get($eds-dark-background, default)};
+  --bg-card: #243746;
   --bg-semi-transparent: #{map.get($eds-dark-background, semi-transparent)};
   --bg-light: #{map.get($eds-dark-background, light)};
   --bg-medium: #{map.get($eds-dark-background, medium)};

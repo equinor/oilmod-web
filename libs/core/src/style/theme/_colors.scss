@@ -147,13 +147,13 @@ $theme-fg: (
 );
 
 $theme-bg: (
-  app-bar: var(--bg-default),
-  background: var(--bg-default),
+  app-bar: var(--bg-card),
+  background: var(--bg-app),
   hover: var(--bg-hover),
-  card: var(--bg-default),
-  dialog: var(--bg-default),
+  card: var(--bg-card),
+  dialog: var(--bg-card),
   disabled-button: var(--bg-disabled),
-  raised-button: var(--bg-default),
+  raised-button: var(--bg-card),
   focused-button: var(--bg-focus),
   selected-button: var(--bg-light),
   selected-disabled-button: var(--bg-disabled),
