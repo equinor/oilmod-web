@@ -1,5 +1,4 @@
 @use '~@angular/material' as mat;
-@use 'libs/core/src/style/grid' as grid;
 
 $footer-height: 69px;
 
@@ -21,7 +20,6 @@ $footer-height: 69px;
 
   &__content {
     padding: 16px 24px;
-    @include grid.grid(12);
   }
 
   .mat-progress-bar {
