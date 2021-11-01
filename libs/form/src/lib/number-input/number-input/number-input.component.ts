@@ -172,9 +172,8 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   }
 
   set value(value) {
-    value = value ?? 0;
     this._value = value;
-    const valueAsString = this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize);
+    const valueAsString = ( value || value === 0 ) ? this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize) : '';
     this.ctrl.setValue(valueAsString, { emitEvent: false });
     this.stateChanges.next();
   }
