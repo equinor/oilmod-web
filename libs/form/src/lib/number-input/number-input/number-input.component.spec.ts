@@ -83,13 +83,22 @@ describe('NumberInputComponent', () => {
     expect(spy).toHaveBeenCalledWith(1323.457); // Rounded
   });
 
-  it('should allow null as input and set value to 0', () => {
+  it('should allow null as input', () => {
     component.value = 5;
     fixture.detectChanges();
     component.value = null;
     fixture.detectChanges();
+    expect(component.ctrl.value).toBe('');
+  });
+
+  it('should keep number 0 as 0', () => {
+    component.value = 5;
+    fixture.detectChanges();
+    component.value = 0;
+    fixture.detectChanges();
     expect(component.ctrl.value).toBe('0,000');
   });
+
 
   it('should clean up after calling ngOnDestroy', () => {
     component.ngOnDestroy();

@@ -40,7 +40,7 @@ export class NumberInputPipe implements PipeTransform {
     return { integer, fraction };
   }
 
-  transform(value: number | string, fractionSize: number = 5, dynamicFractionSize = false): string {
+  transform(value: number | string | null, fractionSize: number = 5, dynamicFractionSize = false): string {
     if ( !value && value !== 0 ) {
       return '';
     }
