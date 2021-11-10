@@ -1,5 +1,10 @@
 .sto-datatable {
   .sto-form__field {
+
+    &--readonly {
+      border: 0;
+    }
+
     width: 100%;
 
     input[type="number"] {
