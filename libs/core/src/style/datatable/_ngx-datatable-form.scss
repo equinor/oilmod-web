@@ -1,8 +1,10 @@
 .sto-datatable {
   .sto-form__field {
 
-    &--readonly {
-      border: 0;
+    &--readonly, &--disabled {
+      .mat-form-field-flex {
+        border: 0;
+      }
     }
 
     width: 100%;

@@ -237,13 +237,13 @@ $height: 72px;
 
 //Readonly
 .sto-form__field--readonly {
-  border: 1px solid var(--divider);
 
   .mat-input-element {
     cursor: default;
   }
 
   .mat-form-field-flex {
+    border: 1px solid var(--divider);
     background-color: transparent;
   }
 
@@ -280,10 +280,10 @@ $height: 72px;
     visibility: hidden;
   }
 
-
-
   .mat-form-field-flex {
     cursor: default;
+    border: 1px solid var(--divider);
+    background-color: transparent;
   }
 }
 
