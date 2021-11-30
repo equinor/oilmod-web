@@ -21,7 +21,7 @@ describe('StoDatatableResizeDirective', () => {
 
   it('should add class', () => {
     const elRef = new MockElementRef();
-    const spy = spyOn(elRef.nativeElement.classList, 'add');
+    const spy = jest.spyOn(elRef.nativeElement.classList, 'add');
     const directive = new StoDatatableResizeDirective(elRef);
     directive.ngAfterViewInit();
     expect(spy).toHaveBeenCalledWith('sto-mdl-table__header__row__cell__resize-handle');
@@ -29,7 +29,7 @@ describe('StoDatatableResizeDirective', () => {
 
   it('should trigger onMouseUp after mouseup event is dispatched', () => {
     const directive = new StoDatatableResizeDirective(new MockElementRef());
-    const spy = spyOn(directive, 'onMouseUp');
+    const spy = jest.spyOn(directive, 'onMouseUp');
     directive.column = { prop: '', name: '', flexBasis: 80 };
     const event = {} as MouseEvent;
     ( event as any ).type = 'mousedown';

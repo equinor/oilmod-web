@@ -45,7 +45,7 @@ describe('NumberInputComponent', () => {
   });
 
   it('should trigger statechanges when attributes are set', () => {
-    const spy = spyOn(component.stateChanges, 'next').and.callThrough();
+    const spy = jest.spyOn(component.stateChanges, 'next');
     component.placeholder = 'Placeholder';
     component.required = true;
     component.setDisabledState(true);
@@ -55,7 +55,7 @@ describe('NumberInputComponent', () => {
   });
 
   it('should call onChange with a parsed number', () => {
-    const spy = spyOn(component, 'onChange');
+    const spy = jest.spyOn(component, 'onChange');
     component.writeValue(123.456);
     component.ctrl.updateValueAndValidity();
     fixture.detectChanges();
@@ -64,7 +64,7 @@ describe('NumberInputComponent', () => {
 
   it('should allow a dynamic number of decimal places', () => {
     component.dynamicFractionSize = true;
-    const spy = spyOn(component, 'onChange');
+    const spy = jest.spyOn(component, 'onChange');
     fixture.detectChanges();
     component.writeValue(123.4567);
     component.ctrl.updateValueAndValidity();

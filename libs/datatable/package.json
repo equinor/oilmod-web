@@ -1,9 +1,9 @@
 {
   "name": "@ngx-stoui/datatable",
-  "version": "12.0.1",
+  "version": "13.0.0-BETA.1",
   "peerDependencies": {
-    "@angular/common": "^12.0.2",
-    "@angular/core": "^12.0.2"
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0"
   },
   "dependencies": {
     "tslib": "^2.1.0"

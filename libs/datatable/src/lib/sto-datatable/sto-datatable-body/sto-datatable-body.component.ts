@@ -115,6 +115,8 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
     if ( this.timeout ) {
       clearTimeout(this.timeout);
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this.timeout = setTimeout(() => {
       this.vScroller.ngOnInit();
     }, 100);

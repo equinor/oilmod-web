@@ -59,7 +59,7 @@ describe('NumberUnitInputComponent', () => {
   });
 
   it('should trigger statechanges when attributes are set', () => {
-    const spy = spyOn(component.stateChanges, 'next').and.callThrough();
+    const spy = jest.spyOn(component.stateChanges, 'next');
     component.placeholder = 'Placeholder';
     component.unitPlaceholder = 'Unit Placeholder';
     component.required = true;
@@ -70,7 +70,7 @@ describe('NumberUnitInputComponent', () => {
   });
 
   it('should call onChange with a parsed number', () => {
-    const spy = spyOn(component, 'onChange');
+    const spy = jest.spyOn(component, 'onChange');
     component.writeValue({ value: 123.456, unit: 'C' });
     component.form.updateValueAndValidity();
     fixture.detectChanges();
@@ -91,8 +91,8 @@ describe('NumberUnitInputComponent', () => {
   it('should focus the correct element', () => {
     const ev = {} as any;
     const rect = page.input.getBoundingClientRect();
-    const selectSpy = spyOn(page.matSelect, 'focus');
-    const selectSpyOpen = spyOn(page.matSelect, 'open');
+    const selectSpy = jest.spyOn(page.matSelect, 'focus');
+    const selectSpyOpen = jest.spyOn(page.matSelect, 'open');
     ev.clientX = rect.right - 50;
     component.onContainerClick(ev);
     const focusEl = fixture.debugElement.query(By.css(':focus'));

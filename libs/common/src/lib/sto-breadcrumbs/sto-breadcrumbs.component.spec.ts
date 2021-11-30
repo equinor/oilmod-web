@@ -7,6 +7,7 @@ import { StoBreadcrumbsComponent } from './sto-breadcrumbs.component';
 import { breadCrumbs } from '../../test-utils';
 import { RouterTestingModule } from '@angular/router/testing';
 
+
 let comp: StoBreadcrumbsComponent;
 let fixture: ComponentFixture<StoBreadcrumbsComponent>;
 let wrapFixture: ComponentFixture<WrapperComponent>;
@@ -36,7 +37,7 @@ describe('StoBreadcrumbsComponent', () => {
   });
 
   it('should trigger the command of a clicked item', () => {
-    spyOn(breadCrumbs[ 0 ], 'command');
+    jest.spyOn(breadCrumbs[ 0 ], 'command');
     page.elements[ 0 ].dispatchEvent(new Event('click'));
     fixture.detectChanges();
     expect(breadCrumbs[ 0 ].command).toHaveBeenCalled();

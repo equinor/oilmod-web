@@ -1,7 +1,8 @@
-/**
+/*
+/!**
  * Grid can't be tested in a headless environment, due to the nature of ResizeObserver.
  * The test below will work in a browser.
- */
+ *!/
 
 import { StoGridColumnDirective, StoGridDirective, StoGridSpacerDirective } from './sto-grid.directive';
 import { Component, QueryList, ViewChildren } from '@angular/core';
@@ -80,3 +81,4 @@ function createComponent() {
 class Page {
 
 }
+*/

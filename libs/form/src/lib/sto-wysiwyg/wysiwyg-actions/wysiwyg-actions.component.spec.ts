@@ -34,7 +34,7 @@ describe('WysiwygActionsComponent', () => {
   });
 
   it('should emit a single string to apply formatting', () => {
-    const spy = spyOn(component.modifier, 'emit');
+    const spy = jest.spyOn(component.modifier, 'emit');
     const buttonDe = fixture.debugElement.query(By.css('.sto-wysiwyg__editor__button'));
     buttonDe.triggerEventHandler('click', { type: 'click' });
     fixture.detectChanges();
