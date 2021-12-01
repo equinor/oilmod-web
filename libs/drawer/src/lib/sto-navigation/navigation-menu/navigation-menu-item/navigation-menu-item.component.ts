@@ -12,6 +12,7 @@ export class NavigationMenuItemComponent {
   @Input() item: MenuItem;
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   onCommand = new EventEmitter<NavigateCommand>();
   public menuItemTypes = MenuItemTypes;
   public urlPrefix: string;
