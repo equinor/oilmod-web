@@ -43,16 +43,20 @@ describe('ErrorHandlerService', () => {
 
   it('should call the correct error handler', () => {
     const service: ErrorHandlerService = TestBed.get(ErrorHandlerService);
-    let spy = spyOn(service, 400).and.callThrough();
+    // @ts-ignore
+    let spy = jest.spyOn(service, 400);
     service.handler(getError(400));
     expect(spy).toHaveBeenCalled();
-    spy = spyOn(service, 403).and.callThrough();
+    // @ts-ignore
+    spy = jest.spyOn(service, 403);
     service.handler(getError(403));
     expect(spy).toHaveBeenCalled();
-    spy = spyOn(service, 500).and.callThrough();
+    // @ts-ignore
+    spy = jest.spyOn(service, 500);
     service.handler(getError(500));
     expect(spy).toHaveBeenCalled();
-    spy = spyOn(service, 'defaultHandler').and.callThrough();
+    // @ts-ignore
+    spy = jest.spyOn(service, 'defaultHandler');
     service.handler(getError(428));
     expect(spy).toHaveBeenCalled();
   });
@@ -61,7 +65,7 @@ describe('ErrorHandlerService', () => {
     const handler = {
       handler: (err: HttpErrorResponse) => new HttpError(err)
     };
-    const spy = spyOn(handler, 'handler').and.callThrough();
+    const spy = jest.spyOn(handler, 'handler');
     const service: ErrorHandlerService = TestBed.get(ErrorHandlerService);
     service.handler(getError(401), handler.handler);
     expect(spy).toHaveBeenCalled();
@@ -70,7 +74,8 @@ describe('ErrorHandlerService', () => {
   it('should use the injected handler', () => {
     const service: ErrorHandlerService = TestBed.get(ErrorHandlerService);
     const custom: CustomHandler = TestBed.get(CUSTOM_ERROR_HANDLER);
-    const spy = spyOn(custom, 401).and.callThrough();
+    // @ts-ignore
+    const spy = jest.spyOn(custom, '401');
     service.handler(getError(401));
     expect(spy).toHaveBeenCalled();
   });
@@ -78,7 +83,7 @@ describe('ErrorHandlerService', () => {
   it('should call the injected logger', () => {
     const service: ErrorHandlerService = TestBed.get(ErrorHandlerService);
     const logger: Logger = TestBed.get(ERROR_LOGGER);
-    const spy = spyOn(logger, 'log').and.callThrough();
+    const spy = jest.spyOn(logger, 'log');
     service.handler(getError(400));
     expect(spy).toHaveBeenCalled();
   });

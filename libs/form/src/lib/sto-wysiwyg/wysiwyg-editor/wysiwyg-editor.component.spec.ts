@@ -54,32 +54,32 @@ describe('WysiwygEditorComponent', () => {
     const ev = new TestEvent('input');
     const el = component.editor.nativeElement;
     el.innerHTML = '<h1>SomeStuff</h1>';
-    const spy = spyOn(component.valueChanged, 'emit');
+    const spy = jest.spyOn(component.valueChanged, 'emit');
     el.dispatchEvent(ev);
     tick(320);
     expect(spy).toHaveBeenCalledWith('<h1>SomeStuff</h1>');
   }));
 
   // Broken in jsdom
-/*  it('should show a warning if pasted html contains an image tag', () => {
-    const el = component.editor.nativeElement;
-    // set cursor inside editor
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    const sel = document.getSelection();
-    sel?.removeAllRanges();
-    sel?.addRange(range);
+  /*  it('should show a warning if pasted html contains an image tag', () => {
+      const el = component.editor.nativeElement;
+      // set cursor inside editor
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = document.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
 
-    const spy = spyOn(component, 'onPaste').and.callThrough();
-    const paste = `<h1>Heading</h1><div><img src="An Image"></div><p>Some text</p>`;
-    const pasteData = new DataTransfer();
-    pasteData.setData('text/html', paste);
-    const ev = new ClipboardEvent('paste', {
-      clipboardData: pasteData
-    });
-    el.dispatchEvent(ev);
-    fixture.detectChanges();
-    expect(spy).toHaveBeenCalled();
-    expect(component.warning).toBeTruthy();
-  });*/
+      const spy = jest.spyOn(component, 'onPaste');
+      const paste = `<h1>Heading</h1><div><img src="An Image"></div><p>Some text</p>`;
+      const pasteData = new DataTransfer();
+      pasteData.setData('text/html', paste);
+      const ev = new ClipboardEvent('paste', {
+        clipboardData: pasteData
+      });
+      el.dispatchEvent(ev);
+      fixture.detectChanges();
+      expect(spy).toHaveBeenCalled();
+      expect(component.warning).toBeTruthy();
+    });*/
 });

@@ -56,7 +56,7 @@ describe('StoSelectFilterComponent', () => {
   it('should emit valueChanges when value input element is changed', () => {
     comp.isFilter = true;
     fixture.detectChanges();
-    const emitSpy = spyOn(comp.valueChanges, 'emit');
+    const emitSpy = jest.spyOn(comp.valueChanges, 'emit');
     comp.value = 'test';
     expect(emitSpy).toHaveBeenCalledWith('test');
   });

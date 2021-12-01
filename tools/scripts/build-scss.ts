@@ -1,8 +1,7 @@
 import * as sass from 'sass';
 import * as path from 'path';
-import {writeFile as writeFileCb} from 'fs';
-import {promisify} from 'util';
-const importer = require('node-sass-tilde-importer');
+import { writeFile as writeFileCb } from 'fs';
+import { promisify } from 'util';
 
 const writeFile = promisify(writeFileCb);
 
@@ -22,7 +21,7 @@ async function processScss(file: string, outFile: string): Promise<void> {
 
   const result = sass.renderSync({
     file,
-    importer
+    includePaths: [ path.join(root, 'node_modules') ]
   });
 
   const css = result.css.toString();

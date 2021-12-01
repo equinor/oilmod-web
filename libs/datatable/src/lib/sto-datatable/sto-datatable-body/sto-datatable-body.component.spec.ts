@@ -40,7 +40,7 @@ describe('StoDatatableBodyComponent', () => {
   });
 
   it('should emit selection on row click', fakeAsync(() => {
-    spyOn(comp.rowSelected, 'emit');
+    jest.spyOn(comp.rowSelected, 'emit');
     const event = new Event('click') as MouseEvent;
     page.rowEls[ 0 ].dispatchEvent(event);
     fixture.detectChanges();
@@ -56,7 +56,7 @@ describe('StoDatatableBodyComponent', () => {
   }));
 
   it('should emit activation on keydown events', () => {
-    spyOn(comp.activate, 'emit');
+    jest.spyOn(comp.activate, 'emit');
     const event = new Event('keydown') as KeyboardEvent;
     ( <any>event ).key = 'B';
     const rowEl = page.rowEls[ 0 ];

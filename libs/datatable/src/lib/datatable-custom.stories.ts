@@ -50,7 +50,15 @@ ResponsiveMode.args = {
 };
 
 export const Paging: Story = (args) => ( {
-  props: args,
+  props: {
+    page: action('Page change'),
+    setPage: (pageEvent: { pageIndex: number; }, that: { visibleRows: { total: unknown; invoiceNo: number; voyageNo: number; vesselName: string; allocated: number; }[]; }) => {
+      const startAt = pageEvent.pageIndex * 30;
+      const endAt = ( pageEvent.pageIndex + 1 ) * 30 - 1;
+      that.visibleRows = [ ...rows ].slice(startAt, endAt);
+    },
+    ...args
+  },
   template: `
 <h3>Paging is done by using <a href="https://material.angular.io/components/paginator/overview" target="_blank">mat-paginator</a></h3>
 <mat-card class="sto-card" (resize)="resize()">
@@ -61,12 +69,6 @@ export const Paging: Story = (args) => ( {
 } );
 Paging.args = {
   activePage: 0,
-  page: action('Page change'),
-  setPage: (pageEvent: { pageIndex: number; }, that: { visibleRows: { total: unknown; invoiceNo: number; voyageNo: number; vesselName: string; allocated: number; }[]; }) => {
-    const startAt = pageEvent.pageIndex * 30;
-    const endAt = ( pageEvent.pageIndex + 1 ) * 30 - 1;
-    that.visibleRows = [ ...rows ].slice(startAt, endAt);
-  },
   height: 400,
   rows,
   visibleRows: rows.slice(0, 30),

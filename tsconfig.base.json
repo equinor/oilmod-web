@@ -16,13 +16,27 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "paths": {
-      "@ngx-stoui/core": ["libs/core/src/index.ts"],
-      "@ngx-stoui/common": ["libs/common/src/index.ts"],
-      "@ngx-stoui/datatable": ["libs/datatable/src/index.ts"],
-      "@ngx-stoui/drawer": ["libs/drawer/src/index.ts"],
-      "@ngx-stoui/error-handler": ["libs/error-handler/src/index.ts"],
-      "@ngx-stoui/form": ["libs/form/src/index.ts"],
-      "@ngx-stoui/testing": ["libs/testing/src/index.ts"]
+      "@ngx-stoui/common": [
+        "libs/common/src/index.ts"
+      ],
+      "@ngx-stoui/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@ngx-stoui/datatable": [
+        "libs/datatable/src/index.ts"
+      ],
+      "@ngx-stoui/drawer": [
+        "libs/drawer/src/index.ts"
+      ],
+      "@ngx-stoui/error-handler": [
+        "libs/error-handler/src/index.ts"
+      ],
+      "@ngx-stoui/form": [
+        "libs/form/src/index.ts"
+      ],
+      "@ngx-stoui/testing": [
+        "libs/testing/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -58,7 +58,7 @@ describe('WysiwygComponent unit tests', () => {
   });
 
   it('should only call execCommand when execute is called with a known method', () => {
-    const spy = spyOn(document, 'execCommand');
+    const spy = jest.spyOn(document, 'execCommand');
     component.execute('bold');
     expect(spy).toHaveBeenCalled();
     component.execute('formatDocument');
@@ -66,7 +66,7 @@ describe('WysiwygComponent unit tests', () => {
   });
 
   it('should execute [in|out]dent when onKeyDownHandleTab is called with tab', () => {
-    const spy = spyOn(component, 'execute');
+    const spy = jest.spyOn(component, 'execute');
 
     const ev = {
       key: 'Tab',
@@ -146,7 +146,7 @@ describe('WysiwygComponent integration tests', () => {
     expect(page.editable.getAttribute('contenteditable')).toEqual('true');
     expect(page.editor.readonly).toBeFalsy();
     expect(page.wysiwyg.disabled).toBeFalsy();
-    const spy = spyOn(page.wysiwyg, 'setDisabledState').and.callThrough();
+    const spy = jest.spyOn(page.wysiwyg, 'setDisabledState');
     wrapper.disable();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();

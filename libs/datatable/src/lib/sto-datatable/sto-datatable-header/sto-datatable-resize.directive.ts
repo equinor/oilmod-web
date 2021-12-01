@@ -12,6 +12,7 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   column: Column;
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-native
   resize = new EventEmitter<number>();
   @Output()
   resizeEnd = new EventEmitter<number>();

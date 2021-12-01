@@ -14,7 +14,6 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
 import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
 import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
 import { ColumnStylePipe } from './column-style.pipe';
-import DoneCallback = jest.DoneCallback;
 
 let comp: StoDatatableComponent<Record<string, unknown>>;
 let fixture: ComponentFixture<StoDatatableComponent<Record<string, unknown>>>;
@@ -108,7 +107,7 @@ describe('StoDatatableComponent', () => {
   });*/
 
   it('should emit a select event when a row is clicked', fakeAsync(() => {
-    spyOn(comp.select, 'emit');
+    jest.spyOn(comp.select, 'emit');
     const firstRow = page.rowElements[ 0 ];
     const event = new Event('click');
     firstRow.dispatchEvent(event);
@@ -127,7 +126,7 @@ describe('StoDatatableComponent', () => {
     comp.body.selectionMode = comp.selectionMode;
     fixture.detectChanges();
 
-    spyOn(comp.select, 'emit');
+    jest.spyOn(comp.select, 'emit');
     const firstRow = page.rowElements[ 0 ];
     const clickEvent = new Event('click');
     firstRow.dispatchEvent(clickEvent);
@@ -145,7 +144,7 @@ describe('StoDatatableComponent', () => {
   }));
 
   it('should emit a contextmenu event when a row is right clicked', fakeAsync(() => {
-    spyOn(comp.rowContextMenu, 'emit');
+    jest.spyOn(comp.rowContextMenu, 'emit');
     const firstRow = page.rowElements[ 0 ];
     const firstCell = firstRow.querySelector('.sto-mdl-table__body__row__cell');
     const event = new Event('contextmenu');
@@ -294,6 +293,7 @@ function createAutosizeComponent() {
   });
 }
 
+/*
 describe('StoDatatableComponent with responsive template height', () => {
 
   beforeEach(waitForAsync(() => {
@@ -320,7 +320,7 @@ describe('StoDatatableComponent with responsive template height', () => {
   }));
 
   // TODO: Need to look at how this can be fixed. The queries seem to fail at the moment (return empty lists)
-/*  it('should show as a responsive view when container width is below 400px', (done: DoneCallback) => {
+  it('should show as a responsive view when container width is below 400px', (done: DoneCallback) => {
     wrapperComp.width = 350;
     wrapFixture.detectChanges();
     setTimeout(() => {
@@ -329,9 +329,9 @@ describe('StoDatatableComponent with responsive template height', () => {
       expect(r.length).toBeGreaterThan(1);
       done();
     }, 200);
-  });*/
+  });
 
-});
+});*/
 
 function createResponsiveComponent() {
   wrapFixture = TestBed.createComponent(WrapperComponent);

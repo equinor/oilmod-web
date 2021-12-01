@@ -204,8 +204,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   columnGroups: ColumnGroup[];
 
   private _columns: Column[];
-  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-native
   select = new EventEmitter<RowSelection<T>>();
   @Output()
   resized = new EventEmitter<Column>();
@@ -256,6 +256,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
         if ( this.resizeTimeout ) {
           clearTimeout(this.resizeTimeout);
         }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         this.resizeTimeout = setTimeout(() => {
           for ( const entry of entries ) {
             const cr = entry.contentRect;

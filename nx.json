@@ -20,38 +20,48 @@
           "test",
           "e2e",
           "build-storybook"
-        ]
+        ],
+        "parallel": 3
       }
     }
   },
-  "projects": {
-    "oilmod-web": {
-      "tags": []
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "oilmod-web",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
     },
-    "oilmod-web-e2e": {
-      "tags": [],
-      "implicitDependencies": ["oilmod-web"]
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
-    "core": {
-      "tags": []
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
     },
-    "common": {
-      "tags": []
-    },
-    "datatable": {
-      "tags": []
-    },
-    "drawer": {
-      "tags": []
-    },
-    "error-handler": {
-      "tags": []
-    },
-    "form": {
-      "tags": []
-    },
-    "testing": {
-      "tags": []
+    "@nrwl/angular:component": {
+      "style": "scss"
     }
   }
 }
