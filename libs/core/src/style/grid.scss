@@ -8,9 +8,13 @@
     display: block;
     grid-column: span 1;
   }
-  @for $i from 1 through $col-count {
+  @for $i from 1 through 12 {
     .#{$child-selector}-#{$i} {
-      grid-column: span $i;
+      @if $i > $col-count {
+        grid-column: span $col-count;
+      } @else {
+        grid-column: span $i;
+      }
     }
   }
 }
