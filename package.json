@@ -71,6 +71,7 @@
     "@nrwl/storybook": "13.2.3",
     "@nrwl/tao": "13.2.3",
     "@nrwl/workspace": "13.2.3",
+    "@storybook/addon-docs": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.1",
     "@storybook/angular": "^6.4.1",
     "@storybook/builder-webpack5": "^6.4.1",
