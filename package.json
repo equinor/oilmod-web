@@ -46,8 +46,6 @@
     "@angular/platform-browser-dynamic": "13.0.2",
     "@angular/router": "13.0.2",
     "@nrwl/angular": "13.2.3",
-    "@storybook/addon-actions": "^6.4.1",
-    "@storybook/addon-docs": "^6.4.1",
     "@storybook/addon-links": "^6.4.1",
     "@storybook/addon-storysource": "^6.4.1",
     "@swimlane/ngx-datatable": "^20.0.0",
