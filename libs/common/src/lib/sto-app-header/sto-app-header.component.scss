@@ -17,6 +17,10 @@
     margin: auto;
   }
 
+  &__form {
+    margin-left: 40px;
+  }
+
   &__environment {
     position: absolute;
     width: 100%;
@@ -34,6 +38,7 @@
       position: relative;
       margin: auto;
     }
+
   }
 
   .small-toggle {

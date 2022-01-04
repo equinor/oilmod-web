@@ -2,6 +2,8 @@
      [class.sto-header--test-environment]="testEnvironment">
   <sto-breadcrumbs [home]="homeBreadCrumbConfig"
                    [model]="breadCrumbs"></sto-breadcrumbs>
+  <ng-content select=".sto-header__form">
+  </ng-content>
   <div class="sto-header__environment"
        *ngIf="testEnvironment && environmentName && (isSmall$ | async) === false">
     <div class="sto-header__environment--label">

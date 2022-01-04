@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { StoAppHeaderComponent, StoAppHeaderModule, StoThemeModule } from '@ngx-stoui/common';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 export default {
   title: 'common/Application Header',
@@ -17,7 +19,7 @@ export default {
     moduleMetadata({
       imports: [
         StoAppHeaderModule, CommonModule,
-        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule,
+        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule,
         StoThemeModule.forRoot() ],
     })
   ],
@@ -90,4 +92,37 @@ export const WithUserMenu: Story<StoAppHeaderComponent> = (args: StoAppHeaderCom
 WithUserMenu.argTypes = {
   testEnvironment: { table: { disable: true } },
   environmentName: { table: { disable: true } }
+};
+
+export const withForm: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
+  return {
+    props: {
+      breadCrumbs: [
+        { label: 'Root', command: action('Root clicked'), segment: '' },
+        { label: 'SubModule', command: action('SubModule clicked'), segment: 'submodule' },
+        { label: 'Third level!', command: action('Third clicked'), segment: 'third' }
+      ],
+      environmentName: 'Systemtest',
+      homeConfig: { command: action('Home clicked') },
+      testEnvironment: true,
+      ...args
+    },
+    styles: [
+      '::ng-deep body .sto-header { left: 0; width: 100% !important; }'
+    ],
+    template: `
+<sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [homeBreadCrumbConfig]="homeConfig">
+  <div class="sto-header__form">
+    <mat-form-field stoFormField floatLabel="never" style="margin-top: 10px; width: 1000px;">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="Search">
+    </mat-form-field>
+  </div>
+</sto-app-header>
+<mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
+`
+  };
+};
+withForm.argTypes = {
+  testEnvironment: { table: { disable: true } }
 };
