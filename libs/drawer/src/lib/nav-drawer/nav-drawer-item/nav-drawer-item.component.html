@@ -5,21 +5,27 @@
      routerLinkActive="active"
      [href]="navigationItem.link"
      *ngIf="navigationItem.link && !navigationItem.children">
-    <mat-icon>{{ navigationItem.icon }}</mat-icon>
+    <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
+    <mat-icon *ngIf="navigationItem.svgIcon"
+              [svgIcon]="navigationItem.icon"></mat-icon>
   </a>
   <a mat-button
      [title]="navigationItem.label"
      routerLinkActive="active"
      [routerLink]="navigationItem.route"
      *ngIf="navigationItem.route && !navigationItem.children">
-    <mat-icon>{{ navigationItem.icon }}</mat-icon>
+    <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
+    <mat-icon *ngIf="navigationItem.svgIcon"
+              [svgIcon]="navigationItem.icon"></mat-icon>
   </a>
   <button mat-button
           [title]="navigationItem.label"
           *ngIf="navigationItem.children"
           [matMenuTriggerFor]="menu"
           [disabled]="navigationItem.disabled">
-    <mat-icon>{{ navigationItem.icon }}</mat-icon>
+    <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
+    <mat-icon *ngIf="navigationItem.svgIcon"
+              [svgIcon]="navigationItem.icon"></mat-icon>
   </button>
   <mat-menu #menu="matMenu"
             xPosition="after"
@@ -52,7 +58,9 @@
      *ngIf="!collapsed && navigationItem.children"
      [class.disabled]="navigationItem.disabled"
      (click)="toggleExpansionState()">
-  <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
+  <mat-icon *ngIf="navigationItem.svgIcon"
+            [svgIcon]="navigationItem.icon"></mat-icon>
   <a>{{ navigationItem.label }}</a>
   <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
 </div>
@@ -61,7 +69,9 @@
    matRipple
    *ngIf="!collapsed && !navigationItem.children && navigationItem.link"
    [class.disabled]="navigationItem.disabled">
-  <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
+  <mat-icon *ngIf="navigationItem.svgIcon"
+            [svgIcon]="navigationItem.icon"></mat-icon>
   <span>{{ navigationItem.label }}</span>
 </a>
 <a class="sto-nav-drawer--expanded__item"
@@ -70,7 +80,9 @@
    matRipple
    *ngIf="!collapsed && !navigationItem.children && navigationItem.route"
    [class.disabled]="navigationItem.disabled">
-  <mat-icon>{{ navigationItem.icon }}</mat-icon>
+  <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
+  <mat-icon *ngIf="navigationItem.svgIcon"
+            [svgIcon]="navigationItem.icon"></mat-icon>
   <span>{{ navigationItem.label }}</span>
 </a>
 <sto-nav-drawer-list [@bodyExpansion]="expansionState"

@@ -23,6 +23,10 @@ export type Navigation = CommonNavigation & {
    */
   icon: string;
   /**
+   * svgIcon determines if you want to use an svgIcon
+   */
+  svgIcon?: boolean;
+  /**
    * chldren is a list of {@link NavigationChild} used to show collapse / expand icons or build a menu
    */
   children?: Array<NavigationChild>;
