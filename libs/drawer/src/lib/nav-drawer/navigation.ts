@@ -1,3 +1,5 @@
+export type Divider = 'below' | 'above' | null;
+
 type CommonNavigation = {
   /**
    * label is the displayed text to the user
@@ -34,6 +36,10 @@ export type Navigation = CommonNavigation & {
    * title is shown in the expanded mat-menu. If not supplied, no top-level menu-item will be created.
    */
   title?: string;
+  /**
+   * divider
+   */
+  divider?: Divider;
 }
 
 export type NavigationChild = CommonNavigation & {

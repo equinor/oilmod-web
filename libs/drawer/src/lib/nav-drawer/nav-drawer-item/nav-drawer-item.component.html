@@ -55,6 +55,8 @@
   </mat-menu>
 </div>
 <div class="sto-nav-drawer--expanded__item"
+     [class.divider-below]="navigationItem.divider === 'below'"
+     [class.divider-above]="navigationItem.divider === 'above'"
      *ngIf="!collapsed && navigationItem.children"
      [class.disabled]="navigationItem.disabled"
      (click)="toggleExpansionState()">
@@ -65,6 +67,8 @@
   <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
 </div>
 <a class="sto-nav-drawer--expanded__item"
+   [class.divider-below]="navigationItem.divider === 'below'"
+   [class.divider-above]="navigationItem.divider === 'above'"
    [href]="navigationItem.link"
    matRipple
    *ngIf="!collapsed && !navigationItem.children && navigationItem.link"
@@ -75,6 +79,8 @@
   <span>{{ navigationItem.label }}</span>
 </a>
 <a class="sto-nav-drawer--expanded__item"
+   [class.divider-below]="navigationItem.divider === 'below'"
+   [class.divider-above]="navigationItem.divider === 'above'"
    [routerLink]="navigationItem.route"
    routerLinkActive="active"
    matRipple

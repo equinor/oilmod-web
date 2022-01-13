@@ -99,11 +99,12 @@ const navigationItems = [
   },
   {
     label: 'External',
+    divider: 'above',
     children: [
       {
         link: 'https://example.com',
         target: '_blank',
-        label: 'Example.com'
+        label: 'Example.com',
       }
     ],
     icon: 'open_in_new',

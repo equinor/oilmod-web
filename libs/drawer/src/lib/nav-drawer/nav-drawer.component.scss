@@ -90,6 +90,14 @@ $height: 48px;
       display: grid;
       grid-template-columns: 24px 1fr 24px;
       grid-column-gap: 20px;
+
+      &.divider-below {
+        border-bottom: 2px solid var(--divider);
+      }
+
+      &.divider-above {
+        border-top: 2px solid var(--divider);
+      }
     }
   }
 
