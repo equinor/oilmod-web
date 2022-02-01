@@ -11,6 +11,7 @@ import { StoAppHeaderComponent, StoAppHeaderModule, StoThemeModule } from '@ngx-
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { StoFormModule } from '@ngx-stoui/form';
 
 export default {
   title: 'common/Application Header',
@@ -19,7 +20,15 @@ export default {
     moduleMetadata({
       imports: [
         StoAppHeaderModule, CommonModule,
-        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule,
+        RouterTestingModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        StoFormModule,
         StoThemeModule.forRoot() ],
     })
   ],
@@ -113,9 +122,10 @@ export const withForm: Story<StoAppHeaderComponent> = (args: StoAppHeaderCompone
     template: `
 <sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [homeBreadCrumbConfig]="homeConfig">
   <div class="sto-header__form">
-    <mat-form-field stoFormField floatLabel="never" style="margin-top: 10px; width: 1000px;">
+    <mat-form-field stoFormField floatLabel="never" style="width: 600px">
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput placeholder="Search">
+      <mat-label>Search</mat-label>
+      <input matInput>
     </mat-form-field>
   </div>
 </sto-app-header>
