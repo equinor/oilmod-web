@@ -19,6 +19,11 @@ export class Column {
   sortArrowPosition?: 'before' | 'after';
 }
 
+export class Group {
+  props: Array<string>;
+  name?: string;
+}
+
 export class ColumnGroup {
   name: string;
   columnStart: number;

@@ -14,6 +14,7 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
 import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
 import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
 import { ColumnStylePipe } from './column-style.pipe';
+import { GetGroupFlexPipe } from './get-group-flex.pipe';
 
 let comp: StoDatatableComponent<Record<string, unknown>>;
 let fixture: ComponentFixture<StoDatatableComponent<Record<string, unknown>>>;
@@ -66,6 +67,7 @@ describe('StoDatatableComponent', () => {
           , StoDatatableHeaderGroupComponent
           , StoDatatableResizeDirective
           , ColumnStylePipe
+          , GetGroupFlexPipe
         ],
       })
       // .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })

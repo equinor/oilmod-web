@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Column, ColumnDisplay } from '../columns';
+import { Column, ColumnDisplay, Group } from '../columns';
 import { HeaderContextMenu } from '../events';
 import { Sort } from '@angular/material/sort';
 
@@ -38,6 +38,9 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   activeSortId: string | undefined;
   @Input()
   columnMode: ColumnDisplay;
+  @Input()
+  groups: Array<Group>;
+
   ColumnDisplay = ColumnDisplay;
   public tempWidth: string | null;
 

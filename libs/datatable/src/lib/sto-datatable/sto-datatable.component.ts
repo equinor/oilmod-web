@@ -14,7 +14,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Column, ColumnDisplay, ColumnGroup } from './columns';
+import { Column, ColumnDisplay, ColumnGroup, Group } from './columns';
 import { HeaderContextMenu, RowActivation, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { fromEvent, Observable, of, Subject } from 'rxjs';
@@ -132,6 +132,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
     }
   }
+
+  @Input()
+  groups: Array<Group>;
 
   get width() {
     if ( this.scrollbarH && this.columns ) {

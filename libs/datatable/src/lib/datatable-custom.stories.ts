@@ -122,3 +122,29 @@ Actionbar.args = {
   columns: [ ...columns, ...columns, ...columns ],
   autoSizeOffset: 10,
 };
+
+
+export const Grouped: Story<Partial<StoDatatableComponent<Record<string, unknown>>>> = args => ( {
+  props: args,
+  template: `<h3>With column groups</h3>
+<sto-datatable [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+} );
+Grouped.args = {
+  rows,
+  columns: columns,
+  groups: [
+    {
+      props: [ 'invoiceNo',
+        'voyageNo'
+      ], name: 'Invoice & Voyage#'
+    },
+    {
+      props:
+        [ 'vesselName',
+          'allocated',
+        ], name: 'Vessel & Allocated'
+    },
+    { props: [ 'total' ], name: 'Sum' }
+  ],
+  autoSizeOffset: 10,
+};
