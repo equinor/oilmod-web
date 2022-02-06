@@ -16,6 +16,7 @@ import {
   StoDataTableActionsLeftComponent,
   StoDataTableActionsRightComponent
 } from './sto-datatable-actions/sto-datatable-actions.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {
     ScrollingModule,
     MatIconModule,
     MatRippleModule,
+    MatSortModule,
   ],
   declarations: [
     StoDatatableComponent

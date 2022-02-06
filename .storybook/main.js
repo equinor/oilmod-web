@@ -4,7 +4,6 @@ module.exports = {
   addons: [
     "@storybook/addon-docs",
     '@storybook/addon-essentials',
-    "@storybook/addon-storysource",
     "@storybook/addon-links",
     // 'storybook-dark-mode',
   ],

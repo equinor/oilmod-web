@@ -2,7 +2,7 @@
      [class.sto-mdl-table--force-width]="columnMode === ColumnDisplay.Force"
      [style.height.px]="height$ | async">
   <ng-content select="sto-datatable-actions"></ng-content>
-  <sto-datatable-header-group *ngIf="(!responsive || (responsive && !smallScreen)) && columnGroups && this.scrollbarH"
+  <sto-datatable-header-group *ngIf="(!responsive || (responsive && !(smallScreen))) && columnGroups && this.scrollbarH"
                               [width]="width"
                               [height]="headerHeight"
                               [transform]="scrollLeft"
@@ -65,7 +65,7 @@
        [style.overflowX]="'auto'"
        (scroll)="scrollBodyAndHeader($event)"
        [style.width]="'calc(100% - ' + body.verticalScrollOffset + 'px)'"
-       *ngIf="footerRow && (!responsive || (responsive && !smallScreen))">
+       *ngIf="footerRow && (!responsive || (responsive && !(smallScreen)))">
     <div class="sto-mdl-table__footer__row"
          [class.sto-mdl-table__row--scroll-offset]="scrollbarH && !!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight"
          *ngFor="let row of footerRow; let i = index"

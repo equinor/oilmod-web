@@ -51,6 +51,7 @@
     "@swimlane/ngx-datatable": "^20.0.0",
     "date-fns": "^2.22.1",
     "rxjs": "~6.6.0",
+    "storybook-ng-source-addon": "^0.0.18",
     "tslib": "^2.0.0",
     "zone.js": "0.11.4"
   },

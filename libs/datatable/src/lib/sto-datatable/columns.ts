@@ -16,6 +16,7 @@ export class Column {
   sortFn?: SortFunction;
   disableSort?: boolean;
   disableResize?: boolean;
+  sortArrowPosition?: 'before' | 'after';
 }
 
 export class ColumnGroup {
