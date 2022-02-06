@@ -165,7 +165,8 @@ describe('StoDatatableComponent', () => {
     fixture.detectChanges();
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
-    page.header.sortByColumn(comp.columns[ 0 ]);
+    // @ts-ignore
+    page.header.sortColumn({ active: comp.columns[ 0 ].$$id, direction: 'desc' });
     expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
   });
 
@@ -176,7 +177,8 @@ describe('StoDatatableComponent', () => {
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
     expect(comp[ '_rows' ].indexOf(first)).toEqual(0);
-    page.header.sortByColumn(comp.columns[ 0 ]);
+    // @ts-ignore
+    page.header.sortColumn({ active: comp.columns[ 0 ].$$id, direction: 'desc' });
     expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
     expect(comp[ '_rows' ].indexOf(first)).toEqual(0);
   });
@@ -187,7 +189,8 @@ describe('StoDatatableComponent', () => {
     fixture.detectChanges();
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
-    page.header.sortByColumn(comp.columns[ 0 ]);
+    // @ts-ignore
+    page.header.sortColumn({ active: comp.columns[ 0 ].$$id, direction: 'desc' });
     expect(comp.rows.indexOf(first)).toBeGreaterThan(0);
     comp.rows = [ ...rows ];
     expect(comp.rows.indexOf(first)).toEqual(0);
@@ -200,7 +203,8 @@ describe('StoDatatableComponent', () => {
     fixture.detectChanges();
     const first = comp.rows[ 0 ];
     expect(comp.rows.indexOf(first)).toEqual(0);
-    page.header.sortByColumn(comp.columns[ 0 ]);
+    // @ts-ignore
+    page.header.sortColumn({ active: comp.columns[ 0 ].$$id, direction: 'desc' });
     const index = comp.rows.indexOf(first);
     expect(index).toBeGreaterThan(0);
     comp.rows = [ ...rows ];
