@@ -1,7 +1,12 @@
-name: Example workflow for Node using Snyk
+name: Snyk vulnerability scan
 on:
-  - push
-  - workflow_dispatch
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    - workflow_dispatch
 jobs:
   security:
     runs-on: ubuntu-latest

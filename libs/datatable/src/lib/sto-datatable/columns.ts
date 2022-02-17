@@ -22,6 +22,7 @@ export class Column {
 export class Group {
   props: Array<string>;
   name?: string;
+  sticky?: boolean;
 }
 
 export class ColumnGroup {

@@ -24,6 +24,12 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   offset: number;
   @Input()
   scrollLeft: string;
+
+  // Can be used to generate sticky columns at a later stage.
+  get offsetLeft() {
+    return this.scrollLeft.replace('-', '');
+  }
+
   @Input()
   bodyHeight: number | null;
   @Input()

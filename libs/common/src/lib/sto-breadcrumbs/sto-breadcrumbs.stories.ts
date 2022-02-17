@@ -6,10 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  StoBreadcrumbsComponent,
-  StoBreadcrumbsModule,
-} from '@ngx-stoui/common';
+import { StoBreadcrumbsComponent, StoBreadcrumbsModule, } from '@ngx-stoui/common';
 
 export default {
   title: 'common/Breadcrumbs',
@@ -41,9 +38,4 @@ export const Breadcrumbs = Template.bind({});
 Breadcrumbs.args = {
   title: 'Usage',
   model: [ { label: 'Ext Url', url: window.location.href }, { label: 'RouterLink', segment: 'submodule/again' }, { label: 'Neither' }, ],
-};
-Breadcrumbs.argTypes = {
-  homeBreadCrumbConfig: { control: { disable: true } },
-  userMenu: { control: { disable: true } },
-  breadCrumbs: { control: { disable: false } },
 };
