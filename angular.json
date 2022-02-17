@@ -397,7 +397,8 @@
             "port": 4400,
             "config": {
               "configFolder": "apps/oilmod-web/.storybook"
-            }
+            },
+            "projectBuildConfig": "oilmod-web"
           },
           "configurations": {
             "ci": {
@@ -415,7 +416,8 @@
             "outputPath": "dist/storybook/oilmod-web",
             "config": {
               "configFolder": "apps/oilmod-web/.storybook"
-            }
+            },
+            "projectBuildConfig": "oilmod-web"
           },
           "configurations": {
             "ci": {

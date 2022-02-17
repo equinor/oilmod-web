@@ -127,7 +127,9 @@ Actionbar.args = {
 export const Grouped: Story<Partial<StoDatatableComponent<Record<string, unknown>>>> = args => ( {
   props: args,
   template: `<h3>With column groups</h3>
-<sto-datatable [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+<div >
+<sto-datatable [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
+</div>`,
 } );
 Grouped.args = {
   rows,

@@ -11,7 +11,7 @@
        [style.overflow]="'hidden'"
        [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight">
     <div class="sto-mdl-table__header__row__cell sto-mdl-table__header__group__row__cell"
-         [style.flex-basis.px]="group | getGroupFlex:columns"
+         [style.flex]="group | getGroupFlex:columns"
          *ngFor="let group of groups; let i = index;">
       <span class="sto-mdl-table__header__row__cell__content">{{ group.name || '' }}</span>
     </div>

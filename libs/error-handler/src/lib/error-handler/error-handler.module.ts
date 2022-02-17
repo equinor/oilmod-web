@@ -16,8 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
   providers: [
     ErrorHandlerService,
     ErrorDialogService
-  ],
-  entryComponents: [ DialogComponent ],
+  ]
 })
 export class ErrorHandlerModule {
 }

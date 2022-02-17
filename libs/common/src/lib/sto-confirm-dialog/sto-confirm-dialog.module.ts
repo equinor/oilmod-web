@@ -17,9 +17,6 @@ import { ConfirmComponent } from './sto-confirm-dialog.component';
   ],
   providers: [
     ConfirmService
-  ],
-  entryComponents: [
-    ConfirmComponent
   ]
 })
 export class ConfirmModule {

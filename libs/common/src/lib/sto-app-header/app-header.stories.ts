@@ -62,9 +62,9 @@ AppHeader.argTypes = {
 export const AsTestEnvironment: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
   return {
     props: {
+      ...args,
       environmentName: 'Systemtest',
       testEnvironment: true,
-      ...args
     },
     template: `<sto-app-header [breadCrumbs]="[ { label: 'Root' }, { label: 'SubModule' } ]" [environmentName]="environmentName" [testEnvironment]="true"></sto-app-header>`
   };
@@ -77,6 +77,7 @@ AsTestEnvironment.argTypes = {
 export const WithUserMenu: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
   return {
     props: {
+      ...args,
       breadCrumbs: [
         { label: 'Root', command: action('Root clicked'), segment: '' },
         { label: 'SubModule', command: action('SubModule clicked'), segment: 'submodule' },
@@ -85,7 +86,6 @@ export const WithUserMenu: Story<StoAppHeaderComponent> = (args: StoAppHeaderCom
       environmentName: 'Systemtest',
       homeConfig: { command: action('Home clicked') },
       testEnvironment: true,
-      ...args
     },
     styles: [
       '::ng-deep body .sto-header { left: 0; width: 100% !important; }'
@@ -106,6 +106,7 @@ WithUserMenu.argTypes = {
 export const withForm: Story<StoAppHeaderComponent> = (args: StoAppHeaderComponent) => {
   return {
     props: {
+      ...args,
       breadCrumbs: [
         { label: 'Root', command: action('Root clicked'), segment: '' },
         { label: 'SubModule', command: action('SubModule clicked'), segment: 'submodule' },
@@ -114,7 +115,6 @@ export const withForm: Story<StoAppHeaderComponent> = (args: StoAppHeaderCompone
       environmentName: 'Systemtest',
       homeConfig: { command: action('Home clicked') },
       testEnvironment: true,
-      ...args
     },
     styles: [
       '::ng-deep body .sto-header { left: 0; width: 100% !important; }'
