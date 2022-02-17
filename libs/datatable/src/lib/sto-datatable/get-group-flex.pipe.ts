@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Column, Group } from '@ngx-stoui/datatable';
+import { Column, Group } from './columns';
 
 @Pipe({
   name: 'getGroupFlex'
