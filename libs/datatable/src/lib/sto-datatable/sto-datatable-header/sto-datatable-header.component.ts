@@ -35,8 +35,6 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   @Input()
   sortable: boolean;
   @Input()
-  activeSortId: string | undefined;
-  @Input()
   columnMode: ColumnDisplay;
   @Input()
   groups: Array<Group>;
