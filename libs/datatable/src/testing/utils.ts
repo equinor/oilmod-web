@@ -1,11 +1,11 @@
 import { Column } from '../lib/sto-datatable/columns';
 
 export const columns: Column[] = [
-  { prop: 'invoiceNo', name: 'invoiceNo', },
-  { prop: 'voyageNo', name: 'voyageNo', },
-  { prop: 'vesselName', name: 'vesselName', },
-  { prop: 'allocated', name: 'allocated', },
-  { prop: 'total', name: 'total' },
+  { prop: 'invoiceNo', $$id: 'invoiceNo', name: 'invoiceNo', },
+  { prop: 'voyageNo', $$id: 'voyageNo', name: 'voyageNo', },
+  { prop: 'vesselName', $$id: 'vesselName', name: 'vesselName', },
+  { prop: 'allocated', $$id: 'allocated', name: 'allocated', },
+  { prop: 'total', $$id: 'total', name: 'total' },
 ];
 
 export const rows = [

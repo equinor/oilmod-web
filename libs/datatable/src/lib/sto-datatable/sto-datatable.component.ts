@@ -14,14 +14,16 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Column, ColumnDisplay, ColumnGroup } from './columns';
+import { Column, ColumnDisplay, ColumnGroup, Group } from './columns';
 import { HeaderContextMenu, RowActivation, RowContextMenu, RowSelection } from './events';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
-import { fromEvent, Observable, of } from 'rxjs';
-import { debounceTime, map, startWith, tap } from 'rxjs/operators';
+import { fromEvent, Observable, of, Subject } from 'rxjs';
+import { debounceTime, map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { SelectionModes } from './selection-modes';
-import { rowClassFn, SortColumn } from './models';
+import { rowClassFn } from './models';
 import { StoDatatableActionsComponent } from './sto-datatable-actions/sto-datatable-actions.component';
+import { Sort } from '@angular/material/sort';
+import { observeWidth } from './observer';
 
 @Component({
   selector: 'sto-datatable',
@@ -31,7 +33,7 @@ import { StoDatatableActionsComponent } from './sto-datatable-actions/sto-datata
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoDatatableComponent<T extends Record<string, unknown>> implements AfterViewInit, OnDestroy {
-
+  private destroyed$ = new Subject();
   @Input()
   get height() {
     return this._height;
@@ -72,11 +74,11 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     }
 
     if (this.activeSort) {
-      const column = this.columns.find(col => col.$$id === this.activeSort?.id);
-      const sortDir = this.activeSort.sortDir;
-      if (column) {
-          const fn = column.sortFn || this.defaultSortFn;
-          sortedRows = [ ...rows ].sort((a, b) => fn(a, b, column));
+      const column = this.columns.find(col => col.$$id === this.activeSort?.active);
+      const sortDir = this.activeSort.direction;
+      if ( column ) {
+        const fn = column.sortFn || this.defaultSortFn;
+        sortedRows = [ ...rows ].sort((a, b) => fn(a, b, column));
         if ( sortDir === 'desc' ) {
           sortedRows.reverse();
         }
@@ -130,6 +132,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
     }
   }
+
+  @Input()
+  groups: Array<Group>;
 
   get width() {
     if ( this.scrollbarH && this.columns ) {
@@ -223,7 +228,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
 
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
-  public activeSort: SortColumn | null;
+  public activeSort: Sort | null;
 
   constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
   }
@@ -252,30 +257,14 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       console.error('Responsive mode set to true, but no view passed in. Please pass in responsiveView (templateRef)');
       this.responsive = false;
     } else if ( this.responsive ) {
-      new ResizeObserver(entries => {
-        if ( this.resizeTimeout ) {
-          clearTimeout(this.resizeTimeout);
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        this.resizeTimeout = setTimeout(() => {
-          for ( const entry of entries ) {
-            const cr = entry.contentRect;
-            const { width } = cr;
-            const smallScreen = width < this.responsiveBreakPoint;
-            if ( this.smallScreen !== smallScreen ) {
-              this.smallScreen = smallScreen;
-              requestAnimationFrame(() => {
-                try {
-                  this.cdr.markForCheck();
-                  this.cdr.detectChanges();
-                } catch { /** them all */
-                }
-              });
-            }
-          }
-        }, 15);
-      }).observe(this.elRef.nativeElement);
+      observeWidth(this.elRef.nativeElement)
+        .pipe(
+          takeUntil(this.destroyed$)
+        ).subscribe(width => {
+        this.smallScreen = width < this.responsiveBreakPoint;
+        this.cdr.markForCheck();
+        this.cdr.detectChanges();
+      });
     }
   }
 
@@ -283,6 +272,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     if ( this.resizeTimeout ) {
       clearTimeout(this.resizeTimeout);
     }
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   private scrollToIndex(index: number, behaviour: ScrollBehavior) {
@@ -318,29 +309,32 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   }
 
   setHeaderScroll(event: Event) {
-    const left = (event.target as HTMLElement).scrollLeft;
+    const left = ( event.target as HTMLElement ).scrollLeft;
     this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
     this.cdr.detectChanges();
   }
 
   scrollBodyAndHeader(event: Event) {
-    const left = (event.target as HTMLElement).scrollLeft;
+    const left = ( event.target as HTMLElement ).scrollLeft;
     this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
   }
 
-  sort({ column, sortDir }: { column: Column, sortDir: 'asc' | 'desc' | null }) {
-    if ( sortDir === null ) {
+  sort(sort: Sort) {
+    if ( !sort.active || sort.direction === '' ) {
       this._internalRows = [ ...this._rows ];
       this.activeSort = null;
       return;
     }
-    this.activeSort = { id: column.$$id || '', sortDir };
-    const fn = column.sortFn || this.defaultSortFn;
-    const rows = [ ...this._rows ].sort((a, b) => fn(a, b, column));
-    if ( sortDir === 'desc' ) {
-      rows.reverse();
+    this.activeSort = sort;
+    const column = this.columns.find(c => c.$$id === sort.active);
+    if ( !column ) {
+      return;
     }
-    this._internalRows = rows;
+    const fn = column.sortFn || this.defaultSortFn;
+    this._internalRows = [ ...this._rows ].sort((a, b) => {
+      const n = fn(a, b, column);
+      return n * ( sort.direction === 'asc' ? 1 : -1 );
+    });
     this.cdr.detectChanges();
     this.cdr.markForCheck();
   }
@@ -352,14 +346,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const bValue = b[ col.prop ];
-    switch ( typeof aValue ) {
-      case 'string':
-        return aValue.localeCompare(bValue as string);
-      case 'number':
-        return aValue - (bValue as number);
-      default:
-        return 0;
-    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
   }
 
   onResize({ columns, column }: { columns: Column[], column: Column }) {

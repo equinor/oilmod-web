@@ -16,6 +16,12 @@ export class Column {
   sortFn?: SortFunction;
   disableSort?: boolean;
   disableResize?: boolean;
+  sortArrowPosition?: 'before' | 'after';
+}
+
+export class Group {
+  props: Array<string>;
+  name?: string;
 }
 
 export class ColumnGroup {

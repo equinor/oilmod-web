@@ -16,6 +16,8 @@ import {
   StoDataTableActionsLeftComponent,
   StoDataTableActionsRightComponent
 } from './sto-datatable-actions/sto-datatable-actions.component';
+import { MatSortModule } from '@angular/material/sort';
+import { GetGroupFlexPipe } from './get-group-flex.pipe';
 
 @NgModule({
   imports: [
@@ -23,6 +25,7 @@ import {
     ScrollingModule,
     MatIconModule,
     MatRippleModule,
+    MatSortModule,
   ],
   declarations: [
     StoDatatableComponent
@@ -35,9 +38,9 @@ import {
     , ColumnStylePipe
     , StoDataTableActionsLeftComponent
     , StoDataTableActionsRightComponent
-    , StoDatatableActionsComponent,
+    , StoDatatableActionsComponent, GetGroupFlexPipe,
   ],
-  exports: [ StoDatatableComponent, StoDataTableActionsLeftComponent, StoDataTableActionsRightComponent, StoDatatableActionsComponent ],
+  exports: [ StoDatatableComponent, StoDataTableActionsLeftComponent, StoDataTableActionsRightComponent, StoDatatableActionsComponent, GetGroupFlexPipe ],
 })
 export class StoDatatableModule {
 }

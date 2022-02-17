@@ -47,7 +47,8 @@ export const NormalUse: Story<StoDatatableComponent<Record<string, unknown>>> = 
       rowContextMenu: action('Row context menu'),
       rowActivate: action('Keyboard-activation on row'),
       select: action('Row selected'),
-      resized: action('Resize')
+      resized: action('Resize'),
+      trackBy: (index: number) => index
     },
   };
 };

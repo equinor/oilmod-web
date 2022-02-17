@@ -2,7 +2,25 @@
      [style.overflow-y]="'hidden'"
      [style.overflowX]="'hidden'"
      *ngIf="!responsive || (responsive && !smallScreen)">
+  <div class="sto-mdl-table__header__row sto-mdl-table__header__group__row"
+       *ngIf="groups && groups.length > 0"
+       [style.display]="columnMode === ColumnDisplay.Flex ? 'flex' : 'block'"
+       [style.height]="headerHeight + 'px'"
+       [style.min-width]="tempWidth || width"
+       [style.transform]="scrollLeft"
+       [style.overflow]="'hidden'"
+       [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight">
+    <div class="sto-mdl-table__header__row__cell sto-mdl-table__header__group__row__cell"
+         [style.flex-basis.px]="group | getGroupFlex:columns"
+         *ngFor="let group of groups; let i = index;">
+      <span class="sto-mdl-table__header__row__cell__content">{{ group.name || '' }}</span>
+    </div>
+  </div>
+
   <div class="sto-mdl-table__header__row"
+       matSort
+       (matSortChange)="sortColumn($event)"
+       [matSortDisabled]="!sortable"
        (dragover)="$event.preventDefault()"
        [style.display]="columnMode === ColumnDisplay.Flex ? 'flex' : 'block'"
        [style.height]="headerHeight + 'px'"
@@ -11,17 +29,14 @@
        [style.overflow]="'hidden'"
        [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight">
     <div class="sto-mdl-table__header__row__cell"
-         (click)="sortByColumn(column)"
+         [mat-sort-header]="column.$$id"
+         [arrowPosition]="column.sortArrowPosition || 'after'"
+         [disabled]="column.disableSort"
          (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
          [class.sto-mdl-table__header__row__cell--sortable]="sortable && !column.disableSort"
          [ngClass]="column.headerClass | exec:column"
          [ngStyle]="column | columnStyle:columnMode:(resize.width$ | async)"
          *ngFor="let column of columns; let i = index; trackBy: trackColumnsFn">
-      <mat-icon [@sort]="activeSortId === column.$$id ? 'open' : 'close'"
-                [title]="sortDirection === 'desc' ? 'DESC' : 'ASC'"
-                *ngIf="activeSortId === column.$$id">
-        {{ activeSortId === column.$$id && sortDirection === 'desc' ? 'arrow_downward' : 'arrow_upward' }}
-      </mat-icon>
       <span *ngIf="!column.headerTemplate"
             class="sto-mdl-table__header__row__cell__content"
             [title]="column.name">{{ column.name || '' }}</span>
