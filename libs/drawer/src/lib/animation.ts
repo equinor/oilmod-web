@@ -8,13 +8,13 @@ export const drawerOpenAnimation = trigger('drawerAnimations', [
   state('closedImmediate-right', style({ transform: 'translateX(100%)', opacity: 0 })),
   state('closed-left', style({ transform: 'translateX(-100%)', opacity: 0 })),
   state('closed-right', style({ transform: 'translateX(100%)', opacity: 0 })),
-  transition('* => closed-left', [
+  transition('open-left => closed-left', [
     group([
       animate('400ms ease-in-out', style({ transform: 'translateX(-100%)' })),
       animate('1ms 400ms ease', style({ opacity: 0 }))
     ])
   ]),
-  transition('* => closed-right', [
+  transition('open-right => closed-right', [
     group([
       animate('400ms ease-in-out', style({ transform: 'translateX(100%)' })),
       animate('1ms 400ms ease', style({ opacity: 0 }))
