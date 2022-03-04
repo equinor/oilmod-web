@@ -1,33 +1,53 @@
 @use '@angular/material' as mat;
 
 
-
 $header-height: 74px;
 $large-header-height: 24 * 4px;
 $footer-height: 16 * 4px;
 $header-size: 20px;
-.large-header {
-  .sto-drawer__content {
-    height: calc(100% - calc(#{$large-header-height} + #{$footer-height}));
-  }
-
-  .sto-drawer__header {
-    line-height: 30px;
-    height: $large-header-height;
-  }
-}
-
 
 
 .sto-drawer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+
+  .sto-drawer__header__wrapper {
+    flex: 1 1 $header-height;
+    box-shadow: none;
+  }
+
+  .sto-drawer__content {
+    flex: 1 1 auto;
+    padding-bottom: 0;
+  }
+
+  .drawer-footer {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 8px;
+  }
+
+  &__content {
+    padding-top: 0;
+  }
+
+  padding-top: 0;
+
+  &__footer {
+    flex: 1 1 $footer-height;
+  }
+
   transition: right 400ms ease-in-out;
-  @include mat.elevation(16);
+  @include mat.elevation(3);
   position: fixed;
   top: 0;
-  bottom: 0;
   width: 20%;
   min-width: 260px;
-  padding-top: $header-height;
 
   &.right {
     min-width: 450px;
@@ -56,8 +76,7 @@ $header-size: 20px;
   }
 
   &__footer {
-    @include mat.elevation(4);
-    position: absolute;
+    @include mat.elevation(1);
     bottom: 0;
     left: 0;
     padding: 2 * 4px;
@@ -78,6 +97,7 @@ $header-size: 20px;
     display: flex;
     align-items: center;
     width: 100%;
+    padding-top: 16px;
 
     .sto-main-icon {
       height: 40px;
@@ -85,7 +105,7 @@ $header-size: 20px;
       margin: 6px 0 0 16px;
     }
 
-    &__title, h1, h2, h3, h4 {
+    &__title {
       margin: 0;
       padding-left: 16px;
     }
@@ -113,8 +133,6 @@ $header-size: 20px;
 
     &__wrapper {
       @include mat.elevation(4);
-      position: absolute;
-      top: 0;
       z-index: 1;
       padding: 0;
       display: flex;
@@ -153,3 +171,55 @@ $header-size: 20px;
 }
 
 @import "sto-drawer-tabs.component";
+
+// Theme
+
+.sto-drawer__overlay {
+  background: var(--bg-overlay);
+}
+
+.sto-drawer {
+  background-color: var(--bg-card);
+
+  &__footer {
+    border-top: 1px solid var(--divider);
+    background-color: var(--bg-card);
+    color: var(--text);
+  }
+
+  &__content {
+    background-color: var(--bg-card);
+    color: var(--text);
+  }
+
+  &__header {
+    &__wrapper {
+      background-color: var(--bg-card);
+      color: var(--text);
+    }
+  }
+
+  // @deprecated TODO remove in angular 14
+  .sto-slide-panel {
+    color: var(--text);
+    background-color: var(--bg-card);
+
+    .mat-list.sto-navigation {
+      .mat-list-item {
+        color: var(--text);
+
+        .mat-icon {
+          color: var(--text);
+        }
+
+        .sto-navigation__item__text {
+          color: var(--text);
+
+          a {
+            color: var(--primary-resting);
+          }
+        }
+      }
+    }
+  }
+}

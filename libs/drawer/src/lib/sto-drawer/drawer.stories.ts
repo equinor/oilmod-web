@@ -31,7 +31,7 @@ const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
     props: args,
     template: `
   <div>
-  <sto-drawer [position]="position" [open]="open" [animation]="animation" [backdrop]="backdrop">
+  <sto-drawer [position]="'right'" [open]="true" [animation]="animation" [backdrop]="backdrop">
 <sto-drawer-header>
 <div class="sto-drawer__header__title">
 <h2>Title</h2>
@@ -47,7 +47,7 @@ const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
 
 
 <mat-card class="sto-card sto-form">
-<mat-card-title class="sto-card__title">Content title</mat-card-title>
+<button mat-raised-button>Open</button>
 </mat-card>
 <mat-card class="sto-card sto-form">
 <mat-card-title class="sto-card__title">Content title</mat-card-title>

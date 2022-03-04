@@ -18,6 +18,7 @@ import {
 import { Key } from '@ngx-stoui/core';
 import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 import { drawerAnimations } from '../animation';
+import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
 
 /**
  * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
@@ -137,6 +138,8 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   @ViewChild('header') headerRef: ElementRef;
   @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
   footer: ElementRef<HTMLElement>;
+  @ContentChild(StoDrawerHeaderComponent, { read: ElementRef })
+  headerChild: ElementRef<HTMLElement>;
 
   constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
   }
