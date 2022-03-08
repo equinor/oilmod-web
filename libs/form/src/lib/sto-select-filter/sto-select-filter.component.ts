@@ -19,6 +19,7 @@ import { MatSelect } from '@angular/material/select';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
+ * @deprecated will be removed in v14 or v15, use {@link StoOptionSelectAllComponent}
  *
  * @example
  *

@@ -15,3 +15,4 @@ export * from './lib/number-input/number-unit-input/number-unit-input.component'
 export * from './lib/number-input/number-input/number-input.component';
 export * from './lib/slide-toggle/slide-toggle.module';
 export * from './lib/slide-toggle/slide-toggle.component';
+export * from './lib/sto-option-select-all/sto-option-select-all.component';

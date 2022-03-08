@@ -7,6 +7,7 @@
   [@drawerAnimations]="slideInOut"
   class="sto-drawer">
   <div class="sto-drawer__header__wrapper"
+       [style.display]="headerChild ? 'inherit' : 'none'"
        #header>
     <ng-content select="sto-drawer-header">
     </ng-content>
