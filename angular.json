@@ -25,9 +25,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/common"
-          ],
+          "outputs": ["coverage/libs/common"],
           "options": {
             "jestConfig": "libs/common/jest.config.js",
             "passWithNoTests": true
@@ -41,9 +39,7 @@
               "libs/common/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
@@ -96,9 +92,7 @@
               "libs/core/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         },
         "post-build": {
           "builder": "@nrwl/workspace:run-commands",
@@ -151,9 +145,7 @@
               "libs/datatable/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
@@ -196,9 +188,7 @@
               "libs/drawer/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
@@ -241,9 +231,7 @@
               "libs/error-handler/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
@@ -286,9 +274,7 @@
               "libs/form/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
@@ -312,9 +298,7 @@
               "apps/oilmod-web/src/favicon.ico",
               "apps/oilmod-web/src/assets"
             ],
-            "styles": [
-              "apps/oilmod-web/src/styles.scss"
-            ],
+            "styles": ["apps/oilmod-web/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -376,15 +360,11 @@
               "apps/oilmod-web/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/oilmod-web"
-          ],
+          "outputs": ["coverage/apps/oilmod-web"],
           "options": {
             "jestConfig": "apps/oilmod-web/jest.config.js",
             "passWithNoTests": true
@@ -408,9 +388,7 @@
         },
         "build-storybook": {
           "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "uiFramework": "@storybook/angular",
             "outputPath": "dist/storybook/oilmod-web",
@@ -492,19 +470,13 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/oilmod-web-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/oilmod-web-e2e/**/*.{js,ts}"]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "oilmod-web"
-      ]
+      "implicitDependencies": ["oilmod-web"]
     },
     "testing": {
       "projectType": "library",
@@ -543,9 +515,7 @@
               "libs/testing/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
