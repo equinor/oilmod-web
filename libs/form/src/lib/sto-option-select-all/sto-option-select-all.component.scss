@@ -1,0 +1,13 @@
+.mat-option {
+  border-bottom: 1px solid var(--divider);
+  height: 3.5em;
+  line-height: 3.5em;
+}
+
+:host {
+  position: sticky;
+  top: 0;
+  display: block;
+  z-index: 30;
+  background-color: var(--bg-card);
+}
