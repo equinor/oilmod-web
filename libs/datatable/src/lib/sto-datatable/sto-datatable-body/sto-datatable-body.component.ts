@@ -5,8 +5,6 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  KeyValueDiffer,
-  KeyValueDiffers,
   OnDestroy,
   Output,
   TemplateRef,
@@ -97,15 +95,10 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   scroller: ElementRef<HTMLDivElement>;
 
   private destroyed$ = new Subject<boolean>();
-  private rowDiffer: KeyValueDiffer<T, T>;
   private timeout: number | undefined;
   private resizeObserver: ResizeObserver;
   public horizontalScrollActive: boolean;
   public verticalScrollOffset = 0;
-
-  constructor(private differs: KeyValueDiffers) {
-    this.rowDiffer = differs.find({}).create();
-  }
 
   @HostListener('window:resize', [ '$event' ])
   onresize() {
@@ -126,14 +119,14 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   trackBy = (index: number, item: T) => {
     return index;
-  }
+  };
   _rowClass = (row: T) => {
     let userDefinedClass = '';
     if ( this.rowClass ) {
       userDefinedClass = this.rowClass.bind(this)(row);
     }
     return `${userDefinedClass} sto-mdl-table__body__row`;
-  }
+  };
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

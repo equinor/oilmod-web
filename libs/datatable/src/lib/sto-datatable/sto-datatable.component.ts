@@ -8,6 +8,7 @@ import {
   EventEmitter,
   HostBinding,
   Input,
+  NgZone,
   OnDestroy,
   Output,
   TemplateRef,
@@ -34,6 +35,7 @@ import { observeWidth } from './observer';
 })
 export class StoDatatableComponent<T extends Record<string, unknown>> implements AfterViewInit, OnDestroy {
   private destroyed$ = new Subject();
+
   @Input()
   get height() {
     return this._height;
@@ -68,12 +70,12 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
-    let sortedRows = [...(rows || [])];
-    if (!this.preserveSort) {
+    let sortedRows = [ ...( rows || [] ) ];
+    if ( !this.preserveSort ) {
       this.activeSort = null;
     }
 
-    if (this.activeSort) {
+    if ( this.activeSort ) {
       const column = this.columns.find(col => col.$$id === this.activeSort?.active);
       const sortDir = this.activeSort.direction;
       if ( column ) {
@@ -86,7 +88,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     }
 
     this.rowTotalHeight = ( rows || [] ).length * this.rowHeight;
-    this._internalRows = [...( sortedRows || [] )];
+    this._internalRows = [ ...( sortedRows || [] ) ];
   }
 
   get rows() {
@@ -196,7 +198,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   responsiveView: TemplateRef<unknown>;
   @Input()
   responsiveBreakPoint = 400;
-  public smallScreen: boolean;
+  public smallScreen = false;
 
   @Input()
   rowClass: rowClassFn;
@@ -230,7 +232,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   public scrollNum: number;
   public activeSort: Sort | null;
 
-  constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
+  constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef, private zone: NgZone) {
   }
 
 
@@ -261,9 +263,10 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
         .pipe(
           takeUntil(this.destroyed$)
         ).subscribe(width => {
-        this.smallScreen = width < this.responsiveBreakPoint;
-        this.cdr.markForCheck();
-        this.cdr.detectChanges();
+        this.zone.run(() => {
+          this.smallScreen = width < this.responsiveBreakPoint;
+          this.cdr.markForCheck();
+        });
       });
     }
   }
@@ -275,6 +278,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+
 
   private scrollToIndex(index: number, behaviour: ScrollBehavior) {
     if ( this.body.vScroller ) {

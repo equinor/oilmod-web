@@ -3,7 +3,6 @@ import { moduleMetadata } from '@storybook/angular';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { StoFormModule, StoOptionSelectAllComponent, StoOptionSelectAllComponentModule } from '@ngx-stoui/form';
@@ -38,13 +37,13 @@ const items = [
 
 export const SelectAllMulti: Story<any> = (args) => ( {
   props: {
-    selected: [1, 2],
+    selected: [ 1, 2 ],
     isFilter: true,
     focusIfNoValue: false,
     items,
     total: items.length,
-    valueChange: event => console.log(event),
-    ctrl: new FormControl([1, 2])
+    valueChange: (event: any) => console.log(event),
+    ctrl: new FormControl([ 1, 2 ])
   }, template: `
 <mat-card style="width: 300px" class="sto-form" >
   <mat-form-field stoFormField

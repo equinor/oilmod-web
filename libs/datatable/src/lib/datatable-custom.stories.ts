@@ -8,6 +8,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StoDatatableComponent, StoDatatableModule } from '@ngx-stoui/datatable';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export default {
   title: 'Datatable/StoDatatable/Specific usecases',
@@ -15,7 +16,7 @@ export default {
     moduleMetadata({
       imports: [
         StoDatatableModule,
-        MatButtonModule, BrowserAnimationsModule, MatPaginatorModule, MatCardModule, MatIconModule
+        MatButtonModule, BrowserAnimationsModule, MatPaginatorModule, MatCardModule, MatIconModule, MatTooltipModule
       ],
     })
   ],
@@ -29,9 +30,14 @@ export default {
 
 export const ResponsiveMode: Story = (args) => ( {
   props: args,
+  styles: [
+    `.container {
+      transition: width 300ms linear;
+    }`
+  ],
   template: `
 <h3>Responsive mode will make the grid break into a list, allowing for a simpler view</h3>
-<div [style.width.px]="emulateSmallElement ? breakpoint - 1 : 1000">
+<div class="container" [style.width.px]="emulateSmallElement ? breakpoint - 1 : 1000">
 <sto-datatable [virtualScroll]="true"
 [responsiveBreakPoint]="breakpoint"
 [responsive]="true"
@@ -39,7 +45,7 @@ export const ResponsiveMode: Story = (args) => ( {
 [height]="400"
 [rows]="rows"
 [columns]="columns"></sto-datatable>
-<ng-template #responsive let-row="row">{{ row | json }}</ng-template>
+<ng-template #responsive let-row="row"><span [matTooltip]="row | json">{{ row | json }}</span></ng-template>
 </div>`
 } );
 ResponsiveMode.args = {
