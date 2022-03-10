@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { format as formatDate } from 'date-fns';
+import { format as formatDate, parseISO } from 'date-fns';
 
 /**
  * Pipe used to transform dates, based on our default formats.
@@ -21,7 +21,7 @@ export class DateFormatPipe implements PipeTransform {
       return null;
     }
     if (typeof value === 'string') {
-      value = new Date(value);
+      value = parseISO(value);
     }
     switch (format) {
       case 'long':
