@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { format as formatDate, parseISO } from 'date-fns';
+import { format as formatDate, isValid, parseISO } from 'date-fns';
 
 /**
  * Pipe used to transform dates, based on our default formats.
@@ -21,7 +21,13 @@ export class DateFormatPipe implements PipeTransform {
       return null;
     }
     if (typeof value === 'string') {
+      const originalValue = value;
       value = parseISO(value);
+      if ( !isValid(value) ) {
+        // If invalid ISO date (e.g single-digit day), fall back to new Date()
+        console.warn(`${originalValue} is not a valid ISO date string, falling back to native date`);
+        value = new Date(originalValue);
+      }
     }
     switch (format) {
       case 'long':
