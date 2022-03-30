@@ -3,11 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   Self,
   ViewChild,
   ViewEncapsulation
@@ -19,6 +21,11 @@ import { Subject, Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ThemePalette } from '@angular/material/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+
+export class StoSlideToggleChange {
+  source: SlideToggleComponent;
+  checked: boolean;
+}
 
 @Component({
   selector: 'sto-slide-toggle',
@@ -44,6 +51,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   describedBy = '';
   @ViewChild(MatSlideToggle)
   slideToggle: MatSlideToggle;
+  @Output()
+  toggled = new EventEmitter<StoSlideToggleChange>();
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
@@ -133,6 +142,9 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     this.stateChanges.next();
   }
 
+  @Input()
+  model: unknown;
+
   constructor(@Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
               private elRef: ElementRef<HTMLElement>) {
@@ -148,6 +160,10 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   ngOnInit(): void {
     const sub = this.ctrl.valueChanges
       .subscribe((value: boolean) => {
+        const event = new StoSlideToggleChange();
+        event.checked = value;
+        event.source = this;
+        this.toggled.emit(event);
         this.onChange(value);
       });
     this.sub.add(sub);

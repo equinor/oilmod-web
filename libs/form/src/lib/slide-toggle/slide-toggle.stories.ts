@@ -24,13 +24,17 @@ const Template: Story<SlideToggleComponent> = (args) => {
       ...args,
       ctrl: new FormControl(true),
       valueChange: action('Value changed'),
+      toggled: (event: unknown) => {
+        console.log(event);
+        action('Toggled event');
+      }
     },
     template: `
 <mat-card style="width: 300px" class="sto-form">
   <button (click)="ctrl.disabled ? ctrl.enable() : ctrl.disable()">Toggle disabled</button><br>
 <mat-form-field stoFormField floatLabel="always">
     <mat-label>Slide toggle</mat-label>
-    <sto-slide-toggle [color]="color" [readonly]="readonly" [formControl]="ctrl" (ngModelChange)="valueChange($event)"></sto-slide-toggle>
+    <sto-slide-toggle (toggled)="toggled($event)" [color]="color" [readonly]="readonly" [formControl]="ctrl" (ngModelChange)="valueChange($event)"></sto-slide-toggle>
 </mat-form-field>
 </mat-card>`
   };
