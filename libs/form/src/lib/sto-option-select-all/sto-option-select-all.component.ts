@@ -1,11 +1,16 @@
 import {
-  Component,
-  OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
-  NgModule, AfterViewInit, OnDestroy, Host, ChangeDetectorRef, ElementRef, Optional,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Host,
+  NgModule,
+  OnDestroy,
+  Optional,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPseudoCheckboxModule, MatPseudoCheckboxState } from '@angular/material/core';
+import { MatPseudoCheckboxState } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -14,31 +19,39 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 @Component({
   selector: 'sto-option-select-all',
   templateUrl: './sto-option-select-all.component.html',
-  styleUrls: ['./sto-option-select-all.component.scss'],
+  styleUrls: [ './sto-option-select-all.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, OnDestroy {
   state: MatPseudoCheckboxState = 'checked';
 
   private options: Array<unknown> = [];
-  private value = [];
+  private _value: Array<T> = [];
+  set value(value: Array<T>) {
+    this._value = value ?? [];
+  }
+
+  get value() {
+    return this._value;
+  }
 
   private destroyed = new Subject();
 
   constructor(
     @Host() @Optional() private matSelect: MatSelect,
     private cdr: ChangeDetectorRef,
-    private el: ElementRef<HTMLElement>) { }
+    private el: ElementRef<HTMLElement>) {
+  }
 
   ngAfterViewInit() {
-    if (!this.matSelect) {
+    if ( !this.matSelect ) {
       this.el.nativeElement.style.display = 'none';
       return;
     }
     this.options = this.matSelect.options?.map(x => x.value) ?? [];
     this.matSelect.options?.changes
       .pipe(takeUntil(this.destroyed))
-      .subscribe(res => {
+      .subscribe(() => {
         this.options = this.matSelect.options.map(x => x.value);
         this.updateState();
       });
