@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { Column, ColumnDisplay, Group } from '../columns';
 import { HeaderContextMenu } from '../events';
 import { Sort } from '@angular/material/sort';
+import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sto-datatable-header',
@@ -65,7 +66,40 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
     return item.$$id;
   }
 
-  public onResize(column: Column, flexBasis: number): void {
+  onResize(event: CdkDragMove<Column>) {
+    const el = event.source.element.nativeElement;
+    const cell = el.parentElement as HTMLDivElement;
+    const distance = event.distance.x;
+    const def = event.source.data;
+    let flexBasis = ( def.flexBasis ?? 80 ) + distance;
+    flexBasis = flexBasis < 80 ? 80 : flexBasis;
+    cell.style.flexBasis = `${flexBasis}px`;
+  }
+
+  onResizeComplete(event: CdkDragEnd<Column>) {
+    const distance = event.distance.x;
+    const col = event.source.data;
+    const cell = event.source.element.nativeElement.parentElement as HTMLDivElement;
+    let flexBasis = ( col.flexBasis ?? 80 ) + distance;
+    if ( col.flexGrow || col.flexBasis ) {
+      flexBasis = cell.clientWidth;
+    }
+    flexBasis = flexBasis < 80 ? 80 : flexBasis;
+    const columns = this.columns
+      .map(c => {
+        if ( c.prop === col.prop ) {
+          return {
+            ...c,
+            flexBasis, flexGrow: 0, flexShrink: 0
+          };
+        }
+        return c;
+      });
+    const column = { ...col, flexBasis, flexGrow: 0, flexShrink: 0 };
+    this.resized.emit({ columns, column });
+  }
+
+  public _onResize(column: Column, flexBasis: number): void {
     const width = 0;
     const colIndex = this.columns.indexOf(column);
     this.headerWidthMap[ colIndex ] = flexBasis;

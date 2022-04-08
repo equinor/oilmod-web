@@ -18,6 +18,7 @@ import {
 } from './sto-datatable-actions/sto-datatable-actions.component';
 import { MatSortModule } from '@angular/material/sort';
 import { GetGroupFlexPipe } from './get-group-flex.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { GetGroupFlexPipe } from './get-group-flex.pipe';
     MatIconModule,
     MatRippleModule,
     MatSortModule,
+    DragDropModule,
   ],
   declarations: [
     StoDatatableComponent

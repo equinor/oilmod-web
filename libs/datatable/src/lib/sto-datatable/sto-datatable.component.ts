@@ -71,11 +71,11 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   set rows(rows: T[]) {
     this._rows = rows;
     let sortedRows = [ ...( rows || [] ) ];
-    if ( !this.preserveSort ) {
+    if ( !this.preserveSort && !this.externalSort ) {
       this.activeSort = null;
     }
 
-    if ( this.activeSort ) {
+    if ( this.activeSort && !this.externalSort ) {
       const column = this.columns.find(col => col.$$id === this.activeSort?.active);
       const sortDir = this.activeSort.direction;
       if ( column ) {
@@ -129,7 +129,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       this._columns = columns
         .map((column, index) => ( {
           ...column,
-          $$id: btoa(`${column.prop}${column.name}${index}`)
+          $$id: btoa(`${column.prop}${column.name}${index}`),
+          flexShrink: this.resizeable ? 0 : column.flexShrink,
+          flexGrow: this.resizeable ? 0 : column.flexGrow,
         } ));
       this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
     }
@@ -198,6 +200,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   responsiveView: TemplateRef<unknown>;
   @Input()
   responsiveBreakPoint = 400;
+  @Input()
+  externalSort: boolean;
   public smallScreen = false;
 
   @Input()
@@ -222,8 +226,22 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
   @Output()
   rowActivate = new EventEmitter<RowActivation<T>>();
+  @Output()
+  sortChanged = new EventEmitter<{ sort: Sort, column: Column }>();
+
   @Input()
-  resizeable: boolean;
+  get resizeable(): boolean {
+    return this._resizeable;
+  };
+
+  set resizeable(resizeable: boolean) {
+    this._resizeable = resizeable;
+    if ( resizeable && this._columns ) {
+      this.columns = this._columns;
+    }
+  }
+
+  private _resizeable: boolean;
 
   private resizeTimeout: number | undefined;
   public columnTotalWidth: number;
@@ -334,6 +352,10 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     if ( !column ) {
       return;
     }
+    if ( this.externalSort ) {
+      this.sortChanged.emit({ sort, column });
+      return;
+    }
     const fn = column.sortFn || this.defaultSortFn;
     this._internalRows = [ ...this._rows ].sort((a, b) => {
       const n = fn(a, b, column);
@@ -363,6 +385,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
         c.flexShrink = 0;
         return c;
       });
+
     this.resized.emit(column);
   }
 }
