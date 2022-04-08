@@ -27,12 +27,12 @@
   height: 32px;
   margin-right: -6px;
   border-left: 6px solid transparent;
-  border-right: 2px solid transparent;
+  border-right: 4px solid transparent;
   cursor: move;
   transform: none !important;
 
   &__drag {
-    width: 4px;
+    width: 2px;
     height: 32px;
     background-color: var(--divider);
   }
