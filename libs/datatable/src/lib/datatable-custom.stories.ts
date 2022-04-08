@@ -68,7 +68,7 @@ export const Paging: Story = (args) => ( {
   template: `
 <h3>Paging is done by using <a href="https://material.angular.io/components/paginator/overview" target="_blank">mat-paginator</a></h3>
 <mat-card class="sto-card" (resize)="resize()">
-<sto-datatable [virtualScroll]="false" [height]="height" [rows]="visibleRows" [columns]="columns">
+<sto-datatable [sortable]="true" [resizeable]="true" [scrollbarH]="true" [virtualScroll]="false" [height]="height" [rows]="visibleRows" [columns]="columns">
     <mat-paginator (page)="setPage($event, this); page($event)" [showFirstLastButtons]="true" [length]="rows.length" [hidePageSize]="true" [pageSize]="30" [pageIndex]="activePage"></mat-paginator>
 </sto-datatable>
 </mat-card>`

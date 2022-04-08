@@ -129,7 +129,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       this._columns = columns
         .map((column, index) => ( {
           ...column,
-          $$id: btoa(`${column.prop}${column.name}${index}`)
+          $$id: btoa(`${column.prop}${column.name}${index}`),
+          flexShrink: this.resizeable ? 0 : column.flexShrink,
+          flexGrow: this.resizeable ? 0 : column.flexGrow,
         } ));
       this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
     }
@@ -222,8 +224,20 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
   @Output()
   rowActivate = new EventEmitter<RowActivation<T>>();
+
   @Input()
-  resizeable: boolean;
+  get resizeable(): boolean {
+    return this._resizeable;
+  };
+
+  set resizeable(resizeable: boolean) {
+    this._resizeable = resizeable;
+    if ( resizeable && this._columns ) {
+      this.columns = this._columns;
+    }
+  }
+
+  private _resizeable: boolean;
 
   private resizeTimeout: number | undefined;
   public columnTotalWidth: number;
@@ -356,6 +370,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   }
 
   onResize({ columns, column }: { columns: Column[], column: Column }) {
+    console.log('Resize');
     this.columns = [ ...columns ]
       .map(c => {
         // Disallow grow/shrink if resizing
@@ -363,6 +378,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
         c.flexShrink = 0;
         return c;
       });
+
     this.resized.emit(column);
   }
 }

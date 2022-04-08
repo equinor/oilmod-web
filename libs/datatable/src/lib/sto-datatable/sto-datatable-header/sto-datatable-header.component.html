@@ -29,32 +29,40 @@
        [style.overflow]="'hidden'"
        [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight">
     <div class="sto-mdl-table__header__row__cell"
-         [mat-sort-header]="column.$$id"
-         [arrowPosition]="column.sortArrowPosition || 'after'"
-         [disabled]="column.disableSort"
+         (click)="sortHeader._handleClick()"
          (contextmenu)="headerContextMenu.emit({event: $event, column: column})"
          [class.sto-mdl-table__header__row__cell--sortable]="sortable && !column.disableSort"
          [ngClass]="column.headerClass | exec:column"
-         [ngStyle]="column | columnStyle:columnMode:(resize.width$ | async)"
+         [ngStyle]="column | columnStyle:columnMode"
          *ngFor="let column of columns; let i = index; trackBy: trackColumnsFn">
-      <span *ngIf="!column.headerTemplate"
-            class="sto-mdl-table__header__row__cell__content"
-            [title]="column.name">{{ column.name || '' }}</span>
-      <ng-template #headerTemplate
-                   *ngIf="column.headerTemplate"
-                   [ngTemplateOutlet]="column.headerTemplate"
-                   [ngTemplateOutletContext]="{column: column}">
-      </ng-template>
-      <span [style.height.px]="headerHeight - 4"
-            (click)="$event.stopPropagation();"
-            stoDatatableResize
-            #resize="stoDatatableResize"
-            [column]="column"
-            [style.display]="resizeable && !column.disableResize ? 'inherit' : 'none'"
-            (resizeEnd)="onResizeEnd(column, $event)"
-            (resize)="onResize(column, $event)">
-        <span style="width: 1px; height: 100%; margin: auto"></span>
-      </span>
+      <div [mat-sort-header]="column.$$id"
+           class="sto-mdl-table__header__row__cell__label"
+           (click)="$event.stopPropagation()"
+           #sortHeader
+           [arrowPosition]="column.sortArrowPosition || 'after'"
+           [disabled]="column.disableSort">
+        <span *ngIf="!column.headerTemplate"
+              class="sto-mdl-table__header__row__cell__content"
+              [title]="column.name">{{ column.name || '' }}</span>
+        <ng-template #headerTemplate
+                     *ngIf="column.headerTemplate"
+                     [ngTemplateOutlet]="column.headerTemplate"
+                     [ngTemplateOutletContext]="{column: column}">
+        </ng-template>
+      </div>
+      <span class="spacer"></span>
+      <div [style.height.px]="headerHeight"
+           *ngIf="resizeable && !column.disableResize"
+           class="col-resizer"
+           (click)="$event.stopPropagation();"
+           [cdkDragData]="column"
+           (cdkDragMoved)="onResize($event)"
+           (cdkDragEnded)="onResizeComplete($event)"
+           cdkDragLockAxis="x"
+           cdkDrag>
+        <div class="col-resizer__drag"
+             [style.height.px]="headerHeight"></div>
+      </div>
     </div>
   </div>
 </div>

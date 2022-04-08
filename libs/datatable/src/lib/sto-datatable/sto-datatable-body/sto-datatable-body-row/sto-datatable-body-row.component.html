@@ -8,9 +8,8 @@
   <div class="sto-mdl-table__body__row__cell"
        [ngClass]="column.cellClass | exec:row[column.prop]:column:row"
        [ngStyle]="column | columnStyle:columnMode"
-
        (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: rowIndex})"
-       *ngFor="let column of columns;">
+       *ngFor="let column of columns; trackBy: trackColumn">
     <span *ngIf="!column.cellTemplate"
           [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
     <ng-template #cellTemplate

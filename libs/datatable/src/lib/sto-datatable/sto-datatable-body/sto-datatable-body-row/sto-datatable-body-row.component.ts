@@ -71,6 +71,9 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>> imp
   }
 
   private rowDiffer: KeyValueDiffer<unknown, unknown>;
+  public trackColumn = (index: number, column: Column) => {
+    return column.$$id ?? column.prop;
+  };
 
   constructor(private differs: KeyValueDiffers, private cdr: ChangeDetectorRef, private elRef: ElementRef) {
     this.rowDiffer = differs.find({}).create();
