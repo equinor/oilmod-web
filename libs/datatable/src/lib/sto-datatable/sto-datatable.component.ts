@@ -71,11 +71,11 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   set rows(rows: T[]) {
     this._rows = rows;
     let sortedRows = [ ...( rows || [] ) ];
-    if ( !this.preserveSort ) {
+    if ( !this.preserveSort && !this.externalSort ) {
       this.activeSort = null;
     }
 
-    if ( this.activeSort ) {
+    if ( this.activeSort && !this.externalSort ) {
       const column = this.columns.find(col => col.$$id === this.activeSort?.active);
       const sortDir = this.activeSort.direction;
       if ( column ) {
@@ -200,6 +200,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   responsiveView: TemplateRef<unknown>;
   @Input()
   responsiveBreakPoint = 400;
+  @Input()
+  externalSort: boolean;
   public smallScreen = false;
 
   @Input()
@@ -224,6 +226,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
   @Output()
   rowActivate = new EventEmitter<RowActivation<T>>();
+  @Output()
+  sortChanged = new EventEmitter<{ sort: Sort, column: Column }>();
 
   @Input()
   get resizeable(): boolean {
@@ -348,6 +352,10 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     if ( !column ) {
       return;
     }
+    if ( this.externalSort ) {
+      this.sortChanged.emit({ sort, column });
+      return;
+    }
     const fn = column.sortFn || this.defaultSortFn;
     this._internalRows = [ ...this._rows ].sort((a, b) => {
       const n = fn(a, b, column);
@@ -370,7 +378,6 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   }
 
   onResize({ columns, column }: { columns: Column[], column: Column }) {
-    console.log('Resize');
     this.columns = [ ...columns ]
       .map(c => {
         // Disallow grow/shrink if resizing
