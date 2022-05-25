@@ -1,13 +1,13 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormFieldDirective, StoFormModule } from '@ngx-stoui/form';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export default {
   title: 'form/Form field directive',
@@ -17,7 +17,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [ MatFormFieldModule, MatInputModule, StoFormModule, MatSelectModule,
-        BrowserAnimationsModule, MatCardModule, TextFieldModule ],
+        BrowserAnimationsModule, MatCardModule, TextFieldModule, ReactiveFormsModule, FormsModule ],
       providers: [ { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } } ]
     }),
 
@@ -27,16 +27,25 @@ export default {
 const Template: Story<FormFieldDirective & Record<string, unknown>> = (args) => {
   return {
     component: FormFieldDirective,
-    props: args,
+    props: {
+      ...args,
+      formGroup: new FormGroup({
+        first: new FormControl('Some value')
+      }),
+      dropdown: 'B'
+    },
     template: `
   <mat-card class="sto-form">
-<mat-form-field stoFormField *ngIf="withClasses">
+<mat-form-field [formGroup]="formGroup" stoFormField *ngIf="withClasses">
 <mat-label>Form field with styles</mat-label>
-<input value="Some value" [disabled]="disabled" [readonly]="readonly" matInput>
+<input  formControlName="first" [disabled]="disabled" [readonly]="readonly" matInput>
 </mat-form-field>
 <mat-form-field stoFormField *ngIf="withClasses">
 <mat-label>Form field with styles</mat-label>
-<mat-select><mat-option value="B">A</mat-option></mat-select>
+<mat-select name="dropdown" [ngModel]="dropdown" (selectionChange)="dropdown = $event">
+<mat-option value="A">A</mat-option>
+<mat-option value="B">B</mat-option>
+</mat-select>
 </mat-form-field>
 <mat-form-field appearance="fill" *ngIf="!withClasses">
 <mat-label>Form field without styles</mat-label>
@@ -44,7 +53,7 @@ const Template: Story<FormFieldDirective & Record<string, unknown>> = (args) => 
 </mat-form-field>
 <mat-form-field stoFormField *ngIf="withClasses">
 <mat-label>Text area with styles</mat-label>
-<textarea matInput [cdkTextareaAutosize]="true">
+<textarea name="test" matInput [cdkTextareaAutosize]="true">
 Some Text Content
 
 Should not select all on click

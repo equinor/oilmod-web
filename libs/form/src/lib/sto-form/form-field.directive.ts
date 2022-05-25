@@ -48,8 +48,19 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
       )
       .subscribe(() => {
         const { disabled } = this.input.first;
+        try {
+          let name = this.input.first?.ngControl?.name;
+          // Fallback to using the name-attribute
+          if ( !name && 'name' in this.input.first ) {
+            name = ( this.input.first as MatInput ).name;
+          }
+          if ( name ) {
+            this.el.nativeElement.setAttribute('data-cy', `${name}`);
+          }
+        } catch {/*em all*/
+        }
         // eslint-disable-next-line
-        if (this.titleSub) {
+        if ( this.titleSub ) {
           this.titleSub.unsubscribe();
         }
         this.titleSub = this.input.first.stateChanges
