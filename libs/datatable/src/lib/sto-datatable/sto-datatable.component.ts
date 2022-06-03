@@ -154,6 +154,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   actions: StoDatatableActionsComponent;
   @Input()
   rowHeight = 36;
+  @HostBinding('class.horizontal-scroll')
   @Input()
   scrollbarH: boolean;
   @Input()
@@ -162,6 +163,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   headerHeight = 24;
   @Input()
   selectionMode: SelectionModes = SelectionModes.Click;
+  @HostBinding('class.sortable')
   @Input()
   sortable: boolean;
   @Input()
@@ -175,6 +177,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   public height$: Observable<number>;
   public rowTotalHeight: number;
 
+  @HostBinding('class.autosize')
   @Input()
   autoSize: boolean;
   @Input()
@@ -189,6 +192,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
 
   private _footerRow: T;
 
+  @HostBinding('class.virtual-scroll')
   @Input()
   virtualScroll = true;
 
@@ -202,6 +206,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   responsiveBreakPoint = 400;
   @Input()
   externalSort: boolean;
+  @HostBinding('class.responsive')
   public smallScreen = false;
 
   @Input()
@@ -229,6 +234,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   @Output()
   sortChanged = new EventEmitter<{ sort: Sort, column: Column }>();
 
+  @HostBinding('class.resizeable')
   @Input()
   get resizeable(): boolean {
     return this._resizeable;
