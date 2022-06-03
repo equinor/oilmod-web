@@ -27,7 +27,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/common"],
           "options": {
-            "jestConfig": "libs/common/jest.config.js",
+            "jestConfig": "libs/common/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -80,7 +80,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/core"],
           "options": {
-            "jestConfig": "libs/core/jest.config.js",
+            "jestConfig": "libs/core/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -133,7 +133,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/datatable"],
           "options": {
-            "jestConfig": "libs/datatable/jest.config.js",
+            "jestConfig": "libs/datatable/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -176,7 +176,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/drawer"],
           "options": {
-            "jestConfig": "libs/drawer/jest.config.js",
+            "jestConfig": "libs/drawer/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -219,7 +219,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/error-handler"],
           "options": {
-            "jestConfig": "libs/error-handler/jest.config.js",
+            "jestConfig": "libs/error-handler/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -262,7 +262,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/form"],
           "options": {
-            "jestConfig": "libs/form/jest.config.js",
+            "jestConfig": "libs/form/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -366,19 +366,17 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/oilmod-web"],
           "options": {
-            "jestConfig": "apps/oilmod-web/jest.config.js",
+            "jestConfig": "apps/oilmod-web/jest.config.ts",
             "passWithNoTests": true
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/oilmod-web/.storybook"
-            },
-            "projectBuildConfig": "oilmod-web"
+            "configDir": "apps/oilmod-web/.storybook",
+            "browserTarget": "oilmod-web:build",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -387,15 +385,15 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": ["{options.outputPath}"],
+          "builder": "@storybook/angular:build-storybook",
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/oilmod-web",
-            "config": {
-              "configFolder": "apps/oilmod-web/.storybook"
-            },
-            "projectBuildConfig": "oilmod-web"
+            "outputDir": "dist/storybook/oilmod-web",
+            "configDir": "apps/oilmod-web/.storybook",
+            "browserTarget": "oilmod-web:build",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -503,7 +501,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/testing"],
           "options": {
-            "jestConfig": "libs/testing/jest.config.js",
+            "jestConfig": "libs/testing/jest.config.ts",
             "passWithNoTests": true
           }
         },

@@ -1,14 +1,15 @@
-module.exports = {
-  displayName: 'form',
+/* eslint-disable */
+export default {
+  displayName: 'oilmod-web',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: [ '<rootDir>/src/test-setup.ts' ],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/form',
+  coverageDirectory: '../../coverage/apps/oilmod-web',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
@@ -17,5 +18,5 @@ module.exports = {
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
-  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+  transformIgnorePatterns: [ 'node_modules/(?!.*.mjs$)' ],
 };

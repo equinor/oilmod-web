@@ -1,7 +1,8 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'datatable',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: [ '<rootDir>/src/test-setup.ts' ],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -17,5 +18,5 @@ module.exports = {
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
-  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+  transformIgnorePatterns: [ 'node_modules/(?!.*.mjs$)' ],
 };

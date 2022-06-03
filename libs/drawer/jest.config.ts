@@ -1,14 +1,15 @@
-module.exports = {
-  displayName: 'common',
+/* eslint-disable */
+export default {
+  displayName: 'drawer',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: [ '<rootDir>/src/test-setup.ts' ],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/common',
+  coverageDirectory: '../../coverage/libs/drawer',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
@@ -17,5 +18,5 @@ module.exports = {
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
-  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+  transformIgnorePatterns: [ 'node_modules/(?!.*.mjs$)' ],
 };
