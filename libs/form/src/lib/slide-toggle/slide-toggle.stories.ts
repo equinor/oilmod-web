@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 import { MatCardModule } from '@angular/material/card';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
@@ -22,7 +22,7 @@ const Template: Story<SlideToggleComponent> = (args) => {
     component: SlideToggleComponent,
     props: {
       ...args,
-      ctrl: new FormControl(true),
+      ctrl: new UntypedFormControl(true),
       valueChange: action('Value changed'),
       toggled: (event: unknown) => {
         console.log(event);

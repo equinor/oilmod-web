@@ -1,5 +1,5 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Key } from '../abstract-and-interfaces/keyPress.enum';
 
 /**
@@ -15,7 +15,7 @@ export class QuickKeysDirective {
   /**
    * Optional formGroup input, when used in combination with a reactive form
    */
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: UntypedFormGroup;
   /**
    * Emits when ctrl + enter is clicked in combination
    * <form (quickSubmit)="save()">

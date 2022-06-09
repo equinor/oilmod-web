@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { StoWysiwygModule, WysiwygComponent } from '@ngx-stoui/form';
 
 export default {
@@ -22,7 +22,7 @@ const unsanitized = `<iframe srcdoc="<script>xmlHttp = new XMLHttpRequest();xmlH
 `;
 
 const Template: Story<WysiwygComponent> = (args) => {
-  const ctrl = new FormControl(unsanitized);
+  const ctrl = new UntypedFormControl(unsanitized);
   return {
     props: { ...args, ctrl, unsanitized },
     template: `

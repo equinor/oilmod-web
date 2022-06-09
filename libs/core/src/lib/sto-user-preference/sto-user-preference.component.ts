@@ -1,20 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {take, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {StoUserPreferenceService} from './sto-user-preference.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { StoUserPreferenceService } from './sto-user-preference.service';
 
 @Component({
   selector: 'sto-user-preference',
   templateUrl: './sto-user-preference.component.html',
-  styleUrls: ['./sto-user-preference.component.css']
+  styleUrls: [ './sto-user-preference.component.css' ]
 })
 export class StoUserPreferenceComponent implements OnInit, OnDestroy {
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   private destroyed$ = new Subject<boolean>();
 
-  constructor(private fb: FormBuilder, private service: StoUserPreferenceService) {
+  constructor(private fb: UntypedFormBuilder, private service: StoUserPreferenceService) {
   }
 
   private initForm(value: boolean ) {

@@ -18,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterForm, FilterList } from './filter';
 import { OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import { MatChipList, MatChipsModule } from '@angular/material/chips';
 
 let comp: StoFilterPanelComponent;
@@ -62,7 +62,7 @@ class WrapperComponent extends FilterForm<{ field: string }> {
     return [];
   });
 
-  constructor(fb: FormBuilder) {
+  constructor(fb: UntypedFormBuilder) {
     super(fb);
   }
 }

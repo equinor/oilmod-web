@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 import { MatCardModule } from '@angular/material/card';
-import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
@@ -25,7 +25,7 @@ const Template: Story<NumberInputComponent & Record<string, unknown>> = (args) =
     props: {
       ...args,
       change: action('Value changed'),
-      control: new FormControl(null, Validators.required),
+      control: new UntypedFormControl(null, Validators.required),
       toggleValidator: (ctrl: AbstractControl) => {
         if ( ctrl.validator ) {
           ctrl.clearValidators();

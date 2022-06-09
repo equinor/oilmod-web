@@ -13,7 +13,7 @@ import {
   Self,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm, UntypedFormControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -52,7 +52,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
-  ctrl = new FormControl();
+  ctrl = new UntypedFormControl();
   public sub = new Subscription();
   @Input()
   dynamicFractionSize: boolean;

@@ -14,7 +14,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NgControl, UntypedFormControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Subject, Subscription } from 'rxjs';
@@ -43,7 +43,7 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
-  ctrl = new FormControl();
+  ctrl = new UntypedFormControl();
   public sub = new Subscription();
   @HostBinding()
   id = `value-unit-input-${SlideToggleComponent.nextId++}`;

@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { StoFormModule, StoOptionSelectAllComponent, StoOptionSelectAllComponentModule } from '@ngx-stoui/form';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 
 export default {
   title: 'form/Select all',
@@ -43,7 +43,7 @@ export const SelectAllMulti: Story<any> = (args) => ( {
     items,
     total: items.length,
     valueChange: (event: any) => console.log(event),
-    ctrl: new FormControl([ 1, 2 ])
+    ctrl: new UntypedFormControl([ 1, 2 ])
   }, template: `
 <mat-card style="width: 300px" class="sto-form" >
   <mat-form-field stoFormField

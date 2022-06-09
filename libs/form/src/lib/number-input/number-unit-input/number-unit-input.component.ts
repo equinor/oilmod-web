@@ -12,7 +12,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -43,7 +43,7 @@ export class NumberUnitInputComponent extends FormFieldBase
   implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
   static nextId = 0;
   stateChanges = new Subject<void>();
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   readonly autofilled: boolean;
   controlType = 'number-unit-input';
   private numberFormatterPipe = new NumberInputPipe();
@@ -191,7 +191,7 @@ export class NumberUnitInputComponent extends FormFieldBase
 
   constructor(@Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               @Optional() _parentForm: NgForm,
               @Optional() _parentFormGroup: FormGroupDirective,
               _defaultErrorStateMatcher: ErrorStateMatcher,

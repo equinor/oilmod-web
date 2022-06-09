@@ -33,9 +33,6 @@
       }
     ]
   },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
   "defaultProject": "oilmod-web",
   "generators": {
     "@nrwl/angular": {
@@ -62,5 +59,6 @@
     "@nrwl/angular:component": {
       "style": "scss"
     }
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

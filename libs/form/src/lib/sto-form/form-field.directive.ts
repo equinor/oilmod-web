@@ -15,6 +15,7 @@ import { MatInput } from '@angular/material/input';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
+import { NgControl } from '@angular/forms';
 
 @Directive({
   selector: 'mat-form-field[stoFormField]',
@@ -49,7 +50,7 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
       .subscribe(() => {
         const { disabled } = this.input.first;
         try {
-          let name = this.input.first?.ngControl?.name;
+          let name = ( this.input.first?.ngControl as NgControl )?.name;
           // Fallback to using the name-attribute
           if ( !name && 'name' in this.input.first ) {
             name = ( this.input.first as MatInput ).name;

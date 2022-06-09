@@ -6,7 +6,7 @@ import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.compo
 import { MaterialModule } from '@ngx-stoui/testing';
 import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
 import { By, SafeHtml } from '@angular/platform-browser';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 
 interface TestSafeHtml extends SafeHtml {
   changingThisBreaksApplicationSecurity: string;
@@ -21,7 +21,7 @@ interface TestSafeHtml extends SafeHtml {
       </sto-wysiwyg>`
 })
 class WrapperComponent {
-  public ctrl = new FormControl();
+  public ctrl = new UntypedFormControl();
 
   disable() {
     this.ctrl.disable();

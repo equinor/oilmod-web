@@ -1,5 +1,5 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { EventEmitter, Input, OnDestroy, OnInit, Output, Directive } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, startWith, takeUntil } from 'rxjs/operators';
 
@@ -29,11 +29,11 @@ export abstract class FilterForm<T extends Record<string, unknown>> implements O
   value: T;
 
   // Form group
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   // Chip value. See {@link FilterList}
   public filter$: Observable<FilterList[]>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
   }
 
   ngOnInit() {

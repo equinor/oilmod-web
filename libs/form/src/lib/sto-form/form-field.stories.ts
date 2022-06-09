@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormFieldDirective, StoFormModule } from '@ngx-stoui/form';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 export default {
   title: 'form/Form field directive',
@@ -29,8 +29,8 @@ const Template: Story<FormFieldDirective & Record<string, unknown>> = (args) => 
     component: FormFieldDirective,
     props: {
       ...args,
-      formGroup: new FormGroup({
-        first: new FormControl('Some value')
+      formGroup: new UntypedFormGroup({
+        first: new UntypedFormControl('Some value')
       }),
       dropdown: 'B'
     },

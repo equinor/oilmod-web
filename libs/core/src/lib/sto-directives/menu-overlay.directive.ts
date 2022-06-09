@@ -15,7 +15,7 @@ export class MenuOverlayDirective {
   top = 0;
 
   constructor(@Host() private trigger: MatMenuTrigger, el: ElementRef<HTMLButtonElement>) {
-    this.menu = trigger.menu;
+    this.menu = trigger.menu as MatMenuPanel;
     this.trigger.menuOpened.pipe(
       switchMap(() =>
         fromEvent<MouseEvent>(document, 'click')

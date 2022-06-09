@@ -3,13 +3,8 @@ import { moduleMetadata } from '@storybook/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  Preference,
-  PreferenceManagerComponent,
-  PreferenceManagerModule,
-  StoFilterPanelModule
-} from '@ngx-stoui/common';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { Preference, PreferenceManagerComponent, PreferenceManagerModule, StoFilterPanelModule } from '@ngx-stoui/common';
 
 export default {
   title: 'common/Preference Manager',
@@ -34,7 +29,7 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
   return {
     props: {
       ...args,
-      filterForm: new FormControl(),
+      filterForm: new UntypedFormControl(),
       onSelect: function (id: string) {
         this.activePreferenceId = id;
         this.filterForm.reset();

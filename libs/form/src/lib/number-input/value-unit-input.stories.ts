@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 import { MatCardModule } from '@angular/material/card';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
@@ -19,7 +19,7 @@ export default {
   ],
 } as Meta;
 
-const control = new FormControl({ value: 32.123, unit: 'C' }, Validators.required);
+const control = new UntypedFormControl({ value: 32.123, unit: 'C' }, Validators.required);
 
 const Template: Story<NumberUnitInputComponent & Record<string, unknown>> = (args) => {
   return {

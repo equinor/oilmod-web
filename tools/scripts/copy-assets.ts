@@ -1,25 +1,26 @@
 import * as path from 'path';
-import * as glob from 'glob';
 import * as fs from 'fs';
 
+const glob = require('glob');
+
 const root = path.join(__dirname, '../../');
-const src = path.join(root, 'libs', 'core', 'src')
+const src = path.join(root, 'libs', 'core', 'src');
 const out = path.join(root, 'dist', 'libs', 'core');
 const scss = path.join(src, 'style/**/*');
 
-console.log('Running asset-copier')
+console.log('Running asset-copier');
 
-glob(scss, (err, files) => {
+glob(scss, (err: Error | null, files: Array<string>) => {
   const onlyLocalPath = [
     ...files,
   ]
     .filter(file => !fs.lstatSync(file).isDirectory())
     .map(file => file.replace(`${src}/`, ''));
   const withDest = onlyLocalPath
-    .map(source => ({
+    .map(source => ( {
       source: path.join(src, source),
       dest: path.join(out, source),
-    }));
+    } ));
   withDest
     .forEach(({ source, dest}) => {
       const exists = fs.existsSync(path.dirname(dest));

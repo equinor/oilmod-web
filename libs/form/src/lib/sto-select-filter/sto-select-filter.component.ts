@@ -12,7 +12,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
@@ -102,8 +102,8 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild('inputElement')
   public inputElement: ElementRef<HTMLInputElement>;
 
-  public checkboxControl = new FormControl();
-  public inputControl = new FormControl();
+  public checkboxControl = new UntypedFormControl();
+  public inputControl = new UntypedFormControl();
 
   public indeterminate: boolean;
 
