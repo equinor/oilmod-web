@@ -73,14 +73,14 @@ body:not(.sto-dark-theme) {
 
 
 body.sto-dark-theme {
-  --danger-highlight: #FFC1C1;
+  --danger-highlight: rgba(255, 102, 112, 0.1);
   --danger-resting: #EB0000;
   --danger-hover: #FF949B;
   --danger-text: #FF6670;
-  --danger-highlight-contrast: black;
+  --danger-highlight-contrast: white;
   --danger-resting-contrast: white;
   --danger-hover-contrast: black;
-  --warning-highlight: #FFE7D6;
+  --warning-highlight: rgba(255, 198, 122, 0.1);
   --warning-resting: #FF9200;
   --warning-hover: #FFDAA8;
   --warning-text: #FFC67A;
@@ -88,7 +88,7 @@ body.sto-dark-theme {
   --warning-resting-contrast: black;
   --warning-hover-contrast: black;
   --warning-text-contrast: black;
-  --success-highlight: #E6FAEC;
+  --success-highlight: rgba(161, 218, 160, 0.1);
   --success-resting: #4BB748;
   --success-hover: #C1E7C1;
   --success-text: #A1DAA0;
