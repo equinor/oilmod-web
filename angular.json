@@ -45,6 +45,16 @@
           "outputs": [
             "{options.outputFile}"
           ]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/libs/common",
+            "commands": [
+              "npm publish"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
@@ -113,6 +123,16 @@
             ],
             "parallel": true
           }
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/libs/core",
+            "commands": [
+              "npm publish"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
@@ -161,6 +181,16 @@
           "outputs": [
             "{options.outputFile}"
           ]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/libs/datatable",
+            "commands": [
+              "npm publish"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
@@ -209,6 +239,16 @@
           "outputs": [
             "{options.outputFile}"
           ]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/libs/drawer",
+            "commands": [
+              "npm publish"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
@@ -257,6 +297,16 @@
           "outputs": [
             "{options.outputFile}"
           ]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/libs/error-handler",
+            "commands": [
+              "npm publish"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
@@ -305,6 +355,16 @@
           "outputs": [
             "{options.outputFile}"
           ]
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/libs/form",
+            "commands": [
+              "npm publish"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
