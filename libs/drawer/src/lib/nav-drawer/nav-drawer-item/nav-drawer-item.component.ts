@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Navigation } from '../navigation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { EXPANSION_PANEL_ANIMATION_TIMING } from '@angular/material/expansion';
@@ -31,9 +31,13 @@ export class NavDrawerItemComponent {
   @Input()
   collapsed: boolean;
   private _expansionState: 'collapsed' | 'expanded' = 'collapsed';
+  @Output()
+  activate = new EventEmitter<Navigation>();
+
   public get expansionState() {
     return this.collapsed ? 'collapsed' : this._expansionState;
   }
+
   public set expansionState(state) {
     this._expansionState = state;
   }

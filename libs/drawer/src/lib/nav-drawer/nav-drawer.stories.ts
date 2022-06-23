@@ -3,12 +3,13 @@ import { moduleMetadata } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { NavDrawerComponent, NavDrawerModule } from '@ngx-stoui/drawer';
+import { NavDrawerComponent, NavDrawerModule, Navigation } from '@ngx-stoui/drawer';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
 import { StoAppHeaderModule } from '@ngx-stoui/common';
+import { action } from '@storybook/addon-actions';
 
 @Component({
   selector: 'wrapper',
@@ -56,7 +57,10 @@ export default {
 const Template: Story<NavDrawerComponent> = (args: NavDrawerComponent) => {
   return {
     component: NavDrawerComponent,
-    props: args,
+    props: {
+      ...args,
+      activate: action('Activate route')
+    },
   };
 };
 
@@ -67,8 +71,19 @@ const navigationItems = [
     icon: 'home'
   },
   {
+    label: 'Disabled',
+    route: [ '/', 'home' ],
+    icon: 'do_disturb',
+    disabled: true
+  },
+  {
     label: 'Internal route title',
     children: [
+      {
+        route: [ '/', 'disabled', 'route1' ],
+        disabled: true,
+        label: 'Disabled child route',
+      },
       {
         route: [ '/', 'route1' ],
         label: 'Internal child route',
@@ -116,18 +131,12 @@ const navigationItems = [
     icon: 'do_disturb',
     disabled: true
   },
-];
+] as Array<Navigation>;
 
-export const NormalUse = (args: NavDrawerComponent) => {
-  return {
-    component: NavDrawerComponent,
-    props: args,
-  };
-};
+export const NormalUse = Template.bind({});
 NormalUse.args = {
-  height: '100vh',
   navigationItems,
-  collapsed: false
+  collapsed: false,
 };
 
 
@@ -137,13 +146,14 @@ export const WithAppHeader = (args: NavDrawerComponent) => {
     props: args,
     template: `
     <sto-app-header></sto-app-header>
-    <sto-nav-drawer [withAppHeader]="true" [navigationItems]="navigationItems" [collapsed]="collapsed"></sto-nav-drawer>
+    <sto-nav-drawer (activate)="activate($event)" [withAppHeader]="true" [navigationItems]="navigationItems" [collapsed]="collapsed"></sto-nav-drawer>
     `
   };
 };
 WithAppHeader.args = {
   navigationItems,
   collapsed: true,
+  activate: action('Activate route')
 };
 
 

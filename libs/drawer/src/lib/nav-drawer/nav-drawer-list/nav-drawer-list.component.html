@@ -1,3 +1,5 @@
 <sto-nav-drawer-list-item class="sto-nav-drawer-list"
+                          [class.disabled]="item.disabled"
+                          (activate)="activate.emit(item)"
                           *ngFor="let item of navigationItems"
                           [navigationItem]="item"></sto-nav-drawer-list-item>

@@ -7,12 +7,17 @@
 
 <a *ngIf="navigationItem.link"
    [href]="navigationItem.link"
+   (click)="activate.emit(navigationItem)"
+   [class.disabled]="navigationItem.disabled"
    [attr.target]="navigationItem.target || null"
    [routerLinkActive]="'active'">
   <ng-container *ngTemplateOutlet="linkContent"></ng-container>
 </a>
-<a *ngIf="navigationItem.route" [routerLink]="navigationItem.route"
+<a *ngIf="navigationItem.route"
+   [routerLink]="navigationItem.route"
    [attr.target]="navigationItem.target || null"
+   (click)="activate.emit(navigationItem)"
+   [class.disabled]="navigationItem.disabled"
    [routerLinkActive]="'active'">
   <ng-container *ngTemplateOutlet="linkContent"></ng-container>
 </a>

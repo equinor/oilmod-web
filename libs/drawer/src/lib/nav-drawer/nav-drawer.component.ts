@@ -1,4 +1,13 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import { Navigation } from './navigation';
 import { StoThemeService } from '@ngx-stoui/common';
 import { overlayAnimation } from '../animation';
@@ -20,6 +29,8 @@ export class NavDrawerComponent implements AfterViewInit {
   navigationItems: Array<Navigation>;
   @Input()
   withAppHeader: boolean;
+  @Output()
+  activate = new EventEmitter();
   public headerOffset = 64;
 
   constructor(private themeService: StoThemeService, private cdr: ChangeDetectorRef) {
@@ -32,5 +43,10 @@ export class NavDrawerComponent implements AfterViewInit {
         this.headerOffset = typography.name === 'small' ? 48 : 64;
         this.cdr.detectChanges();
       });
+  }
+
+  onActivate(item: Navigation) {
+    this.activate.emit(item);
+    // collapse? Should be handled at parent imo, otherwise un-collapsing will be a problem
   }
 }

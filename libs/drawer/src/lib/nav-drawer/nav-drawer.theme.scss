@@ -16,7 +16,8 @@ body {
     background-color: var(--primary-fill-activated);
     color: var(--primary-resting);
   }
-  a.mat-menu-item:hover {
+
+  a.mat-menu-item:not(.disabled):hover {
     text-shadow: 0 0 1px var(--text);
   }
 
@@ -64,7 +65,7 @@ body {
         color: var(--text-secondary);
       }
 
-      &:hover {
+      &:not(.disabled):hover {
         background-color: var(--bg-hover);
       }
     }
@@ -79,6 +80,15 @@ body {
 
     a.active {
       color: var(--text-secondary);
+    }
+
+    a.disabled {
+      pointer-events: none;
+      color: var(--text-disabled);
+
+      .mat-icon {
+        color: var(--text-disabled);
+      }
     }
 
     .disabled {

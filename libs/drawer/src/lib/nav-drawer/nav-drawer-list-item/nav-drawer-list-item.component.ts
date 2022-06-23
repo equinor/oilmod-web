@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { NavigationChild } from '../navigation';
 
 @Component({
@@ -10,4 +10,6 @@ import { NavigationChild } from '../navigation';
 export class NavDrawerListItemComponent {
   @Input()
   navigationItem: NavigationChild;
+  @Output()
+  activate = new EventEmitter<NavigationChild>();
 }

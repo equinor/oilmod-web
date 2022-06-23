@@ -2,6 +2,8 @@
      *ngIf="collapsed">
   <a mat-button
      [title]="navigationItem.label"
+     [class.disabled]="navigationItem.disabled"
+     (click)="activate.emit(navigationItem)"
      routerLinkActive="active"
      [href]="navigationItem.link"
      *ngIf="navigationItem.link && !navigationItem.children">
@@ -11,7 +13,9 @@
   </a>
   <a mat-button
      [title]="navigationItem.label"
+     [class.disabled]="navigationItem.disabled"
      routerLinkActive="active"
+     (click)="activate.emit(navigationItem)"
      [routerLink]="navigationItem.route"
      *ngIf="navigationItem.route && !navigationItem.children">
     <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
@@ -40,6 +44,9 @@
     <mat-divider *ngIf="navigationItem.title"></mat-divider>
     <ng-container *ngFor="let item of navigationItem.children">
       <a [routerLink]="item.route"
+         (click)="activate.emit(navigationItem)"
+         [disabled]="item.disabled"
+         [class.disabled]="item.disabled"
          routerLinkActive="active-menu-route"
          mat-menu-item
          *ngIf="item.route">
@@ -48,6 +55,9 @@
       <a [href]="item.link"
          mat-menu-item
          [attr.target]="item.target || null"
+         (click)="activate.emit(navigationItem)"
+         [disabled]="item.disabled"
+         [class.disabled]="item.disabled"
          *ngIf="item.link">
         {{ item.label }}
       </a>
@@ -70,6 +80,7 @@
    [class.divider-below]="navigationItem.divider === 'below'"
    [class.divider-above]="navigationItem.divider === 'above'"
    [href]="navigationItem.link"
+   (click)="activate.emit(navigationItem)"
    matRipple
    *ngIf="!collapsed && !navigationItem.children && navigationItem.link"
    [class.disabled]="navigationItem.disabled">
@@ -82,6 +93,7 @@
    [class.divider-below]="navigationItem.divider === 'below'"
    [class.divider-above]="navigationItem.divider === 'above'"
    [routerLink]="navigationItem.route"
+   (click)="activate.emit(navigationItem)"
    routerLinkActive="active"
    matRipple
    *ngIf="!collapsed && !navigationItem.children && navigationItem.route"
@@ -92,6 +104,7 @@
   <span>{{ navigationItem.label }}</span>
 </a>
 <sto-nav-drawer-list [@bodyExpansion]="expansionState"
+                     (activate)="activate.emit(navigationItem)"
                      *ngIf="navigationItem.children"
                      [navigationItems]="navigationItem.children"></sto-nav-drawer-list>
 

@@ -12,6 +12,7 @@
       </button>
     </div>
     <sto-nav-drawer-item [collapsed]="collapsed"
+                         (activate)="onActivate($event)"
                          *ngFor="let item of navigationItems"
                          [navigationItem]="item"></sto-nav-drawer-item>
   </div>

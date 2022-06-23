@@ -164,8 +164,12 @@ $height: 48px;
 .sto-nav-drawer-menu + div {
   left: 48px !important;
 
-  a.mat-menu-item:hover {
+  a.mat-menu-item:not(.disabled):hover {
     text-shadow: 0px 0px 1px black;
+  }
+
+  a.mat-menu-item.disabled {
+    pointer-events: none;
   }
 
   .mat-menu-content .mat-divider {
