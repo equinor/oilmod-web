@@ -508,7 +508,8 @@
               "$(npm bin)/nx build common",
               "$(npm bin)/nx build datatable",
               "$(npm bin)/nx build drawer",
-              "$(npm bin)/nx build error-handler"
+              "$(npm bin)/nx build error-handler",
+              "for dir in ./dist/libs/* ; do cp license.md $dir/ ; done"
             ],
             "parallel": false
           }
