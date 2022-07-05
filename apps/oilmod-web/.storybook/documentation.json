@@ -20926,16 +20926,6 @@
         "name": "context",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/datatable/src/test.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "",
-        "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
-      },
-      {
-        "name": "context",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
         "file": "libs/error-handler/src/test.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -20946,7 +20936,7 @@
         "name": "context",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/drawer/src/test.ts",
+        "file": "libs/datatable/src/test.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -20957,6 +20947,16 @@
         "ctype": "miscellaneous",
         "subtype": "variable",
         "file": "libs/form/src/test.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "",
+        "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+      },
+      {
+        "name": "context",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "libs/drawer/src/test.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -21136,7 +21136,7 @@
         "name": "items",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/form/src/lib/sto-select-filter/item-list.ts",
+        "file": "libs/form/src/lib/sto-option-select-all/sto-option-select-all.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "[]",
@@ -21146,7 +21146,7 @@
         "name": "items",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/form/src/lib/sto-option-select-all/sto-option-select-all.stories.ts",
+        "file": "libs/form/src/lib/sto-select-filter/item-list.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "[]",
@@ -21216,6 +21216,16 @@
         "name": "NormalUse",
         "ctype": "miscellaneous",
         "subtype": "variable",
+        "file": "libs/error-handler/src/lib/error-handler.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "",
+        "defaultValue": "Template.bind({})"
+      },
+      {
+        "name": "NormalUse",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
         "file": "libs/datatable/src/lib/datatable.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -21227,16 +21237,6 @@
         "ctype": "miscellaneous",
         "subtype": "variable",
         "file": "libs/datatable/src/lib/swimlane-table.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "",
-        "defaultValue": "Template.bind({})"
-      },
-      {
-        "name": "NormalUse",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
-        "file": "libs/error-handler/src/lib/error-handler.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -21286,7 +21286,7 @@
         "name": "out",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "tools/scripts/build-scss.ts",
+        "file": "tools/scripts/copy-assets.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -21296,7 +21296,7 @@
         "name": "out",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "tools/scripts/copy-assets.ts",
+        "file": "tools/scripts/build-scss.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -21414,15 +21414,6 @@
         "name": "require",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/datatable/src/test.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "any"
-      },
-      {
-        "name": "require",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
         "file": "libs/error-handler/src/test.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -21432,7 +21423,7 @@
         "name": "require",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/drawer/src/test.ts",
+        "file": "libs/datatable/src/test.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "any"
@@ -21442,6 +21433,15 @@
         "ctype": "miscellaneous",
         "subtype": "variable",
         "file": "libs/form/src/test.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "any"
+      },
+      {
+        "name": "require",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "libs/drawer/src/test.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "any"
@@ -21460,7 +21460,7 @@
         "name": "root",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "tools/scripts/build-scss.ts",
+        "file": "tools/scripts/copy-assets.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -21470,7 +21470,7 @@
         "name": "root",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "tools/scripts/copy-assets.ts",
+        "file": "tools/scripts/build-scss.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -21610,16 +21610,6 @@
         "name": "Template",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/datatable/src/lib/swimlane-table.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "Story<Record<string, >>",
-        "defaultValue": "(args: Record<string, unknown>) => {\n  return {\n    props: args,\n    template: `<mat-card>\n<mat-card-title><h2>This replaces StoComplexDatatable and is only here for CSS</h2></mat-card-title>\n<ngx-datatable [loadingIndicator]=\"loading\"\n[footerHeight]=\"40\"\n[selectionType]=\"'single'\"\n[scrollbarV]=\"true\"\n[scrollbarH]=\"horizontalScroll\"\n[style.height.px]=\"height\"\n[rowHeight]=\"rowHeight\"\n[headerHeight]=\"headerHeight\"\n[class.sto-datatable]=\"withCss\"\n[rows]=\"rows\"\n[columns]=\"columns\"></ngx-datatable>\n</mat-card>`\n  };\n}"
-      },
-      {
-        "name": "Template",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
         "file": "libs/error-handler/src/lib/error-handler.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -21630,11 +21620,11 @@
         "name": "Template",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/common/src/lib/sto-action-footer/action-footer.stories.ts",
+        "file": "libs/datatable/src/lib/swimlane-table.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
-        "type": "Story<StoActionFooterComponent>",
-        "defaultValue": "(args: StoActionFooterComponent) => {\n  return {\n    component: StoActionFooterComponent,\n    props: {\n      ...args,\n      save: action('Save'),\n      cancel: action('Cancel')\n    },\n    template: '<sto-action-footer [isLoading]=\"isLoading\" [position]=\"position\" [shouldAddClass]=\"shouldAddClass\"><button mat-flat-button (click)=\"save()\" color=\"primary\">Save</button><button (click)=\"cancel()\" mat-button>Cancel</button></sto-action-footer>'\n  };\n}"
+        "type": "Story<Record<string, >>",
+        "defaultValue": "(args: Record<string, unknown>) => {\n  return {\n    props: args,\n    template: `<mat-card>\n<mat-card-title><h2>This replaces StoComplexDatatable and is only here for CSS</h2></mat-card-title>\n<ngx-datatable [loadingIndicator]=\"loading\"\n[footerHeight]=\"40\"\n[selectionType]=\"'single'\"\n[scrollbarV]=\"true\"\n[scrollbarH]=\"horizontalScroll\"\n[style.height.px]=\"height\"\n[rowHeight]=\"rowHeight\"\n[headerHeight]=\"headerHeight\"\n[class.sto-datatable]=\"withCss\"\n[rows]=\"rows\"\n[columns]=\"columns\"></ngx-datatable>\n</mat-card>`\n  };\n}"
       },
       {
         "name": "Template",
@@ -21660,6 +21650,16 @@
         "name": "Template",
         "ctype": "miscellaneous",
         "subtype": "variable",
+        "file": "libs/common/src/lib/sto-action-footer/action-footer.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story<StoActionFooterComponent>",
+        "defaultValue": "(args: StoActionFooterComponent) => {\n  return {\n    component: StoActionFooterComponent,\n    props: {\n      ...args,\n      save: action('Save'),\n      cancel: action('Cancel')\n    },\n    template: '<sto-action-footer [isLoading]=\"isLoading\" [position]=\"position\" [shouldAddClass]=\"shouldAddClass\"><button mat-flat-button (click)=\"save()\" color=\"primary\">Save</button><button (click)=\"cancel()\" mat-button>Cancel</button></sto-action-footer>'\n  };\n}"
+      },
+      {
+        "name": "Template",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
         "file": "libs/common/src/lib/sto-filter/filter-panel.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -21680,21 +21680,11 @@
         "name": "Template",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/drawer/src/lib/nav-drawer/nav-drawer.stories.ts",
+        "file": "libs/form/src/lib/sto-form/form-field.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
-        "type": "Story<NavDrawerComponent>",
-        "defaultValue": "(args: NavDrawerComponent) => {\n  return {\n    component: NavDrawerComponent,\n    props: {\n      ...args,\n      activate: action('Activate route')\n    },\n  };\n}"
-      },
-      {
-        "name": "Template",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
-        "file": "libs/drawer/src/lib/sto-drawer/drawer.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "Story<StoDrawerComponent>",
-        "defaultValue": "(args: StoDrawerComponent) => {\n  return {\n    component: StoDrawerComponent,\n    props: args,\n    template: `\n  <div>\n  <sto-drawer [position]=\"'right'\" [open]=\"true\" [animation]=\"animation\" [backdrop]=\"backdrop\">\n<sto-drawer-header>\n<div class=\"sto-drawer__header__title\">\n<h2>Title</h2>\n      </div>\n</sto-drawer-header>\n\n<mat-card class=\"sto-card\"><p>Content in drawer</p></mat-card>\n\n<sto-drawer-footer>\n<button mat-button color=\"primary\">Save</button>\n</sto-drawer-footer>\n</sto-drawer>\n\n\n<mat-card class=\"sto-card sto-form\">\n<button mat-raised-button>Open</button>\n</mat-card>\n<mat-card class=\"sto-card sto-form\">\n<mat-card-title class=\"sto-card__title\">Content title</mat-card-title>\n</mat-card>\n</div>\n`,\n\n  };\n}"
+        "type": "Story<>",
+        "defaultValue": "(args) => {\n  return {\n    component: FormFieldDirective,\n    props: {\n      ...args,\n      formGroup: new UntypedFormGroup({\n        first: new UntypedFormControl('Some value')\n      }),\n      dropdown: 'B'\n    },\n    template: `\n  <mat-card class=\"sto-form\">\n<mat-form-field [formGroup]=\"formGroup\" stoFormField *ngIf=\"withClasses\">\n<mat-label>Form field with styles</mat-label>\n<input  formControlName=\"first\" [disabled]=\"disabled\" [readonly]=\"readonly\" matInput>\n</mat-form-field>\n<mat-form-field stoFormField *ngIf=\"withClasses\">\n<mat-label>Form field with styles</mat-label>\n<mat-select name=\"dropdown\" [ngModel]=\"dropdown\" (selectionChange)=\"dropdown = $event\">\n<mat-option value=\"A\">A</mat-option>\n<mat-option value=\"B\">B</mat-option>\n</mat-select>\n</mat-form-field>\n<mat-form-field appearance=\"fill\" *ngIf=\"!withClasses\">\n<mat-label>Form field without styles</mat-label>\n<input value=\"Some value\" [disabled]=\"disabled\" [readonly]=\"readonly\" matInput>\n</mat-form-field>\n<mat-form-field stoFormField *ngIf=\"withClasses\">\n<mat-label>Text area with styles</mat-label>\n<textarea name=\"test\" matInput [cdkTextareaAutosize]=\"true\">\nSome Text Content\n\nShould not select all on click\n</textarea>\n</mat-form-field>\n</mat-card>`\n  };\n}"
       },
       {
         "name": "Template",
@@ -21720,26 +21710,6 @@
         "name": "Template",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "libs/drawer/src/lib/sto-navigation/navigation.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "Story<>",
-        "defaultValue": "(args: StoDrawerComponent) => {\n  const actions = {\n    handleCommand: action('Link pressed'),\n    topsNav: action('Open tops landing'),\n    toggle: action('Switch side'),\n    closeMenu: action('Close menu'),\n  };\n  return {\n    component: StoDrawerComponent,\n    props: { ...args, ...actions, navigation, subNavigation },\n    template: `<div>\n  <sto-drawer [open]=\"open\" [animation]=\"animation\" [backdrop]=\"backdrop\">\n<sto-drawer-header>\n<div class=\"sto-drawer__header__infix\">\n        <button *ngIf=\"activePane === 'right'; else topIcon\"\n                type=\"button\"\n                mat-icon-button\n                (click)=\"toggle(); activePane = 'left'\">\n          <mat-icon>arrow_back</mat-icon>\n        </button>\n        <ng-template #topIcon>\n          <button mat-icon-button\n          type=\"button\"\n          (click)=\"topsNav()\">\n            <mat-icon [class.sto-main-icon--test-environment]=\"testEnvironment\">settings</mat-icon>\n          </button>\n        </ng-template>\n      </div>\n<div class=\"sto-drawer__header__title\">\n        <ng-container *ngIf=\"activePane === 'right'; else leftName;\">\n          <span *ngIf=\"activePane === 'right'\">\n           {{rightMenu.name}}\n         </span>\n        </ng-container>\n        <ng-template #leftName>\n         <span *ngIf=\"activePane === 'left'\">\n           {{leftMenu.name}}\n         </span>\n        </ng-template>\n      </div>\n      <div class=\"sto-drawer__header__suffix\">\n        <button type=\"button\"\n                mat-icon-button\n                (click)=\"closeMenu(); open = false\">\n          <mat-icon>close</mat-icon>\n        </button>\n      </div>\n</sto-drawer-header>\n<sto-slide-panel class=\"sto-slide-panel\"\n                     [activePane]=\"activePane\">\n                     {{activePane}}\n<sto-navigation-menu [menu]=\"subNavigation\"\n*ngIf=\"activePane === 'right'\"\n                         (onCommand)=\"handleCommand('internal', $event.command)\"\n                         rightPane></sto-navigation-menu>\n<sto-navigation-menu [menu]=\"navigation\"\n*ngIf=\"activePane === 'left'\"\n                         (onCommand)=\"activePane = 'right'; handleCommand('root', $event.command)\"\n                         leftPane></sto-navigation-menu>\n                         </sto-slide-panel>\n</sto-drawer>\n\n\n<mat-card class=\"sto-card sto-form\">\n<mat-card-title class=\"sto-card__title\">Content title</mat-card-title>\n</mat-card>\n<mat-card class=\"sto-card sto-form\">\n<mat-card-title class=\"sto-card__title\">Content title</mat-card-title>\n</mat-card>\n</div>`\n  };\n}"
-      },
-      {
-        "name": "Template",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
-        "file": "libs/form/src/lib/sto-form/form-field.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "Story<>",
-        "defaultValue": "(args) => {\n  return {\n    component: FormFieldDirective,\n    props: {\n      ...args,\n      formGroup: new UntypedFormGroup({\n        first: new UntypedFormControl('Some value')\n      }),\n      dropdown: 'B'\n    },\n    template: `\n  <mat-card class=\"sto-form\">\n<mat-form-field [formGroup]=\"formGroup\" stoFormField *ngIf=\"withClasses\">\n<mat-label>Form field with styles</mat-label>\n<input  formControlName=\"first\" [disabled]=\"disabled\" [readonly]=\"readonly\" matInput>\n</mat-form-field>\n<mat-form-field stoFormField *ngIf=\"withClasses\">\n<mat-label>Form field with styles</mat-label>\n<mat-select name=\"dropdown\" [ngModel]=\"dropdown\" (selectionChange)=\"dropdown = $event\">\n<mat-option value=\"A\">A</mat-option>\n<mat-option value=\"B\">B</mat-option>\n</mat-select>\n</mat-form-field>\n<mat-form-field appearance=\"fill\" *ngIf=\"!withClasses\">\n<mat-label>Form field without styles</mat-label>\n<input value=\"Some value\" [disabled]=\"disabled\" [readonly]=\"readonly\" matInput>\n</mat-form-field>\n<mat-form-field stoFormField *ngIf=\"withClasses\">\n<mat-label>Text area with styles</mat-label>\n<textarea name=\"test\" matInput [cdkTextareaAutosize]=\"true\">\nSome Text Content\n\nShould not select all on click\n</textarea>\n</mat-form-field>\n</mat-card>`\n  };\n}"
-      },
-      {
-        "name": "Template",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
         "file": "libs/form/src/lib/slide-toggle/slide-toggle.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -21755,6 +21725,36 @@
         "deprecationMessage": "",
         "type": "Story<WysiwygComponent>",
         "defaultValue": "(args) => {\n  const ctrl = new UntypedFormControl(unsanitized);\n  return {\n    props: { ...args, ctrl, unsanitized },\n    template: `\n<sto-wysiwyg [readonly]=\"readonly\" #wysiwyg [formControl]=\"ctrl\"></sto-wysiwyg>\n<hr>\n<div>\n<p>The text we're sending in is</p>\n<div style=\"background-color: lightgray\"><code>{{ unsanitized }}</code></div>\n<br>\n<p>The resulting HTML output is then sanitized </p>\n<div style=\"background-color: lightgray\"><code >{{ wysiwyg.value.changingThisBreaksApplicationSecurity }}</code></div>\n<p>While it gets sanitized in the wysiwyg editor, best practice dictates that sanitizing happens before sending it in\n(and preferable on your backend service)</p>\n</div>\n`\n  };\n}"
+      },
+      {
+        "name": "Template",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "libs/drawer/src/lib/nav-drawer/nav-drawer.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story<NavDrawerComponent>",
+        "defaultValue": "(args: NavDrawerComponent) => {\n  return {\n    component: NavDrawerComponent,\n    props: {\n      ...args,\n      activate: action('Activate route')\n    },\n  };\n}"
+      },
+      {
+        "name": "Template",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "libs/drawer/src/lib/sto-drawer/drawer.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story<StoDrawerComponent>",
+        "defaultValue": "(args: StoDrawerComponent) => {\n  return {\n    component: StoDrawerComponent,\n    props: args,\n    template: `\n  <div>\n  <sto-drawer [position]=\"'right'\" [open]=\"true\" [animation]=\"animation\" [backdrop]=\"backdrop\">\n<sto-drawer-header>\n<div class=\"sto-drawer__header__title\">\n<h2>Title</h2>\n      </div>\n</sto-drawer-header>\n\n<mat-card class=\"sto-card\"><p>Content in drawer</p></mat-card>\n\n<sto-drawer-footer>\n<button mat-button color=\"primary\">Save</button>\n</sto-drawer-footer>\n</sto-drawer>\n\n\n<mat-card class=\"sto-card sto-form\">\n<button mat-raised-button>Open</button>\n</mat-card>\n<mat-card class=\"sto-card sto-form\">\n<mat-card-title class=\"sto-card__title\">Content title</mat-card-title>\n</mat-card>\n</div>\n`,\n\n  };\n}"
+      },
+      {
+        "name": "Template",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "libs/drawer/src/lib/sto-navigation/navigation.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story<>",
+        "defaultValue": "(args: StoDrawerComponent) => {\n  const actions = {\n    handleCommand: action('Link pressed'),\n    topsNav: action('Open tops landing'),\n    toggle: action('Switch side'),\n    closeMenu: action('Close menu'),\n  };\n  return {\n    component: StoDrawerComponent,\n    props: { ...args, ...actions, navigation, subNavigation },\n    template: `<div>\n  <sto-drawer [open]=\"open\" [animation]=\"animation\" [backdrop]=\"backdrop\">\n<sto-drawer-header>\n<div class=\"sto-drawer__header__infix\">\n        <button *ngIf=\"activePane === 'right'; else topIcon\"\n                type=\"button\"\n                mat-icon-button\n                (click)=\"toggle(); activePane = 'left'\">\n          <mat-icon>arrow_back</mat-icon>\n        </button>\n        <ng-template #topIcon>\n          <button mat-icon-button\n          type=\"button\"\n          (click)=\"topsNav()\">\n            <mat-icon [class.sto-main-icon--test-environment]=\"testEnvironment\">settings</mat-icon>\n          </button>\n        </ng-template>\n      </div>\n<div class=\"sto-drawer__header__title\">\n        <ng-container *ngIf=\"activePane === 'right'; else leftName;\">\n          <span *ngIf=\"activePane === 'right'\">\n           {{rightMenu.name}}\n         </span>\n        </ng-container>\n        <ng-template #leftName>\n         <span *ngIf=\"activePane === 'left'\">\n           {{leftMenu.name}}\n         </span>\n        </ng-template>\n      </div>\n      <div class=\"sto-drawer__header__suffix\">\n        <button type=\"button\"\n                mat-icon-button\n                (click)=\"closeMenu(); open = false\">\n          <mat-icon>close</mat-icon>\n        </button>\n      </div>\n</sto-drawer-header>\n<sto-slide-panel class=\"sto-slide-panel\"\n                     [activePane]=\"activePane\">\n                     {{activePane}}\n<sto-navigation-menu [menu]=\"subNavigation\"\n*ngIf=\"activePane === 'right'\"\n                         (onCommand)=\"handleCommand('internal', $event.command)\"\n                         rightPane></sto-navigation-menu>\n<sto-navigation-menu [menu]=\"navigation\"\n*ngIf=\"activePane === 'left'\"\n                         (onCommand)=\"activePane = 'right'; handleCommand('root', $event.command)\"\n                         leftPane></sto-navigation-menu>\n                         </sto-slide-panel>\n</sto-drawer>\n\n\n<mat-card class=\"sto-card sto-form\">\n<mat-card-title class=\"sto-card__title\">Content title</mat-card-title>\n</mat-card>\n<mat-card class=\"sto-card sto-form\">\n<mat-card-title class=\"sto-card__title\">Content title</mat-card-title>\n</mat-card>\n</div>`\n  };\n}"
       },
       {
         "name": "THEME_SAVER",
@@ -21829,6 +21829,16 @@
         "name": "Usage",
         "ctype": "miscellaneous",
         "subtype": "variable",
+        "file": "libs/form/src/lib/sto-form/form-field.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "",
+        "defaultValue": "Template.bind({})"
+      },
+      {
+        "name": "Usage",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
         "file": "libs/form/src/lib/number-input/number-input.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -21840,16 +21850,6 @@
         "ctype": "miscellaneous",
         "subtype": "variable",
         "file": "libs/form/src/lib/number-input/value-unit-input.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "",
-        "defaultValue": "Template.bind({})"
-      },
-      {
-        "name": "Usage",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
-        "file": "libs/form/src/lib/sto-form/form-field.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -23463,27 +23463,6 @@
           "type": "any"
         }
       ],
-      "libs/datatable/src/test.ts": [
-        {
-          "name": "context",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/datatable/src/test.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "",
-          "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
-        },
-        {
-          "name": "require",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/datatable/src/test.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "any"
-        }
-      ],
       "libs/error-handler/src/test.ts": [
         {
           "name": "context",
@@ -23505,12 +23484,12 @@
           "type": "any"
         }
       ],
-      "libs/drawer/src/test.ts": [
+      "libs/datatable/src/test.ts": [
         {
           "name": "context",
           "ctype": "miscellaneous",
           "subtype": "variable",
-          "file": "libs/drawer/src/test.ts",
+          "file": "libs/datatable/src/test.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "",
@@ -23520,7 +23499,7 @@
           "name": "require",
           "ctype": "miscellaneous",
           "subtype": "variable",
-          "file": "libs/drawer/src/test.ts",
+          "file": "libs/datatable/src/test.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "any"
@@ -23542,6 +23521,27 @@
           "ctype": "miscellaneous",
           "subtype": "variable",
           "file": "libs/form/src/test.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "any"
+        }
+      ],
+      "libs/drawer/src/test.ts": [
+        {
+          "name": "context",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/drawer/src/test.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "",
+          "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+        },
+        {
+          "name": "require",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/drawer/src/test.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "any"
@@ -23767,18 +23767,6 @@
           "defaultValue": "new Map([\n  [ 'equinor', `<svg width=\"26\" height=\"30\" viewBox=\"0 0 26 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M3.20802 6.37778L3.20825 14.4349C3.20802 14.6738 3.32778 14.8944 3.53463 15.0135L10.5162 19.0356C10.8124 19.2063 11.1901 18.9925 11.1903 18.6506V10.5937C11.1905 10.3548 11.0632 10.1342 10.8561 10.0149L3.87479 5.99297C3.5784 5.82233 3.20847 6.03607 3.20802 6.37778ZM24.7118 0.0862991L14.6605 5.87699C14.3628 6.04851 14.1793 6.36601 14.1797 6.70972V18.3095C14.1802 18.8019 14.7239 19.1094 15.1502 18.8637L25.2017 13.0734C25.4994 12.9017 25.6716 12.5842 25.6711 12.2405L25.6714 0.640639C25.6709 0.148287 25.1383 -0.15921 24.7118 0.0862991ZM10.9237 24.7574L8.13043 26.3669C8.04778 26.4147 7.99668 26.5029 7.99668 26.5984L7.99646 29.8218C7.99646 29.9589 8.14798 30.0442 8.2664 29.976L11.0597 28.3668C11.1425 28.3192 11.1905 28.2308 11.1903 28.1355V24.9116C11.1903 24.775 11.0421 24.6895 10.9237 24.7574ZM9.29577 21.7831L5.11256 19.3625C4.98858 19.2909 4.83572 19.2909 4.71174 19.3625L0.528527 21.7831C0.351005 21.8858 0.351005 22.1419 0.528527 22.2448L4.71174 24.665C4.83572 24.737 4.98858 24.737 5.11256 24.665L9.29577 22.2448C9.47329 22.1419 9.47329 21.8858 9.29577 21.7831ZM16.0303 22.2195L17.889 23.2948C17.999 23.3586 18.1348 23.3586 18.245 23.2948L20.1035 22.2195C20.2613 22.1279 20.2613 21.9002 20.1035 21.8089L18.245 20.7335C18.1348 20.6698 17.999 20.6698 17.889 20.7335L16.0303 21.8089C15.8725 21.9002 15.8725 22.1279 16.0303 22.2195ZM14.5352 24.8077L16.3958 25.8794C16.506 25.943 16.574 26.0607 16.574 26.1881L16.5717 28.3352C16.5715 28.5174 16.3742 28.6314 16.2162 28.5405L14.3557 27.4687C14.2455 27.4052 14.18 27.287 14.18 27.1601L14.1797 25.0129C14.1797 24.831 14.3773 24.7166 14.5352 24.8077Z\" fill=\"#EB0037\"/>\n</svg>` ]\n])"
         }
       ],
-      "libs/form/src/lib/sto-select-filter/item-list.ts": [
-        {
-          "name": "items",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/form/src/lib/sto-select-filter/item-list.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "[]",
-          "defaultValue": "[\n  {id: 1, name: 'TEST1', longName: 'LONG TEST1'},\n  {id: 2, name: 'TEST2', longName: 'LONG TEST2'},\n  {id: 3, name: 'TEST3', longName: 'LONG TEST3'},\n  {id: 4, name: 'TEST4', longName: 'LONG TEST4'},\n  {id: 5, name: 'TEST5', longName: 'LONG TEST5'},\n  {id: 6, name: 'TEST6', longName: 'LONG TEST6'},\n  {id: 7, name: 'TEST7', longName: 'LONG TEST7'},\n  {id: 8, name: 'TEST8', longName: 'LONG TEST8'},\n  {id: 9, name: 'TEST9', longName: 'LONG TEST9'},\n  {id: 10, name: 'TEST10', longName: 'LONG TEST10'},\n]"
-        }
-      ],
       "libs/form/src/lib/sto-option-select-all/sto-option-select-all.stories.ts": [
         {
           "name": "items",
@@ -23799,6 +23787,18 @@
           "deprecationMessage": "",
           "type": "Story<any>",
           "defaultValue": "(args) => ( {\n  props: {\n    selected: [ 1, 2 ],\n    isFilter: true,\n    focusIfNoValue: false,\n    items,\n    total: items.length,\n    valueChange: (event: any) => console.log(event),\n    ctrl: new UntypedFormControl([ 1, 2 ])\n  }, template: `\n<mat-card style=\"width: 300px\" class=\"sto-form\" >\n  <mat-form-field stoFormField\n                  floatLabel=\"always\" >\n    <mat-label>Multiselect with filter</mat-label>\n    <mat-select [multiple]=\"true\"\n    [formControl]=\"ctrl\"\n                (selectionChange)=\"valueChange($event)\"\n                [value]=\"selected\">\n      <sto-option-select-all></sto-option-select-all>\n      <mat-option *ngFor=\"let opt of items\"\n                  [value]=\"opt.id\">{{opt.name}}</mat-option>\n    </mat-select>\n  </mat-form-field>\n</mat-card>`\n} )"
+        }
+      ],
+      "libs/form/src/lib/sto-select-filter/item-list.ts": [
+        {
+          "name": "items",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/form/src/lib/sto-select-filter/item-list.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "[]",
+          "defaultValue": "[\n  {id: 1, name: 'TEST1', longName: 'LONG TEST1'},\n  {id: 2, name: 'TEST2', longName: 'LONG TEST2'},\n  {id: 3, name: 'TEST3', longName: 'LONG TEST3'},\n  {id: 4, name: 'TEST4', longName: 'LONG TEST4'},\n  {id: 5, name: 'TEST5', longName: 'LONG TEST5'},\n  {id: 6, name: 'TEST6', longName: 'LONG TEST6'},\n  {id: 7, name: 'TEST7', longName: 'LONG TEST7'},\n  {id: 8, name: 'TEST8', longName: 'LONG TEST8'},\n  {id: 9, name: 'TEST9', longName: 'LONG TEST9'},\n  {id: 10, name: 'TEST10', longName: 'LONG TEST10'},\n]"
         }
       ],
       "libs/form/src/lib/sto-select-filter/mat-select-filter.stories.ts": [
@@ -23899,6 +23899,28 @@
           "defaultValue": "(args: NavDrawerComponent) => {\n  return {\n    component: NavDrawerComponent,\n    props: { ...args, activate: action('Activate route') },\n    template: `\n    <sto-app-header></sto-app-header>\n    <sto-nav-drawer (activate)=\"collapsed = true; activate($event)\" [withAppHeader]=\"true\" [navigationItems]=\"navigationItems\" [collapsed]=\"collapsed\"></sto-nav-drawer>\n    `\n  };\n}"
         }
       ],
+      "libs/error-handler/src/lib/error-handler.stories.ts": [
+        {
+          "name": "NormalUse",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/error-handler/src/lib/error-handler.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "",
+          "defaultValue": "Template.bind({})"
+        },
+        {
+          "name": "Template",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/error-handler/src/lib/error-handler.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story<Record<string, >>",
+          "defaultValue": "(args: Record<string, unknown> ) => {\n  return {\n    props: args,\n    template: `<next-wrapper></next-wrapper>`,\n  };\n}"
+        }
+      ],
       "libs/datatable/src/lib/datatable.stories.ts": [
         {
           "name": "NormalUse",
@@ -23931,28 +23953,6 @@
           "deprecationMessage": "",
           "type": "Story<Record<string, >>",
           "defaultValue": "(args: Record<string, unknown>) => {\n  return {\n    props: args,\n    template: `<mat-card>\n<mat-card-title><h2>This replaces StoComplexDatatable and is only here for CSS</h2></mat-card-title>\n<ngx-datatable [loadingIndicator]=\"loading\"\n[footerHeight]=\"40\"\n[selectionType]=\"'single'\"\n[scrollbarV]=\"true\"\n[scrollbarH]=\"horizontalScroll\"\n[style.height.px]=\"height\"\n[rowHeight]=\"rowHeight\"\n[headerHeight]=\"headerHeight\"\n[class.sto-datatable]=\"withCss\"\n[rows]=\"rows\"\n[columns]=\"columns\"></ngx-datatable>\n</mat-card>`\n  };\n}"
-        }
-      ],
-      "libs/error-handler/src/lib/error-handler.stories.ts": [
-        {
-          "name": "NormalUse",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/error-handler/src/lib/error-handler.stories.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "",
-          "defaultValue": "Template.bind({})"
-        },
-        {
-          "name": "Template",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/error-handler/src/lib/error-handler.stories.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "Story<Record<string, >>",
-          "defaultValue": "(args: Record<string, unknown> ) => {\n  return {\n    props: args,\n    template: `<next-wrapper></next-wrapper>`,\n  };\n}"
         }
       ],
       "libs/drawer/src/lib/sto-drawer/drawer.stories.ts": [
@@ -24165,28 +24165,6 @@
           "defaultValue": "(args: Record<string, unknown>) => ( {\n  props: { ...args },\n  template: `<mat-card class=\"sto-card\">\n<div style=\"background: white;\" stoGrid [maxWidth]=\"1000\" [breakpoints]=\"breakpoints\">\n<div stoGridColumn style=\"background: lightblue;\">1 (col)</div>\n<div stoGridColumn style=\"background: lightblue;\">2 (col)</div>\n<div stoGridColumn style=\"background: lightblue;\">3 (col)</div>\n<div stoGridColumn style=\"background: lightblue;\">4 (col)</div>\n<div stoGridColumn style=\"background: lightblue;\">5 (col)</div>\n<div stoGridColumn style=\"background: lightblue;\">6 (col)</div>\n<div stoGridColumn [stoGridColumnDouble]=\"true\" style=\"background: lightblue;\">7 (double col)</div>\n<div stoGridColumn [stoGridColumnDouble]=\"true\" style=\"background: lightblue;\">8 (double col)</div>\n<div stoGridColumn [stoGridColumnDouble]=\"true\" stoGridSpacer>9 (double spacer, hidden on 2-col)</div>\n<div stoGridColumn [stoGridColumnDouble]=\"true\" style=\"background: lightblue;\">10 (double col)</div>\n<div stoGridColumn style=\"background: lightblue;\">11 (col)</div>\n<div stoGridColumn stoGridSpacer>12 (spacer, hidden on 1-col)</div>\n<div stoGridColumn style=\"background: transparent;\" class=\"sto-form\"></div>\n<div stoGridColumn stoGridSpacer style=\"background: lightblue;\">13 (col spacer, hidden on 1-col grid)</div>\n<div stoGridColumn stoGridSpacer style=\"background: lightblue;\" [stoGridColumnDouble]=\"true\" >14 (double spacer, hidden on 2-col)</div>\n</div>\n</mat-card>`\n} )"
         }
       ],
-      "libs/form/src/lib/number-input/number-input.stories.ts": [
-        {
-          "name": "Template",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/form/src/lib/number-input/number-input.stories.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "Story<>",
-          "defaultValue": "(args) => {\n  return {\n    component: NumberInputComponent,\n    props: {\n      ...args,\n      change: action('Value changed'),\n      control: new UntypedFormControl(null, Validators.required),\n      toggleValidator: (ctrl: AbstractControl) => {\n        if ( ctrl.validator ) {\n          ctrl.clearValidators();\n        } else {\n          ctrl.setValidators(Validators.required);\n        }\n        ctrl.updateValueAndValidity();\n      },\n    },\n    template: `\n  <mat-card class=\"sto-form\" style=\"width: 600px\">\n  <button (click)=\"control.disabled ? control.enable() : control.disable()\">Toggle disabled</button><br>\n  <button (click)=\"toggleValidator(control)\">Toggle validator</button><br>\n  <button (click)=\"control.markAsTouched()\">Touched</button><br>\n    <mat-form-field stoFormField floatLabel=\"always\">\n      <mat-label>{{label}}</mat-label>\n      <sto-number-input (ngModelChange)=\"change($event)\"\n            [dynamicFractionSize]=\"dynamicFractionSize\"\n                        [fractionSize]=\"fractionSize\"\n                        [readonly]=\"readonly\"\n                        [formControl]=\"control\"\n                        [placeholder]=\"placeholder\">\n      </sto-number-input>\n      <span matSuffix>{{ suffix }}</span>\n      <mat-error *ngIf=\"control.hasError('required')\">{{ control.getError('required') }}</mat-error>\n    </mat-form-field><br>\n    {{control.value}}\n  </mat-card>`\n  };\n}"
-        },
-        {
-          "name": "Usage",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "libs/form/src/lib/number-input/number-input.stories.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "",
-          "defaultValue": "Template.bind({})"
-        }
-      ],
       "libs/form/src/lib/sto-form/form-field.stories.ts": [
         {
           "name": "Template",
@@ -24203,6 +24181,28 @@
           "ctype": "miscellaneous",
           "subtype": "variable",
           "file": "libs/form/src/lib/sto-form/form-field.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "",
+          "defaultValue": "Template.bind({})"
+        }
+      ],
+      "libs/form/src/lib/number-input/number-input.stories.ts": [
+        {
+          "name": "Template",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/form/src/lib/number-input/number-input.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story<>",
+          "defaultValue": "(args) => {\n  return {\n    component: NumberInputComponent,\n    props: {\n      ...args,\n      change: action('Value changed'),\n      control: new UntypedFormControl(null, Validators.required),\n      toggleValidator: (ctrl: AbstractControl) => {\n        if ( ctrl.validator ) {\n          ctrl.clearValidators();\n        } else {\n          ctrl.setValidators(Validators.required);\n        }\n        ctrl.updateValueAndValidity();\n      },\n    },\n    template: `\n  <mat-card class=\"sto-form\" style=\"width: 600px\">\n  <button (click)=\"control.disabled ? control.enable() : control.disable()\">Toggle disabled</button><br>\n  <button (click)=\"toggleValidator(control)\">Toggle validator</button><br>\n  <button (click)=\"control.markAsTouched()\">Touched</button><br>\n    <mat-form-field stoFormField floatLabel=\"always\">\n      <mat-label>{{label}}</mat-label>\n      <sto-number-input (ngModelChange)=\"change($event)\"\n            [dynamicFractionSize]=\"dynamicFractionSize\"\n                        [fractionSize]=\"fractionSize\"\n                        [readonly]=\"readonly\"\n                        [formControl]=\"control\"\n                        [placeholder]=\"placeholder\">\n      </sto-number-input>\n      <span matSuffix>{{ suffix }}</span>\n      <mat-error *ngIf=\"control.hasError('required')\">{{ control.getError('required') }}</mat-error>\n    </mat-form-field><br>\n    {{control.value}}\n  </mat-card>`\n  };\n}"
+        },
+        {
+          "name": "Usage",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "libs/form/src/lib/number-input/number-input.stories.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "",
