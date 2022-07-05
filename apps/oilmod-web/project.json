@@ -1,0 +1,175 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/oilmod-web/src",
+  "prefix": "oilmod-web-nx",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/oilmod-web",
+        "index": "apps/oilmod-web/src/index.html",
+        "main": "apps/oilmod-web/src/main.ts",
+        "polyfills": "apps/oilmod-web/src/polyfills.ts",
+        "tsConfig": "apps/oilmod-web/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/oilmod-web/src/favicon.ico",
+          "apps/oilmod-web/src/assets"
+        ],
+        "styles": [
+          "apps/oilmod-web/src/styles.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/oilmod-web/src/environments/environment.ts",
+              "with": "apps/oilmod-web/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "oilmod-web:build:production"
+        },
+        "development": {
+          "browserTarget": "oilmod-web:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "oilmod-web:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/oilmod-web/src/**/*.ts",
+          "apps/oilmod-web/src/**/*.html"
+        ]
+      },
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/oilmod-web"
+      ],
+      "options": {
+        "jestConfig": "apps/oilmod-web/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "apps/oilmod-web/.storybook",
+        "browserTarget": "oilmod-web:build",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputDir": "dist/storybook/oilmod-web",
+        "configDir": "apps/oilmod-web/.storybook",
+        "browserTarget": "oilmod-web:build",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-all": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "$(npm bin)/nx build testing",
+          "$(npm bin)/nx build core",
+          "$(npm bin)/nx build form",
+          "$(npm bin)/nx build common",
+          "$(npm bin)/nx build datatable",
+          "$(npm bin)/nx build drawer",
+          "$(npm bin)/nx build error-handler",
+          "for dir in ./dist/libs/* ; do cp license.md $dir/ ; done"
+        ],
+        "parallel": false
+      }
+    },
+    "test-all": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "$(npm bin)/nx test core",
+          "$(npm bin)/nx test form",
+          "$(npm bin)/nx test common",
+          "$(npm bin)/nx test datatable",
+          "$(npm bin)/nx test drawer",
+          "$(npm bin)/nx test error-handler"
+        ],
+        "parallel": true
+      }
+    },
+    "lint-all": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "$(npm bin)/nx lint core --fix",
+          "$(npm bin)/nx lint form --fix",
+          "$(npm bin)/nx lint common --fix",
+          "$(npm bin)/nx lint datatable --fix",
+          "$(npm bin)/nx lint drawer --fix",
+          "$(npm bin)/nx lint error-handler --fix"
+        ],
+        "parallel": true
+      }
+    }
+  },
+  "tags": []
+}
