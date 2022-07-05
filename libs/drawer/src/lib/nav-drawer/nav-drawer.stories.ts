@@ -49,7 +49,7 @@ export default {
   ],
   argTypes: {
     open: {
-      control: {type: 'boolean'}
+      control: { type: 'boolean' }
     }
   }
 } as Meta;
@@ -143,17 +143,17 @@ NormalUse.args = {
 export const WithAppHeader = (args: NavDrawerComponent) => {
   return {
     component: NavDrawerComponent,
-    props: args,
+    props: { ...args, activate: action('Activate route') },
     template: `
     <sto-app-header></sto-app-header>
-    <sto-nav-drawer (activate)="activate($event)" [withAppHeader]="true" [navigationItems]="navigationItems" [collapsed]="collapsed"></sto-nav-drawer>
+    <sto-nav-drawer (activate)="collapsed = true; activate($event)" [withAppHeader]="true" [navigationItems]="navigationItems" [collapsed]="collapsed"></sto-nav-drawer>
     `
   };
 };
 WithAppHeader.args = {
   navigationItems,
   collapsed: true,
-  activate: action('Activate route')
+
 };
 
 

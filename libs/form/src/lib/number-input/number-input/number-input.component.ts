@@ -13,7 +13,7 @@ import {
   Self,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm, UntypedFormControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -22,17 +22,6 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormFieldBase } from '../../sto-form/form-field.base';
-
-/*
-class NumberInputBase {
-  constructor(public _elementRef: ElementRef,
-              public _defaultErrorStateMatcher: ErrorStateMatcher,
-              public _parentForm: NgForm,
-              public _parentFormGroup: FormGroupDirective,
-              public ngControl: NgControl) {}
-}
-const _NumberInputBase: CanUpdateErrorStateCtor = mixinErrorState(NumberInputBase.constructor);
-*/
 
 
 @Component({
@@ -48,26 +37,21 @@ const _NumberInputBase: CanUpdateErrorStateCtor = mixinErrorState(NumberInputBas
 export class NumberInputComponent extends FormFieldBase implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<number> {
   static nextId = 0;
   stateChanges = new Subject<void>();
-  private numberFormatter = new NumberInputPipe();
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
-  ctrl = new UntypedFormControl();
+  ctrl = new FormControl<string | number | null>(null);
   public sub = new Subscription();
   @Input()
   dynamicFractionSize: boolean;
-
-  @HostBinding('class.floating')
-  get shouldLabelFloat() {
-    return this.focused || !this.empty;
-  }
-
   @HostBinding()
   id = `value-unit-input-${NumberInputComponent.nextId++}`;
   @HostBinding('attr.aria-describedby')
   describedBy = '';
-
   errorState: boolean;
+  @Output()
+  ngModelChange = new EventEmitter<number | null>();
+  private numberFormatter = new NumberInputPipe();
 
   /*  get errorState() {
       return this._errorState && (this.ngControl ? this.ngControl.touched : false);
@@ -79,106 +63,6 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
     }
 
     private _errorState: boolean;*/
-
-  @Output()
-  ngModelChange = new EventEmitter<number | null>();
-
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(value: boolean) {
-    this._disabled = coerceBooleanProperty(value);
-    const opts = { onlySelf: true, emitEvent: false };
-    this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
-    this.stateChanges.next();
-  }
-
-  private _disabled = false;
-
-  @Input()
-  get readonly(): boolean {
-    return this._readonly;
-  }
-
-  set readonly(value: boolean) {
-    this._readonly = coerceBooleanProperty(value);
-    this.stateChanges.next();
-  }
-
-  private _readonly = false;
-
-  @Input()
-  get fractionSize() {
-    return this._fractionSize;
-  }
-
-  set fractionSize(fractionSize) {
-    if ( !fractionSize && fractionSize !== 0 ) {
-      fractionSize = 3;
-    }
-    this._fractionSize = fractionSize;
-    this.value = this._value;
-    this.stateChanges.next();
-  }
-
-  private _fractionSize: number;
-
-  get empty() {
-    const value = this.ctrl.value;
-    return !( value && value !== 0 );
-  }
-
-  @Input()
-  get placeholder() {
-    return this._placeholder || '';
-  }
-
-  set placeholder(plh) {
-    this._placeholder = plh;
-    this.stateChanges.next();
-  }
-
-  private _placeholder: string;
-
-  @Input()
-  get tabIndex() {
-    return this._tabIndex;
-  }
-
-  set tabIndex(tabIndex) {
-    this._tabIndex = tabIndex;
-    this.stateChanges.next();
-  }
-
-  private _tabIndex: number;
-
-  @Input()
-  get required() {
-    return this._required;
-  }
-
-  set required(req) {
-    this._required = coerceBooleanProperty(req);
-    this.stateChanges.next();
-  }
-
-  private _required = false;
-
-  @Input()
-  get value() {
-    return this._value;
-  }
-
-  set value(value) {
-    this._value = value;
-    const valueAsString = this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize);
-    this.ctrl.setValue(valueAsString, { emitEvent: false });
-    this.stateChanges.next();
-  }
-
-  private _value: number | null;
 
   constructor(@Optional() @Self() public ngControl: NgControl,
               private fm: FocusMonitor,
@@ -196,6 +80,108 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
     });
   }
 
+  @HostBinding('class.floating')
+  get shouldLabelFloat() {
+    return this.focused || !this.empty;
+  }
+
+  private _disabled = false;
+
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(value: boolean) {
+    this._disabled = coerceBooleanProperty(value);
+    const opts = { onlySelf: true, emitEvent: false };
+    this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
+    this.stateChanges.next();
+  }
+
+  private _readonly = false;
+
+  @Input()
+  get readonly(): boolean {
+    return this._readonly;
+  }
+
+  set readonly(value: boolean) {
+    this._readonly = coerceBooleanProperty(value);
+    this.stateChanges.next();
+  }
+
+  private _fractionSize: number;
+
+  @Input()
+  get fractionSize() {
+    return this._fractionSize;
+  }
+
+  set fractionSize(fractionSize) {
+    if ( !fractionSize && fractionSize !== 0 ) {
+      fractionSize = 3;
+    }
+    this._fractionSize = fractionSize;
+    this.value = this._value;
+    this.stateChanges.next();
+  }
+
+  get empty() {
+    const value = this.ctrl.value;
+    return !( value && value !== 0 );
+  }
+
+  private _placeholder: string;
+
+  @Input()
+  get placeholder() {
+    return this._placeholder || '';
+  }
+
+  set placeholder(plh) {
+    this._placeholder = plh;
+    this.stateChanges.next();
+  }
+
+  private _tabIndex: number;
+
+  @Input()
+  get tabIndex() {
+    return this._tabIndex;
+  }
+
+  set tabIndex(tabIndex) {
+    this._tabIndex = tabIndex;
+    this.stateChanges.next();
+  }
+
+  private _required = false;
+
+  @Input()
+  get required() {
+    return this._required;
+  }
+
+  set required(req) {
+    this._required = coerceBooleanProperty(req);
+    this.stateChanges.next();
+  }
+
+  private _value: number | null;
+
+  @Input()
+  get value() {
+    return this._value;
+  }
+
+  set value(value) {
+    this._value = value;
+    const valueAsString = this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize);
+    this.ctrl.setValue(valueAsString, { emitEvent: false });
+    this.stateChanges.next();
+  }
+
   ngDoCheck(): void {
     if ( this.ngControl ) {
       this.updateErrorState();
@@ -204,8 +190,8 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
 
   ngOnInit(): void {
     const sub = this.ctrl.valueChanges
-      .subscribe((value: string) => {
-        let numericValue: null | number = parseFloat(this.numberFormatter.parse(value, this.fractionSize, this.dynamicFractionSize));
+      .subscribe((value) => {
+        let numericValue: null | number = parseFloat(this.numberFormatter.parse(value as string, this.fractionSize, this.dynamicFractionSize));
         numericValue = isNaN(numericValue) ? null : numericValue;
         this.onChange(numericValue);
         this.ngModelChange.emit(numericValue);
@@ -238,10 +224,10 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
 
   // eslint-disable-next-line
   onChange = (_: any) => {
-  }
+  };
   // eslint-disable-next-line
   onTouched = () => {
-  }
+  };
 
   matOnTouched() {
     this.stateChanges.next();

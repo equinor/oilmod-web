@@ -12,7 +12,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -25,9 +25,14 @@ import { debounceTime } from 'rxjs/operators';
 import { NumberInputDirective } from '../number-input.directive';
 
 class NumberUnit {
-  value: number | string;
-  unit: string;
+  value: number | string | null;
+  unit: string | null;
 }
+
+type NumberUnitForm = {
+  value: FormControl<number | string | null>,
+  unit: FormControl<string | null>
+};
 
 @Component({
   selector: 'sto-number-unit-input',
@@ -43,23 +48,49 @@ export class NumberUnitInputComponent extends FormFieldBase
   implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
   static nextId = 0;
   stateChanges = new Subject<void>();
-  public form: UntypedFormGroup;
+  public form: FormGroup<NumberUnitForm>;
   readonly autofilled: boolean;
   controlType = 'number-unit-input';
-  private numberFormatterPipe = new NumberInputPipe();
   @ViewChild(MatSelect)
   select: MatSelect;
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
   @ViewChild(NumberInputDirective)
   numberInputDirective: NumberInputDirective;
-
   errorState: boolean;
-
   @Input()
   unitOptional = true;
   @Input()
   unitClearText = '(none)';
+  public focused: boolean;
+  @HostBinding()
+  id = `value-unit-input-${NumberUnitInputComponent.nextId++}`;
+  @HostBinding('attr.aria-describedby') describedBy = '';
+  public sub = new Subscription();
+  private numberFormatterPipe = new NumberInputPipe();
+
+  constructor(@Optional() @Self() public ngControl: NgControl,
+              private fm: FocusMonitor,
+              private fb: FormBuilder,
+              @Optional() _parentForm: NgForm,
+              @Optional() _parentFormGroup: FormGroupDirective,
+              _defaultErrorStateMatcher: ErrorStateMatcher,
+              private elRef: ElementRef<HTMLElement>) {
+    super(elRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
+    this.form = this.fb.group<NumberUnitForm>({
+      value: this.fb.control(null),
+      unit: this.fb.control(null)
+    });
+    if ( this.ngControl != null ) {
+      this.ngControl.valueAccessor = this;
+    }
+    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+      this.focused = !!origin;
+      this.stateChanges.next();
+    });
+  }
+
+  private _disabled = false;
 
   @Input()
   get disabled(): boolean {
@@ -75,7 +106,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _disabled = false;
+  private _readonly = false;
 
   @Input()
   get readonly(): boolean {
@@ -89,7 +120,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _readonly = false;
+  private _list: { value: unknown; title?: string; }[] = [];
 
   @Input()
   get list() {
@@ -101,7 +132,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _list: { value: unknown; title?: string; }[] = [];
+  private _fractionSize: number;
 
   @Input()
   get fractionSize() {
@@ -113,18 +144,12 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _fractionSize: number;
-
   get empty() {
     const n = this.form.value;
     return !n.value && !n.unit;
   }
 
-  public focused: boolean;
-
-
-  @HostBinding()
-  id = `value-unit-input-${NumberUnitInputComponent.nextId++}`;
+  private _placeholder: string;
 
   @Input()
   get placeholder() {
@@ -136,7 +161,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _placeholder: string;
+  private _unitPlaceholder: string;
 
   @Input()
   get unitPlaceholder() {
@@ -148,7 +173,7 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _unitPlaceholder: string;
+  private _required = false;
 
   @Input()
   get required() {
@@ -160,12 +185,12 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _required = false;
-
   @HostBinding('class.floating')
   get shouldLabelFloat() {
     return this.focused || !this.empty;
   }
+
+  private _value: NumberUnit | null;
 
   get value(): NumberUnit | null {
     return this._value;
@@ -182,44 +207,15 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.stateChanges.next();
   }
 
-  private _value: NumberUnit | null;
-
-  @HostBinding('attr.aria-describedby') describedBy = '';
-
-  public sub = new Subscription();
-
-
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              private fm: FocusMonitor,
-              private fb: UntypedFormBuilder,
-              @Optional() _parentForm: NgForm,
-              @Optional() _parentFormGroup: FormGroupDirective,
-              _defaultErrorStateMatcher: ErrorStateMatcher,
-              private elRef: ElementRef<HTMLElement>) {
-    super(elRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
-    this.form = this.fb.group({
-      value: [],
-      unit: []
-    });
-    if ( this.ngControl != null ) {
-      this.ngControl.valueAccessor = this;
-    }
-    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
-      this.focused = !!origin;
-      this.stateChanges.next();
-    });
-  }
-
   ngDoCheck(): void {
     if ( this.ngControl ) {
       this.updateErrorState();
     }
   }
 
-
   ngOnInit(): void {
     const sub = this.form.valueChanges
-      .subscribe((value: NumberUnit) => {
+      .subscribe((value) => {
         const valueAsString = value.value as string;
         let numberValue: number | null = parseFloat(this.numberFormatterPipe.parse(valueAsString, this.fractionSize));
         numberValue = !isNaN(numberValue) ? numberValue : null;
@@ -263,10 +259,10 @@ export class NumberUnitInputComponent extends FormFieldBase
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   onChange = (_: unknown) => {
-  }
+  };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {
-  }
+  };
 
   writeValue(value: NumberUnit | null): void {
     this.value = value;
@@ -285,3 +281,5 @@ export class NumberUnitInputComponent extends FormFieldBase
   }
 
 }
+
+// {eslint-plugin,eslint-plugin-template,template-parser}@^14.0.0

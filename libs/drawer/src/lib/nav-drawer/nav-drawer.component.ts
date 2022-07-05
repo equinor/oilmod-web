@@ -47,6 +47,6 @@ export class NavDrawerComponent implements AfterViewInit {
 
   onActivate(item: Navigation) {
     this.activate.emit(item);
-    // collapse? Should be handled at parent imo, otherwise un-collapsing will be a problem
+    this.collapsed = true;
   }
 }

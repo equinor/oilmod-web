@@ -1,0 +1,46 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/testing/src",
+  "prefix": "oilmod-web-nx",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "project": "libs/testing/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/testing/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/testing/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/testing"
+      ],
+      "options": {
+        "jestConfig": "libs/testing/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/testing/src/**/*.ts",
+          "libs/testing/src/**/*.html"
+        ]
+      },
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    }
+  },
+  "tags": []
+}
