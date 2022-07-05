@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Divider = 'below' | 'above' | null;
 
 type CommonNavigation = {
@@ -12,7 +13,7 @@ type CommonNavigation = {
   /**
    * route is used for internal routing in the same application
    */
-  route?: Array<string | number>;
+  route?: Array<any>; // any is used for the type to match up with Angular's router commands
   /**
    * link is used for external links to different applications (reports or other micro-frontends)
    */

@@ -25,14 +25,6 @@
       }
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
-  },
   "defaultProject": "oilmod-web",
   "generators": {
     "@nrwl/angular": {
@@ -60,5 +52,12 @@
       "style": "scss"
     }
   },
-  "$schema": "./node_modules/nx/schemas/nx-schema.json"
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ]
+    }
+  }
 }

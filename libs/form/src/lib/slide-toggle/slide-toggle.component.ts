@@ -14,7 +14,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, NgControl, UntypedFormControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Subject, Subscription } from 'rxjs';
@@ -43,7 +43,7 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   focused: boolean;
   autofilled: boolean;
   controlType = 'number-input';
-  ctrl = new UntypedFormControl();
+  ctrl = new FormControl<boolean | null>(null);
   public sub = new Subscription();
   @HostBinding()
   id = `value-unit-input-${SlideToggleComponent.nextId++}`;
@@ -53,11 +53,28 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   slideToggle: MatSlideToggle;
   @Output()
   toggled = new EventEmitter<StoSlideToggleChange>();
+  placeholder: string; // Required by material control, but not used.
+  @Input()
+  model: unknown;
+
+  constructor(@Optional() @Self() public ngControl: NgControl,
+              private fm: FocusMonitor,
+              private elRef: ElementRef<HTMLElement>) {
+    if ( this.ngControl != null ) {
+      this.ngControl.valueAccessor = this;
+    }
+    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+      this.focused = !!origin;
+      this.stateChanges.next();
+    });
+  }
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
     return this.focused || !this.empty;
   }
+
+  private _errorState: boolean;
 
   get errorState() {
     return this._errorState;
@@ -67,8 +84,6 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     this._errorState = errorState;
     this.stateChanges.next();
   }
-
-  private _errorState: boolean;
 
   private _disabled = false;
 
@@ -84,6 +99,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     this.stateChanges.next();
   }
 
+  private _color: ThemePalette;
+
   @Input()
   get color(): ThemePalette {
     return this._color || 'primary';
@@ -93,8 +110,6 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     this._color = color || 'primary';
     this.stateChanges.next();
   }
-
-  private _color: ThemePalette;
 
   private _readonly = false;
 
@@ -112,10 +127,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   get empty() {
     const value = this.ctrl.value;
-    return !( value && value !== 0 );
+    return value === null || value === undefined;
   }
-
-  placeholder: string; // Required by material control, but not used.
 
   private _required = false;
 
@@ -142,26 +155,11 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     this.stateChanges.next();
   }
 
-  @Input()
-  model: unknown;
-
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              private fm: FocusMonitor,
-              private elRef: ElementRef<HTMLElement>) {
-    if ( this.ngControl != null ) {
-      this.ngControl.valueAccessor = this;
-    }
-    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
-      this.focused = !!origin;
-      this.stateChanges.next();
-    });
-  }
-
   ngOnInit(): void {
     const sub = this.ctrl.valueChanges
-      .subscribe((value: boolean) => {
+      .subscribe((value) => {
         const event = new StoSlideToggleChange();
-        event.checked = value;
+        event.checked = value ?? false;
         event.source = this;
         this.toggled.emit(event);
         this.onChange(value);
@@ -192,10 +190,10 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onChange = (_: unknown) => {
-  }
+  };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {
-  }
+  };
 
   writeValue(value: boolean): void {
     this.value = value;
