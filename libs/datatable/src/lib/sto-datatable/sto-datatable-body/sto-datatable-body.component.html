@@ -1,63 +1,67 @@
-<cdk-virtual-scroll-viewport [itemSize]="(!smallView || !responsive) ? rowHeight : 80"
-                             *ngIf="virtualScroll"
-                             [style.height.px]="(height || 500) "
+<cdk-virtual-scroll-viewport #scrollViewport
                              (scroll)="scrollHeader.emit($event)"
-                             [class.sto-mdl-table__body--selectable]="selectable"
-                             #scrollViewport
+                             *ngIf="virtualScroll"
                              [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
-                             class="sto-mdl-table__body">
-  <sto-datatable-body-row *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; let last = last; trackBy: trackBy"
-                          matRipple
+                             [class.sto-mdl-table__body--selectable]="selectable"
+                             [itemSize]="(!smallView || !responsive) ? rowHeight : 80"
+                             [style.height.px]="(height || 500) "
+                             class="sto-mdl-table__body"
+                             role="rowgroup">
+  <sto-datatable-body-row #rowEl
+                          (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          (keydown)="onKeyDownHandler($event, rowEl.element, {index: i, event: $event, row: row})"
+                          (rowContextMenu)="rowContextMenu.emit($event)"
+                          *cdkVirtualFor="let row of rows; templateCacheSize: 0; let i = index; let last = last; trackBy: trackBy"
+                          [columnMode]="columnMode"
+                          [columns]="columns"
+                          [compressedView]="smallView && responsive"
+                          [isSelected]="selected === row"
                           [matRippleDisabled]="disableRipple"
                           [matRippleUnbounded]="false"
-                          [style.min-width]="width"
-                          [style.transform]="scrollLeft"
-                          [columnMode]="columnMode"
-                          [tabindex]="0"
-                          [columns]="columns"
-                          [row]="row"
                           [responsiveView]="responsiveView"
-                          [rowIndex]="i"
                           [rowClass]="rowClass"
-                          #rowEl
-                          (keydown)="onKeyDownHandler($event, rowEl.element, {index: i, event: $event, row: row})"
-                          [isSelected]="selected === row"
-                          [compressedView]="smallView && responsive"
-                          (rowContextMenu)="rowContextMenu.emit($event)"
-                          (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
-                          (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
+                          [rowIndex]="i"
+                          [row]="row"
+                          [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'"
+                          [style.min-width]="width"
                           [style.overflow]="disableRipple ? 'visible' : 'hidden'"
-                          [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
+                          [style.transform]="scrollLeft"
+                          [tabindex]="0"
+                          matRipple
+                          role="row">
   </sto-datatable-body-row>
-  <sto-datatable-body-row [style.height.px]="rowHeight"
-                          *ngIf="scrollbarH && hasFooter"></sto-datatable-body-row>
+  <sto-datatable-body-row *ngIf="scrollbarH && hasFooter"
+                          [style.height.px]="rowHeight"></sto-datatable-body-row>
 </cdk-virtual-scroll-viewport>
 
-<div class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
-     *ngIf="!virtualScroll"
+<div #scroller
      (scroll)="scrollHeader.emit($event)"
-     #scroller
+     *ngIf="!virtualScroll"
      [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
      [class.sto-mdl-table__body--selectable]="selectable"
+     [style.height]="height ? (height + 'px') : 'auto'"
      [style.padding-bottom.px]="horizontalScrollActive && hasFooter ? rowHeight : 0"
-     [style.height]="height ? (height + 'px') : 'auto'">
+     class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
+     role="rowgroup">
 
-  <sto-datatable-body-row *ngFor="let row of rows; let i = index; trackBy: trackBy"
-                          [style.min-width]="width"
-                          [tabindex]="0"
-                          [columns]="columns"
-                          [row]="row"
-                          [responsiveView]="responsiveView"
-                          [rowIndex]="i"
-                          [rowClass]="rowClass"
-                          #rowEl
-                          (keydown)="onKeyDownHandler($event, rowEl.element, {index: i, event: $event, row: row})"
-                          [isSelected]="selected === row"
-                          [compressedView]="smallView && responsive"
-                          (rowContextMenu)="rowContextMenu.emit($event)"
+  <sto-datatable-body-row #rowEl
                           (click)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
                           (dblclick)="selectRow($event, {index: i, event: $event, row: row, rowEl: rowEl.element})"
-                          [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'">
+                          (keydown)="onKeyDownHandler($event, rowEl.element, {index: i, event: $event, row: row})"
+                          (rowContextMenu)="rowContextMenu.emit($event)"
+                          *ngFor="let row of rows; let i = index; trackBy: trackBy"
+                          [columns]="columns"
+                          [compressedView]="smallView && responsive"
+                          [isSelected]="selected === row"
+                          [responsiveView]="responsiveView"
+                          [rowClass]="rowClass"
+                          [rowIndex]="i"
+                          [row]="row"
+                          [style.height]="((!smallView || !responsive) ? rowHeight : 80) + 'px'"
+                          [style.min-width]="width"
+                          [tabindex]="0"
+                          role="row">
   </sto-datatable-body-row>
   <!--<div *ngFor="let row of rows; let i = index; trackBy: trackBy"
        [tabindex]="0"

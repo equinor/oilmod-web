@@ -1,87 +1,88 @@
-<div class="sto-mdl-table"
-     [class.sto-mdl-table--force-width]="columnMode === ColumnDisplay.Force"
-     [style.height.px]="height$ | async">
+<div [class.sto-mdl-table--force-width]="columnMode === ColumnDisplay.Force"
+     [style.height.px]="height$ | async"
+     class="sto-mdl-table"
+     role="table">
   <ng-content select="sto-datatable-actions"></ng-content>
   <sto-datatable-header-group *ngIf="(!responsive || (responsive && !(smallScreen))) && columnGroups && this.scrollbarH"
-                              [width]="width"
+                              [columns]="columns"
+                              [groups]="columnGroups"
                               [height]="headerHeight"
                               [transform]="scrollLeft"
-                              [columns]="columns"
-                              [groups]="columnGroups"></sto-datatable-header-group>
-  <sto-datatable-header [responsive]="responsive"
-                        [groups]="groups"
-                        [columnMode]="columnMode"
+                              [width]="width"></sto-datatable-header-group>
+  <sto-datatable-header (headerContextMenu)="headerContextMenu.emit($event)"
                         (resized)="onResize($event)"
-                        [resizeable]="resizeable && scrollbarH"
-                        [smallScreen]="smallScreen"
+                        (sort)="sort($event)"
+                        [bodyHeight]="bodyHeight"
+                        [columnMode]="columnMode"
+                        [columns]="columns"
+                        [groups]="groups"
                         [headerHeight]="headerHeight"
                         [offset]="bodyHeight && rowTotalHeight > bodyHeight ? 12 : 0"
-                        [width]="width"
-                        [scrollLeft]="scrollLeft"
-                        [bodyHeight]="bodyHeight"
-                        [rows]="rows"
+                        [resizeable]="resizeable && scrollbarH"
+                        [responsive]="responsive"
                         [rowHeight]="rowHeight"
-                        [columns]="columns"
+                        [rows]="rows"
+                        [scrollLeft]="scrollLeft"
+                        [smallScreen]="smallScreen"
                         [sortable]="sortable"
-                        (sort)="sort($event)"
-                        (headerContextMenu)="headerContextMenu.emit($event)"></sto-datatable-header>
-  <div class="sto-mdl-table__progress-bar"
-       *ngIf="loading"
+                        [width]="width"></sto-datatable-header>
+  <div *ngIf="loading"
+       class="sto-mdl-table__progress-bar"
        role="progressbar">
     <div class="sto-mdl-table__progress-bar__container">
       <div class="sto-mdl-table__progress-bar__container__bar"></div>
     </div>
   </div>
-  <div class="sto-mdl-table__body--empty"
-       *ngIf="!rows || rows.length === 0">
+  <div *ngIf="!rows || rows.length === 0"
+       class="sto-mdl-table__body--empty">
     {{ emptyMessage }}
   </div>
   <sto-datatable-body #body
-                      [disableRipple]="disableRipple || select.observers.length === 0"
+                      (activate)="rowActivate.emit($event)"
+                      (rowContextMenu)="rowContextMenu.emit($event)"
+                      (rowSelected)="select.emit($event)"
+                      (scrollHeader)="setHeaderScroll($event)"
                       [columnMode]="columnMode"
-                      [width]="scrollbarH ? columnTotalWidth + 'px' : 'auto'"
-                      [selectable]="!!select.observers.length"
-                      [rows]="rows"
+                      [columns]="columns"
+                      [disableRipple]="disableRipple || select.observers.length === 0"
+                      [hasFooter]="!!footerRow"
+                      [height]="bodyHeight"
+                      [responsiveView]="responsiveView"
+                      [responsive]="responsive"
                       [rowClass]="rowClass"
+                      [rowHeight]="rowHeight"
+                      [rows]="rows"
                       [scrollLeft]="scrollbarH && footerRow ? scrollLeft : null"
-                      [selectionMode]="selectionMode"
                       [scrollbarH]="footerRow ? false : scrollbarH"
+                      [selectable]="!!select.observers.length"
+                      [selected]="selected"
+                      [selectionMode]="selectionMode"
+                      [smallView]="smallScreen"
                       [trackBy]="trackBy"
                       [virtualScroll]="virtualScroll"
-                      [height]="bodyHeight"
-                      [rowHeight]="rowHeight"
-                      (rowContextMenu)="rowContextMenu.emit($event)"
-                      (activate)="rowActivate.emit($event)"
-                      (rowSelected)="select.emit($event)"
-                      [columns]="columns"
-                      (scrollHeader)="setHeaderScroll($event)"
-                      [responsive]="responsive"
-                      [responsiveView]="responsiveView"
-                      [smallView]="smallScreen"
-                      [hasFooter]="!!footerRow"
-                      [selected]="selected"></sto-datatable-body>
-  <div class="sto-mdl-table__footer"
-       [style.overflowY]="'hidden'"
+                      [width]="scrollbarH ? columnTotalWidth + 'px' : 'auto'"></sto-datatable-body>
+  <div (scroll)="scrollBodyAndHeader($event)"
+       *ngIf="footerRow && (!responsive || (responsive && !(smallScreen)))"
        [style.overflowX]="'auto'"
-       (scroll)="scrollBodyAndHeader($event)"
+       [style.overflowY]="'hidden'"
        [style.width]="'calc(100% - ' + body.verticalScrollOffset + 'px)'"
-       *ngIf="footerRow && (!responsive || (responsive && !(smallScreen)))">
-    <div class="sto-mdl-table__footer__row"
+       class="sto-mdl-table__footer">
+    <div *ngFor="let row of footerRow; let i = index"
          [class.sto-mdl-table__row--scroll-offset]="scrollbarH && !!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight"
-         *ngFor="let row of footerRow; let i = index"
+         [style.height]="rowHeight + 'px'"
          [style.min-width]="width"
          [style.overflowY]="'hidden'"
-         [style.height]="rowHeight + 'px'">
-      <div class="sto-mdl-table__footer__row__cell"
+         class="sto-mdl-table__footer__row">
+      <div *ngFor="let column of columns; trackBy: trackColumnsFn"
            [ngStyle]="column | columnStyle:columnMode"
-           *ngFor="let column of columns; trackBy: trackColumnsFn">
+           class="sto-mdl-table__footer__row__cell">
         <span *ngIf="!column.footerTemplate">
           {{ row[column.prop] }}
         </span>
         <ng-template #footerTemplate
                      *ngIf="column.footerTemplate"
-                     [ngTemplateOutlet]="column.footerTemplate"
-                     [ngTemplateOutletContext]="{column: column, value: row[column.prop], index: i}">
+                     [ngTemplateOutletContext]="{column: column, value: row[column.prop], index: i}"
+                     [ngTemplateOutlet]="column.footerTemplate">
         </ng-template>
       </div>
     </div>

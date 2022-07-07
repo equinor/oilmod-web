@@ -1,21 +1,22 @@
 <!--<div>-->
 <ng-container *ngIf="compressedView; else regular">
-  <ng-template [ngTemplateOutlet]="responsiveView"
-               [ngTemplateOutletContext]="{row: row}">
+  <ng-template [ngTemplateOutletContext]="{row: row}"
+               [ngTemplateOutlet]="responsiveView">
   </ng-template>
 </ng-container>
 <ng-template #regular>
-  <div class="sto-mdl-table__body__row__cell"
+  <div (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: rowIndex})"
+       *ngFor="let column of columns; trackBy: trackColumn"
        [ngClass]="column.cellClass | exec:row[column.prop]:column:row"
        [ngStyle]="column | columnStyle:columnMode"
-       (contextmenu)="rowContextMenu.emit({event: $event, column: column, row: row, index: rowIndex})"
-       *ngFor="let column of columns; trackBy: trackColumn">
+       class="sto-mdl-table__body__row__cell"
+       role="cell">
     <span *ngIf="!column.cellTemplate"
           [title]="row[column.prop] || ''">{{ row[column.prop] }}</span>
     <ng-template #cellTemplate
                  *ngIf="column.cellTemplate"
-                 [ngTemplateOutlet]="column.cellTemplate"
-                 [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: rowIndex}">
+                 [ngTemplateOutletContext]="{row: row, column: column, value: row[column.prop], index: rowIndex}"
+                 [ngTemplateOutlet]="column.cellTemplate">
     </ng-template>
   </div>
 </ng-template>
