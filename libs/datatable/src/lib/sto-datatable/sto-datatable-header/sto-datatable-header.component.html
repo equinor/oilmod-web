@@ -38,15 +38,15 @@
          [class.sto-mdl-table__header__row__cell--sortable]="sortable && !column.disableSort"
          [ngClass]="column.headerClass | exec:column"
          [ngStyle]="column | columnStyle:columnMode"
-         class="sto-mdl-table__header__row__cell"
-         role="columnheader">
+         class="sto-mdl-table__header__row__cell">
       <div #sortHeader
            (click)="$event.stopPropagation()"
            [arrowPosition]="column.sortArrowPosition || 'after'"
            [disabled]="column.disableSort"
            [mat-sort-header]="column.$$id"
            [sortActionDescription]="'Sort by ' + column.name"
-           class="sto-mdl-table__header__row__cell__label">
+           class="sto-mdl-table__header__row__cell__label"
+           role="columnheader">
         <span *ngIf="!column.headerTemplate"
               [title]="column.name"
               class="sto-mdl-table__header__row__cell__content">{{ column.name || '' }}</span>
