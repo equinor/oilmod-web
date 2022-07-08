@@ -7,7 +7,10 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
+  Inject,
+  Input,
   OnDestroy,
+  Optional,
   QueryList
 } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -16,6 +19,7 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
 import { NgControl } from '@angular/forms';
+import { HIDE_FORM_FIELD_TITLE } from './token';
 
 @Directive({
   selector: 'mat-form-field[stoFormField]',
@@ -24,12 +28,15 @@ import { NgControl } from '@angular/forms';
 export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDestroy {
   @ContentChildren(MatFormFieldControl)
   input: QueryList<MatFormFieldControl<unknown>>;
+  @Input()
+  disableFormFieldTitle: boolean;
   @HostBinding('title')
   title = '';
   private destroyed$ = new Subject();
   private titleSub: Subscription;
 
   constructor(
+    @Optional() @Inject(HIDE_FORM_FIELD_TITLE) private hideFormFieldTitle: boolean,
     private el: ElementRef<HTMLElement>) {
   }
 
@@ -64,18 +71,24 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
         if ( this.titleSub ) {
           this.titleSub.unsubscribe();
         }
-        this.titleSub = this.input.first.stateChanges
-          .pipe(
-            debounceTime(30),
-            startWith(0)
-          )
-          .subscribe(() => {
-          if (this.input.first instanceof MatSelect) {
-            this.title = this.input.first.triggerValue;
-          } else {
-            this.title = this.input.first.value as string || '';
-          }
-        })
+        if ( !this.hideFormFieldTitle && !this.disableFormFieldTitle ) {
+          this.titleSub = this.input.first.stateChanges
+            .pipe(
+              debounceTime(30),
+              startWith(0),
+              takeUntil(this.destroyed$)
+            )
+            .subscribe(() => {
+              if ( this.input.first instanceof MatSelect ) {
+                this.title = this.input.first.triggerValue;
+              } else {
+                const value = this.input.first.value;
+                if ( typeof value === 'string' ) {
+                  this.title = this.input.first.value as string || '';
+                }
+              }
+            });
+        }
         let readOnly = ( this.input.first as any ).readonly || false;
         if ( this.input.first instanceof MatInput ) {
           readOnly = this.input.first.readonly;
