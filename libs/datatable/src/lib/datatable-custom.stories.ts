@@ -96,7 +96,7 @@ AutoSize.args = {
 export const MultilineFooter: Story<Partial<StoDatatableComponent<Record<string, unknown>>>> = args => ( {
   props: args,
   template: `<h3>The table takes in a list of footer rows</h3>
-<sto-datatable [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+<sto-datatable [virtualScroll]="true" [scrollbarH]="false" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
 } );
 MultilineFooter.args = {
   rows,
@@ -134,12 +134,12 @@ export const Grouped: Story<Partial<StoDatatableComponent<Record<string, unknown
   props: args,
   template: `<h3>With column groups</h3>
 <div >
-<sto-datatable [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
+<sto-datatable [resizeable]="true" [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
 </div>`,
 } );
 Grouped.args = {
   rows,
-  columns: columns,
+  columns: columns.map(c => ( { ...c, flexShrink: 0, flexGrow: 0 } )),
   groups: [
     {
       props: [ 'invoiceNo',

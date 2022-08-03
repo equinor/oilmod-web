@@ -70,6 +70,7 @@
     "@nrwl/linter": "14.4.1",
     "@nrwl/storybook": "14.4.1",
     "@nrwl/workspace": "14.4.1",
+    "@storybook/addon-a11y": "^6.5.9",
     "@storybook/addon-docs": "^6.5.9",
     "@storybook/addon-essentials": "6.5.9",
     "@storybook/angular": "^6.5.9",

@@ -24,25 +24,6 @@ import { rowClassFn } from '../models';
 })
 export class StoDatatableBodyComponent<T extends Record<string, unknown>> implements OnDestroy, AfterViewInit {
 
-  @Input()
-  get scrollbarH(): boolean {
-    return this._scrollbarH;
-  }
-
-  set scrollbarH(scrollbarH: boolean) {
-    this._scrollbarH = scrollbarH;
-    this.horizontalScrollActive = false;
-    if ( this.resizeObserver ) {
-      this.resizeObserver.disconnect();
-    }
-    if ( scrollbarH && this.virtualScroll && this.vScroller ) {
-      this.virtHorzScrollPosition();
-    } else if ( scrollbarH ) {
-      this.horzScrollPosition();
-    }
-    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
-  }
-
   @ViewChild('scrollViewport', { read: ElementRef })
   scrollElement: ElementRef<HTMLElement>;
   @Input()
@@ -71,8 +52,6 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   virtualScroll: boolean;
   @Input()
   columnMode: ColumnDisplay;
-
-  private _scrollbarH: boolean;
   @Input()
   rowClass: rowClassFn;
   @Input()
@@ -93,12 +72,32 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   vScroller: CdkVirtualScrollViewport;
   @ViewChild('scroller')
   scroller: ElementRef<HTMLDivElement>;
-
+  public horizontalScrollActive: boolean;
+  public verticalScrollOffset = 0;
   private destroyed$ = new Subject<boolean>();
   private timeout: number | undefined;
   private resizeObserver: ResizeObserver;
-  public horizontalScrollActive: boolean;
-  public verticalScrollOffset = 0;
+
+  private _scrollbarH: boolean;
+
+  @Input()
+  get scrollbarH(): boolean {
+    return this._scrollbarH;
+  }
+
+  set scrollbarH(scrollbarH: boolean) {
+    this._scrollbarH = scrollbarH;
+    this.horizontalScrollActive = false;
+    if ( this.resizeObserver ) {
+      this.resizeObserver.disconnect();
+    }
+    if ( scrollbarH && this.virtualScroll && this.vScroller ) {
+      this.virtHorzScrollPosition();
+    } else if ( scrollbarH ) {
+      this.horzScrollPosition();
+    }
+    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  }
 
   @HostListener('window:resize', [ '$event' ])
   onresize() {
@@ -141,6 +140,42 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
       this.virtHorzScrollPosition();
     } else if ( this.scrollbarH ) {
       this.horzScrollPosition();
+    }
+  }
+
+  selectRow(event: KeyboardEvent | MouseEvent, activationData: RowSelection<T>) {
+    if ( event.type === this.selectionMode ) {
+      this.rowSelected.emit(activationData);
+      const el = event.target as HTMLElement;
+      const ignoreRe = /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
+      const elTag = el.tagName.toLowerCase();
+      const isIgnoredEl = ignoreRe.test(el.className) || elTag === 'input';
+      if ( !isIgnoredEl ) {
+        activationData.rowEl?.focus();
+      }
+    }
+  }
+
+  onKeyDownHandler(event: KeyboardEvent, rowEl: HTMLDivElement, activationData: RowSelection<T> | RowActivation<T>) {
+    this.activate.emit({ event, rowEl, row: activationData.row, index: activationData.index });
+    const next = rowEl.nextSibling as HTMLDivElement;
+    const prev = rowEl.previousSibling as HTMLDivElement;
+    switch ( event.key ) {
+      case 'ArrowDown':
+        if ( next && next instanceof HTMLElement ) {
+          next.focus();
+          event.preventDefault();
+        }
+        break;
+      case 'ArrowUp':
+        if ( prev && prev instanceof HTMLElement ) {
+          prev.focus();
+          event.preventDefault();
+        }
+        break;
+      case 'Enter':
+        this.rowSelected.emit(activationData);
+        break;
     }
   }
 
@@ -225,42 +260,6 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
     };
     this.resizeObserver = new ResizeObserver(cb);
     this.resizeObserver.observe(elRef);
-  }
-
-  selectRow(event: KeyboardEvent | MouseEvent, activationData: RowSelection<T>) {
-    if ( event.type === this.selectionMode ) {
-      this.rowSelected.emit(activationData);
-      const el = event.target as HTMLElement;
-      const ignoreRe = /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
-      const elTag = el.tagName.toLowerCase();
-      const isIgnoredEl = ignoreRe.test(el.className) || elTag === 'input';
-      if ( !isIgnoredEl ) {
-        activationData.rowEl?.focus();
-      }
-    }
-  }
-
-  onKeyDownHandler(event: KeyboardEvent, rowEl: HTMLDivElement, activationData: RowSelection<T> | RowActivation<T>) {
-    this.activate.emit({ event, rowEl, row: activationData.row, index: activationData.index });
-    const next = rowEl.nextSibling as HTMLDivElement;
-    const prev = rowEl.previousSibling as HTMLDivElement;
-    switch ( event.key ) {
-      case 'ArrowDown':
-        if ( next && next instanceof HTMLElement ) {
-          next.focus();
-          event.preventDefault();
-        }
-        break;
-      case 'ArrowUp':
-        if ( prev && prev instanceof HTMLElement ) {
-          prev.focus();
-          event.preventDefault();
-        }
-        break;
-      case 'Enter':
-        this.rowSelected.emit(activationData);
-        break;
-    }
   }
 
 }

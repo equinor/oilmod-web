@@ -45,7 +45,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   @Input()
   dynamicFractionSize: boolean;
   @HostBinding()
-  id = `value-unit-input-${NumberInputComponent.nextId++}`;
+  id = `sto-number-input-${NumberInputComponent.nextId++}`;
   @HostBinding('attr.aria-describedby')
   describedBy = '';
   errorState: boolean;

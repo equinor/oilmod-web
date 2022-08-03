@@ -1,13 +1,14 @@
-<input numberInput
-       class="sto-number-input"
-       (blur)="onTouched()"
-       [fractionSize]="fractionSize"
+<input (blur)="onTouched()"
        [dynamicFractionSize]="dynamicFractionSize"
+       [formControl]="ctrl"
+       [fractionSize]="fractionSize"
        [placeholder]="placeholder"
        [readonly]="readonly"
        [tabindex]="readonly ? -1 : (tabIndex || 0)"
-       type="text"
-       [formControl]="ctrl">
+       aria-label="Numerical value"
+       class="sto-number-input"
+       numberInput
+       type="text">
 <div>
   <ng-content select="mat-option"></ng-content>
 </div>
