@@ -127,7 +127,7 @@
       }
     },
     "build-all": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "$(npm bin)/nx build testing",
@@ -143,7 +143,7 @@
       }
     },
     "test-all": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "$(npm bin)/nx test core",
@@ -157,7 +157,7 @@
       }
     },
     "lint-all": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "$(npm bin)/nx lint core --fix",

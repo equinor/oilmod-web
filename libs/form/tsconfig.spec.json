@@ -3,9 +3,16 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["jest", "node", "dom", "es2020"]
+    "types": [
+      "jest",
+      "node",
+      "dom",
+      "es2020"
+    ]
   },
-  "files": ["src/test-setup.ts"],
+  "files": [
+    "src/test-setup.ts"
+  ],
   "include": [
     "**/*.spec.ts",
     "**/*.test.ts",

@@ -21,7 +21,7 @@
       "defaultConfiguration": "production"
     },
     "build": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "$(npm bin)/nx build-lib core",
@@ -53,7 +53,7 @@
       ]
     },
     "post-build": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "$(npm bin)/ts-node tools/scripts/build-scss.ts",
@@ -63,7 +63,7 @@
       }
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "dist/libs/core",
         "commands": [
