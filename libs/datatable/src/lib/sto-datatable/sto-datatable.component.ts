@@ -34,18 +34,84 @@ import { observeWidth } from './observer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoDatatableComponent<T extends Record<string, unknown>> implements AfterViewInit, OnDestroy {
-  private destroyed$ = new Subject();
-
   @Input()
-  get height() {
-    return this._height;
-  }
+  groups: Array<Group>;
+  @ViewChild(StoDatatableBodyComponent)
+  body: StoDatatableBodyComponent<T>;
+  @ContentChild(StoDatatableActionsComponent)
+  actions: StoDatatableActionsComponent;
+  @Input()
+  rowHeight = 36;
+  @HostBinding('class.horizontal-scroll')
+  @Input()
+  scrollbarH: boolean;
+  @Input()
+  emptyMessage = `No records in set`;
+  @Input()
+  headerHeight = 24;
+  @Input()
+  selectionMode: SelectionModes = SelectionModes.Click;
+  @HostBinding('class.sortable')
+  @Input()
+  sortable: boolean;
+  @Input()
+  disableRipple: boolean;
+  ColumnDisplay = ColumnDisplay;
+  @Input()
+  loading: boolean;
+  public height$: Observable<number>;
+  public rowTotalHeight: number;
+  @HostBinding('class.autosize')
+  @Input()
+  autoSize: boolean;
+  @Input()
+  autoSizeOffset = 0;
+  @Input()
+  preserveSort: boolean;
+  @Input()
+  selected: T;
+  @HostBinding('class.virtual-scroll')
+  @Input()
+  virtualScroll = true;
+  @Input()
+  responsive: boolean;
+  @Input()
+  responsiveView: TemplateRef<unknown>;
+  @Input()
+  responsiveBreakPoint = 400;
+  @Input()
+  externalSort: boolean;
+  @HostBinding('class.responsive')
+  public smallScreen = false;
+  @Input()
+  rowClass: rowClassFn;
+  @HostBinding('class.mat-elevation-z3')
+  @Input()
+  elevation = true;
+  @Input()
+  columnGroups: ColumnGroup[];
+  @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-native
+  select = new EventEmitter<RowSelection<T>>();
+  @Output()
+  resized = new EventEmitter<Column>();
+  @Output()
+  rowContextMenu = new EventEmitter<RowContextMenu<T>>();
+  @Output()
+  headerContextMenu = new EventEmitter<HeaderContextMenu>();
+  @Output()
+  rowActivate = new EventEmitter<RowActivation<T>>();
+  @Output()
+  sortChanged = new EventEmitter<{ sort: Sort, column: Column }>();
+  public columnTotalWidth: number;
+  public scrollLeft = 'translate3d(0px, 0px, 0px)';
+  public scrollNum: number;
+  public activeSort: Sort | null;
+  private destroyed$ = new Subject();
+  private _internalRows: T[];
+  private resizeTimeout: number | undefined;
 
-  set height(height: number) {
-    this._height = height;
-    if ( !this.autoSize ) {
-      this.height$ = of(height);
-    }
+  constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef, private zone: NgZone) {
   }
 
   get bodyHeight() {
@@ -65,6 +131,34 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     }
     const groupOffset = hasHeaderGroup ? this.headerHeight : 0;
     return this.height - headerOffset - footerOffset - groupOffset - actionsHeight;
+  }
+
+  get width() {
+    if ( this.scrollbarH && this.columns ) {
+      const widthOffset = this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
+      return `${this.columnTotalWidth + widthOffset}px`;
+    }
+    return 'auto';
+  }
+
+  private _height: number;
+
+  @Input()
+  get height() {
+    return this._height;
+  }
+
+  set height(height: number) {
+    this._height = height;
+    if ( !this.autoSize ) {
+      this.height$ = of(height);
+    }
+  }
+
+  private _rows: T[];
+
+  get rows() {
+    return this._internalRows;
   }
 
   @Input()
@@ -91,9 +185,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     this._internalRows = [ ...( sortedRows || [] ) ];
   }
 
-  get rows() {
-    return this._internalRows;
-  }
+  private _footerRow: T;
 
   @Input('footerRow')
   get footerRow() {
@@ -110,6 +202,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     this._footerRow = row;
   }
 
+  private _columnMode: ColumnDisplay;
+
   @Input()
   get columnMode(): ColumnDisplay {
     return this._columnMode || ColumnDisplay.Flex;
@@ -118,6 +212,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   set columnMode(columnMode: ColumnDisplay) {
     this._columnMode = columnMode;
   }
+
+  private _columns: Column[];
 
   @Input()
   get columns(): Column[] {
@@ -137,102 +233,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     }
   }
 
-  @Input()
-  groups: Array<Group>;
-
-  get width() {
-    if ( this.scrollbarH && this.columns ) {
-      const widthOffset = this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
-      return `${this.columnTotalWidth + widthOffset}px`;
-    }
-    return 'auto';
-  }
-
-  @ViewChild(StoDatatableBodyComponent)
-  body: StoDatatableBodyComponent<T>;
-  @ContentChild(StoDatatableActionsComponent)
-  actions: StoDatatableActionsComponent;
-  @Input()
-  rowHeight = 36;
-  @HostBinding('class.horizontal-scroll')
-  @Input()
-  scrollbarH: boolean;
-  @Input()
-  emptyMessage = `No records in set`;
-  @Input()
-  headerHeight = 24;
-  @Input()
-  selectionMode: SelectionModes = SelectionModes.Click;
-  @HostBinding('class.sortable')
-  @Input()
-  sortable: boolean;
-  @Input()
-  disableRipple: boolean;
-
-  ColumnDisplay = ColumnDisplay;
-
-  private _height: number;
-  @Input()
-  loading: boolean;
-  public height$: Observable<number>;
-  public rowTotalHeight: number;
-
-  @HostBinding('class.autosize')
-  @Input()
-  autoSize: boolean;
-  @Input()
-  autoSizeOffset = 0;
-  @Input()
-  preserveSort: boolean;
-
-  private _rows: T[];
-  private _internalRows: T[];
-  @Input()
-  selected: T;
-
-  private _footerRow: T;
-
-  @HostBinding('class.virtual-scroll')
-  @Input()
-  virtualScroll = true;
-
-  private _columnMode: ColumnDisplay;
-
-  @Input()
-  responsive: boolean;
-  @Input()
-  responsiveView: TemplateRef<unknown>;
-  @Input()
-  responsiveBreakPoint = 400;
-  @Input()
-  externalSort: boolean;
-  @HostBinding('class.responsive')
-  public smallScreen = false;
-
-  @Input()
-  rowClass: rowClassFn;
-
-  @HostBinding('class.mat-elevation-z3')
-  @Input()
-  elevation = true;
-
-  @Input()
-  columnGroups: ColumnGroup[];
-
-  private _columns: Column[];
-  @Output()
-    // eslint-disable-next-line @angular-eslint/no-output-native
-  select = new EventEmitter<RowSelection<T>>();
-  @Output()
-  resized = new EventEmitter<Column>();
-  @Output()
-  rowContextMenu = new EventEmitter<RowContextMenu<T>>();
-  @Output()
-  headerContextMenu = new EventEmitter<HeaderContextMenu>();
-  @Output()
-  rowActivate = new EventEmitter<RowActivation<T>>();
-  @Output()
-  sortChanged = new EventEmitter<{ sort: Sort, column: Column }>();
+  private _resizeable: boolean;
 
   @HostBinding('class.resizeable')
   @Input()
@@ -246,19 +247,6 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       this.columns = this._columns;
     }
   }
-
-  private _resizeable: boolean;
-
-  private resizeTimeout: number | undefined;
-  public columnTotalWidth: number;
-
-  public scrollLeft = 'translate3d(0px, 0px, 0px)';
-  public scrollNum: number;
-  public activeSort: Sort | null;
-
-  constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef, private zone: NgZone) {
-  }
-
 
   @Input()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -276,6 +264,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   }
 
   ngAfterViewInit() {
+    if ( this.resizeable && !this.scrollbarH ) {
+      console.warn(`Datatable: Not allowed to have resizeable columns without horizontal scroll. Set [scrollbarH]="true"`);
+    }
     if ( this.autoSize ) {
       this.setAutoSize();
     }
@@ -303,13 +294,6 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     this.destroyed$.complete();
   }
 
-
-  private scrollToIndex(index: number, behaviour: ScrollBehavior) {
-    if ( this.body.vScroller ) {
-      this.body.vScroller.scrollToIndex(index, behaviour);
-    }
-  }
-
   public scrollTo(item: T | number, behaviour: ScrollBehavior = 'smooth') {
     if ( this.body.vScroller ) {
       if ( typeof item === 'number' ) {
@@ -321,19 +305,6 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
         }
       }
     }
-  }
-
-  private setAutoSize() {
-    const el = this.elRef.nativeElement as HTMLElement;
-    this.height$ = fromEvent(window, 'resize')
-      .pipe(
-        startWith(null),
-        debounceTime(20), // ~1 animation frame
-        map(() => el.getBoundingClientRect()),
-        map(rect => rect.top),
-        map(top => window.innerHeight - top - 16 - this.autoSizeOffset - ( this.actions ? 6 : 0 )),
-        tap(height => this.height = height)
-      );
   }
 
   setHeaderScroll(event: Event) {
@@ -371,18 +342,6 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     this.cdr.markForCheck();
   }
 
-  private defaultSortFn(a: T, b: T, col: Column) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const aValue = a[ col.prop ];
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const bValue = b[ col.prop ];
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
-  }
-
   onResize({ columns, column }: { columns: Column[], column: Column }) {
     this.columns = [ ...columns ]
       .map(c => {
@@ -393,5 +352,36 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       });
 
     this.resized.emit(column);
+  }
+
+  private scrollToIndex(index: number, behaviour: ScrollBehavior) {
+    if ( this.body.vScroller ) {
+      this.body.vScroller.scrollToIndex(index, behaviour);
+    }
+  }
+
+  private setAutoSize() {
+    const el = this.elRef.nativeElement as HTMLElement;
+    this.height$ = fromEvent(window, 'resize')
+      .pipe(
+        startWith(null),
+        debounceTime(20), // ~1 animation frame
+        map(() => el.getBoundingClientRect()),
+        map(rect => rect.top),
+        map(top => window.innerHeight - top - 16 - this.autoSizeOffset - ( this.actions ? 6 : 0 )),
+        tap(height => this.height = height)
+      );
+  }
+
+  private defaultSortFn(a: T, b: T, col: Column) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const aValue = a[ col.prop ];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const bValue = b[ col.prop ];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
   }
 }
