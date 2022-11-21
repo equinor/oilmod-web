@@ -11,6 +11,10 @@ import {
 import { Navigation } from './navigation';
 import { StoThemeService } from '@ngx-stoui/common';
 import { overlayAnimation } from '../animation';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NavDrawerItemComponent } from './nav-drawer-item/nav-drawer-item.component';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'sto-nav-drawer',
@@ -20,6 +24,14 @@ import { overlayAnimation } from '../animation';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     overlayAnimation
+  ],
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    NavDrawerItemComponent,
+    NgForOf,
+    NgIf
   ]
 })
 export class NavDrawerComponent implements AfterViewInit {
