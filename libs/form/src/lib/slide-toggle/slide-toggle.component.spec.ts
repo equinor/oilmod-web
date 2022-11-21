@@ -15,8 +15,7 @@ describe('SlideToggleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule, ReactiveFormsModule ],
-      declarations: [ SlideToggleComponent ]
+      imports: [ SlideToggleComponent, MaterialModule, ReactiveFormsModule ],
     }).overrideComponent(SlideToggleComponent, {
         set: {
           providers: [

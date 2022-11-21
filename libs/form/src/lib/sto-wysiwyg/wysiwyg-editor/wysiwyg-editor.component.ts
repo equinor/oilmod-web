@@ -2,11 +2,16 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDe
 import { SafeHtml } from '@angular/platform-browser';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'sto-wysiwyg-editor',
   templateUrl: './wysiwyg-editor.component.html',
-  styleUrls: [ './wysiwyg-editor.component.scss' ]
+  styleUrls: [ './wysiwyg-editor.component.scss' ],
+  standalone: true,
+  imports: [
+    NgIf
+  ]
 })
 export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
   @Input()
@@ -34,22 +39,11 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
     this.listenForValueChange();
   }
 
-  private listenForValueChange() {
-    fromEvent(this.editor.nativeElement, 'input')
-      .pipe(
-        debounceTime(100),
-        takeUntil(this.destroyed$)
-      ).subscribe(ev => {
-      this.warning = null;
-      this.valueChanged.emit(( ev.target as HTMLElement ).innerHTML);
-    });
-  }
-
   onPaste(event: ClipboardEvent) {
     if ( this.readonly ) {
       return;
     }
-    if (!event.clipboardData) {
+    if ( !event.clipboardData ) {
       return;
     }
     const img = event.clipboardData.files.item(0);
@@ -61,8 +55,32 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  onDrop(event: DragEvent) {
+    if ( this.readonly || !event.dataTransfer ) {
+      return;
+    }
+    if ( event.dataTransfer.types.includes('Files') ) {
+      event.preventDefault();
+      const img = event.dataTransfer.files.item(0);
+      if ( img ) {
+        this.insertImage(img);
+      }
+    }
+  }
+
+  private listenForValueChange() {
+    fromEvent(this.editor.nativeElement, 'input')
+      .pipe(
+        debounceTime(100),
+        takeUntil(this.destroyed$)
+      ).subscribe(ev => {
+      this.warning = null;
+      this.valueChanged.emit(( ev.target as HTMLElement ).innerHTML);
+    });
+  }
+
   private pasteText(event: ClipboardEvent) {
-    if (!event.clipboardData) {
+    if ( !event.clipboardData ) {
       return;
     }
     const html = event.clipboardData.getData('text/html');
@@ -74,7 +92,7 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
       const el = document.createElement('div');
       el.innerHTML = stripped;
       const sel = document.getSelection();
-      if (!sel) {
+      if ( !sel ) {
         return;
       }
       const range = sel.getRangeAt(0);
@@ -111,7 +129,7 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
         el.src = res;
         el.style.maxHeight = '300px';
         const sel = document.getSelection();
-        if (!sel) {
+        if ( !sel ) {
           return;
         }
         const range = sel.getRangeAt(0);
@@ -129,18 +147,5 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
       });
     };
     fr.readAsDataURL(img);
-  }
-
-  onDrop(event: DragEvent) {
-    if ( this.readonly || !event.dataTransfer ) {
-      return;
-    }
-    if ( event.dataTransfer.types.includes('Files') ) {
-      event.preventDefault();
-      const img = event.dataTransfer.files.item(0);
-      if (img) {
-        this.insertImage(img);
-      }
-    }
   }
 }

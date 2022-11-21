@@ -23,7 +23,8 @@ import { HIDE_FORM_FIELD_TITLE } from './token';
 
 @Directive({
   selector: 'mat-form-field[stoFormField]',
-  exportAs: 'stoFormField'
+  exportAs: 'stoFormField',
+  standalone: true
 })
 export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDestroy {
   @ContentChildren(MatFormFieldControl)

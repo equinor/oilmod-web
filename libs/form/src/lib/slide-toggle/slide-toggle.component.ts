@@ -14,13 +14,13 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Subject, Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ThemePalette } from '@angular/material/core';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export class StoSlideToggleChange {
   source: SlideToggleComponent;
@@ -35,6 +35,11 @@ export class StoSlideToggleChange {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: MatFormFieldControl, useExisting: SlideToggleComponent }
+  ],
+  standalone: true,
+  imports: [
+    MatSlideToggleModule,
+    ReactiveFormsModule
   ]
 })
 export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<boolean> {
