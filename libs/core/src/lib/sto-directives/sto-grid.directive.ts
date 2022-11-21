@@ -18,14 +18,20 @@ const getClass = (width: number, small = 400, large = 800) => {
 
 const ALL_GRIDS = [ 'sto-f-grid--1', 'sto-f-grid--2', 'sto-f-grid--4', 'sto-f-grid--6' ];
 
-@Directive({ selector: '[stoGridSpacer]' })
+@Directive({
+  selector: '[stoGridSpacer]',
+  standalone: true
+})
 export class StoGridSpacerDirective {
   @HostBinding('class.sto-f-grid__col')
   @HostBinding('class.sto-f-grid__col--spacer')
   useClass = true;
 }
 
-@Directive({ selector: '[stoGridColumn]' })
+@Directive({
+  selector: '[stoGridColumn]',
+  standalone: true
+})
 export class StoGridColumnDirective {
   @HostBinding('class.sto-f-grid__col')
   useClass = true;
@@ -37,7 +43,8 @@ export class StoGridColumnDirective {
 
 @Directive({
   selector: '[stoGrid]',
-  exportAs: 'stoGrid'
+  exportAs: 'stoGrid',
+  standalone: true
 })
 export class StoGridDirective implements AfterViewInit, OnDestroy {
   @HostBinding('style.max-width.px')

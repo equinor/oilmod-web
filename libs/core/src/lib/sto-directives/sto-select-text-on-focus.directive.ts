@@ -8,7 +8,8 @@ import { takeUntil } from 'rxjs/operators';
  * A user service is established in {@link StoUserPreferenceService} that allows a user to toggle this feature
  */
 @Directive({
-  selector: '[stoSelectTextOnFocus]'
+  selector: '[stoSelectTextOnFocus]',
+  standalone: true
 })
 export class StoSelectTextOnFocusDirective implements OnInit, OnDestroy {
 

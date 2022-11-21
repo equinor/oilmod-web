@@ -8,7 +8,8 @@ import { Key } from '../abstract-and-interfaces/keyPress.enum';
  */
 
 @Directive({
-  selector: '[stoQuickKeys]'
+  selector: '[stoQuickKeys]',
+  standalone: true
 })
 export class QuickKeysDirective {
   @Input() quickKeys: unknown;
@@ -31,9 +32,9 @@ export class QuickKeysDirective {
    * Listens on the host element for any keyup events
    * @param e
    */
-  @HostListener('keyup', ['$event'])
+  @HostListener('keyup', [ '$event' ])
   onKeyUp(e: KeyboardEvent) {
-    if (this.formGroup) {
+    if ( this.formGroup ) {
       this.handleFormKeys(e);
     }
     this.handleGenericKeydown(e);
@@ -46,10 +47,10 @@ export class QuickKeysDirective {
    */
   private handleGenericKeydown(e: KeyboardEvent) {
     // Shortcuts that are useful outside of forms
-    if (e.keyCode === Key.Escape) {
+    if ( e.keyCode === Key.Escape ) {
       this.quickCancel.emit();
     }
-    if (!this.formGroup && e.keyCode === Key.Enter && e.ctrlKey) {
+    if ( !this.formGroup && e.keyCode === Key.Enter && e.ctrlKey ) {
       this.quickSubmit.emit();
     }
   }
@@ -59,10 +60,10 @@ export class QuickKeysDirective {
    * @param e
    */
   private handleFormKeys(e: KeyboardEvent) {
-    if (this.formGroup.pristine) {
+    if ( this.formGroup.pristine ) {
       return;
     }
-    if (e.keyCode === Key.Enter && e.ctrlKey) {
+    if ( e.keyCode === Key.Enter && e.ctrlKey ) {
       this.quickSubmit.emit();
     }
   }

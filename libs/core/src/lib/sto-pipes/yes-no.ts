@@ -1,9 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-@Pipe({name: 'yesNo'})
+
+@Pipe({ name: 'yesNo', standalone: true })
 export class YesNoPipe implements PipeTransform {
   transform(value: boolean, ignoreNulls = false): string {
     let valueStr = '';
-    if (ignoreNulls) {
+    if ( ignoreNulls ) {
       valueStr = value ? 'Yes' : value === false ? 'No' : '';
     } else {
       valueStr = value ? 'Yes' : 'No';

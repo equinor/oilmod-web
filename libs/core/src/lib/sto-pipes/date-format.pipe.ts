@@ -12,15 +12,16 @@ import { format as formatDate, isValid, parseISO } from 'date-fns';
  */
 
 @Pipe({
-  name: 'formatDate'
+  name: 'formatDate',
+  standalone: true
 })
 export class DateFormatPipe implements PipeTransform {
 
   transform(value: string | number | Date | null, format?: string): string | null {
-    if (!value) {
+    if ( !value ) {
       return null;
     }
-    if (typeof value === 'string') {
+    if ( typeof value === 'string' ) {
       const originalValue = value;
       value = parseISO(value);
       if ( !isValid(value) ) {
@@ -29,7 +30,7 @@ export class DateFormatPipe implements PipeTransform {
         value = new Date(originalValue);
       }
     }
-    switch (format) {
+    switch ( format ) {
       case 'long':
         return formatDate(value, 'EEEE MMM d, yyyy');
       case 'short':

@@ -3,7 +3,8 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { MenuOverlayDirective } from './menu-overlay.directive';
 
 @Directive({
-  selector: '[stoContextMenu]'
+  selector: '[stoContextMenu]',
+  standalone: true
 })
 export class ContextMenuDirective {
   @Input()

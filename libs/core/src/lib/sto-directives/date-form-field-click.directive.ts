@@ -11,22 +11,26 @@ import { takeUntil } from 'rxjs/operators';
  * When the datepicker is closed in any manner, we shift focus back to the datepicker input
  */
 @Directive({
-  selector: '[stoDateFormFieldClick]'
+  selector: '[stoDateFormFieldClick]',
+  standalone: true
 })
 export class DateFormFieldClickDirective implements OnInit, OnDestroy {
-  private destroy$ = new Subject();
   @ContentChildren(MatInput) inputs: QueryList<MatInput>;
   @Input() stoDateFormFieldClick: MatDatepicker<Date>;
+  private destroy$ = new Subject();
+
   @HostListener('click')
   clickEvent() {
     this.stoDateFormFieldClick.open();
   }
+
   ngOnInit() {
     this.stoDateFormFieldClick.closedStream
       .pipe(
         takeUntil(this.destroy$)
       ).subscribe(() => this.inputs.first.focus());
   }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
