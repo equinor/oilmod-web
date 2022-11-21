@@ -1,32 +1,23 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
 import { By } from '@angular/platform-browser';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MaterialModule } from '@ngx-stoui/testing';
+import { ChangeDetectionStrategy } from '@angular/core';
 import { StoAppHeaderComponent } from './sto-app-header.component';
 import { StoBreadcrumbsComponent } from '../sto-breadcrumbs/sto-breadcrumbs.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { breadCrumbs } from '../../test-utils';
-import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 let comp: StoAppHeaderComponent;
 let fixture: ComponentFixture<StoAppHeaderComponent>;
 // let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
-@Component({
-  selector: 'sto-spec-wrap',
-  template: ''
-})
-class WrapperComponent {
-}
 
 describe('StoAppHeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, StoBreadcrumbsModule, RouterTestingModule ],
-        declarations: [ StoAppHeaderComponent, WrapperComponent ]
+        imports: [ StoAppHeaderComponent, RouterTestingModule, NoopAnimationsModule ],
       })
       .overrideComponent(StoAppHeaderComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()

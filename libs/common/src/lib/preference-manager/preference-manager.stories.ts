@@ -4,7 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Preference, PreferenceManagerComponent, PreferenceManagerModule, StoFilterPanelModule } from '@ngx-stoui/common';
+import { Preference, PreferenceManagerComponent, StoFilterPanelModule } from '@ngx-stoui/common';
 
 export default {
   title: 'common/Preference Manager',
@@ -12,7 +12,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        PreferenceManagerModule,
+        PreferenceManagerComponent,
         BrowserAnimationsModule,
         StoFilterPanelModule,
         ReactiveFormsModule

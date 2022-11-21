@@ -1,17 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PreferenceManagerComponent } from './preference-manager.component';
-import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivePreferencePipe } from './active-preference.pipe';
 import { Preference } from './preference';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const preferences: Preference[] = [
   { name: 'A filter', id: 'uuid', identifierKey: 'reports_filter', user: 'Bobby B', payload: {} },
@@ -25,16 +18,8 @@ describe('PreferenceManagerComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
         imports: [
-          CommonModule,
-          MatMenuModule,
-          MatIconModule,
-          MatButtonModule,
-          MatFormFieldModule,
-          MatInputModule,
-          MatProgressSpinnerModule,
-          NoopAnimationsModule,
+          PreferenceManagerComponent, ActivePreferencePipe, NoopAnimationsModule
         ],
-        declarations: [ PreferenceManagerComponent, ActivePreferencePipe ]
       })
       .compileComponents()
       .then(createComponents);

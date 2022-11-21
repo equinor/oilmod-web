@@ -1,4 +1,9 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /**
  * The action footer is a fixed footer at the bottom of the viewport.
@@ -8,14 +13,13 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnIn
 @Component({
   selector: 'sto-action-footer',
   templateUrl: './sto-action-footer.component.html',
-  styleUrls : ['./sto-action-footer.component.scss'],
+  styleUrls: [ './sto-action-footer.component.scss' ],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [ MatIconModule, MatButtonModule, MatButtonToggleModule, MatProgressBarModule, NgIf ],
 })
-export class StoActionFooterComponent implements OnInit, OnDestroy  {
-  @HostBinding('class.sto-action-footer')
-  private actionFooterClass = true;
-
+export class StoActionFooterComponent implements OnInit, OnDestroy {
   /**
    * Triggers if the progressbar should be visible or not.
    */
@@ -26,11 +30,12 @@ export class StoActionFooterComponent implements OnInit, OnDestroy  {
    * Default true.
    */
   @Input() shouldAddClass = true;
-
   /**
    * Hostbinds to style.position. Defaults to "fixed", but could be absolute inside a relative container.
    */
   @HostBinding('style.position') @Input() position = 'fixed';
+  @HostBinding('class.sto-action-footer')
+  private actionFooterClass = true;
 
   constructor(private renderer: Renderer2) {
   }

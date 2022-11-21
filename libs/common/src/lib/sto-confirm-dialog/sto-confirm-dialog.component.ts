@@ -32,7 +32,7 @@ type Data = {
       </button>
     </div>
   `,
-  styleUrls: ['sto-confirm-dialog.component.scss']
+  styleUrls: [ 'sto-confirm-dialog.component.scss' ]
 })
 export class ConfirmComponent {
   @ViewChild('ok')

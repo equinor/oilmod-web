@@ -15,42 +15,32 @@ import {
 } from '@angular/core';
 import { FilterForm, FilterList } from './filter';
 
-/**
- * Sto filter panel is an extension of mat-accordion
- */
 @Component({
   selector: 'sto-filter-panel',
   templateUrl: './sto-filter-panel.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [ './sto-filter-panel.component.scss' ]
 })
+/**
+ * @deprecated sto-filter-panel should not be used in future application
+ * Sto filter panel is an extension of mat-accordion
+ */
 export class StoFilterPanelComponent implements OnInit, AfterViewInit {
-  set contentHeight(contentHeight: number) {
-    this._contentHeight = contentHeight;
-  }
-
-  get contentHeight(): number {
-    return this._contentHeight;
-  }
-
   /**
    * If the filter panel should be expandable. Default true.
    */
   @Input()
   expandable = true;
-
   /**
    * If the filter panel should be expanded by default. Default false.
    */
   @Input()
   expanded: boolean;
-
   /**
    * List of active filters.
    */
   @Input()
   filterList: FilterList[];
-
   /**
    * Emits {isExpanded: boolean, contentHeight: number } where
    * isExpanded is true if the panel opens and false if not.
@@ -63,7 +53,6 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    */
   @Output()
   clearFilter = new EventEmitter();
-
   /**
    * Buttons and actions on the left side of the separator if both table and filter actions is present.
    */
@@ -73,11 +62,8 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    */
   @ViewChild('filterActions') contentWrapper2: { nativeElement: HTMLElement; };
   @ViewChild('filterForm') filterForm: { nativeElement: HTMLElement; };
-
   @Input()
   public host: FilterForm<Record<string, unknown>>;
-  private _contentHeight: number;
-
   public hasSeperator = false;
 
   constructor(
@@ -91,6 +77,16 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private _contentHeight: number;
+
+  get contentHeight(): number {
+    return this._contentHeight;
+  }
+
+  set contentHeight(contentHeight: number) {
+    this._contentHeight = contentHeight;
+  }
+
   public toggle() {
     this.expanded = !this.expanded;
     this.setContentHeight();
@@ -98,6 +94,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.warn(`StoFilterPanel should not be used in future applications, and will be removed in a future release.`);
     if ( this.expandable ) {
       if ( this.expanded === undefined ) {
         this.expanded = true;
@@ -112,14 +109,6 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.needSeperator();
     this.setContentHeight();
-  }
-
-  private setContentHeight() {
-    const element = this.filterForm.nativeElement;
-    if ( element ) {
-      const contentArea = element.parentElement;
-      this.contentHeight = contentArea?.offsetHeight || 0;
-    }
   }
 
   public needSeperator() {
@@ -142,13 +131,21 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   }
 
   _clearFilter(key: string, index?: number) {
-    if (index === null) {
+    if ( index === null ) {
       return;
     }
     try {
       this.host.clearFilter(key, index);
     } catch {
       this.clearFilter.emit({ key, index });
+    }
+  }
+
+  private setContentHeight() {
+    const element = this.filterForm.nativeElement;
+    if ( element ) {
+      const contentArea = element.parentElement;
+      this.contentHeight = contentArea?.offsetHeight || 0;
     }
   }
 }
@@ -198,19 +195,18 @@ export class StoFilterActions {
 export class StoFilterActionsBar {
   @HostBinding('class.sto-filter-actions')
   hasClass = true;
+  @Input() expandable: boolean;
+  @Output() toggle = new EventEmitter<void>();
 
-  @Input() set expanded(expanded: boolean) {
-    this._expanded = expanded;
-  }
+  private _expanded: boolean;
 
   get expanded(): boolean {
     return this._expanded;
   }
 
-  @Input() expandable: boolean;
-  private _expanded: boolean;
-
-  @Output() toggle = new EventEmitter<void>();
+  @Input() set expanded(expanded: boolean) {
+    this._expanded = expanded;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChange(event: unknown) {

@@ -15,7 +15,7 @@ export default {
     moduleMetadata({
       imports: [
         StoBreadcrumbsModule,
-        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule],
+        RouterTestingModule, HttpClientModule, MatButtonModule, MatMenuModule, MatIconModule, BrowserAnimationsModule ],
     })
   ],
   argTypes: {
@@ -23,11 +23,10 @@ export default {
     homeBreadCrumbConfig: { table: { disable: true } },
     userMenu: { table: { disable: true } },
   },
-  parameters: {
-  },
+  parameters: {},
 } as Meta;
 
-const Template: Story<StoBreadcrumbsComponent & {title?: string}> = (args: StoBreadcrumbsComponent) => {
+const Template: Story<StoBreadcrumbsComponent & { title?: string }> = (args: StoBreadcrumbsComponent) => {
   return {
     props: args,
     // template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`

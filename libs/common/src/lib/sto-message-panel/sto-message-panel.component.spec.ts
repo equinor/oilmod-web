@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { MaterialModule } from '@ngx-stoui/testing';
 import { StoMessagePanelComponent } from './sto-message-panel.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 let comp: StoMessagePanelComponent;
 let fixture: ComponentFixture<StoMessagePanelComponent>;
@@ -12,8 +11,8 @@ describe('StoMessagePanelComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule ],
-        declarations: [ StoMessagePanelComponent ]
+        imports: [ StoMessagePanelComponent, NoopAnimationsModule ],
+        declarations: []
       })
       .overrideComponent(StoMessagePanelComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
