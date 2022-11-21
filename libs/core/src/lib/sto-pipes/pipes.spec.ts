@@ -60,7 +60,7 @@ describe('NumberFormatPipe', () => {
 
 describe('DateFormatPipe', () => {
   const date = '2018-08-27 14:00:30';
-  const dateSingleDay = '2018-08-7 14:00:30';
+  const dateSingleDay = '2018-08-07 14:00:30';
   let pipe: DateFormatPipe;
   beforeEach(() => pipe = new DateFormatPipe());
 
