@@ -4,23 +4,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { StoDrawerComponent, StoDrawerModule, StoNavigationModule } from '@ngx-stoui/drawer';
+import { StoDrawerComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent, } from '@ngx-stoui/drawer';
 
 export default {
-  title: 'Drawer/Presentation',
+  title: 'Sidesheet/Presentation',
   component: StoDrawerComponent,
-  parameters: {
-  },
+  parameters: {},
   decorators: [
     moduleMetadata({
       imports: [
-        StoDrawerModule, StoNavigationModule, MatIconModule, MatButtonModule, BrowserAnimationsModule, MatCardModule
+        StoDrawerComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent, MatIconModule, MatButtonModule, BrowserAnimationsModule, MatCardModule
       ],
     })
   ],
   argTypes: {
     open: {
-      control: {type: 'boolean'}
+      control: { type: 'boolean' }
     }
   }
 } as Meta;

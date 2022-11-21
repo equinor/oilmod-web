@@ -19,6 +19,7 @@ import { Key } from '@ngx-stoui/core';
 import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 import { drawerAnimations } from '../animation';
 import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
+import { NgClass, NgIf } from '@angular/common';
 
 /**
  * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
@@ -29,33 +30,16 @@ import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
   styleUrls: [ './sto-drawer.component.scss', '../sto-navigation/_sto-navigation.scss' ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: drawerAnimations
+  animations: drawerAnimations,
+  standalone: true,
+  imports: [
+    NgClass,
+    NgIf
+
+  ]
 })
 
 export class StoDrawerComponent implements OnInit, AfterViewInit {
-
-  /**
-   * If the drawer is opened.
-   */
-  @Input()
-  @HostBinding('class.open')
-  get open(): boolean {
-    return this._open;
-  }
-
-  set open(open: boolean) {
-    this._open = open;
-    this.onOpen.emit(open);
-    this.cdr.detectChanges();
-  }
-
-  // @HostBinding('@drawerAnimations')
-  get slideInOut() {
-    if ( !this.animation ) {
-      return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
-    }
-    return this.open ? `open-${this.position}` : `closed-${this.position}`;
-  }
 
   /**
    * Offset (space) between the viewPanel right and the drawer in pixels
@@ -83,31 +67,24 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * If the drawer should close when clicked outside the drawer.
    */
   @Input() closeOnClick: boolean;
-
   /**
    * Esc key closed by default the drawer, this overrides that behaviour.
    * Default false.
    */
   @Input() ignoreEscKey = false;
-
-  private _open: boolean;
-
   /**
    * The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
    * Default '25vw'
    */
   @Input() @HostBinding('style.width')
   width = '300px';
-
   // I don't see what harm this can do, the drawer should always be full height..
   @HostBinding('style.height.vh')
   h = 100;
-
   @Input()
   animation: boolean;
   @Input()
   backdrop: boolean;
-
   /**
    * Emits true if opened, false if closed.
    *  {EventEmitter<boolean>}
@@ -121,7 +98,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * Emits on open.
    */
   @Output() onOpen = new EventEmitter();
-
   /**
    * Emits on cancel. When the cancel is called by pressing ESC key.
    *  {EventEmitter<any>}
@@ -132,9 +108,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    *  {EventEmitter<any>}
    */
   @Output() submit = new EventEmitter();
-
   public height = '100%';
-
   @ViewChild('header') headerRef: ElementRef;
   @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
   footer: ElementRef<HTMLElement>;
@@ -144,6 +118,30 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
   }
 
+  // @HostBinding('@drawerAnimations')
+  get slideInOut() {
+    if ( !this.animation ) {
+      return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
+    }
+    return this.open ? `open-${this.position}` : `closed-${this.position}`;
+  }
+
+  private _open: boolean;
+
+  /**
+   * If the drawer is opened.
+   */
+  @Input()
+  @HostBinding('class.open')
+  get open(): boolean {
+    return this._open;
+  }
+
+  set open(open: boolean) {
+    this._open = open;
+    this.onOpen.emit(open);
+    this.cdr.detectChanges();
+  }
 
   @HostListener('document:keydown', [ '$event' ])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -154,6 +152,46 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     }
   }
 
+  @HostListener('window:resize', [ '$event' ])
+  onWindowResize() {
+    this.resizeContent();
+  }
+
+  public toggle(emit = true) {
+    if ( emit ) {
+      this.onToggle.emit(!this.open);
+    }
+    if ( !this.open ) {
+      this.openDrawer(emit);
+    } else {
+      this.closeDrawer(emit);
+    }
+  }
+
+  public closeDrawer(emit = true) {
+    this.open = false;
+    this.cdr.detectChanges();
+    if ( emit ) {
+      this.onClose.emit();
+    }
+  }
+
+  public openDrawer(emit = true) {
+    this.open = true;
+    if ( emit ) {
+      this.onOpen.emit();
+    }
+  }
+
+  ngOnInit() {
+    if ( !this.position ) {
+      this.position = 'left';
+    }
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.resizeContent());
+  }
 
   private testKeyCombos(ev: KeyboardEvent) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -195,38 +233,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     return overlaysActive.length !== 0;
   }
 
-  @HostListener('window:resize', [ '$event' ])
-  onWindowResize() {
-    this.resizeContent();
-  }
-
-
-  public toggle(emit = true) {
-    if ( emit ) {
-      this.onToggle.emit(!this.open);
-    }
-    if ( !this.open ) {
-      this.openDrawer(emit);
-    } else {
-      this.closeDrawer(emit);
-    }
-  }
-
-  public closeDrawer(emit = true) {
-    this.open = false;
-    this.cdr.detectChanges();
-    if ( emit ) {
-      this.onClose.emit();
-    }
-  }
-
-  public openDrawer(emit = true) {
-    this.open = true;
-    if ( emit ) {
-      this.onOpen.emit();
-    }
-  }
-
   private resizeContent() {
     if ( this.open ) {
       const hasFooter = this.footer;
@@ -239,15 +245,5 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
     }
-  }
-
-  ngOnInit() {
-    if ( !this.position ) {
-      this.position = 'left';
-    }
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => this.resizeContent());
   }
 }
