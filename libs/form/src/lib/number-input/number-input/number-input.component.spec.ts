@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { NumberInputPipe } from '../number-input.pipe';
-import { StoFormModule } from '../../sto-form/sto-form.module';
 import { NumberInputDirective } from '../number-input.directive';
 import { Subject } from 'rxjs';
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -18,9 +17,7 @@ describe('NumberInputComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule, ReactiveFormsModule, StoFormModule ],
-        declarations: [ NumberInputPipe, NumberInputDirective, NumberInputComponent ],
-        providers: [ NumberInputPipe ]
+        imports: [ MaterialModule, ReactiveFormsModule, NumberInputPipe, NumberInputDirective, NumberInputComponent ],
       })
       .overrideComponent(NumberInputComponent, {
         set: {

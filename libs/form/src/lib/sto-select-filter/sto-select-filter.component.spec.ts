@@ -6,7 +6,7 @@ import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StoFormModule } from '../sto-form/sto-form.module';
+import { FormFieldDirective, StoSelectFilterModule } from '@ngx-stoui/form';
 
 describe('StoSelectFilterComponent', () => {
 
@@ -19,8 +19,8 @@ describe('StoSelectFilterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, ReactiveFormsModule, StoFormModule ],
-        declarations: [ StoSelectFilterComponent, StoSelectFilterComponent ],
+        imports: [ CommonModule, MaterialModule, ReactiveFormsModule, StoSelectFilterModule, FormFieldDirective ],
+        declarations: [],
         providers: [ { provide: MatSelect, useClass: MockedSelectClass } ]
       })
       .compileComponents()
