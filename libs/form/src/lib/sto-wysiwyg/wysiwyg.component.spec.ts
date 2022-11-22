@@ -16,9 +16,9 @@ interface TestSafeHtml extends SafeHtml {
 @Component({
   selector: 'sto-wrap',
   template: `
-      <sto-wysiwyg [formControl]="ctrl">
-          <button id="submit">SaveButton</button>
-      </sto-wysiwyg>`
+    <sto-wysiwyg [formControl]="ctrl">
+      <button id="submit">SaveButton</button>
+    </sto-wysiwyg>`
 })
 class WrapperComponent {
   public ctrl = new UntypedFormControl();
@@ -41,8 +41,7 @@ describe('WysiwygComponent unit tests', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule ],
-        declarations: [ WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent ]
+        imports: [ MaterialModule, WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent ],
       })
       .compileComponents();
   }));
@@ -113,8 +112,8 @@ describe('WysiwygComponent integration tests', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule, ReactiveFormsModule ],
-        declarations: [ WrapperComponent, WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent ]
+        imports: [ MaterialModule, ReactiveFormsModule, WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent ],
+        declarations: [ WrapperComponent ]
       })
       .overrideComponent(WysiwygComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()

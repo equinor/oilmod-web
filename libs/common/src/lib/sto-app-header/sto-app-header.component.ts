@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
-import { MatMenuPanel } from '@angular/material/menu';
+import { MatMenuModule, MatMenuPanel } from '@angular/material/menu';
 import { StoThemeService } from '../theme/theme.service';
 import { typography, TypographyName } from '../theme/models';
 import { fromEvent, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * StoAppHeaderComponent is used to create an App header toolbar with a common look / feel across our portfolio
@@ -21,7 +25,17 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   templateUrl: './sto-app-header.component.html',
   styleUrls: [ './sto-app-header.component.scss' ],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    StoBreadcrumbsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    LayoutModule,
+    NgIf,
+    AsyncPipe
+  ]
 })
 export class StoAppHeaderComponent implements OnInit {
   /**

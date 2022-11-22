@@ -13,7 +13,7 @@ import {
   Self,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -22,6 +22,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormFieldBase } from '../../sto-form/form-field.base';
+import { NumberInputDirective } from '../number-input.directive';
 
 
 @Component({
@@ -32,6 +33,11 @@ import { FormFieldBase } from '../../sto-form/form-field.base';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: MatFormFieldControl, useExisting: NumberInputComponent }
+  ],
+  standalone: true,
+  imports: [
+    NumberInputDirective,
+    ReactiveFormsModule
   ]
 })
 export class NumberInputComponent extends FormFieldBase implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<number> {

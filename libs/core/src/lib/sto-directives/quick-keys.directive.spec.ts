@@ -1,28 +1,36 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MaterialModule } from '@ngx-stoui/testing';
 import { QuickKeysDirective } from './quick-keys.directive';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Key } from '@ngx-stoui/core';
+import { By } from '@angular/platform-browser';
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
 
 @Component({
   selector: 'sto-spec-wrap',
-  template: `<mat-form-field>
-    <input quickKeys (quickSubmit)="submit()" (quickCancel)="cancel()" matInput #input>
-  </mat-form-field>`
+  template: `
+    <mat-form-field>
+      <input stoQuickKeys
+             (quickSubmit)="submit()"
+             (quickCancel)="cancel()"
+             matInput
+             #input>
+    </mat-form-field>`
 })
 class WrapperComponent {
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
 
   submit() {
-    console.log('submit')
+    console.log('submit');
   }
 
   cancel() {
-    console.log('cancel')
+    console.log('cancel');
   }
 }
 
@@ -30,8 +38,8 @@ describe('QuickKeysDirective', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule ],
-        declarations: [ QuickKeysDirective, WrapperComponent ]
+        imports: [ QuickKeysDirective, MatFormFieldModule, MatInputModule, NoopAnimationsModule ],
+        declarations: [ WrapperComponent ]
       })
       .compileComponents()
       .then(createComponent);
@@ -39,6 +47,22 @@ describe('QuickKeysDirective', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
+  });
+
+  it('should react on ctrl+enter', () => {
+    const spy = jest.spyOn(comp, 'submit');
+    const event = new KeyboardEvent('keyup', { ctrlKey: true, keyCode: Key.Enter });
+    const el = fixture.debugElement.query(By.css('input'));
+    el.nativeElement.dispatchEvent(event);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should react on escape', () => {
+    const spy = jest.spyOn(comp, 'cancel');
+    const event = new KeyboardEvent('keyup', { keyCode: Key.Escape });
+    const el = fixture.debugElement.query(By.css('input'));
+    el.nativeElement.dispatchEvent(event);
+    expect(spy).toHaveBeenCalled();
   });
 
 });

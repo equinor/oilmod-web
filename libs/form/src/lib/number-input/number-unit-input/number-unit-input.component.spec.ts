@@ -2,7 +2,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angul
 import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { NumberInputPipe } from '../number-input.pipe';
-import { StoFormModule } from '../../sto-form/sto-form.module';
 import { NumberInputDirective } from '../number-input.directive';
 import { NumberUnitInputComponent } from './number-unit-input.component';
 import { Subject } from 'rxjs';
@@ -15,11 +14,11 @@ const ngControl = {
   statusChanges: new Subject()
 };
 
-const createSpyObj = (baseName: string, methodNames: string[]): { [key: string]: Mock<any> } => {
+const createSpyObj = (baseName: string, methodNames: string[]): { [ key: string ]: Mock<any> } => {
   const obj: any = {};
 
-  for (let i = 0; i < methodNames.length; i++) {
-    obj[methodNames[i]] = jest.fn();
+  for ( let i = 0; i < methodNames.length; i++ ) {
+    obj[ methodNames[ i ] ] = jest.fn();
   }
 
   return obj;
@@ -33,9 +32,8 @@ describe('NumberUnitInputComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule, ReactiveFormsModule, StoFormModule ],
-      declarations: [ NumberInputPipe, NumberInputDirective, NumberUnitInputComponent ],
-      providers: [ NumberInputPipe, { provide: NgControl, useValue: formControlSpy } ]
+      imports: [ MaterialModule, ReactiveFormsModule, NumberInputPipe, NumberInputDirective, NumberUnitInputComponent ],
+      providers: [ { provide: NgControl, useValue: formControlSpy } ]
     }).overrideComponent(NumberUnitInputComponent, {
         set: {
           providers: [

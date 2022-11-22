@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
 import { By } from '@angular/platform-browser';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { StoBreadcrumbsComponent } from './sto-breadcrumbs.component';
 import { breadCrumbs } from '../../test-utils';
@@ -10,22 +9,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 let comp: StoBreadcrumbsComponent;
 let fixture: ComponentFixture<StoBreadcrumbsComponent>;
-let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
-@Component({
-  selector: 'sto-spec-wrap',
-  template: ''
-})
-class WrapperComponent {
-}
 
 describe('StoBreadcrumbsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, RouterTestingModule ],
-        declarations: [ StoBreadcrumbsComponent, WrapperComponent ]
+        imports: [ StoBreadcrumbsComponent, MaterialModule, RouterTestingModule ],
+        declarations: []
       })
       .overrideComponent(StoBreadcrumbsComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()

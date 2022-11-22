@@ -11,6 +11,9 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 const COLORS = [
   'primary', 'accent', 'warning', 'danger', 'success'
@@ -21,7 +24,9 @@ const COLORS = [
   templateUrl: './sto-message-panel.component.html',
   styleUrls: [ './sto-message-panel.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [ MatIconModule, MatButtonModule, NgIf ],
 })
 /**
  * Message panel to display inline info boxes.
@@ -38,22 +43,6 @@ const COLORS = [
 export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
   @Input()
   color: 'primary' | 'accent' | 'warning' | 'danger' | 'success' = 'primary';
-
-  @HostBinding('class.warning')
-  get warning() {
-    return this.severity === 'warning';
-  }
-
-  @HostBinding('class.info')
-  get info() {
-    return this.severity === 'info';
-  }
-
-  @HostBinding('class.error')
-  get error() {
-    return this.severity === 'error';
-  }
-
   /**
    * @deprecated
    * severity was used to signify behaviour. Now you should use icon + color.
@@ -74,6 +63,21 @@ export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
   constructor(private elRef: ElementRef<HTMLElement>) {
   }
 
+  @HostBinding('class.warning')
+  get warning() {
+    return this.severity === 'warning';
+  }
+
+  @HostBinding('class.info')
+  get info() {
+    return this.severity === 'info';
+  }
+
+  @HostBinding('class.error')
+  get error() {
+    return this.severity === 'error';
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     const el = this.elRef.nativeElement;
     if ( changes.color ) {
@@ -86,17 +90,17 @@ export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
     }
   }
 
+  ngAfterViewInit(): void {
+    const color = this.color;
+    this.elRef.nativeElement.classList.add(`mat-${color}`, 'sto-message-panel');
+    this.setDismissableClass(this.dismissable, this.elRef.nativeElement);
+  }
+
   private setDismissableClass(dismissable: boolean, el: HTMLElement) {
     if ( dismissable ) {
       el.classList.add('sto-message-panel--dismissable');
     } else {
       el.classList.remove('sto-message-panel--dismissable');
     }
-  }
-
-  ngAfterViewInit(): void {
-    const color = this.color;
-    this.elRef.nativeElement.classList.add(`mat-${color}`, 'sto-message-panel');
-    this.setDismissableClass(this.dismissable, this.elRef.nativeElement);
   }
 }

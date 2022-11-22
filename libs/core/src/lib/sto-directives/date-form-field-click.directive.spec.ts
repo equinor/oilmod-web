@@ -31,8 +31,8 @@ describe('DateFormFieldClickDirective', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule ],
-        declarations: [ DateFormFieldClickDirective, WrapperComponent ]
+        imports: [ DateFormFieldClickDirective, CommonModule, MaterialModule ],
+        declarations: [ WrapperComponent ]
       })
       .compileComponents()
       .then(createComponent);

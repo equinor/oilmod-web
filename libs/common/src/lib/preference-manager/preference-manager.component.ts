@@ -11,22 +11,38 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Preference } from './preference';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenu, MatMenuItem, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { take } from 'rxjs/operators';
+import { NgForOf, NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ActivePreferencePipe } from './active-preference.pipe';
 
 @Component({
   selector: 'sto-preference-manager',
   templateUrl: './preference-manager.component.html',
   styleUrls: [ './preference-manager.component.scss' ],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    NgForOf,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    ActivePreferencePipe
+  ]
 })
 export class PreferenceManagerComponent {
-  @ViewChild(MatMenuTrigger)
-  private trigger: MatMenuTrigger;
   @ViewChild('nameTmpl')
   nameTmpl: ElementRef<HTMLInputElement>;
-
   /**
    * List of the available preferences
    */
@@ -58,7 +74,6 @@ export class PreferenceManagerComponent {
    */
   @Input()
   placeholder: string | null = 'No filter selected';
-
   /**
    * selectPreference emits whenever a preference is selected
    */
@@ -91,14 +106,14 @@ export class PreferenceManagerComponent {
    */
   @Output()
   sharePreference = new EventEmitter<string>();
-
-
   /**
    * @internal
    */
   public editIndex: number | null;
-  private changedPreference: Preference | null;
   public newPreference: Preference | null;
+  @ViewChild(MatMenuTrigger)
+  private trigger: MatMenuTrigger;
+  private changedPreference: Preference | null;
 
   @HostListener('click')
   openMenu() {
@@ -127,7 +142,7 @@ export class PreferenceManagerComponent {
    * @internal
    */
   saveRename() {
-    if (!this.changedPreference) {
+    if ( !this.changedPreference ) {
       return;
     }
     const el = this.nameTmpl.nativeElement;
@@ -170,7 +185,7 @@ export class PreferenceManagerComponent {
    * @internal
    */
   saveNewPreference() {
-    if (!this.newPreference) {
+    if ( !this.newPreference ) {
       return;
     }
     const el = this.nameTmpl.nativeElement;

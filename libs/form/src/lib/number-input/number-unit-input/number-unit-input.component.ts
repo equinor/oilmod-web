@@ -12,17 +12,27 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgControl,
+  NgForm,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NumberInputPipe } from '../number-input.pipe';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime } from 'rxjs/operators';
 import { NumberInputDirective } from '../number-input.directive';
+import { NgForOf, NgIf } from '@angular/common';
 
 class NumberUnit {
   value: number | string | null;
@@ -42,7 +52,15 @@ type NumberUnitForm = {
     { provide: MatFormFieldControl, useExisting: NumberUnitInputComponent }
   ],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NumberInputDirective,
+    ReactiveFormsModule,
+    MatSelectModule,
+    NgIf,
+    NgForOf
+  ]
 })
 export class NumberUnitInputComponent extends FormFieldBase
   implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {

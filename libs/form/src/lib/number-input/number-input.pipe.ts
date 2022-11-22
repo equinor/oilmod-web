@@ -2,11 +2,71 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 const PADDING = '000000000';
 
-@Pipe({ name: 'numberInput' })
+@Pipe({
+  name: 'numberInput',
+  standalone: true
+})
 export class NumberInputPipe implements PipeTransform {
 
   private DECIMAL_SEPARATOR = ',';
   private THOUSANDS_SEPARATOR = ' ';
+
+  transform(value: number | string | null, fractionSize: number = 5, dynamicFractionSize = false): string {
+    if ( !value && value !== 0 ) {
+      return '';
+    }
+    value = value + '';
+    // eslint-disable-next-line
+    const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
+    value = value.replace(re, '');
+
+    value = value.replace('.', this.DECIMAL_SEPARATOR);
+    const [ integerSplit, fractionSplit = '' ] = value.split(this.DECIMAL_SEPARATOR);
+    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
+    if ( integer === null ) {
+      return '';
+    }
+    if ( dynamicFractionSize ) {
+      fraction = fraction ? this.DECIMAL_SEPARATOR + ( fraction ) : '';
+    } else {
+      fraction = fractionSize > 0
+        ? this.DECIMAL_SEPARATOR + ( fraction + PADDING ).substring(0, fractionSize)
+        : '';
+    }
+
+    integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+
+
+    return integer + fraction;
+  }
+
+  parse(value: string, fractionSize: number = 5, dynamicFractionSize = false): string {
+    value = value + '';
+    // eslint-disable-next-line
+    const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
+    value = value.replace(re, '');
+    value = value.replace('.', this.DECIMAL_SEPARATOR);
+    // eslint-disable-next-line prefer-const
+    let [ integerSplit, fractionSplit = '' ] = ( value || '' ).split(this.DECIMAL_SEPARATOR);
+
+    integerSplit = integerSplit.replace(new RegExp(this.THOUSANDS_SEPARATOR, 'g'), '');
+    // eslint-disable-next-line prefer-const
+    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
+
+    if ( dynamicFractionSize ) {
+      fraction = fraction ? `.${fraction}` : '';
+    } else {
+      fraction = fractionSize > 0
+        ? '.' + ( fraction + PADDING ).substring(0, fractionSize)
+        : '';
+    }
+
+
+    if ( !integer ) {
+      return '';
+    }
+    return integer + fraction;
+  }
 
   private handleIntegerAndFractions(integer: string, fraction: string, fractionSize: number, dynamicFractionSize = false) {
     const negative = integer.startsWith('-');
@@ -38,64 +98,6 @@ export class NumberInputPipe implements PipeTransform {
     }
 
     return { integer, fraction };
-  }
-
-  transform(value: number | string | null, fractionSize: number = 5, dynamicFractionSize = false): string {
-    if ( !value && value !== 0 ) {
-      return '';
-    }
-    value = value + '';
-    // eslint-disable-next-line
-    const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
-    value = value.replace(re, '');
-
-    value = value.replace('.', this.DECIMAL_SEPARATOR);
-    const [ integerSplit, fractionSplit = '' ] = value.split(this.DECIMAL_SEPARATOR);
-    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
-    if ( integer === null ) {
-      return '';
-    }
-    if ( dynamicFractionSize ) {
-      fraction = fraction ? this.DECIMAL_SEPARATOR + ( fraction ) : '';
-    } else {
-      fraction = fractionSize > 0
-        ? this.DECIMAL_SEPARATOR + ( fraction + PADDING ).substring(0, fractionSize)
-        : '';
-    }
-
-    integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
-
-
-    return integer + fraction;
-  }
-
-
-  parse(value: string, fractionSize: number = 5, dynamicFractionSize = false): string {
-    value = value + '';
-    // eslint-disable-next-line
-    const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
-    value = value.replace(re, '');
-    value = value.replace('.', this.DECIMAL_SEPARATOR);
-    // eslint-disable-next-line prefer-const
-    let [ integerSplit, fractionSplit = '' ] = ( value || '' ).split(this.DECIMAL_SEPARATOR);
-
-    integerSplit = integerSplit.replace(new RegExp(this.THOUSANDS_SEPARATOR, 'g'), '');
-    // eslint-disable-next-line prefer-const
-    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
-
-    if ( dynamicFractionSize ) {
-      fraction = fraction ? `.${fraction}` : '';
-    } else {
-      fraction = fractionSize > 0
-        ? '.' + ( fraction + PADDING ).substring(0, fractionSize)
-        : '';
-    }
-
-
-    if ( !integer ) {
-      return '';
-    }
-    return integer + fraction;
   }
 
 }

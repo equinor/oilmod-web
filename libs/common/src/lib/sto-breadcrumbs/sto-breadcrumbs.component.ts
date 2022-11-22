@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Optional, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 
 import { Breadcrumb, BreadcrumbConfig, NAVIGATION_HOME_ICON } from './breadcrumb';
+import { NgForOf, NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Breadcrumbs is the navigation scheme that reveals the user's location on the web application.
@@ -13,37 +15,22 @@ import { Breadcrumb, BreadcrumbConfig, NAVIGATION_HOME_ICON } from './breadcrumb
   templateUrl: './sto-breadcrumbs.component.html',
   styleUrls: [ './sto-breadcrumbs.component.scss' ],
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [ MatIconModule, NgIf, NgForOf, RouterLinkWithHref ]
 })
 export class StoBreadcrumbsComponent implements OnDestroy {
 
-  /**
-   * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
-   */
-  @Input() get model(): any[] {
-    return this._model;
-  }
-
-  set model(model: any[]) {
-    this.title = ( model || [] ).map(e => e.label || '').join(' / ');
-    this._model = model;
-  }
-
   @HostBinding('class.sto-breadcrumb')
   css = true;
-
-  private _model: any[];
   public title: string;
-
   @Input()
   homeicon = 'apps';
   @Input()
   svgIcon = false;
-
   /**
    * An object that can contain a url segment or a command.
    */
   @Input() home: any;
-
   /**
    * DEPRECATED
    */
@@ -62,6 +49,20 @@ export class StoBreadcrumbsComponent implements OnDestroy {
 
   constructor(private router: Router, @Inject(NAVIGATION_HOME_ICON) @Optional() iconConfig: BreadcrumbConfig) {
     this.iconConfig = iconConfig || { icon: 'apps' };
+  }
+
+  private _model: any[];
+
+  /**
+   * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
+   */
+  @Input() get model(): any[] {
+    return this._model;
+  }
+
+  set model(model: any[]) {
+    this.title = ( model || [] ).map(e => e.label || '').join(' / ');
+    this._model = model;
   }
 
   itemClick(event: Event, item: Breadcrumb) {

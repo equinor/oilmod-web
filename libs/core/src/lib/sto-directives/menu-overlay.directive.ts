@@ -5,14 +5,15 @@ import { switchMap, take } from 'rxjs/operators';
 
 @Directive({
   selector: '[stoMenuOverlay]',
-  exportAs: 'stoMenuOverlay'
+  exportAs: 'stoMenuOverlay',
+  standalone: true
 })
 export class MenuOverlayDirective {
-  private readonly menu: MatMenuPanel;
   @HostBinding('style.left.px')
   left = 0;
   @HostBinding('style.top.px')
   top = 0;
+  private readonly menu: MatMenuPanel;
 
   constructor(@Host() private trigger: MatMenuTrigger, el: ElementRef<HTMLButtonElement>) {
     this.menu = trigger.menu as MatMenuPanel;

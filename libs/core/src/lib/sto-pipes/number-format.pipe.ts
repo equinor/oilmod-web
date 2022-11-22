@@ -12,7 +12,8 @@ import { Pipe, PipeTransform } from '@angular/core';
  * {{ 1234,32 | numberFormat:'M3':false:true:5 }} -> 1 234,32000 M3
  */
 @Pipe({
-  name: 'numberFormat'
+  name: 'numberFormat',
+  standalone: true
 })
 export class NumberFormatPipe implements PipeTransform {
 

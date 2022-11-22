@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Preference } from './preference';
 
 @Pipe({
-  name: 'activePreference'
+  name: 'activePreference',
+  standalone: true
 })
 export class ActivePreferencePipe implements PipeTransform {
 

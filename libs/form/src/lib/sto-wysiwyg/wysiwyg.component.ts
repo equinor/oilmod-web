@@ -18,6 +18,7 @@ import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
 import { Modifiers, validCommands } from './modifiers';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
 
 @Component({
   selector: 'sto-wysiwyg',
@@ -32,17 +33,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi: true
     }
   ],
+  standalone: true,
+  imports: [
+    WysiwygActionsComponent,
+    WysiwygEditorComponent
+  ]
 })
 export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
   // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('readonly')
   disabled: boolean;
-  private destroyed$ = new Subject<boolean>();
   @ViewChild(WysiwygEditorComponent, { read: ElementRef })
   editor: ElementRef<HTMLDivElement>;
   public value: SafeHtml;
   public active: string[] = [];
   public onTouched: unknown;
+  private destroyed$ = new Subject<boolean>();
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -58,20 +64,6 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-  }
-
-  private listenForSelectEvents() {
-    merge(
-      fromEvent(this.editor.nativeElement, 'mouseup'),
-      fromEvent<KeyboardEvent>(this.editor.nativeElement, 'keyup')
-        .pipe(
-          filter((ev) => ( ev.ctrlKey && ev.key === 'A' ) || ( /Arrow/.test(ev.key) ))
-        )
-    ).pipe(debounceTime(200), takeUntil(this.destroyed$))
-      .subscribe(() => {
-        this.active = Modifiers.getActiveModifiers();
-        this.cdr.detectChanges();
-      });
   }
 
   execute(method: string) {
@@ -111,6 +103,7 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
       this.cdr.detectChanges();
     }
   }
+
   // eslint-disable-next-line
   propagateChange = (value: unknown) => {
     console.log(value); // To remove eslint warning..
@@ -131,5 +124,19 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
 
   valueChanged(value: string) {
     this.propagateChange(value);
+  }
+
+  private listenForSelectEvents() {
+    merge(
+      fromEvent(this.editor.nativeElement, 'mouseup'),
+      fromEvent<KeyboardEvent>(this.editor.nativeElement, 'keyup')
+        .pipe(
+          filter((ev) => ( ev.ctrlKey && ev.key === 'A' ) || ( /Arrow/.test(ev.key) ))
+        )
+    ).pipe(debounceTime(200), takeUntil(this.destroyed$))
+      .subscribe(() => {
+        this.active = Modifiers.getActiveModifiers();
+        this.cdr.detectChanges();
+      });
   }
 }

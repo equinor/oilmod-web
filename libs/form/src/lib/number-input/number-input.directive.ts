@@ -4,20 +4,22 @@ import { Key } from '@ngx-stoui/core';
 import { NumberInputPipe } from './number-input.pipe';
 
 
+@Directive({
 // eslint-disable-next-line @angular-eslint/directive-selector
-@Directive({ selector: '[numberInput]' })
+  selector: '[numberInput]',
+  standalone: true
+})
 export class NumberInputDirective {
   @Input()
   unit: string | undefined;
   @Input()
   appendUnit: boolean;
-
-  private _el: HTMLInputElement;
-
   @Input()
   fractionSize = 5;
   @Input()
   dynamicFractionSize: boolean;
+  private _el: HTMLInputElement;
+  private numberFormatPipe = new NumberInputPipe();
   /**
    * List of keys ignored, to work as default.
    *  {Key[]}
@@ -35,8 +37,7 @@ export class NumberInputDirective {
   ];
 
 
-  constructor(private elementRef: ElementRef,
-              private numberFormatPipe: NumberInputPipe,
+  constructor(private elementRef: ElementRef
   ) {
     this._el = this.elementRef.nativeElement;
   }
@@ -79,36 +80,6 @@ export class NumberInputDirective {
   }
 
   /**
-   *  Handles thousand seperator with commas
-   * @param orgStr eg. 123.214,123
-   * {string} 123214.123
-   */
-  private handleMixedCommasAndDecimals(orgStr: string) {
-    let str = orgStr + '';
-    str = str.replace(',', '.');
-    const array = str.split('.');
-    if ( array.length > 1 ) {
-      const prefix = array.slice(0, array.length - 1).join('');
-      str = prefix + '.' + array[ array.length - 1 ];
-    } else {
-      str = orgStr;
-    }
-    return str;
-  }
-
-
-  /**
-   * Se if parsed string contains words that indicate a failed parse.
-   * @param parsedValue
-   * {boolean}
-   */
-  private hasInvalidValues(parsedValue: string) {
-    return parsedValue.includes('NaN')
-      || parsedValue.includes('undefined')
-      || parsedValue.includes('null');
-  }
-
-  /**
    * Listen for key event to work like a number field.
    * Transforms period to comma.
    * Handles hash, allows copy,pase,cut and select all.
@@ -137,6 +108,54 @@ export class NumberInputDirective {
     }
   }
 
+  @HostListener('focus', [ '$event' ])
+  onFocus($event: FocusEvent) {
+    if ( this._el.readOnly || this._el.disabled ) {
+      return;
+    }
+    const target = $event.target as HTMLInputElement;
+    const value = target.value;
+    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize, this.dynamicFractionSize) + '' ).replace('.', ',');
+    this._el.select();
+  }
+
+  @HostListener('blur', [ '$event.target.value' ])
+  onBlur(value: number) {
+    if ( this._el.readOnly || this._el.disabled ) {
+      return;
+    }
+    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize, this.dynamicFractionSize);
+  }
+
+  /**
+   *  Handles thousand seperator with commas
+   * @param orgStr eg. 123.214,123
+   * {string} 123214.123
+   */
+  private handleMixedCommasAndDecimals(orgStr: string) {
+    let str = orgStr + '';
+    str = str.replace(',', '.');
+    const array = str.split('.');
+    if ( array.length > 1 ) {
+      const prefix = array.slice(0, array.length - 1).join('');
+      str = prefix + '.' + array[ array.length - 1 ];
+    } else {
+      str = orgStr;
+    }
+    return str;
+  }
+
+  /**
+   * Se if parsed string contains words that indicate a failed parse.
+   * @param parsedValue
+   * {boolean}
+   */
+  private hasInvalidValues(parsedValue: string) {
+    return parsedValue.includes('NaN')
+      || parsedValue.includes('undefined')
+      || parsedValue.includes('null');
+  }
+
   /**
    * Handles dash. Is ignored if already exist a comma.
    * Replaces period with comma.
@@ -144,7 +163,7 @@ export class NumberInputDirective {
    */
   private handlePeriodDelimiter(e: KeyboardEvent) {
     let selectionIncludesPeriod = false;
-    if (!e.target) {
+    if ( !e.target ) {
       return;
     }
     const target = e.target as HTMLInputElement;
@@ -175,7 +194,7 @@ export class NumberInputDirective {
    */
   private hasSelectedAllText(e: KeyboardEvent) {
     const target = e.target as HTMLInputElement;
-    if (!target) {
+    if ( !target ) {
       return;
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -189,11 +208,11 @@ export class NumberInputDirective {
    * @param e
    */
   private handleDash(e: KeyboardEvent) {
-    if (!e.target) {
+    if ( !e.target ) {
       return;
     }
     if ( this.hasSelectedAllText(e) ) {
-    } else if ( !this._el.value.includes('-') && (e.target as HTMLInputElement).selectionStart === 0 ) {
+    } else if ( !this._el.value.includes('-') && ( e.target as HTMLInputElement ).selectionStart === 0 ) {
     } else {
       e.preventDefault();
     }
@@ -226,7 +245,6 @@ export class NumberInputDirective {
     return ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 );
   }
 
-
   /**
    * Handles up and down arrows by adding/subtracting one
    * @param e
@@ -254,25 +272,6 @@ export class NumberInputDirective {
       this._el.dispatchEvent(new Event('input'));
     }, 0);
 
-  }
-
-  @HostListener('focus', [ '$event' ])
-  onFocus($event: FocusEvent) {
-    if ( this._el.readOnly || this._el.disabled ) {
-      return;
-    }
-    const target = $event.target as HTMLInputElement;
-    const value = target.value;
-    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize, this.dynamicFractionSize) + '' ).replace('.', ',');
-    this._el.select();
-  }
-
-  @HostListener('blur', [ '$event.target.value' ])
-  onBlur(value: number) {
-    if ( this._el.readOnly || this._el.disabled ) {
-      return;
-    }
-    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize, this.dynamicFractionSize);
   }
 
 }

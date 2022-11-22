@@ -5,11 +5,9 @@ import {
   Component,
   ElementRef,
   Host,
-  NgModule,
   OnDestroy,
   Optional,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatPseudoCheckboxState } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { takeUntil } from 'rxjs/operators';
@@ -21,26 +19,31 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   templateUrl: './sto-option-select-all.component.html',
   styleUrls: [ './sto-option-select-all.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatCheckboxModule
+  ]
 })
 export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, OnDestroy {
   state: MatPseudoCheckboxState = 'checked';
 
   private options: Array<unknown> = [];
-  private _value: Array<T> = [];
-  set value(value: Array<T>) {
-    this._value = value ?? [];
-  }
-
-  get value() {
-    return this._value;
-  }
-
   private destroyed = new Subject();
 
   constructor(
     @Host() @Optional() private matSelect: MatSelect,
     private cdr: ChangeDetectorRef,
     private el: ElementRef<HTMLElement>) {
+  }
+
+  private _value: Array<T> = [];
+
+  get value() {
+    return this._value;
+  }
+
+  set value(value: Array<T>) {
+    this._value = value ?? [];
   }
 
   ngAfterViewInit() {
@@ -56,17 +59,17 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
         this.updateState();
       });
 
-    if (this.matSelect.ngControl?.control) {
+    if ( this.matSelect.ngControl?.control ) {
       // Null-checked via isControl
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+      // @ts-ignore
       this.value = this.matSelect.ngControl.control.value;
-        this.matSelect.ngControl.valueChanges
-          ?.pipe(takeUntil(this.destroyed))
-          .subscribe(res => {
-            this.value = res;
-            this.updateState();
-          });
+      this.matSelect.ngControl.valueChanges
+        ?.pipe(takeUntil(this.destroyed))
+        .subscribe(res => {
+          this.value = res;
+          this.updateState();
+        });
     } else {
       this.el.nativeElement.style.display = 'none';
     }
@@ -82,10 +85,9 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
   }
 
   onSelectAllClick() {
-    if (this.state === 'checked') {
+    if ( this.state === 'checked' ) {
       this.matSelect.ngControl?.control?.setValue([]);
-    }
-    else {
+    } else {
       this.matSelect.ngControl?.control?.setValue(this.options);
     }
 
@@ -95,29 +97,23 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const areAllSelected = this.areArraysEqual(this.value, this.options);
-    if (areAllSelected) {
+    if ( areAllSelected ) {
       this.state = 'checked';
-    }
-    else if (this.value.length > 0) {
-      this.state = 'indeterminate'
-    }
-    else {
+    } else if ( this.value.length > 0 ) {
+      this.state = 'indeterminate';
+    } else {
       this.state = 'unchecked';
     }
     this.cdr.markForCheck();
   }
 
   private areArraysEqual(a: Array<T>, b: Array<T>) {
-    if (!a || !b) {
+    if ( !a || !b ) {
       return false;
     }
-    return [...a].sort().join(',') === [...b].sort().join(',');
+    return [ ...a ].sort().join(',') === [ ...b ].sort().join(',');
   }
 }
 
-@NgModule({
-  imports: [ CommonModule, MatCheckboxModule ],
-  declarations: [StoOptionSelectAllComponent],
-  exports: [StoOptionSelectAllComponent],
-})
-export class StoOptionSelectAllComponentModule {}
+
+export const StoOptionSelectAllComponentModule = [ StoOptionSelectAllComponent ];

@@ -10,12 +10,13 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 
 @Pipe({
-  name: 'keys'
+  name: 'keys',
+  standalone: true
 })
 export class KeysPipe implements PipeTransform {
 
   transform(value: Record<string, unknown>): Array<string> {
-    if (value) {
+    if ( value ) {
       return Object.keys(value);
     }
     return [];

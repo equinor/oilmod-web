@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: '0 0 * * 0' # Every sunday at midnight
   workflow_dispatch:
 
 jobs:
@@ -17,10 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Use Node 14
-        uses: actions/setup-node@v1
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16
       - name: Install deps
         run: npm ci
       - name: Run tests

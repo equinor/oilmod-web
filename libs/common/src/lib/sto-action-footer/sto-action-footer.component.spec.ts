@@ -1,12 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { StoActionFooterComponent } from './sto-action-footer.component';
-import { CommonModule } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 let comp: StoActionFooterComponent;
 let fixture: ComponentFixture<StoActionFooterComponent>;
@@ -24,8 +22,8 @@ describe('StoActionFooterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatProgressBarModule ],
-        declarations: [ StoActionFooterComponent, WrapperComponent ]
+        imports: [ MatButtonModule, StoActionFooterComponent, NoopAnimationsModule ],
+        declarations: [ WrapperComponent ]
       })
       .overrideComponent(StoActionFooterComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()

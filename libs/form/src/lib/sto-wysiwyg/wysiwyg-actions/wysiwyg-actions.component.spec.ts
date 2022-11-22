@@ -13,8 +13,7 @@ describe('WysiwygActionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule ],
-        declarations: [ WysiwygActionsComponent ],
+        imports: [ MaterialModule, WysiwygActionsComponent ],
       })
       .overrideComponent(WysiwygActionsComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents();
