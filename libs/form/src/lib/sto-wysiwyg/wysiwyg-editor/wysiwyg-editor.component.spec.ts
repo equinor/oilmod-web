@@ -16,7 +16,7 @@ describe('WysiwygEditorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        declarations: [ WysiwygEditorComponent ]
+        imports: [ WysiwygEditorComponent ]
       })
       .compileComponents();
   }));
@@ -42,10 +42,10 @@ describe('WysiwygEditorComponent', () => {
     expect(component.readonly).toBeTruthy();
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('false');
-    ( component.readonly as unknown as null) = null;
+    ( component.readonly as unknown as null ) = null;
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('true');
-    (component.readonly as unknown as undefined) = undefined;
+    ( component.readonly as unknown as undefined ) = undefined;
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('true');
   });
