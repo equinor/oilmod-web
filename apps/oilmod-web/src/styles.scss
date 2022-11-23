@@ -1,2 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../../../libs/core/src/ngx-stoui";
+@import 'highlight.js/styles/github-dark.css';
+
+.hljs-ln td.hljs-ln-numbers {
+  padding-right: 12px;
+}
+
+.app-wrapper-content {
+  padding: 0 32px;
+}

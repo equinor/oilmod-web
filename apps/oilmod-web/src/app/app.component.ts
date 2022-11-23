@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'oilmod-web-nx-root',
+  selector: 'sto-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: [ './app.component.scss' ],
 })
 export class AppComponent {
-  title = 'oilmod-web';
+  public links = [
+    { route: [ '/', 'core' ], label: 'Core' },
+    { route: [ '/', 'common' ], label: 'Common' },
+    { route: [ '/', 'datatable' ], label: 'Datatable' },
+    { route: [ '/', 'drawer' ], label: 'Drawer' },
+    { route: [ '/', 'form' ], label: 'Form' },
+  ];
 }
