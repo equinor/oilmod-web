@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { DemoComponent } from '../../../demo.component';
 import { StoActionFooterComponent } from '@ngx-stoui/common';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 
 const code = `import { Component } from '@angular/core';
 import { DemoComponent } from '../../../demo.component';

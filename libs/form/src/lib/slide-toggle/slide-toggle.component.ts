@@ -15,12 +15,15 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Subject, Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ThemePalette } from '@angular/material/core';
-import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  MatLegacySlideToggle as MatSlideToggle,
+  MatLegacySlideToggleModule as MatSlideToggleModule
+} from '@angular/material/legacy-slide-toggle';
 
 export class StoSlideToggleChange {
   source: SlideToggleComponent;

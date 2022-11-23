@@ -9,10 +9,10 @@ import {
   Optional,
 } from '@angular/core';
 import { MatPseudoCheckboxState } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 
 @Component({
   selector: 'sto-option-select-all',

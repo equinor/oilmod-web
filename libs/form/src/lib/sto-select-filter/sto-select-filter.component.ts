@@ -15,7 +15,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
@@ -52,6 +52,43 @@ import { MatSelect } from '@angular/material/select';
 })
 export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
 
+  @HostBinding('class.sto-select-filter') cssClass = true;
+  @ViewChild('inputElement')
+  public inputElement: ElementRef<HTMLInputElement>;
+  public checkboxControl = new UntypedFormControl();
+  public inputControl = new UntypedFormControl();
+  public indeterminate: boolean;
+  /**
+   * Emits when selectAll checkbox changes
+   */
+  @Output() selectAll = new EventEmitter<boolean>();
+  /**
+   * Emits when the search value changes
+   */
+  @Output() valueChanges = new EventEmitter<unknown>();
+  /**
+   * isMulti determines if select all is available
+   */
+  @Input() isMulti: boolean;
+  /**
+   * isFilter determines if filtering is active
+   */
+  @Input() isFilter: boolean;
+  /**
+   * automatically focus input element if it's empty
+   */
+  @Input() focusIfNoValue: boolean;
+  private destroyed$ = new Subject();
+
+  constructor(public select: MatSelect) {
+  }
+
+  private _value: unknown;
+
+  get value(): unknown {
+    return this._value;
+  }
+
   /**
    * Initial value of the filter
    */
@@ -60,8 +97,10 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
     this.writeValue(value);
   }
 
-  get value(): unknown {
-    return this._value;
+  private _total: number;
+
+  get total(): number {
+    return this._total;
   }
 
   /**
@@ -72,8 +111,10 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
     this._total = total;
   }
 
-  get total(): number {
-    return this._total;
+  private _selected: number;
+
+  get selected(): number {
+    return this._selected;
   }
 
   /**
@@ -92,54 +133,6 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
       this.isChecked(false);
     }
     this._selected = selected;
-  }
-
-  get selected(): number {
-    return this._selected;
-  }
-
-  @HostBinding('class.sto-select-filter') cssClass = true;
-  @ViewChild('inputElement')
-  public inputElement: ElementRef<HTMLInputElement>;
-
-  public checkboxControl = new UntypedFormControl();
-  public inputControl = new UntypedFormControl();
-
-  public indeterminate: boolean;
-
-  private _value: unknown;
-
-
-  private _total: number;
-
-
-  private _selected: number;
-
-  /**
-   * Emits when selectAll checkbox changes
-   */
-  @Output() selectAll = new EventEmitter<boolean>();
-  /**
-   * Emits when the search value changes
-   */
-  @Output() valueChanges = new EventEmitter<unknown>();
-
-  /**
-   * isMulti determines if select all is available
-   */
-  @Input() isMulti: boolean;
-  /**
-   * isFilter determines if filtering is active
-   */
-  @Input() isFilter: boolean;
-  /**
-   * automatically focus input element if it's empty
-   */
-  @Input() focusIfNoValue: boolean;
-  private destroyed$ = new Subject();
-
-
-  constructor(public select: MatSelect) {
   }
 
   public isChecked(isChecked: boolean) {

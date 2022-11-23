@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { DemoComponent } from '../../../demo.component';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { FormFieldDirective, NumberInputComponent } from '@ngx-stoui/form';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { NgIf } from '@angular/common';
 import { code } from './code';
 

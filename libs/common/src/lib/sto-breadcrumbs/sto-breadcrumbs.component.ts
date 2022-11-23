@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Optional, ViewEncapsulation } from '@angular/core';
-import { Router, RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { Breadcrumb, BreadcrumbConfig, NAVIGATION_HOME_ICON } from './breadcrumb';
 import { NgForOf, NgIf } from '@angular/common';
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: [ './sto-breadcrumbs.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [ MatIconModule, NgIf, NgForOf, RouterLinkWithHref ]
+  imports: [ MatIconModule, NgIf, NgForOf, RouterLink ]
 })
 export class StoBreadcrumbsComponent implements OnDestroy {
 

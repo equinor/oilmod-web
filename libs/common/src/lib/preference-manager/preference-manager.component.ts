@@ -11,14 +11,19 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Preference } from './preference';
-import { MatMenu, MatMenuItem, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import {
+  MatLegacyMenu as MatMenu,
+  MatLegacyMenuItem as MatMenuItem,
+  MatLegacyMenuModule as MatMenuModule,
+  MatLegacyMenuTrigger as MatMenuTrigger
+} from '@angular/material/legacy-menu';
 import { take } from 'rxjs/operators';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { ActivePreferencePipe } from './active-preference.pipe';
 
 @Component({

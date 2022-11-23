@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 import { MenuOverlayDirective } from './menu-overlay.directive';
 
 @Directive({

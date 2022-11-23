@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEn
 import { NavigationChild } from '../navigation';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'sto-nav-drawer-list-item',
@@ -13,7 +13,7 @@ import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
     MatIconModule,
     NgIf,
     RouterLinkActive,
-    RouterLinkWithHref,
+    RouterLink,
     NgTemplateOutlet
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
