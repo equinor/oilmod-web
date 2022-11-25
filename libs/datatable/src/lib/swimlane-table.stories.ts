@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fixedColumns, rows } from './rows';
 import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
 import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
 import { StoDatatableModule } from '@ngx-stoui/datatable';
 
 export default {

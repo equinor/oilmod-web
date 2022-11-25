@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 16
       - name: Install deps
-        run: npm ci
+        run: npm ci --force
       - name: Run tests
         run: npm run test:all
       - name: Run linter
