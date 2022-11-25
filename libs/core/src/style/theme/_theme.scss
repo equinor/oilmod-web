@@ -8,7 +8,7 @@ $sto-theme: mat.define-light-theme($primary, $accent, $sto-warn);
 $sto-theme: map_merge($sto-theme, $sto-indicators);
 $variables: theme_variables($sto-theme);
 
-/// @deprecated only here for backwards compability
+// @deprecated only here for backwards compability
 $sto-dark-theme: $sto-theme;
 
 $dark-variables: theme_variables($sto-theme);

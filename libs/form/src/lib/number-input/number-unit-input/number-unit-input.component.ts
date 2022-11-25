@@ -70,7 +70,7 @@ export class NumberUnitInputComponent extends FormFieldBase
   readonly autofilled: boolean;
   controlType = 'number-unit-input';
   @ViewChild(MatSelect)
-  select: MatSelect;
+  select?: MatSelect;
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
   @ViewChild(NumberInputDirective)
@@ -264,8 +264,8 @@ export class NumberUnitInputComponent extends FormFieldBase
     if ( isInputFocus ) {
       this.elRef.nativeElement.querySelector('input')?.focus();
     } else {
-      this.select.focus();
-      this.select.open();
+      this.select?.focus();
+      this.select?.open();
     }
   }
 

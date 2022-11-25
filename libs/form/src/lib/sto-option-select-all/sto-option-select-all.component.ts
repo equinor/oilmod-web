@@ -28,7 +28,7 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
   state: MatPseudoCheckboxState = 'checked';
 
   private options: Array<unknown> = [];
-  private destroyed = new Subject();
+  private destroyed = new Subject<void>();
 
   constructor(
     @Host() @Optional() private matSelect: MatSelect,

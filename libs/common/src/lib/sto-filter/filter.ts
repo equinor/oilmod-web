@@ -20,18 +20,17 @@ export abstract class FilterForm<T extends Record<string, unknown>> implements O
   abstract formConfig: { [ key: string ]: unknown };
   // Serializer function
   abstract serializer: OperatorFunction<T, FilterList[]>;
-  protected destroyed$ = new Subject();
   // Most filters will emit a filterChanged event
   @Output()
   filterChanged = new EventEmitter<T>();
   // Initial value of the filter
   @Input()
   value: T;
-
   // Form group
   public form: UntypedFormGroup;
   // Chip value. See {@link FilterList}
   public filter$: Observable<FilterList[]>;
+  protected destroyed$ = new Subject();
 
   constructor(private fb: UntypedFormBuilder) {
   }
@@ -41,7 +40,7 @@ export abstract class FilterForm<T extends Record<string, unknown>> implements O
     this.form.reset(this.value || {});
     this.filter$ = this.form
       .valueChanges
-      .pipe(startWith<T>(this.form.value), this.serializer);
+      .pipe(startWith<T>(this.form.value as T), this.serializer);
     this.form.valueChanges
       .pipe(
         startWith(this.form.value),
@@ -63,7 +62,7 @@ export abstract class FilterForm<T extends Record<string, unknown>> implements O
    */
   public clearFilter(key: string, index?: number) {
     if ( index || index === 0 ) {
-      const val = [...(this.form.get(key)?.value ?? [])];
+      const val = [ ...( this.form.get(key)?.value ?? [] ) ];
       val.splice(index, 1);
       this.form.get(key)?.reset(val);
     } else {
