@@ -10,7 +10,7 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
 import { MatIconModule } from '@angular/material/icon';
 import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
 import { ColumnStylePipe } from './column-style.pipe';
-import { MatRippleModule } from '@angular/material/core';
+import { MatLegacyRippleModule as MatRippleModule } from '@angular/material/legacy-core';
 import {
   StoDatatableActionsComponent,
   StoDataTableActionsLeftComponent,

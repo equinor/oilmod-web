@@ -1,16 +1,16 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { StoAppHeaderComponent, StoAppHeaderModule, StoThemeModule } from '@ngx-stoui/common';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { StoFormModule } from '@ngx-stoui/form';
 
 export default {
@@ -37,11 +37,10 @@ export default {
     homeBreadCrumbConfig: { table: { disable: true } },
     userMenu: { table: { disable: true } },
   },
-  parameters: {
-  },
+  parameters: {},
 } as Meta;
 
-const Template: Story<StoAppHeaderComponent & {title?: string}> = (args: StoAppHeaderComponent) => {
+const Template: Story<StoAppHeaderComponent & { title?: string }> = (args: StoAppHeaderComponent) => {
   return {
     props: args,
     template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`

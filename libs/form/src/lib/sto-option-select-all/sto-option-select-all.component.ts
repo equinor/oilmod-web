@@ -8,7 +8,7 @@ import {
   OnDestroy,
   Optional,
 } from '@angular/core';
-import { MatPseudoCheckboxState } from '@angular/material/core';
+import { MatLegacyPseudoCheckboxState as MatPseudoCheckboxState } from '@angular/material/legacy-core';
 import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

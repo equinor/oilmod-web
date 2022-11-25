@@ -2,10 +2,10 @@ import { Meta } from '@storybook/angular/types-6-0';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { StoDirectivesModule } from '@ngx-stoui/core';
 
 export default {
@@ -15,8 +15,7 @@ export default {
       imports: [ BrowserAnimationsModule, CommonModule, StoDirectivesModule, MatCardModule, MatMenuModule, MatButtonModule ],
     })
   ],
-  parameters: {
-  }
+  parameters: {}
 } as Meta;
 
 

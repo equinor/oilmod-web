@@ -5,7 +5,7 @@ import { DateFormFieldClickDirective } from './date-form-field-click.directive';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MatFormField } from '@angular/material/form-field';
+import { MatLegacyFormField as MatFormField } from '@angular/material/legacy-form-field';
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;

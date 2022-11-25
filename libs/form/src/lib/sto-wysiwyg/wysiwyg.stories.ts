@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { StoWysiwygModule, WysiwygComponent } from '@ngx-stoui/form';
 

@@ -1,8 +1,7 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
-import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// @ts-ignore
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // @ts-ignore
 import { Component, NgModule } from '@angular/core';
 import { ConfirmModule, ConfirmService } from '@ngx-stoui/common';
 
@@ -16,19 +15,20 @@ import { ConfirmModule, ConfirmService } from '@ngx-stoui/common';
 
 })
 class ConfirmDemoComponent {
-  show() {
-    this.confirm.confirm('Confirmation message should be short', 'Confirm delete', 'Delete');
+  constructor(private confirm: ConfirmService) {
   }
 
-  constructor(private confirm: ConfirmService) {
+  show() {
+    this.confirm.confirm('Confirmation message should be short', 'Confirm delete', 'Delete');
   }
 }
 
 @NgModule({
-  declarations: [ConfirmDemoComponent],
-  exports: [ConfirmDemoComponent],
+  declarations: [ ConfirmDemoComponent ],
+  exports: [ ConfirmDemoComponent ],
 })
-class ConfirmerModule {}
+class ConfirmerModule {
+}
 
 export default {
   title: 'common/Confirm Service',
@@ -36,11 +36,10 @@ export default {
     moduleMetadata({
       imports: [
         ConfirmModule, ConfirmerModule, BrowserAnimationsModule, MatButtonModule ],
-      declarations: [  ],
+      declarations: [],
     })
   ],
-  parameters: {
-  },
+  parameters: {},
 } as Meta;
 
 

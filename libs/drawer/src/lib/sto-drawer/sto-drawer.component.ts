@@ -27,7 +27,7 @@ import { NgClass, NgIf } from '@angular/common';
 @Component({
   selector: 'sto-drawer',
   templateUrl: './sto-drawer.component.html',
-  styleUrls: [ './sto-drawer.component.scss', '../sto-navigation/_sto-navigation.scss' ],
+  styleUrls: [ './sto-drawer.component.scss' ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: drawerAnimations,

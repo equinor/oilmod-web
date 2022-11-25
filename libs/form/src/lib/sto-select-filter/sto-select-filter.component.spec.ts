@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angul
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { StoSelectFilterComponent } from './sto-select-filter.component';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';

@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { NavDrawerComponent, NavDrawerModule, Navigation } from '@ngx-stoui/drawer';
