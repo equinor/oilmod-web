@@ -17,14 +17,12 @@ import { ContextMenuDirective } from './context-menu.directive';
  *     ContextMenuDirective
  */
 export const StoDirectivesModule = [
-  [
-    QuickKeysDirective
-    , DateFormFieldClickDirective
-    , StoSelectTextOnFocusDirective
-    , StoGridDirective
-    , StoGridColumnDirective
-    , StoGridSpacerDirective
-    , MenuOverlayDirective
-    , ContextMenuDirective
-  ]
-];
+  QuickKeysDirective
+  , DateFormFieldClickDirective
+  , StoSelectTextOnFocusDirective
+  , StoGridDirective
+  , StoGridColumnDirective
+  , StoGridSpacerDirective
+  , MenuOverlayDirective
+  , ContextMenuDirective
+] as const;

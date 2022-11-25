@@ -14,4 +14,4 @@ export const StoPipesModule = [
   GetUnit,
   ExcludeUnit,
   YesNoPipe
-];
+] as const;
