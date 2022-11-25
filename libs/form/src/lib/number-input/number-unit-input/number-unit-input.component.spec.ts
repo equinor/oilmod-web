@@ -143,7 +143,7 @@ class Page {
   constructor(fixture: ComponentFixture<NumberUnitInputComponent>) {
     this.input = fixture.componentInstance.input.nativeElement;
     this.inputDe = fixture.debugElement.query(By.css('input'));
-    this.matSelect = fixture.componentInstance.select;
+    this.matSelect = fixture.componentInstance.select!;
     this.elementRef = fixture.elementRef.nativeElement;
   }
 }
