@@ -22,18 +22,20 @@ sto-preference-manager {
   }
 }
 
-.mat-menu-panel.preference-manager-list {
+.mat-mdc-menu-panel.preference-manager-list {
   width: 350px;
   min-height: 32px;
 
-  .mat-menu-content:not(:empty) {
+  mat-mdc-menu-content:not(:empty) {
     padding-top: 0;
     padding-bottom: 0;
   }
 
-  .preference-manager-list-item {
+  .preference-manager-list-item > span {
     display: flex;
     padding: 0 8px;
+    width: 100%;
+    align-items: center;
 
     &.edit {
       padding-left: 0;

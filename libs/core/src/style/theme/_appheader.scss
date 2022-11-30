@@ -81,15 +81,15 @@ body {
   }
   .sto-header {
     height: $height;
-    font-size: mat.font-size($config, subheading-1);
-    line-height: mat.line-height($config, subheading-1);
+    font-size: mat.font-size($config, subtitle-1);
+    line-height: mat.line-height($config, subtitle-1);
 
-    .mat-icon {
-      font-size: mat.font-size($config, title);
-      line-height: mat.font-size($config, title);
-      width: mat.font-size($config, title);
-      height: mat.font-size($config, title);
-    }
+    /*    .mat-icon {
+          font-size: mat.font-size($config, title);
+          line-height: mat.font-size($config, title);
+          width: mat.font-size($config, title);
+          height: mat.font-size($config, title);
+        }*/
 
     &__environment {
       height: $height;
@@ -97,14 +97,14 @@ body {
     }
   }
   .sto-breadcrumb {
-    font-size: mat.font-size($config, subheading-1);
-    line-height: mat.line-height($config, subheading-1);
+    font-size: mat.font-size($config, subtitle-1);
+    line-height: mat.line-height($config, subtitle-1);
 
     .mat-icon {
-      font-size: mat.font-size($config, title);
-      line-height: mat.font-size($config, title);
-      width: mat.font-size($config, title);
-      height: mat.font-size($config, title);
+      /*      font-size: mat.font-size($config, title);
+            line-height: mat.font-size($config, title);
+            width: mat.font-size($config, title);
+            height: mat.font-size($config, title);*/
     }
   }
 }

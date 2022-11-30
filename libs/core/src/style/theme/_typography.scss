@@ -4,7 +4,48 @@ $base-font-size: 13px;
 $sm-font-size: 10px;
 $l-font-size: 16px;
 
-$sto-typography: mat.define-legacy-typography-config(
+/*
+
+/// @param {String} $font-family The font family to use for levels where it is not explicitly
+///     specified.
+/// @param {Map} $headline-1 The font settings for the headline-1 font level.
+/// @param {Map} $headline-2 The font settings for the headline-2 font level.
+/// @param {Map} $headline-3 The font settings for the headline-3 font level.
+/// @param {Map} $headline-4 The font settings for the headline-4 font level.
+/// @param {Map} $headline-5 The font settings for the headline-5 font level.
+/// @param {Map} $headline-6 The font settings for the headline-6 font level.
+/// @param {Map} $subtitle-1 The font settings for the subtitle-1 font level.
+/// @param {Map} $subtitle-2 The font settings for the subtitle-2 font level.
+/// @param {Map} $body-1 The font settings for the body-1 font level.
+/// @param {Map} $body-2 The font settings for the body-2 font level.
+/// @param {Map} $caption The font settings for the caption font level.
+/// @param {Map} $button The font settings for the button font level.
+/// @param {Map} $overline The font settings for the overline font level.
+/// @return {Map} A map containing font settings for each of the levels in the Material Design spec.
+
+*/
+$headline: mat.define-typography-level(28px, 44px, 400, 'Equinor, Roboto');
+$sto-typography: mat.define-typography-config(
+  $font-family: 'Equinor, Roboto',
+  $body-1: mat.define-typography-level(13px, 20px, 400, 'Equinor, Roboto'),
+  $body-2: mat.define-typography-level(13px, 20px, 400, 'Equinor, Roboto'),
+  $button: mat.define-typography-level(14px, 24px, 500, 'Equinor, Roboto'),
+  $caption: mat.define-typography-level(18px, 1.333, 400, 'Equinor, Roboto'),
+  $headline-1: $headline,
+  $headline-2: $headline,
+  $headline-3: $headline,
+  $headline-4: $headline,
+  $headline-5: mat.define-typography-level(24px, 32px, 400, 'Equinor, Roboto'),
+  $headline-6: mat.define-typography-level(20px, 28px, 400, 'Equinor, Roboto'),
+  $subtitle-1: mat.define-typography-level(16px, 24px, 400, 'Equinor, Roboto'),
+  $subtitle-2: mat.define-typography-level(16px, 24px, 400, 'Equinor, Roboto'),
+);
+$sto-sm-typography: $sto-typography;
+$sto-l-typography: $sto-typography;
+
+/*
+
+$sto-typography: mat.define-typography-config(
   $font-family: 'Equinor, Roboto',
   $body-1: mat.define-typography-level(13px, 20px, 400, 'Equinor, Roboto'),
   $body-2: mat.define-typography-level(13px, 20px, 400, 'Equinor, Roboto'),
@@ -15,7 +56,8 @@ $sto-typography: mat.define-legacy-typography-config(
   $subheading-1: mat.define-typography-level(16px, 24px, 400, 'Equinor, Roboto'),
   $input: mat.define-typography-level(13px, 1.333, 400, 0.025em, 'Equinor, Roboto')
 );
-
+$sto-sm-typography: $sto-typography;
+$sto-l-typography: $sto-typography;
 $sto-sm-typography: mat.define-legacy-typography-config(
   $font-family: 'Equinor, Roboto',
   $body-1: mat.define-typography-level(10px, 16px, 400, 'Equinor, Roboto'),
@@ -39,3 +81,4 @@ $sto-l-typography: mat.define-legacy-typography-config(
   $subheading-1: mat.define-typography-level(20px, 32px, 400, 'Equinor, Roboto'),
   $input: mat.define-typography-level(16px, 1.333, 400, 0.025em, 'Equinor, Roboto')
 );
+*/

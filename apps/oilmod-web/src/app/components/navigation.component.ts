@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgForOf } from '@angular/common';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { tap } from 'rxjs/operators';

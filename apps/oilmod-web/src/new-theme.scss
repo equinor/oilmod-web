@@ -1,0 +1,85 @@
+@use '@angular/material' as mat;
+@use '@material/icon-button/icon-button-theme' as mdc-icon-button-theme;
+@use './light';
+@use './dark';
+@use './fg-bg' as clrs;
+@use 'sass:map';
+
+$light: white;
+$dark: rgba(black, 0.87);
+
+// Override some styles that are crap from mdc.
+body.mdc-stoui, body.mdc-stoui.sto-dark-theme {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: var(--bg-light);
+  }
+
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: var(--text-tertiary);
+  }
+
+  mat-card.mat-mdc-card.mdc-card {
+    background-color: var(--bg-card);
+  }
+}
+
+@mixin sto-button($palette, $hue: 500) {
+  $background: mat.get-color-from-palette($palette, $hue);
+  $contrast: mat.get-contrast-color-from-palette($palette, $hue);
+  $text: mat.get-color-from-palette($palette, 'text');
+
+  &.mdc-button--unelevated, &.mdc-button--raised {
+    --mat-mdc-button-ripple-color: rgba(255, 255, 255, 0.1);
+    --mat-mdc-button-persistent-ripple-color: #{$contrast};
+  }
+  &.mdc-button--outlined, &.mat-mdc-button {
+    --mat-mdc-button-ripple-color: rgba(0, 0, 0, 0.1);
+    --mat-mdc-button-persistent-ripple-color: #{$background};
+  }
+  --mat-mdc-button-ripple-color: rgba(255, 255, 255, 0.1);
+  --mat-mdc-button-persistent-ripple-color: #{$contrast};
+  --mdc-filled-button-container-color: #{$background};
+  --mdc-filled-button-label-text-color: #{$contrast};
+  --mdc-protected-button-container-color: #{$background};
+  --mdc-protected-button-label-text-color: #{$contrast};
+  --mdc-outlined-button-label-text-color: #{$text};
+  --mdc-outlined-button-outline-color: #{$text};
+  --mdc-text-button-label-text-color: #{$text};
+}
+
+:root {
+  --mdc-theme-text-primary-on-background: #3D3D3D;
+}
+
+body.mdc-stoui {
+  a {
+    outline: none;
+    text-decoration: none;
+  }
+
+  @include mat.all-component-themes(light.$theme);
+  /*  @include mat.menu-theme(light.$theme);
+    @include mat.tabs-theme(light.$theme);
+    @include mat.button-theme(light.$theme);
+    @include mat.icon-button-theme(light.$theme);
+    @include mat.card-theme(light.$theme);
+    @include mat.progress-bar-theme(light.$theme);
+    @include mat.form-field-theme(light.$theme);*/
+  $config: mat.get-color-config(light.$theme);
+
+  @each $name in light.$custom-colors {
+    $palette: map.get($config, $name);
+    .mdc-icon-button.mat-#{$name} {
+      $icon-color: mat.get-color-from-palette($palette, 'text');
+      @include mdc-icon-button-theme.theme((icon-color: $icon-color));
+    }
+    .mdc-button.mat-#{$name} {
+      @include sto-button($palette, map.get(light.$button-hues, $name));
+    }
+  }
+
+  &.sto-dark-theme {
+    @include mat.all-component-colors(dark.$theme);
+  }
+
+}

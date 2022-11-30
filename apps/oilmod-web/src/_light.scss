@@ -1,0 +1,197 @@
+@use '@angular/material' as mat;
+@use './fg-bg' as clrs;
+@use 'sass:map';
+
+
+$light: white;
+$dark: rgba(black, 0.87);
+// Unable to use css variables for color palettes. Can work around by duplicating colors.
+// Will cause a lot of additional css
+$eds-primary-palette: (
+  900: #007179,
+  800: #0d95a6,
+  700: #14a9bf,
+  600: #1bbeda,
+  500: #20cfef,
+  400: #34d7f2,
+  300: #57dff6,
+  200: #88e9fa,
+  100: #b7f1fb,
+  50: #e2fafe,
+  contrast: (
+    900: $dark,
+    800: $dark,
+    700: $dark,
+    600: $dark,
+    500: $dark,
+    400: $dark,
+    300: $dark,
+    200: $dark,
+    100: $dark,
+    50: $dark,
+  )
+);
+
+$eds-dark-primary: (
+  900: #001f1a,
+  800: #003434,
+  700: #004343,
+  600: #005052,
+  500: #005a5d,
+  400: #007175,
+  300: #00878c,
+  200: #4fa8ad,
+  100: #97cace,
+  50: #d6eaec,
+  contrast: (
+    900: $light,
+    800: $light,
+    700: $light,
+    600: $light,
+    500: $light,
+    400: $light,
+    300: $light,
+    200: $light,
+    100: $light,
+    50: $light,
+  )
+);
+
+$eds-accent-palette: (
+  900: #243746,
+  800: #364c5e,
+  700: #445f74,
+  600: #54748b,
+  500: #61839d,
+  400: #7895ad,
+  300: #8fa9be,
+  200: #adc2d4,
+  100: #c9dbe9,
+  50: #e6f1fd,
+  contrast: (
+    900: $light,
+    800: $light,
+    700: $light,
+    600: $dark,
+    500: $dark,
+    400: $dark,
+    300: $dark,
+    200: $dark,
+    100: $dark,
+    50: $dark,
+  )
+);
+
+$eds-success-palette: (
+  900: #116515,
+  800: #2a8429,
+  700: #369534,
+  600: #42a83f,
+  500: #4cb748,
+  400: #67c264,
+  300: #83cd80,
+  200: #a7dba5,
+  100: #c9e9c8,
+  50: #e8f6e9,
+  contrast: (
+    900: $light,
+    800: $light,
+    700: $light,
+    600: $dark,
+    500: $dark,
+    400: $dark,
+    300: $dark,
+    200: $dark,
+    100: $dark,
+    50: $dark,
+  )
+);
+
+$eds-danger-palette: (
+  900: #d40000,
+  800: #eb0000,
+  700: #f91606,
+  600: #ff220d,
+  500: #ff2a12,
+  400: #ff5838,
+  300: #ff7a5c,
+  200: #ffa28b,
+  100: #ffc7b8,
+  50: #ffe7e6,
+  contrast: (
+    900: $light,
+    800: $light,
+    700: $light,
+    600: $dark,
+    500: $dark,
+    400: $dark,
+    300: $dark,
+    200: $dark,
+    100: $dark,
+    50: $dark,
+  )
+);
+
+$eds-warning-palette: (
+  900: #ff7100,
+  800: #ff9100,
+  700: #ffa101,
+  600: #ffb402,
+  500: #ffc20a,
+  400: #ffcb29,
+  300: #ffd650,
+  200: #ffe183,
+  100: #ffecb3,
+  50: #fff8e1,
+  contrast: (
+    900: $light,
+    800: $light,
+    700: $light,
+    600: $dark,
+    500: $dark,
+    400: $dark,
+    300: $dark,
+    200: $dark,
+    100: $dark,
+    50: $dark,
+  )
+);
+
+$sto-primary: mat.define-palette($eds-primary-palette, 900);
+$sto-primary-dark: mat.define-palette($eds-dark-primary, 100);
+$sto-accent: mat.define-palette($eds-accent-palette, 900);
+$sto-success: mat.define-palette($eds-success-palette, 500, $text: 700);
+$sto-danger: mat.define-palette($eds-danger-palette, 800);
+$sto-warning: mat.define-palette($eds-warning-palette, 800);
+$sto-warn: mat.define-palette(mat.$red-palette);
+
+$colors: (
+  primary: $sto-primary,
+  accent: $sto-accent
+);
+$extra: (
+  success: $sto-success,
+  danger: $sto-danger,
+  warning: $sto-warning,
+  foreground: clrs.$light-theme-foreground-palette,
+  background: clrs.$light-theme-background-palette
+);
+
+$custom-colors: success, danger, warning;
+$button-hues: (
+  success: 500,
+  danger: 800,
+  warning: 800
+);
+
+
+$theme: mat.define-light-theme((
+  color: $colors,
+  density: -1,
+));
+
+$colormap: (
+  color: map.merge(map.get($theme, 'color'), $extra)
+);
+
+$theme: map_merge($theme, $colormap);

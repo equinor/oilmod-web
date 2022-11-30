@@ -1,0 +1,37 @@
+$light-theme-foreground-palette: (
+  elevation: #000000,
+  base: var(--text),
+  divider: var(--divider),
+  dividers: var(--divider),
+  disabled: var(--text-disabled),
+  disabled-button: var(--text-disabled),
+  disabled-text: var(--text-disabled),
+  hint-text: var(--text-disabled),
+  secondary-text: var(--text-secondary),
+  icon: var(--text-secondary),
+  icons: var(--text-secondary),
+  text: var(--text),
+  slider-min: var(--text-secondary),
+  slider-off: var(--text-disabled),
+  slider-off-active: var(--text-disabled),
+);
+
+// Background palette for light themes.
+$light-theme-background-palette: (
+  status-bar: var(--bg-card),
+  app-bar: var(--bg-card),
+  background: var(--bg-app),
+  hover: var(--bg-hover),
+  // card cannot be a css-variable, which is an absolute dealbreaker as it is used to set background of most components
+  card: #FFF,
+  dialog: var(--bg-card),
+  disabled-button: var(--bg-disabled),
+  raised-button: var(--bg-card),
+  focused-button: var(--bg-focus),
+  selected-button: var(--bg-light),
+  selected-disabled-button: var(--bg-disabled),
+  disabled-button-toggle: var(--bg-disabled),
+  unselected-chip: var(--bg-light),
+  disabled-list-option: var(--bg-disabled),
+  tooltip: var(--bg-overlay),
+);
