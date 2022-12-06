@@ -6,12 +6,27 @@ import { ExcludeUnit, GetUnit } from './with-unit';
 import { YesNoPipe } from './yes-no';
 
 
-export const StoPipesModule = [
-  DateFormatPipe,
-  KeysPipe,
-  NumberFormatPipe,
-  CurrencyFormatPipe,
-  GetUnit,
-  ExcludeUnit,
-  YesNoPipe
-] as const;
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [
+    DateFormatPipe,
+    KeysPipe,
+    NumberFormatPipe,
+    CurrencyFormatPipe,
+    GetUnit,
+    ExcludeUnit,
+    YesNoPipe
+  ],
+  exports: [
+    DateFormatPipe,
+    KeysPipe,
+    NumberFormatPipe,
+    CurrencyFormatPipe,
+    GetUnit,
+    ExcludeUnit,
+    YesNoPipe
+  ]
+})
+export class StoPipesModule {
+}

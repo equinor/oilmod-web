@@ -5,6 +5,7 @@ import {
   Component,
   ElementRef,
   Host,
+  NgModule,
   OnDestroy,
   Optional,
 } from '@angular/core';
@@ -116,4 +117,9 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
 }
 
 
-export const StoOptionSelectAllComponentModule = [ StoOptionSelectAllComponent ];
+@NgModule({
+  imports: [ StoOptionSelectAllComponent ],
+  exports: [ StoOptionSelectAllComponent ]
+})
+export class StoOptionSelectAllComponentModule {
+}

@@ -3,4 +3,11 @@ import { FormFieldDirective } from './form-field.directive';
 /**
  * @deprecated FormFieldDirective is standalone, import it directly.
  */
-export const StoFormModule = [ FormFieldDirective ];
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [ FormFieldDirective ],
+  exports: [ FormFieldDirective ]
+})
+export class StoFormModule {
+}

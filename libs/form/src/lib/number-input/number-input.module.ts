@@ -4,4 +4,11 @@ import { NumberInputDirective } from './number-input.directive';
 import { NumberInputPipe } from './number-input.pipe';
 
 
-export const NumberInputModule = [ NumberUnitInputComponent, NumberInputComponent, NumberInputDirective, NumberInputPipe ];
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [ NumberUnitInputComponent, NumberInputComponent, NumberInputDirective, NumberInputPipe ],
+  exports: [ NumberUnitInputComponent, NumberInputComponent, NumberInputDirective, NumberInputPipe ]
+})
+export class NumberInputModule {
+}

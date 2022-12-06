@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/core",
-  "version": "15.0.0-BETA.1",
+  "version": "15.0.0",
   "author": {
     "name": "Ronnie Laugen",
     "email": "rhenri@equinor.com"
@@ -21,8 +21,8 @@
     "equinor"
   ],
   "peerDependencies": {
-    "@angular/common": "^14.0.0",
-    "@angular/core": "^14.0.0",
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0",
     "date-fns": "^2.0.0"
   },
   "dependencies": {

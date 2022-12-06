@@ -16,13 +16,29 @@ import { ContextMenuDirective } from './context-menu.directive';
  *     MenuOverlayDirective
  *     ContextMenuDirective
  */
-export const StoDirectivesModule = [
-  QuickKeysDirective
-  , DateFormFieldClickDirective
-  , StoSelectTextOnFocusDirective
-  , StoGridDirective
-  , StoGridColumnDirective
-  , StoGridSpacerDirective
-  , MenuOverlayDirective
-  , ContextMenuDirective
-] as const;
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [
+    QuickKeysDirective
+    , DateFormFieldClickDirective
+    , StoSelectTextOnFocusDirective
+    , StoGridDirective
+    , StoGridColumnDirective
+    , StoGridSpacerDirective
+    , MenuOverlayDirective
+    , ContextMenuDirective
+  ],
+  exports: [
+    QuickKeysDirective
+    , DateFormFieldClickDirective
+    , StoSelectTextOnFocusDirective
+    , StoGridDirective
+    , StoGridColumnDirective
+    , StoGridSpacerDirective
+    , MenuOverlayDirective
+    , ContextMenuDirective
+  ]
+})
+export class StoDirectivesModule {
+}

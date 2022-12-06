@@ -8,7 +8,6 @@
 @import "overrides";
 @import "style/form/sto-form";
 
-
 body:not(.sto-dark-theme) {
   --warning-highlight: #FFE7D6;
   --warning-resting: #FF9200;
@@ -142,4 +141,8 @@ body.sto-dark-theme {
 
 .mat-typography .mat-calendar-body-cell-content.mat-focus-indicator {
   position: absolute !important; // for some reason this is needed due to typography.
+}
+
+.mat-datepicker-content .mat-mdc-button.mat-unthemed {
+  --mdc-text-button-label-text-color: var(--text) !important;
 }
