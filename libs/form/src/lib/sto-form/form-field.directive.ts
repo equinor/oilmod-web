@@ -20,6 +20,7 @@ import { debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs
 import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { NgControl } from '@angular/forms';
 import { HIDE_FORM_FIELD_TITLE } from './token';
+import { DateRange, MatDateRangeInput } from '@angular/material/datepicker';
 
 @Directive({
   selector: 'mat-form-field[stoFormField]',
@@ -82,10 +83,35 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
             .subscribe(() => {
               if ( this.input.first instanceof MatSelect ) {
                 this.title = this.input.first.triggerValue;
+              } else if ( this.input.first instanceof MatDateRangeInput ) {
+                const value = this.input.first.value as DateRange<Date>;
+                if ( !value ) {
+                  this.title = '';
+                  return;
+                }
+                this.title = Object.values(value)
+                  .filter(v => !!v)
+                  .map(value => {
+                    if ( value instanceof Date ) {
+                      const year = value.getFullYear();
+                      const month = `${value.getMonth() + 1}`.padStart(2, '0');
+                      const day = `${value.getDate()}`.padStart(2, '0');
+                      return `${year}-${month}-${day}`;
+                    }
+                    return value;
+                  })
+                  .join(' - ');
               } else {
                 const value = this.input.first.value;
                 if ( typeof value === 'string' ) {
-                  this.title = this.input.first.value as string || '';
+                  this.title = value || '';
+                } else if ( Array.isArray(value) ) {
+                  this.title = value.join(', ');
+                } else if ( value instanceof Date ) {
+                  const year = value.getFullYear();
+                  const month = `${value.getMonth() + 1}`.padStart(2, '0');
+                  const day = `${value.getDate()}`.padStart(2, '0');
+                  this.title = `${year}-${month}-${day}`;
                 }
               }
             });
