@@ -3,13 +3,13 @@ import { Navigation } from '../navigation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { EXPANSION_PANEL_ANIMATION_TIMING } from '@angular/material/expansion';
 import { NgForOf, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { NavDrawerListComponent } from '../nav-drawer-list/nav-drawer-list.component';
-import { MatRippleModule } from '@angular/material/core';
+import { MatLegacyRippleModule as MatRippleModule } from '@angular/material/legacy-core';
 
 @Component({
   selector: 'sto-nav-drawer-item',
@@ -22,7 +22,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatButtonModule,
     RouterLinkActive,
     MatIconModule,
-    RouterLinkWithHref,
+    RouterLink,
     MatMenuModule,
     MatDividerModule,
     NavDrawerListComponent,

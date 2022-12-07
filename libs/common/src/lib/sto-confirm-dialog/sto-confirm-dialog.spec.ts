@@ -5,7 +5,7 @@ import { MaterialModule } from '@ngx-stoui/testing';
 import { ConfirmComponent } from './sto-confirm-dialog.component';
 import { ConfirmModule } from './sto-confirm-dialog.module';
 import { ConfirmService } from './sto-confirm-dialog.service';
-import { MatButton } from '@angular/material/button';
+import { MatLegacyButton as MatButton } from '@angular/material/legacy-button';
 import { By } from '@angular/platform-browser';
 import DoneCallback = jest.DoneCallback;
 

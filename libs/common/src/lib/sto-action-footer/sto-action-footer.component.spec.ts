@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { StoActionFooterComponent } from './sto-action-footer.component';
-import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatLegacyButton as MatButton, MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyProgressBar as MatProgressBar } from '@angular/material/legacy-progress-bar';
 import { By } from '@angular/platform-browser';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

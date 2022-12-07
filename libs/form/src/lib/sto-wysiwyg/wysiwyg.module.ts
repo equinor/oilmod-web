@@ -5,4 +5,11 @@ import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.componen
 /**
  * @deprecated WysiwygComponent is standalone, import it directly.
  */
-export const StoWysiwygModule = [ WysiwygComponent, WysiwygActionsComponent, WysiwygEditorComponent ];
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [ WysiwygComponent, WysiwygActionsComponent, WysiwygEditorComponent ],
+  exports: [ WysiwygComponent, WysiwygActionsComponent, WysiwygEditorComponent ]
+})
+export class StoWysiwygModule {
+}

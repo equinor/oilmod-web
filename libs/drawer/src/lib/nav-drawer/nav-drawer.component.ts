@@ -11,7 +11,7 @@ import {
 import { Navigation } from './navigation';
 import { StoThemeService } from '@ngx-stoui/common';
 import { overlayAnimation } from '../animation';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavDrawerItemComponent } from './nav-drawer-item/nav-drawer-item.component';
 import { NgForOf, NgIf } from '@angular/common';

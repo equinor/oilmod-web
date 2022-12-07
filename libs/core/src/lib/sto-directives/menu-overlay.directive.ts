@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Host, HostBinding } from '@angular/core';
-import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyMenuPanel as MatMenuPanel, MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 import { fromEvent } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
 import { ThemeModel, ThemeName, themes, typography, TypographyName } from './models';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
@@ -151,13 +151,11 @@ export class StoThemeService implements OnDestroy {
 
   private async getInitialValuesFromStorage() {
     try {
-      const theme = await this.saver.load('theme')
-        .pipe(take(1))
-        .toPromise();
+      const theme = await firstValueFrom(this.saver.load('theme')
+        .pipe(take(1)));
       this.setTheme(theme.value as ThemeName);
-      const typo = await this.saver.load('typography')
-        .pipe(take(1))
-        .toPromise();
+      const typo = await firstValueFrom(this.saver.load('typography')
+        .pipe(take(1)));
       this.setTypography(typo.value as TypographyName);
     } catch {
       // gotta catch em all

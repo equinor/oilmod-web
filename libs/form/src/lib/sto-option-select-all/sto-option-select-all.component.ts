@@ -5,14 +5,15 @@ import {
   Component,
   ElementRef,
   Host,
+  NgModule,
   OnDestroy,
   Optional,
 } from '@angular/core';
-import { MatPseudoCheckboxState } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacyPseudoCheckboxState as MatPseudoCheckboxState } from '@angular/material/legacy-core';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 
 @Component({
   selector: 'sto-option-select-all',
@@ -28,7 +29,7 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
   state: MatPseudoCheckboxState = 'checked';
 
   private options: Array<unknown> = [];
-  private destroyed = new Subject();
+  private destroyed = new Subject<void>();
 
   constructor(
     @Host() @Optional() private matSelect: MatSelect,
@@ -116,4 +117,9 @@ export class StoOptionSelectAllComponent<T = unknown> implements AfterViewInit, 
 }
 
 
-export const StoOptionSelectAllComponentModule = [ StoOptionSelectAllComponent ];
+@NgModule({
+  imports: [ StoOptionSelectAllComponent ],
+  exports: [ StoOptionSelectAllComponent ]
+})
+export class StoOptionSelectAllComponentModule {
+}

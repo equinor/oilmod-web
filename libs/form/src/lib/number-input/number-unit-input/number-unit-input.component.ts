@@ -22,12 +22,12 @@ import {
   NgForm,
   ReactiveFormsModule
 } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
 import { Subject, Subscription } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NumberInputPipe } from '../number-input.pipe';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatLegacySelect as MatSelect, MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime } from 'rxjs/operators';
@@ -70,7 +70,7 @@ export class NumberUnitInputComponent extends FormFieldBase
   readonly autofilled: boolean;
   controlType = 'number-unit-input';
   @ViewChild(MatSelect)
-  select: MatSelect;
+  select?: MatSelect;
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
   @ViewChild(NumberInputDirective)
@@ -264,8 +264,8 @@ export class NumberUnitInputComponent extends FormFieldBase
     if ( isInputFocus ) {
       this.elRef.nativeElement.querySelector('input')?.focus();
     } else {
-      this.select.focus();
-      this.select.open();
+      this.select?.focus();
+      this.select?.open();
     }
   }
 

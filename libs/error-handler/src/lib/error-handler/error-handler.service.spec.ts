@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ErrorHandlerService } from './error-handler.service';
 import { ErrorHandlerModule } from './error-handler.module';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpError } from './http-error';

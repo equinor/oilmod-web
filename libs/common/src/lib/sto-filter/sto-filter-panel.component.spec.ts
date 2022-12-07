@@ -9,17 +9,17 @@ import {
   StoFilterTableActions,
   StoFilterTitle
 } from './sto-filter-panel.component';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatLegacyButton as MatButton, MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterForm, FilterList } from './filter';
 import { OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
-import { MatChipList, MatChipsModule } from '@angular/material/chips';
+import { MatLegacyChipList as MatChipList, MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 
 let comp: StoFilterPanelComponent;
 let fixture: ComponentFixture<StoFilterPanelComponent>;
@@ -29,29 +29,29 @@ let page: Page;
 @Component({
   selector: 'sto-spec-wrap',
   template: `
-      <div style="background: white">
-          <sto-filter-panel [expandable]="true"
-                            [filterList]="filter$ | async">
-              <sto-filter-title>Filter Title</sto-filter-title>
-              <sto-filter-table-actions>
-                  <button mat-button>
-                      New
-                      <mat-icon>add</mat-icon>
-                  </button>
-              </sto-filter-table-actions>
-              <sto-filter-actions>
-                  <button mat-icon-button>
-                      <mat-icon>refresh</mat-icon>
-                  </button>
-              </sto-filter-actions>
-              <div class="sto-form sto-grid sto-grid--6"
-                   [formGroup]="form">
-                  <div class="sto-grid__column">
-                      <input formControlName="field">
-                  </div>
-              </div>
-          </sto-filter-panel>
-      </div>`
+    <div style="background: white">
+      <sto-filter-panel [expandable]="true"
+                        [filterList]="filter$ | async">
+        <sto-filter-title>Filter Title</sto-filter-title>
+        <sto-filter-table-actions>
+          <button mat-button>
+            New
+            <mat-icon>add</mat-icon>
+          </button>
+        </sto-filter-table-actions>
+        <sto-filter-actions>
+          <button mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </sto-filter-actions>
+        <div class="sto-form sto-grid sto-grid--6"
+             [formGroup]="form">
+          <div class="sto-grid__column">
+            <input formControlName="field">
+          </div>
+        </div>
+      </sto-filter-panel>
+    </div>`
 })
 class WrapperComponent extends FilterForm<{ field: string }> {
   formConfig = { field: [] };

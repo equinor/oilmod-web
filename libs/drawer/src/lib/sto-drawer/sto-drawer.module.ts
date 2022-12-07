@@ -6,4 +6,11 @@ import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
 /**
  * @deprecated StoDrawer has been made standalone, import component(s) directly
  */
-export const StoDrawerModule = [ StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent ];
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [ StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent ],
+  exports: [ StoDrawerComponent, StoDrawerWrapperComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent ]
+})
+export class StoDrawerModule {
+}

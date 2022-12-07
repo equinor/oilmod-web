@@ -7,7 +7,7 @@ import { NumberUnitInputComponent } from './number-unit-input.component';
 import { Subject } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import Mock = jest.Mock;
 
 const ngControl = {
@@ -143,7 +143,7 @@ class Page {
   constructor(fixture: ComponentFixture<NumberUnitInputComponent>) {
     this.input = fixture.componentInstance.input.nativeElement;
     this.inputDe = fixture.debugElement.query(By.css('input'));
-    this.matSelect = fixture.componentInstance.select;
+    this.matSelect = fixture.componentInstance.select!;
     this.elementRef = fixture.elementRef.nativeElement;
   }
 }

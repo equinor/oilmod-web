@@ -19,3 +19,4 @@ export * from './lib/slide-toggle/slide-toggle.module';
 export * from './lib/slide-toggle/slide-toggle.component';
 export * from './lib/sto-option-select-all/sto-option-select-all.component';
 export * from './lib/sto-form/token';
+export * from './lib/sto-form/form-config';

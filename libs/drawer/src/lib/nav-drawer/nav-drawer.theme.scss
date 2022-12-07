@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
-@import "libs/core/src/style/theme/theme";
-@import "libs/core/src/style/theme/typography";
+@import "theme/theme";
+@import "theme/typography";
 
 
 body {

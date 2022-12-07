@@ -1,8 +1,7 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { MatIconModule } from '@angular/material/icon';
-// @ts-ignore
+import { MatIconModule } from '@angular/material/icon'; // @ts-ignore
 import markdown from './sto-message-panel.component.md';
 import { StoMessagePanelComponent, StoMessagePanelModule } from '@ngx-stoui/common';
 
@@ -22,7 +21,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<StoMessagePanelComponent & {contents?: string}> = (args: StoMessagePanelComponent) => {
+const Template: Story<StoMessagePanelComponent & { contents?: string }> = (args: StoMessagePanelComponent) => {
   return {
     component: StoMessagePanelComponent,
     props: { ...args, dismissed: action('Dismissed') },

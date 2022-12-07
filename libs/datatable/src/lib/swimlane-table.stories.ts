@@ -1,12 +1,12 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fixedColumns, rows } from './rows';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatCardModule } from '@angular/material/card';
-import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
 import { StoDatatableModule } from '@ngx-stoui/datatable';
 
 export default {

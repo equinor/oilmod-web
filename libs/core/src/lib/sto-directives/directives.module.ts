@@ -16,8 +16,20 @@ import { ContextMenuDirective } from './context-menu.directive';
  *     MenuOverlayDirective
  *     ContextMenuDirective
  */
-export const StoDirectivesModule = [
-  [
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [
+    QuickKeysDirective
+    , DateFormFieldClickDirective
+    , StoSelectTextOnFocusDirective
+    , StoGridDirective
+    , StoGridColumnDirective
+    , StoGridSpacerDirective
+    , MenuOverlayDirective
+    , ContextMenuDirective
+  ],
+  exports: [
     QuickKeysDirective
     , DateFormFieldClickDirective
     , StoSelectTextOnFocusDirective
@@ -27,4 +39,6 @@ export const StoDirectivesModule = [
     , MenuOverlayDirective
     , ContextMenuDirective
   ]
-];
+})
+export class StoDirectivesModule {
+}

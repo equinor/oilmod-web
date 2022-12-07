@@ -1,14 +1,8 @@
 import { Component, Injectable, NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  CUSTOM_ERROR_HANDLER, ERROR_LOGGER,
-  ErrorHandlerService,
-  Handler,
-  HttpError,
-  StoErrorHandler
-} from '@ngx-stoui/error-handler';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER, ErrorHandlerService, Handler, HttpError, StoErrorHandler } from '@ngx-stoui/error-handler';
 
 @Component({
   selector: 'next-wrapper',
