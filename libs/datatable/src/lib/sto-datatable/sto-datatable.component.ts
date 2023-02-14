@@ -106,12 +106,36 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
   public columnTotalWidth: number;
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
-  public activeSort: Sort | null;
   private destroyed$ = new Subject();
   private _internalRows: T[];
   private resizeTimeout: number | undefined;
+  private sortKey = `${window?.location?.hostname}_${window?.location?.pathname}_sort`;
+
+  get activeSort() {
+    return this._activeSort;
+  }
+
+  set activeSort(sort: Sort | null) {
+    this._activeSort = sort;
+    if ( this.preserveSort && sort ) {
+      try {
+        localStorage.setItem(this.sortKey, JSON.stringify(sort));
+      } catch {/*em all*/
+      }
+    }
+  }
+
+  private _activeSort: Sort | null;
+
 
   constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef, private zone: NgZone) {
+    try {
+      const sortStr = localStorage.getItem(this.sortKey);
+      if ( sortStr ) {
+        this._activeSort = JSON.parse(sortStr);
+      }
+    } catch {/*em all*/
+    }
   }
 
   get bodyHeight() {
@@ -170,7 +194,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     }
 
     if ( this.activeSort && !this.externalSort ) {
-      const column = this.columns.find(col => col.$$id === this.activeSort?.active);
+      const column = ( this.columns || [] ).find(col => col.$$id === this.activeSort?.active);
       const sortDir = this.activeSort.direction;
       if ( column ) {
         const fn = column.sortFn || this.defaultSortFn;
@@ -230,6 +254,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
           flexGrow: this.resizeable ? 0 : column.flexGrow,
         } ));
       this.columnTotalWidth = columns.map(c => c.flexBasis || 80).reduce((a, b) => a + b, 0);
+      if ( this._activeSort ) {
+        this.sort(this._activeSort);
+      }
     }
   }
 
@@ -380,6 +407,12 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const bValue = b[ col.prop ];
+    if ( aValue === null || aValue === undefined ) {
+      return -1;
+    }
+    if ( bValue === null || bValue === undefined ) {
+      return 1;
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;

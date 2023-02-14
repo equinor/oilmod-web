@@ -21,6 +21,8 @@
   </div>
 
   <div (dragover)="$event.preventDefault()"
+       [matSortActive]="activeSort?.active"
+       [matSortDirection]="activeSort?.direction"
        (matSortChange)="sortColumn($event)"
        [class.sto-mdl-table__row--scroll-offset]="!!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight"
        [matSortDisabled]="!sortable"

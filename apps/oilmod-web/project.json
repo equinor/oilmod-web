@@ -102,7 +102,13 @@
         "port": 4400,
         "configDir": "apps/oilmod-web/.storybook",
         "browserTarget": "oilmod-web:build",
-        "compodoc": false
+        "compodoc": false,
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "node_modules",
+            "libs/core/src/style"
+          ]
+        }
       },
       "configurations": {
         "ci": {
@@ -119,7 +125,13 @@
         "outputDir": "dist/storybook/oilmod-web",
         "configDir": "apps/oilmod-web/.storybook",
         "browserTarget": "oilmod-web:build",
-        "compodoc": false
+        "compodoc": false,
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "node_modules",
+            "libs/core/src/style"
+          ]
+        }
       },
       "configurations": {
         "ci": {

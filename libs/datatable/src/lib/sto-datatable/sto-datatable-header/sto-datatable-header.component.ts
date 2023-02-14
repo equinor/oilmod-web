@@ -61,6 +61,8 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   headerContextMenu = new EventEmitter<HeaderContextMenu>();
   @Output()
   sort = new EventEmitter<Sort>();
+  @Input()
+  activeSort: Sort;
 
   public trackColumnsFn(index: number, item: Column) {
     return item.$$id;
