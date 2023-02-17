@@ -350,7 +350,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
 
   sort(sort: Sort) {
     if ( !sort.active || sort.direction === '' ) {
-      this._internalRows = [ ...this._rows ];
+      this._internalRows = [ ...( this._rows || [] ) ];
       this.activeSort = null;
       return;
     }
@@ -364,7 +364,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
       return;
     }
     const fn = column.sortFn || this.defaultSortFn;
-    this._internalRows = [ ...this._rows ].sort((a, b) => {
+    this._internalRows = [ ...( this._rows || [] ) ].sort((a, b) => {
       const n = fn(a, b, column);
       return n * ( sort.direction === 'asc' ? 1 : -1 );
     });
