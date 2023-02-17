@@ -140,7 +140,8 @@ sto-datatable {
 }
 
 sto-datatable .cdk-virtual-scroll-content-wrapper {
-  position: static;
+  // RHENRI 2023-02-17 Removed. Unsure why it was needed?
+  // position: static;
 }
 
 .sto-card.sto-card--table {
