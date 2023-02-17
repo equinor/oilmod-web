@@ -192,21 +192,15 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
     this.rowTotalHeight = ( rows || [] ).length * this.rowHeight;
 
     if ( rows && rows.length > 0 ) {
-      let sortedRows = [ ...( rows || [] ) ];
-      this._internalRows = [ ...( sortedRows || [] ) ];
+      this._internalRows = [ ...( rows || [] ) ];
       if ( !this.preserveSort && !this.externalSort ) {
         this.activeSort = null;
       }
 
       if ( this.activeSort && !this.externalSort ) {
         const column = ( this.columns || [] ).find(col => col.$$id === this.activeSort?.active);
-        const sortDir = this.activeSort.direction;
         if ( column ) {
-          const fn = column.sortFn || this.defaultSortFn;
-          sortedRows = [ ...rows ].sort((a, b) => fn(a, b, column));
-          if ( sortDir === 'desc' ) {
-            sortedRows.reverse();
-          }
+          this.sort(this.activeSort);
         }
       }
     }
