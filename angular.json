@@ -9,6 +9,7 @@
     "form": "libs/form",
     "oilmod-web": "apps/oilmod-web",
     "oilmod-web-e2e": "apps/oilmod-web-e2e",
+    "popover": "libs/popover",
     "testing": "libs/testing"
   }
 }

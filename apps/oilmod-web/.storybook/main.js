@@ -12,6 +12,7 @@ rootMain.stories.push(
   ...['../../../libs/drawer/**/*.stories.@(js|jsx|ts|tsx)'],
   ...['../../../libs/error-handler/**/*.stories.@(js|jsx|ts|tsx)'],
   ...['../../../libs/form/**/*.stories.@(js|jsx|ts|tsx)'],
+  ...['../../../libs/popover/**/*.stories.@(js|jsx|ts|tsx)'],
 );
 
 module.exports = rootMain;
