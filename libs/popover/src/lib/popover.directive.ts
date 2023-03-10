@@ -1,4 +1,4 @@
-import { Directive, HostListener, Output } from '@angular/core';
+import { Directive, HostListener, Input, Output } from '@angular/core';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { BehaviorSubject, map } from 'rxjs';
 
@@ -8,6 +8,8 @@ import { BehaviorSubject, map } from 'rxjs';
   exportAs: 'stoPopoverTrigger'
 })
 export class PopoverDirective extends CdkOverlayOrigin {
+  @Input()
+  openPopoverOn: 'click' | 'hover' = 'click';
   private open$ = new BehaviorSubject<boolean>(false);
   @Output()
   openStream = this.open$.pipe(map(v => v));
@@ -23,6 +25,15 @@ export class PopoverDirective extends CdkOverlayOrigin {
 
   @HostListener('click', [ '$event' ])
   onClick(event: MouseEvent) {
-    this.open$.next(!this.open$.value);
+    if ( this.openPopoverOn === 'click' ) {
+      this.open$.next(!this.open$.value);
+    }
+  }
+
+  @HostListener('mouseenter', [ '$event' ])
+  onHover(event: MouseEvent) {
+    if ( this.openPopoverOn === 'hover' ) {
+      this.open$.next(!this.open$.value);
+    }
   }
 }

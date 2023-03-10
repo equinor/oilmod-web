@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, Output, ViewEncapsulation, } from '@angular/core';
 import { ConnectionPositionPair, OverlayModule, ScrollStrategy } from '@angular/cdk/overlay';
 import { PopoverDirective } from './popover.directive';
 import { CommonModule } from '@angular/common';
@@ -76,4 +76,12 @@ export class PopoverComponent {
   disableClose: boolean;
   @Input()
   hasBackdrop = true;
+
+  @HostListener('document:keypress', [ '$event' ])
+  onKeyPress(event: KeyboardEvent) {
+    if ( event.key === 'Escape' ) {
+      this.trigger.close();
+    }
+  }
+
 }
