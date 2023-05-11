@@ -203,6 +203,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>> implements
           this.sort(this.activeSort);
         }
       }
+    } else {
+      this._internalRows = [];
     }
   }
 
