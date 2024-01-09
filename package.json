@@ -48,7 +48,7 @@
     "@ngx-stoui/swimlane-datatable": "^20.0.0",
     "@nrwl/angular": "15.2.1",
     "@storybook/addon-links": "^6.5.9",
-    "@storybook/core-server": "6.5.9",
+    "@storybook/core-server": "7.0.0",
     "date-fns": "^2.22.1",
     "rxjs": "^7.5.7",
     "tslib": "^2.4.0",
