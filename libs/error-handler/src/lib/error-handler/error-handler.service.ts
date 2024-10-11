@@ -161,7 +161,7 @@ export class ErrorHandlerService implements ErrorHandler {
   /**
    * Uses the getErrorText from the provided custom handler, if available.
    * Otherwise, return the error message, if available in our desired format
-   * Expected err.error -> { message: 'A message', ... }
+   * Expected err.error -> { message | detail: 'A message', ... }
    * Also handles text as a fallback.
    * */
   getErrorText(err: HttpErrorResponse) {
@@ -171,7 +171,7 @@ export class ErrorHandlerService implements ErrorHandler {
     let errorText: string;
     try {
       const e = err.error instanceof Object ? err.error : JSON.parse(err.error);
-      errorText = e.message;
+      errorText = e.message || e.detail;
     } catch ( ex ) {
       errorText = typeof err.error === 'string' ? err.error : '';
     }
