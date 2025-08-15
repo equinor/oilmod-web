@@ -2,13 +2,8 @@
 export default {
   displayName: 'drawer',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: [ '<rootDir>/src/test-setup.ts' ],
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.(html|svg)$',
-    },
-  },
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  globals: {},
   coverageDirectory: '../../coverage/libs/drawer',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
@@ -16,7 +11,13 @@ export default {
     'jest-preset-angular/build/serializers/html-comment',
   ],
   transform: {
-    '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
+    '^.+.(ts|mjs|js|html)$': [
+      'jest-preset-angular',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$',
+      },
+    ],
   },
-  transformIgnorePatterns: [ 'node_modules/(?!.*.mjs$)' ],
+  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
 };

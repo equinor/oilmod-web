@@ -6,7 +6,7 @@
   "prefix": "sto",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "options": {
         "project": "libs/error-handler/ng-package.json",
         "updateBuildableProjectDepsInPackageJson": false
@@ -22,34 +22,28 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/libs/error-handler"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/error-handler"],
       "options": {
         "jestConfig": "libs/error-handler/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "libs/error-handler/src/**/*.ts",
           "libs/error-handler/src/**/*.html"
         ]
       },
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "dist/libs/error-handler",
-        "commands": [
-          "npm publish"
-        ],
+        "commands": ["npm publish"],
         "parallel": false
       }
     }
