@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatButton } from '@angular/material/button';
+import { By } from '@angular/platform-browser';
 import { MaterialModule } from '@ngx-stoui/testing';
-import { ConfirmComponent } from './sto-confirm-dialog.component';
 import { ConfirmModule } from './sto-confirm-dialog.module';
 import { ConfirmService } from './sto-confirm-dialog.service';
-import { MatLegacyButton as MatButton } from '@angular/material/legacy-button';
-import { By } from '@angular/platform-browser';
 import DoneCallback = jest.DoneCallback;
 
 let comp: WrapperComponent;
@@ -15,14 +14,10 @@ let page: Page;
 
 @Component({
   selector: 'sto-spec-wrap',
-  template: `
-    <button (click)="confirm()"
-            mat-button>Confirm
-    </button>`
+  template: ` <button (click)="confirm()" mat-button>Confirm</button>`,
 })
 class WrapperComponent {
-  constructor(public confirmSvc: ConfirmService) {
-  }
+  constructor(public confirmSvc: ConfirmService) {}
 
   confirm() {
     this.confirmSvc.confirm('Confirm message');
@@ -30,12 +25,11 @@ class WrapperComponent {
 }
 
 describe('ConfirmComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, ConfirmModule ],
-        declarations: [ WrapperComponent ]
-      })
+      imports: [CommonModule, MaterialModule, ConfirmModule],
+      declarations: [WrapperComponent],
+    })
       .compileComponents()
       .then(createComponent);
   }));
@@ -58,7 +52,7 @@ describe('ConfirmComponent', () => {
   it('should open a confirmation dialog and return a value', (done: DoneCallback) => {
     const ref = comp.confirmSvc.confirm('Can you confirm this?');
     fixture.detectChanges();
-    ref.subscribe(res => {
+    ref.subscribe((res) => {
       expect(res).toBeTruthy();
       done();
     });
@@ -66,12 +60,10 @@ describe('ConfirmComponent', () => {
     const confirmCmp = comp.confirmSvc.ref?.componentInstance;
     confirmCmp?.dialogRef.close(true);
   });
-
 });
 
 function createComponent() {
-  fixture = TestBed
-    .createComponent(WrapperComponent);
+  fixture = TestBed.createComponent(WrapperComponent);
   comp = fixture.componentInstance;
 
   fixture.detectChanges();
@@ -86,6 +78,8 @@ class Page {
   public confirmBtn: HTMLButtonElement;
 
   constructor() {
-    this.confirmBtn = fixture.debugElement.query(By.directive(MatButton)).nativeElement;
+    this.confirmBtn = fixture.debugElement.query(
+      By.directive(MatButton)
+    ).nativeElement;
   }
 }

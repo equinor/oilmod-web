@@ -1,7 +1,7 @@
 $transition: width ease 250ms;
 $size: 64px;
 $height: 48px;
-.mat-menu-item.no-hover {
+.mat-mdc-menu-item.no-hover {
   font-weight: bold;
 }
 
@@ -26,7 +26,6 @@ $height: 48px;
   .expansion-button {
     height: $height;
     padding-left: 8px;
-
   }
 
   .disabled {
@@ -44,7 +43,6 @@ $height: 48px;
   }
 
   &--collapsed {
-
     width: $size;
 
     .expansion-button {
@@ -52,7 +50,6 @@ $height: 48px;
     }
 
     > div.sto-nav-drawer-items {
-
       .sto-nav-drawer--collapsed__item {
         height: $height - 1px;
         border-bottom-style: solid;
@@ -148,7 +145,6 @@ $height: 48px;
         padding-left: 14px;
       }
     }
-
   }
 }
 
@@ -164,11 +160,11 @@ $height: 48px;
 .sto-nav-drawer-menu + div {
   left: 48px !important;
 
-  a.mat-menu-item:not(.disabled):hover {
+  a.mat-mdc-menu-item:not(.disabled):hover {
     text-shadow: 0px 0px 1px black;
   }
 
-  a.mat-menu-item.disabled {
+  a.mat-mdc-menu-item.disabled {
     pointer-events: none;
   }
 

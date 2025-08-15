@@ -1,10 +1,14 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { StoDrawerComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent, } from '@ngx-stoui/drawer';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StoDrawerComponent,
+  StoDrawerFooterComponent,
+  StoDrawerHeaderComponent,
+} from '@ngx-stoui/drawer';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'Sidesheet/Presentation',
@@ -13,15 +17,21 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        StoDrawerComponent, StoDrawerFooterComponent, StoDrawerHeaderComponent, MatIconModule, MatButtonModule, BrowserAnimationsModule, MatCardModule
+        StoDrawerComponent,
+        StoDrawerFooterComponent,
+        StoDrawerHeaderComponent,
+        MatIconModule,
+        MatButtonModule,
+        BrowserAnimationsModule,
+        MatCardModule,
       ],
-    })
+    }),
   ],
   argTypes: {
     open: {
-      control: { type: 'boolean' }
-    }
-  }
+      control: { type: 'boolean' },
+    },
+  },
 } as Meta;
 
 const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
@@ -53,7 +63,6 @@ const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
 </mat-card>
 </div>
 `,
-
   };
 };
 
@@ -61,7 +70,5 @@ export const NormalUse = Template.bind({});
 NormalUse.args = {
   position: 'right',
   open: true,
-  width: '500px'
+  width: '500px',
 };
-
-

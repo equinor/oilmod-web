@@ -1,5 +1,5 @@
-@import "theme";
-@import "typography";
+@import 'theme';
+@import 'typography';
 
 @mixin sto-daterange-theme($theme, $variables) {
   $primary: map_get($variables, primary);
@@ -25,15 +25,13 @@
         color: $warn-contrast;
       }
     }
-
-
   }
   .sto-daterange-wrapper {
     input.date-input-element {
       color: $color;
     }
 
-    .sto-form__field.mat-focused .mat-form-field-suffix .mat-icon {
+    .sto-form__field.mat-focused .mat-mdc-form-field-icon-suffix .mat-icon {
       color: $icon-color;
     }
   }
@@ -41,8 +39,6 @@
   .sto-date.sto-date__popout {
     background: $background-color;
   }
-
-
 }
 
 // Include theme styles for your custom components.

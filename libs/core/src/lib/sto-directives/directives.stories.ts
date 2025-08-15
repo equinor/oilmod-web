@@ -1,25 +1,31 @@
-import { Meta } from '@storybook/angular/types-6-0';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoDirectivesModule } from '@ngx-stoui/core';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { CommonModule } from '@angular/common';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { StoDirectivesModule } from '@ngx-stoui/core';
+import { Meta } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'core/Directives',
   decorators: [
     moduleMetadata({
-      imports: [ BrowserAnimationsModule, CommonModule, StoDirectivesModule, MatCardModule, MatMenuModule, MatButtonModule ],
-    })
+      imports: [
+        BrowserAnimationsModule,
+        CommonModule,
+        StoDirectivesModule,
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+      ],
+    }),
   ],
-  parameters: {}
+  parameters: {},
 } as Meta;
 
-
-export const StoGrid = (args: Record<string, unknown>) => ( {
+export const StoGrid = (args: Record<string, unknown>) => ({
   props: { ...args },
   template: `<mat-card class="sto-card">
 <div style="background: white;" stoGrid [maxWidth]="1000" [breakpoints]="breakpoints">
@@ -39,13 +45,13 @@ export const StoGrid = (args: Record<string, unknown>) => ( {
 <div stoGridColumn stoGridSpacer style="background: lightblue;">13 (col spacer, hidden on 1-col grid)</div>
 <div stoGridColumn stoGridSpacer style="background: lightblue;" [stoGridColumnDouble]="true" >14 (double spacer, hidden on 2-col)</div>
 </div>
-</mat-card>`
-} );
+</mat-card>`,
+});
 
-export const StoContextMenu = () => ( {
+export const StoContextMenu = () => ({
   props: {
     closed: action('Menu closed'),
-    log: action('Active menu info')
+    log: action('Active menu info'),
   },
   template: `<mat-card>
 <mat-card-title>Context menu</mat-card-title>
@@ -75,5 +81,5 @@ mat-button stoMenuOverlay #trigger="matMenuTrigger" [matMenuTriggerFor]="menu">M
     <button mat-menu-item (click)="activeMenuInfo = index; log(2, $event)">Item 2</button>
   </ng-template>
 </mat-menu>
-</mat-card>`
-} );
+</mat-card>`,
+});

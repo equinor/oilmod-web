@@ -1,25 +1,43 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { AbstractControl, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
+import {
+  AbstractControl,
+  ReactiveFormsModule,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { NumberInputComponent, NumberInputModule, StoFormModule } from '@ngx-stoui/form';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  NumberInputComponent,
+  NumberInputModule,
+  StoFormModule,
+} from '@ngx-stoui/form';
+import { action } from '@storybook/addon-actions';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'form/Number input',
   component: NumberInputComponent,
   decorators: [
     moduleMetadata({
-      imports: [ BrowserAnimationsModule, MatIconModule,
-        MatFormFieldModule, NumberInputModule, MatCardModule, StoFormModule, ReactiveFormsModule ],
-    })
+      imports: [
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        NumberInputModule,
+        MatCardModule,
+        StoFormModule,
+        ReactiveFormsModule,
+      ],
+    }),
   ],
 } as Meta;
 
-const Template: Story<NumberInputComponent & Record<string, unknown>> = (args) => {
+const Template: Story<NumberInputComponent & Record<string, unknown>> = (
+  args
+) => {
   return {
     component: NumberInputComponent,
     props: {
@@ -27,7 +45,7 @@ const Template: Story<NumberInputComponent & Record<string, unknown>> = (args) =
       change: action('Value changed'),
       control: new UntypedFormControl(null, Validators.required),
       toggleValidator: (ctrl: AbstractControl) => {
-        if ( ctrl.validator ) {
+        if (ctrl.validator) {
           ctrl.clearValidators();
         } else {
           ctrl.setValidators(Validators.required);
@@ -53,7 +71,7 @@ const Template: Story<NumberInputComponent & Record<string, unknown>> = (args) =
       <mat-error *ngIf="control.hasError('required')">{{ control.getError('required') }}</mat-error>
     </mat-form-field><br>
     {{control.value}}
-  </mat-card>`
+  </mat-card>`,
   };
 };
 
@@ -63,5 +81,5 @@ Usage.args = {
   dynamicFractionSize: false,
   label: 'Label',
   placeholder: 'Placeholder',
-  suffix: '$'
+  suffix: '$',
 };

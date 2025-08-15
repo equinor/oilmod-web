@@ -1,13 +1,15 @@
 @use '@angular/material' as mat;
-@import "typography";
+@import 'typography';
 
 @mixin sto-card-typography($config) {
   .mat-card.sto-card {
-    .mat-card-title, .mat-card-title.sto-card__title {
-      line-height: mat.line-height($config, headline);
+    .mat-card-title,
+    .mat-card-title.sto-card__title {
+      line-height: mat.line-height($config, headline-1);
     }
 
-    .mat-card-subtitle, .mat-card-subtitle.sto-card__subtitle {
+    .mat-card-subtitle,
+    .mat-card-subtitle.sto-card__subtitle {
       margin-bottom: 4px;
     }
   }

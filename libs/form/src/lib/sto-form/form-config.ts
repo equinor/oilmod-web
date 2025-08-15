@@ -1,13 +1,13 @@
-import { MatLegacyFormFieldDefaultOptions } from '@angular/material/legacy-form-field';
-import { MatLegacyCheckboxDefaultOptions as MatCheckboxDefaultOptions } from '@angular/material/legacy-checkbox';
+import { MatCheckboxDefaultOptions } from '@angular/material/checkbox';
+import { MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
-export const formFieldConfig: MatLegacyFormFieldDefaultOptions = {
-  floatLabel: 'always',
+export const formFieldConfig: MatFormFieldDefaultOptions = {
+  // floatLabel: 'always',
   color: 'primary',
-  appearance: 'legacy',
+  // appearance: 'fill',
 };
 
 export const checkboxConfig: MatCheckboxDefaultOptions = {
   color: 'primary',
-  clickAction: 'check-indeterminate'
+  clickAction: 'check-indeterminate',
 };

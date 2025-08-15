@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ErrorHandlerService } from './error-handler.service';
-import { ErrorHandlerModule } from './error-handler.module';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorHandlerModule } from './error-handler.module';
+import { ErrorHandlerService } from './error-handler.service';
 import { HttpError } from './http-error';
 import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER } from './token';
 
@@ -12,10 +12,10 @@ const getError = (status: number) => {
   return new HttpErrorResponse({
     status,
     error: {
-      message: 'server error message'
+      message: 'server error message',
     },
     statusText: 'Error',
-    url: 'http://errorhandler/api'
+    url: 'http://errorhandler/api',
   });
 };
 
@@ -26,15 +26,19 @@ class CustomHandler {
 }
 
 class Logger {
-  log(ex: HttpError) {
-  }
+  log(ex: HttpError) {}
 }
 
 describe('ErrorHandlerService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [ ErrorHandlerModule, MatDialogModule, NoopAnimationsModule ],
-    providers: [ { provide: CUSTOM_ERROR_HANDLER, useClass: CustomHandler }, { provide: ERROR_LOGGER, useClass: Logger } ]
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [ErrorHandlerModule, MatDialogModule, NoopAnimationsModule],
+      providers: [
+        { provide: CUSTOM_ERROR_HANDLER, useClass: CustomHandler },
+        { provide: ERROR_LOGGER, useClass: Logger },
+      ],
+    })
+  );
 
   it('should be created', () => {
     const service: ErrorHandlerService = TestBed.get(ErrorHandlerService);
@@ -63,7 +67,7 @@ describe('ErrorHandlerService', () => {
 
   it('should call the passed in error handler', () => {
     const handler = {
-      handler: (err: HttpErrorResponse) => new HttpError(err)
+      handler: (err: HttpErrorResponse) => new HttpError(err),
     };
     const spy = jest.spyOn(handler, 'handler');
     const service: ErrorHandlerService = TestBed.get(ErrorHandlerService);
@@ -87,5 +91,4 @@ describe('ErrorHandlerService', () => {
     service.handler(getError(400));
     expect(spy).toHaveBeenCalled();
   });
-
 });

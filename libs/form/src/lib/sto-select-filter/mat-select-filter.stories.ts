@@ -1,22 +1,33 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
 import { CommonModule } from '@angular/common';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StoFormModule,
+  StoSelectFilterComponent,
+  StoSelectFilterModule,
+} from '@ngx-stoui/form';
+import { action } from '@storybook/addon-actions';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 import { items } from './item-list';
-import { StoFormModule, StoSelectFilterComponent, StoSelectFilterModule } from '@ngx-stoui/form';
 
 export default {
   title: 'form/Select filter',
   component: StoSelectFilterComponent,
   decorators: [
     moduleMetadata({
-      imports: [ StoSelectFilterModule,
-        StoFormModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule, MatCardModule ],
-    })
+      imports: [
+        StoSelectFilterModule,
+        StoFormModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        MatCardModule,
+      ],
+    }),
   ],
   argTypes: {
     filteredItems: { table: { disable: true } },
@@ -25,11 +36,11 @@ export default {
     total: { control: { disable: true } },
     isFilter: { control: { disable: true } },
     value: { control: { disable: true } },
-    isMulti: { control: { disable: true } }
-  }
+    isMulti: { control: { disable: true } },
+  },
 } as Meta;
 
-export const SingleSelect: Story<Record<string, unknown>> = (args) => ( {
+export const SingleSelect: Story<Record<string, unknown>> = (args) => ({
   props: { ...args },
   template: `
 <mat-card style="width: 300px" class="sto-form" >
@@ -45,24 +56,25 @@ export const SingleSelect: Story<Record<string, unknown>> = (args) => ( {
                     [value]="opt">{{opt.name}}</mat-option>
       </mat-select>
     </mat-form-field>
-</mat-card>`
-} );
+</mat-card>`,
+});
 SingleSelect.args = {
   filter: (event: any, all: any[]) => {
     const re = new RegExp(event || '');
-    return all.filter(el => re.test(el.name));
+    return all.filter((el) => re.test(el.name));
   },
   isFilter: true,
   focusIfNoValue: false,
-  filteredItems: [ ...items ],
-  allItems: [ ...items ],
+  filteredItems: [...items],
+  allItems: [...items],
   total: items.length,
   valueChange: action('Value changed'),
   selectAll: action('Select all'),
 };
 
-export const MultiSelect: Story<any> = (args) => ( {
-  props: { ...args }, template: `
+export const MultiSelect: Story<any> = (args) => ({
+  props: { ...args },
+  template: `
 <mat-card style="width: 300px" class="sto-form" >
   <mat-form-field class="sto-form__field"
                   floatLabel="always" >
@@ -81,24 +93,24 @@ export const MultiSelect: Story<any> = (args) => ( {
                   [value]="opt">{{opt.name}}</mat-option>
     </mat-select>
   </mat-form-field>
-</mat-card>`
-} );
+</mat-card>`,
+});
 MultiSelect.args = {
   filter: (event: any, all: any[]) => {
     const re = new RegExp(event || '');
-    return all.filter(el => re.test(el.name));
+    return all.filter((el) => re.test(el.name));
   },
   selectAll: (selectAll: boolean) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.filteredItems = selectAll ? [ ...items ] : [];
+    this.filteredItems = selectAll ? [...items] : [];
     action('Select all')(selectAll);
   },
   selected: [],
   isFilter: true,
   focusIfNoValue: false,
-  filteredItems: [ ...items ],
-  allItems: [ ...items ],
+  filteredItems: [...items],
+  allItems: [...items],
   total: items.length,
   valueChange: action('Value changed'),
 };

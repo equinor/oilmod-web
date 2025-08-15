@@ -1,16 +1,19 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select'; // @ts-ignore
-import markdown from './sto-filter-panel.component.md';
-import { StoFilterPanelComponent, StoFilterPanelModule } from '@ngx-stoui/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select'; // @ts-ignore
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StoFilterPanelComponent,
+  StoFilterPanelModule,
+} from '@ngx-stoui/common';
 import { StoDirectivesModule } from '@ngx-stoui/core';
 import { StoFormModule } from '@ngx-stoui/form';
+import { action } from '@storybook/addon-actions';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
+import markdown from './sto-filter-panel.component.md';
 
 export default {
   title: 'common/Filter Panel',
@@ -26,19 +29,21 @@ export default {
         MatButtonModule,
         StoDirectivesModule,
         MatSelectModule,
-        StoFormModule
+        StoFormModule,
       ],
-    })
+    }),
   ],
   argTypes: {
-    filterList: { table: { disable: true } }
+    filterList: { table: { disable: true } },
   },
   parameters: {
-    notes: { markdown }
+    notes: { markdown },
   },
 } as Meta;
 
-const Template: Story<StoFilterPanelComponent & { title?: string }> = (args: StoFilterPanelComponent) => {
+const Template: Story<StoFilterPanelComponent & { title?: string }> = (
+  args: StoFilterPanelComponent
+) => {
   return {
     component: StoFilterPanelComponent,
     props: args,
@@ -76,7 +81,7 @@ const Template: Story<StoFilterPanelComponent & { title?: string }> = (args: Sto
                    [stoGridColumnDouble]="true"
                    stoGridSpacer></div>
           </div>
-      </sto-filter-panel>`
+      </sto-filter-panel>`,
   };
 };
 
@@ -85,6 +90,5 @@ FilterPanel.args = {
   toggled: action('Toggled') as any,
   expanded: true,
   expandable: true,
-  title: 'Filter title'
+  title: 'Filter title',
 };
-

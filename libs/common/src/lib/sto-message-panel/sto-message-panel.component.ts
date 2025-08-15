@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 
 const COLORS = [
   'primary', 'accent', 'warning', 'danger', 'success'

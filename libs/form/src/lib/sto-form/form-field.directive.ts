@@ -13,11 +13,11 @@ import {
   Optional,
   QueryList
 } from '@angular/core';
-import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
-import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
+import { MatSelect } from '@angular/material/select';
 import { NgControl } from '@angular/forms';
 import { HIDE_FORM_FIELD_TITLE } from './token';
 import { DateRange, MatDateRangeInput } from '@angular/material/datepicker';

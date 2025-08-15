@@ -7,10 +7,10 @@
                               [collapsedHeight]="'40px'">
     <mat-panel-title>
       <ng-content select="sto-filter-title"></ng-content>
-      <mat-chip-list [style.opacity]="panel.expanded ? 0 : 1"
+      <mat-chip-listbox [style.opacity]="panel.expanded ? 0 : 1"
                      *ngIf="filterList"
                      style="margin-left: 16px">
-        <mat-chip (removed)="_clearFilter(f.key, f.index)"
+        <mat-chip-option (removed)="_clearFilter(f.key, f.index)"
                   *ngFor="let f of filterList"
                   [removable]="true"
                   [selected]="true"
@@ -19,8 +19,8 @@
           <span style="margin-bottom: -4px">{{ f.value }}</span>
           <mat-icon matChipRemove>cancel</mat-icon>
 
-        </mat-chip>
-      </mat-chip-list>
+        </mat-chip-option>
+      </mat-chip-listbox>
     </mat-panel-title>
     <span class="content-wrapper"
           #tableActions>

