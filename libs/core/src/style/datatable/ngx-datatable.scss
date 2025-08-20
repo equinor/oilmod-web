@@ -41,6 +41,10 @@
           border-right: none;
         }
       }
+      .mat-mdc-checkbox {
+        --mdc-checkbox-state-layer-size: 18px;
+        margin-left: 11px;
+      }
     }
 
     .resize-handle {
@@ -55,10 +59,22 @@
 
     .datatable-body-row {
       .datatable-body-cell {
+        --mdc-checkbox-state-layer-size: 35px;
         padding: 8px;
         vertical-align: top;
         border-top: 0;
         transition: width 0.3s ease, box-shadow 250ms linear;
+        &:has(.mat-mdc-form-field),
+        &:has(.mat-mdc-checkbox) {
+          padding: 0;
+        }
+        .mat-mdc-form-field {
+          margin: 0 4px;
+          min-height: 0;
+        }
+        .mat-mdc-form-field-subscript-wrapper {
+          display: none;
+        }
       }
     }
 

@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
-@import "theme";
-@import "typography";
+@import 'theme';
+@import 'typography';
 
 @mixin sto-datatable-theme($theme, $variables) {
   $primary: map_get($variables, primary);
@@ -47,7 +47,6 @@
         &--sortable:hover {
           background-color: $hover-color;
         }
-
       }
     }
 
@@ -60,7 +59,8 @@
         }
 
         &:not(.sto-mdl-table__body__row--selected) {
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             background-color: $hover-color;
           }
         }
@@ -74,14 +74,14 @@
         background: $footer-bg;
       }
     }
-
   }
 
   .ngx-datatable.sto-datatable {
     background-color: $background-color;
     color: $color;
 
-    .datatable-body, .datatable-header {
+    .datatable-body,
+    .datatable-header {
       mat-icon {
         color: $icon-color;
       }
@@ -105,13 +105,15 @@
       }
     }
 
-    .datatable-body .datatable-body-row .datatable-body-cell {
+    .datatable-body .datatable-body-row {
       color: $color;
       border-bottom: 1px solid $border-color;
     }
 
     .datatable-body .datatable-body-row:not(.active):hover {
-      .datatable-row-left, .datatable-row-right, .datatable-row-center {
+      .datatable-row-left,
+      .datatable-row-right,
+      .datatable-row-center {
         background-color: $hover-color;
       }
 
@@ -122,19 +124,24 @@
       border-left: 1px solid $border-color;
     }
 
-    .datatable-body .datatable-body-row:focus:not(.active) .datatable-row-group {
-      &.datatable-row-left, &.datatable-row-right, &.datatable-row-center {
+    .datatable-body
+      .datatable-body-row:focus:not(.active)
+      .datatable-row-group {
+      &.datatable-row-left,
+      &.datatable-row-right,
+      &.datatable-row-center {
         background-color: $selected-color !important;
       }
     }
 
     .datatable-body .datatable-body-row.active {
-
       background-color: $selected-color;
     }
 
     .datatable-body .datatable-body-row:not(.active):not(:hover) {
-      .datatable-row-left, .datatable-row-right, .datatable-row-center {
+      .datatable-row-left,
+      .datatable-row-right,
+      .datatable-row-center {
         background-color: $background-color;
       }
     }
@@ -169,7 +176,6 @@
       }
     }
   }
-
 }
 
 body {
@@ -187,7 +193,8 @@ body {
   }
 
   .ngx-datatable.sto-datatable {
-    .datatable-body, .datatable-header {
+    .datatable-body,
+    .datatable-header {
       font: {
         family: mat.font-family($config, body-1);
         size: mat.font-size($config, body-1);
@@ -202,7 +209,7 @@ body {
         weight: mat.font-weight($config, body-1);
       }
 
-      .pager li a[role="button"] {
+      .pager li a[role='button'] {
         line-height: mat.font-size($config, body-1);
       }
     }

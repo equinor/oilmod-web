@@ -24,6 +24,7 @@ input::-webkit-inner-spin-button {
 .mat-app-background {
   background-color: var(--bg-app);
   color: var(--text);
+  --mdc-theme-surface: var(--primary-resting);
 }
 
 .mat-expansion-panel {
@@ -31,9 +32,13 @@ input::-webkit-inner-spin-button {
   --mat-expansion-header-hover-state-layer-color: var(--bg-hover);
   --mat-expansion-header-text-color: var(--text);
   --mat-expansion-header-indicator-color: var(--text);
+  --mat-expansion-container-text-color: var(--text);
 }
-.mat-mdc-button.mat-unthemed {
-  --mdc-text-button-label-text-color: var(--text);
+.mat-mdc-button {
+  --mdc-protected-button-label-text-color: var(--primary-hover-alt);
+  &.mat-unthemed {
+    --mdc-text-button-label-text-color: var(--text);
+  }
 }
 .mat-mdc-progress-bar {
   --mdc-linear-progress-active-indicator-color: var(--primary-highlight);
@@ -57,6 +62,10 @@ input::-webkit-inner-spin-button {
 .mat-mdc-form-field {
   --mdc-filled-text-field-input-text-color: var(--text);
   --mdc-filled-text-field-caret-color: var(--text);
+  .mdc-text-field {
+    overflow: visible;
+    padding: 0;
+  }
 }
 .mat-mdc-checkbox,
 .mat-mdc-checkbox.mat-primary {
@@ -66,6 +75,29 @@ input::-webkit-inner-spin-button {
   --mdc-checkbox-unselected-focus-icon-color: var(--text-disabled);
   --mdc-theme-text-primary-on-background: var(--text);
   --mdc-checkbox-unselected-hover-icon-color: var(--text-disabled);
+}
+.mat-mdc-select {
+  --mat-select-enabled-trigger-text-color: var(--text);
+  --mat-select-enabled-arrow-color: var(--text);
+}
+.mat-mdc-slide-toggle .mdc-form-field {
+  --mdc-theme-text-primary-on-background: var(--text);
+  --mdc-switch-selected-track-color: var(--primary-highlight);
+  --mdc-switch-selected-hover-track-color: var(--primary-selected-hover);
+  --mdc-switch-selected-focus-track-color: var(--primary-selected-focus);
+}
+.mat-calendar {
+  --mat-datepicker-calendar-body-label-text-color: var(--text);
+  --mat-datepicker-calendar-date-text-color: hsla(
+    from var(--accent-text),
+    h s l 50%
+  );
+  --mat-datepicker-calendar-date-selected-state-text-color: var(
+    --accent-highlight
+  );
+  --mat-datepicker-calendar-date-selected-state-background-color: var(
+    --primary-resting
+  );
 }
 
 table {

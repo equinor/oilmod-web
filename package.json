@@ -28,8 +28,10 @@
     "storybook:serve": "nx run-many --target=storybook --projects=oilmod-web",
     "storybook": "npm run storybook:docs && nx run-many --target=storybook --projects=oilmod-web",
     "storybook:build": "npm run storybook:docs && nx run oilmod-web:build-storybook",
-    "test:all": "nx test-all",
-    "lint:all": "nx lint-all"
+    "build:all": "nx run-many --target=build --all",
+    "test:all": "nx run-many --target=test --all",
+    "lint:all": "nx lint-all",
+    "pack": "bun run build:all && cd dist/libs/core && bun pm pack && cd ../common && bun pm pack && cd ../datatable && bun pm pack && cd ../drawer && bun pm pack && cd ../error-handler && bun pm pack && cd ../form && bun pm pack && cd ../popover && bun pm pack && cd ../testing && bun pm pack && cd ../../../"
   },
   "private": true,
   "dependencies": {

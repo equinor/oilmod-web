@@ -10,7 +10,7 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   Output,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
 import { Column, ColumnDisplay } from '../../columns';
 import { rowClassFn } from '../../models';
@@ -19,9 +19,15 @@ import { rowClassFn } from '../../models';
   selector: 'sto-datatable-body-row',
   templateUrl: './sto-datatable-body-row.component.html',
   styleUrls: ['./sto-datatable-body-row.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+  host: {
+    class: 'datatable-body-row',
+  },
 })
-export class StoDatatableBodyRowComponent<T extends Record<string, unknown>> implements DoCheck {
+export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
+  implements DoCheck
+{
   @Input()
   responsiveView: TemplateRef<unknown>;
   @Input()
@@ -43,27 +49,26 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>> imp
 
   public element: HTMLDivElement;
 
-
   @HostBinding('class')
   get cssClass() {
     let cls = 'sto-mdl-table__body__row';
-    if ( this.isSelected ) {
+    if (this.isSelected) {
       cls += ' sto-mdl-table__body__row--selected';
     }
 
-    if ( this.rowClass ) {
+    if (this.rowClass) {
       let userClass = ' ';
-      if ( typeof this.rowClass === 'function' ) {
+      if (typeof this.rowClass === 'function') {
         userClass += this.rowClass(this.row);
-      } else if ( typeof this.rowClass === 'object' && !!this.rowClass ) {
+      } else if (typeof this.rowClass === 'object' && !!this.rowClass) {
         userClass += Object.values(this.rowClass).join(' ');
-      } else if ( typeof this.rowClass === 'string' ) {
+      } else if (typeof this.rowClass === 'string') {
         userClass += this.rowClass;
       }
       cls += userClass;
     }
 
-    if ( this.compressedView ) {
+    if (this.compressedView) {
       cls += ' sto-mdl-table__body__row--compressed';
     }
 
@@ -75,15 +80,18 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>> imp
     return column.$$id ?? column.prop;
   };
 
-  constructor(private differs: KeyValueDiffers, private cdr: ChangeDetectorRef, private elRef: ElementRef) {
+  constructor(
+    private differs: KeyValueDiffers,
+    private cdr: ChangeDetectorRef,
+    private elRef: ElementRef
+  ) {
     this.rowDiffer = differs.find({}).create();
     this.element = this.elRef.nativeElement as HTMLDivElement;
   }
 
   ngDoCheck() {
-    if ( this.rowDiffer.diff(this.row) ) {
+    if (this.rowDiffer.diff(this.row)) {
       this.cdr.detectChanges();
     }
   }
-
 }
