@@ -31,7 +31,8 @@
     "build:all": "nx run-many --target=build --all",
     "test:all": "nx run-many --target=test --all",
     "lint:all": "nx lint-all",
-    "pack": "bun run build:all && cd dist/libs/core && bun pm pack && cd ../common && bun pm pack && cd ../datatable && bun pm pack && cd ../drawer && bun pm pack && cd ../error-handler && bun pm pack && cd ../form && bun pm pack && cd ../popover && bun pm pack && cd ../testing && bun pm pack && cd ../../../"
+    "pack": "bun run build:all && cd dist/libs/core && bun pm pack && cd ../common && bun pm pack && cd ../datatable && bun pm pack && cd ../drawer && bun pm pack && cd ../error-handler && bun pm pack && cd ../form && bun pm pack && cd ../popover && bun pm pack && cd ../testing && bun pm pack && cd ../../../",
+    "publish": "bun run build:all && cd dist/libs/core && bun publish && cd ../common && bun publish && cd ../datatable && bun publish && cd ../drawer && bun publish && cd ../error-handler && bun publish && cd ../form && bun publish && cd ../popover && bun publish && cd ../testing && bun publish && cd ../../../"
   },
   "private": true,
   "dependencies": {
