@@ -156,7 +156,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
+}
+.datatable-body-cell .sto-form__field {
+  .mat-mdc-form-field-infix {
+    padding: 0 9px 0 0;
+    border-top: 0;
+  }
   .mat-select,
   .mat-input {
     padding: 0;
@@ -168,15 +173,6 @@
 
   .mat-select-trigger {
     // font-size: $font-size;
-  }
-
-  .mat-mdc-form-field-infix {
-    margin-top: -10px;
-    padding: 0 9px 0 0;
-  }
-
-  .mat-input-underline {
-    //display: none;
   }
 
   .mat-icon-button {

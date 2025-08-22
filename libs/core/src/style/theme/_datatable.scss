@@ -87,37 +87,50 @@
       }
     }
 
+    .mat-mdc-checkbox {
+      --mdc-checkbox-state-layer-size: 25px;
+      display: inline-flex;
+    }
     .datatable-header {
       border-bottom: 1px solid $border-color;
+      .datatable-header-cell {
+        color: $color;
+      }
     }
 
-    .datatable-header .datatable-header-cell {
-      color: $color;
-    }
+    .datatable-body {
+      .progress-linear {
+        .container {
+          background-color: $accent;
 
-    .datatable-body .progress-linear {
-      .container {
-        background-color: $accent;
-
-        .bar {
-          background-color: $primary;
+          .bar {
+            background-color: $primary;
+          }
         }
       }
-    }
+      .datatable-body-row {
+        color: $color;
+        border-bottom: 1px solid $border-color;
+        &:not(.active):hover {
+          .datatable-row-left,
+          .datatable-row-right,
+          .datatable-row-center {
+            background-color: $hover-color;
+          }
 
-    .datatable-body .datatable-body-row {
-      color: $color;
-      border-bottom: 1px solid $border-color;
-    }
-
-    .datatable-body .datatable-body-row:not(.active):hover {
-      .datatable-row-left,
-      .datatable-row-right,
-      .datatable-row-center {
-        background-color: $hover-color;
+          background-color: $hover-color;
+        }
+        .sto-form__field {
+          .mat-mdc-form-field-infix {
+            padding: 0 9px 0 0;
+            border-top: 0;
+          }
+        }
+        .mat-mdc-icon-button {
+          --mdc-icon-button-state-layer-size: 28px;
+          padding: 0;
+        }
       }
-
-      background-color: $hover-color;
     }
 
     .datatable-header .datatable-header-column-group .datatable-header-cell {
