@@ -1,33 +1,41 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
-import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { Component, Input, TemplateRef } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 @Component({
   selector: 'app-dialog-demo',
   template: `
-    <button mat-button
-            (click)="show(tmpl)">Show dialog
-    </button>
+    <button mat-button (click)="show(tmpl)">Show dialog</button>
     <ng-template #tmpl>
       <h3 mat-dialog-title>Dialog Title</h3>
       <mat-dialog-content [class.scroll-lines]="separatorLines">
         <ul style="padding-left: 12px">
-          <li>Dialog actions should (nearly) always be text-buttons (never raised).</li>
+          <li>
+            Dialog actions should (nearly) always be text-buttons (never
+            raised).
+          </li>
           <ul>
-            <li>Exception is e.g to confirm a deletion, in which case you can use "mat-stroked-button" with color="warn"</li>
+            <li>
+              Exception is e.g to confirm a deletion, in which case you can use
+              "mat-stroked-button" with color="warn"
+            </li>
           </ul>
           <li>Dialog title should always be with an h3 element</li>
-          <li>Dialog textual content should always be done using paragraphs (&lt;p&gt;)</li>
+          <li>
+            Dialog textual content should always be done using paragraphs
+            (&lt;p&gt;)
+          </li>
         </ul>
         <p>Configuration:</p>
-        <code><pre>
+        <code>
+          <pre>
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '560px';
     dialogConfig.panelClass = 'sto-dialog';
@@ -41,32 +49,27 @@ import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-t
     ...
     )
     export class AppModule...
-  </pre>
+  </pre
+          >
         </code>
       </mat-dialog-content>
       <mat-dialog-actions>
-        <button mat-button
-                mat-dialog-close>Cancel
-        </button>
-        <button mat-button
-                mat-dialog-close
-                color="primary">Save
-        </button>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-dialog-close color="primary">Save</button>
       </mat-dialog-actions>
     </ng-template>
-  `
+  `,
 })
 class DialogDemoComponent {
   @Input()
   separatorLines: boolean;
 
-  constructor(private dialog: MatDialog) {
-  }
+  constructor(private dialog: MatDialog) {}
 
   show(tmpl: TemplateRef<unknown>) {
     this.dialog.open(tmpl, {
       width: '560px',
-      panelClass: 'sto-dialog'
+      panelClass: 'sto-dialog',
     });
   }
 }
@@ -75,37 +78,48 @@ export default {
   title: 'core/Styles',
   decorators: [
     moduleMetadata({
-      imports: [ MatCardModule, MatTabsModule, MatDialogModule, CommonModule, BrowserAnimationsModule, MatButtonModule, MatIconModule ],
-      declarations: [ DialogDemoComponent ]
-    })
+      imports: [
+        MatCardModule,
+        MatTabsModule,
+        MatDialogModule,
+        CommonModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatIconModule,
+      ],
+      declarations: [DialogDemoComponent],
+    }),
   ],
   argTypes: {
-    template: { control: { disable: true } }
-  }
+    template: { control: { disable: true } },
+  },
 } as Meta;
 
-export const StoCard: Story<{ withStyles: boolean }> = (args) => ( {
+export const StoCard: Story<{ withStyles: boolean }> = (args) => ({
   props: { ...args },
   template: `<mat-card [class.sto-card]="withStyles">
 <mat-card-title [class.sto-card__title]="withStyles">Card Title</mat-card-title>
 <mat-card-subtitle [class.sto-card__subtitle]="withStyles">Card Subtitle</mat-card-subtitle>
 <mat-card-content [class.sto-card__content]="withStyles">Card Content In Here</mat-card-content>
-</mat-card>`
-} );
+</mat-card>`,
+});
 StoCard.args = {
-  withStyles: true
+  withStyles: true,
 };
 
-export const StoDialog: Story<Record<string, unknown>> = (args) => ( {
+export const StoDialog: Story<Record<string, unknown>> = (args) => ({
   props: { ...args },
   template: `<app-dialog-demo [separatorLines]="separatorLines"></app-dialog-demo>`,
-} );
+});
 StoDialog.args = {
-  separatorLines: false
+  separatorLines: false,
 };
 
-export const StoTheme: Story<Record<string, unknown>> = args => ( {
-  props: { ...args, colors: [ 'primary', 'accent', 'warn', 'warning', 'success', 'danger' ] },
+export const StoTheme: Story<Record<string, unknown>> = (args) => ({
+  props: {
+    ...args,
+    colors: ['primary', 'accent', 'warn', 'warning', 'success', 'danger'],
+  },
   styles: [
     `
     .container { display: flex; }
@@ -113,7 +127,7 @@ export const StoTheme: Story<Record<string, unknown>> = args => ( {
      flex: 0 1 auto;
      padding-left: 16px;
      }
-    `
+    `,
   ],
   template: `
   <mat-tab-group>
@@ -157,7 +171,7 @@ export const StoTheme: Story<Record<string, unknown>> = args => ( {
 </mat-tab>
 </mat-tab-group>
   `,
-} );
+});
 /*StoTheme.argTypes = {
   color: { control: { type: 'select', options: [ 'primary', 'accent', 'warn', 'warning', 'success', 'danger' ] }, defaultValue: 'primary' },
 };*/

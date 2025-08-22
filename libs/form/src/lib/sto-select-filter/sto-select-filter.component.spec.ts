@@ -1,15 +1,20 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@ngx-stoui/testing';
-import { StoSelectFilterComponent } from './sto-select-filter.component';
-import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
-import { Subject } from 'rxjs';
-import { By } from '@angular/platform-browser';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { By } from '@angular/platform-browser';
 import { FormFieldDirective, StoSelectFilterModule } from '@ngx-stoui/form';
+import { MaterialModule } from '@ngx-stoui/testing';
+import { Subject } from 'rxjs';
+import { StoSelectFilterComponent } from './sto-select-filter.component';
 
 describe('StoSelectFilterComponent', () => {
-
   let comp: StoSelectFilterComponent;
   let fixture: ComponentFixture<StoSelectFilterComponent>;
 
@@ -19,10 +24,16 @@ describe('StoSelectFilterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, ReactiveFormsModule, StoSelectFilterModule, FormFieldDirective ],
-        declarations: [],
-        providers: [ { provide: MatSelect, useClass: MockedSelectClass } ]
-      })
+      imports: [
+        CommonModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        StoSelectFilterModule,
+        FormFieldDirective,
+      ],
+      declarations: [],
+      providers: [{ provide: MatSelect, useClass: MockedSelectClass }],
+    })
       .compileComponents()
       .then(createComponent);
   }));
@@ -70,5 +81,4 @@ describe('StoSelectFilterComponent', () => {
       fixture.detectChanges();
     });
   }
-
 });

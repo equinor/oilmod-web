@@ -1,9 +1,12 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StoActionFooterComponent,
+  StoActionFooterModule,
+} from '@ngx-stoui/common';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoActionFooterComponent, StoActionFooterModule } from '@ngx-stoui/common';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'common/Action footer',
@@ -12,21 +15,26 @@ export default {
     moduleMetadata({
       imports: [
         StoActionFooterModule,
-        MatButtonModule, BrowserAnimationsModule ],
-    })
+        MatButtonModule,
+        BrowserAnimationsModule,
+      ],
+    }),
   ],
   parameters: {},
 } as Meta;
 
-const Template: Story<StoActionFooterComponent> = (args: StoActionFooterComponent) => {
+const Template: Story<StoActionFooterComponent> = (
+  args: StoActionFooterComponent
+) => {
   return {
     component: StoActionFooterComponent,
     props: {
       ...args,
       save: action('Save'),
-      cancel: action('Cancel')
+      cancel: action('Cancel'),
     },
-    template: '<sto-action-footer [isLoading]="isLoading" [position]="position" [shouldAddClass]="shouldAddClass"><button mat-flat-button (click)="save()" color="primary">Save</button><button (click)="cancel()" mat-button>Cancel</button></sto-action-footer>'
+    template:
+      '<sto-action-footer [isLoading]="isLoading" [position]="position" [shouldAddClass]="shouldAddClass"><button mat-flat-button (click)="save()" color="primary">Save</button><button (click)="cancel()" mat-button>Cancel</button></sto-action-footer>',
   };
 };
 

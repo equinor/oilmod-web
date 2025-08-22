@@ -1,3 +1,4 @@
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
   AfterViewInit,
   Component,
@@ -8,22 +9,26 @@ import {
   OnDestroy,
   Output,
   TemplateRef,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { Column, ColumnDisplay } from '../columns';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { SelectionModes } from '../selection-modes';
+import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { rowClassFn } from '../models';
+import { SelectionModes } from '../selection-modes';
 
 @Component({
   selector: 'sto-datatable-body',
   templateUrl: './sto-datatable-body.component.html',
-  styleUrls: [ './sto-datatable-body.component.scss' ]
+  styleUrls: ['./sto-datatable-body.component.scss'],
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+  host: {
+    class: 'datatable-body',
+  },
 })
-export class StoDatatableBodyComponent<T extends Record<string, unknown>> implements OnDestroy, AfterViewInit {
-
+export class StoDatatableBodyComponent<T extends Record<string, unknown>>
+  implements OnDestroy, AfterViewInit
+{
   @ViewChild('scrollViewport', { read: ElementRef })
   scrollElement: ElementRef<HTMLElement>;
   @Input()
@@ -88,23 +93,23 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   set scrollbarH(scrollbarH: boolean) {
     this._scrollbarH = scrollbarH;
     this.horizontalScrollActive = false;
-    if ( this.resizeObserver ) {
+    if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
-    if ( scrollbarH && this.virtualScroll && this.vScroller ) {
+    if (scrollbarH && this.virtualScroll && this.vScroller) {
       this.virtHorzScrollPosition();
-    } else if ( scrollbarH ) {
+    } else if (scrollbarH) {
       this.horzScrollPosition();
     }
     requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
   }
 
-  @HostListener('window:resize', [ '$event' ])
+  @HostListener('window:resize', ['$event'])
   onresize() {
-    if ( !this.vScroller ) {
+    if (!this.vScroller) {
       return;
     }
-    if ( this.timeout ) {
+    if (this.timeout) {
       clearTimeout(this.timeout);
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -115,13 +120,13 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   }
 
   @Input()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   trackBy = (index: number, item: T) => {
     return index;
   };
   _rowClass = (row: T) => {
     let userDefinedClass = '';
-    if ( this.rowClass ) {
+    if (this.rowClass) {
       userDefinedClass = this.rowClass.bind(this)(row);
     }
     return `${userDefinedClass} sto-mdl-table__body__row`;
@@ -130,45 +135,58 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-    if ( this.resizeObserver ) {
+    if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
   }
 
   ngAfterViewInit() {
-    if ( this.scrollbarH && this.virtualScroll ) {
+    if (this.scrollbarH && this.virtualScroll) {
       this.virtHorzScrollPosition();
-    } else if ( this.scrollbarH ) {
+    } else if (this.scrollbarH) {
       this.horzScrollPosition();
     }
   }
 
-  selectRow(event: KeyboardEvent | MouseEvent, activationData: RowSelection<T>) {
-    if ( event.type === this.selectionMode ) {
+  selectRow(
+    event: KeyboardEvent | MouseEvent,
+    activationData: RowSelection<T>
+  ) {
+    if (event.type === this.selectionMode) {
       this.rowSelected.emit(activationData);
       const el = event.target as HTMLElement;
-      const ignoreRe = /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
+      const ignoreRe =
+        /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
       const elTag = el.tagName.toLowerCase();
       const isIgnoredEl = ignoreRe.test(el.className) || elTag === 'input';
-      if ( !isIgnoredEl ) {
+      if (!isIgnoredEl) {
         activationData.rowEl?.focus();
       }
     }
   }
 
-  onKeyDownHandler(event: KeyboardEvent, rowEl: HTMLDivElement, activationData: RowSelection<T> | RowActivation<T>) {
-    this.activate.emit({ event, rowEl, row: activationData.row, index: activationData.index });
+  onKeyDownHandler(
+    event: KeyboardEvent,
+    rowEl: HTMLDivElement,
+    activationData: RowSelection<T> | RowActivation<T>
+  ) {
+    this.activate.emit({
+      event,
+      rowEl,
+      row: activationData.row,
+      index: activationData.index,
+    });
     const next = rowEl.nextSibling as HTMLDivElement;
     const prev = rowEl.previousSibling as HTMLDivElement;
-    switch ( event.key ) {
+    switch (event.key) {
       case 'ArrowDown':
-        if ( next && next instanceof HTMLElement ) {
+        if (next && next instanceof HTMLElement) {
           next.focus();
           event.preventDefault();
         }
         break;
       case 'ArrowUp':
-        if ( prev && prev instanceof HTMLElement ) {
+        if (prev && prev instanceof HTMLElement) {
           prev.focus();
           event.preventDefault();
         }
@@ -180,39 +198,39 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   }
 
   private horzScrollPosition() {
-    if ( !this.scroller ) {
+    if (!this.scroller) {
       return;
     }
     const elRef = this.scroller.nativeElement;
     const cb: ResizeObserverCallback = (entries) => {
-      if ( !this.hasFooter ) {
+      if (!this.hasFooter) {
         return;
       }
-      for ( const entry of entries ) {
+      for (const entry of entries) {
         const t = entry.target as HTMLElement;
         const el = t;
         const currentScale = el.style.transform;
         const notScaled = this.rows.length * this.rowHeight;
         this.verticalScrollOffset = t.scrollHeight > t.offsetHeight ? 14 : 0;
-        if ( t.scrollWidth > t.offsetWidth ) {
+        if (t.scrollWidth > t.offsetWidth) {
           this.horizontalScrollActive = true;
           const strScale = /\d+/.exec(currentScale || '');
-          if ( !strScale ) {
+          if (!strScale) {
             return;
           }
-          const numericScale = Number(strScale[ 0 ]);
-          if ( numericScale === notScaled ) {
+          const numericScale = Number(strScale[0]);
+          if (numericScale === notScaled) {
             const newScaleValue = notScaled + this.rowHeight;
             el.style.transform = `scaleY(${newScaleValue}`;
           }
         } else {
           this.horizontalScrollActive = false;
           const strScale = /\d+/.exec(currentScale || '');
-          if ( !strScale ) {
+          if (!strScale) {
             return;
           }
-          const numericScale = Number(strScale[ 0 ]);
-          if ( numericScale !== notScaled ) {
+          const numericScale = Number(strScale[0]);
+          if (numericScale !== notScaled) {
             el.style.transform = `scaleY(${notScaled}`;
           }
         }
@@ -225,34 +243,36 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
   private virtHorzScrollPosition() {
     const elRef = this.vScroller.elementRef.nativeElement;
     const cb: ResizeObserverCallback = (entries) => {
-      if ( !this.hasFooter ) {
+      if (!this.hasFooter) {
         return;
       }
-      for ( const entry of entries ) {
+      for (const entry of entries) {
         const t = entry.target as HTMLElement;
-        const el = t.querySelector('.cdk-virtual-scroll-spacer') as HTMLDivElement;
+        const el = t.querySelector(
+          '.cdk-virtual-scroll-spacer'
+        ) as HTMLDivElement;
         const currentScale = el.style.transform;
         const notScaled = this.rows.length * this.rowHeight;
         this.verticalScrollOffset = t.scrollHeight > t.offsetHeight ? 14 : 0;
-        if ( t.scrollWidth > t.offsetWidth ) {
+        if (t.scrollWidth > t.offsetWidth) {
           this.horizontalScrollActive = true;
           const strScale = /\d+/.exec(currentScale || '');
-          if ( !strScale ) {
+          if (!strScale) {
             return;
           }
-          const numericScale = Number(strScale[ 0 ]);
-          if ( numericScale === notScaled ) {
+          const numericScale = Number(strScale[0]);
+          if (numericScale === notScaled) {
             const newScaleValue = notScaled + this.rowHeight;
             el.style.transform = `scaleY(${newScaleValue}`;
           }
         } else {
           this.horizontalScrollActive = false;
           const strScale = /\d+/.exec(currentScale || '');
-          if ( !strScale ) {
+          if (!strScale) {
             return;
           }
-          const numericScale = Number(strScale[ 0 ]);
-          if ( numericScale !== notScaled ) {
+          const numericScale = Number(strScale[0]);
+          if (numericScale !== notScaled) {
             el.style.transform = `scaleY(${notScaled}`;
           }
         }
@@ -261,5 +281,4 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>> implem
     this.resizeObserver = new ResizeObserver(cb);
     this.resizeObserver.observe(elRef);
   }
-
 }

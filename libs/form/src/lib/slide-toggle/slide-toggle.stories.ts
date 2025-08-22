@@ -1,19 +1,30 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  SlideToggleComponent,
+  SlideToggleModule,
+  StoFormModule,
+} from '@ngx-stoui/form';
 import { action } from '@storybook/addon-actions';
-import { SlideToggleComponent, SlideToggleModule, StoFormModule } from '@ngx-stoui/form';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'form/Slide toggle',
   component: SlideToggleComponent,
   decorators: [
     moduleMetadata({
-      imports: [ SlideToggleModule, MatFormFieldModule, ReactiveFormsModule, BrowserAnimationsModule, MatCardModule, StoFormModule ],
-    })
+      imports: [
+        SlideToggleModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        StoFormModule,
+      ],
+    }),
   ],
 } as Meta;
 
@@ -27,7 +38,7 @@ const Template: Story<SlideToggleComponent> = (args) => {
       toggled: (event: unknown) => {
         console.log(event);
         action('Toggled event');
-      }
+      },
     },
     template: `
 <mat-card style="width: 300px" class="sto-form">
@@ -36,7 +47,7 @@ const Template: Story<SlideToggleComponent> = (args) => {
     <mat-label>Slide toggle</mat-label>
     <sto-slide-toggle (toggled)="toggled($event)" [color]="color" [readonly]="readonly" [formControl]="ctrl" (ngModelChange)="valueChange($event)"></sto-slide-toggle>
 </mat-form-field>
-</mat-card>`
+</mat-card>`,
   };
 };
 

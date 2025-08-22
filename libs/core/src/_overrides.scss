@@ -11,7 +11,7 @@ body {
   margin-left: 0;
   margin-right: 0;
 }
-*{
+* {
   box-sizing: border-box;
 }
 // Styles to remove arrows from number inputs
@@ -19,6 +19,85 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0; // Apparently some margin is still there even though it's hidden
+}
+
+.mat-app-background {
+  background-color: var(--bg-app);
+  color: var(--text);
+  --mdc-theme-surface: var(--primary-resting);
+}
+
+.mat-expansion-panel {
+  --mat-expansion-container-background-color: var(--bg-card);
+  --mat-expansion-header-hover-state-layer-color: var(--bg-hover);
+  --mat-expansion-header-text-color: var(--text);
+  --mat-expansion-header-indicator-color: var(--text);
+  --mat-expansion-container-text-color: var(--text);
+}
+.mat-mdc-button {
+  --mdc-protected-button-label-text-color: var(--primary-hover-alt);
+  &.mat-unthemed {
+    --mdc-text-button-label-text-color: var(--text);
+  }
+}
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-active-indicator-color: var(--primary-highlight);
+}
+.mat-mdc-tab-group,
+.mat-mdc-tab-nav-bar {
+  --mat-tab-header-inactive-label-text-color: var(--text-disabled);
+  --mat-tab-header-active-label-text-color: var(--text);
+  --mat-tab-header-inactive-focus-label-text-color: var(--text-disabled);
+  --mat-tab-header-inactive-hover-label-text-color: var(--text-disabled);
+}
+.mat-mdc-menu-panel {
+  --mat-menu-item-label-text-color: var(--text);
+  --mat-menu-container-color: var(--bg-card);
+  --mat-menu-item-icon-color: var(--text);
+}
+.mat-mdc-card {
+  --mdc-elevated-card-container-color: var(--bg-card);
+  --mdc-outlined-card-container-color: hsla(from var(--bg-card), h s l 50%);
+}
+.mat-mdc-form-field {
+  --mdc-filled-text-field-input-text-color: var(--text);
+  --mdc-filled-text-field-caret-color: var(--text);
+  .mdc-text-field {
+    overflow: visible;
+    padding: 0;
+  }
+}
+.mat-mdc-checkbox,
+.mat-mdc-checkbox.mat-primary {
+  --mdc-theme-text-primary-on-background: var(--text);
+  --mdc-checkbox-selected-checkmark-color: var(--text);
+  --mdc-checkbox-unselected-icon-color: var(--text);
+  --mdc-checkbox-unselected-focus-icon-color: var(--text-disabled);
+  --mdc-theme-text-primary-on-background: var(--text);
+  --mdc-checkbox-unselected-hover-icon-color: var(--text-disabled);
+}
+.mat-mdc-select {
+  --mat-select-enabled-trigger-text-color: var(--text);
+  --mat-select-enabled-arrow-color: var(--text);
+}
+.mat-mdc-slide-toggle .mdc-form-field {
+  --mdc-theme-text-primary-on-background: var(--text);
+  --mdc-switch-selected-track-color: var(--primary-highlight);
+  --mdc-switch-selected-hover-track-color: var(--primary-selected-hover);
+  --mdc-switch-selected-focus-track-color: var(--primary-selected-focus);
+}
+.mat-calendar {
+  --mat-datepicker-calendar-body-label-text-color: var(--text);
+  --mat-datepicker-calendar-date-text-color: hsla(
+    from var(--accent-text),
+    h s l 50%
+  );
+  --mat-datepicker-calendar-date-selected-state-text-color: var(
+    --accent-highlight
+  );
+  --mat-datepicker-calendar-date-selected-state-background-color: var(
+    --primary-resting
+  );
 }
 
 table {
@@ -41,7 +120,6 @@ Below styles overrides Angular Material defaults
   line-height: 13px;
 }
 
-
 .mat-menu-panel.large {
   /**
   ** Per https://material.io/guidelines/components/menus.html: width should be a multiple of 56
@@ -51,13 +129,14 @@ Below styles overrides Angular Material defaults
   max-width: 336px;
 }
 
-.mat-menu-item[disabled] .mat-icon {
+.mat-mdc-menu-item[disabled] .mat-icon {
   color: currentColor;
 }
 
-
-
-.sto-portal__footer, .sto-drawer__footer, .sto-toolbar-panel__actions, .sto-card__button-row {
+.sto-portal__footer,
+.sto-drawer__footer,
+.sto-toolbar-panel__actions,
+.sto-card__button-row {
   button:first-of-type {
     margin-left: 0;
   }
@@ -66,8 +145,10 @@ Below styles overrides Angular Material defaults
   }
 }
 
-button, a {
-  &.mat-button, &.mat-raised-button {
+button,
+a {
+  &.mat-button,
+  &.mat-raised-button {
     min-width: 88px;
     margin: 0 1 * 4px;
     padding: 0 2 * 4px;
@@ -82,16 +163,15 @@ button, a {
   }
 }
 
-.mat-menu-content{
-  .mat-divider{
+.mat-menu-content {
+  .mat-divider {
     margin-top: 8px;
     margin-bottom: 7px;
   }
 }
 
-.mat-menu-item {
+.mat-mdc-menu-item {
   &.dense {
-
     height: 36px; // !important;
     line-height: 36px; // !important;
   }
@@ -100,26 +180,28 @@ button, a {
     width: 24px;
     font-size: 24px;
   }
-  .mat-icon[svgIcon]{
-    height: 100%;// hack to align svg icons
+  .mat-icon[svgIcon] {
+    height: 100%; // hack to align svg icons
   }
-
 }
 
 //GLI-902 Fixes in selectlist
-$selectPanelHeight : 36px;
-.mat-select-panel, .mat-autocomplete-panel {
+$selectPanelHeight: 36px;
+.mat-select-panel,
+.mat-autocomplete-panel {
   border-radius: 4px;
-  .mat-option, .mat-optgroup-label{
+  .mat-option,
+  .mat-optgroup-label {
     line-height: $selectPanelHeight;
     height: $selectPanelHeight;
   }
-  .mat-select-content{
-    .mat-option-pseudo-checkbox{
+  .mat-select-content {
+    .mat-option-pseudo-checkbox {
       margin-right: 16px;
     }
 
-    .mat-option, .mat-optgroup-label{
+    .mat-option,
+    .mat-optgroup-label {
       line-height: $selectPanelHeight;
       height: $selectPanelHeight;
     }
@@ -132,13 +214,13 @@ $selectPanelHeight : 36px;
   }
 }
 
-
 mat-form-field {
   max-width: 100%;
 }
 
 .mat-select-panel {
-  .mat-option:hover, .mat-option:focus {
+  .mat-option:hover,
+  .mat-option:focus {
     &:not(.mat-active) {
       background: inherit;
     }

@@ -1,15 +1,28 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { Navigation } from '../navigation';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { EXPANSION_PANEL_ANIMATION_TIMING } from '@angular/material/expansion';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { NgForOf, NgIf } from '@angular/common';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
+import { EXPANSION_PANEL_ANIMATION_TIMING } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NavDrawerListComponent } from '../nav-drawer-list/nav-drawer-list.component';
-import { MatLegacyRippleModule as MatRippleModule } from '@angular/material/legacy-core';
+import { Navigation } from '../navigation';
 
 @Component({
   selector: 'sto-nav-drawer-item',
@@ -27,24 +40,28 @@ import { MatLegacyRippleModule as MatRippleModule } from '@angular/material/lega
     MatDividerModule,
     NavDrawerListComponent,
     MatRippleModule,
-    NgForOf
+    NgForOf,
   ],
   animations: [
     /** Animation that rotates the indicator arrow. */
     trigger('indicatorRotate', [
       state('collapsed, void', style({ transform: 'rotate(0deg)' })),
       state('expanded', style({ transform: 'rotate(180deg)' })),
-      transition('expanded <=> collapsed, void => collapsed',
-        animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+      transition(
+        'expanded <=> collapsed, void => collapsed',
+        animate(EXPANSION_PANEL_ANIMATION_TIMING)
+      ),
     ]),
     /** Animation that expands and collapses the panel content. */
     trigger('bodyExpansion', [
       state('collapsed, void', style({ height: '0px', visibility: 'hidden' })),
       state('expanded', style({ height: '*', visibility: 'visible' })),
-      transition('expanded <=> collapsed, void => collapsed',
-        animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+      transition(
+        'expanded <=> collapsed, void => collapsed',
+        animate(EXPANSION_PANEL_ANIMATION_TIMING)
+      ),
     ]),
-  ]
+  ],
 })
 export class NavDrawerItemComponent {
   @Input()
@@ -65,9 +82,13 @@ export class NavDrawerItemComponent {
   }
 
   toggleExpansionState() {
-    if ( !this.navigationItem.children || this.navigationItem.children.length === 0 ) {
+    if (
+      !this.navigationItem.children ||
+      this.navigationItem.children.length === 0
+    ) {
       return;
     }
-    this.expansionState = this.expansionState === 'collapsed' ? 'expanded' : 'collapsed';
+    this.expansionState =
+      this.expansionState === 'collapsed' ? 'expanded' : 'collapsed';
   }
 }

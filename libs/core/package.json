@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/core",
-  "version": "15.0.1",
+  "version": "16.0.1",
   "author": {
     "name": "Ronnie Laugen",
     "email": "rhenri@equinor.com"
@@ -21,11 +21,22 @@
     "equinor"
   ],
   "peerDependencies": {
-    "@angular/common": "^15.0.0",
-    "@angular/core": "^15.0.0",
-    "date-fns": "^2.0.0"
+    "@angular/common": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "date-fns": "^2.30.0"
   },
   "dependencies": {
     "tslib": "^2.1.0"
+  },
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./ngx-stoui.css": {
+      "default": "./ngx-stoui.css"
+    },
+    "./ngx-datatable.css": {
+      "default": "./ngx-datatable.css"
+    }
   }
 }

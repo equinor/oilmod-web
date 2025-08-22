@@ -40,7 +40,6 @@
       position: relative;
       margin: auto;
     }
-
   }
 
   .small-toggle {
@@ -96,38 +95,45 @@
   }
 }
 
-
-.mat-typography.sto-l-typography .sto-header__form .sto-form__field .mat-form-field-flex .mat-form-field-label {
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+.mat-typography.sto-l-typography
+  .sto-header__form
+  .sto-form__field
+  .mat-mdc-form-field-flex
+  .mat-mdc-floating-label {
   top: 0.12em;
 }
-.mat-typography.sto-sm-typography .sto-header__form .sto-form__field.mat-form-field{
+.mat-typography.sto-sm-typography
+  .sto-header__form
+  .sto-form__field.mat-mdc-form-field {
   line-height: 12px;
-  .mat-form-field-flex .mat-form-field-label {
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+  .mat-mdc-form-field-flex .mat-mdc-floating-label {
     top: 0.36em;
   }
 }
 
-.sto-header__form{
+.sto-header__form {
   .sto-form__field {
     margin-bottom: -40px;
-
-    .mat-form-field-flex {
+    .mat-mdc-form-field-flex {
       height: 32px;
-      .mat-form-field-prefix{
+      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+      .mat-form-field-prefix {
         margin-right: 8px;
       }
-
-      .mat-form-field-infix {
+      .mat-mdc-form-field-infix {
         border: 0 !important;
         margin: 0 !important;
         padding: 4px 0 0 !important;
-
-        .mat-form-field-label{
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+        .mat-mdc-floating-label {
           top: 0.22em;
         }
       }
     }
-    .mat-form-field-label-wrapper {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+    .mat-mdc-floating-label-wrapper {
       top: 0;
       padding: 0;
     }

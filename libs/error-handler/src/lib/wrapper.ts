@@ -1,45 +1,43 @@
-import { Component, Injectable, NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER, ErrorHandlerService, Handler, HttpError, StoErrorHandler } from '@ngx-stoui/error-handler';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { Component, Injectable, NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  CUSTOM_ERROR_HANDLER,
+  ERROR_LOGGER,
+  ErrorHandlerService,
+  Handler,
+  HttpError,
+  StoErrorHandler,
+} from '@ngx-stoui/error-handler';
 
 @Component({
   selector: 'next-wrapper',
   template: `
-    <button mat-button
-            (click)="overRide(404)">Overridden 404
+    <button mat-button (click)="overRide(404)">Overridden 404</button>
+    <button mat-button (click)="showError(s)" *ngFor="let s of errors">
+      {{ s }} {{ s === 401 ? '(App Override)' : '' }}
     </button>
-    <button mat-button
-            (click)="showError(s)"
-            *ngFor="let s of errors">{{s}} {{ s === 401 ? '(App Override)' : ''}}</button>
   `,
-  providers: []
+  providers: [],
 })
 export class NextWrapperComponent {
-  public errors = [
-    0,
-    400,
-    401,
-    403,
-    404,
-    409,
-    500,
-    501,
-    503
-  ];
+  public errors = [0, 400, 401, 403, 404, 409, 500, 501, 503];
 
-  constructor(private service: ErrorHandlerService) {
-  }
+  constructor(private service: ErrorHandlerService) {}
 
   showError(status: number) {
     const err = new HttpErrorResponse({
       status,
       error: {
-        message: 'server error message'
+        message: 'server error message',
       },
       statusText: 'Error',
-      url: 'http://errorhandler/api'
+      url: 'http://errorhandler/api',
     });
     this.service.handler(err);
   }
@@ -48,10 +46,10 @@ export class NextWrapperComponent {
     const err = new HttpErrorResponse({
       status,
       error: {
-        message: 'server error message'
+        message: 'server error message',
       },
       statusText: 'Error',
-      url: 'http://errorhandler/api'
+      url: 'http://errorhandler/api',
     });
     const handler = function (err: HttpErrorResponse) {
       const e = new HttpError(err);
@@ -64,10 +62,10 @@ export class NextWrapperComponent {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorHandlerImpl implements StoErrorHandler {
-  [ code: number ]: Handler;
+  [code: number]: Handler;
 
   401(err: HttpErrorResponse) {
     const error = new HttpError(err);
@@ -78,11 +76,10 @@ export class ErrorHandlerImpl implements StoErrorHandler {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Logger {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   log(err: HttpError) {
     // This method will typically go to the application backend or a central log repository
@@ -95,14 +92,12 @@ function LoggerFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [ NextWrapperComponent ],
-  imports: [ CommonModule, MatButtonModule, HttpClientModule ],
-  exports: [ NextWrapperComponent ],
+  declarations: [NextWrapperComponent],
+  imports: [CommonModule, MatButtonModule, HttpClientModule],
+  exports: [NextWrapperComponent],
   providers: [
     { provide: CUSTOM_ERROR_HANDLER, useClass: ErrorHandlerImpl },
-    { provide: ERROR_LOGGER, useFactory: LoggerFactory, deps: [ HttpClient ] }
-  ]
+    { provide: ERROR_LOGGER, useFactory: LoggerFactory, deps: [HttpClient] },
+  ],
 })
-export class WrapperModule {
-}
-
+export class WrapperModule {}

@@ -1,24 +1,33 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { NgControl, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@ngx-stoui/testing';
-import { NumberInputPipe } from '../number-input.pipe';
-import { NumberInputDirective } from '../number-input.directive';
-import { NumberUnitInputComponent } from './number-unit-input.component';
-import { Subject } from 'rxjs';
 import { DebugElement } from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
+import { NgControl, ReactiveFormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
-import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
+import { MaterialModule } from '@ngx-stoui/testing';
+import { Subject } from 'rxjs';
+import { NumberInputDirective } from '../number-input.directive';
+import { NumberInputPipe } from '../number-input.pipe';
+import { NumberUnitInputComponent } from './number-unit-input.component';
 import Mock = jest.Mock;
 
 const ngControl = {
-  statusChanges: new Subject()
+  statusChanges: new Subject(),
 };
 
-const createSpyObj = (baseName: string, methodNames: string[]): { [ key: string ]: Mock<any> } => {
+const createSpyObj = (
+  baseName: string,
+  methodNames: string[]
+): { [key: string]: Mock<any> } => {
   const obj: any = {};
 
-  for ( let i = 0; i < methodNames.length; i++ ) {
-    obj[ methodNames[ i ] ] = jest.fn();
+  for (let i = 0; i < methodNames.length; i++) {
+    obj[methodNames[i]] = jest.fn();
   }
 
   return obj;
@@ -28,18 +37,23 @@ describe('NumberUnitInputComponent', () => {
   let component: NumberUnitInputComponent;
   let fixture: ComponentFixture<NumberUnitInputComponent>;
   let page: Page;
-  const formControlSpy = createSpyObj('NgControl', [ 'value' ]);
+  const formControlSpy = createSpyObj('NgControl', ['value']);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule, ReactiveFormsModule, NumberInputPipe, NumberInputDirective, NumberUnitInputComponent ],
-      providers: [ { provide: NgControl, useValue: formControlSpy } ]
-    }).overrideComponent(NumberUnitInputComponent, {
+      imports: [
+        MaterialModule,
+        ReactiveFormsModule,
+        NumberInputPipe,
+        NumberInputDirective,
+        NumberUnitInputComponent,
+      ],
+      providers: [{ provide: NgControl, useValue: formControlSpy }],
+    })
+      .overrideComponent(NumberUnitInputComponent, {
         set: {
-          providers: [
-            { provide: NgControl, useValue: ngControl }
-          ]
-        }
+          providers: [{ provide: NgControl, useValue: ngControl }],
+        },
       })
       .compileComponents()
       .then(createComponent);
@@ -129,9 +143,7 @@ describe('NumberUnitInputComponent', () => {
       fixture.detectChanges();
       page = new Page(fixture);
     });
-
   }
-
 });
 
 class Page {
@@ -147,4 +159,3 @@ class Page {
     this.elementRef = fixture.elementRef.nativeElement;
   }
 }
-

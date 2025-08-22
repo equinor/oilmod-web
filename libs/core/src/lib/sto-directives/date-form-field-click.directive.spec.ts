@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { DateFormFieldClickDirective } from './date-form-field-click.directive';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatFormField } from '@angular/material/form-field';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '@ngx-stoui/testing';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { MatLegacyFormField as MatFormField } from '@angular/material/legacy-form-field';
+import { DateFormFieldClickDirective } from './date-form-field-click.directive';
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
@@ -15,25 +15,20 @@ let page: Page;
   selector: 'sto-spec-wrap',
   template: `
     <mat-form-field [stoDateFormFieldClick]="picker">
-      <input matInput
-             [matDatepicker]="picker"
-             placeholder="Date">
-      <mat-datepicker-toggle matSuffix
-                             [for]="picker"></mat-datepicker-toggle>
+      <input matInput [matDatepicker]="picker" placeholder="Date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-  `
+  `,
 })
-class WrapperComponent {
-}
+class WrapperComponent {}
 
 describe('DateFormFieldClickDirective', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ DateFormFieldClickDirective, CommonModule, MaterialModule ],
-        declarations: [ WrapperComponent ]
-      })
+      imports: [DateFormFieldClickDirective, CommonModule, MaterialModule],
+      declarations: [WrapperComponent],
+    })
       .compileComponents()
       .then(createComponent);
   }));
@@ -50,7 +45,6 @@ describe('DateFormFieldClickDirective', () => {
     page.picker.close();
     fixture.detectChanges();
   });
-
 });
 
 function createComponent() {

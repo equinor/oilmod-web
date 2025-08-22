@@ -1,7 +1,6 @@
 @use '@angular/material' as mat;
-@import "theme/theme";
-@import "theme/typography";
-
+@import 'theme/theme';
+@import 'theme/typography';
 
 body {
   .mat-menu-item.no-hover {
@@ -21,7 +20,6 @@ body {
     text-shadow: 0 0 1px var(--text);
   }
 
-
   .sto-nav-drawer {
     background-color: var(--bg-default);
     border-right: 1px solid var(--divider);
@@ -30,7 +28,7 @@ body {
       color: var(--text-secondary);
 
       &.active {
-        background-color: var(--primary-fill-activated)
+        background-color: var(--primary-fill-activated);
       }
 
       .mat-icon {
@@ -101,16 +99,15 @@ body {
   }
 }
 
-
 @mixin navigation-drawer-typography($config) {
   .sto-nav-drawer {
     sto-nav-drawer-item {
-      font-size: mat.font-size($config, subheading-1);
-      line-height: mat.line-height($config, subheading-1);
+      font-size: mat.font-size($config, subtitle-1);
+      line-height: mat.line-height($config, subtitle-1);
     }
   }
   .sto-nav-drawer-menu + div .mat-menu-item {
-    font-size: mat.font-size($config, subheading-1);
+    font-size: mat.font-size($config, subtitle-1);
   }
 }
 

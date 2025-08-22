@@ -1,25 +1,25 @@
 .sto-datatable {
   .sto-form__field {
-
-    &--readonly, &--disabled {
-      .mat-form-field-flex {
+    &--readonly,
+    &--disabled {
+      .mat-mdc-form-field-flex {
         border: 0;
       }
     }
 
     width: 100%;
 
-    input[type="number"] {
+    input[type='number'] {
       text-align: right;
     }
 
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
       border: 0 !important;
       margin: 0 !important;
       padding: 1px 0 0 0 !important;
     }
 
-    .mat-form-field-flex {
+    .mat-mdc-form-field-flex {
       height: 31px;
       padding: 4px 6px;
     }
@@ -29,7 +29,6 @@
         margin-top: -5px;
       }
     }
-
   }
 
   &__column {
@@ -50,15 +49,15 @@
           width: 16px;
         }
       }
-
     }
   }
 
-  .mat-form-field-placeholder, .mat-form-field-label {
+  .mat-form-field-placeholder,
+  .mat-mdc-floating-label {
     top: 0;
   }
 
-  .mat-form-field-label-wrapper {
+  .mat-mdc-floating-label-wrapper {
     top: 0;
     padding: 0;
   }
@@ -67,12 +66,12 @@
 .sto-compact {
   .sto-datatable {
     .sto-form__field {
-      .mat-form-field-flex {
+      .mat-mdc-form-field-flex {
         height: 19px;
         padding: 0 6px;
       }
 
-      .mat-form-field-suffix {
+      .mat-mdc-form-field-icon-suffix {
         height: 22px;
       }
 

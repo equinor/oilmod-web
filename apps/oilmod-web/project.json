@@ -18,9 +18,7 @@
           "apps/oilmod-web/src/favicon.ico",
           "apps/oilmod-web/src/assets"
         ],
-        "styles": [
-          "apps/oilmod-web/src/styles.scss"
-        ],
+        "styles": ["apps/oilmod-web/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -75,22 +73,18 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/oilmod-web/src/**/*.ts",
           "apps/oilmod-web/src/**/*.html"
         ]
       },
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/apps/oilmod-web"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/oilmod-web"],
       "options": {
         "jestConfig": "apps/oilmod-web/jest.config.ts",
         "passWithNoTests": true
@@ -104,10 +98,7 @@
         "browserTarget": "oilmod-web:build",
         "compodoc": false,
         "stylePreprocessorOptions": {
-          "includePaths": [
-            "node_modules",
-            "libs/core/src/style"
-          ]
+          "includePaths": ["node_modules", "libs/core/src/style"]
         }
       },
       "configurations": {
@@ -118,19 +109,14 @@
     },
     "build-storybook": {
       "executor": "@storybook/angular:build-storybook",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputDir": "dist/storybook/oilmod-web",
         "configDir": "apps/oilmod-web/.storybook",
         "browserTarget": "oilmod-web:build",
         "compodoc": false,
         "stylePreprocessorOptions": {
-          "includePaths": [
-            "node_modules",
-            "libs/core/src/style"
-          ]
+          "includePaths": ["node_modules", "libs/core/src/style"]
         }
       },
       "configurations": {

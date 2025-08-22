@@ -1,22 +1,25 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { NavDrawerComponent, NavDrawerModule, Navigation } from '@ngx-stoui/drawer';
-import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoAppHeaderModule } from '@ngx-stoui/common';
+import {
+  NavDrawerComponent,
+  NavDrawerModule,
+  Navigation,
+} from '@ngx-stoui/drawer';
 import { action } from '@storybook/addon-actions';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 @Component({
   selector: 'wrapper',
-  template: 'Hi'
+  template: 'Hi',
 })
-class WrapperComponent {
-}
+class WrapperComponent {}
 
 @Injectable({ providedIn: 'root' })
 class IconService {
@@ -31,8 +34,8 @@ export default {
   parameters: {},
   decorators: [
     moduleMetadata({
-      declarations: [ WrapperComponent ],
-      providers: [ IconService ],
+      declarations: [WrapperComponent],
+      providers: [IconService],
       imports: [
         NavDrawerModule,
         StoAppHeaderModule,
@@ -40,18 +43,18 @@ export default {
         MatButtonModule,
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([
-          { path: '**', component: WrapperComponent }
+          { path: '**', component: WrapperComponent },
         ]),
         BrowserModule,
-        CommonModule
-      ]
-    })
+        CommonModule,
+      ],
+    }),
   ],
   argTypes: {
     open: {
-      control: { type: 'boolean' }
-    }
-  }
+      control: { type: 'boolean' },
+    },
+  },
 } as Meta;
 
 const Template: Story<NavDrawerComponent> = (args: NavDrawerComponent) => {
@@ -59,7 +62,7 @@ const Template: Story<NavDrawerComponent> = (args: NavDrawerComponent) => {
     component: NavDrawerComponent,
     props: {
       ...args,
-      activate: action('Activate route')
+      activate: action('Activate route'),
     },
   };
 };
@@ -67,50 +70,50 @@ const Template: Story<NavDrawerComponent> = (args: NavDrawerComponent) => {
 const navigationItems = [
   {
     label: 'Direct route',
-    route: [ '/', 'home' ],
-    icon: 'home'
+    route: ['/', 'home'],
+    icon: 'home',
   },
   {
     label: 'Disabled',
-    route: [ '/', 'home' ],
+    route: ['/', 'home'],
     icon: 'do_disturb',
-    disabled: true
+    disabled: true,
   },
   {
     label: 'Internal route title',
     children: [
       {
-        route: [ '/', 'disabled', 'route1' ],
+        route: ['/', 'disabled', 'route1'],
         disabled: true,
         label: 'Disabled child route',
       },
       {
-        route: [ '/', 'route1' ],
+        route: ['/', 'route1'],
         label: 'Internal child route',
       },
       {
-        route: [ '/', 'route2' ],
+        route: ['/', 'route2'],
         label: 'Internal child route 2',
       },
       {
-        route: [ '/', 'route3' ],
+        route: ['/', 'route3'],
         label: 'Internal child route 3',
       },
       {
-        route: [ '/', 'route4' ],
+        route: ['/', 'route4'],
         label: 'Internal child route 4',
       },
       {
-        route: [ '/', 'route5' ],
+        route: ['/', 'route5'],
         label: 'Internal child route 5',
       },
       {
-        route: [ '/', 'route6' ],
+        route: ['/', 'route6'],
         label: 'Internal child route 6',
       },
     ],
     icon: 'dashboard',
-    title: 'Dashboard'
+    title: 'Dashboard',
   },
   {
     label: 'External',
@@ -120,7 +123,7 @@ const navigationItems = [
         link: 'https://example.com',
         target: '_blank',
         label: 'Example.com',
-      }
+      },
     ],
     icon: 'open_in_new',
   },
@@ -129,7 +132,7 @@ const navigationItems = [
     label: 'Disabled Route',
     children: [],
     icon: 'do_disturb',
-    disabled: true
+    disabled: true,
   },
 ] as Array<Navigation>;
 
@@ -139,7 +142,6 @@ NormalUse.args = {
   collapsed: false,
 };
 
-
 export const WithAppHeader = (args: NavDrawerComponent) => {
   return {
     component: NavDrawerComponent,
@@ -147,13 +149,10 @@ export const WithAppHeader = (args: NavDrawerComponent) => {
     template: `
     <sto-app-header></sto-app-header>
     <sto-nav-drawer (activate)="collapsed = true; activate($event)" [withAppHeader]="true" [navigationItems]="navigationItems" [collapsed]="collapsed"></sto-nav-drawer>
-    `
+    `,
   };
 };
 WithAppHeader.args = {
   navigationItems,
   collapsed: true,
-
 };
-
-

@@ -1,25 +1,26 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { QuickKeysDirective } from './quick-keys.directive';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Key } from '@ngx-stoui/core';
-import { By } from '@angular/platform-browser';
+import { QuickKeysDirective } from './quick-keys.directive';
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
 
 @Component({
   selector: 'sto-spec-wrap',
-  template: `
-    <mat-form-field>
-      <input stoQuickKeys
-             (quickSubmit)="submit()"
-             (quickCancel)="cancel()"
-             matInput
-             #input>
-    </mat-form-field>`
+  template: ` <mat-form-field>
+    <input
+      stoQuickKeys
+      (quickSubmit)="submit()"
+      (quickCancel)="cancel()"
+      matInput
+      #input
+    />
+  </mat-form-field>`,
 })
 class WrapperComponent {
   @ViewChild('input')
@@ -35,12 +36,16 @@ class WrapperComponent {
 }
 
 describe('QuickKeysDirective', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ QuickKeysDirective, MatFormFieldModule, MatInputModule, NoopAnimationsModule ],
-        declarations: [ WrapperComponent ]
-      })
+      imports: [
+        QuickKeysDirective,
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule,
+      ],
+      declarations: [WrapperComponent],
+    })
       .compileComponents()
       .then(createComponent);
   }));
@@ -51,7 +56,10 @@ describe('QuickKeysDirective', () => {
 
   it('should react on ctrl+enter', () => {
     const spy = jest.spyOn(comp, 'submit');
-    const event = new KeyboardEvent('keyup', { ctrlKey: true, keyCode: Key.Enter });
+    const event = new KeyboardEvent('keyup', {
+      ctrlKey: true,
+      keyCode: Key.Enter,
+    });
     const el = fixture.debugElement.query(By.css('input'));
     el.nativeElement.dispatchEvent(event);
     expect(spy).toHaveBeenCalled();
@@ -64,7 +72,6 @@ describe('QuickKeysDirective', () => {
     el.nativeElement.dispatchEvent(event);
     expect(spy).toHaveBeenCalled();
   });
-
 });
 
 function createComponent() {

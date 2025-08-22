@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogConfig as MatDialogConfig,
-  MatLegacyDialogRef as MatDialogRef
-} from '@angular/material/legacy-dialog';
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { Observable, ReplaySubject } from 'rxjs';
 import { ConfirmComponent } from './sto-confirm-dialog.component';
 

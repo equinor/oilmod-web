@@ -10,7 +10,7 @@ sto-preference-manager {
     }
   }
 
-  .mat-progress-spinner {
+  .mat-mdc-progress-spinner {
     display: inline-block;
   }
 
@@ -22,18 +22,23 @@ sto-preference-manager {
   }
 }
 
-.mat-menu-panel.preference-manager-list {
+.mat-mdc-menu-panel.preference-manager-list {
   width: 350px;
   min-height: 32px;
 
-  .mat-menu-content:not(:empty) {
+  .mat-mdc-menu-content:not(:empty) {
     padding-top: 0;
     padding-bottom: 0;
   }
 
   .preference-manager-list-item {
-    display: flex;
     padding: 0 8px;
+
+    .mat-mdc-menu-item-text {
+      display: flex;
+      flex: 1;
+      place-items: center;
+    }
 
     &.edit {
       padding-left: 0;
@@ -41,30 +46,28 @@ sto-preference-manager {
 
     .preference-manager-list-item-title {
       flex: 1 1 auto;
+      line-height: 32px;
 
-      .mat-form-field {
+      .mat-mdc-form-field {
         min-height: 32px;
         height: 32px;
-
-        .mat-form-field-wrapper {
+        .mat-mdc-text-field-wrapper {
           padding-bottom: 0;
-
-          .mat-form-field-flex {
+          .mat-mdc-form-field-flex {
             padding: 8px;
-
-            .mat-form-field-infix {
+            .mat-mdc-form-field-infix {
+              width: auto;
               border-top: 0;
               padding-top: 0;
             }
           }
-
-          .mat-form-field-subscript-wrapper {
-            display: none;
-          }
-
-          .mat-form-field-underline {
-            bottom: 1px;
-          }
+        }
+        .mat-mdc-form-field-subscript-wrapper {
+          display: none;
+        }
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+        .mat-form-field-underline {
+          bottom: 1px;
         }
       }
     }
@@ -78,10 +81,10 @@ sto-preference-manager {
         margin-right: 0;
       }
 
-      .mat-icon-button {
-        height: 32px;
-        width: 32px;
+      .mat-mdc-icon-button {
+        --mdc-icon-button-state-layer-size: 32px;
         line-height: 32px;
+        padding: 5px;
       }
     }
   }

@@ -9,11 +9,11 @@ import {
   OnDestroy,
   Optional,
 } from '@angular/core';
-import { MatLegacyPseudoCheckboxState as MatPseudoCheckboxState } from '@angular/material/legacy-core';
-import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
+import { MatPseudoCheckboxState } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'sto-option-select-all',

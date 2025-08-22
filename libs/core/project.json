@@ -6,7 +6,7 @@
   "prefix": "sto",
   "targets": {
     "build-lib": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "options": {
         "project": "libs/core/ng-package.json",
         "updateBuildableProjectDepsInPackageJson": false
@@ -24,41 +24,31 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "$(npm bin)/nx build-lib core",
-          "$(npm bin)/nx post-build core"
-        ],
+        "commands": ["nx build-lib core", "nx post-build core"],
         "parallel": false
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/libs/core"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/core"],
       "options": {
         "jestConfig": "libs/core/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "libs/core/src/**/*.ts",
-          "libs/core/src/**/*.html"
-        ]
+        "lintFilePatterns": ["libs/core/src/**/*.ts", "libs/core/src/**/*.html"]
       },
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "post-build": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "$(npm bin)/ts-node tools/scripts/build-scss.ts",
-          "$(npm bin)/ts-node tools/scripts/copy-assets.ts"
+          "ts-node tools/scripts/build-scss.ts",
+          "ts-node tools/scripts/copy-assets.ts"
         ],
         "parallel": true
       }
@@ -67,9 +57,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "dist/libs/core",
-        "commands": [
-          "npm publish"
-        ],
+        "commands": ["npm publish"],
         "parallel": false
       }
     }

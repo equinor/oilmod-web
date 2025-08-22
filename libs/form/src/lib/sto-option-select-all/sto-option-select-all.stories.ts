@@ -1,25 +1,35 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { StoFormModule, StoOptionSelectAllComponent, StoOptionSelectAllComponentModule } from '@ngx-stoui/form';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StoFormModule,
+  StoOptionSelectAllComponent,
+  StoOptionSelectAllComponentModule,
+} from '@ngx-stoui/form';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'form/Select all',
   component: StoOptionSelectAllComponent,
   decorators: [
     moduleMetadata({
-      imports: [ StoOptionSelectAllComponentModule,
+      imports: [
+        StoOptionSelectAllComponentModule,
         ReactiveFormsModule,
-        StoFormModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, CommonModule, MatCardModule ],
-    })
-  ]
+        StoFormModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        MatCardModule,
+      ],
+    }),
+  ],
 } as Meta;
-
 
 const items = [
   { id: 1, name: 'TEST1', longName: 'LONG TEST1' },
@@ -34,16 +44,17 @@ const items = [
   { id: 10, name: 'TEST10', longName: 'LONG TEST10' },
 ];
 
-export const SelectAllMulti: Story<any> = (args) => ( {
+export const SelectAllMulti: Story<any> = (args) => ({
   props: {
-    selected: [ 1, 2 ],
+    selected: [1, 2],
     isFilter: true,
     focusIfNoValue: false,
     items,
     total: items.length,
     valueChange: (event: any) => console.log(event),
-    ctrl: new UntypedFormControl([ 1, 2 ])
-  }, template: `
+    ctrl: new UntypedFormControl([1, 2]),
+  },
+  template: `
 <mat-card style="width: 300px" class="sto-form" >
   <mat-form-field stoFormField
                   floatLabel="always" >
@@ -57,5 +68,5 @@ export const SelectAllMulti: Story<any> = (args) => ( {
                   [value]="opt.id">{{opt.name}}</mat-option>
     </mat-select>
   </mat-form-field>
-</mat-card>`
-} );
+</mat-card>`,
+});

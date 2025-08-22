@@ -1,13 +1,13 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoDatatableModule } from '@ngx-stoui/datatable';
+import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 import { fixedColumns, rows } from './rows';
-import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
-import { StoDatatableModule } from '@ngx-stoui/datatable';
 
 export default {
   title: 'Datatable/Swimlane',
@@ -15,14 +15,19 @@ export default {
     moduleMetadata({
       imports: [
         StoDatatableModule,
-        MatButtonModule, BrowserAnimationsModule, MatPaginatorModule, MatCardModule,
-        NgxDatatableModule
+        MatButtonModule,
+        BrowserAnimationsModule,
+        MatPaginatorModule,
+        MatCardModule,
+        NgxDatatableModule,
       ],
-    })
+    }),
   ],
 } as Meta;
 
-const Template: Story<Record<string, unknown>> = (args: Record<string, unknown>) => {
+const Template: Story<Record<string, unknown>> = (
+  args: Record<string, unknown>
+) => {
   return {
     props: args,
     template: `<mat-card>
@@ -38,7 +43,7 @@ const Template: Story<Record<string, unknown>> = (args: Record<string, unknown>)
 [class.sto-datatable]="withCss"
 [rows]="rows"
 [columns]="columns"></ngx-datatable>
-</mat-card>`
+</mat-card>`,
   };
 };
 
@@ -54,7 +59,5 @@ NormalUse.args = {
   rowHeight: 40,
   headerHeight: 36,
   rows,
-  columns: fixedColumns.map(c => ( { ...c, width: c.flexBasis } )),
+  columns: fixedColumns.map((c) => ({ ...c, width: c.flexBasis })),
 };
-
-

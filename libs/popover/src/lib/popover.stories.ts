@@ -1,12 +1,12 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { action } from '@storybook/addon-actions';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
+import { PopoverFooterComponent } from './popover-footer.component';
+import { PopoverTitleComponent } from './popover-title.component';
 import { PopoverComponent } from './popover.component';
 import { PopoverDirective } from './popover.directive';
-import { PopoverTitleComponent } from './popover-title.component';
-import { PopoverFooterComponent } from './popover-footer.component';
-import { MatLegacyButtonModule } from '@angular/material/legacy-button';
-import { action } from '@storybook/addon-actions';
 
 export default {
   component: PopoverComponent,
@@ -23,47 +23,56 @@ export default {
   },
   argTypes: {
     width: {
-      type: 'number'
+      type: 'number',
     },
     height: {
-      type: 'number'
+      type: 'number',
     },
     minWidth: {
-      type: 'number'
+      type: 'number',
     },
     minHeight: {
-      type: 'number'
+      type: 'number',
     },
     backdropClass: {
-      type: 'string'
+      type: 'string',
     },
     panelClass: {
-      type: 'string'
+      type: 'string',
     },
     disableClose: {
-      type: 'boolean'
+      type: 'boolean',
     },
     hasBackdrop: {
-      type: 'boolean'
+      type: 'boolean',
     },
   },
   parameters: {
-    docs: { iframeHeight: 300 }
+    docs: { iframeHeight: 300 },
   },
   decorators: [
     moduleMetadata({
-      imports: [ BrowserAnimationsModule, PopoverDirective, PopoverComponent, PopoverTitleComponent, PopoverFooterComponent, MatLegacyButtonModule ],
+      imports: [
+        BrowserAnimationsModule,
+        PopoverDirective,
+        PopoverComponent,
+        PopoverTitleComponent,
+        PopoverFooterComponent,
+        MatButtonModule,
+      ],
     }),
   ],
 } as Meta;
 
-export const Usage: Story<PopoverComponent & Record<string, unknown>> = (args) => ( {
+export const Usage: Story<PopoverComponent & Record<string, unknown>> = (
+  args
+) => ({
   props: {
     ...args,
     open: false,
     onToggle: action('Toggled'),
     onSave: action('Save'),
-    onClose: action('Close')
+    onClose: action('Close'),
   },
   template: `
 <div style="margin-left: 300px; height: 500px;">
@@ -91,9 +100,9 @@ export const Usage: Story<PopoverComponent & Record<string, unknown>> = (args) =
 </sto-popover-footer>
 </sto-popover>
 `,
-} );
+});
 
-export const WithoutTitle: Story = (args) => ( {
+export const WithoutTitle: Story = (args) => ({
   props: args,
   template: `
 <div style="margin-left: 300px; height: 500px;">
@@ -108,9 +117,9 @@ export const WithoutTitle: Story = (args) => ( {
 </sto-popover-footer>
 </sto-popover>
 `,
-} );
+});
 
-export const WithoutFooter: Story = (args) => ( {
+export const WithoutFooter: Story = (args) => ({
   props: args,
   template: `
 <div style="margin-left: 300px; height: 500px;">
@@ -122,4 +131,4 @@ export const WithoutFooter: Story = (args) => ( {
 <div>This is also content</div>
 </sto-popover>
 `,
-} );
+});

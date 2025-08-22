@@ -1,12 +1,15 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StoDatatableComponent,
+  StoDatatableModule,
+} from '@ngx-stoui/datatable';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 import { columns, rows } from './rows';
-import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { StoDatatableComponent, StoDatatableModule } from '@ngx-stoui/datatable';
 
 export default {
   title: 'Datatable/StoDatatable',
@@ -15,9 +18,12 @@ export default {
     moduleMetadata({
       imports: [
         StoDatatableModule,
-        MatButtonModule, BrowserAnimationsModule, MatPaginatorModule, MatCardModule
+        MatButtonModule,
+        BrowserAnimationsModule,
+        MatPaginatorModule,
+        MatCardModule,
       ],
-    })
+    }),
   ],
   argTypes: {
     rows: { table: { disable: true } },
@@ -34,21 +40,24 @@ export default {
     responsiveView: { table: { disable: true } },
     selected: { table: { disable: true } },
     trackBy: { table: { disable: true } },
-  }
+  },
 } as Meta;
 
-export const NormalUse: Story<StoDatatableComponent<Record<string, unknown>>> = (args: StoDatatableComponent<Record<string, unknown>>) => {
+export const NormalUse: Story<
+  StoDatatableComponent<Record<string, unknown>>
+> = (args: StoDatatableComponent<Record<string, unknown>>) => {
   return {
     component: StoDatatableComponent,
     props: {
-      ...args, columns: args.scrollbarH ? [ ...columns, ...columns, ...columns ] : columns,
+      ...args,
+      columns: args.scrollbarH ? [...columns, ...columns, ...columns] : columns,
       rows: rows,
       headerContextMenu: action('Header context menu'),
       rowContextMenu: action('Row context menu'),
       rowActivate: action('Keyboard-activation on row'),
       select: action('Row selected'),
       resized: action('Resize'),
-      trackBy: (index: number) => index
+      trackBy: (index: number) => index,
     },
   };
 };

@@ -1,27 +1,47 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
+import {
+  ReactiveFormsModule,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { NumberInputModule, NumberUnitInputComponent, StoFormModule } from '@ngx-stoui/form';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  NumberInputModule,
+  NumberUnitInputComponent,
+  StoFormModule,
+} from '@ngx-stoui/form';
+import { action } from '@storybook/addon-actions';
+import { moduleMetadata } from '@storybook/angular';
+import { Meta, Story } from '@storybook/angular/types-6-0';
 
 export default {
   title: 'form/Value & Unit input',
   component: NumberUnitInputComponent,
   decorators: [
     moduleMetadata({
-      imports: [ BrowserAnimationsModule, MatIconModule,
-        MatFormFieldModule, NumberInputModule, MatCardModule, StoFormModule, ReactiveFormsModule ],
-    })
+      imports: [
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        NumberInputModule,
+        MatCardModule,
+        StoFormModule,
+        ReactiveFormsModule,
+      ],
+    }),
   ],
 } as Meta;
 
-const control = new UntypedFormControl({ value: 32.123, unit: 'C' }, Validators.required);
+const control = new UntypedFormControl(
+  { value: 32.123, unit: 'C' },
+  Validators.required
+);
 
-const Template: Story<NumberUnitInputComponent & Record<string, unknown>> = (args) => {
+const Template: Story<NumberUnitInputComponent & Record<string, unknown>> = (
+  args
+) => {
   return {
     component: NumberUnitInputComponent,
     props: {
@@ -46,7 +66,7 @@ const Template: Story<NumberUnitInputComponent & Record<string, unknown>> = (arg
       </sto-number-unit-input>
     </mat-form-field><br>
     {{control.value | json}}
-  </mat-card>`
+  </mat-card>`,
   };
 };
 
@@ -54,10 +74,13 @@ export const Usage = Template.bind({});
 Usage.args = {
   fractionSize: 3,
   label: 'Value Unit Input',
-  units: [ { value: 'C', title: 'C°' }, { value: 'F', title: 'F°' } ],
+  units: [
+    { value: 'C', title: 'C°' },
+    { value: 'F', title: 'F°' },
+  ],
   qtyPlaceholder: 'Quantity',
   unitPlaceholder: 'Unit',
   readonly: true,
   unitOptional: true,
-  unitClearText: '(none)'
+  unitClearText: '(none)',
 };

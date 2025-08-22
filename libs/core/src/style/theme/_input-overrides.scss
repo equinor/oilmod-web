@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
-@import "theme";
-@import "typography";
+@import 'theme';
+@import 'typography';
 
 @mixin sto-input-override-theme($theme, $variables) {
   $color: map_get($variables, color);
@@ -9,11 +9,13 @@
   $icon-color: map_get($variables, icon);
   $icon-hover: map_get($variables, icon-hover);
 
-  .sto-form__field, .sto-form__field.mat-form-field {
-    .mat-form-field-flex {
-      background-color: $form-field-bg;
+  .sto-form__field,
+  .sto-form__field.mat-mdc-form-field {
+    --mdc-filled-text-field-container-color: #{$form-field-bg};
+    .mat-mdc-form-field-flex {
+      // background-color: $form-field-bg;
 
-      .mat-form-field-infix {
+      .mat-mdc-form-field-infix {
         //line-height: 14px; // TODO: Proper fix.
       }
       .mat-input {
@@ -21,11 +23,12 @@
       }
     }
 
-    &.sto-form__field--readonly, &.sto-form__field--disabled {
-      .mat-form-field-flex {
+    &.sto-form__field--readonly,
+    &.sto-form__field--disabled {
+      .mat-mdc-form-field-flex {
         background-color: transparent;
 
-        .mat-form-field-infix {
+        .mat-mdc-form-field-infix {
           //line-height: 14px; // TODO: Proper fix.
         }
 
@@ -35,24 +38,24 @@
       }
     }
 
-    &.sto-form__field--readonly .mat-form-field-flex {
+    &.sto-form__field--readonly .mat-mdc-form-field-flex {
       background-color: transparent;
     }
 
-    .mat-form-field-flex:hover ~ .mat-form-field-underline {
+    .mat-mdc-form-field-flex:hover ~ .mat-form-field-underline {
     }
 
-    &.mat-focused .mat-form-field-infix .mat-form-field-label {
+    &.mat-focused .mat-mdc-form-field-infix .mat-mdc-floating-label {
       color: $color;
     }
 
-    .mat-form-field-flex:hover {
-      .mat-form-field-suffix > .mat-icon {
+    .mat-mdc-form-field-flex:hover {
+      .mat-mdc-form-field-icon-suffix > .mat-icon {
         color: $icon-hover;
       }
     }
 
-    .mat-form-field-suffix > .mat-icon {
+    .mat-mdc-form-field-icon-suffix > .mat-icon {
       color: $icon-color;
     }
   }
@@ -63,12 +66,13 @@ body {
   @include sto-input-override-theme($sto-theme, $variables);
 }
 
-@import "typography";
+@import 'typography';
 
 @mixin sto-input-typography($config) {
   $base: mat.font-size($config, body-1);
 
-  .sto-form-field, .sto-form__field.mat-form-field {
+  .sto-form-field,
+  .sto-form__field.mat-form-field {
     line-height: $base;
 
     .mat-select-trigger {
@@ -76,14 +80,12 @@ body {
     }
   }
 
-
   .sto-form__field.mat-form-field-can-float.mat-form-field-should-float {
-
-    .mat-form-field-label-wrapper {
+    .mat-mdc-floating-label-wrapper {
       top: -1.3em;
     }
 
-    .mat-form-field-label {
+    .mat-mdc-floating-label {
       transform: translateY(-1em) perspective(100px) translateZ(0.001px) !important;
       @if $base == 16px {
         font-size: $base - 3px;
@@ -98,7 +100,8 @@ body {
     }
   }
 
-  .mat-option, .mat-option .mat-option-text {
+  .mat-option,
+  .mat-option .mat-option-text {
     font-size: $base;
   }
 }
@@ -106,7 +109,6 @@ body {
 .mat-typography:not(.sto-sm-typography):not(.sto-l-typography) {
   @include sto-input-typography($sto-typography);
 }
-
 
 .mat-typography.sto-sm-typography {
   @include sto-input-typography($sto-sm-typography);

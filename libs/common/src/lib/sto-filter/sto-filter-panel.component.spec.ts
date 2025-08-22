@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { By } from '@angular/platform-browser';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OperatorFunction } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FilterForm, FilterList } from './filter';
 import {
   StoFilterActions,
   StoFilterActionsBar,
   StoFilterPanelComponent,
   StoFilterTableActions,
-  StoFilterTitle
+  StoFilterTitle,
 } from './sto-filter-panel.component';
-import { MatLegacyButton as MatButton, MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FilterForm, FilterList } from './filter';
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
-import { MatLegacyChipList as MatChipList, MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 
 let comp: StoFilterPanelComponent;
 let fixture: ComponentFixture<StoFilterPanelComponent>;
@@ -28,36 +28,33 @@ let page: Page;
 
 @Component({
   selector: 'sto-spec-wrap',
-  template: `
-    <div style="background: white">
-      <sto-filter-panel [expandable]="true"
-                        [filterList]="filter$ | async">
-        <sto-filter-title>Filter Title</sto-filter-title>
-        <sto-filter-table-actions>
-          <button mat-button>
-            New
-            <mat-icon>add</mat-icon>
-          </button>
-        </sto-filter-table-actions>
-        <sto-filter-actions>
-          <button mat-icon-button>
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </sto-filter-actions>
-        <div class="sto-form sto-grid sto-grid--6"
-             [formGroup]="form">
-          <div class="sto-grid__column">
-            <input formControlName="field">
-          </div>
+  template: ` <div style="background: white">
+    <sto-filter-panel [expandable]="true" [filterList]="filter$ | async">
+      <sto-filter-title>Filter Title</sto-filter-title>
+      <sto-filter-table-actions>
+        <button mat-button>
+          New
+          <mat-icon>add</mat-icon>
+        </button>
+      </sto-filter-table-actions>
+      <sto-filter-actions>
+        <button mat-icon-button>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </sto-filter-actions>
+      <div class="sto-form sto-grid sto-grid--6" [formGroup]="form">
+        <div class="sto-grid__column">
+          <input formControlName="field" />
         </div>
-      </sto-filter-panel>
-    </div>`
+      </div>
+    </sto-filter-panel>
+  </div>`,
 })
 class WrapperComponent extends FilterForm<{ field: string }> {
   formConfig = { field: [] };
-  serializer: OperatorFunction<{ field: string; }, FilterList[]> = map(val => {
-    if ( val.field ) {
-      return [ { value: 'Field1 has a value', key: 'field' } ];
+  serializer: OperatorFunction<{ field: string }, FilterList[]> = map((val) => {
+    if (val.field) {
+      return [{ value: 'Field1 has a value', key: 'field' }];
     }
     return [];
   });
@@ -68,30 +65,31 @@ class WrapperComponent extends FilterForm<{ field: string }> {
 }
 
 describe('StoFilterPanelComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [
-          CommonModule
-          , BrowserAnimationsModule
-          , MatExpansionModule
-          , MatIconModule
-          , MatButtonModule
-          , MatButtonToggleModule
-          , MatTooltipModule
-          , ReactiveFormsModule
-          , MatChipsModule
-        ],
-        declarations: [
-          StoFilterPanelComponent
-          , StoFilterTitle
-          , StoFilterActions
-          , StoFilterActionsBar
-          , StoFilterTableActions
-          , WrapperComponent
-        ]
+      imports: [
+        CommonModule,
+        BrowserAnimationsModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+      ],
+      declarations: [
+        StoFilterPanelComponent,
+        StoFilterTitle,
+        StoFilterActions,
+        StoFilterActionsBar,
+        StoFilterTableActions,
+        WrapperComponent,
+      ],
+    })
+      .overrideComponent(StoFilterPanelComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
       })
-      .overrideComponent(StoFilterPanelComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createComponent);
   }));
@@ -117,15 +115,13 @@ describe('StoFilterPanelComponent', () => {
     wrapFixture.detectChanges();
     page.stoFilterPanel.expanded = false;
     wrapFixture.detectChanges();
-    const chips = wrapFixture.debugElement.query(By.directive(MatChipList));
+    const chips = wrapFixture.debugElement.query(By.directive(MatChipListbox));
     expect(chips).toBeDefined();
   });
-
 });
 
 function createComponent() {
-  fixture = TestBed
-    .createComponent(StoFilterPanelComponent);
+  fixture = TestBed.createComponent(StoFilterPanelComponent);
   wrapFixture = TestBed.createComponent(WrapperComponent);
   comp = fixture.componentInstance;
 
@@ -145,9 +141,13 @@ class Page {
   public newButton: MatButton;
 
   constructor() {
-    const toggleBtnDe = wrapFixture.debugElement.query(By.css('button.toggle-expand-button'));
+    const toggleBtnDe = wrapFixture.debugElement.query(
+      By.css('button.toggle-expand-button')
+    );
     this.toggleButton = toggleBtnDe.nativeElement;
-    const panelDe = wrapFixture.debugElement.query(By.directive(StoFilterPanelComponent));
+    const panelDe = wrapFixture.debugElement.query(
+      By.directive(StoFilterPanelComponent)
+    );
     this.stoFilterPanel = panelDe.componentInstance;
     const btnDe = wrapFixture.debugElement.query(By.directive(MatButton));
     this.newButton = btnDe.componentInstance;

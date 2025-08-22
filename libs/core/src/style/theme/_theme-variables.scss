@@ -3,7 +3,10 @@
 @function theme_variables($theme) {
   $primary-palette: map-get($theme, primary);
   $primary: mat.get-color-from-palette($primary-palette);
-  $primary-contrast: mat.get-contrast-color-from-palette($primary-palette, main);
+  $primary-contrast: mat.get-contrast-color-from-palette(
+    $primary-palette,
+    main
+  );
   $accent-palette: map-get($theme, accent);
   $accent: mat.get-color-from-palette($accent-palette, highlight);
   $accent-contrast: mat.get-contrast-color-from-palette($accent-palette, main);
@@ -18,7 +21,6 @@
   $success-palette: map-get($indicators, success);
   $success: mat.get-color-from-palette($success-palette, resting);
 
-
   $foreground: map-get($theme, foreground);
   $color: mat.get-color-from-palette($foreground, text);
   $secondary: mat.get-color-from-palette($foreground, secondary-text);
@@ -29,7 +31,7 @@
   $background: map-get($theme, background);
   $background-color: map-get($background, background);
   $card-bg: map_get($background, card);
-  $hover-bg-color: mat.get-color-from-palette($background, 'hover');
+  $hover-bg-color: mat.get-color-from-palette($background, hover);
   $hover-color: mat.get-color-from-palette($foreground, slider-off-active);
   $selected-color: mat.get-color-from-palette($background, selected-button);
   $border-color: mat.get-color-from-palette($foreground, divider);
@@ -57,5 +59,5 @@
     icon-hover: $icon-hover,
     hover-color: $hover-color,
     card-bg: $card-bg
-  )
+  );
 }

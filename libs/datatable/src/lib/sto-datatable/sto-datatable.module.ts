@@ -1,24 +1,24 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StoDatatableComponent } from './sto-datatable.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
-import { ExecPipe } from './exec.pipe';
-import { StoDatatableBodyRowComponent } from './sto-datatable-body/sto-datatable-body-row/sto-datatable-body-row.component';
-import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
-import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
+import { MatSortModule } from '@angular/material/sort';
 import { ColumnStylePipe } from './column-style.pipe';
-import { MatLegacyRippleModule as MatRippleModule } from '@angular/material/legacy-core';
+import { ExecPipe } from './exec.pipe';
+import { GetGroupFlexPipe } from './get-group-flex.pipe';
 import {
   StoDatatableActionsComponent,
   StoDataTableActionsLeftComponent,
-  StoDataTableActionsRightComponent
+  StoDataTableActionsRightComponent,
 } from './sto-datatable-actions/sto-datatable-actions.component';
-import { MatSortModule } from '@angular/material/sort';
-import { GetGroupFlexPipe } from './get-group-flex.pipe';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { StoDatatableBodyRowComponent } from './sto-datatable-body/sto-datatable-body-row/sto-datatable-body-row.component';
+import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
+import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
+import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
+import { StoDatatableResizeDirective } from './sto-datatable-header/sto-datatable-resize.directive';
+import { StoDatatableComponent } from './sto-datatable.component';
 
 @NgModule({
   imports: [
@@ -30,19 +30,25 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DragDropModule,
   ],
   declarations: [
-    StoDatatableComponent
-    , StoDatatableBodyComponent
-    , ExecPipe
-    , StoDatatableBodyRowComponent
-    , StoDatatableHeaderGroupComponent
-    , StoDatatableHeaderComponent
-    , StoDatatableResizeDirective
-    , ColumnStylePipe
-    , StoDataTableActionsLeftComponent
-    , StoDataTableActionsRightComponent
-    , StoDatatableActionsComponent, GetGroupFlexPipe,
+    StoDatatableComponent,
+    StoDatatableBodyComponent,
+    ExecPipe,
+    StoDatatableBodyRowComponent,
+    StoDatatableHeaderGroupComponent,
+    StoDatatableHeaderComponent,
+    StoDatatableResizeDirective,
+    ColumnStylePipe,
+    StoDataTableActionsLeftComponent,
+    StoDataTableActionsRightComponent,
+    StoDatatableActionsComponent,
+    GetGroupFlexPipe,
   ],
-  exports: [ StoDatatableComponent, StoDataTableActionsLeftComponent, StoDataTableActionsRightComponent, StoDatatableActionsComponent, GetGroupFlexPipe ],
+  exports: [
+    StoDatatableComponent,
+    StoDataTableActionsLeftComponent,
+    StoDataTableActionsRightComponent,
+    StoDatatableActionsComponent,
+    GetGroupFlexPipe,
+  ],
 })
-export class StoDatatableModule {
-}
+export class StoDatatableModule {}

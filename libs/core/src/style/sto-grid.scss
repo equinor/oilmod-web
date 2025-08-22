@@ -11,8 +11,6 @@ Use with StoGridDirective
 
   &__col {
     min-height: 24px;
-    margin-left: 8px;
-    margin-right: 8px;
     overflow: hidden;
 
     &--spacer {
@@ -25,7 +23,8 @@ Use with StoGridDirective
       display: none;
     }
 
-    .sto-f-grid__col, .sto-f-grid__col--2 {
+    .sto-f-grid__col,
+    .sto-f-grid__col--2 {
       flex: 1 1 calc(100% - 16px);
     }
   }
@@ -40,7 +39,6 @@ Use with StoGridDirective
 
       &.sto-f-grid__col--spacer {
         display: none;
-
       }
     }
   }

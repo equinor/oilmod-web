@@ -4,8 +4,10 @@ $sto-filter-header-font-size: 18px;
 $sto-filter-header-line-height: 24px;
 
 .sto-filter {
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   .mat-button-toggle {
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     &-standalone.mat-button-toggle-appearance-standard {
       border: 0;
     }
@@ -67,7 +69,7 @@ $sto-filter-header-line-height: 24px;
       cursor: pointer;
     }
 
-    .mat-icon-button {
+    .mat-mdc-icon-button {
     }
   }
 
@@ -75,16 +77,16 @@ $sto-filter-header-line-height: 24px;
   .mat-expansion-panel-header {
     border-radius: 2px;
   }
-
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   .mat-button-toggle-standalone {
     width: 32px;
     height: 32px;
-
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     .mat-button-toggle-label {
       margin: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     .mat-button-toggle-label-content {
       height: 100%;
       display: flex;
