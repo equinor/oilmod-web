@@ -1,7 +1,7 @@
 @import 'ngx-datatable-compact';
 @import 'ngx-datatable-form';
 
-.ngx-datatable.sto-datatable {
+.sto-datatable {
   border-radius: 2px;
   margin-bottom: 4px;
 
@@ -211,10 +211,7 @@
   }
 }
 
-.ngx-datatable.sto-datatable
-  .datatable-header
-  .datatable-header-cell
-  .sort-btn {
+.sto-datatable .datatable-header .datatable-header-cell .sort-btn {
   line-height: 0;
   vertical-align: bottom;
 }
@@ -223,7 +220,7 @@ span.sortable {
   cursor: pointer;
 }
 
-.sto-datatable.ngx-datatable {
+.sto-datatable {
   .datatable-body {
     -moz-transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -232,7 +229,7 @@ span.sortable {
   }
 }
 
-.ngx-datatable.sto-datatable
+.sto-datatable
   .datatable-header
   .datatable-header-column-group
   .datatable-header-cell {
@@ -257,7 +254,7 @@ span.sortable {
   }
 }
 
-.ngx-datatable.sto-datatable .datatable-header .datatable-header-cell {
+.sto-datatable .datatable-header .datatable-header-cell {
   &.sto-datatable__header--dense {
     padding-top: 8px;
   }
@@ -273,7 +270,7 @@ span.sortable {
 .sto-datatable__border--left {
 }
 
-.ngx-datatable.sto-datatable {
+.sto-datatable {
   .datatable-header-cell {
     .mat-icon.mat-icon-sort {
       line-height: 13px; // TODO TYpography

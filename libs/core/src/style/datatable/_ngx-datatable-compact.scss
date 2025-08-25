@@ -1,12 +1,13 @@
 $row-height: 24px;
 $icon-height: 16px;
 
+.sto-compact .imo-overview,
+.sto-compact .sto-drawer--compact {
+  //only in .imo-overview for now
 
-.sto-compact .imo-overview, .sto-compact .sto-drawer--compact { //only in .imo-overview for now
-
-  .ngx-datatable.sto-datatable, .ngx-datatable.sto-datatable.inside-card {
+  .sto-datatable,
+  .sto-datatable.inside-card {
     .datatable-body {
-
       .progress-linear {
         height: 3px;
         margin: -3px 0 0 0;
@@ -40,7 +41,6 @@ $icon-height: 16px;
               line-height: $row-height;
             }
           }
-
         }
       }
     }
@@ -60,7 +60,6 @@ $icon-height: 16px;
               line-height: 12px;
             }
           }
-
         }
 
         &.sto-datatable__header-column {
@@ -71,18 +70,16 @@ $icon-height: 16px;
               position: static;
 
               &::before {
-                content: "("
+                content: '(';
               }
 
               &::after {
-                content: ")"
+                content: ')';
               }
             }
-
           }
         }
       }
-
     }
 
     .mat-icon {
@@ -90,15 +87,12 @@ $icon-height: 16px;
       width: $icon-height;
       font-size: $icon-height;
       line-height: $icon-height;
-
     }
   }
-
 
   sto-datatable-fixed-row-wrapper {
     margin-top: 8px;
   }
-
 
   .date-status-cell {
     .month-label {
@@ -107,11 +101,13 @@ $icon-height: 16px;
       left: 2px;
     }
   }
-
 }
 
-
-.sto-compact .sto-datatable .datatable-body .datatable-body-cell-label .date-status-cell {
+.sto-compact
+  .sto-datatable
+  .datatable-body
+  .datatable-body-cell-label
+  .date-status-cell {
   line-height: 24px;
 }
 
@@ -122,7 +118,13 @@ $icon-height: 16px;
   }
 }
 
-.sto-compact .imo-overview .ngx-datatable.sto-datatable .datatable-body .datatable-body-row .datatable-body-cell.sto-datatable__column--editable .datatable-body-cell-label {
+.sto-compact
+  .imo-overview
+  .sto-datatable
+  .datatable-body
+  .datatable-body-row
+  .datatable-body-cell.sto-datatable__column--editable
+  .datatable-body-cell-label {
   .mat-form-field-prefix {
     height: 19px;
     width: 19px;
