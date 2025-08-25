@@ -40,6 +40,9 @@ input::-webkit-inner-spin-button {
   &.mat-unthemed {
     --mdc-text-button-label-text-color: var(--text);
   }
+  &.mat-mdc-raised-button {
+    --mdc-protected-button-label-text-color: var(--primary-hover-alt);
+  }
   &.mat-mdc-button-base {
     height: var(--mdc-text-button-container-height);
   }

@@ -56,7 +56,7 @@
   .sto-datatable {
     .sto-form__field {
       .mat-mdc-form-field-flex {
-        height: 19px;
+        height: auto;
         padding: 0 6px;
       }
 
@@ -76,7 +76,7 @@
     }
 
     .datatable-body .datatable-body-cell-label {
-      line-height: 19px;
+      line-height: inherit;
       height: 100%;
     }
   }
