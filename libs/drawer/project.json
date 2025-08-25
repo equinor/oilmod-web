@@ -8,8 +8,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/drawer/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "libs/drawer/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -25,18 +24,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/drawer"],
       "options": {
-        "jestConfig": "libs/drawer/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/drawer/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/drawer/src/**/*.ts",
-          "libs/drawer/src/**/*.html"
-        ]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "publish": {

@@ -8,8 +8,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/datatable/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "libs/datatable/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -25,18 +24,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/datatable"],
       "options": {
-        "jestConfig": "libs/datatable/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/datatable/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/datatable/src/**/*.ts",
-          "libs/datatable/src/**/*.html"
-        ]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "publish": {

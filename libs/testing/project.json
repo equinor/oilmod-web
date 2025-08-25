@@ -8,8 +8,7 @@
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
       "options": {
-        "project": "libs/testing/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": true
+        "project": "libs/testing/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -25,18 +24,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/testing"],
       "options": {
-        "jestConfig": "libs/testing/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/testing/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/testing/src/**/*.ts",
-          "libs/testing/src/**/*.html"
-        ]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     }
   },
