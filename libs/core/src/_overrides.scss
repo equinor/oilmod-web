@@ -62,10 +62,13 @@ input::-webkit-inner-spin-button {
 .mat-mdc-card {
   --mdc-elevated-card-container-color: var(--bg-card);
   --mdc-outlined-card-container-color: hsla(from var(--bg-card), h s l 50%);
+  --mdc-outlined-card-container-color: var(--bg-card);
 }
 .mat-mdc-form-field {
   --mdc-filled-text-field-input-text-color: var(--text);
   --mdc-filled-text-field-caret-color: var(--text);
+  --mat-form-field-container-height: 36px;
+  --mat-form-field-filled-with-label-container-padding-bottom: 0px;
   .mdc-text-field {
     overflow: visible;
     padding: 0;

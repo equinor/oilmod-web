@@ -69,6 +69,8 @@
           padding: 0;
         }
         .mat-mdc-form-field {
+          --mat-form-field-container-vertical-padding: 0px;
+          --mat-form-field-container-height: 20px;
           margin: 0 4px;
           min-height: 0;
         }
@@ -158,10 +160,6 @@
   }
 }
 .datatable-body-cell .sto-form__field {
-  .mat-mdc-form-field-infix {
-    padding: 0 9px 0 0;
-    border-top: 0;
-  }
   .mat-select,
   .mat-input {
     padding: 0;

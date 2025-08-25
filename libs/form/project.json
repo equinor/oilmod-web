@@ -8,8 +8,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/form/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "libs/form/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -25,15 +24,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/form"],
       "options": {
-        "jestConfig": "libs/form/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/form/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["libs/form/src/**/*.ts", "libs/form/src/**/*.html"]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "publish": {

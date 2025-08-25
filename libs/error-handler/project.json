@@ -8,8 +8,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/error-handler/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "libs/error-handler/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -25,18 +24,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/error-handler"],
       "options": {
-        "jestConfig": "libs/error-handler/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/error-handler/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/error-handler/src/**/*.ts",
-          "libs/error-handler/src/**/*.html"
-        ]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "publish": {
