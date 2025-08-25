@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "master"
-  },
   "defaultProject": "oilmod-web",
   "generators": {
     "@nx/angular:application": {
@@ -80,5 +77,7 @@
     ]
   },
   "nxCloudId": "689db4b8e26f8f382bc53b05",
-  "parallel": 3
+  "parallel": 3,
+  "useInferencePlugins": false,
+  "defaultBase": "master"
 }
