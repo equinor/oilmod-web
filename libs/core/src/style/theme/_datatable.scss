@@ -76,7 +76,7 @@
     }
   }
 
-  .ngx-datatable.sto-datatable {
+  .sto-datatable {
     background-color: $background-color;
     color: $color;
 
@@ -88,7 +88,7 @@
     }
 
     .mat-mdc-checkbox {
-      --mdc-checkbox-state-layer-size: 25px;
+      --mdc-checkbox-state-layer-size: 35px;
       display: inline-flex;
     }
     .datatable-header {
@@ -205,7 +205,7 @@ body {
     font-feature-settings: 'tnum', 'lnum';
   }
 
-  .ngx-datatable.sto-datatable {
+  .sto-datatable {
     .datatable-body,
     .datatable-header {
       font: {

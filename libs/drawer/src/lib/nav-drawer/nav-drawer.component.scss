@@ -101,6 +101,9 @@ $height: 48px;
   sto-nav-drawer-item {
     display: block;
     line-height: 24px;
+    .mat-mdc-button {
+      --mdc-text-button-container-height: 46px;
+    }
   }
 
   sto-nav-drawer-list {
