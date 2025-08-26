@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/core",
-  "version": "18.0.0.dev5",
+  "version": "18.0.0",
   "author": {
     "name": "Ronnie Laugen",
     "email": "rhenri@equinor.com"
