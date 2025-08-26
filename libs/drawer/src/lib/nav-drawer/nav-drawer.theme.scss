@@ -102,12 +102,12 @@ body {
 @mixin navigation-drawer-typography($config) {
   .sto-nav-drawer {
     sto-nav-drawer-item {
-      font-size: mat.font-size($config, subtitle-1);
-      line-height: mat.line-height($config, subtitle-1);
+      font-size: mat.m2-font-size($config, subtitle-1);
+      line-height: mat.m2-line-height($config, subtitle-1);
     }
   }
   .sto-nav-drawer-menu + div .mat-menu-item {
-    font-size: mat.font-size($config, subtitle-1);
+    font-size: mat.m2-font-size($config, subtitle-1);
   }
 }
 

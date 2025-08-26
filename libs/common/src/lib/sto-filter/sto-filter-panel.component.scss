@@ -40,39 +40,31 @@ $sto-filter-header-line-height: 24px;
     margin: 0;
   }
 
-  .mat-expansion-panel-header[aria-disabled=true] {
+  .mat-expansion-panel-header[aria-disabled='true'] {
     color: inherit;
   }
 
-
   .sto-filter-table-actions {
-
     padding: 0;
-
   }
 
   .sto-filter-actions {
     padding: 0 0 0 8px;
-
-
   }
 
   sto-filter-actions {
     height: 32px;
   }
 
-  .sto-filter-table-actions, .sto-filter-actions {
+  .sto-filter-table-actions,
+  .sto-filter-actions {
     display: flex;
     align-items: center;
 
     .mat-icon {
       cursor: pointer;
     }
-
-    .mat-mdc-icon-button {
-    }
   }
-
 
   .mat-expansion-panel-header {
     border-radius: 2px;
@@ -105,7 +97,4 @@ $sto-filter-header-line-height: 24px;
   .content-wrapper {
     display: flex;
   }
-
-
 }
-

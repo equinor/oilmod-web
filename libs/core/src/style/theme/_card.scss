@@ -5,7 +5,7 @@
   .mat-card.sto-card {
     .mat-card-title,
     .mat-card-title.sto-card__title {
-      line-height: mat.line-height($config, headline-1);
+      line-height: mat.m2-line-height($config, headline-1);
     }
 
     .mat-card-subtitle,

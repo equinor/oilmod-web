@@ -1,8 +1,7 @@
 @use '@angular/material' as mat;
-@import "./theme-variables";
-@import "./theme";
-@import "colors";
-
+@import './theme-variables';
+@import './theme';
+@import 'colors';
 
 @mixin indicators-theme($theme, $variables) {
   $primary: map_get($variables, primary);
@@ -16,19 +15,38 @@
   $icon-color: map_get($variables, icon);
   $indicators: map_get($theme, indicators);
   $success-palette: map_get($indicators, success);
-  $success-highlight-bg: mat.get-color-from-palette($success-palette, highlight);
-  $success-highlight-contrast: map-get(map-get($success-palette, contrast), highlight); // mat.get-color-from-palette($success-palette, highlight-contrast);
+  $success-highlight-bg: mat.m2-get-color-from-palette(
+    $success-palette,
+    highlight
+  );
+  $success-highlight-contrast: map-get(
+    map-get($success-palette, contrast),
+    highlight
+  ); // mat.get-color-from-palette($success-palette, highlight-contrast);
   $danger-palette: map-get($indicators, danger);
-  $danger-highlight-bg: mat.get-color-from-palette($danger-palette, highlight);
-  $danger-highlight-contrast: map-get(map-get($danger-palette, contrast), highlight); //mat.get-color-from-palette($danger-palette, highlight-contrast);
+  $danger-highlight-bg: mat.m2-get-color-from-palette(
+    $danger-palette,
+    highlight
+  );
+  $danger-highlight-contrast: map-get(
+    map-get($danger-palette, contrast),
+    highlight
+  ); //mat.get-color-from-palette($danger-palette, highlight-contrast);
   $warning-palette: map-get($indicators, warning);
-  $warning-highlight-bg: mat.get-color-from-palette($warning-palette, highlight);
-  $warning-highlight-contrast: mat.get-color-from-palette($warning-palette, highlight-contrast);
-  $warning-text: mat.get-color-from-palette($warning-palette, text);
-  $success-text: mat.get-color-from-palette($success-palette, text);
-  $danger-text: mat.get-color-from-palette($danger-palette, text);
+  $warning-highlight-bg: mat.m2-get-color-from-palette(
+    $warning-palette,
+    highlight
+  );
+  $warning-highlight-contrast: mat.m2-get-color-from-palette(
+    $warning-palette,
+    highlight-contrast
+  );
+  $warning-text: mat.m2-get-color-from-palette($warning-palette, text);
+  $success-text: mat.m2-get-color-from-palette($success-palette, text);
+  $danger-text: mat.m2-get-color-from-palette($danger-palette, text);
 
-  $fill-buttons: '.mat-raised-button', '.mat-flat-button', '.mat-fab', '.mat-mini-fab';
+  $fill-buttons:
+    '.mat-raised-button', '.mat-flat-button', '.mat-fab', '.mat-mini-fab';
   $text-buttons: '.mat-button', '.mat-stroked-button', '.mat-icon-button';
 
   .mat-card {
@@ -48,7 +66,9 @@
     }
   }
 
-  div, .mat-card, #{$fill-buttons} {
+  div,
+  .mat-card,
+  #{$fill-buttons} {
     &.mat-success {
       background-color: $success-highlight-bg;
       color: $success-highlight-contrast;
@@ -65,8 +85,18 @@
     }
   }
 
-
-  .mat-hint, span, p, h1, h2, h3, h4, h5, h6, small, .mat-icon, #{$text-buttons} {
+  .mat-hint,
+  span,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  small,
+  .mat-icon,
+  #{$text-buttons} {
     &.mat-success {
       color: $success-text;
     }
@@ -85,5 +115,3 @@
 body {
   @include indicators-theme($sto-theme, $variables);
 }
-
-

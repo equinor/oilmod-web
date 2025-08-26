@@ -4,8 +4,8 @@
 
 @mixin sto-appheader-theme($theme, $variables) {
   $primary: map_get($variables, primary);
-  $accent: mat.get-color-from-palette(map_get($theme, accent), resting);
-  $hover-accent: mat.get-color-from-palette(map_get($theme, accent), hover);
+  $accent: mat.m2-get-color-from-palette(map_get($theme, accent), resting);
+  $hover-accent: mat.m2-get-color-from-palette(map_get($theme, accent), hover);
   $color: map_get($variables, color);
   $border-color: map_get($variables, border-color);
   $background-color: map_get($variables, card-bg);
@@ -13,7 +13,7 @@
   $selected-color: map_get($variables, selected-bg);
   $indicators: map-get($theme, indicators);
   $warning-palette: map_get($indicators, warning);
-  $warning-color: mat.get-color-from-palette($warning-palette, resting);
+  $warning-color: mat.m2-get-color-from-palette($warning-palette, resting);
   $icon-color: map_get($variables, icon);
   $hover-color: map_get($variables, hover-color);
 
@@ -80,14 +80,14 @@ body {
   }
   .sto-header {
     height: $height;
-    font-size: mat.font-size($config, subtitle-1);
-    line-height: mat.line-height($config, subtitle-1);
+    font-size: mat.m2-font-size($config, subtitle-1);
+    line-height: mat.m2-line-height($config, subtitle-1);
 
     .mat-icon {
-      font-size: mat.font-size($config, headline-2);
-      line-height: mat.font-size($config, headline-2);
-      width: mat.font-size($config, headline-2);
-      height: mat.font-size($config, headline-2);
+      font-size: mat.m2-font-size($config, headline-2);
+      line-height: mat.m2-font-size($config, headline-2);
+      width: mat.m2-font-size($config, headline-2);
+      height: mat.m2-font-size($config, headline-2);
     }
 
     &__environment {
@@ -96,14 +96,14 @@ body {
     }
   }
   .sto-breadcrumb {
-    font-size: mat.font-size($config, subtitle-1);
-    line-height: mat.line-height($config, subtitle-1);
+    font-size: mat.m2-font-size($config, subtitle-1);
+    line-height: mat.m2-line-height($config, subtitle-1);
 
     .mat-icon {
-      font-size: mat.font-size($config, headline-2);
-      line-height: mat.font-size($config, headline-2);
-      width: mat.font-size($config, headline-2);
-      height: mat.font-size($config, headline-2);
+      font-size: mat.m2-font-size($config, headline-2);
+      line-height: mat.m2-font-size($config, headline-2);
+      width: mat.m2-font-size($config, headline-2);
+      height: mat.m2-font-size($config, headline-2);
     }
   }
 }

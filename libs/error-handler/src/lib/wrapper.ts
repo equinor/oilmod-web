@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
   HttpClient,
-  HttpClientModule,
   HttpErrorResponse,
+  provideHttpClient,
+  withInterceptorsFromDi,
 } from '@angular/common/http';
 import { Component, Injectable, NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -93,11 +94,12 @@ function LoggerFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [NextWrapperComponent],
-  imports: [CommonModule, MatButtonModule, HttpClientModule],
   exports: [NextWrapperComponent],
+  imports: [CommonModule, MatButtonModule],
   providers: [
     { provide: CUSTOM_ERROR_HANDLER, useClass: ErrorHandlerImpl },
     { provide: ERROR_LOGGER, useFactory: LoggerFactory, deps: [HttpClient] },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class WrapperModule {}

@@ -69,7 +69,7 @@ body {
 @import 'typography';
 
 @mixin sto-input-typography($config) {
-  $base: mat.font-size($config, body-1);
+  $base: mat.m2-font-size($config, body-1);
 
   .sto-form-field,
   .sto-form__field.mat-form-field {
@@ -95,8 +95,8 @@ body {
     }
 
     .cdk-overlay-container .mat-option {
-      font-size: mat.font-size($config, body-1);
-      line-height: mat.line-height($config, body-1);
+      font-size: mat.m2-font-size($config, body-1);
+      line-height: mat.m2-line-height($config, body-1);
     }
   }
 
