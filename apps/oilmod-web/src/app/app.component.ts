@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'sto-root',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ],
+    selector: 'sto-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   public links = [

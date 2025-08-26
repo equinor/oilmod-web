@@ -1,5 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { CommonModule } from '@angular/common';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,16 +12,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { PopoverComponent } from './popover.component';
 
 @Component({
-  selector: 'sto-popover-title',
-  standalone: true,
-  imports: [
+    selector: 'sto-popover-title',
+    imports: [
     OverlayModule,
-    CommonModule,
     MatDividerModule,
     MatButtonModule,
-    MatIconModule,
-  ],
-  template: `
+    MatIconModule
+],
+    template: `
     <div class="sto-popover-title">
       <h3>
         <ng-content></ng-content>
@@ -32,9 +30,9 @@ import { PopoverComponent } from './popover.component';
     </div>
     <mat-divider></mat-divider>
   `,
-  styles: [],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: [],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PopoverTitleComponent {
   public overlay = inject(PopoverComponent);

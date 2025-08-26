@@ -1,9 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Column } from './columns';
 
-@Pipe({
-  name: 'exec'
-})
+@Pipe({ name: 'exec' })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class ExecPipe<T = unknown, R = any> implements PipeTransform/*, Exec<T>*/ {
 

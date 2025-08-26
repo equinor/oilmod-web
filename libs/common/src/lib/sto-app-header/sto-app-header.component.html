@@ -4,40 +4,43 @@
     [model]="breadCrumbs"
   ></sto-breadcrumbs>
   <ng-content select=".sto-header__form"> </ng-content>
-  <div
-    class="sto-header__environment"
-    *ngIf="testEnvironment && environmentName && (isSmall$ | async) === false"
-  >
-    <div class="sto-header__environment--label">
-      {{ environmentName }}
+  @if (testEnvironment && environmentName && (isSmall$ | async) === false) {
+    <div
+      class="sto-header__environment"
+      >
+      <div class="sto-header__environment--label">
+        {{ environmentName }}
+      </div>
     </div>
-  </div>
+  }
   <span class="spacer"></span>
-  <button
-    mat-icon-button
-    class="small-toggle"
-    *ngIf="isSmall$ | async"
-    (click)="toggleMenu($event)"
-  >
-    <mat-icon>more_vert</mat-icon>
-  </button>
+  @if (isSmall$ | async) {
+    <button
+      mat-icon-button
+      class="small-toggle"
+      (click)="toggleMenu($event)"
+      >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  }
   <div
     class="sto-header__actions"
     [class.sto-header__actions--small--open]="menuOpen"
     [class.sto-header__actions--small]="isSmall$ | async"
-  >
+    >
     <ng-content></ng-content>
     <button mat-icon-button title="Accessibility" [matMenuTriggerFor]="menu">
       <mat-icon>accessibility</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      title="Account"
-      *ngIf="userMenu"
-      [matMenuTriggerFor]="userMenu"
-    >
-      <mat-icon>account_circle</mat-icon>
-    </button>
+    @if (userMenu) {
+      <button
+        mat-icon-button
+        title="Account"
+        [matMenuTriggerFor]="userMenu"
+        >
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    }
   </div>
 </div>
 
@@ -57,7 +60,7 @@
     class="dense"
     style="--mat-menu-item-label-text-size: 10px"
     (click)="toggleTypography('sto-sm-typography')"
-  >
+    >
     Smaller
   </button>
   <button
@@ -65,7 +68,7 @@
     class="dense"
     style="--mat-menu-item-label-text-size: 13px"
     (click)="toggleTypography()"
-  >
+    >
     Regular
   </button>
   <button
@@ -73,7 +76,7 @@
     class="dense"
     style="--mat-menu-item-label-text-size: 16px"
     (click)="toggleTypography('sto-l-typography')"
-  >
+    >
     Larger
   </button>
 </mat-menu>

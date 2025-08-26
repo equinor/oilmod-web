@@ -23,8 +23,8 @@ let wrapperComp: WrapperComponent;
 let page: Page;
 
 @Component({
-  selector: 'sto-wrap',
-  template: `
+    selector: 'sto-wrap',
+    template: `
     <div [style.width.px]="width">
       <sto-datatable [rows]="rows"
                      #table
@@ -37,7 +37,8 @@ let page: Page;
       <ng-template #responsiveTmpl
                    let-row="row">{{ row | json }}</ng-template>
     </div>
-  `
+  `,
+    standalone: false
 })
 class WrapperComponent {
   @ViewChild('responsiveTmpl')
@@ -53,23 +54,21 @@ describe('StoDatatableComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [
-          CommonModule,
-          ScrollingModule,
-          MaterialModule
-        ],
-        declarations: [
-          StoDatatableComponent
-          , StoDatatableBodyComponent
-          , ExecPipe
-          , StoDatatableBodyRowComponent
-          , StoDatatableHeaderComponent
-          , StoDatatableHeaderGroupComponent
-          , StoDatatableResizeDirective
-          , ColumnStylePipe
-          , GetGroupFlexPipe
-        ],
-      })
+    imports: [
+        CommonModule,
+        ScrollingModule,
+        MaterialModule,
+        StoDatatableComponent,
+        StoDatatableBodyComponent,
+        ExecPipe,
+        StoDatatableBodyRowComponent,
+        StoDatatableHeaderComponent,
+        StoDatatableHeaderGroupComponent,
+        StoDatatableResizeDirective,
+        ColumnStylePipe,
+        GetGroupFlexPipe
+    ],
+})
       // .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createComponent);
@@ -236,22 +235,20 @@ describe('StoDatatableComponent with automatic height', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [
-          CommonModule,
-          ScrollingModule,
-          MaterialModule
-        ],
-        declarations: [
-          StoDatatableComponent
-          , StoDatatableBodyComponent
-          , ExecPipe
-          , StoDatatableBodyRowComponent
-          , StoDatatableHeaderComponent
-          , StoDatatableHeaderGroupComponent
-          , StoDatatableResizeDirective
-          , ColumnStylePipe
-        ],
-      })
+    imports: [
+        CommonModule,
+        ScrollingModule,
+        MaterialModule,
+        StoDatatableComponent,
+        StoDatatableBodyComponent,
+        ExecPipe,
+        StoDatatableBodyRowComponent,
+        StoDatatableHeaderComponent,
+        StoDatatableHeaderGroupComponent,
+        StoDatatableResizeDirective,
+        ColumnStylePipe
+    ],
+})
       .overrideComponent(StoDatatableComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createAutosizeComponent);

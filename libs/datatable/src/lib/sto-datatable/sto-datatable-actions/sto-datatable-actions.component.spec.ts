@@ -8,8 +8,8 @@ describe('StoDatatableActionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        declarations: [ StoDatatableActionsComponent ]
-      })
+    imports: [StoDatatableActionsComponent]
+})
       .compileComponents();
   }));
 

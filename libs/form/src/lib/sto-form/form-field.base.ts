@@ -1,9 +1,20 @@
 import { Subject } from 'rxjs';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { FormGroupDirective, NgControl, NgForm, UntypedFormControl } from '@angular/forms';
-import { ElementRef } from '@angular/core';
+import {
+  FormGroupDirective,
+  NgControl,
+  NgForm,
+  UntypedFormControl,
+} from '@angular/forms';
+import { ElementRef, inject } from '@angular/core';
 
 export class FormFieldBase {
+  ngControl = inject(NgControl, { self: true });
+  _parentForm = inject(NgForm, { optional: true });
+  _parentFormGroup = inject(FormGroupDirective, { optional: true });
+  _defaultErrorStateMatcher = inject(ErrorStateMatcher);
+  elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
   /** Whether the component is in an error state. */
   errorState = false;
 
@@ -15,21 +26,16 @@ export class FormFieldBase {
 
   errorStateMatcher: ErrorStateMatcher;
 
-  constructor(public _elementRef: ElementRef,
-              public _defaultErrorStateMatcher: ErrorStateMatcher,
-              public _parentForm: NgForm,
-              public _parentFormGroup: FormGroupDirective,
-              public ngControl: NgControl) {
-  }
-
   updateErrorState() {
     const oldState = this.errorState;
     const parent = this._parentFormGroup || this._parentForm;
     const matcher = this.errorStateMatcher || this._defaultErrorStateMatcher;
-    const control = this.ngControl ? this.ngControl.control as UntypedFormControl : null;
+    const control = this.ngControl
+      ? (this.ngControl.control as UntypedFormControl)
+      : null;
     const newState = matcher.isErrorState(control, parent);
 
-    if ( newState !== oldState ) {
+    if (newState !== oldState) {
       this.errorState = newState;
       this.stateChanges.next();
     }

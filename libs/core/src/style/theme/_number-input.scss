@@ -1,9 +1,10 @@
-@import "./theme";
-@import "./typography";
+@use 'sass:map' as map;
+@import './theme';
+@import './typography';
 
 @mixin sto-number-input-theme($theme, $variables) {
-  $color: map_get($variables, color);
-  $secondary-color: map_get($variables, secondary);
+  $color: map.get($variables, color);
+  $secondary-color: map.get($variables, secondary);
 
   .mat-form-field.sto-form__field {
     .sto-number-input {
@@ -13,7 +14,6 @@
         color: $secondary-color;
       }
     }
-
   }
 }
 

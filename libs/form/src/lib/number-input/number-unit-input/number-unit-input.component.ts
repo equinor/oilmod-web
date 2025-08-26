@@ -1,3 +1,6 @@
+import { FocusMonitor } from '@angular/cdk/a11y';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,10 +10,9 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Optional,
-  Self,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -20,19 +22,16 @@ import {
   FormGroupDirective,
   NgControl,
   NgForm,
-  ReactiveFormsModule
+  ReactiveFormsModule,
 } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
-import { Subject, Subscription } from 'rxjs';
-import { FocusMonitor } from '@angular/cdk/a11y';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { NumberInputPipe } from '../number-input.pipe';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { FormFieldBase } from '../../sto-form/form-field.base';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { FormFieldBase } from '../../sto-form/form-field.base';
 import { NumberInputDirective } from '../number-input.directive';
-import { NgForOf, NgIf } from '@angular/common';
+import { NumberInputPipe } from '../number-input.pipe';
 
 class NumberUnit {
   value: number | string | null;
@@ -40,30 +39,38 @@ class NumberUnit {
 }
 
 type NumberUnitForm = {
-  value: FormControl<number | string | null>,
-  unit: FormControl<string | null>
+  value: FormControl<number | string | null>;
+  unit: FormControl<string | null>;
 };
 
 @Component({
   selector: 'sto-number-unit-input',
   templateUrl: './number-unit-input.component.html',
-  styleUrls: [ './number-unit-input.component.scss' ],
+  styleUrls: ['./number-unit-input.component.scss'],
   providers: [
-    { provide: MatFormFieldControl, useExisting: NumberUnitInputComponent }
+    { provide: MatFormFieldControl, useExisting: NumberUnitInputComponent },
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NumberInputDirective,
     ReactiveFormsModule,
-    MatSelectModule,
-    NgIf,
-    NgForOf
-  ]
+    MatSelectModule
+],
 })
-export class NumberUnitInputComponent extends FormFieldBase
-  implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<NumberUnit> {
+export class NumberUnitInputComponent
+  extends FormFieldBase
+  implements
+    DoCheck,
+    OnInit,
+    OnDestroy,
+    ControlValueAccessor,
+    MatFormFieldControl<NumberUnit>
+{
+  ngControl: NgControl;
+  private fm = inject(FocusMonitor);
+  private fb = inject(FormBuilder);
+
   static nextId = 0;
   stateChanges = new Subject<void>();
   public form: FormGroup<NumberUnitForm>;
@@ -87,22 +94,18 @@ export class NumberUnitInputComponent extends FormFieldBase
   public sub = new Subscription();
   private numberFormatterPipe = new NumberInputPipe();
 
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              private fm: FocusMonitor,
-              private fb: FormBuilder,
-              @Optional() _parentForm: NgForm,
-              @Optional() _parentFormGroup: FormGroupDirective,
-              _defaultErrorStateMatcher: ErrorStateMatcher,
-              private elRef: ElementRef<HTMLElement>) {
-    super(elRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
+  constructor() {
+    super();
+    const fm = this.fm;
+
     this.form = this.fb.group<NumberUnitForm>({
       value: this.fb.control(null),
-      unit: this.fb.control(null)
+      unit: this.fb.control(null),
     });
-    if ( this.ngControl != null ) {
+    if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
-    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+    fm.monitor(this.elRef.nativeElement, true).subscribe((origin) => {
       this.focused = !!origin;
       this.stateChanges.next();
     });
@@ -134,11 +137,13 @@ export class NumberUnitInputComponent extends FormFieldBase
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
-    value ? this.form.get('unit')?.disable(opts) : this.form.get('unit')?.enable(opts);
+    value
+      ? this.form.get('unit')?.disable(opts)
+      : this.form.get('unit')?.enable(opts);
     this.stateChanges.next();
   }
 
-  private _list: { value: unknown; title?: string; }[] = [];
+  private _list: { value: unknown; title?: string }[] = [];
 
   @Input()
   get list() {
@@ -215,8 +220,11 @@ export class NumberUnitInputComponent extends FormFieldBase
   }
 
   set value(value: NumberUnit | null) {
-    if ( value ) {
-      const parsedValue = this.numberFormatterPipe.transform(value.value, this.fractionSize);
+    if (value) {
+      const parsedValue = this.numberFormatterPipe.transform(
+        value.value,
+        this.fractionSize,
+      );
       this._value = { ...value, value: parsedValue };
     } else {
       this._value = value;
@@ -226,27 +234,30 @@ export class NumberUnitInputComponent extends FormFieldBase
   }
 
   ngDoCheck(): void {
-    if ( this.ngControl ) {
+    if (this.ngControl) {
       this.updateErrorState();
     }
   }
 
   ngOnInit(): void {
-    const sub = this.form.valueChanges
-      .subscribe((value) => {
-        const valueAsString = value.value as string;
-        let numberValue: number | null = parseFloat(this.numberFormatterPipe.parse(valueAsString, this.fractionSize));
-        numberValue = !isNaN(numberValue) ? numberValue : null;
-        this.onChange({ ...value, value: numberValue });
-      });
+    const sub = this.form.valueChanges.subscribe((value) => {
+      const valueAsString = value.value as string;
+      let numberValue: number | null = parseFloat(
+        this.numberFormatterPipe.parse(valueAsString, this.fractionSize),
+      );
+      numberValue = !isNaN(numberValue) ? numberValue : null;
+      this.onChange({ ...value, value: numberValue });
+    });
 
-    this.sub.add(this.stateChanges.pipe(debounceTime(50)).subscribe(() => {
-      this.numberInputDirective?.setDisplayValue(this.readonly);
-    }));
+    this.sub.add(
+      this.stateChanges.pipe(debounceTime(50)).subscribe(() => {
+        this.numberInputDirective?.setDisplayValue(this.readonly);
+      }),
+    );
     this.sub.add(sub);
-    if ( this.ngControl && this.ngControl.statusChanges ) {
-      this.sub.add(this.ngControl.statusChanges
-        .subscribe(() => this.updateErrorState())
+    if (this.ngControl && this.ngControl.statusChanges) {
+      this.sub.add(
+        this.ngControl.statusChanges.subscribe(() => this.updateErrorState()),
       );
     }
   }
@@ -257,11 +268,10 @@ export class NumberUnitInputComponent extends FormFieldBase
     this.sub.unsubscribe();
   }
 
-
   onContainerClick(event: MouseEvent) {
     const rect = this.input.nativeElement.getBoundingClientRect();
     const isInputFocus = rect.right >= event.clientX;
-    if ( isInputFocus ) {
+    if (isInputFocus) {
       this.elRef.nativeElement.querySelector('input')?.focus();
     } else {
       this.select?.focus();
@@ -269,18 +279,14 @@ export class NumberUnitInputComponent extends FormFieldBase
     }
   }
 
-
   setDescribedByIds(ids: string[]) {
     this.describedBy = ids.join(' ');
   }
 
-
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-  onChange = (_: unknown) => {
-  };
+  onChange = (_: unknown) => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onTouched = () => {
-  };
+  onTouched = () => {};
 
   writeValue(value: NumberUnit | null): void {
     this.value = value;
@@ -297,7 +303,6 @@ export class NumberUnitInputComponent extends FormFieldBase
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
 }
 
 // {eslint-plugin,eslint-plugin-template,template-parser}@^14.0.0

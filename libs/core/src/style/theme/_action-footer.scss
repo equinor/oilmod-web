@@ -1,20 +1,18 @@
-@import "theme";
-@import "typography";
+@use 'sass:map' as map;
+@import 'theme';
+@import 'typography';
 
 @mixin sto-action-footer-theme($theme, $variables) {
-  $border-color: map_get($variables, border-color);
-  $background-color: map_get($variables, background);
+  $border-color: map.get($variables, border-color);
+  $background-color: map.get($variables, background);
 
   .sto-action-footer {
     background-color: $background-color;
     border-top: 1px solid $border-color;
   }
-
 }
 
 // Include theme styles for your custom components.
 body {
   @include sto-action-footer-theme($sto-theme, $variables);
 }
-
-

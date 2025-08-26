@@ -1,19 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnDestroy,
-  OnInit,
-  Optional,
-  Output,
-  Self,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -31,21 +17,24 @@ export class StoSlideToggleChange {
 }
 
 @Component({
-  selector: 'sto-slide-toggle',
-  templateUrl: './slide-toggle.component.html',
-  styleUrls: [ './slide-toggle.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    { provide: MatFormFieldControl, useExisting: SlideToggleComponent }
-  ],
-  standalone: true,
-  imports: [
-    MatSlideToggleModule,
-    ReactiveFormsModule
-  ]
+    selector: 'sto-slide-toggle',
+    templateUrl: './slide-toggle.component.html',
+    styleUrls: ['./slide-toggle.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: MatFormFieldControl, useExisting: SlideToggleComponent }
+    ],
+    imports: [
+        MatSlideToggleModule,
+        ReactiveFormsModule
+    ]
 })
 export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<boolean> {
+  ngControl = inject(NgControl, { optional: true, self: true });
+  private fm = inject(FocusMonitor);
+  private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
   static nextId = 0;
   stateChanges = new Subject<void>();
   focused: boolean;
@@ -65,9 +54,10 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   @Input()
   model: unknown;
 
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              private fm: FocusMonitor,
-              private elRef: ElementRef<HTMLElement>) {
+  constructor() {
+    const fm = this.fm;
+    const elRef = this.elRef;
+
     if ( this.ngControl != null ) {
       this.ngControl.valueAccessor = this;
     }

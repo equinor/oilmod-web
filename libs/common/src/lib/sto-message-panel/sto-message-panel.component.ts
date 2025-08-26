@@ -1,17 +1,5 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-  ViewEncapsulation
-} from '@angular/core';
-import { NgIf } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -20,13 +8,12 @@ const COLORS = [
 ];
 
 @Component({
-  selector: 'sto-message-panel',
-  templateUrl: './sto-message-panel.component.html',
-  styleUrls: [ './sto-message-panel.component.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [ MatIconModule, MatButtonModule, NgIf ],
+    selector: 'sto-message-panel',
+    templateUrl: './sto-message-panel.component.html',
+    styleUrls: ['./sto-message-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [MatIconModule, MatButtonModule]
 })
 /**
  * Message panel to display inline info boxes.
@@ -41,6 +28,8 @@ const COLORS = [
  *    (dismissed)="err = null" severity="warning">{{ err }}</sto-message-panel>
  */
 export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
+  private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
   @Input()
   color: 'primary' | 'accent' | 'warning' | 'danger' | 'success' = 'primary';
   /**
@@ -59,9 +48,6 @@ export class StoMessagePanelComponent implements OnChanges, AfterViewInit {
    * Determines if the message can be dismissed - typically used for showing and hiding errors.
    */
   @Input() dismissable: boolean;
-
-  constructor(private elRef: ElementRef<HTMLElement>) {
-  }
 
   @HostBinding('class.warning')
   get warning() {

@@ -1,20 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  NgZone,
-  OnDestroy,
-  Output,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, NgZone, OnDestroy, Output, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { fromEvent, Observable, of, Subject } from 'rxjs';
 import { debounceTime, map, startWith, takeUntil, tap } from 'rxjs/operators';
@@ -30,24 +14,33 @@ import { observeWidth } from './observer';
 import { SelectionModes } from './selection-modes';
 import { StoDatatableActionsComponent } from './sto-datatable-actions/sto-datatable-actions.component';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
+import { NgStyle, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
+import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
+import { ColumnStylePipe } from './column-style.pipe';
 
 @Component({
-  selector: 'sto-datatable',
-  templateUrl: './sto-datatable.component.html',
-  styleUrls: [
-    './sto-datatable.component.scss',
-    './sto-datatable-progress-bar.scss',
-  ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    class: 'sto-datatable ngx-datatable',
-  },
+    selector: 'sto-datatable',
+    templateUrl: './sto-datatable.component.html',
+    styleUrls: [
+        './sto-datatable.component.scss',
+        './sto-datatable-progress-bar.scss',
+    ],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        class: 'sto-datatable ngx-datatable',
+    },
+    imports: [StoDatatableHeaderGroupComponent, StoDatatableHeaderComponent, StoDatatableBodyComponent, NgStyle, NgTemplateOutlet, AsyncPipe, ColumnStylePipe]
 })
 export class StoDatatableComponent<T extends Record<string, unknown>>
   implements AfterViewInit, OnDestroy
 {
+  private elRef = inject(ElementRef);
+  private cdr = inject(ChangeDetectorRef);
+  private zone = inject(NgZone);
+
   @Input()
   groups: Array<Group>;
   @ViewChild(StoDatatableBodyComponent)
@@ -142,11 +135,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   private _activeSort: Sort | null;
 
-  constructor(
-    private elRef: ElementRef,
-    private cdr: ChangeDetectorRef,
-    private zone: NgZone
-  ) {
+  constructor() {
     try {
       const sortStr = localStorage.getItem(this.sortKey);
       if (sortStr) {

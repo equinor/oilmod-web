@@ -1,4 +1,4 @@
-import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
+import { CdkDragEnd, CdkDragMove, CdkDrag } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,19 +6,24 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { Sort, MatSort, MatSortHeader } from '@angular/material/sort';
 import { Column, ColumnDisplay, Group } from '../columns';
 import { HeaderContextMenu } from '../events';
+import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { ExecPipe } from '../exec.pipe';
+import { ColumnStylePipe } from '../column-style.pipe';
+import { GetGroupFlexPipe } from '../get-group-flex.pipe';
 
 @Component({
-  selector: 'sto-datatable-header',
-  templateUrl: './sto-datatable-header.component.html',
-  styleUrls: ['./sto-datatable-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    class: 'datatable-header',
-  },
+    selector: 'sto-datatable-header',
+    templateUrl: './sto-datatable-header.component.html',
+    styleUrls: ['./sto-datatable-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        class: 'datatable-header',
+    },
+    imports: [MatSort, NgClass, NgStyle, MatSortHeader, NgTemplateOutlet, CdkDrag, ExecPipe, ColumnStylePipe, GetGroupFlexPipe]
 })
 export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   @Input()

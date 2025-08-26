@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "libs/core/src",
   "prefix": "sto",
+  "tags": [],
   "targets": {
     "build-lib": {
       "executor": "@nx/angular:package",
@@ -42,8 +43,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "ts-node tools/scripts/build-scss.ts",
-          "ts-node tools/scripts/copy-assets.ts"
+          "ts-node --project tools/tsconfig.tools.json tools/scripts/build-scss.ts",
+          "ts-node --project tools/tsconfig.tools.json tools/scripts/copy-assets.ts"
         ],
         "parallel": true
       }
@@ -55,7 +56,41 @@
         "commands": ["npm publish"],
         "parallel": false
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/core/.storybook",
+        "browserTarget": "core:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/core",
+        "configDir": "libs/core/.storybook",
+        "browserTarget": "core:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c libs/core/.storybook --url=http://localhost:4400"
+      }
     }
-  },
-  "tags": []
+  }
 }

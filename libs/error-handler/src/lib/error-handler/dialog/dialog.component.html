@@ -1,20 +1,22 @@
 <h3 style="font-weight: 500"
-    mat-dialog-title>
+  mat-dialog-title>
   {{ data.title }}
 </h3>
 <mat-dialog-content>
   <p style="font-size: 16px; white-space: pre-line">{{ data.text }}</p>
 </mat-dialog-content>
 <mat-dialog-actions style="justify-content: flex-end">
-  <button color="primary"
-          mat-button
-          *ngIf="!(data.actions || []).length"
-          mat-dialog-close>OK
-  </button>
-  <button color="primary"
-          mat-button
-          *ngFor="let a of data.actions"
-          (click)="handleEvent(a.action || a.closeDialogData)">
-    {{ a.label }}
-  </button>
+  @if (!(data.actions || []).length) {
+    <button color="primary"
+      mat-button
+      mat-dialog-close>OK
+    </button>
+  }
+  @for (a of data.actions; track a) {
+    <button color="primary"
+      mat-button
+      (click)="handleEvent(a.action || a.closeDialogData)">
+      {{ a.label }}
+    </button>
+  }
 </mat-dialog-actions>

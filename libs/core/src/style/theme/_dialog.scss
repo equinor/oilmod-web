@@ -1,13 +1,13 @@
-@import "theme";
-@import "typography";
+@use 'sass:map' as map;
+@import 'theme';
+@import 'typography';
 
 @mixin dialog-theme($theme, $variables) {
-  $border-color: map_get($variables, border-color);
-  $background-color: map_get($variables, app-bar);
-  $divider: map-get($variables, border-color);
+  $border-color: map.get($variables, border-color);
+  $background-color: map.get($variables, app-bar);
+  $divider: map.get($variables, border-color);
 
   .sto-dialog .mat-dialog-container {
-
     .mat-dialog-content {
       border-top: solid 1px $divider;
 
@@ -22,4 +22,3 @@
 body {
   @include dialog-theme($sto-theme, $variables);
 }
-

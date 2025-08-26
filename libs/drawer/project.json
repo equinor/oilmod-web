@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "libs/drawer/src",
   "prefix": "sto",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -38,7 +39,41 @@
         "commands": ["npm publish"],
         "parallel": false
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/drawer/.storybook",
+        "browserTarget": "drawer:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/drawer",
+        "configDir": "libs/drawer/.storybook",
+        "browserTarget": "drawer:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c libs/drawer/.storybook --url=http://localhost:4400"
+      }
     }
-  },
-  "tags": []
+  }
 }

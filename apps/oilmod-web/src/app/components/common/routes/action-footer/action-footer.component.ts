@@ -45,7 +45,7 @@ export class ActionFooterDemoComponent {
 `;
 
 @Component({
-  template: `
+    template: `
     <sto-demo [code]="code">
       <mat-checkbox [checked]="loading"
                     (change)="loading = $event.checked">Loading indicator
@@ -67,14 +67,13 @@ export class ActionFooterDemoComponent {
 
 
   `,
-  standalone: true,
-  imports: [
-    DemoComponent,
-    DemoComponent,
-    StoActionFooterComponent,
-    MatCheckboxModule,
-    MatButtonModule
-  ]
+    imports: [
+        DemoComponent,
+        DemoComponent,
+        StoActionFooterComponent,
+        MatCheckboxModule,
+        MatButtonModule
+    ]
 })
 export class ActionFooterDemoComponent {
   public loading: boolean;

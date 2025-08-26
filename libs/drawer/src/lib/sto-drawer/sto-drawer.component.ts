@@ -1,45 +1,30 @@
 /* eslint-disable @angular-eslint/no-output-native,@angular-eslint/no-output-on-prefix */
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
 import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 import { drawerAnimations } from '../animation';
 import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 /**
  * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
  */
 @Component({
-  selector: 'sto-drawer',
-  templateUrl: './sto-drawer.component.html',
-  styleUrls: [ './sto-drawer.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: drawerAnimations,
-  standalone: true,
-  imports: [
-    NgClass,
-    NgIf
-
-  ]
+    selector: 'sto-drawer',
+    templateUrl: './sto-drawer.component.html',
+    styleUrls: ['./sto-drawer.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: drawerAnimations,
+    imports: [
+    NgClass
+]
 })
 
 export class StoDrawerComponent implements OnInit, AfterViewInit {
+  private el = inject(ElementRef);
+  private cdr = inject(ChangeDetectorRef);
+
 
   /**
    * Offset (space) between the viewPanel right and the drawer in pixels
@@ -114,9 +99,6 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   footer: ElementRef<HTMLElement>;
   @ContentChild(StoDrawerHeaderComponent, { read: ElementRef })
   headerChild: ElementRef<HTMLElement>;
-
-  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
-  }
 
   // @HostBinding('@drawerAnimations')
   get slideInOut() {

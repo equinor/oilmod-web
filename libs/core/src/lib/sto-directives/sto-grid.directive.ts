@@ -1,4 +1,4 @@
-import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, OnDestroy, QueryList } from '@angular/core';
+import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, OnDestroy, QueryList, inject } from '@angular/core';
 
 interface BreakpointConfig {
   2: number;
@@ -47,6 +47,8 @@ export class StoGridColumnDirective {
   standalone: true
 })
 export class StoGridDirective implements AfterViewInit, OnDestroy {
+  private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
   @HostBinding('style.max-width.px')
   @Input()
   maxWidth = 1000;
@@ -61,11 +63,6 @@ export class StoGridDirective implements AfterViewInit, OnDestroy {
   breakpoints: BreakpointConfig;
 
   private observer: ResizeObserver;
-
-  constructor(
-    private elRef: ElementRef<HTMLElement>,
-  ) {
-  }
 
   ngAfterViewInit() {
     const el = this.elRef.nativeElement as HTMLElement;

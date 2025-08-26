@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -27,8 +27,8 @@ let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
 @Component({
-  selector: 'sto-spec-wrap',
-  template: ` <div style="background: white">
+    selector: 'sto-spec-wrap',
+    template: ` <div style="background: white">
     <sto-filter-panel [expandable]="true" [filterList]="filter$ | async">
       <sto-filter-title>Filter Title</sto-filter-title>
       <sto-filter-table-actions>
@@ -49,6 +49,14 @@ let page: Page;
       </div>
     </sto-filter-panel>
   </div>`,
+    imports: [CommonModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatChipsModule]
 })
 class WrapperComponent extends FilterForm<{ field: string }> {
   formConfig = { field: [] };
@@ -59,7 +67,9 @@ class WrapperComponent extends FilterForm<{ field: string }> {
     return [];
   });
 
-  constructor(fb: UntypedFormBuilder) {
+  constructor() {
+    const fb = inject(UntypedFormBuilder);
+
     super(fb);
   }
 }
@@ -67,7 +77,7 @@ class WrapperComponent extends FilterForm<{ field: string }> {
 describe('StoFilterPanelComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         CommonModule,
         BrowserAnimationsModule,
         MatExpansionModule,
@@ -77,16 +87,14 @@ describe('StoFilterPanelComponent', () => {
         MatTooltipModule,
         ReactiveFormsModule,
         MatChipsModule,
-      ],
-      declarations: [
         StoFilterPanelComponent,
         StoFilterTitle,
         StoFilterActions,
         StoFilterActionsBar,
         StoFilterTableActions,
         WrapperComponent,
-      ],
-    })
+    ],
+})
       .overrideComponent(StoFilterPanelComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })

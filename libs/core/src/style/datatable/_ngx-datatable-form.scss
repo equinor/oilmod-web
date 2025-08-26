@@ -1,13 +1,12 @@
 .sto-datatable {
   .sto-form__field {
+    width: 100%;
     &--readonly,
     &--disabled {
       .mat-mdc-form-field-flex {
         border: 0;
       }
     }
-
-    width: 100%;
 
     input[type='number'] {
       text-align: right;

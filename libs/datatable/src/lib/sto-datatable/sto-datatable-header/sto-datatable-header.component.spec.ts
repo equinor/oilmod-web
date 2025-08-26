@@ -16,8 +16,9 @@ let fixture: ComponentFixture<StoDatatableHeaderComponent<unknown>>;
 let page: Page;
 
 @Component({
-  selector: 'sto-spec-wrap',
-  template: ''
+    selector: 'sto-spec-wrap',
+    template: '',
+    imports: [MaterialModule, ScrollingModule]
 })
 class WrapperComponent {
 }
@@ -26,9 +27,8 @@ describe('StoDatatableHeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, ScrollingModule ],
-        declarations: [ StoDatatableHeaderComponent, WrapperComponent, ExecPipe, StoDatatableResizeDirective, ColumnStylePipe, GetGroupFlexPipe ]
-      })
+    imports: [CommonModule, MaterialModule, ScrollingModule, StoDatatableHeaderComponent, WrapperComponent, ExecPipe, StoDatatableResizeDirective, ColumnStylePipe, GetGroupFlexPipe]
+})
       .overrideComponent(StoDatatableHeaderComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createComponent);

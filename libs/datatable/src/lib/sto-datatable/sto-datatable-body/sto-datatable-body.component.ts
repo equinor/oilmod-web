@@ -1,4 +1,4 @@
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from '@angular/cdk/scrolling';
 import {
   AfterViewInit,
   Component,
@@ -17,14 +17,18 @@ import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { rowClassFn } from '../models';
 import { SelectionModes } from '../selection-modes';
 
+import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datatable-body-row.component';
+import { MatRipple } from '@angular/material/core';
+
 @Component({
-  selector: 'sto-datatable-body',
-  templateUrl: './sto-datatable-body.component.html',
-  styleUrls: ['./sto-datatable-body.component.scss'],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    class: 'datatable-body',
-  },
+    selector: 'sto-datatable-body',
+    templateUrl: './sto-datatable-body.component.html',
+    styleUrls: ['./sto-datatable-body.component.scss'],
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        class: 'datatable-body',
+    },
+    imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, StoDatatableBodyRowComponent, MatRipple]
 })
 export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   implements OnDestroy, AfterViewInit

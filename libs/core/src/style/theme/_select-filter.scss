@@ -1,9 +1,10 @@
-@import "theme";
-@import "typography";
+@use 'sass:map' as map;
+@import 'theme';
+@import 'typography';
 
 @mixin sto-input-override-theme($theme, $variables) {
-  $color: map_get($variables, color);
-  $background-color: map_get($variables, background);
+  $color: map.get($variables, color);
+  $background-color: map.get($variables, background);
 
   .sto-select-filter {
     background-color: $background-color;

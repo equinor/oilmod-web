@@ -1,19 +1,18 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild, inject } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { NgIf } from '@angular/common';
+
 
 @Component({
-  selector: 'sto-wysiwyg-editor',
-  templateUrl: './wysiwyg-editor.component.html',
-  styleUrls: [ './wysiwyg-editor.component.scss' ],
-  standalone: true,
-  imports: [
-    NgIf
-  ]
+    selector: 'sto-wysiwyg-editor',
+    templateUrl: './wysiwyg-editor.component.html',
+    styleUrls: ['./wysiwyg-editor.component.scss'],
+    imports: []
 })
 export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
+  private zone = inject(NgZone);
+
   @Input()
   content: SafeHtml;
   @Input()
@@ -25,9 +24,6 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
   public warning: string | null;
 
   private destroyed$ = new Subject<boolean>();
-
-  constructor(private zone: NgZone) {
-  }
 
 
   ngOnDestroy(): void {

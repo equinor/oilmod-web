@@ -1,13 +1,14 @@
+@use 'sass:map' as map;
 @import '../theme/theme';
 @import '../theme/typography';
 
 @mixin sto-form-theme($theme, $variables) {
-  $color: map_get($variables, color);
-  $secondary-color: map_get($variables, secondary);
-  $disabled-color: map_get($variables, disabled);
-  $border-hover: map_get($variables, hover-bg-color);
-  $border: map_get($variables, border-color);
-  $selected-color: map_get($variables, selected-color);
+  $color: map.get($variables, color);
+  $secondary-color: map.get($variables, secondary);
+  $disabled-color: map.get($variables, disabled);
+  $border-hover: map.get($variables, hover-bg-color);
+  $border: map.get($variables, border-color);
+  $selected-color: map.get($variables, selected-color);
 
   .sto-form {
     &__field {

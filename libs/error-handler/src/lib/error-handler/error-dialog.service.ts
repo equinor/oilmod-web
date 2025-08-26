@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { HttpError } from './http-error';
@@ -7,9 +7,9 @@ import { HttpError } from './http-error';
   providedIn: 'root',
 })
 export class ErrorDialogService {
-  private ref: MatDialogRef<DialogComponent>;
+  private dialog = inject(MatDialog);
 
-  constructor(private dialog: MatDialog) {}
+  private ref: MatDialogRef<DialogComponent>;
 
   // Opens a dialog, and returns the reference with the close results.
   open(err: HttpError): MatDialogRef<DialogComponent, unknown> {

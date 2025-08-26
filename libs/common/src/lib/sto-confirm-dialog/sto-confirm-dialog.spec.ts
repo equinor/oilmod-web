@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButton } from '@angular/material/button';
 import { By } from '@angular/platform-browser';
@@ -13,11 +13,13 @@ let fixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
 @Component({
-  selector: 'sto-spec-wrap',
-  template: ` <button (click)="confirm()" mat-button>Confirm</button>`,
+    selector: 'sto-spec-wrap',
+    template: ` <button (click)="confirm()" mat-button>Confirm</button>`,
+    imports: [MaterialModule, ConfirmModule]
 })
 class WrapperComponent {
-  constructor(public confirmSvc: ConfirmService) {}
+  confirmSvc = inject(ConfirmService);
+
 
   confirm() {
     this.confirmSvc.confirm('Confirm message');
@@ -27,9 +29,8 @@ class WrapperComponent {
 describe('ConfirmComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, MaterialModule, ConfirmModule],
-      declarations: [WrapperComponent],
-    })
+    imports: [CommonModule, MaterialModule, ConfirmModule, WrapperComponent],
+})
       .compileComponents()
       .then(createComponent);
   }));

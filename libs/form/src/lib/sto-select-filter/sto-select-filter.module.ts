@@ -7,13 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatInputModule, MatIconModule, MatCheckboxModule,
-    FormsModule, ReactiveFormsModule
-  ],
-  declarations: [ StoSelectFilterComponent ],
-  exports: [ StoSelectFilterComponent ],
+    imports: [
+        CommonModule,
+        MatInputModule, MatIconModule, MatCheckboxModule,
+        FormsModule, ReactiveFormsModule,
+        StoSelectFilterComponent
+    ],
+    exports: [StoSelectFilterComponent],
 })
 export class StoSelectFilterModule {
 }

@@ -1,31 +1,30 @@
 import { Component, inject, Input } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgForOf } from '@angular/common';
+
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'sto-navigation',
-  standalone: true,
-  template: `
+    selector: 'sto-navigation',
+    template: `
     <nav mat-tab-nav-bar
-         [tabPanel]="tabPanel">
-      <a mat-tab-link
-         *ngFor="let link of links"
-         [routerLink]="link.route"
-         (click)="activeLink = link"
-         #rla="routerLinkActive"
-         [active]="rla.isActive"
-         routerLinkActive="mat-tab-label-active"> {{link.label}} </a>
+      [tabPanel]="tabPanel">
+      @for (link of links; track link) {
+        <a mat-tab-link
+          [routerLink]="link.route"
+          (click)="activeLink = link"
+          #rla="routerLinkActive"
+          [active]="rla.isActive"
+        routerLinkActive="mat-tab-label-active"> {{link.label}} </a>
+      }
     </nav>
     <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-  `,
-  imports: [
+    `,
+    imports: [
     MatTabsModule,
-    NgForOf,
     RouterLink,
-    RouterLinkActive,
-  ]
+    RouterLinkActive
+]
 })
 export class NavigationComponent {
   public activeLink: { route: string[]; label: string };

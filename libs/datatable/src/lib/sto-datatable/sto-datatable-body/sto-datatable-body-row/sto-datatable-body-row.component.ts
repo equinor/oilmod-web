@@ -1,33 +1,28 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DoCheck,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  KeyValueDiffer,
-  KeyValueDiffers,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, EventEmitter, HostBinding, Input, KeyValueDiffer, KeyValueDiffers, Output, TemplateRef, inject } from '@angular/core';
 import { Column, ColumnDisplay } from '../../columns';
 import { rowClassFn } from '../../models';
+import { NgTemplateOutlet, NgClass, NgStyle } from '@angular/common';
+import { ExecPipe } from '../../exec.pipe';
+import { ColumnStylePipe } from '../../column-style.pipe';
 
 @Component({
-  selector: 'sto-datatable-body-row',
-  templateUrl: './sto-datatable-body-row.component.html',
-  styleUrls: ['./sto-datatable-body-row.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    class: 'datatable-body-row',
-  },
+    selector: 'sto-datatable-body-row',
+    templateUrl: './sto-datatable-body-row.component.html',
+    styleUrls: ['./sto-datatable-body-row.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        class: 'datatable-body-row',
+    },
+    imports: [NgTemplateOutlet, NgClass, NgStyle, ExecPipe, ColumnStylePipe]
 })
 export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
   implements DoCheck
 {
+  private differs = inject(KeyValueDiffers);
+  private cdr = inject(ChangeDetectorRef);
+  private elRef = inject(ElementRef);
+
   @Input()
   responsiveView: TemplateRef<unknown>;
   @Input()
@@ -80,11 +75,9 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
     return column.$$id ?? column.prop;
   };
 
-  constructor(
-    private differs: KeyValueDiffers,
-    private cdr: ChangeDetectorRef,
-    private elRef: ElementRef
-  ) {
+  constructor() {
+    const differs = this.differs;
+
     this.rowDiffer = differs.find({}).create();
     this.element = this.elRef.nativeElement as HTMLDivElement;
   }

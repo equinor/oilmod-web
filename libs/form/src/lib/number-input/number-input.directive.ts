@@ -1,5 +1,5 @@
 /* eslint-disable no-empty */
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, inject } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
 import { NumberInputPipe } from './number-input.pipe';
 
@@ -10,6 +10,8 @@ import { NumberInputPipe } from './number-input.pipe';
   standalone: true
 })
 export class NumberInputDirective {
+  private elementRef = inject(ElementRef);
+
   @Input()
   unit: string | undefined;
   @Input()
@@ -37,8 +39,7 @@ export class NumberInputDirective {
   ];
 
 
-  constructor(private elementRef: ElementRef
-  ) {
+  constructor() {
     this._el = this.elementRef.nativeElement;
   }
 

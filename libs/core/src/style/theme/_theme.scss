@@ -13,7 +13,7 @@ $sto-theme: mat.m2-define-light-theme(
     ),
   )
 );
-$sto-theme: map_merge($sto-theme, $sto-indicators);
+$sto-theme: map.merge($sto-theme, $sto-indicators);
 $variables: theme_variables($sto-theme);
 
 // @deprecated only here for backwards compability

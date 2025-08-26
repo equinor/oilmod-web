@@ -1,39 +1,40 @@
 @use '@angular/material' as mat;
+@use 'sass:map' as map;
 
 @function theme_variables($theme) {
-  $primary-palette: map-get($theme, primary);
+  $primary-palette: map.get($theme, primary);
   $primary: mat.m2-get-color-from-palette($primary-palette);
   $primary-contrast: mat.m2-get-contrast-color-from-palette(
     $primary-palette,
     main
   );
-  $accent-palette: map-get($theme, accent);
+  $accent-palette: map.get($theme, accent);
   $accent: mat.m2-get-color-from-palette($accent-palette, highlight);
   $accent-contrast: mat.m2-get-contrast-color-from-palette(
     $accent-palette,
     main
   );
-  $warn-palette: map-get($theme, warn);
+  $warn-palette: map.get($theme, warn);
   $warn: mat.m2-get-color-from-palette($warn-palette);
   $warn-contrast: mat.m2-get-contrast-color-from-palette($warn-palette, main);
-  $indicators: map-get($theme, indicators);
-  $danger-palette: map-get($indicators, danger);
+  $indicators: map.get($theme, indicators);
+  $danger-palette: map.get($indicators, danger);
   $error: mat.m2-get-color-from-palette($danger-palette, resting);
-  $warning-palette: map-get($indicators, warning);
+  $warning-palette: map.get($indicators, warning);
   $warning: mat.m2-get-color-from-palette($warning-palette, resting);
-  $success-palette: map-get($indicators, success);
+  $success-palette: map.get($indicators, success);
   $success: mat.m2-get-color-from-palette($success-palette, resting);
 
-  $foreground: map-get($theme, foreground);
+  $foreground: map.get($theme, foreground);
   $color: mat.m2-get-color-from-palette($foreground, text);
   $secondary: mat.m2-get-color-from-palette($foreground, secondary-text);
   $disabled: mat.m2-get-color-from-palette($foreground, disabled-text);
   $icon: mat.m2-get-color-from-palette($foreground, icon);
   $icon-hover: rgba($icon, 0.8);
 
-  $background: map-get($theme, background);
-  $background-color: map-get($background, background);
-  $card-bg: map_get($background, card);
+  $background: map.get($theme, background);
+  $background-color: map.get($background, background);
+  $card-bg: map.get($background, card);
   $hover-bg-color: mat.m2-get-color-from-palette($background, hover);
   $hover-color: mat.m2-get-color-from-palette($foreground, slider-off-active);
   $selected-color: mat.m2-get-color-from-palette($background, selected-button);

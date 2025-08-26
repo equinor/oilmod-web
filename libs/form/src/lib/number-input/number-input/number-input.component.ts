@@ -1,3 +1,5 @@
+import { FocusMonitor } from '@angular/cdk/a11y';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,39 +10,49 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
-  Self,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm, ReactiveFormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  FormGroupDirective,
+  NgControl,
+  NgForm,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
-import { FocusMonitor } from '@angular/cdk/a11y';
-import { NumberInputPipe } from '../number-input.pipe';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { startWith } from 'rxjs/operators';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { NumberInputDirective } from '../number-input.directive';
-
+import { NumberInputPipe } from '../number-input.pipe';
 
 @Component({
   selector: 'sto-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: [ './number-input.component.scss' ],
+  styleUrls: ['./number-input.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: MatFormFieldControl, useExisting: NumberInputComponent }
+    { provide: MatFormFieldControl, useExisting: NumberInputComponent },
   ],
-  standalone: true,
-  imports: [
-    NumberInputDirective,
-    ReactiveFormsModule
-  ]
+  imports: [NumberInputDirective, ReactiveFormsModule],
 })
-export class NumberInputComponent extends FormFieldBase implements DoCheck, OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<number> {
+export class NumberInputComponent
+  extends FormFieldBase
+  implements
+    DoCheck,
+    OnInit,
+    OnDestroy,
+    ControlValueAccessor,
+    MatFormFieldControl<number>
+{
+  ngControl: NgControl;
+  private fm = inject(FocusMonitor);
+
   static nextId = 0;
   stateChanges = new Subject<void>();
   focused: boolean;
@@ -70,17 +82,14 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
 
     private _errorState: boolean;*/
 
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              private fm: FocusMonitor,
-              @Optional() _parentForm: NgForm,
-              @Optional() _parentFormGroup: FormGroupDirective,
-              _defaultErrorStateMatcher: ErrorStateMatcher,
-              private elRef: ElementRef<HTMLElement>) {
-    super(elRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
-    if ( this.ngControl != null ) {
+  constructor() {
+    super();
+    const fm = this.fm;
+
+    if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
-    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+    fm.monitor(this.elRef.nativeElement, true).subscribe((origin) => {
       this.focused = !!origin;
       this.stateChanges.next();
     });
@@ -125,7 +134,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   }
 
   set fractionSize(fractionSize) {
-    if ( !fractionSize && fractionSize !== 0 ) {
+    if (!fractionSize && fractionSize !== 0) {
       fractionSize = 3;
     }
     this._fractionSize = fractionSize;
@@ -135,7 +144,7 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
 
   get empty() {
     const value = this.ctrl.value;
-    return !( value && value !== 0 );
+    return !(value && value !== 0);
   }
 
   private _placeholder: string;
@@ -183,33 +192,44 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
 
   set value(value) {
     this._value = value;
-    const valueAsString = this.numberFormatter.transform(value, this.fractionSize, this.dynamicFractionSize);
+    const valueAsString = this.numberFormatter.transform(
+      value,
+      this.fractionSize,
+      this.dynamicFractionSize,
+    );
     this.ctrl.setValue(valueAsString, { emitEvent: false });
     this.stateChanges.next();
   }
 
   ngDoCheck(): void {
-    if ( this.ngControl ) {
+    if (this.ngControl) {
       this.updateErrorState();
     }
   }
 
   ngOnInit(): void {
-    const sub = this.ctrl.valueChanges
-      .subscribe((value) => {
-        let numericValue: null | number = parseFloat(this.numberFormatter.parse(value as string, this.fractionSize, this.dynamicFractionSize));
-        numericValue = isNaN(numericValue) ? null : numericValue;
-        this.onChange(numericValue);
-        this.ngModelChange.emit(numericValue);
-      });
+    const sub = this.ctrl.valueChanges.subscribe((value) => {
+      let numericValue: null | number = parseFloat(
+        this.numberFormatter.parse(
+          value as string,
+          this.fractionSize,
+          this.dynamicFractionSize,
+        ),
+      );
+      numericValue = isNaN(numericValue) ? null : numericValue;
+      this.onChange(numericValue);
+      this.ngModelChange.emit(numericValue);
+    });
 
     this.sub.add(sub);
-    if ( this.ngControl && this.ngControl.statusChanges ) {
-      this.sub.add(this.ngControl.statusChanges
-        .pipe(startWith(this.ngControl.status))
-        .subscribe(() => {
-          this.updateErrorState();
-        }));
+    if (this.ngControl && this.ngControl.statusChanges) {
+      this.sub.add(
+        this.ngControl.statusChanges
+          .pipe(startWith(this.ngControl.status))
+          .subscribe(() => {
+            this.updateErrorState();
+          }),
+      );
     }
   }
 
@@ -229,11 +249,9 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   }
 
   // eslint-disable-next-line
-  onChange = (_: any) => {
-  };
+  onChange = (_: any) => {};
   // eslint-disable-next-line
-  onTouched = () => {
-  };
+  onTouched = () => {};
 
   matOnTouched() {
     this.stateChanges.next();
@@ -254,6 +272,4 @@ export class NumberInputComponent extends FormFieldBase implements DoCheck, OnIn
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-
 }

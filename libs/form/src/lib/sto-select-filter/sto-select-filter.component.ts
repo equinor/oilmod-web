@@ -5,17 +5,34 @@ import {
   EventEmitter,
   forwardRef,
   HostBinding,
+  inject,
   Input,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  UntypedFormControl,
+} from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MatSelect } from '@angular/material/select';
+
+import { MatCheckbox } from '@angular/material/checkbox';
+import {
+  MatFormField,
+  MatLabel,
+  MatPrefix,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
 
 /**
  * Component used in mat-select's to filter out the values, and adds a Select all checkbox
@@ -40,17 +57,31 @@ import { MatSelect } from '@angular/material/select';
 @Component({
   selector: 'sto-select-filter',
   templateUrl: './sto-select-filter.component.html',
-  styleUrls: [ './sto-select-filter.component.scss' ],
+  styleUrls: ['./sto-select-filter.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => StoSelectFilterComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
+  imports: [
+    MatFormField,
+    MatPrefix,
+    MatCheckbox,
+    FormsModule,
+    ReactiveFormsModule,
+    MatLabel,
+    MatInput,
+    MatIcon,
+    MatSuffix,
+  ],
 })
-export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+export class StoSelectFilterComponent
+  implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor
+{
+  select = inject(MatSelect);
 
   @HostBinding('class.sto-select-filter') cssClass = true;
   @ViewChild('inputElement')
@@ -79,9 +110,6 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
    */
   @Input() focusIfNoValue: boolean;
   private destroyed$ = new Subject();
-
-  constructor(public select: MatSelect) {
-  }
 
   private _value: unknown;
 
@@ -122,10 +150,10 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
    * @param selected
    */
   @Input() set selected(selected: number) {
-    if ( this.total === selected ) {
+    if (this.total === selected) {
       this.isChecked(true);
       this.indeterminate = false;
-    } else if ( selected > 0 ) {
+    } else if (selected > 0) {
       this.indeterminate = true;
       this.isChecked(false);
     } else {
@@ -136,12 +164,11 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   public isChecked(isChecked: boolean) {
-
     this.checkboxControl.setValue(isChecked, { emitEvent: false });
   }
 
   writeValue(value: unknown) {
-    if ( value || value === '' ) {
+    if (value || value === '') {
       this.inputControl.setValue(value);
     }
   }
@@ -155,41 +182,39 @@ export class StoSelectFilterComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   // eslint-disable-next-line
-  registerOnTouched(fn: unknown): void {
-  }
+  registerOnTouched(fn: unknown): void {}
 
   ngOnDestroy() {
-
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
 
   ngAfterViewInit(): void {
-    if ( this.select ) {
-      this.select.openedChange.pipe(takeUntil(this.destroyed$)).subscribe(open => {
-        if ( open && this.focusIfNoValue && this.isMulti ) {
-          this.inputElement?.nativeElement.focus();
-        }
-      });
+    if (this.select) {
+      this.select.openedChange
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((open) => {
+          if (open && this.focusIfNoValue && this.isMulti) {
+            this.inputElement?.nativeElement.focus();
+          }
+        });
     }
   }
 
   ngOnInit() {
     this.checkboxControl.valueChanges
-      .pipe(
-        takeUntil(this.destroyed$)
-      ).subscribe(isChecked => {
-      this.selectAll.emit(isChecked);
-    });
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((isChecked) => {
+        this.selectAll.emit(isChecked);
+      });
 
     this.inputControl.valueChanges
-      .pipe(
-        takeUntil(this.destroyed$)
-      ).subscribe(value => {
-      if ( !value && this.focusIfNoValue ) {
-        requestAnimationFrame(() => this.inputElement.nativeElement.focus());
-      }
-      this.propagateChange(value);
-    });
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((value) => {
+        if (!value && this.focusIfNoValue) {
+          requestAnimationFrame(() => this.inputElement.nativeElement.focus());
+        }
+        this.propagateChange(value);
+      });
   }
 }

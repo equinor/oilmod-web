@@ -1,31 +1,27 @@
 /* eslint-disable @angular-eslint/directive-class-suffix,@angular-eslint/directive-selector */
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  Directive,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewContainerRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild, ViewContainerRef, ViewEncapsulation, forwardRef, inject } from '@angular/core';
 import { FilterForm, FilterList } from './filter';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { NgClass } from '@angular/common';
+import { MatChipListbox, MatChipOption, MatChipRemove } from '@angular/material/chips';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
-  selector: 'sto-filter-panel',
-  templateUrl: './sto-filter-panel.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: [ './sto-filter-panel.component.scss' ]
+    selector: 'sto-filter-panel',
+    templateUrl: './sto-filter-panel.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./sto-filter-panel.component.scss'],
+    imports: [MatExpansionPanel, NgClass, MatExpansionPanelHeader, MatExpansionPanelTitle, MatChipListbox, MatChipOption, MatIcon, MatChipRemove, forwardRef(() => StoFilterActionsBar)]
 })
 /**
  * @deprecated sto-filter-panel should not be used in future application
  * Sto filter panel is an extension of mat-accordion
  */
 export class StoFilterPanelComponent implements OnInit, AfterViewInit {
+  private cdr = inject(ChangeDetectorRef);
+  private vcRef = inject(ViewContainerRef);
+
   /**
    * If the filter panel should be expandable. Default true.
    */
@@ -66,9 +62,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   public host: FilterForm<Record<string, unknown>>;
   public hasSeperator = false;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private vcRef: ViewContainerRef) {
+  constructor() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.host = ( this.vcRef as any )._view.context;
@@ -155,41 +149,38 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
  *
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
-@Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: 'sto-filter-title'
-})
+@Directive({ 
+    // eslint-disable-next-line @angular-eslint/directive-selector
+    selector: 'sto-filter-title' })
 export class StoFilterTitle {
 }
 
 
-@Directive({
-  selector: 'sto-filter-table-actions'
-})
+@Directive({ selector: 'sto-filter-table-actions' })
 export class StoFilterTableActions {
   @HostBinding('class.sto-filter-table-actions')
   className = true;
 }
 
-@Directive({
-  selector: 'sto-filter-actions'
-})
+@Directive({ selector: 'sto-filter-actions' })
 export class StoFilterActions {
 }
 
 @Component({
-  selector: 'sto-filter-actions-bar',
-  template: `
+    selector: 'sto-filter-actions-bar',
+    template: `
     <ng-content></ng-content>
-    <button mat-icon-button
-            class="toggle-expand-button"
-            *ngIf="expandable"
-            title="Toggle filter panel"
-            (click)="toggle.emit()">
-      <mat-icon>filter_list</mat-icon>
-    </button>
-
-  `
+    @if (expandable) {
+      <button mat-icon-button
+        class="toggle-expand-button"
+        title="Toggle filter panel"
+        (click)="toggle.emit()">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    }
+    
+    `,
+    imports: [MatIconButton, MatIcon]
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class StoFilterActionsBar {

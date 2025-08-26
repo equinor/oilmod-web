@@ -1,19 +1,20 @@
+@use 'sass:map' as map;
 @use '@angular/material' as mat;
 @import 'theme';
 @import 'typography';
 
 @mixin sto-datatable-theme($theme, $variables) {
-  $primary: map_get($variables, primary);
-  $accent: map_get($variables, accent);
-  $color: map_get($variables, color);
-  $border-color: map_get($variables, border-color);
+  $primary: map.get($variables, primary);
+  $accent: map.get($variables, accent);
+  $color: map.get($variables, color);
+  $border-color: map.get($variables, border-color);
   $background-color: transparent;
-  $footer-bg: map_get($variables, background);
-  $header-background-color: map_get($variables, selected-bg);
-  $hover-color: map_get($variables, hover-bg);
-  $selected-color: map_get($variables, selected-bg);
-  $icon-color: map_get($variables, icon);
-  $icon-hover: map_get($variables, icon-hover);
+  $footer-bg: map.get($variables, background);
+  $header-background-color: map.get($variables, selected-bg);
+  $hover-color: map.get($variables, hover-bg);
+  $selected-color: map.get($variables, selected-bg);
+  $icon-color: map.get($variables, icon);
+  $icon-hover: map.get($variables, icon-hover);
 
   .sto-mdl-table {
     background-color: $background-color;
