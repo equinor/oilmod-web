@@ -34,17 +34,47 @@ input::-webkit-inner-spin-button {
   --mat-expansion-header-indicator-color: var(--text);
   --mat-expansion-container-text-color: var(--text);
 }
-.mat-mdc-button {
+.mat-mdc-button-base {
   --mdc-text-button-container-height: 46px;
   --mdc-protected-button-label-text-color: var(--primary-hover-alt);
+  height: var(--mdc-text-button-container-height);
   &.mat-unthemed {
     --mdc-text-button-label-text-color: var(--text);
   }
   &.mat-mdc-raised-button {
     --mdc-protected-button-label-text-color: var(--primary-hover-alt);
   }
-  &.mat-mdc-button-base {
-    height: var(--mdc-text-button-container-height);
+  &.mat-mdc-icon-button {
+    --mdc-icon-button-padding: max(
+      0px,
+      calc(
+        calc(
+            var(--mdc-icon-button-state-layer-size, 48px) -
+              var(--mdc-icon-button-icon-size, 24px)
+          ) / 2
+      )
+    );
+    padding: var(--mdc-icon-button-padding);
+    line-height: calc(
+      var(--mdc-icon-button-state-layer-size, 48px) -
+        var(--mdc-icon-button-padding)
+    );
+    .mat-icon {
+      height: calc(
+        var(--mdc-icon-button-state-layer-size, 48px) -
+          (var(--mdc-icon-button-padding) * 2)
+      );
+      width: calc(
+        var(--mdc-icon-button-state-layer-size, 48px) -
+          (var(--mdc-icon-button-padding) * 2)
+      );
+    }
+    .mat-mdc-focus-indicator,
+    .mat-mdc-button-touch-target {
+      width: var(--mdc-icon-button-state-layer-size, 48px);
+      height: var(--mdc-icon-button-state-layer-size, 48px);
+      margin: 2px;
+    }
   }
 }
 .mat-mdc-progress-bar {
@@ -87,13 +117,17 @@ input::-webkit-inner-spin-button {
   --mdc-checkbox-unselected-hover-icon-color: var(--text-disabled);
   --mdc-checkbox-selected-hover-icon-color: var(--primary-hover);
 }
+// .mat-mdc-radio-button {
+//   --mdc-radio-selected-icon-color: var(--primary-resting);
+// }
 .mat-mdc-select {
   --mat-select-enabled-trigger-text-color: var(--text);
   --mat-select-enabled-arrow-color: var(--text);
 }
-.mat-mdc-slide-toggle .mdc-form-field {
+.mdc-switch {
   --mdc-theme-text-primary-on-background: var(--text);
-  --mdc-switch-selected-track-color: var(--primary-highlight);
+  --mdc-switch-handle-surface-color: var(--primary-resting);
+  --mdc-switch-selected-track-color: var(--primary-selected-hover);
   --mdc-switch-selected-hover-track-color: var(--primary-selected-hover);
   --mdc-switch-selected-focus-track-color: var(--primary-selected-focus);
 }

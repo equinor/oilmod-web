@@ -1,10 +1,10 @@
 @use '@angular/material' as mat;
-@import "./theme/typography";
+@import './theme/typography';
 
 @mixin sto-dialog-typography($config) {
   .sto-dialog {
     .mat-dialog-title {
-      line-height: mat.line-height($config, body-1);
+      line-height: mat.m2-line-height($config, body-1);
     }
   }
 }
@@ -21,9 +21,7 @@
   @include sto-dialog-typography($sto-l-typography);
 }
 
-
 .sto-dialog {
-
 }
 
 .sto-dialog .mat-dialog-container {
@@ -46,7 +44,6 @@
     p {
       white-space: pre-line;
     }
-
   }
 
   .mat-dialog-title {

@@ -1,7 +1,6 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-
 $sto-warning-map: (
   highlight: var(--warning-highlight),
   resting: var(--warning-resting),
@@ -12,10 +11,16 @@ $sto-warning-map: (
     resting: var(--warning-resting-contrast),
     hover: var(--warning-hover-contrast),
     text: var(--warning-text-contrast),
-  )
+  ),
 );
 
-$sto-warning: mat.define-palette($sto-warning-map, highlight, resting, hover, text);
+$sto-warning: mat.m2-define-palette(
+  $sto-warning-map,
+  highlight,
+  resting,
+  hover,
+  text
+);
 
 $sto-danger-map: (
   highlight: var(--danger-highlight),
@@ -26,9 +31,15 @@ $sto-danger-map: (
     highlight: var(--danger-highlight-contrast),
     resting: var(--danger-resting-contrast),
     hover: var(--danger-hover-contrast),
-  )
+  ),
 );
-$sto-danger: mat.define-palette($sto-danger-map, highlight, resting, hover, text);
+$sto-danger: mat.m2-define-palette(
+  $sto-danger-map,
+  highlight,
+  resting,
+  hover,
+  text
+);
 
 $sto-success-map: (
   highlight: var(--success-highlight),
@@ -39,9 +50,15 @@ $sto-success-map: (
     highlight: --success-highlight-contrast,
     resting: --success-resting-contrast,
     hover: --success-hover-contrast,
-  )
+  ),
 );
-$sto-success: mat.define-palette($sto-success-map, highlight, resting, hover, text);
+$sto-success: mat.m2-define-palette(
+  $sto-success-map,
+  highlight,
+  resting,
+  hover,
+  text
+);
 
 $sto-primary: (
   highlight: var(--primary-highlight),
@@ -54,79 +71,77 @@ $sto-primary: (
     highlight: var(--primary-contrast-highlight),
     resting: var(--primary-contrast-resting),
     hover: var(--primary-contrast-hover),
-  )
+  ),
 );
 
-$primary: mat.define-palette($sto-primary, resting, highlight, hover, text);
+$primary: mat.m2-define-palette($sto-primary, resting, highlight, hover, text);
 
 $sto-indicators-map: (
   success: $sto-success,
   warning: $sto-warning,
-  danger: $sto-danger
+  danger: $sto-danger,
 );
-
 
 $sto-accent: (
   highlight: var(--accent-highlight),
   resting: var(--accent-resting),
   hover: var(--accent-hover),
   text: var(--accent-text),
-  200: var(--accent-toggle), // For slide toggle,
-  contrast : (
-    highlight: var(--accent-highlight-contrast),
-    resting: var(--accent-resting-contrast),
-    hover: var(--accent-hover-contrast),
-  )
+  200: var(--accent-toggle),
+  // For slide toggle,
+  contrast: (
+      highlight: var(--accent-highlight-contrast),
+      resting: var(--accent-resting-contrast),
+      hover: var(--accent-hover-contrast),
+    ),
 );
 
-$accent: mat.define-palette($sto-accent, highlight, resting, hover);
+$accent: mat.m2-define-palette($sto-accent, highlight, resting, hover);
 
-$sto-warn: mat.define-palette(mat.$red-palette);
-
+$sto-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 $eds-dark-foreground: (
-  secondary: #DEE5E7,
-  primary: #FFFFFF,
-  tertiary: #9CA6AC,
+  secondary: #dee5e7,
+  primary: #ffffff,
+  tertiary: #9ca6ac,
   disabled: #637583,
-  divider: #3E4F5C,
+  divider: #3e4f5c,
 );
 $eds-dark-background: (
   default: #132634,
   semi-transparent: rgba(255, 255, 255, 0.16),
-  light: #2E3F4D,
+  light: #2e3f4d,
   medium: #243746,
-  info: #D5EAF4,
+  info: #d5eaf4,
   warning: rgba(255, 198, 122, 0.1),
   danger: rgba(255, 102, 112, 0.1),
   scrim: #132634,
-  overlay: #2E3F4D,
+  overlay: #2e3f4d,
   disabled: #344450,
-  hover: #324D62,
-  focus: #2E3F4D
+  hover: #324d62,
+  focus: #2e3f4d,
 );
-
 
 $eds-light-foreground: (
   secondary: #565656,
-  primary: #3D3D3D,
-  tertiary: #6F6F6F,
-  disabled: #BEBEBE,
-  divider: #DCDCDC,
+  primary: #3d3d3d,
+  tertiary: #6f6f6f,
+  disabled: #bebebe,
+  divider: #dcdcdc,
 );
 $eds-light-background: (
-  default: #FFFFFF,
+  default: #ffffff,
   semi-transparent: rgba(255, 255, 255, 0.2),
-  light: #F7F7F7,
-  medium: #DCDCDC,
-  info: #D5EAF4,
-  warning: #FFE7D6,
-  danger: #FFC1C1,
+  light: #f7f7f7,
+  medium: #dcdcdc,
+  info: #d5eaf4,
+  warning: #ffe7d6,
+  danger: #ffc1c1,
   scrim: rgba(0, 0, 0, 0.4),
   overlay: rgba(0, 0, 0, 0.8),
-  disabled: #EAEAEA,
-  hover: #EAEAEA,
-  focus: #007079
+  disabled: #eaeaea,
+  hover: #eaeaea,
+  focus: #007079,
 );
 
 $theme-fg: (

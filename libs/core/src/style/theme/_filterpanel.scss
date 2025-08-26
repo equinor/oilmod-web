@@ -69,8 +69,8 @@ body {
 @mixin sto-filter-panel-typography($config) {
   .sto-filter {
     .mat-expansion-panel-header {
-      font-size: mat.font-size($config, subtitle-2);
-      line-height: mat.line-height($config, subtitle-2);
+      font-size: mat.m2-font-size($config, subtitle-2);
+      line-height: mat.m2-line-height($config, subtitle-2);
     }
   }
 }

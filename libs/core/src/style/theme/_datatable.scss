@@ -122,7 +122,6 @@
         }
         .mat-mdc-icon-button {
           --mdc-icon-button-state-layer-size: 28px;
-          padding: 0;
         }
       }
     }
@@ -192,9 +191,9 @@ body {
 @mixin sto-datatable-typography($config) {
   .sto-mdl-table {
     font: {
-      family: mat.font-family($config, body-1);
-      size: mat.font-size($config, body-1);
-      weight: mat.font-weight($config, body-1);
+      family: mat.m2-font-family($config, body-1);
+      size: mat.m2-font-size($config, body-1);
+      weight: mat.m2-font-weight($config, body-1);
     }
     font-feature-settings: 'tnum', 'lnum';
   }
@@ -203,21 +202,21 @@ body {
     .datatable-body,
     .datatable-header {
       font: {
-        family: mat.font-family($config, body-1);
-        size: mat.font-size($config, body-1);
-        weight: mat.font-weight($config, body-1);
+        family: mat.m2-font-family($config, body-1);
+        size: mat.m2-font-size($config, body-1);
+        weight: mat.m2-font-weight($config, body-1);
       }
     }
 
     .datatable-footer {
       font: {
-        family: mat.font-family($config, body-1);
-        size: mat.font-size($config, body-1);
-        weight: mat.font-weight($config, body-1);
+        family: mat.m2-font-family($config, body-1);
+        size: mat.m2-font-size($config, body-1);
+        weight: mat.m2-font-weight($config, body-1);
       }
 
       .pager li a[role='button'] {
-        line-height: mat.font-size($config, body-1);
+        line-height: mat.m2-font-size($config, body-1);
       }
     }
 

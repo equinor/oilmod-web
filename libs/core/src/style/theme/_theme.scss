@@ -4,7 +4,7 @@
 @import 'colors';
 
 // Create the theme object (a Sass map containing all of the palettes).
-$sto-theme: mat.define-light-theme(
+$sto-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $primary,
