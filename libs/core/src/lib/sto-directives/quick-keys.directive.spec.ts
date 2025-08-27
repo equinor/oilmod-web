@@ -12,6 +12,7 @@ let fixture: ComponentFixture<WrapperComponent>;
 
 @Component({
   selector: 'sto-spec-wrap',
+  imports: [MatFormFieldModule, MatInputModule, QuickKeysDirective],
   template: ` <mat-form-field>
     <input
       stoQuickKeys
@@ -38,13 +39,7 @@ class WrapperComponent {
 describe('QuickKeysDirective', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        QuickKeysDirective,
-        MatFormFieldModule,
-        MatInputModule,
-        NoopAnimationsModule,
-      ],
-      declarations: [WrapperComponent],
+      imports: [NoopAnimationsModule, WrapperComponent],
     })
       .compileComponents()
       .then(createComponent);

@@ -27,8 +27,9 @@ let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
 @Component({
-    selector: 'sto-spec-wrap',
-    template: ` <div style="background: white">
+  selector: 'sto-spec-wrap',
+  standalone: true,
+  template: ` <div style="background: white">
     <sto-filter-panel [expandable]="true" [filterList]="filter$ | async">
       <sto-filter-title>Filter Title</sto-filter-title>
       <sto-filter-table-actions>
@@ -49,14 +50,21 @@ let page: Page;
       </div>
     </sto-filter-panel>
   </div>`,
-    imports: [CommonModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatTooltipModule,
-        ReactiveFormsModule,
-        MatChipsModule]
+  imports: [
+    CommonModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    MatChipsModule,
+    StoFilterPanelComponent,
+    StoFilterTitle,
+    StoFilterTableActions,
+    StoFilterActions,
+    StoFilterActionsBar,
+  ],
 })
 class WrapperComponent extends FilterForm<{ field: string }> {
   formConfig = { field: [] };
@@ -77,7 +85,7 @@ class WrapperComponent extends FilterForm<{ field: string }> {
 describe('StoFilterPanelComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         CommonModule,
         BrowserAnimationsModule,
         MatExpansionModule,
@@ -93,8 +101,8 @@ describe('StoFilterPanelComponent', () => {
         StoFilterActionsBar,
         StoFilterTableActions,
         WrapperComponent,
-    ],
-})
+      ],
+    })
       .overrideComponent(StoFilterPanelComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })
@@ -150,11 +158,11 @@ class Page {
 
   constructor() {
     const toggleBtnDe = wrapFixture.debugElement.query(
-      By.css('button.toggle-expand-button')
+      By.css('button.toggle-expand-button'),
     );
     this.toggleButton = toggleBtnDe.nativeElement;
     const panelDe = wrapFixture.debugElement.query(
-      By.directive(StoFilterPanelComponent)
+      By.directive(StoFilterPanelComponent),
     );
     this.stoFilterPanel = panelDe.componentInstance;
     const btnDe = wrapFixture.debugElement.query(By.directive(MatButton));

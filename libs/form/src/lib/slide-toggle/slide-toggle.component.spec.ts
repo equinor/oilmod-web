@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SlideToggleComponent } from './slide-toggle.component';
-import { MaterialModule } from '@ngx-stoui/testing';
 import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { SlideToggleComponent } from './slide-toggle.component';
 
 const ngControl = {
-  statusChanges: new Subject()
+  statusChanges: new Subject(),
 };
 
 describe('SlideToggleComponent', () => {
@@ -15,13 +14,12 @@ describe('SlideToggleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ SlideToggleComponent, MaterialModule, ReactiveFormsModule ],
-    }).overrideComponent(SlideToggleComponent, {
+      imports: [SlideToggleComponent, ReactiveFormsModule],
+    })
+      .overrideComponent(SlideToggleComponent, {
         set: {
-          providers: [
-            { provide: NgControl, useValue: ngControl }
-          ]
-        }
+          providers: [{ provide: NgControl, useValue: ngControl }],
+        },
       })
       .compileComponents()
       .then(createComponent);
@@ -70,9 +68,9 @@ describe('SlideToggleComponent', () => {
   });
 
   it('should set component as control value accessor', () => {
-    expect(component.ngControl.valueAccessor).toBe(component);
+    // ngControl is optionally injected; in this test we provide a stub so it should be set.
+    expect(component.ngControl!.valueAccessor).toBe(component);
   });
-
 
   function createComponent() {
     fixture = TestBed.createComponent(SlideToggleComponent);
@@ -83,6 +81,5 @@ describe('SlideToggleComponent', () => {
     return fixture.whenStable().then(() => {
       fixture.detectChanges();
     });
-
   }
 });

@@ -7,7 +7,7 @@
   [matMenuTriggerData]="{ preferences: preferences }"
   >
   {{
-  (preferences | activePreference: activePreferenceId)?.name || placeholder
+    (preferences | activePreference: activePreferenceId)?.name || placeholder
   }}
   @if (dirty) {
     <small>(modified)</small>

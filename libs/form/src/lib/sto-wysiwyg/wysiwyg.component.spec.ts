@@ -1,12 +1,15 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { WysiwygComponent } from './wysiwyg.component';
-import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
-import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
-import { MaterialModule } from '@ngx-stoui/testing';
-import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
-import { By, SafeHtml } from '@angular/platform-browser';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+} from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { By, SafeHtml } from '@angular/platform-browser';
+import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
+import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
+import { WysiwygComponent } from './wysiwyg.component';
 
 interface TestSafeHtml extends SafeHtml {
   changingThisBreaksApplicationSecurity: string;
@@ -14,12 +17,16 @@ interface TestSafeHtml extends SafeHtml {
 }
 
 @Component({
-    selector: 'sto-wrap',
-    template: `
-    <sto-wysiwyg [formControl]="ctrl">
-      <button id="submit">SaveButton</button>
-    </sto-wysiwyg>`,
-    imports: [MaterialModule, ReactiveFormsModule, WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent]
+  selector: 'sto-wrap',
+  template: ` <sto-wysiwyg [formControl]="ctrl">
+    <button id="submit">SaveButton</button>
+  </sto-wysiwyg>`,
+  imports: [
+    ReactiveFormsModule,
+    WysiwygComponent,
+    WysiwygEditorComponent,
+    WysiwygActionsComponent,
+  ],
 })
 class WrapperComponent {
   public ctrl = new UntypedFormControl();
@@ -42,9 +49,12 @@ describe('WysiwygComponent unit tests', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule, WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent ],
-      })
-      .compileComponents();
+      imports: [
+        WysiwygComponent,
+        WysiwygEditorComponent,
+        WysiwygActionsComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -71,8 +81,7 @@ describe('WysiwygComponent unit tests', () => {
     const ev = {
       key: 'Tab',
       shiftKey: false,
-      preventDefault: () => {
-      }
+      preventDefault: () => {},
     } as any;
 
     component.onKeyDownHandleTab(ev);
@@ -103,7 +112,6 @@ describe('WysiwygComponent unit tests', () => {
     component.setDisabledState(false);
     expect(component.disabled).toBeFalsy();
   });
-
 });
 
 describe('WysiwygComponent integration tests', () => {
@@ -113,9 +121,17 @@ describe('WysiwygComponent integration tests', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [MaterialModule, ReactiveFormsModule, WysiwygComponent, WysiwygEditorComponent, WysiwygActionsComponent, WrapperComponent]
-})
-      .overrideComponent(WysiwygComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
+      imports: [
+        ReactiveFormsModule,
+        WysiwygComponent,
+        WysiwygEditorComponent,
+        WysiwygActionsComponent,
+        WrapperComponent,
+      ],
+    })
+      .overrideComponent(WysiwygComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
       .compileComponents()
       .then(createComponent);
   }));
@@ -131,7 +147,9 @@ describe('WysiwygComponent integration tests', () => {
     wrapper.ctrl.setValue(`<h1>A title!</h1>`);
     fixture.detectChanges();
     const val = page.wysiwyg.value as TestSafeHtml;
-    expect(val.changingThisBreaksApplicationSecurity).toEqual(`<h1>A title!</h1>`);
+    expect(val.changingThisBreaksApplicationSecurity).toEqual(
+      `<h1>A title!</h1>`,
+    );
   });
 
   it('should update value from wysiwyg to wrapper', () => {
@@ -160,7 +178,9 @@ describe('WysiwygComponent integration tests', () => {
   it('should project a button', () => {
     expect(page.projectedButton).toBeTruthy();
     // Test that it was projected correctly.
-    expect(page.projectedButton.parentElement?.classList.contains('user-buttons')).toBeTruthy();
+    expect(
+      page.projectedButton.parentElement?.classList.contains('user-buttons'),
+    ).toBeTruthy();
   });
 
   function createComponent() {
@@ -173,7 +193,6 @@ describe('WysiwygComponent integration tests', () => {
       page = new Page(fixture);
     });
   }
-
 });
 
 class Page {
@@ -186,7 +205,9 @@ class Page {
   public projectedButton: HTMLButtonElement;
 
   constructor(fixture: ComponentFixture<WrapperComponent>) {
-    const wysiwygDe = fixture.debugElement.query(By.directive(WysiwygComponent));
+    const wysiwygDe = fixture.debugElement.query(
+      By.directive(WysiwygComponent),
+    );
     this.wysiwyg = wysiwygDe.componentInstance;
     this.wysiwygDe = wysiwygDe;
     const actionsDe = wysiwygDe.query(By.directive(WysiwygActionsComponent));

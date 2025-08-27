@@ -1,35 +1,33 @@
+import { ChangeDetectionStrategy, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
+import { MatSortModule } from '@angular/material/sort';
 import { By } from '@angular/platform-browser';
-import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
-import { MaterialModule } from '@ngx-stoui/testing';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ExecPipe } from '../exec.pipe';
 import { columns } from '../../../testing/utils';
+import { ColumnStylePipe } from '../column-style.pipe';
+import { ExecPipe } from '../exec.pipe';
+import { GetGroupFlexPipe } from '../get-group-flex.pipe';
 import { StoDatatableHeaderComponent } from './sto-datatable-header.component';
 import { StoDatatableResizeDirective } from './sto-datatable-resize.directive';
-import { ColumnStylePipe } from '../column-style.pipe';
-import { GetGroupFlexPipe } from '../get-group-flex.pipe';
 
 let comp: StoDatatableHeaderComponent<unknown>;
 let fixture: ComponentFixture<StoDatatableHeaderComponent<unknown>>;
 let page: Page;
 
-@Component({
-    selector: 'sto-spec-wrap',
-    template: '',
-    imports: [MaterialModule, ScrollingModule]
-})
-class WrapperComponent {
-}
-
 describe('StoDatatableHeaderComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [CommonModule, MaterialModule, ScrollingModule, StoDatatableHeaderComponent, WrapperComponent, ExecPipe, StoDatatableResizeDirective, ColumnStylePipe, GetGroupFlexPipe]
-})
-      .overrideComponent(StoDatatableHeaderComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
+      imports: [
+        MatSortModule,
+        StoDatatableHeaderComponent,
+        ExecPipe,
+        StoDatatableResizeDirective,
+        ColumnStylePipe,
+        GetGroupFlexPipe,
+      ],
+    })
+      .overrideComponent(StoDatatableHeaderComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
       .compileComponents()
       .then(createComponent);
   }));
@@ -56,12 +54,10 @@ describe('StoDatatableHeaderComponent', () => {
     fixture.detectChanges();
     expect(comp.headerContextMenu.emit).toHaveBeenCalled();
   });
-
 });
 
 function createComponent() {
-  fixture = TestBed
-    .createComponent(StoDatatableHeaderComponent);
+  fixture = TestBed.createComponent(StoDatatableHeaderComponent);
   comp = fixture.componentInstance;
   comp.columns = columns;
   comp.sortable = true;
@@ -71,7 +67,9 @@ function createComponent() {
 
   return fixture.whenStable().then(() => {
     fixture.detectChanges();
-    const cells = fixture.debugElement.queryAll(By.css('.sto-mdl-table__header__row__cell'));
+    const cells = fixture.debugElement.queryAll(
+      By.css('.sto-mdl-table__header__row__cell'),
+    );
     page = new Page(cells);
   });
 }
@@ -81,7 +79,7 @@ class Page {
   public renderedCells: number;
 
   constructor(cells: DebugElement[]) {
-    const first = cells[ 0 ];
+    const first = cells[0];
     this.firstCell = first.nativeElement;
     this.renderedCells = cells.length;
   }
