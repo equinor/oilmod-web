@@ -1,11 +1,12 @@
-@import "./theme";
-@import "./typography";
+@use 'sass:map' as map;
+@import './theme';
+@import './typography';
 
 @mixin sto-number-unit-input-theme($theme, $variables) {
-  $border-color: map_get($variables, border-color);
-  $color: map_get($variables, color);
-  $disabled: map_get($variables, disabled);
-  $secondary-color: map_get($variables, secondary);
+  $border-color: map.get($variables, border-color);
+  $color: map.get($variables, color);
+  $disabled: map.get($variables, disabled);
+  $secondary-color: map.get($variables, secondary);
 
   .mat-form-field.sto-form__field {
     sto-number-unit-input {
@@ -20,7 +21,6 @@
           color: $secondary-color;
         }
       }
-
     }
   }
   .mat-option.sto-option--clear {

@@ -1,18 +1,5 @@
 /* tslint:disable:no-string-literal */
-import {
-  AfterContentInit,
-  AfterViewInit,
-  ContentChildren,
-  Directive,
-  ElementRef,
-  HostBinding,
-  HostListener,
-  Inject,
-  Input,
-  OnDestroy,
-  Optional,
-  QueryList
-} from '@angular/core';
+import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, HostListener, Input, OnDestroy, QueryList, inject } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Subject, Subscription } from 'rxjs';
@@ -28,6 +15,9 @@ import { DateRange, MatDateRangeInput } from '@angular/material/datepicker';
   standalone: true
 })
 export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDestroy {
+  private hideFormFieldTitle = inject(HIDE_FORM_FIELD_TITLE, { optional: true });
+  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+
   @ContentChildren(MatFormFieldControl)
   input: QueryList<MatFormFieldControl<unknown>>;
   @Input()
@@ -36,11 +26,6 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
   title = '';
   private destroyed$ = new Subject();
   private titleSub: Subscription;
-
-  constructor(
-    @Optional() @Inject(HIDE_FORM_FIELD_TITLE) private hideFormFieldTitle: boolean,
-    private el: ElementRef<HTMLElement>) {
-  }
 
   ngAfterViewInit(): void {
     const el = this.el.nativeElement;

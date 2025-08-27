@@ -1,21 +1,22 @@
+@use 'sass:map' as map;
 @use '@angular/material' as mat;
 @import 'theme';
 @import 'typography';
 
 @mixin sto-appheader-theme($theme, $variables) {
-  $primary: map_get($variables, primary);
-  $accent: mat.m2-get-color-from-palette(map_get($theme, accent), resting);
-  $hover-accent: mat.m2-get-color-from-palette(map_get($theme, accent), hover);
-  $color: map_get($variables, color);
-  $border-color: map_get($variables, border-color);
-  $background-color: map_get($variables, card-bg);
-  $hover-bg-color: map_get($variables, hover-bg);
-  $selected-color: map_get($variables, selected-bg);
-  $indicators: map-get($theme, indicators);
-  $warning-palette: map_get($indicators, warning);
+  $primary: map.get($variables, primary);
+  $accent: mat.m2-get-color-from-palette(map.get($theme, accent), resting);
+  $hover-accent: mat.m2-get-color-from-palette(map.get($theme, accent), hover);
+  $color: map.get($variables, color);
+  $border-color: map.get($variables, border-color);
+  $background-color: map.get($variables, card-bg);
+  $hover-bg-color: map.get($variables, hover-bg);
+  $selected-color: map.get($variables, selected-bg);
+  $indicators: map.get($theme, indicators);
+  $warning-palette: map.get($indicators, warning);
   $warning-color: mat.m2-get-color-from-palette($warning-palette, resting);
-  $icon-color: map_get($variables, icon);
-  $hover-color: map_get($variables, hover-color);
+  $icon-color: map.get($variables, icon);
+  $hover-color: map.get($variables, hover-color);
 
   .sto-header {
     background-color: $background-color !important;

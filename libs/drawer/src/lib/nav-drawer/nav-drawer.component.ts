@@ -1,14 +1,5 @@
-import { NgForOf, NgIf } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
+
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { StoThemeService } from '@ngx-stoui/common';
@@ -17,22 +8,22 @@ import { NavDrawerItemComponent } from './nav-drawer-item/nav-drawer-item.compon
 import { Navigation } from './navigation';
 
 @Component({
-  selector: 'sto-nav-drawer',
-  templateUrl: './nav-drawer.component.html',
-  styleUrls: ['./nav-drawer.component.scss', './nav-drawer.theme.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [overlayAnimation],
-  standalone: true,
-  imports: [
+    selector: 'sto-nav-drawer',
+    templateUrl: './nav-drawer.component.html',
+    styleUrls: ['./nav-drawer.component.scss', './nav-drawer.theme.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [overlayAnimation],
+    imports: [
     MatButtonModule,
     MatIconModule,
-    NavDrawerItemComponent,
-    NgForOf,
-    NgIf,
-  ],
+    NavDrawerItemComponent
+]
 })
 export class NavDrawerComponent implements AfterViewInit {
+  private themeService = inject(StoThemeService);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input()
   collapsed = false;
   @Input()
@@ -42,11 +33,6 @@ export class NavDrawerComponent implements AfterViewInit {
   @Output()
   activate = new EventEmitter();
   public headerOffset = 64;
-
-  constructor(
-    private themeService: StoThemeService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngAfterViewInit() {
     this.themeService.getActiveTypography().subscribe((typography) => {

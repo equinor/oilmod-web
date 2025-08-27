@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation, inject } from '@angular/core';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -11,15 +11,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
  * Has a built-in loading/progress bar.
  */
 @Component({
-  selector: 'sto-action-footer',
-  templateUrl: './sto-action-footer.component.html',
-  styleUrls: [ './sto-action-footer.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [ MatIconModule, MatButtonModule, MatButtonToggleModule, MatProgressBarModule, NgIf ],
+    selector: 'sto-action-footer',
+    templateUrl: './sto-action-footer.component.html',
+    styleUrls: ['./sto-action-footer.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [MatIconModule, MatButtonModule, MatButtonToggleModule, MatProgressBarModule]
 })
 export class StoActionFooterComponent implements OnInit, OnDestroy {
+  private renderer = inject(Renderer2);
+
   /**
    * Triggers if the progressbar should be visible or not.
    */
@@ -36,9 +37,6 @@ export class StoActionFooterComponent implements OnInit, OnDestroy {
   @HostBinding('style.position') @Input() position = 'fixed';
   @HostBinding('class.sto-action-footer')
   private actionFooterClass = true;
-
-  constructor(private renderer: Renderer2) {
-  }
 
   ngOnDestroy(): void {
     if ( this.shouldAddClass ) {

@@ -39,3 +39,7 @@ body,
   @include mat.core-typography($sto-l-typography);
   @include mat.all-component-typographies($sto-l-typography);
 }
+
+body {
+  --mat-sys-primary: var(--primary-resting);
+}

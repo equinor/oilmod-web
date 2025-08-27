@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Column, ColumnGroup } from '../columns';
 
+
 @Component({
-  selector: 'sto-datatable-header-group',
-  templateUrl: './sto-datatable-header-group.component.html',
-  styleUrls: [ './sto-datatable-header-group.component.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'sto-datatable-header-group',
+    templateUrl: './sto-datatable-header-group.component.html',
+    styleUrls: ['./sto-datatable-header-group.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: []
 })
 export class StoDatatableHeaderGroupComponent implements OnChanges {
   @Input()

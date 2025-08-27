@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // @ts-ignore
 import { ConfirmModule, ConfirmService } from '@ngx-stoui/common';
@@ -6,11 +6,12 @@ import { moduleMetadata } from '@storybook/angular';
 import { Meta, Story } from '@storybook/angular/types-6-0';
 
 @Component({
-  selector: 'app-confirm-demo',
-  template: ` <button (click)="show()" mat-button>Show confirm</button> `,
+    selector: 'app-confirm-demo',
+    template: ` <button (click)="show()" mat-button>Show confirm</button> `
 })
 class ConfirmDemoComponent {
-  constructor(private confirm: ConfirmService) {}
+  private confirm = inject(ConfirmService);
+
 
   show() {
     this.confirm.confirm(
@@ -22,8 +23,8 @@ class ConfirmDemoComponent {
 }
 
 @NgModule({
-  declarations: [ConfirmDemoComponent],
-  exports: [ConfirmDemoComponent],
+    imports: [ConfirmDemoComponent],
+    exports: [ConfirmDemoComponent],
 })
 class ConfirmerModule {}
 

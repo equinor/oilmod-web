@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 
 /**
  * stoSelectTextOnFocus listens for input focus events, and selects the contents of the input
@@ -9,10 +9,12 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   standalone: true
 })
 export class StoSelectTextOnFocusDirective {
+  private elementRef = inject(ElementRef);
+
 
   private _el: HTMLInputElement;
 
-  constructor(private elementRef: ElementRef) {
+  constructor() {
     this._el = this.elementRef.nativeElement;
   }
 

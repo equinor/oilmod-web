@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,14 +16,17 @@ import { moduleMetadata } from '@storybook/angular';
 import { Meta, Story } from '@storybook/angular/types-6-0';
 
 @Component({
-  selector: 'wrapper',
-  template: 'Hi',
+    selector: 'wrapper',
+    template: 'Hi',
+    standalone: false
 })
 class WrapperComponent {}
 
 @Injectable({ providedIn: 'root' })
 class IconService {
-  constructor(private iconReg: MatIconRegistry) {
+  private iconReg = inject(MatIconRegistry);
+
+  constructor() {
     this.iconReg.setDefaultFontSetClass('material-icons-outline');
   }
 }

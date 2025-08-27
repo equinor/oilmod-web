@@ -30,7 +30,9 @@ import { NgIf } from '@angular/common';
                             [formControl]="control">
           </sto-number-input>
           <span matSuffix>$</span>
-          <mat-error *ngIf="control.hasError('required')">{{ control.getError('required') }}</mat-error>
+          @if (control.hasError('required')) {
+            <mat-error>{{ control.getError('required') }}</mat-error>
+          }
         </mat-form-field>
         <br>
         {{control.value}}

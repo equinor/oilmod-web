@@ -1,29 +1,30 @@
 <mat-expansion-panel [disabled]="true"
-                     [expanded]="expanded"
-                     #panel
-                     [hideToggle]="true"
-                     [ngClass]="{'sto-filter' : true}">
+  [expanded]="expanded"
+  #panel
+  [hideToggle]="true"
+  [ngClass]="{'sto-filter' : true}">
   <mat-expansion-panel-header [expandedHeight]="'40px'"
-                              [collapsedHeight]="'40px'">
+    [collapsedHeight]="'40px'">
     <mat-panel-title>
       <ng-content select="sto-filter-title"></ng-content>
-      <mat-chip-listbox [style.opacity]="panel.expanded ? 0 : 1"
-                     *ngIf="filterList"
-                     style="margin-left: 16px">
-        <mat-chip-option (removed)="_clearFilter(f.key, f.index)"
-                  *ngFor="let f of filterList"
-                  [removable]="true"
-                  [selected]="true"
-                  [value]="f.key"
-                  style="margin: 2px 4px">
-          <span style="margin-bottom: -4px">{{ f.value }}</span>
-          <mat-icon matChipRemove>cancel</mat-icon>
-
-        </mat-chip-option>
-      </mat-chip-listbox>
+      @if (filterList) {
+        <mat-chip-listbox [style.opacity]="panel.expanded ? 0 : 1"
+          style="margin-left: 16px">
+          @for (f of filterList; track f) {
+            <mat-chip-option (removed)="_clearFilter(f.key, f.index)"
+              [removable]="true"
+              [selected]="true"
+              [value]="f.key"
+              style="margin: 2px 4px">
+              <span style="margin-bottom: -4px">{{ f.value }}</span>
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip-option>
+          }
+        </mat-chip-listbox>
+      }
     </mat-panel-title>
     <span class="content-wrapper"
-          #tableActions>
+      #tableActions>
       <ng-content select="sto-filter-table-actions">
 
       </ng-content>
@@ -31,20 +32,19 @@
     </span>
 
     <span class="content-wrapper"
-          #filterActions>
-      <sto-filter-actions-bar #contentWrapper2
-                              *ngIf="expandable"
-                              [expanded]="expanded"
-                              [expandable]="expandable"
-                              (toggle)="toggle()">
-
-        <ng-content select="sto-filter-actions"></ng-content>
-
-      </sto-filter-actions-bar>
+      #filterActions>
+      @if (expandable) {
+        <sto-filter-actions-bar #contentWrapper2
+          [expanded]="expanded"
+          [expandable]="expandable"
+          (toggle)="toggle()">
+          <ng-content select="sto-filter-actions"></ng-content>
+        </sto-filter-actions-bar>
+      }
     </span>
   </mat-expansion-panel-header>
   <div class="sto-filter-form"
-       #filterForm>
+    #filterForm>
     <ng-content></ng-content>
   </div>
 </mat-expansion-panel>

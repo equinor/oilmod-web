@@ -1,17 +1,18 @@
+@use 'sass:map' as map;
 @use '@angular/material' as mat;
 @import 'theme';
 @import 'typography';
 
 @mixin sto-filterpanel-theme($theme, $variables) {
-  $primary: map_get($variables, primary);
-  $color: map_get($variables, color);
-  $secondary: map_get($variables, secondary);
-  $border-color: map_get($variables, border-color);
-  $background-color: map_get($variables, app-bar);
-  $icon-color: map_get($variables, icon);
-  $icon-hover: map-get($variables, icon-hover);
-  $hover-color: map_get($variables, hover-bg);
-  $selected-color: map_get($variables, selected-bg);
+  $primary: map.get($variables, primary);
+  $color: map.get($variables, color);
+  $secondary: map.get($variables, secondary);
+  $border-color: map.get($variables, border-color);
+  $background-color: map.get($variables, app-bar);
+  $icon-color: map.get($variables, icon);
+  $icon-hover: map.get($variables, icon-hover);
+  $hover-color: map.get($variables, hover-bg);
+  $selected-color: map.get($variables, selected-bg);
 
   .sto-filter.mat-expansion-panel {
     .mat-expansion-panel-header {

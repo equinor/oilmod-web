@@ -43,6 +43,7 @@ documentation.json
 
 .angular
 .nx/cache
+.nx/workspace-data
 migrations.json
 
 .cursor\rules\nx-rules.mdc

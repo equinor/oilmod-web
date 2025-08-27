@@ -17,7 +17,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NumberFormatPipe implements PipeTransform {
 
-  transform(value: number | string, unit: string = '', abs?: boolean, appendDecimals = true, numberOfDecimals = 3): string | null {
+  transform(value: number | string, unit = '', abs?: boolean, appendDecimals = true, numberOfDecimals = 3): string | null {
     if ( value !== 0 && !value ) {
       return '';
     }

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '@ngx-stoui/testing';
+// Import only the minimal material modules to avoid pulling BrowserModule twice via large aggregated testing module.
 import { ConfirmModule } from './sto-confirm-dialog.module';
 import { ConfirmService } from './sto-confirm-dialog.service';
 import DoneCallback = jest.DoneCallback;
@@ -15,9 +16,10 @@ let page: Page;
 @Component({
   selector: 'sto-spec-wrap',
   template: ` <button (click)="confirm()" mat-button>Confirm</button>`,
+  imports: [CommonModule, MatButtonModule, MatDialogModule, ConfirmModule],
 })
 class WrapperComponent {
-  constructor(public confirmSvc: ConfirmService) {}
+  confirmSvc = inject(ConfirmService);
 
   confirm() {
     this.confirmSvc.confirm('Confirm message');
@@ -27,8 +29,7 @@ class WrapperComponent {
 describe('ConfirmComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, MaterialModule, ConfirmModule],
-      declarations: [WrapperComponent],
+      imports: [WrapperComponent],
     })
       .compileComponents()
       .then(createComponent);
@@ -79,7 +80,7 @@ class Page {
 
   constructor() {
     this.confirmBtn = fixture.debugElement.query(
-      By.directive(MatButton)
+      By.directive(MatButton),
     ).nativeElement;
   }
 }

@@ -7,8 +7,7 @@ import { ErrorDialogService } from './error-dialog.service';
 import { ErrorHandlerService } from './error-handler.service';
 
 @NgModule({
-  declarations: [DialogComponent],
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
-  providers: [ErrorHandlerService, ErrorDialogService],
+    imports: [CommonModule, MatDialogModule, MatButtonModule, DialogComponent],
+    providers: [ErrorHandlerService, ErrorDialogService],
 })
 export class ErrorHandlerModule {}

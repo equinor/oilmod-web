@@ -1,111 +1,153 @@
-<div class="sto-nav-drawer--collapsed__item"
-     *ngIf="collapsed">
-  <a mat-button
-     [title]="navigationItem.label"
-     [class.disabled]="navigationItem.disabled"
-     (click)="activate.emit(navigationItem)"
-     routerLinkActive="active"
-     [href]="navigationItem.link"
-     *ngIf="navigationItem.link && !navigationItem.children">
-    <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
-    <mat-icon *ngIf="navigationItem.svgIcon"
-              [svgIcon]="navigationItem.icon"></mat-icon>
-  </a>
-  <a mat-button
-     [title]="navigationItem.label"
-     [class.disabled]="navigationItem.disabled"
-     routerLinkActive="active"
-     (click)="activate.emit(navigationItem)"
-     [routerLink]="navigationItem.route"
-     *ngIf="navigationItem.route && !navigationItem.children">
-    <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
-    <mat-icon *ngIf="navigationItem.svgIcon"
-              [svgIcon]="navigationItem.icon"></mat-icon>
-  </a>
-  <button mat-button
-          [title]="navigationItem.label"
-          *ngIf="navigationItem.children"
-          [matMenuTriggerFor]="menu"
-          [disabled]="navigationItem.disabled">
-    <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
-    <mat-icon *ngIf="navigationItem.svgIcon"
-              [svgIcon]="navigationItem.icon"></mat-icon>
-  </button>
-  <mat-menu #menu="matMenu"
-            xPosition="after"
-            [overlapTrigger]="true"
-            backdropClass="sto-nav-drawer-menu">
-    <span mat-menu-item
+@if (collapsed) {
+  <div class="sto-nav-drawer--collapsed__item"
+    >
+    @if (navigationItem.link && !navigationItem.children) {
+      <a mat-button
+        [title]="navigationItem.label"
+        [class.disabled]="navigationItem.disabled"
+        (click)="activate.emit(navigationItem)"
+        routerLinkActive="active"
+        [href]="navigationItem.link"
+        >
+        @if (!navigationItem.svgIcon) {
+          <mat-icon>{{ navigationItem.icon }}</mat-icon>
+        }
+        @if (navigationItem.svgIcon) {
+          <mat-icon
+          [svgIcon]="navigationItem.icon"></mat-icon>
+        }
+      </a>
+    }
+    @if (navigationItem.route && !navigationItem.children) {
+      <a mat-button
+        [title]="navigationItem.label"
+        [class.disabled]="navigationItem.disabled"
+        routerLinkActive="active"
+        (click)="activate.emit(navigationItem)"
+        [routerLink]="navigationItem.route"
+        >
+        @if (!navigationItem.svgIcon) {
+          <mat-icon>{{ navigationItem.icon }}</mat-icon>
+        }
+        @if (navigationItem.svgIcon) {
+          <mat-icon
+          [svgIcon]="navigationItem.icon"></mat-icon>
+        }
+      </a>
+    }
+    @if (navigationItem.children) {
+      <button mat-button
+        [title]="navigationItem.label"
+        [matMenuTriggerFor]="menu"
+        [disabled]="navigationItem.disabled">
+        @if (!navigationItem.svgIcon) {
+          <mat-icon>{{ navigationItem.icon }}</mat-icon>
+        }
+        @if (navigationItem.svgIcon) {
+          <mat-icon
+          [svgIcon]="navigationItem.icon"></mat-icon>
+        }
+      </button>
+    }
+    <mat-menu #menu="matMenu"
+      xPosition="after"
+      [overlapTrigger]="true"
+      backdropClass="sto-nav-drawer-menu">
+      @if (navigationItem.title) {
+        <span mat-menu-item
           class="no-hover"
           (click)="$event.stopPropagation()"
           [disableRipple]="true"
-          *ngIf="navigationItem.title"
-          style="cursor: default;">{{ navigationItem.title }}</span>
-    <mat-divider *ngIf="navigationItem.title"></mat-divider>
-    <ng-container *ngFor="let item of navigationItem.children">
-      <a [routerLink]="item.route"
-         (click)="activate.emit(navigationItem)"
-         [disabled]="item.disabled"
-         [class.disabled]="item.disabled"
-         routerLinkActive="active-menu-route"
-         mat-menu-item
-         *ngIf="item.route">
-        {{ item.label }}
-      </a>
-      <a [href]="item.link"
-         mat-menu-item
-         [attr.target]="item.target || null"
-         (click)="activate.emit(navigationItem)"
-         [disabled]="item.disabled"
-         [class.disabled]="item.disabled"
-         *ngIf="item.link">
-        {{ item.label }}
-      </a>
-    </ng-container>
-  </mat-menu>
-</div>
-<div class="sto-nav-drawer--expanded__item"
-     [class.divider-below]="navigationItem.divider === 'below'"
-     [class.divider-above]="navigationItem.divider === 'above'"
-     *ngIf="!collapsed && navigationItem.children"
-     [class.disabled]="navigationItem.disabled"
-     (click)="toggleExpansionState()">
-  <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
-  <mat-icon *ngIf="navigationItem.svgIcon"
-            [svgIcon]="navigationItem.icon"></mat-icon>
-  <a>{{ navigationItem.label }}</a>
-  <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
-</div>
-<a class="sto-nav-drawer--expanded__item"
-   [class.divider-below]="navigationItem.divider === 'below'"
-   [class.divider-above]="navigationItem.divider === 'above'"
-   [href]="navigationItem.link"
-   (click)="activate.emit(navigationItem)"
-   matRipple
-   *ngIf="!collapsed && !navigationItem.children && navigationItem.link"
-   [class.disabled]="navigationItem.disabled">
-  <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
-  <mat-icon *ngIf="navigationItem.svgIcon"
-            [svgIcon]="navigationItem.icon"></mat-icon>
-  <span>{{ navigationItem.label }}</span>
-</a>
-<a class="sto-nav-drawer--expanded__item"
-   [class.divider-below]="navigationItem.divider === 'below'"
-   [class.divider-above]="navigationItem.divider === 'above'"
-   [routerLink]="navigationItem.route"
-   (click)="activate.emit(navigationItem)"
-   routerLinkActive="active"
-   matRipple
-   *ngIf="!collapsed && !navigationItem.children && navigationItem.route"
-   [class.disabled]="navigationItem.disabled">
-  <mat-icon *ngIf="!navigationItem.svgIcon">{{ navigationItem.icon }}</mat-icon>
-  <mat-icon *ngIf="navigationItem.svgIcon"
-            [svgIcon]="navigationItem.icon"></mat-icon>
-  <span>{{ navigationItem.label }}</span>
-</a>
-<sto-nav-drawer-list [@bodyExpansion]="expansionState"
-                     (activate)="activate.emit(navigationItem)"
-                     *ngIf="navigationItem.children"
-                     [navigationItems]="navigationItem.children"></sto-nav-drawer-list>
+        style="cursor: default;">{{ navigationItem.title }}</span>
+      }
+      @if (navigationItem.title) {
+        <mat-divider></mat-divider>
+      }
+      @for (item of navigationItem.children; track item) {
+        @if (item.route) {
+          <a [routerLink]="item.route"
+            (click)="activate.emit(navigationItem)"
+            [disabled]="item.disabled"
+            [class.disabled]="item.disabled"
+            routerLinkActive="active-menu-route"
+            mat-menu-item
+            >
+            {{ item.label }}
+          </a>
+        }
+        @if (item.link) {
+          <a [href]="item.link"
+            mat-menu-item
+            [attr.target]="item.target || null"
+            (click)="activate.emit(navigationItem)"
+            [disabled]="item.disabled"
+            [class.disabled]="item.disabled"
+            >
+            {{ item.label }}
+          </a>
+        }
+      }
+    </mat-menu>
+  </div>
+}
+@if (!collapsed && navigationItem.children) {
+  <div class="sto-nav-drawer--expanded__item"
+    [class.divider-below]="navigationItem.divider === 'below'"
+    [class.divider-above]="navigationItem.divider === 'above'"
+    [class.disabled]="navigationItem.disabled"
+    (click)="toggleExpansionState()">
+    @if (!navigationItem.svgIcon) {
+      <mat-icon>{{ navigationItem.icon }}</mat-icon>
+    }
+    @if (navigationItem.svgIcon) {
+      <mat-icon
+      [svgIcon]="navigationItem.icon"></mat-icon>
+    }
+    <a>{{ navigationItem.label }}</a>
+    <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
+  </div>
+}
+@if (!collapsed && !navigationItem.children && navigationItem.link) {
+  <a class="sto-nav-drawer--expanded__item"
+    [class.divider-below]="navigationItem.divider === 'below'"
+    [class.divider-above]="navigationItem.divider === 'above'"
+    [href]="navigationItem.link"
+    (click)="activate.emit(navigationItem)"
+    matRipple
+    [class.disabled]="navigationItem.disabled">
+    @if (!navigationItem.svgIcon) {
+      <mat-icon>{{ navigationItem.icon }}</mat-icon>
+    }
+    @if (navigationItem.svgIcon) {
+      <mat-icon
+      [svgIcon]="navigationItem.icon"></mat-icon>
+    }
+    <span>{{ navigationItem.label }}</span>
+  </a>
+}
+@if (!collapsed && !navigationItem.children && navigationItem.route) {
+  <a class="sto-nav-drawer--expanded__item"
+    [class.divider-below]="navigationItem.divider === 'below'"
+    [class.divider-above]="navigationItem.divider === 'above'"
+    [routerLink]="navigationItem.route"
+    (click)="activate.emit(navigationItem)"
+    routerLinkActive="active"
+    matRipple
+    [class.disabled]="navigationItem.disabled">
+    @if (!navigationItem.svgIcon) {
+      <mat-icon>{{ navigationItem.icon }}</mat-icon>
+    }
+    @if (navigationItem.svgIcon) {
+      <mat-icon
+      [svgIcon]="navigationItem.icon"></mat-icon>
+    }
+    <span>{{ navigationItem.label }}</span>
+  </a>
+}
+@if (navigationItem.children) {
+  <sto-nav-drawer-list [@bodyExpansion]="expansionState"
+    (activate)="activate.emit(navigationItem)"
+  [navigationItems]="navigationItem.children"></sto-nav-drawer-list>
+}
 
 

@@ -12,22 +12,23 @@ let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
 @Component({
-  selector: 'sto-wrap-action-footer',
-  template:
-    '<sto-action-footer><button mat-button>Save</button></sto-action-footer>',
+    selector: 'sto-wrap-action-footer',
+    template: '<sto-action-footer><button mat-button>Save</button></sto-action-footer>',
+    imports: [MatButtonModule,
+        StoActionFooterComponent]
 })
 class WrapperComponent {}
 
 describe('StoActionFooterComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MatButtonModule,
         StoActionFooterComponent,
         NoopAnimationsModule,
-      ],
-      declarations: [WrapperComponent],
-    })
+        WrapperComponent,
+    ],
+})
       .overrideComponent(StoActionFooterComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })

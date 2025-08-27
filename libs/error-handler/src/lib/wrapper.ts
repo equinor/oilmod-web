@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import {
   HttpClient,
   HttpErrorResponse,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { Component, Injectable, NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, Injectable, NgModule, inject } from '@angular/core';
+import { MatButtonModule, MatButton } from '@angular/material/button';
 import {
   CUSTOM_ERROR_HANDLER,
   ERROR_LOGGER,
@@ -17,19 +17,22 @@ import {
 } from '@ngx-stoui/error-handler';
 
 @Component({
-  selector: 'next-wrapper',
-  template: `
+    selector: 'next-wrapper',
+    template: `
     <button mat-button (click)="overRide(404)">Overridden 404</button>
-    <button mat-button (click)="showError(s)" *ngFor="let s of errors">
-      {{ s }} {{ s === 401 ? '(App Override)' : '' }}
-    </button>
-  `,
-  providers: [],
+    @for (s of errors; track s) {
+      <button mat-button (click)="showError(s)">
+        {{ s }} {{ s === 401 ? '(App Override)' : '' }}
+      </button>
+    }
+    `,
+    providers: [],
+    imports: [MatButton]
 })
 export class NextWrapperComponent {
-  public errors = [0, 400, 401, 403, 404, 409, 500, 501, 503];
+  private service = inject(ErrorHandlerService);
 
-  constructor(private service: ErrorHandlerService) {}
+  public errors = [0, 400, 401, 403, 404, 409, 500, 501, 503];
 
   showError(status: number) {
     const err = new HttpErrorResponse({
@@ -80,7 +83,8 @@ export class ErrorHandlerImpl implements StoErrorHandler {
   providedIn: 'root',
 })
 export class Logger {
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+
 
   log(err: HttpError) {
     // This method will typically go to the application backend or a central log repository
@@ -93,13 +97,12 @@ function LoggerFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [NextWrapperComponent],
-  exports: [NextWrapperComponent],
-  imports: [CommonModule, MatButtonModule],
-  providers: [
-    { provide: CUSTOM_ERROR_HANDLER, useClass: ErrorHandlerImpl },
-    { provide: ERROR_LOGGER, useFactory: LoggerFactory, deps: [HttpClient] },
-    provideHttpClient(withInterceptorsFromDi()),
-  ],
+    exports: [NextWrapperComponent],
+    imports: [CommonModule, MatButtonModule, NextWrapperComponent],
+    providers: [
+        { provide: CUSTOM_ERROR_HANDLER, useClass: ErrorHandlerImpl },
+        { provide: ERROR_LOGGER, useFactory: LoggerFactory, deps: [HttpClient] },
+        provideHttpClient(withInterceptorsFromDi()),
+    ],
 })
 export class WrapperModule {}

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Optional, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { Breadcrumb, BreadcrumbConfig, NAVIGATION_HOME_ICON } from './breadcrumb';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 
 /**
@@ -11,14 +11,15 @@ import { MatIconModule } from '@angular/material/icon';
  * It shows both a home icon and the path that could be an url or a command/function (e.g open a drawer, popup etc).
  */
 @Component({
-  selector: 'sto-breadcrumbs',
-  templateUrl: './sto-breadcrumbs.component.html',
-  styleUrls: [ './sto-breadcrumbs.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [ MatIconModule, NgIf, NgForOf, RouterLink ]
+    selector: 'sto-breadcrumbs',
+    templateUrl: './sto-breadcrumbs.component.html',
+    styleUrls: ['./sto-breadcrumbs.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [MatIconModule, RouterLink]
 })
 export class StoBreadcrumbsComponent implements OnDestroy {
+  private router = inject(Router);
+
 
   @HostBinding('class.sto-breadcrumb')
   css = true;
@@ -47,7 +48,9 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   @Input() homeIcon = 'home';
   public iconConfig: { icon?: string; svgIcon?: string; text?: string; };
 
-  constructor(private router: Router, @Inject(NAVIGATION_HOME_ICON) @Optional() iconConfig: BreadcrumbConfig) {
+  constructor() {
+    const iconConfig = inject<BreadcrumbConfig>(NAVIGATION_HOME_ICON, { optional: true });
+
     this.iconConfig = iconConfig || { icon: 'apps' };
   }
 

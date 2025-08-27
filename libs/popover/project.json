@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "libs/popover/src",
   "prefix": "sto",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -30,7 +31,41 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/popover/.storybook",
+        "browserTarget": "popover:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/popover",
+        "configDir": "libs/popover/.storybook",
+        "browserTarget": "popover:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c libs/popover/.storybook --url=http://localhost:4400"
+      }
     }
-  },
-  "tags": []
+  }
 }

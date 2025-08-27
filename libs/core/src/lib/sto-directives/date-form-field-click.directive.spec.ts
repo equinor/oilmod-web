@@ -1,10 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { MatFormField } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import {
+  MatDatepicker,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '@ngx-stoui/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { DateFormFieldClickDirective } from './date-form-field-click.directive';
 
 let comp: WrapperComponent;
@@ -13,6 +18,14 @@ let page: Page;
 
 @Component({
   selector: 'sto-spec-wrap',
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    DateFormFieldClickDirective,
+  ],
   template: `
     <mat-form-field [stoDateFormFieldClick]="picker">
       <input matInput [matDatepicker]="picker" placeholder="Date" />
@@ -26,8 +39,8 @@ class WrapperComponent {}
 describe('DateFormFieldClickDirective', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [DateFormFieldClickDirective, CommonModule, MaterialModule],
-      declarations: [WrapperComponent],
+      imports: [WrapperComponent],
+      providers: [provideNoopAnimations()],
     })
       .compileComponents()
       .then(createComponent);

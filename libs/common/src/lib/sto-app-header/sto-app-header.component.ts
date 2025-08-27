@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Breadcrumb } from '../sto-breadcrumbs/breadcrumb';
 import { MatMenuModule, MatMenuPanel } from '@angular/material/menu';
 import { StoThemeService } from '../theme/theme.service';
@@ -6,7 +6,7 @@ import { typography, TypographyName } from '../theme/models';
 import { fromEvent, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { StoBreadcrumbsModule } from '../sto-breadcrumbs/sto-breadcrumbs.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,23 +21,25 @@ import { MatIconModule } from '@angular/material/icon';
  * </sto-app-header>
  */
 @Component({
-  selector: 'sto-app-header',
-  templateUrl: './sto-app-header.component.html',
-  styleUrls: [ './sto-app-header.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
+    selector: 'sto-app-header',
+    templateUrl: './sto-app-header.component.html',
+    styleUrls: ['./sto-app-header.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
     StoBreadcrumbsModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
     LayoutModule,
-    NgIf,
     AsyncPipe
-  ]
+]
 })
 export class StoAppHeaderComponent implements OnInit {
+  private themeService = inject(StoThemeService);
+  private breakpointObserver = inject(BreakpointObserver);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * testEnvironment tells the header whether or not to style itself defining a test-environment
    */
@@ -67,13 +69,6 @@ export class StoAppHeaderComponent implements OnInit {
   public darkmode$: Observable<boolean>;
   public isSmall$: Observable<boolean>;
   public menuOpen: boolean;
-
-  constructor(
-    private themeService: StoThemeService,
-    private breakpointObserver: BreakpointObserver,
-    private cdr: ChangeDetectorRef
-  ) {
-  }
 
   toggleTheme() {
     const themeName = document.body.classList.contains('sto-dark-theme') ? 'light' : 'dark';

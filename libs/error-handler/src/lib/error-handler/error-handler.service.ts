@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action, HttpError } from './http-error';
 import { ErrorHandler, ErrorLogger, Handler } from './error-handler';
@@ -12,15 +12,10 @@ import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER } from './token';
  * Service used to handle errors across our applications. Replaces the previous HttpErrorHandler
  */
 export class ErrorHandlerService implements ErrorHandler {
+  private errorDialogService = inject(ErrorDialogService);
+  private customHandler = inject<ErrorHandler>(CUSTOM_ERROR_HANDLER, { optional: true });
+  private logger = inject<ErrorLogger>(ERROR_LOGGER, { optional: true });
 
-  constructor(
-    private errorDialogService: ErrorDialogService,
-    // Optional custom error handler.
-    @Optional() @Inject(CUSTOM_ERROR_HANDLER) private customHandler: ErrorHandler,
-    // Optional logger. Nothing is logged if logger is not provided.
-    @Optional() @Inject(ERROR_LOGGER) private logger: ErrorLogger,
-  ) {
-  }
 
   /**
    * Global handler. This method will try (in order): passed in handler -> custom handler -> default handler for code -> defaultHandler

@@ -5,7 +5,8 @@
     "*.spec.ts",
     "*.stories.ts",
     "test.ts",
-    "wrapper.ts"
+    "wrapper.ts",
+    "storybook-static"
   ],
   "overrides": [
     {
@@ -30,7 +31,8 @@
             "prefix": "sto",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/prefer-standalone": "off"
       }
     },
     {

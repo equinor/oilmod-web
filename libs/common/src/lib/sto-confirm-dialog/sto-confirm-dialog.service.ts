@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   MatDialog,
   MatDialogConfig,
@@ -13,10 +13,9 @@ dialogConfig.panelClass = 'sto-dialog';
 
 @Injectable()
 export class ConfirmService {
-  public ref: MatDialogRef<ConfirmComponent> | null;
+  private dialog = inject(MatDialog);
 
-  constructor(private dialog: MatDialog) {
-  }
+  public ref: MatDialogRef<ConfirmComponent> | null;
 
   confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true, options = dialogConfig): Observable<boolean> {
     this.ref = this.dialog.open(ConfirmComponent, {

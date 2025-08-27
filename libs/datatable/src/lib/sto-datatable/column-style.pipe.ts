@@ -1,9 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Column, ColumnDisplay } from './columns';
 
-@Pipe({
-  name: 'columnStyle'
-})
+@Pipe({ name: 'columnStyle' })
 export class ColumnStylePipe implements PipeTransform {
 
   transform(column: Column, displayMode: ColumnDisplay, width?: number | null): {[klass: string]: unknown;} {

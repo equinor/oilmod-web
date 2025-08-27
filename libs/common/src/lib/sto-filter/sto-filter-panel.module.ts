@@ -15,9 +15,8 @@ import {
 import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  imports: [ CommonModule, MatExpansionModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatTooltipModule, MatChipsModule ],
-  exports: [ StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterTableActions ],
-  declarations: [ StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterActionsBar, StoFilterTableActions ]
+    imports: [CommonModule, MatExpansionModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatTooltipModule, MatChipsModule, StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterActionsBar, StoFilterTableActions],
+    exports: [StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterTableActions]
 })
 export class StoFilterPanelModule {
 }

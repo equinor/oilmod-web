@@ -1,10 +1,11 @@
+@use 'sass:map' as map;
 @import "./theme";
 
 $form-field-bg: rgba(#6687B8, 0.1);
 
 @mixin wysiwyg-theme($theme, $variables) {
-  $primary: map_get($variables, primary);
-  $border-color: map_get($variables, border-color);
+  $primary: map.get($variables, primary);
+  $border-color: map.get($variables, border-color);
 
   .sto-wysiwyg {
     &__actions {

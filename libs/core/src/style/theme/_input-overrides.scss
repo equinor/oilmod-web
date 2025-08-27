@@ -1,13 +1,14 @@
+@use 'sass:map' as map;
 @use '@angular/material' as mat;
 @import 'theme';
 @import 'typography';
 
 @mixin sto-input-override-theme($theme, $variables) {
-  $color: map_get($variables, color);
+  $color: map.get($variables, color);
   $form-field-bg: var(--bg-light);
   $border-radius: 4px;
-  $icon-color: map_get($variables, icon);
-  $icon-hover: map_get($variables, icon-hover);
+  $icon-color: map.get($variables, icon);
+  $icon-hover: map.get($variables, icon-hover);
 
   .sto-form__field,
   .sto-form__field.mat-mdc-form-field {

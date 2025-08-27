@@ -7,7 +7,7 @@ import { HighlightModule } from 'ngx-highlightjs';
 import { DemoComponent } from '../../demo.component';
 
 @Component({
-  template: `
+    template: `
     <sto-demo [code]="preferenceManagerComponentCode">
       <sto-filter-panel [expandable]="true"
                         [expanded]="true">
@@ -41,15 +41,14 @@ import { DemoComponent } from '../../demo.component';
 
 
   `,
-  standalone: true,
-  imports: [
-    StoFilterPanelModule,
-    StoPreferenceManagerComponent,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    HighlightModule,
-    DemoComponent
-  ]
+    imports: [
+        StoFilterPanelModule,
+        StoPreferenceManagerComponent,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        HighlightModule,
+        DemoComponent
+    ]
 })
 export class PreferenceManagerComponent {
   preferenceManagerComponentCode = preferenceManagerComponentCode;

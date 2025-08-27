@@ -17,8 +17,9 @@ let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
 @Component({
-  selector: 'sto-spec-wrap',
-  template: ''
+    selector: 'sto-spec-wrap',
+    template: '',
+    imports: [MaterialModule, ScrollingModule]
 })
 class WrapperComponent {
 }
@@ -27,9 +28,8 @@ describe('StoDatatableBodyComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ CommonModule, MaterialModule, ScrollingModule ],
-        declarations: [ StoDatatableBodyComponent, StoDatatableBodyRowComponent, WrapperComponent, ExecPipe, ColumnStylePipe ]
-      })
+    imports: [CommonModule, MaterialModule, ScrollingModule, StoDatatableBodyComponent, StoDatatableBodyRowComponent, WrapperComponent, ExecPipe, ColumnStylePipe]
+})
       .overrideComponent(StoDatatableBodyComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createComponent);

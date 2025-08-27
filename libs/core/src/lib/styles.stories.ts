@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -61,10 +61,10 @@ import { Meta, Story } from '@storybook/angular/types-6-0';
   `,
 })
 class DialogDemoComponent {
+  private dialog = inject(MatDialog);
+
   @Input()
   separatorLines: boolean;
-
-  constructor(private dialog: MatDialog) {}
 
   show(tmpl: TemplateRef<unknown>) {
     this.dialog.open(tmpl, {
@@ -133,42 +133,52 @@ export const StoTheme: Story<Record<string, unknown>> = (args) => ({
   <mat-tab-group>
   <mat-tab label="Buttons">
     <mat-card class="sto-card">
-    <div *ngFor="let color of colors">
-      <mat-card-subtitle class="sto-card__subtitle">
-    <h2>{{ color }}</h2>
-</mat-card-subtitle>
-    <button mat-button [color]="color">Mat Button</button>
-    <button mat-stroked-button [color]="color">Mat stroked Button</button>
-    <button mat-flat-button [color]="color">Mat flat Button</button>
-    <button mat-raised-button [color]="color">Mat raised Button</button>
-    <button mat-icon-button [color]="color"><mat-icon>home</mat-icon></button>
-</div>
-</mat-card>
+    @for (color of colors) {
+      <div>
+        <mat-card-subtitle class="sto-card__subtitle">
+          <h2>{{ color }}</h2>
+        </mat-card-subtitle>
+        <button mat-button [color]="color">Mat Button</button>
+        <button mat-stroked-button [color]="color">Mat stroked Button</button>
+        <button mat-flat-button [color]="color">Mat flat Button</button>
+        <button mat-raised-button [color]="color">Mat raised Button</button>
+        <button mat-icon-button [color]="color"><mat-icon>home</mat-icon></button>
+      </div>
+    }
+    </mat-card>
   </mat-tab>
   <mat-tab label="Cards">
-  <mat-card *ngFor="let c of colors" [ngClass]="'mat-' + c">
-  <mat-card-title>{{ c }}</mat-card-title>
-</mat-card>
-</mat-tab>
-<mat-tab label="Text">
-<mat-card class="sto-card">
-    <div class="container">
-    <div>
-    <p *ngFor="let color of colors" [ngClass]="'mat-' + color">&lt;p&gt; {{ color }}</p>
-</div>
-<div>
-    <span *ngFor="let color of colors" style="display: block" [ngClass]="'mat-' + color">
-    &lt;span&gt; {{ color }}
-</span>
-</div>
-<div>
-    <h2 *ngFor="let color of colors" style="display: block" [ngClass]="'mat-' + color">
-    &lt;h[1|2|3|4|5]&gt; {{ color }}
-</h2>
-</div>
-</div>
-</mat-card>
-</mat-tab>
+    @for (c of colors) {
+      <mat-card [ngClass]="'mat-' + c">
+        <mat-card-title>{{ c }}</mat-card-title>
+      </mat-card>
+    }
+  </mat-tab>
+  <mat-tab label="Text">
+    <mat-card class="sto-card">
+      <div class="container">
+        <div>
+          @for (color of colors) {
+            <p [ngClass]="'mat-' + color">&lt;p&gt; {{ color }}</p>
+          }
+        </div>
+        <div>
+          @for (color of colors) {
+            <span style="display: block" [ngClass]="'mat-' + color">
+              &lt;span&gt; {{ color }}
+            </span>
+          }
+        </div>
+        <div>
+          @for (color of colors) {
+            <h2 style="display: block" [ngClass]="'mat-' + color">
+              &lt;h2&gt; {{ color }}
+            </h2>
+          }
+        </div>
+      </div>
+    </mat-card>
+  </mat-tab>
 </mat-tab-group>
   `,
 });

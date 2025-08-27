@@ -1,17 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  forwardRef,
-  Input,
-  NgZone,
-  OnDestroy,
-  SecurityContext,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgZone, OnDestroy, SecurityContext, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
@@ -21,25 +8,28 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
 
 @Component({
-  selector: 'sto-wysiwyg',
-  templateUrl: './wysiwyg.component.html',
-  styleUrls: [ './wysiwyg.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => WysiwygComponent),
-      multi: true
-    }
-  ],
-  standalone: true,
-  imports: [
-    WysiwygActionsComponent,
-    WysiwygEditorComponent
-  ]
+    selector: 'sto-wysiwyg',
+    templateUrl: './wysiwyg.component.html',
+    styleUrls: ['./wysiwyg.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => WysiwygComponent),
+            multi: true
+        }
+    ],
+    imports: [
+        WysiwygActionsComponent,
+        WysiwygEditorComponent
+    ]
 })
 export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
+  private domSanitizer = inject(DomSanitizer);
+  private zone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
+
   // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('readonly')
   disabled: boolean;
@@ -49,13 +39,6 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   public active: string[] = [];
   public onTouched: unknown;
   private destroyed$ = new Subject<boolean>();
-
-  constructor(
-    private domSanitizer: DomSanitizer,
-    private zone: NgZone,
-    private cdr: ChangeDetectorRef
-  ) {
-  }
 
   ngAfterViewInit() {
     this.listenForSelectEvents();

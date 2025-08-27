@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Host, HostBinding } from '@angular/core';
+import { Directive, ElementRef, HostBinding, inject } from '@angular/core';
 import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
 import { fromEvent } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
@@ -9,13 +9,18 @@ import { switchMap, take } from 'rxjs/operators';
   standalone: true
 })
 export class MenuOverlayDirective {
+  private trigger = inject(MatMenuTrigger, { host: true });
+
   @HostBinding('style.left.px')
   left = 0;
   @HostBinding('style.top.px')
   top = 0;
   private readonly menu: MatMenuPanel;
 
-  constructor(@Host() private trigger: MatMenuTrigger, el: ElementRef<HTMLButtonElement>) {
+  constructor() {
+    const trigger = this.trigger;
+    const el = inject<ElementRef<HTMLButtonElement>>(ElementRef);
+
     this.menu = trigger.menu as MatMenuPanel;
     this.trigger.menuOpened.pipe(
       switchMap(() =>

@@ -7,10 +7,9 @@ const svg = ``;
 
 
 @Component({
-  selector: 'sto-popover',
-  standalone: true,
-  imports: [ OverlayModule, CommonModule ],
-  template: `
+    selector: 'sto-popover',
+    imports: [OverlayModule, CommonModule],
+    template: `
       <ng-template
               cdkConnectedOverlay
               (backdropClick)="trigger.close()"
@@ -39,9 +38,9 @@ const svg = ``;
               <ng-content select="[stoPopoverFooter]"></ng-content>
           </div>
       </ng-template>`,
-  styleUrls: [ './popover.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./popover.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PopoverComponent {
   public positions = [

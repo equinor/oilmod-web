@@ -11,7 +11,7 @@ export class NumberInputPipe implements PipeTransform {
   private DECIMAL_SEPARATOR = ',';
   private THOUSANDS_SEPARATOR = ' ';
 
-  transform(value: number | string | null, fractionSize: number = 5, dynamicFractionSize = false): string {
+  transform(value: number | string | null, fractionSize = 5, dynamicFractionSize = false): string {
     if ( !value && value !== 0 ) {
       return '';
     }
@@ -40,7 +40,7 @@ export class NumberInputPipe implements PipeTransform {
     return integer + fraction;
   }
 
-  parse(value: string, fractionSize: number = 5, dynamicFractionSize = false): string {
+  parse(value: string, fractionSize = 5, dynamicFractionSize = false): string {
     value = value + '';
     // eslint-disable-next-line
     const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;

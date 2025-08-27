@@ -1,9 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Column, Group } from './columns';
 
-@Pipe({
-  name: 'getGroupFlex'
-})
+@Pipe({ name: 'getGroupFlex' })
 export class GetGroupFlexPipe implements PipeTransform {
 
   transform(group: Group, columns: Array<Column>): string {

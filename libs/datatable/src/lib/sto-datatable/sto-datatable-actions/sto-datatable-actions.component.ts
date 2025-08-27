@@ -1,9 +1,9 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
-  selector: 'sto-datatable-actions',
-  templateUrl: './sto-datatable-actions.component.html',
-  styleUrls: [ './sto-datatable-actions.component.scss' ],
+    selector: 'sto-datatable-actions',
+    templateUrl: './sto-datatable-actions.component.html',
+    styleUrls: ['./sto-datatable-actions.component.scss']
 })
 
 export class StoDatatableActionsComponent {
@@ -16,8 +16,8 @@ export class StoDatatableActionsComponent {
 }
 
 @Component({
-  selector: 'sto-datatable-actions-left',
-  template: `
+    selector: 'sto-datatable-actions-left',
+    template: `
     <ng-content></ng-content>`
 })
 export class StoDataTableActionsLeftComponent {
@@ -26,8 +26,8 @@ export class StoDataTableActionsLeftComponent {
 }
 
 @Component({
-  selector: 'sto-datatable-actions-right',
-  template: `
+    selector: 'sto-datatable-actions-right',
+    template: `
     <ng-content></ng-content>`
 })
 export class StoDataTableActionsRightComponent {

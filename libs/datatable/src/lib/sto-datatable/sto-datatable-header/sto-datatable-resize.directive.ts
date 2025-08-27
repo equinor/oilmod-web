@@ -1,13 +1,15 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, inject } from '@angular/core';
 import { Column } from '../columns';
 import { fromEvent, ReplaySubject, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[stoDatatableResize]',
-  exportAs: 'stoDatatableResize'
+    selector: '[stoDatatableResize]',
+    exportAs: 'stoDatatableResize'
 })
 export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
+  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+
   @Input()
   column: Column;
   // eslint-disable-next-line @angular-eslint/no-output-native
@@ -24,10 +26,6 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   public width$ = new ReplaySubject<number | null>();
   private width: number;
   private moveComplete$ = new Subject<boolean>();
-
-
-  constructor(private el: ElementRef<HTMLElement>) {
-  }
 
   @HostListener('mousedown', [ '$event' ])
   onMouseDown(event: MouseEvent) {

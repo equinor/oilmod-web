@@ -152,7 +152,7 @@
 }
 
 .datatable-body-cell-label {
-  > span {
+  > * {
     display: inline-block;
     width: 100%;
     overflow: hidden;

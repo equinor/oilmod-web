@@ -1,3 +1,4 @@
+import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,8 +12,11 @@ import {
   KeyValueDiffers,
   Output,
   TemplateRef,
+  inject,
 } from '@angular/core';
+import { ColumnStylePipe } from '../../column-style.pipe';
 import { Column, ColumnDisplay } from '../../columns';
+import { ExecPipe } from '../../exec.pipe';
 import { rowClassFn } from '../../models';
 
 @Component({
@@ -20,14 +24,18 @@ import { rowClassFn } from '../../models';
   templateUrl: './sto-datatable-body-row.component.html',
   styleUrls: ['./sto-datatable-body-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     class: 'datatable-body-row',
   },
+  imports: [NgTemplateOutlet, NgClass, NgStyle, ExecPipe, ColumnStylePipe],
 })
 export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
   implements DoCheck
 {
+  private differs = inject(KeyValueDiffers);
+  private cdr = inject(ChangeDetectorRef);
+  private elRef = inject(ElementRef);
+
   @Input()
   responsiveView: TemplateRef<unknown>;
   @Input()
@@ -80,11 +88,9 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
     return column.$$id ?? column.prop;
   };
 
-  constructor(
-    private differs: KeyValueDiffers,
-    private cdr: ChangeDetectorRef,
-    private elRef: ElementRef
-  ) {
+  constructor() {
+    const differs = this.differs;
+
     this.rowDiffer = differs.find({}).create();
     this.element = this.elRef.nativeElement as HTMLDivElement;
   }

@@ -18,7 +18,7 @@ import {
   MatMenuTrigger
 } from '@angular/material/menu';
 import { take } from 'rxjs/operators';
-import { NgForOf, NgIf } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,15 +27,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivePreferencePipe } from './active-preference.pipe';
 
 @Component({
-  selector: 'sto-preference-manager',
-  templateUrl: './preference-manager.component.html',
-  styleUrls: [ './preference-manager.component.scss' ],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    NgForOf,
+    selector: 'sto-preference-manager',
+    templateUrl: './preference-manager.component.html',
+    styleUrls: ['./preference-manager.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
@@ -43,7 +40,7 @@ import { ActivePreferencePipe } from './active-preference.pipe';
     MatInputModule,
     MatProgressSpinnerModule,
     ActivePreferencePipe
-  ]
+]
 })
 export class PreferenceManagerComponent {
   @ViewChild('nameTmpl')

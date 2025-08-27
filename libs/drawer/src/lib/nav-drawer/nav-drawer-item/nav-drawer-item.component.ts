@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { NgForOf, NgIf } from '@angular/common';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -25,13 +25,11 @@ import { NavDrawerListComponent } from '../nav-drawer-list/nav-drawer-list.compo
 import { Navigation } from '../navigation';
 
 @Component({
-  selector: 'sto-nav-drawer-item',
-  templateUrl: './nav-drawer-item.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
+    selector: 'sto-nav-drawer-item',
+    templateUrl: './nav-drawer-item.component.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
     MatButtonModule,
     RouterLinkActive,
     MatIconModule,
@@ -39,29 +37,22 @@ import { Navigation } from '../navigation';
     MatMenuModule,
     MatDividerModule,
     NavDrawerListComponent,
-    MatRippleModule,
-    NgForOf,
-  ],
-  animations: [
-    /** Animation that rotates the indicator arrow. */
-    trigger('indicatorRotate', [
-      state('collapsed, void', style({ transform: 'rotate(0deg)' })),
-      state('expanded', style({ transform: 'rotate(180deg)' })),
-      transition(
-        'expanded <=> collapsed, void => collapsed',
-        animate(EXPANSION_PANEL_ANIMATION_TIMING)
-      ),
-    ]),
-    /** Animation that expands and collapses the panel content. */
-    trigger('bodyExpansion', [
-      state('collapsed, void', style({ height: '0px', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
-      transition(
-        'expanded <=> collapsed, void => collapsed',
-        animate(EXPANSION_PANEL_ANIMATION_TIMING)
-      ),
-    ]),
-  ],
+    MatRippleModule
+],
+    animations: [
+        /** Animation that rotates the indicator arrow. */
+        trigger('indicatorRotate', [
+            state('collapsed, void', style({ transform: 'rotate(0deg)' })),
+            state('expanded', style({ transform: 'rotate(180deg)' })),
+            transition('expanded <=> collapsed, void => collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        ]),
+        /** Animation that expands and collapses the panel content. */
+        trigger('bodyExpansion', [
+            state('collapsed, void', style({ height: '0px', visibility: 'hidden' })),
+            state('expanded', style({ height: '*', visibility: 'visible' })),
+            transition('expanded <=> collapsed, void => collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        ]),
+    ]
 })
 export class NavDrawerItemComponent {
   @Input()
