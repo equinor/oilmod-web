@@ -22,7 +22,6 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
   templateUrl: './sto-datatable-header.component.html',
   styleUrls: ['./sto-datatable-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     class: 'datatable-header',
   },

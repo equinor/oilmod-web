@@ -1,7 +1,26 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, NgZone, OnDestroy, Output, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { AsyncPipe, NgStyle, NgTemplateOutlet } from '@angular/common';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  inject,
+  Input,
+  NgZone,
+  OnDestroy,
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { fromEvent, Observable, of, Subject } from 'rxjs';
 import { debounceTime, map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { ColumnStylePipe } from './column-style.pipe';
 import { Column, ColumnDisplay, ColumnGroup, Group } from './columns';
 import {
   HeaderContextMenu,
@@ -14,25 +33,30 @@ import { observeWidth } from './observer';
 import { SelectionModes } from './selection-modes';
 import { StoDatatableActionsComponent } from './sto-datatable-actions/sto-datatable-actions.component';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
-import { NgStyle, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
 import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatable-header.component';
-import { ColumnStylePipe } from './column-style.pipe';
 
 @Component({
-    selector: 'sto-datatable',
-    templateUrl: './sto-datatable.component.html',
-    styleUrls: [
-        './sto-datatable.component.scss',
-        './sto-datatable-progress-bar.scss',
-    ],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-    host: {
-        class: 'sto-datatable ngx-datatable',
-    },
-    imports: [StoDatatableHeaderGroupComponent, StoDatatableHeaderComponent, StoDatatableBodyComponent, NgStyle, NgTemplateOutlet, AsyncPipe, ColumnStylePipe]
+  selector: 'sto-datatable',
+  templateUrl: './sto-datatable.component.html',
+  styleUrls: [
+    './sto-datatable.component.scss',
+    './sto-datatable-progress-bar.scss',
+  ],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'sto-datatable ngx-datatable',
+  },
+  imports: [
+    StoDatatableHeaderGroupComponent,
+    StoDatatableHeaderComponent,
+    StoDatatableBodyComponent,
+    NgStyle,
+    NgTemplateOutlet,
+    AsyncPipe,
+    ColumnStylePipe,
+  ],
 })
 export class StoDatatableComponent<T extends Record<string, unknown>>
   implements AfterViewInit, OnDestroy
@@ -215,7 +239,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
       if (this.activeSort && !this.externalSort) {
         const column = (this.columns || []).find(
-          (col) => col.$$id === this.activeSort?.active
+          (col) => col.$$id === this.activeSort?.active,
         );
         if (column) {
           this.sort(this.activeSort);
@@ -311,7 +335,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   ngAfterViewInit() {
     if (this.resizeable && !this.scrollbarH) {
       console.warn(
-        `Datatable: Not allowed to have resizeable columns without horizontal scroll. Set [scrollbarH]="true"`
+        `Datatable: Not allowed to have resizeable columns without horizontal scroll. Set [scrollbarH]="true"`,
       );
     }
     if (this.autoSize) {
@@ -319,7 +343,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     }
     if (this.responsive && !this.responsiveView) {
       console.error(
-        'Responsive mode set to true, but no view passed in. Please pass in responsiveView (templateRef)'
+        'Responsive mode set to true, but no view passed in. Please pass in responsiveView (templateRef)',
       );
       this.responsive = false;
     } else if (this.responsive) {
@@ -420,9 +444,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
           top -
           16 -
           this.autoSizeOffset -
-          (this.actions ? 6 : 0)
+          (this.actions ? 6 : 0),
       ),
-      tap((height) => (this.height = height))
+      tap((height) => (this.height = height)),
     );
   }
 

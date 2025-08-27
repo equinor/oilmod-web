@@ -9,6 +9,6 @@ export interface Breadcrumb {
   url?: string;
 }
 
-export interface BreadcrumbConfig { icon?: string; svgIcon?: string; text?: string };
+export interface BreadcrumbConfig { icon?: string; svgIcon?: string; text?: string }
 
 export const NAVIGATION_HOME_ICON = new InjectionToken<BreadcrumbConfig>('sto-home-icon');

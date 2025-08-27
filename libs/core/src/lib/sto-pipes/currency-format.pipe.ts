@@ -14,7 +14,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class CurrencyFormatPipe implements PipeTransform {
-  transform(value: number, unit: string = '', maximumFractionDigits = 3): string | null {
+  transform(value: number, unit = '', maximumFractionDigits = 3): string | null {
     if ( !value ) {
       return null;
     }

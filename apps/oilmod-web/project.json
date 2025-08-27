@@ -122,13 +122,13 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "$(npm bin)/nx build testing",
-          "$(npm bin)/nx build core",
-          "$(npm bin)/nx build form",
-          "$(npm bin)/nx build common",
-          "$(npm bin)/nx build datatable",
-          "$(npm bin)/nx build drawer",
-          "$(npm bin)/nx build error-handler",
+          "nx build testing",
+          "nx build core",
+          "nx build form",
+          "nx build common",
+          "nx build datatable",
+          "nx build drawer",
+          "nx build error-handler",
           "for dir in ./dist/libs/* ; do cp license.md $dir/ ; done"
         ],
         "parallel": false
@@ -138,12 +138,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "$(npm bin)/nx test core",
-          "$(npm bin)/nx test form",
-          "$(npm bin)/nx test common",
-          "$(npm bin)/nx test datatable",
-          "$(npm bin)/nx test drawer",
-          "$(npm bin)/nx test error-handler"
+          "nx test core",
+          "nx test form",
+          "nx test common",
+          "nx test datatable",
+          "nx test drawer",
+          "nx test error-handler"
         ],
         "parallel": true
       }
@@ -152,12 +152,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "$(npm bin)/nx lint core --fix",
-          "$(npm bin)/nx lint form --fix",
-          "$(npm bin)/nx lint common --fix",
-          "$(npm bin)/nx lint datatable --fix",
-          "$(npm bin)/nx lint drawer --fix",
-          "$(npm bin)/nx lint error-handler --fix"
+          "nx lint core --fix",
+          "nx lint form --fix",
+          "nx lint common --fix",
+          "nx lint datatable --fix",
+          "nx lint drawer --fix",
+          "nx lint error-handler --fix"
         ],
         "parallel": true
       }

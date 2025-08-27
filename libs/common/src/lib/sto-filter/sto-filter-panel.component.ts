@@ -228,6 +228,7 @@ export class StoFilterActionsBar {
   @HostBinding('class.sto-filter-actions')
   hasClass = true;
   @Input() expandable: boolean;
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() toggle = new EventEmitter<void>();
 
   private _expanded: boolean;

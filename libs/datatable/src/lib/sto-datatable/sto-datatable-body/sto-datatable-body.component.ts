@@ -1,4 +1,8 @@
-import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from '@angular/cdk/scrolling';
+import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
 import {
   AfterViewInit,
   Component,
@@ -17,18 +21,23 @@ import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { rowClassFn } from '../models';
 import { SelectionModes } from '../selection-modes';
 
-import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datatable-body-row.component';
 import { MatRipple } from '@angular/material/core';
+import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datatable-body-row.component';
 
 @Component({
-    selector: 'sto-datatable-body',
-    templateUrl: './sto-datatable-body.component.html',
-    styleUrls: ['./sto-datatable-body.component.scss'],
-    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-    host: {
-        class: 'datatable-body',
-    },
-    imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, StoDatatableBodyRowComponent, MatRipple]
+  selector: 'sto-datatable-body',
+  templateUrl: './sto-datatable-body.component.html',
+  styleUrls: ['./sto-datatable-body.component.scss'],
+  host: {
+    class: 'datatable-body',
+  },
+  imports: [
+    CdkVirtualScrollViewport,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualForOf,
+    StoDatatableBodyRowComponent,
+    MatRipple,
+  ],
 })
 export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   implements OnDestroy, AfterViewInit
@@ -154,7 +163,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
 
   selectRow(
     event: KeyboardEvent | MouseEvent,
-    activationData: RowSelection<T>
+    activationData: RowSelection<T>,
   ) {
     if (event.type === this.selectionMode) {
       this.rowSelected.emit(activationData);
@@ -172,7 +181,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   onKeyDownHandler(
     event: KeyboardEvent,
     rowEl: HTMLDivElement,
-    activationData: RowSelection<T> | RowActivation<T>
+    activationData: RowSelection<T> | RowActivation<T>,
   ) {
     this.activate.emit({
       event,
@@ -253,7 +262,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
       for (const entry of entries) {
         const t = entry.target as HTMLElement;
         const el = t.querySelector(
-          '.cdk-virtual-scroll-spacer'
+          '.cdk-virtual-scroll-spacer',
         ) as HTMLDivElement;
         const currentScale = el.style.transform;
         const notScaled = this.rows.length * this.rowHeight;
