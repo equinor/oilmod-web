@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/oilmod-web/src",
   "prefix": "oilmod-web-nx",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -64,7 +65,8 @@
           "buildTarget": "oilmod-web:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -162,6 +164,5 @@
         "parallel": true
       }
     }
-  },
-  "tags": []
+  }
 }

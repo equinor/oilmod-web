@@ -17,7 +17,7 @@
   z-index: 1;
   .mat-mdc-checkbox {
     margin-left: calc(
-      0px - (var(--mdc-checkbox-state-layer-size, 40px) - 18px) / 2
+      0px - (var(--mat-checkbox-state-layer-size, 40px) - 18px) / 2
     );
   }
   .sto-form__field {

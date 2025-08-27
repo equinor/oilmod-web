@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/angular/types-6-0';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { moduleMetadata } from '@storybook/angular';
 import { MatIconModule } from '@angular/material/icon'; // @ts-ignore
 import markdown from './sto-message-panel.component.md';

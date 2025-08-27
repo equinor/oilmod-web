@@ -4,7 +4,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoDatatableModule } from '@ngx-stoui/datatable';
 import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { moduleMetadata } from '@storybook/angular';
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { fixedColumns, rows } from './rows';

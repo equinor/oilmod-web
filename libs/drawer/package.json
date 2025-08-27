@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/drawer",
-  "version": "19.0.0",
+  "version": "20.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,8 +21,8 @@
     "equinor"
   ],
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0"
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0"
   },
   "dependencies": {
     "tslib": "^2.4.0"

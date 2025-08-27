@@ -3,12 +3,13 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/oilmod-web-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["oilmod-web"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/oilmod-web-e2e/cypress.json",
-        "tsConfig": "apps/oilmod-web-e2e/tsconfig.e2e.json",
         "devServerTarget": "oilmod-web:serve:development"
       },
       "configurations": {
@@ -21,7 +22,5 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["oilmod-web"]
+  }
 }

@@ -6,7 +6,7 @@ import {
   StoDatatableComponent,
   StoDatatableModule,
 } from '@ngx-stoui/datatable';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { moduleMetadata } from '@storybook/angular';
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import { columns, rows } from './rows';
