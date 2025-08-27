@@ -12,15 +12,6 @@
 
   .sto-form {
     &__field {
-      --mdc-filled-text-field-active-indicator-color: var(--divider);
-      --mdc-filled-text-field-hover-active-indicator-color: var(
-        --primary-resting
-      );
-      --mdc-filled-text-field-focus-active-indicator-color: var(
-        --primary-resting
-      );
-      --mdc-filled-text-field-label-text-color: #{$color};
-      --mdc-filled-text-field-focus-label-text-color: #{$color};
       input {
         color: var(--mdc-filled-text-field-label-text-color);
       }

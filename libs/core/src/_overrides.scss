@@ -21,128 +21,156 @@ input::-webkit-inner-spin-button {
   margin: 0; // Apparently some margin is still there even though it's hidden
 }
 
-.mat-app-background {
-  background-color: var(--bg-app);
-  color: var(--text);
-  --mdc-theme-surface: var(--primary-resting);
-}
+html body {
+  &.mat-app-background {
+    background-color: var(--bg-app);
+    color: var(--text);
+    --mdc-theme-surface: var(--primary-resting);
+  }
 
-.mat-expansion-panel {
-  --mat-expansion-container-background-color: var(--bg-card);
-  --mat-expansion-header-hover-state-layer-color: var(--bg-hover);
-  --mat-expansion-header-text-color: var(--text);
-  --mat-expansion-header-indicator-color: var(--text);
-  --mat-expansion-container-text-color: var(--text);
-}
-.mat-mdc-button-base {
-  --mdc-text-button-container-height: 46px;
-  --mdc-protected-button-label-text-color: var(--primary-hover-alt);
-  height: var(--mdc-text-button-container-height);
-  &.mat-unthemed {
-    --mdc-text-button-label-text-color: var(--text);
+  .mat-expansion-panel {
+    --mat-expansion-container-background-color: var(--bg-card);
+    --mat-expansion-header-hover-state-layer-color: var(--bg-hover);
+    --mat-expansion-header-text-color: var(--text);
+    --mat-expansion-header-indicator-color: var(--text);
+    --mat-expansion-container-text-color: var(--text);
   }
-  &.mat-mdc-raised-button {
+  .mat-mdc-button-base {
+    --mdc-text-button-container-height: 46px;
     --mdc-protected-button-label-text-color: var(--primary-hover-alt);
-  }
-  &.mat-mdc-icon-button {
-    --mdc-icon-button-padding: max(
-      0px,
-      calc(
+    height: var(--mdc-text-button-container-height);
+    &.mat-unthemed {
+      --mdc-text-button-label-text-color: var(--text);
+    }
+    &.mat-mdc-raised-button {
+      --mdc-protected-button-label-text-color: var(--primary-hover-alt);
+    }
+    &.mat-mdc-icon-button {
+      --mdc-icon-button-padding: max(
+        0px,
         calc(
-            var(--mdc-icon-button-state-layer-size, 48px) -
-              var(--mdc-icon-button-icon-size, 24px)
-          ) / 2
-      )
-    );
-    padding: var(--mdc-icon-button-padding);
-    line-height: calc(
-      var(--mdc-icon-button-state-layer-size, 48px) -
-        var(--mdc-icon-button-padding)
-    );
-    .mat-icon {
-      height: calc(
-        var(--mdc-icon-button-state-layer-size, 48px) -
-          (var(--mdc-icon-button-padding) * 2)
+          calc(
+              var(--mdc-icon-button-state-layer-size, 48px) - var(
+                  --mdc-icon-button-icon-size,
+                  24px
+                )
+            ) /
+            2
+        )
       );
-      width: calc(
-        var(--mdc-icon-button-state-layer-size, 48px) -
-          (var(--mdc-icon-button-padding) * 2)
+      padding: var(--mdc-icon-button-padding);
+      line-height: calc(
+        var(--mdc-icon-button-state-layer-size, 48px) - var(
+            --mdc-icon-button-padding
+          )
       );
-    }
-    .mat-mdc-focus-indicator,
-    .mat-mdc-button-touch-target {
-      width: var(--mdc-icon-button-state-layer-size, 48px);
-      height: var(--mdc-icon-button-state-layer-size, 48px);
-      margin: 2px;
+      .mat-icon {
+        height: calc(
+          var(--mdc-icon-button-state-layer-size, 48px) -
+            (var(--mdc-icon-button-padding) * 2)
+        );
+        width: calc(
+          var(--mdc-icon-button-state-layer-size, 48px) -
+            (var(--mdc-icon-button-padding) * 2)
+        );
+      }
+      .mat-mdc-focus-indicator,
+      .mat-mdc-button-touch-target {
+        width: var(--mdc-icon-button-state-layer-size, 48px);
+        height: var(--mdc-icon-button-state-layer-size, 48px);
+        margin: 2px;
+      }
     }
   }
-}
-.mat-mdc-progress-bar {
-  --mdc-linear-progress-active-indicator-color: var(--primary-highlight);
-}
-.mat-mdc-tab-group,
-.mat-mdc-tab-nav-bar {
-  --mat-tab-header-inactive-label-text-color: var(--text-disabled);
-  --mat-tab-header-active-label-text-color: var(--text);
-  --mat-tab-header-inactive-focus-label-text-color: var(--text-disabled);
-  --mat-tab-header-inactive-hover-label-text-color: var(--text-disabled);
-}
-.mat-mdc-menu-panel {
-  --mat-menu-item-label-text-color: var(--text);
-  --mat-menu-container-color: var(--bg-card);
-  --mat-menu-item-icon-color: var(--text);
-}
-.mat-mdc-card {
-  --mdc-elevated-card-container-color: var(--bg-card);
-  --mdc-outlined-card-container-color: hsla(from var(--bg-card), h s l 50%);
-  --mdc-outlined-card-container-color: var(--bg-card);
-}
-.mat-mdc-form-field {
-  --mdc-filled-text-field-input-text-color: var(--text);
-  --mdc-filled-text-field-caret-color: var(--text);
-  --mat-form-field-container-height: 36px;
-  --mat-form-field-filled-with-label-container-padding-bottom: 0px;
-  .mdc-text-field {
-    overflow: visible;
-    padding: 0;
+  .mat-button-toggle {
+    --mat-standard-button-toggle-text-color: var(--text);
   }
-}
-.mat-mdc-checkbox,
-.mat-mdc-checkbox.mat-primary {
-  --mdc-theme-text-primary-on-background: var(--text);
-  --mdc-checkbox-selected-checkmark-color: var(--accent-hover-contrast);
-  --mdc-checkbox-unselected-icon-color: var(--text);
-  --mdc-checkbox-unselected-focus-icon-color: var(--text-disabled);
-  --mdc-theme-text-primary-on-background: var(--text);
-  --mdc-checkbox-unselected-hover-icon-color: var(--text-disabled);
-  --mdc-checkbox-selected-hover-icon-color: var(--primary-hover);
-}
-// .mat-mdc-radio-button {
-//   --mdc-radio-selected-icon-color: var(--primary-resting);
-// }
-.mat-mdc-select {
-  --mat-select-enabled-trigger-text-color: var(--text);
-  --mat-select-enabled-arrow-color: var(--text);
-}
-.mdc-switch {
-  --mdc-theme-text-primary-on-background: var(--text);
-  --mdc-switch-handle-surface-color: var(--primary-resting);
-  --mdc-switch-selected-track-color: var(--primary-selected-hover);
-  --mdc-switch-selected-hover-track-color: var(--primary-selected-hover);
-  --mdc-switch-selected-focus-track-color: var(--primary-selected-focus);
-}
-.mat-calendar {
-  --mat-datepicker-calendar-body-label-text-color: var(--text);
-  --mat-datepicker-calendar-date-text-color: hsla(
-    from var(--accent-text),
-    h s l 50%
-  );
-  --mat-datepicker-calendar-date-selected-state-text-color: var(
-    --accent-highlight
-  );
-  --mat-datepicker-calendar-date-selected-state-background-color: var(
-    --primary-resting
-  );
+  .mat-mdc-progress-bar {
+    --mdc-linear-progress-active-indicator-color: var(--primary-highlight);
+  }
+  .mat-mdc-tab-group,
+  .mat-mdc-tab-nav-bar {
+    --mat-tab-header-inactive-label-text-color: var(--text-disabled);
+    --mat-tab-header-active-label-text-color: var(--text);
+    --mat-tab-header-inactive-focus-label-text-color: var(--text-disabled);
+    --mat-tab-header-inactive-hover-label-text-color: var(--text-disabled);
+  }
+  .mdc-menu-surface {
+    --mat-select-panel-background-color: var(--bg-card);
+    --mat-menu-item-label-text-color: var(--text);
+    --mat-menu-container-color: var(--bg-card);
+    --mat-menu-item-icon-color: var(--text);
+    --mat-option-label-text-color: var(--text);
+    --mat-full-pseudo-checkbox-unselected-icon-color: var(--text);
+  }
+  .mat-mdc-card {
+    --mdc-elevated-card-container-color: var(--bg-card);
+    --mdc-outlined-card-container-color: hsla(from var(--bg-card) h s l / 50%);
+    --mdc-outlined-card-container-color: var(--bg-card);
+  }
+  .mat-mdc-form-field {
+    --mdc-filled-text-field-active-indicator-color: var(--divider);
+    --mdc-filled-text-field-hover-active-indicator-color: var(
+      --primary-resting
+    );
+    --mdc-filled-text-field-focus-active-indicator-color: var(
+      --primary-resting
+    );
+    --mdc-filled-text-field-focus-label-text-color: hsla(
+      from var(--text) h s l / 70%
+    );
+    --mdc-filled-text-field-input-text-color: var(--text);
+    --mdc-filled-text-field-label-text-color: hsla(
+      from var(--text) h s l / 70%
+    );
+    --mdc-filled-text-field-hover-label-text-color: var(--text);
+    --mdc-filled-text-field-caret-color: var(--text);
+    --mat-form-field-container-height: 36px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 0px;
+    .mdc-text-field {
+      overflow: visible;
+      padding: 0;
+    }
+  }
+  .mat-mdc-checkbox,
+  .mat-mdc-checkbox.mat-primary {
+    --mdc-theme-text-primary-on-background: var(--text);
+    --mdc-checkbox-selected-checkmark-color: var(--accent-hover-contrast);
+    --mdc-checkbox-unselected-icon-color: var(--text);
+    --mdc-checkbox-unselected-focus-icon-color: var(--text-disabled);
+    --mdc-theme-text-primary-on-background: var(--text);
+    --mdc-checkbox-unselected-hover-icon-color: var(--text-disabled);
+    --mdc-checkbox-selected-hover-icon-color: var(--primary-hover);
+  }
+  .mat-mdc-radio-button {
+    --mdc-radio-selected-icon-color: var(--primary-resting);
+  }
+  .mat-mdc-select {
+    --mat-select-enabled-trigger-text-color: var(--text);
+    --mat-select-enabled-arrow-color: var(--text);
+  }
+  .mdc-switch {
+    --mdc-theme-text-primary-on-background: var(--text);
+    --mdc-switch-handle-surface-color: var(--primary-resting);
+    --mdc-switch-selected-track-color: var(--primary-selected-hover);
+    --mdc-switch-selected-hover-track-color: var(--primary-selected-hover);
+    --mdc-switch-selected-focus-track-color: var(--primary-selected-focus);
+  }
+  .mat-mdc-slide-toggle {
+    --mat-switch-label-text-color: var(--text);
+  }
+  .mat-calendar {
+    --mat-datepicker-calendar-body-label-text-color: var(--text);
+    --mat-datepicker-calendar-date-text-color: hsla(
+      from var(--text) h s l / 80%
+    );
+    --mat-datepicker-calendar-date-selected-state-text-color: var(
+      --accent-hover-contrast
+    );
+    --mat-datepicker-calendar-date-selected-state-background-color: var(
+      --primary-resting
+    );
+  }
 }
 .ngx-datatable .mat-mdc-checkbox .mdc-checkbox {
   box-sizing: content-box; // To override erroneous styling from ngx-datatable
