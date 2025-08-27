@@ -1,4 +1,7 @@
-<div class="mat-option" (click)="onSelectAllClick()">
-  <mat-checkbox style="margin-right: 8px" color="primary" [checked]="state === 'checked'" [indeterminate]="state === 'indeterminate'"></mat-checkbox>
-  <span class="mat-option-text">Select all</span>
-</div>
+<mat-checkbox
+  color="primary"
+  [checked]="state === 'checked'"
+  [indeterminate]="state === 'indeterminate'"
+>
+  <span class="mdc-list-item__primary-text">Select all</span>
+</mat-checkbox>

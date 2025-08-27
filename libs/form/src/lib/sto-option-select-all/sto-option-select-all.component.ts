@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   NgModule,
   OnDestroy,
   inject,
@@ -20,6 +21,9 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./sto-option-select-all.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatCheckboxModule],
+  host: {
+    class: 'mat-option',
+  },
 })
 export class StoOptionSelectAllComponent<T = unknown>
   implements AfterViewInit, OnDestroy
@@ -81,6 +85,7 @@ export class StoOptionSelectAllComponent<T = unknown>
     this.destroyed.complete();
   }
 
+  @HostListener('click')
   onSelectAllClick() {
     if (this.state === 'checked') {
       this.matSelect?.ngControl?.control?.setValue([]);
