@@ -1,13 +1,23 @@
-.mat-mdc-option {
-  border-bottom: 1px solid var(--divider);
-  height: 3.5em;
-  line-height: 3.5em;
-}
-
 :host {
   position: sticky;
   top: 0;
-  display: block;
   z-index: 30;
   background-color: var(--bg-card);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--divider);
+  height: 3.5em;
+  line-height: 3.5em;
+
+  .mat-mdc-checkbox {
+    flex: 1;
+    margin-left: calc(
+      0px - (var(--mdc-checkbox-state-layer-size, 40px) - 18px) / 2
+    );
+  }
 }

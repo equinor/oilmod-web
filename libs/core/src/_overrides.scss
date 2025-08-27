@@ -41,9 +41,14 @@ html body {
     height: var(--mdc-text-button-container-height);
     &.mat-unthemed {
       --mdc-text-button-label-text-color: var(--text);
+      --mdc-outlined-button-label-text-color: var(--text);
+      --mdc-outlined-button-disabled-label-text-color: var(--text-disabled);
     }
     &.mat-mdc-raised-button {
       --mdc-protected-button-label-text-color: var(--primary-hover-alt);
+    }
+    &.mat-mdc-outlined-button {
+      --mdc-outlined-button-disabled-label-text-color: var(--text-disabled);
     }
     &.mat-mdc-icon-button {
       --mdc-icon-button-padding: max(
@@ -95,13 +100,22 @@ html body {
     --mat-tab-header-inactive-focus-label-text-color: var(--text-disabled);
     --mat-tab-header-inactive-hover-label-text-color: var(--text-disabled);
   }
-  .mdc-menu-surface {
+  .mdc-menu-surface,
+  .mat-mdc-menu-panel {
     --mat-select-panel-background-color: var(--bg-card);
     --mat-menu-item-label-text-color: var(--text);
     --mat-menu-container-color: var(--bg-card);
     --mat-menu-item-icon-color: var(--text);
     --mat-option-label-text-color: var(--text);
     --mat-full-pseudo-checkbox-unselected-icon-color: var(--text);
+  }
+  .mat-mdc-select-panel {
+    padding: 0;
+  }
+  .mat-mdc-dialog-surface {
+    --mdc-dialog-container-color: var(--bg-card);
+    --mdc-dialog-subhead-color: var(--text);
+    --mdc-dialog-supporting-text-color: var(--text);
   }
   .mat-mdc-card {
     --mdc-elevated-card-container-color: var(--bg-card);
@@ -141,6 +155,7 @@ html body {
     --mdc-theme-text-primary-on-background: var(--text);
     --mdc-checkbox-unselected-hover-icon-color: var(--text-disabled);
     --mdc-checkbox-selected-hover-icon-color: var(--primary-hover);
+    --mat-checkbox-label-text-color: var(--text);
   }
   .mat-mdc-radio-button {
     --mdc-radio-selected-icon-color: var(--primary-resting);
