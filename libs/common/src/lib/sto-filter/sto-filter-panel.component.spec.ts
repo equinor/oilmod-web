@@ -74,12 +74,6 @@ class WrapperComponent extends FilterForm<{ field: string }> {
     }
     return [];
   });
-
-  constructor() {
-    const fb = inject(UntypedFormBuilder);
-
-    super(fb);
-  }
 }
 
 describe('StoFilterPanelComponent', () => {

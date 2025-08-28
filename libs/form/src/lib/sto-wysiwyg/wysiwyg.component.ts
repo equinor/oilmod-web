@@ -45,8 +45,9 @@ export class WysiwygComponent
 
   // TODO: Skipped for migration because:
   //  Your application code writes to the input. This prevents migration.
-  @Input()
-  readonly: boolean;
+  // eslint-disable-next-line @angular-eslint/no-input-rename -- preserving public API 'readonly' while property name differs
+  @Input('readonly')
+  disabled: boolean;
   @ViewChild(WysiwygEditorComponent, { read: ElementRef })
   editor: ElementRef<HTMLDivElement>;
   public value: SafeHtml;
@@ -115,7 +116,7 @@ export class WysiwygComponent
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.readonly = isDisabled;
+    this.disabled = isDisabled;
     this.cdr.detectChanges();
   }
 
