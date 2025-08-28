@@ -90,7 +90,8 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   public horizontalScrollActive: boolean;
   public verticalScrollOffset = 0;
   private destroyed$ = new Subject<boolean>();
-  private timeout: number | undefined;
+  // Using ReturnType<typeof setTimeout> works for both browser (number) and Node/JSDOM (Timeout) environments
+  private timeout: ReturnType<typeof setTimeout> | undefined;
   private resizeObserver: ResizeObserver;
 
   private _scrollbarH: boolean;
