@@ -4,24 +4,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   DoCheck,
-  ElementRef,
   HostBinding,
   Input,
   OnDestroy,
   OnInit,
   ViewEncapsulation,
   inject,
-  output
+  output,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
-  FormGroupDirective,
   NgControl,
-  NgForm,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
@@ -112,6 +108,7 @@ export class NumberInputComponent
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }

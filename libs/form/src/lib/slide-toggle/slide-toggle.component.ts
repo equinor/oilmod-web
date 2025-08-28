@@ -1,6 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject, output } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  output,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Subject, Subscription } from 'rxjs';
@@ -8,7 +25,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ThemePalette } from '@angular/material/core';
 import {
   MatSlideToggle,
-  MatSlideToggleModule
+  MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
 
 export class StoSlideToggleChange {
@@ -17,20 +34,23 @@ export class StoSlideToggleChange {
 }
 
 @Component({
-    selector: 'sto-slide-toggle',
-    templateUrl: './slide-toggle.component.html',
-    styleUrls: ['./slide-toggle.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: MatFormFieldControl, useExisting: SlideToggleComponent }
-    ],
-    imports: [
-        MatSlideToggleModule,
-        ReactiveFormsModule
-    ]
+  selector: 'sto-slide-toggle',
+  templateUrl: './slide-toggle.component.html',
+  styleUrls: ['./slide-toggle.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: MatFormFieldControl, useExisting: SlideToggleComponent },
+  ],
+  imports: [MatSlideToggleModule, ReactiveFormsModule],
 })
-export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAccessor, MatFormFieldControl<boolean> {
+export class SlideToggleComponent
+  implements
+    OnInit,
+    OnDestroy,
+    ControlValueAccessor,
+    MatFormFieldControl<boolean>
+{
   ngControl = inject(NgControl, { optional: true, self: true });
   private fm = inject(FocusMonitor);
   private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -59,10 +79,10 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
     const fm = this.fm;
     const elRef = this.elRef;
 
-    if ( this.ngControl != null ) {
+    if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
-    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+    fm.monitor(elRef.nativeElement, true).subscribe((origin) => {
       this.focused = !!origin;
       this.stateChanges.next();
     });
@@ -96,6 +116,7 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }
@@ -126,6 +147,7 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     value ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }
@@ -165,18 +187,20 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   ngOnInit(): void {
-    const sub = this.ctrl.valueChanges
-      .subscribe((value) => {
-        const event = new StoSlideToggleChange();
-        event.checked = value ?? false;
-        event.source = this;
-        this.toggled.emit(event);
-        this.onChange(value);
-      });
+    const sub = this.ctrl.valueChanges.subscribe((value) => {
+      const event = new StoSlideToggleChange();
+      event.checked = value ?? false;
+      event.source = this;
+      this.toggled.emit(event);
+      this.onChange(value);
+    });
     this.sub.add(sub);
-    if ( this.ngControl && this.ngControl.statusChanges ) {
-      this.sub.add(this.ngControl.statusChanges
-        .subscribe(state => this.errorState = state === 'INVALID'));
+    if (this.ngControl && this.ngControl.statusChanges) {
+      this.sub.add(
+        this.ngControl.statusChanges.subscribe(
+          (state) => (this.errorState = state === 'INVALID'),
+        ),
+      );
     }
   }
 
@@ -187,7 +211,7 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   onContainerClick(event: MouseEvent): void {
-    if ( !this.disabled && !this.readonly ) {
+    if (!this.disabled && !this.readonly) {
       this.slideToggle.focus();
       this.ctrl.setValue(!this.ctrl.value);
     }
@@ -198,11 +222,9 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange = (_: unknown) => {
-  };
+  onChange = (_: unknown) => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onTouched = () => {
-  };
+  onTouched = () => {};
 
   writeValue(value: boolean): void {
     this.value = value;
@@ -219,6 +241,4 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-
 }

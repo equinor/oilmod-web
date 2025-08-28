@@ -1,4 +1,4 @@
-/* eslint-disable @angular-eslint/directive-class-suffix,@angular-eslint/directive-selector */
+/* eslint-disable @angular-eslint/directive-selector */
 import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
@@ -199,7 +199,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
+   
   selector: 'sto-filter-title',
   standalone: true,
 })
@@ -232,7 +232,7 @@ export class StoFilterActions {}
   `,
   imports: [MatIconButton, MatIcon],
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
+ 
 export class StoFilterActionsBar {
   @HostBinding('class.sto-filter-actions')
   hasClass = true;

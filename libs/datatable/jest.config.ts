@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
   displayName: 'datatable',
   preset: '../../jest.preset.js',

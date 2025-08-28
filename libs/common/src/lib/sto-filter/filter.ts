@@ -1,4 +1,11 @@
-import { Directive, Input, OnDestroy, OnInit, output } from '@angular/core';
+import {
+  Directive,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  output,
+} from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Observable, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, startWith, takeUntil } from 'rxjs/operators';
@@ -18,6 +25,7 @@ export interface FilterList {
 export abstract class FilterForm<T extends Record<string, unknown>>
   implements OnInit, OnDestroy
 {
+  private readonly fb = inject(UntypedFormBuilder);
   // FormBuilder config
   abstract formConfig: { [key: string]: unknown };
   // Serializer function
@@ -34,8 +42,6 @@ export abstract class FilterForm<T extends Record<string, unknown>>
   // Chip value. See {@link FilterList}
   public filter$: Observable<FilterList[]>;
   protected destroyed$ = new Subject();
-
-  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit() {
     this.form = this.fb.group(this.formConfig);

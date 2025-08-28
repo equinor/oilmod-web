@@ -146,6 +146,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   // TODO: Cannot migrate because:
   // Your application code relies on internal rxjs only implementation details
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-native -- keeping legacy public API '(select)' output
   select = new EventEmitter<RowSelection<T>>();
   readonly resized = output<Column>();
   readonly rowContextMenu = output<RowContextMenu<T>>();

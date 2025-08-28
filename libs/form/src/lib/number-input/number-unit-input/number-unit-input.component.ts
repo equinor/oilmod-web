@@ -52,11 +52,7 @@ type NumberUnitForm = {
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    NumberInputDirective,
-    ReactiveFormsModule,
-    MatSelectModule
-],
+  imports: [NumberInputDirective, ReactiveFormsModule, MatSelectModule],
 })
 export class NumberUnitInputComponent
   extends FormFieldBase
@@ -127,6 +123,7 @@ export class NumberUnitInputComponent
   set disabled(disable: boolean) {
     this._disabled = coerceBooleanProperty(disable);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     disable ? this.form.disable(opts) : this.form.enable(opts);
     // disable ? this.form.get('unit').disable(opts) : this.form.get('unit').enable(opts);
     // disable ? this.form.get('value').disable(opts) : this.form.get('value').enable(opts);
@@ -145,6 +142,7 @@ export class NumberUnitInputComponent
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     value
       ? this.form.get('unit')?.disable(opts)
       : this.form.get('unit')?.enable(opts);
