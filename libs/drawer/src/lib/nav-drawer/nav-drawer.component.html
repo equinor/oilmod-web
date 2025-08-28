@@ -1,7 +1,7 @@
 <nav [class.sto-nav-drawer--collapsed]="collapsed"
   [class.sto-nav-drawer--expanded]="!collapsed"
-  [style.height]="withAppHeader ? 'calc(100vh - ' + headerOffset +  'px)' : '100vh'"
-  [style.top.px]="withAppHeader ? headerOffset : 0"
+  [style.height]="withAppHeader() ? 'calc(100vh - ' + headerOffset +  'px)' : '100vh'"
+  [style.top.px]="withAppHeader() ? headerOffset : 0"
   class="sto-nav-drawer">
   <div class="sto-nav-drawer-items">
     <div [style.width]="collapsed ? '100%' : '100%'"
@@ -12,7 +12,7 @@
         <mat-icon>{{collapsed ? 'last_page' : 'first_page'}}</mat-icon>
       </button>
     </div>
-    @for (item of navigationItems; track item) {
+    @for (item of navigationItems(); track item) {
       <sto-nav-drawer-item (activate)="onActivate($event)"
         [collapsed]="collapsed"
       [navigationItem]="item"></sto-nav-drawer-item>

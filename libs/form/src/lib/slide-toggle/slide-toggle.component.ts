@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject, output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -48,9 +48,10 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
   describedBy = '';
   @ViewChild(MatSlideToggle)
   slideToggle: MatSlideToggle;
-  @Output()
-  toggled = new EventEmitter<StoSlideToggleChange>();
+  readonly toggled = output<StoSlideToggleChange>();
   placeholder: string; // Required by material control, but not used.
+  // TODO: Skipped for migration because:
+  //  Class of this input is referenced in the signature of another class.
   @Input()
   model: unknown;
 
@@ -85,6 +86,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   private _disabled = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -99,6 +102,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   private _color: ThemePalette;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get color(): ThemePalette {
     return this._color || 'primary';
@@ -111,6 +116,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   private _readonly = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get readonly(): boolean {
     return this._readonly;
@@ -130,6 +137,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   private _required = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get required() {
     return this._required;
@@ -142,6 +151,8 @@ export class SlideToggleComponent implements OnInit, OnDestroy, ControlValueAcce
 
   private _value: boolean | null;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get value() {
     return this._value;

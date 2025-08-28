@@ -1,8 +1,8 @@
-<div [style.height.px]="height"
-  [style.min-width]="width"
-  [style.transform]="transform"
+<div [style.height.px]="height()"
+  [style.min-width]="width()"
+  [style.transform]="transform()"
   class="sto-mdl-table__header-group">
-  @for (group of groups; track group) {
+  @for (group of groups(); track group) {
     <div
       [style.transform]="group.transform"
       class="sto-mdl-table__header-group__cell">

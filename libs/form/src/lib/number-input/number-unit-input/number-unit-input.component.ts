@@ -83,8 +83,12 @@ export class NumberUnitInputComponent
   @ViewChild(NumberInputDirective)
   numberInputDirective: NumberInputDirective;
   errorState: boolean;
+  // TODO: Skipped for migration because:
+  //  Class of this input is referenced in the signature of another class.
   @Input()
   unitOptional = true;
+  // TODO: Skipped for migration because:
+  //  Class of this input is referenced in the signature of another class.
   @Input()
   unitClearText = '(none)';
   public focused: boolean;
@@ -113,6 +117,8 @@ export class NumberUnitInputComponent
 
   private _disabled = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -129,6 +135,8 @@ export class NumberUnitInputComponent
 
   private _readonly = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get readonly(): boolean {
     return this._readonly;
@@ -145,6 +153,8 @@ export class NumberUnitInputComponent
 
   private _list: { value: unknown; title?: string }[] = [];
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get list() {
     return this._list;
@@ -157,6 +167,8 @@ export class NumberUnitInputComponent
 
   private _fractionSize: number;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get fractionSize() {
     return this._fractionSize || 3;
@@ -174,6 +186,8 @@ export class NumberUnitInputComponent
 
   private _placeholder: string;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get placeholder() {
     return this._placeholder || '';
@@ -186,6 +200,8 @@ export class NumberUnitInputComponent
 
   private _unitPlaceholder: string;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get unitPlaceholder() {
     return this._unitPlaceholder || '';
@@ -198,6 +214,8 @@ export class NumberUnitInputComponent
 
   private _required = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get required() {
     return this._required;

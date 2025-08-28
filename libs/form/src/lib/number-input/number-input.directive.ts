@@ -1,5 +1,5 @@
 /* eslint-disable no-empty */
-import { Directive, ElementRef, HostListener, Input, inject } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, input } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
 import { NumberInputPipe } from './number-input.pipe';
 
@@ -12,14 +12,10 @@ import { NumberInputPipe } from './number-input.pipe';
 export class NumberInputDirective {
   private elementRef = inject(ElementRef);
 
-  @Input()
-  unit: string | undefined;
-  @Input()
-  appendUnit: boolean;
-  @Input()
-  fractionSize = 5;
-  @Input()
-  dynamicFractionSize: boolean;
+  readonly unit = input<string>();
+  readonly appendUnit = input<boolean>();
+  readonly fractionSize = input(5);
+  readonly dynamicFractionSize = input<boolean>();
   private _el: HTMLInputElement;
   private numberFormatPipe = new NumberInputPipe();
   /**
@@ -44,10 +40,11 @@ export class NumberInputDirective {
   }
 
   public setDisplayValue(readonly: boolean) {
-    const val = ( this._el.value || '' ).replace(` ${this.unit}`, '');
-    if ( this.unit ) {
+    const val = ( this._el.value || '' ).replace(` ${this.unit()}`, '');
+    const unit = this.unit();
+    if ( unit ) {
       if ( readonly ) {
-        this._el.value = val + ` ${this.unit}`;
+        this._el.value = val + ` ${unit}`;
       } else {
         this._el.value = val;
       }
@@ -70,7 +67,7 @@ export class NumberInputDirective {
     let pasted = clipboardData.getData('text') || '';
     pasted = pasted.replace('—', '-'); // long dash, sometime used in Excel and Word
     pasted = this.handleMixedCommasAndDecimals(pasted);
-    let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize, this.dynamicFractionSize);
+    let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize(), this.dynamicFractionSize());
 
     if ( !this.hasInvalidValues(parsedValue) ) {
 
@@ -116,7 +113,7 @@ export class NumberInputDirective {
     }
     const target = $event.target as HTMLInputElement;
     const value = target.value;
-    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize, this.dynamicFractionSize) + '' ).replace('.', ',');
+    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize(), this.dynamicFractionSize()) + '' ).replace('.', ',');
     this._el.select();
   }
 
@@ -125,7 +122,7 @@ export class NumberInputDirective {
     if ( this._el.readOnly || this._el.disabled ) {
       return;
     }
-    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize, this.dynamicFractionSize);
+    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize(), this.dynamicFractionSize());
   }
 
   /**

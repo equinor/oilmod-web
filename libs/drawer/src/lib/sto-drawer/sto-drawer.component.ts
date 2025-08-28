@@ -1,30 +1,42 @@
 /* eslint-disable @angular-eslint/no-output-native,@angular-eslint/no-output-on-prefix */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
-import { Key } from '@ngx-stoui/core';
-import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
-import { drawerAnimations } from '../animation';
-import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
 import { NgClass } from '@angular/common';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  input,
+  output,
+} from '@angular/core';
+import { Key } from '@ngx-stoui/core';
+import { drawerAnimations } from '../animation';
+import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
+import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
 
 /**
  * A sidebar navigation commonly referred as a drawer that animates from the left or right side of the viewport.
  */
 @Component({
-    selector: 'sto-drawer',
-    templateUrl: './sto-drawer.component.html',
-    styleUrls: ['./sto-drawer.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: drawerAnimations,
-    imports: [
-    NgClass
-]
+  selector: 'sto-drawer',
+  templateUrl: './sto-drawer.component.html',
+  styleUrls: ['./sto-drawer.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: drawerAnimations,
+  imports: [NgClass],
 })
-
 export class StoDrawerComponent implements OnInit, AfterViewInit {
   private el = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
-
 
   /**
    * Offset (space) between the viewPanel right and the drawer in pixels
@@ -32,67 +44,71 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * Used for multiple drawers where the offset would be the widht of the allready opened drawer.
    * Default 0.
    */
-  @Input() offset = '0';
+  readonly offset = input('0');
   /**
    * Offset (space) between the viewPanel top and the drawer in pixels.
    * Binds to the top style property.
    * Default 0.
    */
-  @Input() padding = '0px';
+  readonly padding = input('0px');
   /**
    * Position of the drawer as a string
    * Left or right. Default right.
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input() position: 'left' | 'right';
   /**
    * Additional css class(es) as a string e.g 'sto-drawer--xmas'.
    */
-  @Input() cssClass: string;
+  readonly cssClass = input<string>();
   /**
    * If the drawer should close when clicked outside the drawer.
    */
-  @Input() closeOnClick: boolean;
+  readonly closeOnClick = input<boolean>();
   /**
    * Esc key closed by default the drawer, this overrides that behaviour.
    * Default false.
    */
-  @Input() ignoreEscKey = false;
+  readonly ignoreEscKey = input(false);
   /**
    * The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
    * Default '25vw'
    */
-  @Input() @HostBinding('style.width')
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
+  @Input()
+  @HostBinding('style.width')
   width = '300px';
   // I don't see what harm this can do, the drawer should always be full height..
   @HostBinding('style.height.vh')
   h = 100;
-  @Input()
-  animation: boolean;
-  @Input()
-  backdrop: boolean;
+  readonly animation = input<boolean>();
+  readonly backdrop = input<boolean>();
   /**
    * Emits true if opened, false if closed.
    *  {EventEmitter<boolean>}
    */
-  @Output() onToggle = new EventEmitter<boolean>();
+  readonly onToggle = output<boolean>();
   /**
    * Emits on close.
    */
-  @Output() onClose = new EventEmitter();
+  readonly onClose = output<boolean>();
   /**
    * Emits on open.
    */
-  @Output() onOpen = new EventEmitter();
+  readonly onOpen = output<boolean>();
   /**
    * Emits on cancel. When the cancel is called by pressing ESC key.
    *  {EventEmitter<any>}
    */
-  @Output() cancel = new EventEmitter();
+  readonly cancel = output();
   /**
    * Emits on submit. When the submit is called from code like CTRL+S.
    *  {EventEmitter<any>}
    */
-  @Output() submit = new EventEmitter();
+  readonly submit = output();
   public height = '100%';
   @ViewChild('header') headerRef: ElementRef;
   @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
@@ -102,7 +118,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   // @HostBinding('@drawerAnimations')
   get slideInOut() {
-    if ( !this.animation ) {
+    if (!this.animation()) {
       return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
     }
     return this.open ? `open-${this.position}` : `closed-${this.position}`;
@@ -113,6 +129,8 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   /**
    * If the drawer is opened.
    */
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   @HostBinding('class.open')
   get open(): boolean {
@@ -125,25 +143,25 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  @HostListener('document:keydown', [ '$event' ])
+  @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if ( event.ctrlKey || event.altKey || event.shiftKey ) {
+    if (event.ctrlKey || event.altKey || event.shiftKey) {
       this.testKeyCombos(event);
     } else {
       this.testSingleKeys(event);
     }
   }
 
-  @HostListener('window:resize', [ '$event' ])
+  @HostListener('window:resize', ['$event'])
   onWindowResize() {
     this.resizeContent();
   }
 
   public toggle(emit = true) {
-    if ( emit ) {
+    if (emit) {
       this.onToggle.emit(!this.open);
     }
-    if ( !this.open ) {
+    if (!this.open) {
       this.openDrawer(emit);
     } else {
       this.closeDrawer(emit);
@@ -153,20 +171,20 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   public closeDrawer(emit = true) {
     this.open = false;
     this.cdr.detectChanges();
-    if ( emit ) {
-      this.onClose.emit();
+    if (emit) {
+      this.onClose.emit(true);
     }
   }
 
   public openDrawer(emit = true) {
     this.open = true;
-    if ( emit ) {
-      this.onOpen.emit();
+    if (emit) {
+      this.onOpen.emit(true);
     }
   }
 
   ngOnInit() {
-    if ( !this.position ) {
+    if (!this.position) {
       this.position = 'left';
     }
   }
@@ -177,22 +195,22 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   private testKeyCombos(ev: KeyboardEvent) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const path: HTMLElement[] = ( ev as any ).path;
+    const path: HTMLElement[] = (ev as any).path;
     // Test to ensure we have focus inside the drawer
-    if ( !( path && path.includes(this.el.nativeElement) ) ) {
+    if (!(path && path.includes(this.el.nativeElement))) {
       return;
     }
-    if ( ev.ctrlKey && ev.keyCode === Key.Enter ) {
+    if (ev.ctrlKey && ev.keyCode === Key.Enter) {
       this.submit.emit();
     }
   }
 
   private testSingleKeys(ev: KeyboardEvent) {
-    if ( ev.keyCode !== Key.Escape || this.ignoreEscKey ) {
+    if (ev.keyCode !== Key.Escape || this.ignoreEscKey()) {
       return;
     }
     const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
-    if ( isNotInsideAMenu ) {
+    if (isNotInsideAMenu) {
       this.closeDrawer();
       this.cancel.emit();
     }
@@ -204,25 +222,27 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * true if an active overlay is present in the DOM.
    */
   private isAnActiveOverlayPresent(): boolean {
-    const overlays: Array<Element> = Array.from(document.getElementsByClassName('cdk-overlay-container'))
-      .filter(overlay => !!overlay)
-      .filter(overlay => overlay.children.length > 0)
-      .map(overlay => Array.from(overlay.children))
+    const overlays: Array<Element> = Array.from(
+      document.getElementsByClassName('cdk-overlay-container'),
+    )
+      .filter((overlay) => !!overlay)
+      .filter((overlay) => overlay.children.length > 0)
+      .map((overlay) => Array.from(overlay.children))
       .flat();
     const overlaysActive = overlays
-      .map(el => el.innerHTML)
-      .filter(content => !!content || content !== '');
+      .map((el) => el.innerHTML)
+      .filter((content) => !!content || content !== '');
     return overlaysActive.length !== 0;
   }
 
   private resizeContent() {
-    if ( this.open ) {
+    if (this.open) {
       const hasFooter = this.footer;
       const totalHeight: number = this.el?.nativeElement.offsetHeight;
       let footerHeight = 0;
 
       const headerHeight = this.headerRef?.nativeElement.offsetHeight;
-      if ( hasFooter ) {
+      if (hasFooter) {
         footerHeight = this.footer?.nativeElement.offsetHeight;
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;

@@ -1,23 +1,31 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, inject } from '@angular/core';
-import { Column } from '../columns';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  HostListener,
+  inject,
+  Input,
+  OnDestroy,
+  output,
+} from '@angular/core';
 import { fromEvent, ReplaySubject, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { Column } from '../columns';
 
 @Directive({
-    selector: '[stoDatatableResize]',
-    exportAs: 'stoDatatableResize'
+  selector: '[stoDatatableResize]',
+  exportAs: 'stoDatatableResize',
 })
 export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   private el = inject<ElementRef<HTMLElement>>(ElementRef);
 
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   column: Column;
   // eslint-disable-next-line @angular-eslint/no-output-native
-  @Output()
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  resize = new EventEmitter<number>();
-  @Output()
-  resizeEnd = new EventEmitter<number>();
+  readonly resize = output<number>();
+  readonly resizeEnd = output<number>();
   // @HostBinding('draggable')
   // draggable = true;
   private startOffset: number;
@@ -27,7 +35,7 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   private width: number;
   private moveComplete$ = new Subject<boolean>();
 
-  @HostListener('mousedown', [ '$event' ])
+  @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
     event.stopPropagation();
     this.startOffset = event.screenX;
@@ -41,13 +49,13 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   }
 
   onMouseUp(event: MouseEvent) {
-      event.stopPropagation();
-      this.moveComplete$.next(true);
-      this.width$.next(null);
-      this.resizeEnd.emit(this.width);
+    event.stopPropagation();
+    this.moveComplete$.next(true);
+    this.width$.next(null);
+    this.resizeEnd.emit(this.width);
   }
 
-  @HostListener('contextmenu', [ '$event' ])
+  @HostListener('contextmenu', ['$event'])
   ctxMenu(event: MouseEvent) {
     event.stopPropagation();
   }
@@ -60,7 +68,9 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.el.nativeElement.classList.add('sto-mdl-table__header__row__cell__resize-handle');
+    this.el.nativeElement.classList.add(
+      'sto-mdl-table__header__row__cell__resize-handle',
+    );
   }
 
   ngOnDestroy() {
@@ -68,5 +78,4 @@ export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
     this.moveComplete$.complete();
     this.width$.complete();
   }
-
 }

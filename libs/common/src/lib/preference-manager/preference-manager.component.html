@@ -5,11 +5,11 @@
   [matMenuTriggerFor]="menu"
   #trigger="matMenuTrigger"
   [matMenuTriggerData]="{ preferences: preferences }"
-  >
+>
   {{
     (preferences | activePreference: activePreferenceId)?.name || placeholder
   }}
-  @if (dirty) {
+  @if (dirty()) {
     <small>(modified)</small>
   }
   <mat-icon class="filter-title-icon">keyboard_arrow_down</mat-icon>
@@ -31,14 +31,14 @@
         [disableRipple]="true"
         class="dense preference-manager-list-item"
         [class.edit]="editIndex === index"
-      [class.selected]="
-        activePreferenceId ? pref.id === activePreferenceId : pref.default
-      "
-        >
+        [class.selected]="
+          activePreferenceId ? pref.id === activePreferenceId : pref.default
+        "
+      >
         <div class="preference-manager-list-item-title">
           @if (editIndex !== index) {
-            <span
-              >{{ pref.name }}
+            <span>
+              {{ pref.name }}
               @if (pref.default) {
                 <small>[default]</small>
               }
@@ -51,7 +51,7 @@
               (keydown.enter)="saveRename()"
               (keydown.escape)="trigger.closeMenu()"
               class="sto-form__field"
-              >
+            >
               <input
                 matInput
                 autocomplete="off"
@@ -59,153 +59,153 @@
                 [value]="pref.name"
                 name="name"
                 #nameTmpl
-                />
-              </mat-form-field>
-            }
-          </div>
-          <div class="preference-manager-list-item-actions">
-            @if (editIndex === index) {
-              <button
-                title="Save new name"
-                (click)="$event.stopPropagation(); saveRename()"
-                mat-icon-button
-                >
-                <mat-icon>save</mat-icon>
-              </button>
-            }
-            @if (editIndex === index) {
-              <button
-                title="Cancel rename"
-                (click)="$event.stopPropagation(); cancelRename()"
-                mat-icon-button
-                >
-                <mat-icon>close</mat-icon>
-              </button>
-            }
-            @if (
-              pref.external ||
-              (!editIndex &&
-              editIndex !== 0 &&
-              dirty &&
-              (activePreferenceId
-              ? pref.id === activePreferenceId
-              : pref.default))
-              ) {
-              <button
-                (click)="$event.stopPropagation(); overwrite(pref)"
-                title="Overwrite with current values"
-                mat-icon-button
-                >
-                <mat-icon>save</mat-icon>
-              </button>
-            }
-            @if (!editIndex && editIndex !== 0) {
-              <button
-                (click)="$event.stopPropagation()"
-                #moreTrigger="matMenuTrigger"
-                [matMenuTriggerFor]="more"
-                [matMenuTriggerData]="{ preference: pref, trigger: moreTrigger }"
-                mat-icon-button
-                >
-                <mat-icon>more_vert</mat-icon>
-              </button>
-            }
-          </div>
+              />
+            </mat-form-field>
+          }
         </div>
-      }
-      @if (newPreference) {
-        <div
-          mat-menu-item
-          [disableRipple]="true"
-          class="dense preference-manager-list-item edit"
-          >
-          <div class="preference-manager-list-item-title">
-            <mat-form-field
+        <div class="preference-manager-list-item-actions">
+          @if (editIndex === index) {
+            <button
+              title="Save new name"
+              (click)="$event.stopPropagation(); saveRename()"
+              mat-icon-button
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+          }
+          @if (editIndex === index) {
+            <button
+              title="Cancel rename"
+              (click)="$event.stopPropagation(); cancelRename()"
+              mat-icon-button
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+          @if (
+            pref.external ||
+            (!editIndex &&
+              editIndex !== 0 &&
+              dirty() &&
+              (activePreferenceId
+                ? pref.id === activePreferenceId
+                : pref.default))
+          ) {
+            <button
+              (click)="$event.stopPropagation(); overwrite(pref)"
+              title="Overwrite with current values"
+              mat-icon-button
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+          }
+          @if (!editIndex && editIndex !== 0) {
+            <button
               (click)="$event.stopPropagation()"
-              (keydown)="$event.stopPropagation()"
-              (keydown.enter)="saveNewPreference()"
-              (keydown.escape)="trigger.closeMenu()"
-              class="sto-form__field"
-              >
-              <input
-                matInput
-                autocomplete="off"
-                (focus)="nameTmpl.select()"
-                [value]="newPreference.name"
-                name="name"
-                #nameTmpl
-                />
-              </mat-form-field>
-            </div>
-            <div class="preference-manager-list-item-actions">
-              <button
-                (click)="$event.stopPropagation(); saveNewPreference()"
-                mat-icon-button
-                >
-                <mat-icon>save</mat-icon>
-              </button>
-              <button
-                (click)="$event.stopPropagation(); cancelNewPreference()"
-                mat-icon-button
-                >
-                <mat-icon>close</mat-icon>
-              </button>
-            </div>
-          </div>
-        }
-        <div
-          class="preference-manager-list-footer"
-          (click)="$event.stopPropagation(); $event.preventDefault()"
+              #moreTrigger="matMenuTrigger"
+              [matMenuTriggerFor]="more"
+              [matMenuTriggerData]="{ preference: pref, trigger: moreTrigger }"
+              mat-icon-button
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          }
+        </div>
+      </div>
+    }
+    @if (newPreference) {
+      <div
+        mat-menu-item
+        [disableRipple]="true"
+        class="dense preference-manager-list-item edit"
+      >
+        <div class="preference-manager-list-item-title">
+          <mat-form-field
+            (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()"
+            (keydown.enter)="saveNewPreference()"
+            (keydown.escape)="trigger.closeMenu()"
+            class="sto-form__field"
           >
-          <button mat-stroked-button (click)="addPreference()" color="primary">
-            New variant
+            <input
+              matInput
+              autocomplete="off"
+              (focus)="nameTmpl.select()"
+              [value]="newPreference.name"
+              name="name"
+              #nameTmpl
+            />
+          </mat-form-field>
+        </div>
+        <div class="preference-manager-list-item-actions">
+          <button
+            (click)="$event.stopPropagation(); saveNewPreference()"
+            mat-icon-button
+          >
+            <mat-icon>save</mat-icon>
+          </button>
+          <button
+            (click)="$event.stopPropagation(); cancelNewPreference()"
+            mat-icon-button
+          >
+            <mat-icon>close</mat-icon>
           </button>
         </div>
-      </ng-template>
-    </mat-menu>
-    <mat-menu #more="matMenu">
-      <ng-template matMenuContent let-trigger="trigger" let-preference="preference">
-        <button
-          class="dense"
+      </div>
+    }
+    <div
+      class="preference-manager-list-footer"
+      (click)="$event.stopPropagation(); $event.preventDefault()"
+    >
+      <button mat-stroked-button (click)="addPreference()" color="primary">
+        New variant
+      </button>
+    </div>
+  </ng-template>
+</mat-menu>
+<mat-menu #more="matMenu">
+  <ng-template matMenuContent let-trigger="trigger" let-preference="preference">
+    <button
+      class="dense"
       (click)="
         $event.stopPropagation(); trigger.closeMenu(); toggleDefault(preference)
       "
-          mat-menu-item
-          >
-          Set as default
-        </button>
-        <button
-          class="dense"
-          mat-menu-item
+      mat-menu-item
+    >
+      Set as default
+    </button>
+    <button
+      class="dense"
+      mat-menu-item
       (click)="
         $event.stopPropagation();
         trigger.closeMenu();
         renamePreference(preference)
       "
-          >
-          Rename
-        </button>
-        <button
-          class="dense"
+    >
+      Rename
+    </button>
+    <button
+      class="dense"
       (click)="
         $event.stopPropagation();
         trigger.closeMenu();
         deletePreference.emit(preference.id)
       "
-          mat-menu-item
-          >
-          Delete
-        </button>
-        <button
-          class="dense"
+      mat-menu-item
+    >
+      Delete
+    </button>
+    <button
+      class="dense"
       (click)="
         $event.stopPropagation();
         trigger.closeMenu();
         sharePreference.emit(preference.id)
       "
-          mat-menu-item
-          >
-          Share
-        </button>
-      </ng-template>
-    </mat-menu>
+      mat-menu-item
+    >
+      Share
+    </button>
+  </ng-template>
+</mat-menu>

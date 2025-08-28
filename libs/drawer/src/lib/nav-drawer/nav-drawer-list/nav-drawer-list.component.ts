@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, input, output } from '@angular/core';
 import { NavigationChild } from '../navigation';
 import { NavDrawerListItemComponent } from '../nav-drawer-list-item/nav-drawer-list-item.component';
 
@@ -13,8 +13,6 @@ import { NavDrawerListItemComponent } from '../nav-drawer-list-item/nav-drawer-l
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavDrawerListComponent {
-  @Input()
-  navigationItems: Array<NavigationChild>;
-  @Output()
-  activate = new EventEmitter<NavigationChild>();
+  readonly navigationItems = input<Array<NavigationChild>>();
+  readonly activate = output<NavigationChild>();
 }

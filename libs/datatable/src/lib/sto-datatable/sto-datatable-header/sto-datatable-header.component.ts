@@ -3,12 +3,12 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
-  Output,
   QueryList,
   ViewChild,
   ViewChildren,
+  input,
+  output,
 } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { ColumnStylePipe } from '../column-style.pipe';
@@ -38,38 +38,37 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
   ],
 })
 export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
-  @Input()
-  responsive: boolean;
-  @Input()
-  smallScreen: boolean;
+  readonly responsive = input<boolean>();
+  readonly smallScreen = input<boolean>();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   headerHeight: number;
-  @Input()
-  resizeable: boolean;
-  @Input()
-  width: string;
-  @Input()
-  offset: number;
-  @Input()
-  scrollLeft: string;
+  readonly resizeable = input<boolean>();
+  readonly width = input<string>();
+  readonly offset = input<number>(0);
+  readonly scrollLeft = input<string>('');
 
   // Can be used to generate sticky columns at a later stage.
   get offsetLeft() {
-    return this.scrollLeft.replace('-', '');
+    return this.scrollLeft().replace('-', '');
   }
 
-  @Input()
-  bodyHeight: number | null;
-  @Input()
-  rows: T[];
-  @Input()
-  rowHeight: number;
+  readonly bodyHeight = input<number>(0);
+  readonly rows = input<T[]>([]);
+  readonly rowHeight = input<number>(0);
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   columns: Column[];
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   sortable: boolean;
-  @Input()
-  columnMode: ColumnDisplay;
+  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()
   groups: Array<Group>;
 
@@ -78,17 +77,16 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
 
   public headerWidthMap: Record<number, number> = {};
 
-  @Output()
-  resized = new EventEmitter<{ columns: Column[]; column: Column }>();
+  readonly resized = output<{
+    columns: Column[];
+    column: Column;
+  }>();
 
   public sortDirection: 'asc' | 'desc' | null;
 
-  @Output()
-  headerContextMenu = new EventEmitter<HeaderContextMenu>();
-  @Output()
-  sort = new EventEmitter<Sort>();
-  @Input()
-  activeSort: Sort;
+  readonly headerContextMenu = output<HeaderContextMenu>();
+  readonly sort = output<Sort>();
+  readonly activeSort = input<Sort | null>(null);
 
   @ViewChild(MatSort) private matSort: MatSort;
   @ViewChildren(MatSortHeader) private sortHeaders: QueryList<MatSortHeader>;
@@ -144,7 +142,7 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
             width = width + c.flexBasis;
             return c;
           });*/
-    this.tempWidth = this.offset + width + 'px';
+    this.tempWidth = this.offset() + width + 'px';
     // this.columns = [...cols];
   }
 

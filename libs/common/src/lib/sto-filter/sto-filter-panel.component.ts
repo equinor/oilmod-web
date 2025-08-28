@@ -5,16 +5,16 @@ import {
   ChangeDetectorRef,
   Component,
   Directive,
-  EventEmitter,
   HostBinding,
   Input,
   OnInit,
-  Output,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
   forwardRef,
   inject,
+  input,
+  output,
 } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {
@@ -59,16 +59,24 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   /**
    * If the filter panel should be expandable. Default true.
    */
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()
   expandable = true;
   /**
    * If the filter panel should be expanded by default. Default false.
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   expanded: boolean;
   /**
    * List of active filters.
    */
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()
   filterList: FilterList[];
   /**
@@ -77,15 +85,14 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    * ContentHeight is the height of the expanded content i pixels.
    *  {EventEmitter<{isExpanded: boolean, contentHeight: number }>}
    */
-  @Output() toggled = new EventEmitter<{
+  readonly toggled = output<{
     isExpanded: boolean;
     contentHeight: number;
   }>();
   /**
    * Emits when a filter should be cleared (if applicable)
    */
-  @Output()
-  clearFilter = new EventEmitter();
+  readonly clearFilter = output<{ key: string; index?: number }>();
   /**
    * Buttons and actions on the left side of the separator if both table and filter actions is present.
    */
@@ -95,6 +102,8 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    */
   @ViewChild('filterActions') contentWrapper2: { nativeElement: HTMLElement };
   @ViewChild('filterForm') filterForm: { nativeElement: HTMLElement };
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   public host: FilterForm<Record<string, unknown>>;
   public hasSeperator = false;
@@ -210,7 +219,7 @@ export class StoFilterActions {}
   standalone: true,
   template: `
     <ng-content></ng-content>
-    @if (expandable) {
+    @if (expandable()) {
       <button
         mat-icon-button
         class="toggle-expand-button"
@@ -227,9 +236,9 @@ export class StoFilterActions {}
 export class StoFilterActionsBar {
   @HostBinding('class.sto-filter-actions')
   hasClass = true;
-  @Input() expandable: boolean;
+  readonly expandable = input<boolean>();
   // eslint-disable-next-line @angular-eslint/no-output-native
-  @Output() toggle = new EventEmitter<void>();
+  readonly toggle = output<void>();
 
   private _expanded: boolean;
 
@@ -237,6 +246,8 @@ export class StoFilterActionsBar {
     return this._expanded;
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set expanded(expanded: boolean) {
     this._expanded = expanded;
   }

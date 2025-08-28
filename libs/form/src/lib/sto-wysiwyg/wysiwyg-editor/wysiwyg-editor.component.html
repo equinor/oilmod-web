@@ -2,7 +2,7 @@
   (dragover)="$event.preventDefault(); $event.stopPropagation();"
   (drop)="onDrop($event)"
   [class.sto-wysiwyg__editor--readonly]="readonly"
-  [innerHTML]="content"
+  [innerHTML]="content()"
   (paste)="onPaste($event)"
   #editor
 [attr.contenteditable]="!readonly"></div>

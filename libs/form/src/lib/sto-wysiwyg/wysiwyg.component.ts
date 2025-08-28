@@ -31,6 +31,8 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   private cdr = inject(ChangeDetectorRef);
 
   // eslint-disable-next-line @angular-eslint/no-input-rename
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input('readonly')
   disabled: boolean;
   @ViewChild(WysiwygEditorComponent, { read: ElementRef })

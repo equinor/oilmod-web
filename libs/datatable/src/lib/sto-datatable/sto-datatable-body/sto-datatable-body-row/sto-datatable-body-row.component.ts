@@ -5,14 +5,13 @@ import {
   Component,
   DoCheck,
   ElementRef,
-  EventEmitter,
   HostBinding,
-  Input,
   KeyValueDiffer,
   KeyValueDiffers,
-  Output,
   TemplateRef,
   inject,
+  input,
+  output,
 } from '@angular/core';
 import { ColumnStylePipe } from '../../column-style.pipe';
 import { Column, ColumnDisplay } from '../../columns';
@@ -36,47 +35,44 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
   private cdr = inject(ChangeDetectorRef);
   private elRef = inject(ElementRef);
 
-  @Input()
-  responsiveView: TemplateRef<unknown>;
-  @Input()
-  row: T;
-  @Input()
-  columns: Column[];
-  @Input()
-  compressedView: boolean;
-  @Input()
-  rowIndex: number;
-  @Input()
-  rowClass: rowClassFn;
-  @Input()
-  isSelected: boolean;
-  @Output()
-  rowContextMenu = new EventEmitter();
-  @Input()
-  columnMode: ColumnDisplay;
+  readonly responsiveView = input<TemplateRef<unknown>>();
+  readonly row = input<T>({} as T);
+  readonly columns = input<Column[]>();
+  readonly compressedView = input<boolean>();
+  readonly rowIndex = input<number>(0);
+  readonly rowClass = input<rowClassFn>();
+  readonly isSelected = input<boolean>();
+  readonly rowContextMenu = output<{
+    event: MouseEvent | KeyboardEvent;
+    column: Column;
+    row: T;
+    index: number;
+  }>();
+  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
 
   public element: HTMLDivElement;
 
   @HostBinding('class')
   get cssClass() {
     let cls = 'sto-mdl-table__body__row';
-    if (this.isSelected) {
+    if (this.isSelected()) {
       cls += ' sto-mdl-table__body__row--selected';
     }
 
-    if (this.rowClass) {
+    const rowClass = this.rowClass();
+    if (rowClass) {
       let userClass = ' ';
-      if (typeof this.rowClass === 'function') {
-        userClass += this.rowClass(this.row);
-      } else if (typeof this.rowClass === 'object' && !!this.rowClass) {
-        userClass += Object.values(this.rowClass).join(' ');
-      } else if (typeof this.rowClass === 'string') {
-        userClass += this.rowClass;
+      if (typeof rowClass === 'function') {
+        userClass += rowClass(this.row());
+      } else if (typeof rowClass === 'object' && !!rowClass) {
+        userClass += Object.values(rowClass).join(' ');
+      } else if (typeof rowClass === 'string') {
+        userClass += rowClass;
       }
       cls += userClass;
     }
 
-    if (this.compressedView) {
+    if (this.compressedView()) {
       cls += ' sto-mdl-table__body__row--compressed';
     }
 
@@ -96,7 +92,7 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
   }
 
   ngDoCheck() {
-    if (this.rowDiffer.diff(this.row)) {
+    if (this.rowDiffer.diff(this.row())) {
       this.cdr.detectChanges();
     }
   }

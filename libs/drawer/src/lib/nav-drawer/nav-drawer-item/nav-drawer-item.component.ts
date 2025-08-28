@@ -9,10 +9,10 @@ import {
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
-  Output,
   ViewEncapsulation,
+  input,
+  output
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
@@ -55,17 +55,18 @@ import { Navigation } from '../navigation';
     ]
 })
 export class NavDrawerItemComponent {
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()
   navigationItem: Navigation;
-  @Input()
-  collapsed: boolean;
-  @Output()
-  activate = new EventEmitter<Navigation>();
+  readonly collapsed = input<boolean>();
+  readonly activate = output<Navigation>();
 
   private _expansionState: 'collapsed' | 'expanded' = 'collapsed';
 
   public get expansionState() {
-    return this.collapsed ? 'collapsed' : this._expansionState;
+    return this.collapsed() ? 'collapsed' : this._expansionState;
   }
 
   public set expansionState(state) {

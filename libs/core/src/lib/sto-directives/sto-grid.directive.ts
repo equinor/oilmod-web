@@ -1,4 +1,4 @@
-import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, OnDestroy, QueryList, inject } from '@angular/core';
+import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, OnDestroy, QueryList, inject, input } from '@angular/core';
 
 interface BreakpointConfig {
   2: number;
@@ -35,6 +35,9 @@ export class StoGridSpacerDirective {
 export class StoGridColumnDirective {
   @HostBinding('class.sto-f-grid__col')
   useClass = true;
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('class.sto-f-grid__col--2')
   @Input()
   stoGridColumnDouble: boolean;
@@ -49,9 +52,15 @@ export class StoGridColumnDirective {
 export class StoGridDirective implements AfterViewInit, OnDestroy {
   private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('style.max-width.px')
   @Input()
   maxWidth = 1000;
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('style.min-width.px')
   @Input()
   minWidth = 250;
@@ -59,8 +68,7 @@ export class StoGridDirective implements AfterViewInit, OnDestroy {
   baseClass = true;
   @ContentChildren(StoGridColumnDirective, { read: ElementRef })
   columns: QueryList<ElementRef<HTMLElement>>;
-  @Input()
-  breakpoints: BreakpointConfig;
+  readonly breakpoints = input<BreakpointConfig>();
 
   private observer: ResizeObserver;
 
@@ -70,7 +78,7 @@ export class StoGridDirective implements AfterViewInit, OnDestroy {
       for ( const entry of entries ) {
         const cr = entry.contentRect;
         const { width } = cr;
-        const breakpoints = this.breakpoints || { 2: 400, 4: 800 };
+        const breakpoints = this.breakpoints() || { 2: 400, 4: 800 };
         const gridType = getClass(width, breakpoints[ 2 ], breakpoints[ 4 ]);
         if ( !el.classList.contains(gridType) ) {
           el.classList.remove(...ALL_GRIDS);

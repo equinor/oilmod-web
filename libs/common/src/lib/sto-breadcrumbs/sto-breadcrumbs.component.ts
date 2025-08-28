@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, HostBinding, Input, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnDestroy, ViewEncapsulation, inject, input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { Breadcrumb, BreadcrumbConfig, NAVIGATION_HOME_ICON } from './breadcrumb';
@@ -24,28 +24,26 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   @HostBinding('class.sto-breadcrumb')
   css = true;
   public title: string;
-  @Input()
-  homeicon = 'apps';
-  @Input()
-  svgIcon = false;
+  readonly homeicon = input('apps');
+  readonly svgIcon = input(false);
   /**
    * An object that can contain a url segment or a command.
    */
-  @Input() home: any;
+  readonly home = input<any>();
   /**
    * DEPRECATED
    */
-  @Input() style: any;
+  readonly style = input<any>();
   /**
    * DEPRECATED
    */
-  @Input() styleClass: string;
+  readonly styleClass = input<string>();
   /**
    * @DEPRECATED
    * The material icon that is show top left
    *  {string}
    */
-  @Input() homeIcon = 'home';
+  readonly homeIcon = input('home');
   public iconConfig: { icon?: string; svgIcon?: string; text?: string; };
 
   constructor() {
@@ -59,6 +57,8 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   /**
    * A list of items which can be a url segment { segment : 'inventory'} or a command {command: () => {}} .
    */
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() get model(): any[] {
     return this._model;
   }
@@ -98,8 +98,9 @@ export class StoBreadcrumbsComponent implements OnDestroy {
   }
 
   onHomeClick(event: Event) {
-    if ( this.home ) {
-      this.itemClick(event, this.home);
+    const home = this.home();
+    if ( home ) {
+      this.itemClick(event, home);
     }
   }
 
