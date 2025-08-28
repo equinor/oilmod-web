@@ -1,4 +1,12 @@
-import { ContentChildren, Directive, HostListener, Input, OnDestroy, OnInit, QueryList } from '@angular/core';
+import {
+  ContentChildren,
+  Directive,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  input,
+} from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
@@ -12,23 +20,22 @@ import { takeUntil } from 'rxjs/operators';
  */
 @Directive({
   selector: '[stoDateFormFieldClick]',
-  standalone: true
+  standalone: true,
 })
 export class DateFormFieldClickDirective implements OnInit, OnDestroy {
   @ContentChildren(MatInput) inputs: QueryList<MatInput>;
-  @Input() stoDateFormFieldClick: MatDatepicker<Date>;
+  readonly stoDateFormFieldClick = input.required<MatDatepicker<Date>>();
   private destroy$ = new Subject();
 
   @HostListener('click')
   clickEvent() {
-    this.stoDateFormFieldClick.open();
+    this.stoDateFormFieldClick().open();
   }
 
   ngOnInit() {
-    this.stoDateFormFieldClick.closedStream
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(() => this.inputs.first.focus());
+    this.stoDateFormFieldClick()
+      .closedStream.pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.inputs.first.focus());
   }
 
   ngOnDestroy() {

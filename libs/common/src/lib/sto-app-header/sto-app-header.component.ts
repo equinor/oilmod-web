@@ -43,26 +43,37 @@ export class StoAppHeaderComponent implements OnInit {
   /**
    * testEnvironment tells the header whether or not to style itself defining a test-environment
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   testEnvironment: boolean;
   /**
    * If {@link testEnvironment} is true, this name is printed out centered on the header
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   environmentName: string;
   /**
    * Input for user information menu.
    */
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()
   userMenu: MatMenuPanel;
   /**
    * Configuration that determines what to do when clicking the top-level menu icon
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   homeBreadCrumbConfig: { command: () => void };
   /**
    * Configuration used to print out the relevant application breadcrumbs.
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   breadCrumbs: Breadcrumb[];
 

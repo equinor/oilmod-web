@@ -1,10 +1,10 @@
 <div class="sto-message-panel__icon-wrapper">
-  <mat-icon>{{ icon + '_outline' || severity }}</mat-icon>
+  <mat-icon>{{ icon() + '_outline' || severity }}</mat-icon>
 </div>
 <div class="sto-message-panel__content-wrapper">
   <ng-content></ng-content>
 </div>
-@if (dismissable) {
+@if (dismissable()) {
   <div
     class="sto-message-panel__dismiss-wrapper mat__icon--clickable">
     <button mat-icon-button

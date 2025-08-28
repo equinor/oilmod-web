@@ -10,9 +10,11 @@ import {
   HostBinding,
   inject,
   Input,
+  input,
   NgZone,
   OnDestroy,
   Output,
+  output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
@@ -65,75 +67,95 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   private cdr = inject(ChangeDetectorRef);
   private zone = inject(NgZone);
 
-  @Input()
-  groups: Array<Group>;
+  readonly groups = input<Array<Group>>([]);
   @ViewChild(StoDatatableBodyComponent)
   body: StoDatatableBodyComponent<T>;
   @ContentChild(StoDatatableActionsComponent)
   actions: StoDatatableActionsComponent;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   rowHeight = 36;
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('class.horizontal-scroll')
   @Input()
   scrollbarH: boolean;
-  @Input()
-  emptyMessage = `No records in set`;
+  readonly emptyMessage = input(`No records in set`);
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   headerHeight = 24;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   selectionMode: SelectionModes = SelectionModes.Click;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @HostBinding('class.sortable')
   @Input()
   sortable: boolean;
-  @Input()
-  disableRipple: boolean;
+  readonly disableRipple = input<boolean>();
   ColumnDisplay = ColumnDisplay;
-  @Input()
-  loading: boolean;
+  readonly loading = input<boolean>();
   public height$: Observable<number>;
   public rowTotalHeight: number;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @HostBinding('class.autosize')
   @Input()
   autoSize: boolean;
-  @Input()
-  autoSizeOffset = 0;
+  readonly autoSizeOffset = input(0);
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   preserveSort: boolean;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   selected: T;
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('class.virtual-scroll')
   @Input()
   virtualScroll = true;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   responsive: boolean;
-  @Input()
-  responsiveView: TemplateRef<unknown>;
-  @Input()
-  responsiveBreakPoint = 400;
-  @Input()
-  externalSort: boolean;
+  readonly responsiveView = input<TemplateRef<unknown>>();
+  readonly responsiveBreakPoint = input(400);
+  readonly externalSort = input<boolean>();
   @HostBinding('class.responsive')
   public smallScreen = false;
-  @Input()
-  rowClass: rowClassFn;
+  readonly rowClass = input<rowClassFn>();
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('class.mat-elevation-z3')
   @Input()
   elevation = true;
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()
   columnGroups: ColumnGroup[];
+
+  // TODO: Cannot migrate because:
+  // Your application code relies on internal rxjs only implementation details
   @Output()
-  // eslint-disable-next-line @angular-eslint/no-output-native
+  // eslint-disable-next-line @angular-eslint/no-output-native -- keeping legacy public API '(select)' output
   select = new EventEmitter<RowSelection<T>>();
-  @Output()
-  resized = new EventEmitter<Column>();
-  @Output()
-  rowContextMenu = new EventEmitter<RowContextMenu<T>>();
-  @Output()
-  headerContextMenu = new EventEmitter<HeaderContextMenu>();
-  @Output()
-  rowActivate = new EventEmitter<RowActivation<T>>();
-  @Output()
-  sortChanged = new EventEmitter<{ sort: Sort; column: Column }>();
+  readonly resized = output<Column>();
+  readonly rowContextMenu = output<RowContextMenu<T>>();
+  readonly headerContextMenu = output<HeaderContextMenu>();
+  readonly rowActivate = output<RowActivation<T>>();
+  readonly sortChanged = output<{
+    sort: Sort;
+    column: Column;
+  }>();
   public columnTotalWidth: number;
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
@@ -170,9 +192,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     }
   }
 
-  get bodyHeight() {
+  get bodyHeight(): number {
     if (!this.height || !this.body) {
-      return null;
+      return 0;
     }
     const hasHeader =
       !this.responsive || (this.responsive && !this.smallScreen);
@@ -207,6 +229,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   private _height: number;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get height() {
     return this._height;
@@ -225,6 +249,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     return this._internalRows;
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   set rows(rows: T[]) {
     this._rows = rows;
@@ -233,11 +259,12 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
     if (rows && rows.length > 0) {
       this._internalRows = [...(rows || [])];
-      if (!this.preserveSort && !this.externalSort) {
+      const externalSort = this.externalSort();
+      if (!this.preserveSort && !externalSort) {
         this.activeSort = null;
       }
 
-      if (this.activeSort && !this.externalSort) {
+      if (this.activeSort && !externalSort) {
         const column = (this.columns || []).find(
           (col) => col.$$id === this.activeSort?.active,
         );
@@ -252,6 +279,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   private _footerRow: T;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input('footerRow')
   get footerRow() {
     if (this._footerRow && typeof this._footerRow === 'object') {
@@ -269,6 +298,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   private _columnMode: ColumnDisplay;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get columnMode(): ColumnDisplay {
     return this._columnMode || ColumnDisplay.Flex;
@@ -280,6 +311,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   private _columns: Column[];
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get columns(): Column[] {
     return this._columns;
@@ -304,6 +337,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   private _resizeable: boolean;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @HostBinding('class.resizeable')
   @Input()
   get resizeable(): boolean {
@@ -317,11 +352,9 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     }
   }
 
-  @Input()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  trackBy = (index: number, item: T) => {
+  readonly trackBy = input((index: number, item: T) => {
     return index;
-  };
+  });
 
   rowClick(row: T, index: number, event: MouseEvent) {
     this.selected = row;
@@ -341,7 +374,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     if (this.autoSize) {
       this.setAutoSize();
     }
-    if (this.responsive && !this.responsiveView) {
+    if (this.responsive && !this.responsiveView()) {
       console.error(
         'Responsive mode set to true, but no view passed in. Please pass in responsiveView (templateRef)',
       );
@@ -351,7 +384,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
         .pipe(takeUntil(this.destroyed$))
         .subscribe((width) => {
           this.zone.run(() => {
-            this.smallScreen = width < this.responsiveBreakPoint;
+            this.smallScreen = width < this.responsiveBreakPoint();
             this.cdr.markForCheck();
           });
         });
@@ -401,7 +434,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     if (!column) {
       return;
     }
-    if (this.externalSort) {
+    if (this.externalSort()) {
       this.sortChanged.emit({ sort, column });
       return;
     }
@@ -443,7 +476,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
           window.innerHeight -
           top -
           16 -
-          this.autoSizeOffset -
+          this.autoSizeOffset() -
           (this.actions ? 6 : 0),
       ),
       tap((height) => (this.height = height)),

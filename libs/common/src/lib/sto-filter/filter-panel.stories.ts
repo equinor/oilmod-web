@@ -10,7 +10,7 @@ import {
 } from '@ngx-stoui/common';
 import { StoDirectivesModule } from '@ngx-stoui/core';
 import { StoFormModule } from '@ngx-stoui/form';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { moduleMetadata } from '@storybook/angular';
 import { Meta, Story } from '@storybook/angular/types-6-0';
 import markdown from './sto-filter-panel.component.md';

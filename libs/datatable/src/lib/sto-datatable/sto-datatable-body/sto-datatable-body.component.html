@@ -3,8 +3,8 @@
     #scrollViewport
     (scroll)="scrollHeader.emit($event)"
     [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
-    [class.sto-mdl-table__body--selectable]="selectable"
-    [itemSize]="!smallView || !responsive ? rowHeight : 80"
+    [class.sto-mdl-table__body--selectable]="selectable()"
+    [itemSize]="!smallView() || !responsive() ? rowHeight : 80"
     [style.height.px]="height || 500"
     class="sto-mdl-table__body"
     role="rowgroup"
@@ -40,28 +40,28 @@
         templateCacheSize: 0;
         let i = index;
         let last = last;
-        trackBy: trackBy
+        trackBy: trackBy()
       "
-      [columnMode]="columnMode"
+      [columnMode]="columnMode()"
       [columns]="columns"
-      [compressedView]="smallView && responsive"
-      [isSelected]="selected === row"
-      [matRippleDisabled]="disableRipple"
+      [compressedView]="smallView() && responsive()"
+      [isSelected]="selected() === row"
+      [matRippleDisabled]="disableRipple()"
       [matRippleUnbounded]="false"
-      [responsiveView]="responsiveView"
-      [rowClass]="rowClass"
+      [responsiveView]="responsiveView()"
+      [rowClass]="rowClass()"
       [rowIndex]="i"
       [row]="row"
-      [style.height]="(!smallView || !responsive ? rowHeight : 80) + 'px'"
-      [style.min-width]="width"
-      [style.overflow]="disableRipple ? 'visible' : 'hidden'"
-      [style.transform]="scrollLeft"
+      [style.height]="(!smallView() || !responsive() ? rowHeight : 80) + 'px'"
+      [style.min-width]="width()"
+      [style.overflow]="disableRipple() ? 'visible' : 'hidden'"
+      [style.transform]="scrollLeft()"
       [tabindex]="0"
       matRipple
       role="row"
     >
     </sto-datatable-body-row>
-    @if (scrollbarH && hasFooter) {
+    @if (scrollbarH && hasFooter()) {
       <sto-datatable-body-row
         [style.height.px]="rowHeight"
       ></sto-datatable-body-row>
@@ -74,15 +74,15 @@
     #scroller
     (scroll)="scrollHeader.emit($event)"
     [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
-    [class.sto-mdl-table__body--selectable]="selectable"
+    [class.sto-mdl-table__body--selectable]="selectable()"
     [style.height]="height ? height + 'px' : 'auto'"
     [style.padding-bottom.px]="
-      horizontalScrollActive && hasFooter ? rowHeight : 0
+      horizontalScrollActive && hasFooter() ? rowHeight : 0
     "
     class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
     role="rowgroup"
   >
-    @for (row of rows; track trackBy(i, row); let i = $index) {
+    @for (row of rows; track trackBy()(i, row); let i = $index) {
       <sto-datatable-body-row
         #rowEl
         (click)="
@@ -110,14 +110,14 @@
         "
         (rowContextMenu)="rowContextMenu.emit($event)"
         [columns]="columns"
-        [compressedView]="smallView && responsive"
-        [isSelected]="selected === row"
-        [responsiveView]="responsiveView"
-        [rowClass]="rowClass"
+        [compressedView]="smallView() && responsive()"
+        [isSelected]="selected() === row"
+        [responsiveView]="responsiveView()"
+        [rowClass]="rowClass()"
         [rowIndex]="i"
         [row]="row"
-        [style.height]="(!smallView || !responsive ? rowHeight : 80) + 'px'"
-        [style.min-width]="width"
+        [style.height]="(!smallView() || !responsive() ? rowHeight : 80) + 'px'"
+        [style.min-width]="width()"
         [tabindex]="0"
         role="row"
       >

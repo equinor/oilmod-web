@@ -24,7 +24,7 @@ import { PopoverComponent } from './popover.component';
       <h3>
         <ng-content></ng-content>
       </h3>
-      <button mat-icon-button (click)="overlay.trigger.close()">
+      <button mat-icon-button (click)="overlay.trigger().close()">
         <mat-icon>close</mat-icon>
       </button>
     </div>

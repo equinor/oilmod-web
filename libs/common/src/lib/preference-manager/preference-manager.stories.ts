@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Preference, PreferenceManagerComponent, StoFilterPanelModule } from '@ngx-stoui/common';
 

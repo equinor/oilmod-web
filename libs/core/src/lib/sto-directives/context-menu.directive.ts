@@ -1,30 +1,26 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, input } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MenuOverlayDirective } from './menu-overlay.directive';
 
 @Directive({
   selector: '[stoContextMenu]',
-  standalone: true
+  standalone: true,
 })
 export class ContextMenuDirective {
-  @Input()
-  menuTrigger: MatMenuTrigger;
-  @Input()
-  overlayDirective: MenuOverlayDirective;
-  @Input()
-  menuContext: unknown;
+  readonly menuTrigger = input.required<MatMenuTrigger>();
+  readonly overlayDirective = input.required<MenuOverlayDirective>();
+  readonly menuContext = input<unknown>();
 
-  @HostListener('contextmenu', [ '$event' ])
+  @HostListener('contextmenu', ['$event'])
   contextMenu(event: MouseEvent) {
     event.preventDefault();
-    if ( this.menuTrigger.menuOpen ) {
-      this.menuTrigger.closeMenu();
+    if (this.menuTrigger().menuOpen) {
+      this.menuTrigger().closeMenu();
     }
-    this.overlayDirective.updatePosition(event);
+    this.overlayDirective().updatePosition(event);
     setTimeout(() => {
-      this.menuTrigger.menuData = this.menuContext;
-      this.menuTrigger.openMenu();
+      this.menuTrigger().menuData = this.menuContext();
+      this.menuTrigger().openMenu();
     }, 150);
   }
-
 }

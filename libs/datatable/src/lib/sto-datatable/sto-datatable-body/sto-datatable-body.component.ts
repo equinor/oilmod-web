@@ -7,13 +7,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   Input,
   OnDestroy,
-  Output,
   TemplateRef,
   ViewChild,
+  input,
+  output,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Column, ColumnDisplay } from '../columns';
@@ -44,48 +44,45 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
 {
   @ViewChild('scrollViewport', { read: ElementRef })
   scrollElement: ElementRef<HTMLElement>;
-  @Input()
-  responsive: boolean;
-  @Input()
-  disableRipple: boolean;
-  @Input()
-  smallView: boolean;
-  @Input()
-  responsiveView: TemplateRef<unknown>;
+  readonly responsive = input<boolean>();
+  readonly disableRipple = input<boolean>(false);
+  readonly smallView = input<boolean>();
+  readonly responsiveView = input<TemplateRef<unknown>>();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   height: number | null;
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   rows: Array<T>;
-  @Input()
-  selectable: boolean;
-  @Input()
-  width: string;
+  readonly selectable = input<boolean>();
+  readonly width = input<string>();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   rowHeight: number;
-  @Input()
-  selected: T;
+  readonly selected = input<T>();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   columns: Column[];
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   virtualScroll: boolean;
-  @Input()
-  columnMode: ColumnDisplay;
-  @Input()
-  rowClass: rowClassFn;
+  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
+  readonly rowClass = input<rowClassFn>();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   selectionMode: SelectionModes;
-  @Input()
-  scrollLeft: string | null;
-  @Input()
-  hasFooter: boolean;
-  @Output()
-  rowSelected = new EventEmitter<RowSelection<T>>();
-  @Output()
-  rowContextMenu = new EventEmitter<RowContextMenu<T>>();
-  @Output()
-  activate = new EventEmitter<RowActivation<T>>();
-  @Output()
-  scrollHeader = new EventEmitter<Event>();
+  readonly scrollLeft = input<string | null>();
+  readonly hasFooter = input<boolean>();
+  readonly rowSelected = output<RowSelection<T>>();
+  readonly rowContextMenu = output<RowContextMenu<T>>();
+  readonly activate = output<RowActivation<T>>();
+  readonly scrollHeader = output<Event>();
   @ViewChild(CdkVirtualScrollViewport)
   vScroller: CdkVirtualScrollViewport;
   @ViewChild('scroller')
@@ -93,11 +90,14 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   public horizontalScrollActive: boolean;
   public verticalScrollOffset = 0;
   private destroyed$ = new Subject<boolean>();
-  private timeout: number | undefined;
+  // Using ReturnType<typeof setTimeout> works for both browser (number) and Node/JSDOM (Timeout) environments
+  private timeout: ReturnType<typeof setTimeout> | undefined;
   private resizeObserver: ResizeObserver;
 
   private _scrollbarH: boolean;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get scrollbarH(): boolean {
     return this._scrollbarH;
@@ -125,22 +125,19 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     this.timeout = setTimeout(() => {
       this.vScroller.ngOnInit();
     }, 100);
   }
 
-  @Input()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  trackBy = (index: number, item: T) => {
+  readonly trackBy = input((index: number, item: T) => {
     return index;
-  };
+  });
   _rowClass = (row: T) => {
     let userDefinedClass = '';
-    if (this.rowClass) {
-      userDefinedClass = this.rowClass.bind(this)(row);
+    const rowClass = this.rowClass();
+    if (rowClass) {
+      userDefinedClass = rowClass.bind(this)(row);
     }
     return `${userDefinedClass} sto-mdl-table__body__row`;
   };
@@ -216,7 +213,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
     }
     const elRef = this.scroller.nativeElement;
     const cb: ResizeObserverCallback = (entries) => {
-      if (!this.hasFooter) {
+      if (!this.hasFooter()) {
         return;
       }
       for (const entry of entries) {
@@ -256,7 +253,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   private virtHorzScrollPosition() {
     const elRef = this.vScroller.elementRef.nativeElement;
     const cb: ResizeObserverCallback = (entries) => {
-      if (!this.hasFooter) {
+      if (!this.hasFooter()) {
         return;
       }
       for (const entry of entries) {

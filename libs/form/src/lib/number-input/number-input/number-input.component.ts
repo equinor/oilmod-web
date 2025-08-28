@@ -4,25 +4,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   DoCheck,
-  ElementRef,
-  EventEmitter,
   HostBinding,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   ViewEncapsulation,
   inject,
+  output,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
-  FormGroupDirective,
   NgControl,
-  NgForm,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
@@ -60,6 +55,8 @@ export class NumberInputComponent
   controlType = 'number-input';
   ctrl = new FormControl<string | number | null>(null);
   public sub = new Subscription();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   dynamicFractionSize: boolean;
   @HostBinding()
@@ -67,8 +64,7 @@ export class NumberInputComponent
   @HostBinding('attr.aria-describedby')
   describedBy = '';
   errorState: boolean;
-  @Output()
-  ngModelChange = new EventEmitter<number | null>();
+  readonly ngModelChange = output<number | null>();
   private numberFormatter = new NumberInputPipe();
 
   /*  get errorState() {
@@ -102,6 +98,8 @@ export class NumberInputComponent
 
   private _disabled = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -110,12 +108,15 @@ export class NumberInputComponent
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
     this.stateChanges.next();
   }
 
   private _readonly = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get readonly(): boolean {
     return this._readonly;
@@ -128,6 +129,8 @@ export class NumberInputComponent
 
   private _fractionSize: number;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get fractionSize() {
     return this._fractionSize;
@@ -149,6 +152,8 @@ export class NumberInputComponent
 
   private _placeholder: string;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get placeholder() {
     return this._placeholder || '';
@@ -161,6 +166,8 @@ export class NumberInputComponent
 
   private _tabIndex: number;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get tabIndex() {
     return this._tabIndex;
@@ -173,6 +180,8 @@ export class NumberInputComponent
 
   private _required = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get required() {
     return this._required;
@@ -185,6 +194,8 @@ export class NumberInputComponent
 
   private _value: number | null;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get value() {
     return this._value;

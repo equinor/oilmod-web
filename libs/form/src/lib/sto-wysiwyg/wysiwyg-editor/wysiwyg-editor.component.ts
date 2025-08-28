@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild, inject, input, output } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -13,14 +13,14 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
   private zone = inject(NgZone);
 
-  @Input()
-  content: SafeHtml;
+  readonly content = input<SafeHtml>();
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input()
   readonly: boolean;
   @ViewChild('editor')
   editor: ElementRef<HTMLDivElement>;
-  @Output()
-  valueChanged = new EventEmitter<string>();
+  readonly valueChanged = output<string>();
   public warning: string | null;
 
   private destroyed$ = new Subject<boolean>();

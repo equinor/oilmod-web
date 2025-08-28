@@ -2,45 +2,45 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   Input,
-  Output,
   QueryList,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  input,
+  output,
 } from '@angular/core';
-import { Preference } from './preference';
 import {
   MatMenu,
   MatMenuItem,
   MatMenuModule,
-  MatMenuTrigger
+  MatMenuTrigger,
 } from '@angular/material/menu';
 import { take } from 'rxjs/operators';
+import { Preference } from './preference';
 
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivePreferencePipe } from './active-preference.pipe';
 
 @Component({
-    selector: 'sto-preference-manager',
-    templateUrl: './preference-manager.component.html',
-    styleUrls: ['./preference-manager.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
+  selector: 'sto-preference-manager',
+  templateUrl: './preference-manager.component.html',
+  styleUrls: ['./preference-manager.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    ActivePreferencePipe
-]
+    ActivePreferencePipe,
+  ],
 })
 export class PreferenceManagerComponent {
   @ViewChild('nameTmpl')
@@ -54,8 +54,7 @@ export class PreferenceManagerComponent {
    * The preference identifier (typically application area).
    * If missing, will be set to null
    */
-  @Input()
-  identifierKey: string;
+  readonly identifierKey = input<string>();
   /**
    * ID of the selected preference
    */
@@ -69,8 +68,7 @@ export class PreferenceManagerComponent {
   /**
    * If the current preference has been modified
    */
-  @Input()
-  dirty: boolean;
+  readonly dirty = input<boolean>();
   /**
    * Text to display when no preference is selected
    */
@@ -79,35 +77,29 @@ export class PreferenceManagerComponent {
   /**
    * selectPreference emits whenever a preference is selected
    */
-  @Output()
-  selectPreference = new EventEmitter<string>();
+  readonly selectPreference = output<string>();
   /**
    * editPreference emits any changed (existing) preference
    */
-  @Output()
-  editPreference = new EventEmitter<Preference>();
+  readonly editPreference = output<Preference>();
   /**
    * setDefaultPreference emits when the user determines a new default preference
    */
-  @Output()
-  setDefaultPreference = new EventEmitter<Preference>();
+  readonly setDefaultPreference = output<Preference>();
   /**
    * deletePreference emits when a preference is deleted
    */
-  @Output()
-  deletePreference = new EventEmitter<string>();
+  readonly deletePreference = output<string>();
   /**
    * addNewPreference emits when the user creates a new preference.
    * This does *not* include the current setup - that needs to be added by the consuming application
    */
-  @Output()
-  addNewPreference = new EventEmitter<Preference>();
+  readonly addNewPreference = output<Preference>();
   /**
    * sharePreference emits when the user clicks the "share" button.
    * Each application needs to implement this functionality for themselves.
    */
-  @Output()
-  sharePreference = new EventEmitter<string>();
+  readonly sharePreference = output<string>();
   /**
    * @internal
    */
@@ -144,7 +136,7 @@ export class PreferenceManagerComponent {
    * @internal
    */
   saveRename() {
-    if ( !this.changedPreference ) {
+    if (!this.changedPreference) {
       return;
     }
     const el = this.nameTmpl.nativeElement;
@@ -168,10 +160,11 @@ export class PreferenceManagerComponent {
    * @internal
    */
   focusActiveItem(menu: MatMenu) {
-    menu._allItems.changes.pipe(take(1))
+    menu._allItems.changes
+      .pipe(take(1))
       .subscribe((l: QueryList<MatMenuItem>) => {
-        l.forEach(it => {
-          if ( it._getHostElement().classList.contains('selected') ) {
+        l.forEach((it) => {
+          if (it._getHostElement().classList.contains('selected')) {
             requestAnimationFrame(() => it.focus());
           }
         });
@@ -180,14 +173,14 @@ export class PreferenceManagerComponent {
 
   addPreference() {
     this.cancelRename();
-    this.newPreference = new Preference(this.identifierKey);
+    this.newPreference = new Preference(this.identifierKey() || '');
   }
 
   /**
    * @internal
    */
   saveNewPreference() {
-    if ( !this.newPreference ) {
+    if (!this.newPreference) {
       return;
     }
     const el = this.nameTmpl.nativeElement;

@@ -52,11 +52,7 @@ type NumberUnitForm = {
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    NumberInputDirective,
-    ReactiveFormsModule,
-    MatSelectModule
-],
+  imports: [NumberInputDirective, ReactiveFormsModule, MatSelectModule],
 })
 export class NumberUnitInputComponent
   extends FormFieldBase
@@ -83,8 +79,12 @@ export class NumberUnitInputComponent
   @ViewChild(NumberInputDirective)
   numberInputDirective: NumberInputDirective;
   errorState: boolean;
+  // TODO: Skipped for migration because:
+  //  Class of this input is referenced in the signature of another class.
   @Input()
   unitOptional = true;
+  // TODO: Skipped for migration because:
+  //  Class of this input is referenced in the signature of another class.
   @Input()
   unitClearText = '(none)';
   public focused: boolean;
@@ -113,6 +113,8 @@ export class NumberUnitInputComponent
 
   private _disabled = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -121,6 +123,7 @@ export class NumberUnitInputComponent
   set disabled(disable: boolean) {
     this._disabled = coerceBooleanProperty(disable);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     disable ? this.form.disable(opts) : this.form.enable(opts);
     // disable ? this.form.get('unit').disable(opts) : this.form.get('unit').enable(opts);
     // disable ? this.form.get('value').disable(opts) : this.form.get('value').enable(opts);
@@ -129,6 +132,8 @@ export class NumberUnitInputComponent
 
   private _readonly = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get readonly(): boolean {
     return this._readonly;
@@ -137,6 +142,7 @@ export class NumberUnitInputComponent
   set readonly(value: boolean) {
     this._readonly = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     value
       ? this.form.get('unit')?.disable(opts)
       : this.form.get('unit')?.enable(opts);
@@ -145,6 +151,8 @@ export class NumberUnitInputComponent
 
   private _list: { value: unknown; title?: string }[] = [];
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get list() {
     return this._list;
@@ -157,6 +165,8 @@ export class NumberUnitInputComponent
 
   private _fractionSize: number;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get fractionSize() {
     return this._fractionSize || 3;
@@ -174,6 +184,8 @@ export class NumberUnitInputComponent
 
   private _placeholder: string;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get placeholder() {
     return this._placeholder || '';
@@ -186,6 +198,8 @@ export class NumberUnitInputComponent
 
   private _unitPlaceholder: string;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get unitPlaceholder() {
     return this._unitPlaceholder || '';
@@ -198,6 +212,8 @@ export class NumberUnitInputComponent
 
   private _required = false;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input()
   get required() {
     return this._required;

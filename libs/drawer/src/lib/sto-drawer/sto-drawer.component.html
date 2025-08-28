@@ -1,9 +1,9 @@
 <div
-  [ngClass]="position + ' ' + cssClass"
+  [ngClass]="position + ' ' + cssClass()"
   [style.width]="width"
-  [style.top]="padding"
+  [style.top]="padding()"
   [style.zIndex]="position === 'left' ? 60 : 58"
-  [style.right]="offset"
+  [style.right]="offset()"
   [@drawerAnimations]="slideInOut"
   class="sto-drawer">
   <div class="sto-drawer__header__wrapper"
@@ -26,7 +26,7 @@
 
 </div>
 
-@if (open && animation && backdrop) {
+@if (open && animation() && backdrop()) {
   <div @overlay
     class="sto-drawer__overlay"
     [style.left]="0"

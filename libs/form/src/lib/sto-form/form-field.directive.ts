@@ -1,5 +1,5 @@
 /* tslint:disable:no-string-literal */
-import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, HostListener, Input, OnDestroy, QueryList, inject } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, HostListener, OnDestroy, QueryList, inject, input } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Subject, Subscription } from 'rxjs';
@@ -20,8 +20,7 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
 
   @ContentChildren(MatFormFieldControl)
   input: QueryList<MatFormFieldControl<unknown>>;
-  @Input()
-  disableFormFieldTitle: boolean;
+  readonly disableFormFieldTitle = input<boolean>();
   @HostBinding('title')
   title = '';
   private destroyed$ = new Subject();
@@ -54,11 +53,11 @@ export class FormFieldDirective implements AfterViewInit, AfterContentInit, OnDe
           }
         } catch {/*em all*/
         }
-        // eslint-disable-next-line
+         
         if ( this.titleSub ) {
           this.titleSub.unsubscribe();
         }
-        if ( !this.hideFormFieldTitle && !this.disableFormFieldTitle ) {
+        if ( !this.hideFormFieldTitle && !this.disableFormFieldTitle() ) {
           this.titleSub = this.input.first.stateChanges
             .pipe(
               debounceTime(30),

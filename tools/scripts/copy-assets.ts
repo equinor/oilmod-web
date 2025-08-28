@@ -1,16 +1,23 @@
 import * as fs from 'fs';
 import * as path from 'path';
-
-const glob = require('glob');
+import { glob } from 'glob';
 
 const root = path.join(__dirname, '../../');
 const src = path.join(root, 'libs', 'core', 'src');
 const out = path.join(root, 'dist', 'libs', 'core');
-const scss = path.join(src, 'style/**/*');
+// IMPORTANT: glob v9+ treats backslashes as escape chars. Build the pattern with forward slashes
+// or set windowsPathsNoEscape to avoid unintended escaping on Windows.
+const scss = `${src.replace(/\\/g, '/')}/style/**/*`;
 
 console.log('Running asset-copier in', root);
 
-glob(scss, (err: Error | null, files: Array<string>) => {
+(async () => {
+  const files = await glob(scss, { windowsPathsNoEscape: true });
+  if (!files.length) {
+    console.warn('No files matched pattern:', scss);
+  } else {
+    console.log('Matched', files.length, 'files');
+  }
   const onlyLocalPath = [...files]
     .filter((file) => !fs.lstatSync(file).isDirectory())
     .map((file) => {
@@ -32,4 +39,4 @@ glob(scss, (err: Error | null, files: Array<string>) => {
   });
 
   console.log('Assets copied');
-});
+})();

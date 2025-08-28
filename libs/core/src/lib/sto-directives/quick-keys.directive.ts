@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Directive, HostListener, input, output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { Key } from '../abstract-and-interfaces/keyPress.enum';
 
@@ -9,32 +9,32 @@ import { Key } from '../abstract-and-interfaces/keyPress.enum';
 
 @Directive({
   selector: '[stoQuickKeys]',
-  standalone: true
+  standalone: true,
 })
 export class QuickKeysDirective {
-  @Input() quickKeys: unknown;
+  readonly quickKeys = input<unknown>();
   /**
    * Optional formGroup input, when used in combination with a reactive form
    */
-  @Input() formGroup: UntypedFormGroup;
+  readonly formGroup = input<UntypedFormGroup>();
   /**
    * Emits when ctrl + enter is clicked in combination
    * <form (quickSubmit)="save()">
    */
-  @Output() quickSubmit = new EventEmitter<void>();
+  readonly quickSubmit = output<void>();
   /**
    * Emits when escape is clicked
    * <form (quickCancel)="cancel()">
    */
-  @Output() quickCancel = new EventEmitter<void>();
+  readonly quickCancel = output<void>();
 
   /**
    * Listens on the host element for any keyup events
    * @param e
    */
-  @HostListener('keyup', [ '$event' ])
+  @HostListener('keyup', ['$event'])
   onKeyUp(e: KeyboardEvent) {
-    if ( this.formGroup ) {
+    if (this.formGroup()) {
       this.handleFormKeys(e);
     }
     this.handleGenericKeydown(e);
@@ -47,10 +47,12 @@ export class QuickKeysDirective {
    */
   private handleGenericKeydown(e: KeyboardEvent) {
     // Shortcuts that are useful outside of forms
-    if ( e.keyCode === Key.Escape ) {
+    if (e.keyCode === Key.Escape) {
+      // TODO: The 'emit' function requires a mandatory void argument
       this.quickCancel.emit();
     }
-    if ( !this.formGroup && e.keyCode === Key.Enter && e.ctrlKey ) {
+    if (!this.formGroup() && e.keyCode === Key.Enter && e.ctrlKey) {
+      // TODO: The 'emit' function requires a mandatory void argument
       this.quickSubmit.emit();
     }
   }
@@ -60,10 +62,11 @@ export class QuickKeysDirective {
    * @param e
    */
   private handleFormKeys(e: KeyboardEvent) {
-    if ( this.formGroup.pristine ) {
+    if (this.formGroup()?.pristine) {
       return;
     }
-    if ( e.keyCode === Key.Enter && e.ctrlKey ) {
+    if (e.keyCode === Key.Enter && e.ctrlKey) {
+      // TODO: The 'emit' function requires a mandatory void argument
       this.quickSubmit.emit();
     }
   }

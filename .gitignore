@@ -46,5 +46,5 @@ documentation.json
 .nx/workspace-data
 migrations.json
 
-.cursor\rules\nx-rules.mdc
-.github\instructions\nx.instructions.md
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md

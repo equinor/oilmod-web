@@ -1,36 +1,51 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgZone, OnDestroy, SecurityContext, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  forwardRef,
+  inject,
+  Input,
+  NgZone,
+  OnDestroy,
+  SecurityContext,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
-import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
 import { Modifiers, validCommands } from './modifiers';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
+import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
 
 @Component({
-    selector: 'sto-wysiwyg',
-    templateUrl: './wysiwyg.component.html',
-    styleUrls: ['./wysiwyg.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => WysiwygComponent),
-            multi: true
-        }
-    ],
-    imports: [
-        WysiwygActionsComponent,
-        WysiwygEditorComponent
-    ]
+  selector: 'sto-wysiwyg',
+  templateUrl: './wysiwyg.component.html',
+  styleUrls: ['./wysiwyg.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => WysiwygComponent),
+      multi: true,
+    },
+  ],
+  imports: [WysiwygActionsComponent, WysiwygEditorComponent],
 })
-export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
+export class WysiwygComponent
+  implements AfterViewInit, OnDestroy, ControlValueAccessor
+{
   private domSanitizer = inject(DomSanitizer);
   private zone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
 
-  // eslint-disable-next-line @angular-eslint/no-input-rename
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
+  // eslint-disable-next-line @angular-eslint/no-input-rename -- preserving public API 'readonly' while property name differs
   @Input('readonly')
   disabled: boolean;
   @ViewChild(WysiwygEditorComponent, { read: ElementRef })
@@ -50,13 +65,13 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   }
 
   execute(method: string) {
-    if ( !validCommands.includes(method) ) {
+    if (!validCommands.includes(method)) {
       return;
     }
     const showUi = method === 'createLink';
-    if ( showUi ) {
+    if (showUi) {
       const url = window.prompt('url');
-      if ( url ) {
+      if (url) {
         document.execCommand(method, false, url);
       }
     } else {
@@ -67,10 +82,10 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   }
 
   onKeyDownHandleTab(event: KeyboardEvent) {
-    if ( event.key === 'Tab' ) {
+    if (event.key === 'Tab') {
       event.preventDefault();
       let method: string;
-      if ( event.shiftKey ) {
+      if (event.shiftKey) {
         method = 'outdent';
       } else {
         method = 'indent';
@@ -80,14 +95,14 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   }
 
   writeValue(value: string): void {
-    if ( value ) {
-      const sanitized = this.domSanitizer.sanitize(SecurityContext.HTML, value) ?? '';
+    if (value) {
+      const sanitized =
+        this.domSanitizer.sanitize(SecurityContext.HTML, value) ?? '';
       this.value = this.domSanitizer.bypassSecurityTrustHtml(sanitized);
       this.cdr.detectChanges();
     }
   }
 
-  // eslint-disable-next-line
   propagateChange = (value: unknown) => {
     console.log(value); // To remove eslint warning..
   };
@@ -112,11 +127,11 @@ export class WysiwygComponent implements AfterViewInit, OnDestroy, ControlValueA
   private listenForSelectEvents() {
     merge(
       fromEvent(this.editor.nativeElement, 'mouseup'),
-      fromEvent<KeyboardEvent>(this.editor.nativeElement, 'keyup')
-        .pipe(
-          filter((ev) => ( ev.ctrlKey && ev.key === 'A' ) || ( /Arrow/.test(ev.key) ))
-        )
-    ).pipe(debounceTime(200), takeUntil(this.destroyed$))
+      fromEvent<KeyboardEvent>(this.editor.nativeElement, 'keyup').pipe(
+        filter((ev) => (ev.ctrlKey && ev.key === 'A') || /Arrow/.test(ev.key)),
+      ),
+    )
+      .pipe(debounceTime(200), takeUntil(this.destroyed$))
       .subscribe(() => {
         this.active = Modifiers.getActiveModifiers();
         this.cdr.detectChanges();

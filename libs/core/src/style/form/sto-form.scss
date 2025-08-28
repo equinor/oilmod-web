@@ -13,7 +13,7 @@
   .sto-form {
     &__field {
       input {
-        color: var(--mdc-filled-text-field-label-text-color);
+        color: var(--mat-form-field-filled-label-text-color);
       }
     }
 
@@ -124,7 +124,8 @@ $height: 72px;
   &__field {
     cursor: pointer;
     @extend %sto-form__field;
-    --mdc-filled-text-field-container-color: #{$form-field-bg};
+    --mat-form-field-filled-container-color: #{$form-field-bg};
+    --mat-form-field-state-layer-color: #{$form-field-bg};
 
     &.mat-focused {
       @extend %sto-form__field--focused;
@@ -183,7 +184,7 @@ $height: 72px;
       color: var(--text);
       display: flex;
       .mat-mdc-icon-button {
-        --mdc-icon-button-state-layer-size: 23px;
+        --mat-icon-button-state-layer-size: 23px;
       }
       > span {
         display: inline-block;

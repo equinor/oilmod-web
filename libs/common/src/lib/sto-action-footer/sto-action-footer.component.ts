@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation, inject, input } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,28 +24,33 @@ export class StoActionFooterComponent implements OnInit, OnDestroy {
   /**
    * Triggers if the progressbar should be visible or not.
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input() isLoading: boolean;
   /**
    * If a class "sto-has-action-footer" should be appended to the body-tag.
    * This is used to calculate correct height by adding padding to the body element as the footer is a fixed element.
    * Default true.
    */
-  @Input() shouldAddClass = true;
+  readonly shouldAddClass = input(true);
   /**
    * Hostbinds to style.position. Defaults to "fixed", but could be absolute inside a relative container.
    */
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('style.position') @Input() position = 'fixed';
   @HostBinding('class.sto-action-footer')
   private actionFooterClass = true;
 
   ngOnDestroy(): void {
-    if ( this.shouldAddClass ) {
+    if ( this.shouldAddClass() ) {
       this.renderer.removeClass(document.body, 'sto-has-action-footer');
     }
   }
 
   ngOnInit(): void {
-    if ( this.shouldAddClass ) {
+    if ( this.shouldAddClass() ) {
       this.renderer.addClass(document.body, 'sto-has-action-footer');
     }
   }

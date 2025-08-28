@@ -9,6 +9,9 @@ import { Component, HostBinding, Input } from '@angular/core';
 export class StoDatatableActionsComponent {
   @HostBinding('class.sto-mdl-table__actions')
   getClass = true;
+  // TODO: Skipped for migration because:
+  //  This input is used in combination with `@HostBinding` and migrating would
+  //  break.
   @HostBinding('style.height.px')
   @Input()
   height = 40;

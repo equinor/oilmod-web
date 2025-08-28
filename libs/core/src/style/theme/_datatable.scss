@@ -89,7 +89,7 @@
     }
 
     .mat-mdc-checkbox {
-      --mdc-checkbox-state-layer-size: 35px;
+      --mat-checkbox-state-layer-size: 35px;
       display: inline-flex;
     }
     .datatable-header {
@@ -122,7 +122,7 @@
           background-color: $hover-color;
         }
         .mat-mdc-icon-button {
-          --mdc-icon-button-state-layer-size: 28px;
+          --mat-icon-button-state-layer-size: 28px;
         }
       }
     }

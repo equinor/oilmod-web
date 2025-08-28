@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "libs/testing/src",
   "prefix": "oilmod-web-nx",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
@@ -31,6 +32,5 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": []
+  }
 }

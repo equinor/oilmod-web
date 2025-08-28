@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
   displayName: 'form',
   preset: '../../jest.preset.js',

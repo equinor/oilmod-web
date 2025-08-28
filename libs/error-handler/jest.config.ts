@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
   displayName: 'error-handler',
   preset: '../../jest.preset.js',

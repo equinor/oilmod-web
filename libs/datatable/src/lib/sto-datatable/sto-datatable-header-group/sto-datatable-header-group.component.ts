@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, SimpleChanges, input } from '@angular/core';
 import { Column, ColumnGroup } from '../columns';
 
 
@@ -10,23 +10,20 @@ import { Column, ColumnGroup } from '../columns';
     imports: []
 })
 export class StoDatatableHeaderGroupComponent implements OnChanges {
-  @Input()
-  groups: ColumnGroup[];
-  @Input()
-  height: number;
-  @Input()
-  width: string;
-  @Input()
-  transform: string;
+  readonly groups = input<ColumnGroup[]>();
+  readonly height = input<number>();
+  readonly width = input<string>();
+  readonly transform = input<string>();
 
-  @Input() columns: Column[];
+  readonly columns = input<Column[]>();
 
   testOffset(group: ColumnGroup) {
-    if ( !this.columns ) {
+    const columns = this.columns();
+    if ( !columns ) {
       return '';
     }
     const { columnStart } = group;
-    const slice = this.columns.slice(0, columnStart);
+    const slice = columns.slice(0, columnStart);
     let transform = 0;
     slice.forEach(col => transform = transform + ( col.flexBasis || 80 ));
     return `translateX(${transform + 8}px)`;
@@ -34,8 +31,8 @@ export class StoDatatableHeaderGroupComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ( changes.groups || changes.columns ) {
-      const groups: ColumnGroup[] = changes.groups ? changes.groups.currentValue : this.groups;
-      const columns = changes.columns ? changes.columns.currentValue : this.columns;
+      const groups: ColumnGroup[] = changes.groups ? changes.groups.currentValue : this.groups();
+      const columns = changes.columns ? changes.columns.currentValue : this.columns();
       if ( groups && columns ) {
         groups.forEach(group => {
           group.transform = this.testOffset(group);

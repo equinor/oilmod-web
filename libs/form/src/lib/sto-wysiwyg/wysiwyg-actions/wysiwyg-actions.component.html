@@ -2,7 +2,7 @@
   <div class="sto-wysiwyg__buttons">
     @if (!disabled) {
       <mat-button-toggle-group [multiple]="true"
-        [value]="active">
+        [value]="active()">
         <mat-button-toggle value="bold"
           title="Bold (ctrl + b)"
           (change)="modifier.emit($event.value)">

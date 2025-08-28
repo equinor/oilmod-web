@@ -1,4 +1,4 @@
-@if (collapsed) {
+@if (collapsed()) {
   <div class="sto-nav-drawer--collapsed__item"
     >
     @if (navigationItem.link && !navigationItem.children) {
@@ -90,7 +90,7 @@
     </mat-menu>
   </div>
 }
-@if (!collapsed && navigationItem.children) {
+@if (!collapsed() && navigationItem.children) {
   <div class="sto-nav-drawer--expanded__item"
     [class.divider-below]="navigationItem.divider === 'below'"
     [class.divider-above]="navigationItem.divider === 'above'"
@@ -107,7 +107,7 @@
     <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
   </div>
 }
-@if (!collapsed && !navigationItem.children && navigationItem.link) {
+@if (!collapsed() && !navigationItem.children && navigationItem.link) {
   <a class="sto-nav-drawer--expanded__item"
     [class.divider-below]="navigationItem.divider === 'below'"
     [class.divider-above]="navigationItem.divider === 'above'"
@@ -125,7 +125,7 @@
     <span>{{ navigationItem.label }}</span>
   </a>
 }
-@if (!collapsed && !navigationItem.children && navigationItem.route) {
+@if (!collapsed() && !navigationItem.children && navigationItem.route) {
   <a class="sto-nav-drawer--expanded__item"
     [class.divider-below]="navigationItem.divider === 'below'"
     [class.divider-above]="navigationItem.divider === 'above'"

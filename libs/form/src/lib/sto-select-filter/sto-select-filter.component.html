@@ -1,6 +1,8 @@
 @if (isFilter) {
   <div class="sto-form" style="width: 100%">
-    <mat-form-field class="sto-form__field sto-form__field--without-placeholder">
+    <mat-form-field
+      class="sto-form__field sto-form__field--without-placeholder"
+    >
       @if (isMulti !== false) {
         <span matPrefix>
           <mat-checkbox
@@ -9,43 +11,41 @@
             #selectAll
             [indeterminate]="indeterminate"
             [formControl]="checkboxControl"
-            >
+          >
           </mat-checkbox>
         </span>
       }
-      <mat-label>Search in list</mat-label>
       <input
         [formControl]="inputControl"
         #inputElement
         class="sto-select-filter__searchfield"
         autocomplete="off"
+        [placeholder]="'Search in list'"
         matInput
-        />
-        @if (inputControl.value?.length > 0) {
-          <mat-icon
-            class="mat__icon--clickable"
-            (click)="inputControl.reset()"
-            matSuffix
-            >close</mat-icon
-            >
-        }
-        @if (inputControl.value?.length <= 0) {
-          <mat-icon matSuffix
-            >search</mat-icon
-            >
-          }
-        </mat-form-field>
-      </div>
-    } @else {
-      <div class="sto-select-filter__select-all mat-option">
-        <mat-checkbox
-          color="primary"
-          class="sto-select-filter__select-all__checkbox"
-          #selectAll
-          [indeterminate]="indeterminate"
-          [formControl]="checkboxControl"
-          >
-          All
-        </mat-checkbox>
-      </div>
-    }
+      />
+      @if (inputControl.value?.length > 0) {
+        <mat-icon
+          class="mat__icon--clickable"
+          (click)="inputControl.reset()"
+          matSuffix
+          >close</mat-icon
+        >
+      }
+      @if (inputControl.value?.length <= 0) {
+        <mat-icon matSuffix>search</mat-icon>
+      }
+    </mat-form-field>
+  </div>
+} @else {
+  <div class="sto-select-filter__select-all mat-option">
+    <mat-checkbox
+      color="primary"
+      class="sto-select-filter__select-all__checkbox"
+      #selectAll
+      [indeterminate]="indeterminate"
+      [formControl]="checkboxControl"
+    >
+      All
+    </mat-checkbox>
+  </div>
+}

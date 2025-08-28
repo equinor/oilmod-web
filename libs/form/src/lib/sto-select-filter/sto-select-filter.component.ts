@@ -2,16 +2,15 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
   HostBinding,
   inject,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild,
   ViewEncapsulation,
+  output
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -92,22 +91,28 @@ export class StoSelectFilterComponent
   /**
    * Emits when selectAll checkbox changes
    */
-  @Output() selectAll = new EventEmitter<boolean>();
+  readonly selectAll = output<boolean>();
   /**
    * Emits when the search value changes
    */
-  @Output() valueChanges = new EventEmitter<unknown>();
+  readonly valueChanges = output<unknown>();
   /**
    * isMulti determines if select all is available
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input() isMulti: boolean;
   /**
    * isFilter determines if filtering is active
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input() isFilter: boolean;
   /**
    * automatically focus input element if it's empty
    */
+  // TODO: Skipped for migration because:
+  //  Your application code writes to the input. This prevents migration.
   @Input() focusIfNoValue: boolean;
   private destroyed$ = new Subject();
 
@@ -120,6 +125,8 @@ export class StoSelectFilterComponent
   /**
    * Initial value of the filter
    */
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set value(value: unknown) {
     this._value = value;
     this.writeValue(value);
@@ -135,6 +142,8 @@ export class StoSelectFilterComponent
    * Length of unfiltered Array
    * @param total
    */
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set total(total: number) {
     this._total = total;
   }
@@ -149,6 +158,8 @@ export class StoSelectFilterComponent
    * Determines the checkbox state. Can be checked, indeterminate or unchecked
    * @param selected
    */
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set selected(selected: number) {
     if (this.total === selected) {
       this.isChecked(true);

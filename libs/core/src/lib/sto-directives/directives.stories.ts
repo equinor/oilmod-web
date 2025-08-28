@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoDirectivesModule } from '@ngx-stoui/core';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { moduleMetadata } from '@storybook/angular';
 import { Meta } from '@storybook/angular/types-6-0';
 

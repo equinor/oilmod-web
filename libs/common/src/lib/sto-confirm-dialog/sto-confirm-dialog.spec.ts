@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -16,7 +16,7 @@ let page: Page;
 @Component({
   selector: 'sto-spec-wrap',
   template: ` <button (click)="confirm()" mat-button>Confirm</button>`,
-  imports: [CommonModule, MatButtonModule, MatDialogModule, ConfirmModule],
+  imports: [MatButtonModule, MatDialogModule, ConfirmModule],
 })
 class WrapperComponent {
   confirmSvc = inject(ConfirmService);

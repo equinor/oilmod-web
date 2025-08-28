@@ -1,4 +1,4 @@
-@if (!responsive || (responsive && !smallScreen)) {
+@if (!responsive() || (responsive() && !smallScreen())) {
   <div
     [style.overflow-y]="'hidden'"
     [style.overflowX]="'hidden'"
@@ -8,13 +8,13 @@
     @if (groups && groups.length > 0) {
       <div
         [class.sto-mdl-table__row--scroll-offset]="
-          !!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight
+          !!bodyHeight() && (rows()?.length || 1) * rowHeight() > bodyHeight()
         "
-        [style.display]="columnMode === ColumnDisplay.Flex ? 'flex' : 'block'"
+        [style.display]="columnMode() === ColumnDisplay.Flex ? 'flex' : 'block'"
         [style.height]="headerHeight + 'px'"
-        [style.min-width]="tempWidth || width"
+        [style.min-width]="tempWidth || width()"
         [style.overflow]="'hidden'"
-        [style.transform]="scrollLeft"
+        [style.transform]="scrollLeft()"
         class="sto-mdl-table__header__row sto-mdl-table__header__group__row"
         role="row"
       >
@@ -33,18 +33,18 @@
     }
     <div
       (dragover)="$event.preventDefault()"
-      [matSortActive]="activeSort?.active"
-      [matSortDirection]="activeSort?.direction"
+      [matSortActive]="activeSort()?.active ?? ''"
+      [matSortDirection]="activeSort()?.direction ?? ''"
       (matSortChange)="sortColumn($event)"
       [class.sto-mdl-table__row--scroll-offset]="
-        !!bodyHeight && (rows?.length || 1) * rowHeight > bodyHeight
+        !!bodyHeight() && (rows()?.length || 1) * rowHeight() > bodyHeight()
       "
       [matSortDisabled]="!sortable"
-      [style.display]="columnMode === ColumnDisplay.Flex ? 'flex' : 'block'"
+      [style.display]="columnMode() === ColumnDisplay.Flex ? 'flex' : 'block'"
       [style.height]="headerHeight + 'px'"
-      [style.min-width]="tempWidth || width"
+      [style.min-width]="tempWidth || width()"
       [style.overflow]="'hidden'"
-      [style.transform]="scrollLeft"
+      [style.transform]="scrollLeft()"
       class="sto-mdl-table__header__row"
       matSort
       role="row"
@@ -55,7 +55,7 @@
         let i = $index
       ) {
         <div
-          (click)="onHeaderCellClick(column.$$id)"
+          (click)="onHeaderCellClick(column.$$id || '')"
           (contextmenu)="
             headerContextMenu.emit({ event: $event, column: column })
           "
@@ -63,7 +63,7 @@
             sortable && !column.disableSort
           "
           [ngClass]="column.headerClass | exec: column"
-          [ngStyle]="column | columnStyle: columnMode"
+          [ngStyle]="column | columnStyle: columnMode()"
           class="sto-mdl-table__header__row__cell"
         >
           <div
@@ -71,7 +71,7 @@
             (click)="$event.stopPropagation()"
             [arrowPosition]="column.sortArrowPosition || 'after'"
             [disabled]="column.disableSort"
-            [mat-sort-header]="column.$$id"
+            [mat-sort-header]="column.$$id || ''"
             [sortActionDescription]="'Sort by ' + column.name"
             class="sto-mdl-table__header__row__cell__label"
             role="columnheader"
@@ -93,7 +93,7 @@
             }
           </div>
           <span class="spacer"></span>
-          @if (resizeable && !column.disableResize) {
+          @if (resizeable() && !column.disableResize) {
             <div
               (cdkDragEnded)="onResizeComplete($event)"
               (cdkDragMoved)="onResize($event)"
