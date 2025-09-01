@@ -1,15 +1,15 @@
-import { Subject } from 'rxjs';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { ElementRef, inject } from '@angular/core';
 import {
   FormGroupDirective,
   NgControl,
   NgForm,
   UntypedFormControl,
 } from '@angular/forms';
-import { ElementRef, inject } from '@angular/core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { Subject } from 'rxjs';
 
 export class FormFieldBase {
-  ngControl = inject(NgControl, { self: true });
+  ngControl = inject(NgControl, { optional: true, self: true });
   _parentForm = inject(NgForm, { optional: true });
   _parentFormGroup = inject(FormGroupDirective, { optional: true });
   _defaultErrorStateMatcher = inject(ErrorStateMatcher);
