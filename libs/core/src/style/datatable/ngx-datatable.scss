@@ -15,6 +15,9 @@
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+/Edge */
       user-select: none; /* Standard */
+      &:has(.mat-mdc-checkbox) {
+        padding: 4px 8px 0 8px;
+      }
 
       .datatable-header-cell-wrapper {
         position: relative;
@@ -41,10 +44,6 @@
           border-right: none;
         }
       }
-      .mat-mdc-checkbox {
-        --mat-checkbox-state-layer-size: 18px;
-        margin-left: 11px;
-      }
     }
 
     .resize-handle {
@@ -63,7 +62,9 @@
         padding: 8px;
         vertical-align: top;
         border-top: 0;
-        transition: width 0.3s ease, box-shadow 250ms linear;
+        transition:
+          width 0.3s ease,
+          box-shadow 250ms linear;
         &:has(.mat-mdc-form-field),
         &:has(.mat-mdc-checkbox) {
           padding: 0;

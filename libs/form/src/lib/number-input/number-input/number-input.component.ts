@@ -45,7 +45,6 @@ export class NumberInputComponent
     ControlValueAccessor,
     MatFormFieldControl<number>
 {
-  ngControl: NgControl;
   private fm = inject(FocusMonitor);
 
   static nextId = 0;
