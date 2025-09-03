@@ -1,4 +1,4 @@
-@import "./sto-datatable-mixins";
+@import './sto-datatable-mixins';
 
 $space: 4px;
 $space-2x: $space * 2;
@@ -12,7 +12,7 @@ $datatable-horizontal-padding: $space-2x;
 $content-height: 20px;
 
 .sto-mdl-table {
-  transition: height 225ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   width: 100%;
   border-collapse: collapse;
@@ -50,11 +50,12 @@ $content-height: 20px;
         flex: 1 0 50px;
         overflow: hidden;
         text-align: left;
-        padding: 0 $datatable-horizontal-padding;
+        padding: 0;
         position: relative;
         vertical-align: bottom;
         text-overflow: ellipsis;
         box-sizing: border-box;
+        place-self: normal;
 
         &__content {
           flex: 1 1 auto;
@@ -89,7 +90,8 @@ $content-height: 20px;
     }
   }
 
-  &__body, &__footer {
+  &__body,
+  &__footer {
     &--selectable &__row {
       cursor: pointer;
     }
@@ -101,19 +103,21 @@ $content-height: 20px;
       outline: none;
 
       &--selected {
-        box-shadow: -1px 1px 0px 0px rgba(0, 0, 0, .26) inset, 1px -1px 0px 0 rgba(0, 0, 0, .26) inset
+        box-shadow:
+          -1px 1px 0px 0px rgba(0, 0, 0, 0.26) inset,
+          1px -1px 0px 0 rgba(0, 0, 0, 0.26) inset;
       }
-
 
       &__cell {
         flex: 1 0 50px;
         overflow: hidden;
         text-align: left;
-        padding: 0 $datatable-horizontal-padding;
+        padding: 0;
         position: relative;
         vertical-align: middle;
         box-sizing: border-box;
         transition: flex-basis 100ms linear;
+        place-self: normal;
 
         span {
           overflow: hidden;
@@ -134,7 +138,6 @@ $content-height: 20px;
   }
 }
 
-
 sto-datatable {
   display: block;
 }
@@ -148,7 +151,9 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
   sto-datatable {
     margin: 0 -8px;
 
-    .sto-mdl-table__header__row__cell, .sto-mdl-table__body__row__cell, .sto-mdl-table__footer__row__cell {
+    .sto-mdl-table__header__row__cell,
+    .sto-mdl-table__body__row__cell,
+    .sto-mdl-table__footer__row__cell {
       &:first-of-type {
         margin-left: 8px;
       }
@@ -159,5 +164,3 @@ sto-datatable .cdk-virtual-scroll-content-wrapper {
     }
   }
 }
-
-

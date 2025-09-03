@@ -80,7 +80,20 @@
   .sto-datatable {
     background-color: $background-color;
     color: $color;
-
+    .sto-form__field {
+      width: 100%;
+      min-height: auto;
+      --mat-form-field-container-vertical-padding: 8px;
+      .mat-mdc-form-field-flex {
+        padding: 0 6px;
+        .mat-mdc-form-field-infix {
+          width: auto;
+        }
+      }
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
     .datatable-body,
     .datatable-header {
       mat-icon {

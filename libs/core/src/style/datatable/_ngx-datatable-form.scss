@@ -1,11 +1,19 @@
 .sto-datatable {
   .sto-form__field {
     width: 100%;
+    min-height: auto;
+    --mat-form-field-container-vertical-padding: 7px;
     &--readonly,
     &--disabled {
       .mat-mdc-form-field-flex {
         border: 0;
       }
+    }
+    .mat-mdc-form-field-flex {
+      padding: 0 6px;
+    }
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
     }
 
     input[type='number'] {
@@ -56,7 +64,6 @@
     .sto-form__field {
       .mat-mdc-form-field-flex {
         height: auto;
-        padding: 0 6px;
       }
 
       .mat-mdc-form-field-icon-suffix {

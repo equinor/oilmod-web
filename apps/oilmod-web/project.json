@@ -7,12 +7,13 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nx/angular:application",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/oilmod-web",
         "index": "apps/oilmod-web/src/index.html",
-        "main": "apps/oilmod-web/src/main.ts",
-        "polyfills": "apps/oilmod-web/src/polyfills.ts",
+        "browser": "apps/oilmod-web/src/main.ts",
+        "polyfills": ["apps/oilmod-web/src/polyfills.ts"],
         "tsConfig": "apps/oilmod-web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -45,9 +46,7 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
@@ -56,7 +55,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nx/angular:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "oilmod-web:build:production"
