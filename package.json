@@ -1,6 +1,6 @@
 {
   "name": "oilmod-web-nx",
-  "version": "20.0.0",
+  "version": "20.0.1",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -39,6 +39,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "20.2.1",
+    "@angular/build": "^20.2.1",
     "@angular/cdk": "20.2.0",
     "@angular/common": "20.2.1",
     "@angular/compiler": "20.2.1",
