@@ -2,14 +2,14 @@
 @import 'typography';
 
 @mixin sto-card-typography($config) {
-  .mat-card.sto-card {
-    .mat-card-title,
-    .mat-card-title.sto-card__title {
+  .mat-mdc-card.sto-card {
+    .mat-mdc-card-title,
+    .mat-mdc-card-title.sto-card__title {
       line-height: mat.m2-line-height($config, headline-1);
     }
 
-    .mat-card-subtitle,
-    .mat-card-subtitle.sto-card__subtitle {
+    .mat-mdc-card-subtitle,
+    .mat-mdc-card-subtitle.sto-card__subtitle {
       margin-bottom: 4px;
     }
   }

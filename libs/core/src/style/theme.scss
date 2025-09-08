@@ -8,6 +8,7 @@
 // Include theme styles for core and each component used in your app.
 @include mat.core-theme($sto-theme);
 @include mat.all-component-themes($sto-theme);
+@include mat.elevation-classes();
 
 body,
 .sto-header,

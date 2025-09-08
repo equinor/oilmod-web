@@ -55,7 +55,7 @@ $content-height: 20px;
         vertical-align: bottom;
         text-overflow: ellipsis;
         box-sizing: border-box;
-        place-self: normal;
+        place-self: center;
 
         &__content {
           flex: 1 1 auto;
@@ -117,7 +117,7 @@ $content-height: 20px;
         vertical-align: middle;
         box-sizing: border-box;
         transition: flex-basis 100ms linear;
-        place-self: normal;
+        place-self: center;
 
         span {
           overflow: hidden;

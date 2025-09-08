@@ -60,6 +60,9 @@ $sto-filter-header-line-height: 24px;
   .sto-filter-actions {
     display: flex;
     align-items: center;
+    .mat-mdc-icon-button {
+      --mat-icon-button-state-layer-size: 34px;
+    }
 
     .mat-icon {
       cursor: pointer;

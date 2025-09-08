@@ -1,6 +1,6 @@
 {
   "name": "oilmod-web-nx",
-  "version": "20.0.1",
+  "version": "20.0.2",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -34,7 +34,7 @@
     "lint:all": "nx lint-all",
     "link": "bun run build:all && cd dist/libs/core && bun link && cd ../common && bun link && cd ../datatable && bun link && cd ../drawer && bun link && cd ../error-handler && bun link && cd ../form && bun link && cd ../popover && bun link && cd ../testing && bun link && cd ../../../",
     "pack": "bun run build:all && cd dist/libs/core && bun pm pack && cd ../common && bun pm pack && cd ../datatable && bun pm pack && cd ../drawer && bun pm pack && cd ../error-handler && bun pm pack && cd ../form && bun pm pack && cd ../popover && bun pm pack && cd ../testing && bun pm pack && cd ../../../",
-    "publish:all": "bun run build:all && cd dist/libs/core && bun publish && cd ../common && bun publish && cd ../datatable && bun publish && cd ../drawer && bun publish && cd ../error-handler && bun publish && cd ../form && bun publish && cd ../popover && bun publish && cd ../testing && bun publish && cd ../../../"
+    "publish:all": "bun run build:all && (cd dist/libs/core && bun publish || echo skipped core) && (cd dist/libs/common && bun publish || echo skipped common) && (cd dist/libs/datatable && bun publish || echo skipped datatable) && (cd dist/libs/drawer && bun publish || echo skipped drawer) && (cd dist/libs/error-handler && bun publish || echo skipped error-handler) && (cd dist/libs/form && bun publish || echo skipped form) && (cd dist/libs/popover && bun publish || echo skipped popover) && (cd dist/libs/testing && bun publish || echo skipped testing)"
   },
   "private": true,
   "dependencies": {

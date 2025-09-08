@@ -3,10 +3,6 @@
   grid-template-columns: 1fr min-content;
 
   .sto-slide-toggle__toggler {
-    position: absolute;
-    top: -6px;
-    right: 4px;
-
     &--hide {
       display: none;
     }

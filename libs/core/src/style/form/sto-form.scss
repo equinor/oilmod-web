@@ -38,13 +38,11 @@ body {
   @include sto-form-theme($sto-theme, $variables);
 }
 
-$form-field-bg: var(--bg-light);
 $border-radius: 4px;
-$height: 72px;
 
 %sto-form__field {
   width: 100%;
-  min-height: $height;
+  min-height: auto;
   outline: none;
 
   .mat-input-element {
@@ -84,10 +82,10 @@ $height: 72px;
   }
 }
 
-.mat-card.sto-card {
+.mat-mdc-card.sto-card {
   @extend %sto-card;
 
-  .mat-card-title.sto-card__title {
+  .mat-mdc-card-title.sto-card__title {
     width: 100%;
     padding-left: 8px;
     display: flex;
@@ -101,7 +99,7 @@ $height: 72px;
     }
   }
 
-  .mat-card-subtitle.sto-card__subtitle {
+  .mat-mdc-card-subtitle.sto-card__subtitle {
     padding-left: 8px;
   }
 
@@ -124,8 +122,8 @@ $height: 72px;
   &__field {
     cursor: pointer;
     @extend %sto-form__field;
-    --mat-form-field-filled-container-color: #{$form-field-bg};
-    --mat-form-field-state-layer-color: #{$form-field-bg};
+    --mat-form-field-filled-container-color: var(--bg-default);
+    --mat-form-field-state-layer-color: var(--bg-default);
 
     &.mat-focused {
       @extend %sto-form__field--focused;
@@ -139,6 +137,7 @@ $height: 72px;
     }
 
     &.sto-form__field--readonly {
+      --mat-form-field-filled-container-color: var(--bg-light);
       cursor: default;
     }
     &.sto-form__field--disabled {
@@ -149,9 +148,8 @@ $height: 72px;
     }
 
     .mat-mdc-form-field-flex {
-      padding: 6px;
+      padding: 0 6px;
       border-radius: 4px;
-      // background-color: $form-field-bg;
       align-items: center;
       .mat-mdc-floating-label {
         top: 5px;
@@ -163,6 +161,11 @@ $height: 72px;
         .mat-datepicker-toggle-default-icon {
           margin-top: -2px;
         }
+      }
+    }
+    &:not(.sto-form__field--disabled) {
+      .mat-mdc-text-field-wrapper {
+        border: 1px solid var(--divider);
       }
     }
 
@@ -194,9 +197,9 @@ $height: 72px;
         padding: 2px;
       }
     }
-    &:has(.mdc-floating-label) .mat-mdc-form-field-icon-suffix {
-      place-self: center;
-    }
+    // &:has(.mdc-floating-label) .mat-mdc-form-field-icon-suffix {
+    //   place-self: baseline;
+    // }
     .mat-mdc-select-arrow-wrapper {
       height: 20px;
     }
@@ -207,7 +210,7 @@ $height: 72px;
 
     .mat-mdc-slide-toggle {
       position: absolute;
-      bottom: 0;
+      bottom: 8px;
       right: 4px;
     }
 

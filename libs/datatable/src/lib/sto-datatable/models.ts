@@ -3,4 +3,4 @@ export interface SortColumn {
   sortDir: 'asc' | 'desc' | null;
 }
 
-export type rowClassFn = <T>(row: T) => string;
+export type rowClassFn = (row: any) => string;
