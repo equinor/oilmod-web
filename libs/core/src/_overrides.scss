@@ -22,6 +22,7 @@ input::-webkit-inner-spin-button {
 }
 
 html body {
+  // prettier-ignore
   &.mat-app-background {
     --mat-button-outlined-disabled-label-text-color: var(--text-disabled);
     --mat-button-outlined-label-text-color: var(--text);
@@ -30,86 +31,87 @@ html body {
     --mat-button-text-disabled-label-text-color: var(--text-disabled);
     --mat-button-text-label-text-color: var(--text);
     --mat-button-toggle-text-color: var(--text);
+
     --mat-card-elevated-container-color: var(--bg-card);
     --mat-card-outlined-container-color: hsla(from var(--bg-card) h s l / 50%);
+
     --mat-checkbox-label-text-color: var(--text);
     --mat-checkbox-selected-checkmark-color: var(--accent-hover-contrast);
     --mat-checkbox-selected-hover-icon-color: var(--primary-hover);
     --mat-checkbox-unselected-focus-icon-color: var(--text-disabled);
     --mat-checkbox-unselected-hover-icon-color: var(--text-disabled);
     --mat-checkbox-unselected-icon-color: var(--text);
+
     --mat-datepicker-calendar-body-label-text-color: var(--text);
-    --mat-datepicker-calendar-date-today-outline-color: var(--primary-hover);
     --mat-datepicker-calendar-container-background-color: var(--bg-card);
-    --mat-datepicker-calendar-date-selected-state-background-color: var(
-      --primary-resting
-    );
-    --mat-datepicker-calendar-date-selected-state-text-color: var(
-      --accent-hover-contrast
-    );
-    --mat-datepicker-calendar-date-text-color: hsla(
-      from var(--text) h s l / 80%
-    );
+    --mat-datepicker-calendar-date-selected-state-background-color: var(--primary-resting);
+    --mat-datepicker-calendar-date-selected-state-text-color: var(--accent-hover-contrast);
+    --mat-datepicker-calendar-date-text-color: hsla(from var(--text) h s l / 80%);
+    --mat-datepicker-calendar-date-today-outline-color: var(--primary-hover);
     --mat-datepicker-calendar-header-text-color: var(--text-tertiary);
     --mat-datepicker-calendar-navigation-button-icon-color: var(--text);
     --mat-datepicker-calendar-period-button-icon-color: var(--text);
     --mat-datepicker-range-input-separator-color: var(--text-tertiary);
     --mat-datepicker-toggle-icon-color: var(--text);
+
     --mat-dialog-container-color: var(--bg-card);
     --mat-dialog-subhead-color: var(--text);
     --mat-dialog-supporting-text-color: var(--text);
+
     --mat-expansion-container-background-color: var(--bg-card);
     --mat-expansion-container-text-color: var(--text);
     --mat-expansion-header-hover-state-layer-color: var(--bg-hover);
     --mat-expansion-header-indicator-color: var(--text);
     --mat-expansion-header-text-color: var(--text);
+
     --mat-form-field-container-height: 36px;
     --mat-form-field-filled-active-indicator-color: var(--divider);
     --mat-form-field-filled-caret-color: var(--text);
-    --mat-form-field-filled-container-color: var(--bg-default);
-    --mat-form-field-filled-focus-active-indicator-color: var(
-      --primary-resting
-    );
-
-    --mat-form-field-filled-focus-label-text-color: hsla(
-      from var(--text) h s l / 70%
-    );
-    --mat-form-field-filled-hover-active-indicator-color: var(
-      --primary-resting
-    );
+    --mat-form-field-filled-container-color: var(--bg-light);
+    --mat-form-field-filled-focus-active-indicator-color: var(--primary-resting);
+    --mat-form-field-filled-focus-label-text-color: hsla(from var(--text) h s l / 70%);
+    --mat-form-field-filled-hover-active-indicator-color: var(--primary-resting);
     --mat-form-field-filled-hover-label-text-color: var(--text);
     --mat-form-field-filled-input-text-color: var(--text);
-    --mat-form-field-filled-label-text-color: hsla(
-      from var(--text) h s l / 70%
-    );
+    --mat-form-field-filled-label-text-color: hsla(from var(--text) h s l / 70%);
     --mat-form-field-filled-with-label-container-padding-bottom: 0px;
     --mat-form-field-state-layer-color: var(--bg-light);
+
     --mat-menu-container-color: var(--bg-card);
     --mat-menu-item-icon-color: var(--text);
     --mat-menu-item-label-text-color: var(--text);
+
     --mat-option-label-text-color: var(--text);
     --mat-option-selected-state-label-text-color: var(--text);
+
     --mat-progress-bar-active-indicator-color: var(--primary-highlight);
+
     --mat-pseudo-checkbox-full-unselected-icon-color: var(--text);
+
     --mat-radio-selected-icon-color: var(--primary-resting);
+
     --mat-select-enabled-arrow-color: var(--text);
     --mat-select-enabled-trigger-text-color: var(--text);
     --mat-select-panel-background-color: var(--bg-card);
     --mat-select-placeholder-text-color: var(--text);
+
     --mat-slide-toggle-handle-surface-color: var(--primary-resting);
     --mat-slide-toggle-label-text-color: var(--text);
-    --mat-slide-toggle-selected-focus-track-color: var(
-      --primary-selected-focus
-    );
-    --mat-slide-toggle-selected-hover-track-color: var(
-      --primary-selected-hover
-    );
+    --mat-slide-toggle-selected-focus-track-color: var(--primary-selected-focus);
+    --mat-slide-toggle-selected-hover-track-color: var(--primary-selected-hover);
     --mat-slide-toggle-selected-track-color: var(--primary-selected-hover);
+    --mat-slide-toggle-unselected-focus-handle-color: var(--bg-default);
+    --mat-slide-toggle-unselected-handle-color: var(--bg-default);
+    --mat-slide-toggle-unselected-hover-handle-color: var(--bg-default);
+    --mat-slide-toggle-unselected-pressed-handle-color: var(--bg-default);
+
     --mat-sort-arrow-color: var(--text);
+
     --mat-tab-active-label-text-color: var(--text);
     --mat-tab-inactive-focus-label-text-color: var(--text-disabled);
     --mat-tab-inactive-hover-label-text-color: var(--text-disabled);
     --mat-tab-inactive-label-text-color: var(--text-disabled);
+
     --mat-theme-surface: var(--primary-resting);
     --mat-theme-text-primary-on-background: var(--text);
     --mat-theme-text-primary-on-background: var(--text);
@@ -157,6 +159,10 @@ html body {
   .mat-mdc-select-panel {
     padding: 0;
   }
+  .mat-mdc-option {
+    min-height: 36px;
+  }
+
   .mat-mdc-button-base {
     height: var(--mat-button-text-container-height);
     &.mat-mdc-icon-button {

@@ -1,6 +1,6 @@
 {
   "name": "oilmod-web-nx",
-  "version": "20.0.2",
+  "version": "20.0.4",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -29,7 +29,8 @@
     "storybook:serve": "nx run-many --target=storybook --projects=common,core,datatable,drawer,error-handler,form,popover",
     "storybook": "npm run storybook:docs && nx run-many --target=storybook --projects=oilmod-web",
     "storybook:build": "npm run storybook:docs && nx run oilmod-web:build-storybook",
-    "build:all": "nx run-many --target=build --all",
+    "build:all": "nx run-many --target=build  --projects=core,common,datatable,drawer,error-handler,form,popover --parallel=7",
+    "build:watch": "nx run-many --target=build --projects=core,common,datatable,drawer,error-handler,form,popover --watch",
     "test:all": "nx run-many --target=test --all",
     "lint:all": "nx lint-all",
     "link": "bun run build:all && cd dist/libs/core && bun link && cd ../common && bun link && cd ../datatable && bun link && cd ../drawer && bun link && cd ../error-handler && bun link && cd ../form && bun link && cd ../popover && bun link && cd ../testing && bun link && cd ../../../",

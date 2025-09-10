@@ -81,7 +81,7 @@
     background-color: $background-color;
     color: $color;
     .sto-form__field {
-      width: 100%;
+      width: calc(100% - 4px);
       min-height: auto;
       --mat-form-field-container-vertical-padding: 8px;
       .mat-mdc-form-field-flex {

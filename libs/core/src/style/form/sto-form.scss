@@ -122,8 +122,6 @@ $border-radius: 4px;
   &__field {
     cursor: pointer;
     @extend %sto-form__field;
-    --mat-form-field-filled-container-color: var(--bg-default);
-    --mat-form-field-state-layer-color: var(--bg-default);
 
     &.mat-focused {
       @extend %sto-form__field--focused;
@@ -136,8 +134,9 @@ $border-radius: 4px;
       }
     }
 
-    &.sto-form__field--readonly {
-      --mat-form-field-filled-container-color: var(--bg-light);
+    &.sto-form__field--readonly,
+    &.sto-form__field--disabled {
+      --mat-form-field-filled-container-color: var(--bg-default);
       cursor: default;
     }
     &.sto-form__field--disabled {
