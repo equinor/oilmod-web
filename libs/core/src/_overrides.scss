@@ -289,6 +289,7 @@ a {
 
 .mat-mdc-menu-item {
   &.dense {
+    min-height: 36px; // !important;
     height: 36px; // !important;
     line-height: 36px; // !important;
   }
