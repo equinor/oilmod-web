@@ -60,28 +60,28 @@ export const Usage: StoryType = {
     },
     template: `
 <div style="margin-left: 300px; height: 500px;">
-<button (openStream)="onToggle($event)" (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
+  <button (openStream)="onToggle($event)" (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
 </div>
 <sto-popover
-[width]="width"
-[height]="height"
-[minWidth]="minWidth"
-[minHeight]="minHeight"
-[backdropClass]="backdropClass"
-[panelClass]="panelClass"
-[viewportMargin]="viewportMargin"
-[scrollStrategy]="scrollStrategy"
-[disableClose]="disableClose"
-[hasBackdrop]="hasBackdrop"
+  [width]="width"
+  [height]="height"
+  [minWidth]="minWidth"
+  [minHeight]="minHeight"
+  [backdropClass]="backdropClass"
+  [panelClass]="panelClass"
+  [viewportMargin]="viewportMargin"
+  [scrollStrategy]="scrollStrategy"
+  [disableClose]="disableClose"
+  [hasBackdrop]="hasBackdrop"
+  [trigger]="trigger">
 
-[trigger]="trigger">
-<sto-popover-title>This is title</sto-popover-title>
-<div>This is content</div>
-<div>This is also content</div>
-<sto-popover-footer>
-<button mat-flat-button color="primary" (click)="trigger.close(); onSave()">Save</button>
-<button mat-button (click)="trigger.close(); onClose()">Close</button>
-</sto-popover-footer>
+  <sto-popover-title>This is title</sto-popover-title>
+  <div>This is content</div>
+  <div>This is also content</div>
+  <sto-popover-footer>
+    <button mat-flat-button color="primary" (click)="trigger.close(); onSave()">Save</button>
+    <button mat-button (click)="trigger.close(); onClose()">Close</button>
+  </sto-popover-footer>
 </sto-popover>
 `,
   }),
@@ -92,15 +92,15 @@ export const WithoutTitle: StoryType = {
     props: args,
     template: `
 <div style="margin-left: 300px; height: 500px;">
-<button (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
+  <button (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
 </div>
 <sto-popover [trigger]="trigger">
-<div>This is content</div>
-<div>This is also content</div>
-<sto-popover-footer>
-<button mat-flat-button color="primary" (click)="trigger.close()">Save</button>
-<button mat-button (click)="trigger.close()">Close</button>
-</sto-popover-footer>
+  <div>This is content</div>
+  <div>This is also content</div>
+  <sto-popover-footer>
+    <button mat-flat-button color="primary" (click)="trigger.close()">Save</button>
+    <button mat-button (click)="trigger.close()">Close</button>
+  </sto-popover-footer>
 </sto-popover>
 `,
   }),
@@ -111,12 +111,12 @@ export const WithoutFooter: StoryType = {
     props: args,
     template: `
 <div style="margin-left: 300px; height: 500px;">
-<button (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
+  <button (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
 </div>
 <sto-popover [trigger]="trigger">
-<sto-popover-title>This is title</sto-popover-title>
-<div>This is content</div>
-<div>This is also content</div>
+  <sto-popover-title>This is title</sto-popover-title>
+  <div>This is content</div>
+  <div>This is also content</div>
 </sto-popover>
 `,
   }),
