@@ -1,88 +1,89 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { action } from 'storybook/actions';
-import { moduleMetadata } from '@storybook/angular';
 import { MatIconModule } from '@angular/material/icon'; // @ts-ignore
-import markdown from './sto-message-panel.component.md';
-import { StoMessagePanelComponent, StoMessagePanelModule } from '@ngx-stoui/common';
+import {
+  StoMessagePanelComponent,
+  StoMessagePanelModule,
+} from '@ngx-stoui/common';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<StoMessagePanelComponent & { contents?: string }> = {
   title: 'common/Message panel',
   component: StoMessagePanelComponent,
   decorators: [
     moduleMetadata({
-      imports: [ MatIconModule, StoMessagePanelModule ],
-    })
+      imports: [MatIconModule, StoMessagePanelModule],
+    }),
   ],
   argTypes: {
-    severity: { table: { disable: true } }
+    severity: { table: { disable: true } },
   },
   parameters: {
-    notes: { markdown }
+    docs: {
+      description: {
+        component:
+          'Message panel for contextual feedback in various severities with optional dismiss.',
+      },
+    },
   },
-} as Meta;
+};
+export default meta;
 
-const Template: Story<StoMessagePanelComponent & { contents?: string }> = (args: StoMessagePanelComponent) => {
-  return {
+type StoryType = StoryObj<StoMessagePanelComponent & { contents?: string }>;
+
+export const UsageWithInput: StoryType = {
+  args: {
+    contents: 'Message panel contents',
+    color: 'warning',
+    icon: 'warning',
+  },
+  render: (args) => ({
     component: StoMessagePanelComponent,
     props: { ...args, dismissed: action('Dismissed') },
-    template: '<sto-message-panel [color]="color" [dismissable]="dismissable" [icon]="icon" (dismissed)="dismissed()">{{ contents }}</sto-message-panel>'
-  };
+    template:
+      '<sto-message-panel [color]="color" [dismissable]="dismissable" [icon]="icon" (dismissed)="dismissed()">{{ contents }}</sto-message-panel>',
+  }),
 };
 
-export const UsageWithInput = Template.bind({});
-UsageWithInput.args = {
-  contents: 'Message panel contents',
-  color: 'warning',
-  icon: 'warning'
-};
+const simple = (color: string, icon: string, text: string): StoryType => ({
+  render: () => ({
+    template: `<sto-message-panel color="${color}" [dismissable]="false" icon="${icon}">${text}</sto-message-panel>`,
+  }),
+});
 
+export const Primary: StoryType = simple(
+  'primary',
+  'info',
+  'Primary Text Content',
+);
+export const Accent: StoryType = simple(
+  'accent',
+  'info',
+  'Accent Text Content',
+);
+export const Warning: StoryType = simple(
+  'warning',
+  'warning',
+  'Warning Text Content',
+);
+export const Success: StoryType = simple(
+  'success',
+  'info',
+  'Warning Text Content',
+);
+export const Warn: StoryType = simple('warn', 'warning', 'Warn Text Content');
+export const Danger: StoryType = simple(
+  'danger',
+  'error',
+  'Danger Text Content (a little to red atm.. :) )',
+);
 
-export const Primary: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
-    template: '<sto-message-panel (dismissed)="dismiss()" color="primary" [dismissable]="false" icon="info">Primary Text Content</sto-message-panel>'
-  };
-};
-
-
-export const Accent: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
-    template: '<sto-message-panel (dismissed)="dismiss()" color="accent" [dismissable]="false" icon="info">Accent Text Content</sto-message-panel>'
-  };
-};
-
-
-export const Warning: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
-    template: '<sto-message-panel (dismissed)="dismiss()" color="warning" [dismissable]="false" icon="warning">Warning Text Content</sto-message-panel>'
-  };
-};
-
-export const Success: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
-    template: '<sto-message-panel (dismissed)="dismiss()" color="success" [dismissable]="false" icon="info">Warning Text Content</sto-message-panel>'
-  };
-};
-
-
-export const Warn: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
-    template: '<sto-message-panel (dismissed)="dismiss()" color="warn" [dismissable]="false" icon="warning">Warn Text Content</sto-message-panel>'
-  };
-};
-
-
-export const Danger: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
-    template: '<sto-message-panel (dismissed)="dismiss()" color="danger" [dismissable]="false" icon="error">Danger Text Content (a little to red atm.. :) )</sto-message-panel>'
-  };
-};
-
-
-export const Dismissable: Story<StoMessagePanelComponent> = (args: StoMessagePanelComponent) => {
-  return {
+export const Dismissable: StoryType = {
+  render: () => ({
     props: { dismiss: action('Dismissed') },
-    template: '<sto-message-panel (dismissed)="dismiss()" [dismissable]="true">Dismissable Text Content</sto-message-panel>'
-  };
+    template:
+      '<sto-message-panel (dismissed)="dismiss()" [dismissable]="true">Dismissable Text Content</sto-message-panel>',
+  }),
 };
 
 const argTypes = {

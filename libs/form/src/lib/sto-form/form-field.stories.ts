@@ -16,10 +16,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormFieldDirective, StoFormModule } from '@ngx-stoui/form';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
 
-export default {
+const meta: Meta<any> = {
   title: 'form/Form field directive',
   component: FormFieldDirective,
   parameters: {},
@@ -46,12 +46,12 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
-const Template: Story<FormFieldDirective & Record<string, unknown>> = (
-  args
-) => {
-  return {
+export const Usage: StoryObj = {
+  args: { withClasses: true, readonly: false, disabled: false },
+  render: (args) => ({
     component: FormFieldDirective,
     props: {
       ...args,
@@ -99,12 +99,5 @@ Should not select all on click
 </textarea>
 </mat-form-field>
 </mat-card>`,
-  };
-};
-
-export const Usage = Template.bind({});
-Usage.args = {
-  withClasses: true,
-  readonly: false,
-  disabled: false,
+  }),
 };

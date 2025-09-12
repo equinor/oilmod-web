@@ -1,14 +1,14 @@
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 import { PopoverFooterComponent } from './popover-footer.component';
 import { PopoverTitleComponent } from './popover-title.component';
 import { PopoverComponent } from './popover.component';
 import { PopoverDirective } from './popover.directive';
 
-export default {
+const meta: Meta<PopoverComponent & Record<string, unknown>> = {
   component: PopoverComponent,
   title: 'overlay/Popover',
   args: {
@@ -22,34 +22,16 @@ export default {
     hasBackdrop: true,
   },
   argTypes: {
-    width: {
-      type: 'number',
-    },
-    height: {
-      type: 'number',
-    },
-    minWidth: {
-      type: 'number',
-    },
-    minHeight: {
-      type: 'number',
-    },
-    backdropClass: {
-      type: 'string',
-    },
-    panelClass: {
-      type: 'string',
-    },
-    disableClose: {
-      type: 'boolean',
-    },
-    hasBackdrop: {
-      type: 'boolean',
-    },
+    width: { type: 'number' },
+    height: { type: 'number' },
+    minWidth: { type: 'number' },
+    minHeight: { type: 'number' },
+    backdropClass: { type: 'string' },
+    panelClass: { type: 'string' },
+    disableClose: { type: 'boolean' },
+    hasBackdrop: { type: 'boolean' },
   },
-  parameters: {
-    docs: { iframeHeight: 300 },
-  },
+  parameters: { docs: { iframeHeight: 300 } },
   decorators: [
     moduleMetadata({
       imports: [
@@ -62,19 +44,21 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
-export const Usage: Story<PopoverComponent & Record<string, unknown>> = (
-  args
-) => ({
-  props: {
-    ...args,
-    open: false,
-    onToggle: action('Toggled'),
-    onSave: action('Save'),
-    onClose: action('Close'),
-  },
-  template: `
+type StoryType = StoryObj<PopoverComponent & Record<string, unknown>>;
+
+export const Usage: StoryType = {
+  render: (args) => ({
+    props: {
+      ...args,
+      open: false,
+      onToggle: action('Toggled'),
+      onSave: action('Save'),
+      onClose: action('Close'),
+    },
+    template: `
 <div style="margin-left: 300px; height: 500px;">
 <button (openStream)="onToggle($event)" (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
 </div>
@@ -100,11 +84,13 @@ export const Usage: Story<PopoverComponent & Record<string, unknown>> = (
 </sto-popover-footer>
 </sto-popover>
 `,
-});
+  }),
+};
 
-export const WithoutTitle: Story = (args) => ({
-  props: args,
-  template: `
+export const WithoutTitle: StoryType = {
+  render: (args) => ({
+    props: args,
+    template: `
 <div style="margin-left: 300px; height: 500px;">
 <button (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
 </div>
@@ -117,11 +103,13 @@ export const WithoutTitle: Story = (args) => ({
 </sto-popover-footer>
 </sto-popover>
 `,
-});
+  }),
+};
 
-export const WithoutFooter: Story = (args) => ({
-  props: args,
-  template: `
+export const WithoutFooter: StoryType = {
+  render: (args) => ({
+    props: args,
+    template: `
 <div style="margin-left: 300px; height: 500px;">
 <button (click)="open = !open" stoPopoverTrigger #trigger="stoPopoverTrigger">Toggle</button>
 </div>
@@ -131,4 +119,5 @@ export const WithoutFooter: Story = (args) => ({
 <div>This is also content</div>
 </sto-popover>
 `,
-});
+  }),
+};

@@ -1,15 +1,12 @@
-
+import type { Meta, StoryObj } from '@storybook/angular';
 import { AppComponent } from './app.component';
 
-export default {
-  title: 'AppComponent',
-  component: AppComponent
-}
+const meta: Meta<AppComponent> = {
+  title: 'app/Root',
+  component: AppComponent,
+  parameters: { layout: 'fullscreen' },
+};
+export default meta;
 
-export const primary = () => ({
-  moduleMetadata: {
-    imports: []
-  },
-  props: {
-  }
-})
+type Story = StoryObj<AppComponent>;
+export const Primary: Story = { args: {} };

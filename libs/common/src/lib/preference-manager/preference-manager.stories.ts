@@ -1,12 +1,15 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from 'storybook/actions';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Preference, PreferenceManagerComponent, StoFilterPanelModule } from '@ngx-stoui/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  Preference,
+  PreferenceManagerComponent,
+  StoFilterPanelModule,
+} from '@ngx-stoui/common';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta = {
   title: 'common/Preference Manager',
   component: PreferenceManagerComponent,
   decorators: [
@@ -15,18 +18,19 @@ export default {
         PreferenceManagerComponent,
         BrowserAnimationsModule,
         StoFilterPanelModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
       ],
-    })
+    }),
   ],
   argTypes: {
-    filterList: { table: { disable: true } }
+    filterList: { table: { disable: true } },
   },
   parameters: {},
-} as Meta;
+};
+export default meta;
 
-export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManagerComponent) => {
-  return {
+export const Usage: StoryObj = {
+  render: (args) => ({
     props: {
       ...args,
       filterForm: new UntypedFormControl(),
@@ -37,9 +41,12 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
       },
       onSetDefault: function (pref: Preference) {
         const preferences = this.preferences as Preference[];
-        const index = preferences.findIndex(p => p.id === pref.id);
-        const prefs: Preference[] = [ ...preferences ].map(p => ( { ...p, default: false } ));
-        prefs[ index ] = pref;
+        const index = preferences.findIndex((p) => p.id === pref.id);
+        const prefs: Preference[] = [...preferences].map((p) => ({
+          ...p,
+          default: false,
+        }));
+        prefs[index] = pref;
         this.loadingIndicator = true;
         action('Set default preference')(pref.name);
         setTimeout(() => {
@@ -49,14 +56,12 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
       },
       onEdit: function (pref: Preference) {
         const preferences = this.preferences as Preference[];
-        const index = preferences.findIndex(p => p.id === pref.id);
-        const prefs = [ ...preferences ];
-        prefs[ index ] = pref;
-        // Set preference in payload
+        const index = preferences.findIndex((p) => p.id === pref.id);
+        const prefs = [...preferences];
+        prefs[index] = pref;
         this.loadingIndicator = true;
         this.filterForm.markAsPristine();
         action('Edit preference')(`${pref.name} with id ${pref.id}`);
-
         setTimeout(() => {
           this.preferences = prefs;
           this.loadingIndicator = false;
@@ -64,17 +69,17 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
       },
       onDeletePreference: function (id: string) {
         action('Delete preference')(id);
-        const preferences = this.prerences as Preference[];
-        const index = preferences.findIndex(p => p.id === id);
-        const prefs = [ ...preferences ];
+        const preferences = this.preferences as Preference[];
+        const index = preferences.findIndex((p) => p.id === id);
+        const prefs = [...preferences];
         prefs.splice(index, 1);
         this.preferences = prefs;
       },
       onAdd: function (preference: Preference) {
         action('Create preference')(preference);
         preference.id = Date.now().toString(10);
-        this.preferences = [ ...this.preferences, preference ];
-      }
+        this.preferences = [...this.preferences, preference];
+      },
     },
     component: PreferenceManagerComponent,
     template: `
@@ -101,18 +106,29 @@ export const Usage: Story<PreferenceManagerComponent> = (args: PreferenceManager
                                             (setDefaultPreference)="onSetDefault($event)"
                                             [activePreferenceId]="activePreferenceId"
                                             [preferences]="preferences"></sto-preference-manager>
-`
-  };
+`,
+  }),
 };
 const preferences: Preference[] = [
-  { name: 'A filter', id: 'uuid', identifierKey: 'reports_filter', user: 'Bobby B', payload: {} },
-  { name: 'Another filter', id: 'uuid-2', identifierKey: 'reports_filter', user: 'Bobby B', default: true, payload: {} },
+  {
+    name: 'A filter',
+    id: 'uuid',
+    identifierKey: 'reports_filter',
+    user: 'Bobby B',
+    payload: {},
+  },
+  {
+    name: 'Another filter',
+    id: 'uuid-2',
+    identifierKey: 'reports_filter',
+    user: 'Bobby B',
+    default: true,
+    payload: {},
+  },
 ];
 Usage.args = {
   preferences,
   activePreferenceId: undefined,
   loadingIndicator: false,
 };
-Usage.argTypes = {
-  activePreferenceId: { control: { type: 'text' } }
-};
+Usage.argTypes = { activePreferenceId: { control: { type: 'text' } } };

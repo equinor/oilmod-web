@@ -11,14 +11,14 @@ import {
   NavDrawerModule,
   Navigation,
 } from '@ngx-stoui/drawer';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 
 @Component({
-    selector: 'wrapper',
-    template: 'Hi',
-    standalone: false
+  selector: 'wrapper',
+  template: 'Hi',
+  standalone: false,
 })
 class WrapperComponent {}
 
@@ -31,7 +31,7 @@ class IconService {
   }
 }
 
-export default {
+const meta: Meta<any> = {
   title: 'Navigation/Drawer',
   component: NavDrawerComponent,
   parameters: {},
@@ -53,23 +53,13 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    open: {
-      control: { type: 'boolean' },
-    },
-  },
-} as Meta;
-
-const Template: Story<NavDrawerComponent> = (args: NavDrawerComponent) => {
-  return {
-    component: NavDrawerComponent,
-    props: {
-      ...args,
-      activate: action('Activate route'),
-    },
-  };
+  argTypes: {},
 };
+export default meta;
 
+type StoryType = StoryObj<
+  NavDrawerComponent & { navigationItems: any[]; collapsed?: boolean }
+>;
 const navigationItems = [
   {
     label: 'Direct route',
@@ -139,23 +129,22 @@ const navigationItems = [
   },
 ] as Array<Navigation>;
 
-export const NormalUse = Template.bind({});
-NormalUse.args = {
-  navigationItems,
-  collapsed: false,
+export const NormalUse: StoryType = {
+  args: { navigationItems, collapsed: false },
+  render: (args) => ({
+    component: NavDrawerComponent,
+    props: { ...args, activate: action('Activate route') },
+  }),
 };
 
-export const WithAppHeader = (args: NavDrawerComponent) => {
-  return {
+export const WithAppHeader: StoryType = {
+  args: { navigationItems, collapsed: true },
+  render: (args) => ({
     component: NavDrawerComponent,
     props: { ...args, activate: action('Activate route') },
     template: `
     <sto-app-header></sto-app-header>
     <sto-nav-drawer (activate)="collapsed = true; activate($event)" [withAppHeader]="true" [navigationItems]="navigationItems" [collapsed]="collapsed"></sto-nav-drawer>
     `,
-  };
-};
-WithAppHeader.args = {
-  navigationItems,
-  collapsed: true,
+  }),
 };

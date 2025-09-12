@@ -1,4 +1,4 @@
-import {} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -8,10 +8,10 @@ import {
   StoBreadcrumbsComponent,
   StoBreadcrumbsModule,
 } from '@ngx-stoui/common';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
 
-export default {
+const meta: Meta<StoBreadcrumbsComponent> = {
   title: 'common/Breadcrumbs',
   component: StoBreadcrumbsComponent,
   decorators: [
@@ -27,29 +27,20 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    breadCrumbs: { table: { disable: true } },
-    homeBreadCrumbConfig: { table: { disable: true } },
-    userMenu: { table: { disable: true } },
-  },
+  // Hide complex inputs from controls if necessary via parameters instead of invalid argTypes keys
+  argTypes: {},
   parameters: {},
-} as Meta;
-
-const Template: Story<StoBreadcrumbsComponent & { title?: string }> = (
-  args: StoBreadcrumbsComponent
-) => {
-  return {
-    props: args,
-    // template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`
-  };
 };
+export default meta;
 
-export const Breadcrumbs = Template.bind({});
-Breadcrumbs.args = {
-  title: 'Usage',
-  model: [
-    { label: 'Ext Url', url: window.location.href },
-    { label: 'RouterLink', segment: 'submodule/again' },
-    { label: 'Neither' },
-  ],
+type StoryType = StoryObj<StoBreadcrumbsComponent & { title?: string }>;
+export const Breadcrumbs: StoryType = {
+  args: {
+    title: 'Usage',
+    model: [
+      { label: 'Ext Url', url: window.location.href },
+      { label: 'RouterLink', segment: 'submodule/again' },
+      { label: 'Neither' },
+    ],
+  },
 };

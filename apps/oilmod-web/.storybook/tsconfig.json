@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.app.json",
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "emitDecoratorMetadata": true
+  },
+  "exclude": ["../**/*.spec.ts"],
+  "include": [
+    "../../../libs/**/src/**/*.stories.ts",
+    "../../../libs/**/src/**/*.stories.mdx",
+    "../src/**/*.stories.@(ts|tsx|js|jsx|mdx)",
+    "../src/app/**/*.stories.ts",
+    "*.ts"
+  ]
+}

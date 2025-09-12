@@ -8,15 +8,12 @@ import {
 import { Component, Injectable, NgModule, inject } from '@angular/core';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { Handler, StoErrorHandler } from './error-handler/error-handler';
-import {
-  CUSTOM_ERROR_HANDLER,
-  ERROR_LOGGER,
-  ErrorHandlerService,
-  HttpError,
-} from './error-handler/error-handler.service';
+import { ErrorHandlerService } from './error-handler/error-handler.service';
+import { HttpError } from './error-handler/http-error';
+import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER } from './error-handler/token';
 
 @Component({
-  selector: 'next-wrapper',
+  selector: 'sto-next-wrapper',
   template: `
     <button mat-button (click)="overRide(404)">Overridden 404</button>
     @for (s of errors; track s) {

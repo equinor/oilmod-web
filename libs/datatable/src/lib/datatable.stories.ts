@@ -6,12 +6,12 @@ import {
   StoDatatableComponent,
   StoDatatableModule,
 } from '@ngx-stoui/datatable';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 import { columns, rows } from './rows';
 
-export default {
+const meta: Meta<StoDatatableComponent<Record<string, unknown>>> = {
   title: 'Datatable/StoDatatable',
   component: StoDatatableComponent,
   decorators: [
@@ -25,32 +25,19 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    rows: { table: { disable: true } },
-    columns: { table: { disable: true } },
-    component: { table: { disable: true } },
-    headerContextMenu: { table: { disable: true } },
-    rowContextMenu: { table: { disable: true } },
-    rowActivate: { table: { disable: true } },
-    select: { table: { disable: true } },
-    resized: { table: { disable: true } },
-    columnGroups: { table: { disable: true } },
-    columnMode: { table: { disable: true } },
-    footerRow: { table: { disable: true } },
-    responsiveView: { table: { disable: true } },
-    selected: { table: { disable: true } },
-    trackBy: { table: { disable: true } },
-  },
-} as Meta;
+  argTypes: {},
+};
+export default meta;
 
-export const NormalUse: Story<
-  StoDatatableComponent<Record<string, unknown>>
-> = (args: StoDatatableComponent<Record<string, unknown>>) => {
-  return {
+type StoryType = StoryObj<StoDatatableComponent<Record<string, unknown>>>;
+export const NormalUse: StoryType = {
+  render: (args) => ({
     component: StoDatatableComponent,
     props: {
       ...args,
-      columns: args.scrollbarH ? [...columns, ...columns, ...columns] : columns,
+      columns: (args as any).scrollbarH
+        ? [...columns, ...columns, ...columns]
+        : columns,
       rows: rows,
       headerContextMenu: action('Header context menu'),
       rowContextMenu: action('Row context menu'),
@@ -59,5 +46,5 @@ export const NormalUse: Story<
       resized: action('Resize'),
       trackBy: (index: number) => index,
     },
-  };
+  }),
 };

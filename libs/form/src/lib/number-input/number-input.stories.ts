@@ -13,11 +13,11 @@ import {
   NumberInputModule,
   StoFormModule,
 } from '@ngx-stoui/form';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<any> = {
   title: 'form/Number input',
   component: NumberInputComponent,
   decorators: [
@@ -33,12 +33,18 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
-const Template: Story<NumberInputComponent & Record<string, unknown>> = (
-  args
-) => {
-  return {
+export const Usage: StoryObj = {
+  args: {
+    fractionSize: 3,
+    dynamicFractionSize: false,
+    label: 'Label',
+    placeholder: 'Placeholder',
+    suffix: '$',
+  },
+  render: (args) => ({
     component: NumberInputComponent,
     props: {
       ...args,
@@ -72,14 +78,5 @@ const Template: Story<NumberInputComponent & Record<string, unknown>> = (
     </mat-form-field><br>
     {{control.value}}
   </mat-card>`,
-  };
-};
-
-export const Usage = Template.bind({});
-Usage.args = {
-  fractionSize: 3,
-  dynamicFractionSize: false,
-  label: 'Label',
-  placeholder: 'Placeholder',
-  suffix: '$',
+  }),
 };

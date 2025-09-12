@@ -1,0 +1,4 @@
+// Storybook-only global styles to pull in design tokens / custom properties.
+// Excludes remote font @import url() declarations that caused loader parse errors.
+// Fonts are already loaded via preview-head.html links.
+@import '../../libs/core/src/ngx-stoui';

@@ -20,7 +20,10 @@
           "apps/oilmod-web/src/favicon.ico",
           "apps/oilmod-web/src/assets"
         ],
-        "styles": ["apps/oilmod-web/src/styles.scss"],
+        "styles": [
+          "apps/oilmod-web/src/styles.scss",
+          "libs/core/src/ngx-stoui.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -91,6 +94,10 @@
         "configDir": "apps/oilmod-web/.storybook",
         "browserTarget": "oilmod-web:build",
         "compodoc": false,
+        "styles": [
+          "apps/oilmod-web/src/styles.scss",
+          "libs/core/src/ngx-stoui.scss"
+        ],
         "stylePreprocessorOptions": {
           "includePaths": ["node_modules", "libs/core/src/style"]
         }
@@ -109,6 +116,10 @@
         "configDir": "apps/oilmod-web/.storybook",
         "browserTarget": "oilmod-web:build",
         "compodoc": false,
+        "styles": [
+          "apps/oilmod-web/src/styles.scss",
+          "libs/core/src/ngx-stoui.scss"
+        ],
         "stylePreprocessorOptions": {
           "includePaths": ["node_modules", "libs/core/src/style"]
         }

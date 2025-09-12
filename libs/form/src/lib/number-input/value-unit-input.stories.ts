@@ -12,11 +12,11 @@ import {
   NumberUnitInputComponent,
   StoFormModule,
 } from '@ngx-stoui/form';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<any> = {
   title: 'form/Value & Unit input',
   component: NumberUnitInputComponent,
   decorators: [
@@ -32,17 +32,29 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
 const control = new UntypedFormControl(
   { value: 32.123, unit: 'C' },
-  Validators.required
+  Validators.required,
 );
 
-const Template: Story<NumberUnitInputComponent & Record<string, unknown>> = (
-  args
-) => {
-  return {
+export const Usage: StoryObj = {
+  args: {
+    fractionSize: 3,
+    label: 'Value Unit Input',
+    units: [
+      { value: 'C', title: 'C°' },
+      { value: 'F', title: 'F°' },
+    ],
+    qtyPlaceholder: 'Quantity',
+    unitPlaceholder: 'Unit',
+    readonly: true,
+    unitOptional: true,
+    unitClearText: '(none)',
+  },
+  render: (args) => ({
     component: NumberUnitInputComponent,
     props: {
       ...args,
@@ -67,20 +79,5 @@ const Template: Story<NumberUnitInputComponent & Record<string, unknown>> = (
     </mat-form-field><br>
     {{control.value | json}}
   </mat-card>`,
-  };
-};
-
-export const Usage = Template.bind({});
-Usage.args = {
-  fractionSize: 3,
-  label: 'Value Unit Input',
-  units: [
-    { value: 'C', title: 'C°' },
-    { value: 'F', title: 'F°' },
-  ],
-  qtyPlaceholder: 'Quantity',
-  unitPlaceholder: 'Unit',
-  readonly: true,
-  unitOptional: true,
-  unitClearText: '(none)',
+  }),
 };

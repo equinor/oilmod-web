@@ -1,26 +1,24 @@
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NextWrapperComponent, WrapperModule } from './wrapper';
 import { ErrorHandlerModule } from '@ngx-stoui/error-handler';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
+import { WrapperModule } from './wrapper';
 
-export default {
+const meta: Meta = {
   title: 'Error Handling/Error Handling',
   decorators: [
     moduleMetadata({
-      imports: [ ErrorHandlerModule, WrapperModule, BrowserAnimationsModule
-      ],
-    })
+      imports: [ErrorHandlerModule, WrapperModule, BrowserAnimationsModule],
+    }),
   ],
-} as Meta;
-
-const Template: Story<Record<string, unknown>> = (args: Record<string, unknown> ) => {
-  return {
-    props: args,
-    template: `<next-wrapper></next-wrapper>`,
-  };
 };
-console.log(NextWrapperComponent);
+export default meta;
 
-export const NormalUse = Template.bind({});
-NormalUse.args = {};
+type StoryType = StoryObj;
+export const NormalUse: StoryType = {
+  render: (args) => ({
+    props: args,
+    template: `<sto-next-wrapper></sto-next-wrapper>`,
+  }),
+  args: {},
+};

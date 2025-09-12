@@ -4,12 +4,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoDatatableModule } from '@ngx-stoui/datatable';
 import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 import { fixedColumns, rows } from './rows';
 
-export default {
+const meta: Meta<any> = {
   title: 'Datatable/Swimlane',
   decorators: [
     moduleMetadata({
@@ -23,12 +23,25 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
-const Template: Story<Record<string, unknown>> = (
-  args: Record<string, unknown>
-) => {
-  return {
+type StoryType = StoryObj<Record<string, unknown>>;
+export const NormalUse: StoryType = {
+  args: {
+    select: action('Selection made'),
+    contextMenu: action('Context menu'),
+    selected: null,
+    loading: false,
+    horizontalScroll: false,
+    withCss: true,
+    height: 600,
+    rowHeight: 40,
+    headerHeight: 36,
+    rows,
+    columns: fixedColumns.map((c) => ({ ...c, width: c.flexBasis })),
+  },
+  render: (args) => ({
     props: args,
     template: `<mat-card>
 <mat-card-title><h2>This replaces StoComplexDatatable and is only here for CSS</h2></mat-card-title>
@@ -44,20 +57,5 @@ const Template: Story<Record<string, unknown>> = (
 [rows]="rows"
 [columns]="columns"></ngx-datatable>
 </mat-card>`,
-  };
-};
-
-export const NormalUse = Template.bind({});
-NormalUse.args = {
-  select: action('Selection made'),
-  contextMenu: action('Context menu'),
-  selected: null,
-  loading: false,
-  horizontalScroll: false,
-  withCss: true,
-  height: 600,
-  rowHeight: 40,
-  headerHeight: 36,
-  rows,
-  columns: fixedColumns.map((c) => ({ ...c, width: c.flexBasis })),
+  }),
 };

@@ -9,10 +9,10 @@ import {
   StoOptionSelectAllComponent,
   StoOptionSelectAllComponentModule,
 } from '@ngx-stoui/form';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
 
-export default {
+const meta: Meta<StoOptionSelectAllComponent> = {
   title: 'form/Select all',
   component: StoOptionSelectAllComponent,
   decorators: [
@@ -29,7 +29,8 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
 const items = [
   { id: 1, name: 'TEST1', longName: 'LONG TEST1' },
@@ -44,17 +45,19 @@ const items = [
   { id: 10, name: 'TEST10', longName: 'LONG TEST10' },
 ];
 
-export const SelectAllMulti: Story<any> = (args) => ({
-  props: {
-    selected: [1, 2],
-    isFilter: true,
-    focusIfNoValue: false,
-    items,
-    total: items.length,
-    valueChange: (event: any) => console.log(event),
-    ctrl: new UntypedFormControl([1, 2]),
-  },
-  template: `
+export const SelectAllMulti: StoryObj<StoOptionSelectAllComponent> = {
+  args: {},
+  render: () => ({
+    props: {
+      selected: [1, 2],
+      isFilter: true,
+      focusIfNoValue: false,
+      items,
+      total: items.length,
+      valueChange: (event: any) => console.log(event),
+      ctrl: new UntypedFormControl([1, 2]),
+    },
+    template: `
 <mat-card style="width: 300px" class="sto-form" >
   <mat-form-field stoFormField
                   floatLabel="always" >
@@ -69,4 +72,5 @@ export const SelectAllMulti: Story<any> = (args) => ({
     </mat-select>
   </mat-form-field>
 </mat-card>`,
-});
+  }),
+};

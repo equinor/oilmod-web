@@ -15,7 +15,6 @@ import {
 import {
   ControlValueAccessor,
   FormControl,
-  NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';

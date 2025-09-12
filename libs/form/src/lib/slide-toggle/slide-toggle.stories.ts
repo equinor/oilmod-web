@@ -7,11 +7,11 @@ import {
   SlideToggleModule,
   StoFormModule,
 } from '@ngx-stoui/form';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<SlideToggleComponent> = {
   title: 'form/Slide toggle',
   component: SlideToggleComponent,
   decorators: [
@@ -26,10 +26,12 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
+export default meta;
 
-const Template: Story<SlideToggleComponent> = (args) => {
-  return {
+export const Usage: StoryObj<SlideToggleComponent> = {
+  args: { readonly: false, color: 'primary' },
+  render: (args) => ({
     component: SlideToggleComponent,
     props: {
       ...args,
@@ -48,11 +50,5 @@ const Template: Story<SlideToggleComponent> = (args) => {
     <sto-slide-toggle (toggled)="toggled($event)" [color]="color" [readonly]="readonly" [formControl]="ctrl" (ngModelChange)="valueChange($event)"></sto-slide-toggle>
 </mat-form-field>
 </mat-card>`,
-  };
-};
-
-export const Usage = Template.bind({});
-Usage.args = {
-  readonly: false,
-  color: 'primary',
+  }),
 };

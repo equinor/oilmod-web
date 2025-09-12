@@ -4,11 +4,11 @@ import {
   StoActionFooterComponent,
   StoActionFooterModule,
 } from '@ngx-stoui/common';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<StoActionFooterComponent> = {
   title: 'common/Action footer',
   component: StoActionFooterComponent,
   decorators: [
@@ -21,12 +21,13 @@ export default {
     }),
   ],
   parameters: {},
-} as Meta;
+};
+export default meta;
 
-const Template: Story<StoActionFooterComponent> = (
-  args: StoActionFooterComponent
-) => {
-  return {
+type StoryType = StoryObj<StoActionFooterComponent & { isLoading?: boolean }>;
+export const ActionFooter: StoryType = {
+  args: {},
+  render: (args) => ({
     component: StoActionFooterComponent,
     props: {
       ...args,
@@ -35,8 +36,5 @@ const Template: Story<StoActionFooterComponent> = (
     },
     template:
       '<sto-action-footer [isLoading]="isLoading" [position]="position" [shouldAddClass]="shouldAddClass"><button mat-flat-button (click)="save()" color="primary">Save</button><button (click)="cancel()" mat-button>Cancel</button></sto-action-footer>',
-  };
+  }),
 };
-
-export const ActionFooter = Template.bind({});
-ActionFooter.args = {};

@@ -4,16 +4,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  StoDatatableComponent,
-  StoDatatableModule,
-} from '@ngx-stoui/datatable';
-import { action } from 'storybook/actions';
+import { StoDatatableModule } from '@ngx-stoui/datatable';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { columns, rows } from './rows';
+import { action } from 'storybook/actions';
+import { rows } from './rows';
 
-export default {
+// Use generic any to relax strict mismatch with story helper-only fields
+const meta: Meta<any> = {
   title: 'Datatable/StoDatatable/Specific usecases',
   decorators: [
     moduleMetadata({
@@ -28,26 +26,25 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    rows: { table: { disable: true } },
-    columns: { table: { disable: true } },
-    template: { table: { disable: true } },
-    visibleRows: { table: { disable: true } },
-  },
-} as Meta;
+  argTypes: {},
+};
+export default meta;
 
-export const ResponsiveMode: Story = (args) => ({
-  props: args,
-  styles: [
-    `.container {
+type StoryType = StoryObj<any>;
+
+export const ResponsiveMode: StoryType = {
+  render: () => ({
+    props: {},
+    styles: [
+      `.container {
       transition: width 300ms linear;
     }`,
-  ],
-  template: `
+    ],
+    template: `
 <h3>Responsive mode will make the grid break into a list, allowing for a simpler view</h3>
-<div class="container" [style.width.px]="emulateSmallElement ? breakpoint - 1 : 1000">
+<div class="container" [style.width.px]="emulateSmallElement ? 499 : 1000">
 <sto-datatable [virtualScroll]="true"
-[responsiveBreakPoint]="breakpoint"
+[responsiveBreakPoint]="500"
 [responsive]="true"
 [responsiveView]="responsive"
 [height]="400"
@@ -55,91 +52,55 @@ export const ResponsiveMode: Story = (args) => ({
 [columns]="columns"></sto-datatable>
 <ng-template #responsive let-row="row"><span [matTooltip]="row | json">{{ row | json }}</span></ng-template>
 </div>`,
-});
-ResponsiveMode.args = {
-  emulateSmallElement: false,
-  breakpoint: 500,
-  columns,
-  rows,
+  }),
 };
 
-export const Paging: Story = (args) => ({
-  props: {
-    page: action('Page change'),
-    setPage: (
-      pageEvent: { pageIndex: number },
-      that: {
-        visibleRows: {
-          total: unknown;
-          invoiceNo: number;
-          voyageNo: number;
-          vesselName: string;
-          allocated: number;
-        }[];
-      }
-    ) => {
-      const startAt = pageEvent.pageIndex * 30;
-      const endAt = (pageEvent.pageIndex + 1) * 30 - 1;
-      that.visibleRows = [...rows].slice(startAt, endAt);
+export const Paging: StoryType = {
+  render: () => ({
+    props: {
+      page: action('Page change'),
+      setPage: (
+        pageEvent: { pageIndex: number },
+        that: { visibleRows: any[] },
+      ) => {
+        const startAt = pageEvent.pageIndex * 30;
+        const endAt = (pageEvent.pageIndex + 1) * 30 - 1;
+        that.visibleRows = [...rows].slice(startAt, endAt);
+      },
+      activePage: 0,
     },
-    ...args,
-  },
-  template: `
+    template: `
 <h3>Paging is done by using <a href="https://material.angular.io/components/paginator/overview" target="_blank">mat-paginator</a></h3>
 <mat-card class="sto-card" (resize)="resize()">
 <sto-datatable [sortable]="true" [resizeable]="true" [scrollbarH]="true" [virtualScroll]="false" [height]="height" [rows]="visibleRows" [columns]="columns">
     <mat-paginator (page)="setPage($event, this); page($event)" [showFirstLastButtons]="true" [length]="rows.length" [hidePageSize]="true" [pageSize]="30" [pageIndex]="activePage"></mat-paginator>
 </sto-datatable>
 </mat-card>`,
-});
-Paging.args = {
-  activePage: 0,
-  height: 400,
-  rows,
-  visibleRows: rows.slice(0, 30),
-  columns,
+  }),
 };
 
-export const AutoSize: Story = (args) => ({
-  props: args,
-  template: `<h3>Autosize will ensure the table always uses all available height top-down</h3>
-<sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="autosizeOffset" [height]="height" [rows]="rows" [columns]="columns">
+export const AutoSize: StoryType = {
+  render: () => ({
+    props: {},
+    template: `<h3>Autosize will ensure the table always uses all available height top-down</h3>
+<sto-datatable [virtualScroll]="true" [autoSize]="true" [autoSizeOffset]="10" [height]="height" [rows]="rows" [columns]="columns">
 </sto-datatable>`,
-});
-AutoSize.args = {
-  rows,
-  columns,
-  autosizeOffset: 10,
+  }),
 };
 
-export const MultilineFooter: Story<
-  Partial<StoDatatableComponent<Record<string, unknown>>>
-> = (args) => ({
-  props: args,
-  template: `<h3>The table takes in a list of footer rows</h3>
-<sto-datatable [virtualScroll]="true" [scrollbarH]="false" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
-});
-MultilineFooter.args = {
-  rows,
-  columns: [...columns, ...columns, ...columns],
-  footerRow: [
-    { invoiceNo: 'Import', voyageNo: '9001' },
-    { invoiceNo: 'Export', voyageNo: '9002' },
-    {
-      invoiceNo: 'Import',
-      voyageNo: '9001',
-    },
-    { invoiceNo: 'Export', voyageNo: '9002' },
-  ],
-  autoSizeOffset: 10,
+export const MultilineFooter: StoryType = {
+  render: () => ({
+    props: {},
+    template: `<h3>The table takes in a list of footer rows</h3>
+<sto-datatable [virtualScroll]="true" [scrollbarH]="false" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="10" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>`,
+  }),
 };
 
-export const Actionbar: Story<
-  Partial<StoDatatableComponent<Record<string, unknown>>>
-> = (args) => ({
-  props: args,
-  template: `<h3>With an actionbar on the top left and right side</h3>
-<sto-datatable [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns">
+export const Actionbar: StoryType = {
+  render: () => ({
+    props: {},
+    template: `<h3>With an actionbar on the top left and right side</h3>
+<sto-datatable [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="10" [height]="height" [rows]="rows" [columns]="columns">
   <sto-datatable-actions>
       <sto-datatable-actions-left>
         <button mat-icon-button><mat-icon>content_copy</mat-icon></button>
@@ -150,35 +111,15 @@ export const Actionbar: Story<
       </sto-datatable-actions-right>
   </sto-datatable-actions>
 </sto-datatable>`,
-});
-Actionbar.args = {
-  rows,
-  columns: [...columns, ...columns, ...columns],
-  autoSizeOffset: 10,
+  }),
 };
 
-export const Grouped: Story<
-  Partial<StoDatatableComponent<Record<string, unknown>>>
-> = (args) => ({
-  props: args,
-  template: `<h3>With column groups</h3>
+export const Grouped: StoryType = {
+  render: () => ({
+    props: {},
+    template: `<h3>With column groups</h3>
 <div >
-<sto-datatable [resizeable]="true" [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="autoSizeOffset" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
+<sto-datatable [resizeable]="true" [groups]="groups" [virtualScroll]="true" [scrollbarH]="true" [autoSize]="true" [footerRow]="footerRow" [autoSizeOffset]="10" [height]="height" [rows]="rows" [columns]="columns"></sto-datatable>
 </div>`,
-});
-Grouped.args = {
-  rows,
-  columns: columns.map((c) => ({ ...c, flexShrink: 0, flexGrow: 0 })),
-  groups: [
-    {
-      props: ['invoiceNo', 'voyageNo'],
-      name: 'Invoice & Voyage#',
-    },
-    {
-      props: ['vesselName', 'allocated'],
-      name: 'Vessel & Allocated',
-    },
-    { props: ['total'], name: 'Sum' },
-  ],
-  autoSizeOffset: 10,
+  }),
 };

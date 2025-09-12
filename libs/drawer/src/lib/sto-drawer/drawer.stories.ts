@@ -7,10 +7,10 @@ import {
   StoDrawerFooterComponent,
   StoDrawerHeaderComponent,
 } from '@ngx-stoui/drawer';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
 
-export default {
+const meta: Meta<StoDrawerComponent> = {
   title: 'Sidesheet/Presentation',
   component: StoDrawerComponent,
   parameters: {},
@@ -32,12 +32,15 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as Meta;
+};
+export default meta;
 
-const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
-  return {
+type StoryType = StoryObj<StoDrawerComponent>;
+export const NormalUse: StoryType = {
+  args: { position: 'right', open: true, width: '500px' },
+  render: (args) => ({
     component: StoDrawerComponent,
-    props: args,
+    props: args as any,
     template: `
   <div>
   <sto-drawer [position]="'right'" [open]="true" [animation]="animation" [backdrop]="backdrop">
@@ -63,12 +66,5 @@ const Template: Story<StoDrawerComponent> = (args: StoDrawerComponent) => {
 </mat-card>
 </div>
 `,
-  };
-};
-
-export const NormalUse = Template.bind({});
-NormalUse.args = {
-  position: 'right',
-  open: true,
-  width: '500px',
+  }),
 };

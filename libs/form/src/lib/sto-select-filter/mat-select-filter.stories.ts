@@ -8,12 +8,10 @@ import {
   StoSelectFilterComponent,
   StoSelectFilterModule,
 } from '@ngx-stoui/form';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import { items } from './item-list';
 
-export default {
+const meta: Meta<StoSelectFilterComponent> = {
   title: 'form/Select filter',
   component: StoSelectFilterComponent,
   decorators: [
@@ -29,20 +27,15 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    filteredItems: { table: { disable: true } },
-    allItems: { table: { disable: true } },
-    selected: { control: { disable: true } },
-    total: { control: { disable: true } },
-    isFilter: { control: { disable: true } },
-    value: { control: { disable: true } },
-    isMulti: { control: { disable: true } },
-  },
-} as Meta;
+  argTypes: {},
+};
+export default meta;
 
-export const SingleSelect: Story<Record<string, unknown>> = (args) => ({
-  props: { ...args },
-  template: `
+export const SingleSelect: StoryObj = {
+  args: {},
+  render: (args) => ({
+    props: { ...args },
+    template: `
 <mat-card style="width: 300px" class="sto-form" >
     <mat-form-field  class="sto-form__field" floatLabel="always">
     <mat-label>Select with filter</mat-label>
@@ -57,24 +50,14 @@ export const SingleSelect: Story<Record<string, unknown>> = (args) => ({
       </mat-select>
     </mat-form-field>
 </mat-card>`,
-});
-SingleSelect.args = {
-  filter: (event: any, all: any[]) => {
-    const re = new RegExp(event || '');
-    return all.filter((el) => re.test(el.name));
-  },
-  isFilter: true,
-  focusIfNoValue: false,
-  filteredItems: [...items],
-  allItems: [...items],
-  total: items.length,
-  valueChange: action('Value changed'),
-  selectAll: action('Select all'),
+  }),
 };
 
-export const MultiSelect: Story<any> = (args) => ({
-  props: { ...args },
-  template: `
+export const MultiSelect: StoryObj = {
+  args: {},
+  render: (args) => ({
+    props: { ...args },
+    template: `
 <mat-card style="width: 300px" class="sto-form" >
   <mat-form-field class="sto-form__field"
                   floatLabel="always" >
@@ -94,23 +77,5 @@ export const MultiSelect: Story<any> = (args) => ({
     </mat-select>
   </mat-form-field>
 </mat-card>`,
-});
-MultiSelect.args = {
-  filter: (event: any, all: any[]) => {
-    const re = new RegExp(event || '');
-    return all.filter((el) => re.test(el.name));
-  },
-  selectAll: (selectAll: boolean) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.filteredItems = selectAll ? [...items] : [];
-    action('Select all')(selectAll);
-  },
-  selected: [],
-  isFilter: true,
-  focusIfNoValue: false,
-  filteredItems: [...items],
-  allItems: [...items],
-  total: items.length,
-  valueChange: action('Value changed'),
+  }),
 };

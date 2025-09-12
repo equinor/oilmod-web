@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,11 +13,11 @@ import {
   StoThemeModule,
 } from '@ngx-stoui/common';
 import { StoFormModule } from '@ngx-stoui/form';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<StoAppHeaderComponent & { title?: string }> = {
   title: 'common/Application Header',
   component: StoAppHeaderComponent,
   decorators: [
@@ -38,54 +38,38 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    breadCrumbs: { table: { disable: true } },
-    homeBreadCrumbConfig: { table: { disable: true } },
-    userMenu: { table: { disable: true } },
-  },
+  argTypes: {},
   parameters: {},
-} as Meta;
+};
+export default meta;
 
-const Template: Story<StoAppHeaderComponent & { title?: string }> = (
-  args: StoAppHeaderComponent
-) => {
-  return {
+type StoryType = StoryObj<StoAppHeaderComponent & { title?: string }>;
+
+export const AppHeader: StoryType = {
+  args: {
+    title: 'Usage',
+    breadCrumbs: [{ label: 'Root' }, { label: 'SubModule' }],
+  },
+  render: (args) => ({
     props: args,
     template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`,
-  };
+  }),
 };
 
-export const AppHeader = Template.bind({});
-AppHeader.args = {
-  title: 'Usage',
-  breadCrumbs: [{ label: 'Root' }, { label: 'SubModule' }],
-};
-AppHeader.argTypes = {
-  homeBreadCrumbConfig: { control: { disable: true } },
-  userMenu: { control: { disable: true } },
-  breadCrumbs: { control: { disable: false } },
-};
-
-export const AsTestEnvironment: Story<StoAppHeaderComponent> = (
-  args: StoAppHeaderComponent
-) => {
-  return {
+export const AsTestEnvironment: StoryType = {
+  render: (args) => ({
     props: {
       ...args,
       environmentName: 'Systemtest',
       testEnvironment: true,
+      breadCrumbs: [{ label: 'Root' }, { label: 'SubModule' }],
     },
-    template: `<sto-app-header [breadCrumbs]="[ { label: 'Root' }, { label: 'SubModule' } ]" [environmentName]="environmentName" [testEnvironment]="true"></sto-app-header>`,
-  };
-};
-AsTestEnvironment.argTypes = {
-  testEnvironment: { table: { disable: true } },
+    template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="true"></sto-app-header>`,
+  }),
 };
 
-export const WithUserMenu: Story<StoAppHeaderComponent> = (
-  args: StoAppHeaderComponent
-) => {
-  return {
+export const WithUserMenu: StoryType = {
+  render: (args) => ({
     props: {
       ...args,
       breadCrumbs: [
@@ -112,17 +96,11 @@ export const WithUserMenu: Story<StoAppHeaderComponent> = (
 </sto-app-header>
 <mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
 `,
-  };
-};
-WithUserMenu.argTypes = {
-  testEnvironment: { table: { disable: true } },
-  environmentName: { table: { disable: true } },
+  }),
 };
 
-export const withForm: Story<StoAppHeaderComponent> = (
-  args: StoAppHeaderComponent
-) => {
-  return {
+export const WithForm: StoryType = {
+  render: (args) => ({
     props: {
       ...args,
       breadCrumbs: [
@@ -155,8 +133,5 @@ export const withForm: Story<StoAppHeaderComponent> = (
 </sto-app-header>
 <mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
 `,
-  };
-};
-withForm.argTypes = {
-  testEnvironment: { table: { disable: true } },
+  }),
 };

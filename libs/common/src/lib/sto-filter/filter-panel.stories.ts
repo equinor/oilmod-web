@@ -10,12 +10,11 @@ import {
 } from '@ngx-stoui/common';
 import { StoDirectivesModule } from '@ngx-stoui/core';
 import { StoFormModule } from '@ngx-stoui/form';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Meta, Story } from '@storybook/angular/types-6-0';
-import markdown from './sto-filter-panel.component.md';
+import { action } from 'storybook/actions';
 
-export default {
+const meta: Meta<StoFilterPanelComponent & { title?: string }> = {
   title: 'common/Filter Panel',
   component: StoFilterPanelComponent,
   decorators: [
@@ -33,18 +32,29 @@ export default {
       ],
     }),
   ],
-  argTypes: {
-    filterList: { table: { disable: true } },
-  },
+  argTypes: { filterList: { table: { disable: true } } },
   parameters: {
-    notes: { markdown },
+    docs: {
+      description: {
+        component:
+          'Filter panel with title, table actions and filter actions supporting expandable/collapsible content.',
+      },
+    },
   },
-} as Meta;
+};
+export default meta;
 
-const Template: Story<StoFilterPanelComponent & { title?: string }> = (
-  args: StoFilterPanelComponent
-) => {
-  return {
+type StoryType = StoryObj<
+  StoFilterPanelComponent & { title?: string; toggled?: () => void }
+>;
+export const FilterPanel: StoryType = {
+  args: {
+    toggled: action('Toggled') as any,
+    expanded: true,
+    expandable: true,
+    title: 'Filter title',
+  },
+  render: (args) => ({
     component: StoFilterPanelComponent,
     props: args,
     template: `
@@ -82,13 +92,5 @@ const Template: Story<StoFilterPanelComponent & { title?: string }> = (
                    stoGridSpacer></div>
           </div>
       </sto-filter-panel>`,
-  };
-};
-
-export const FilterPanel = Template.bind({});
-FilterPanel.args = {
-  toggled: action('Toggled') as any,
-  expanded: true,
-  expandable: true,
-  title: 'Filter title',
+  }),
 };
