@@ -98,6 +98,8 @@ html body {
     --mat-slide-toggle-handle-surface-color: var(--primary-resting);
     --mat-slide-toggle-label-text-color: var(--text);
     --mat-slide-toggle-selected-focus-track-color: var(--primary-selected-focus);
+    --mat-slide-toggle-selected-icon-color: var(--primary-contrast-resting);
+    --mat-slide-toggle-disabled-selected-icon-color: var(--primary-selected-hover);
     --mat-slide-toggle-selected-hover-track-color: var(--primary-selected-hover);
     --mat-slide-toggle-selected-track-color: var(--primary-selected-hover);
     --mat-slide-toggle-unselected-focus-handle-color: var(--bg-default);
@@ -161,6 +163,9 @@ html body {
   }
   .mat-mdc-option {
     min-height: 36px;
+  }
+  .mdc-switch.mdc-switch--disabled {
+    --mat-slide-toggle-handle-surface-color: var(--bg-disabled);
   }
 
   .mat-mdc-button-base {
@@ -301,6 +306,12 @@ a {
   .mat-icon[svgIcon] {
     height: 100%; // hack to align svg icons
   }
+}
+
+sto-nav-drawer-item .mat-mdc-button > .mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
 }
 
 //GLI-902 Fixes in selectlist

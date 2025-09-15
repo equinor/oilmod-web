@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { FocusMonitor } from '@angular/cdk/a11y';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,15 +20,13 @@ import {
   NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
-import { FocusMonitor } from '@angular/cdk/a11y';
-import { Subject, Subscription } from 'rxjs';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ThemePalette } from '@angular/material/core';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import {
   MatSlideToggle,
   MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
+import { Subject, Subscription } from 'rxjs';
 
 export class StoSlideToggleChange {
   source: SlideToggleComponent;
@@ -116,8 +116,10 @@ export class SlideToggleComponent
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
     const opts = { onlySelf: true, emitEvent: false };
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
+    if (this._disabled != this.ctrl.disabled) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
+    }
     this.stateChanges.next();
   }
 
@@ -182,7 +184,9 @@ export class SlideToggleComponent
 
   set value(value) {
     this._value = value;
-    this.ctrl.setValue(value, { emitEvent: false });
+    if (value !== this.ctrl.value) {
+      this.ctrl.setValue(value, { emitEvent: false });
+    }
     this.stateChanges.next();
   }
 
