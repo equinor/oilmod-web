@@ -1,11 +1,10 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
-    selector: 'sto-datatable-actions',
-    templateUrl: './sto-datatable-actions.component.html',
-    styleUrls: ['./sto-datatable-actions.component.scss']
+  selector: 'sto-datatable-actions',
+  templateUrl: './sto-datatable-actions.component.html',
+  styleUrls: ['./sto-datatable-actions.component.scss'],
 })
-
 export class StoDatatableActionsComponent {
   @HostBinding('class.sto-mdl-table__actions')
   getClass = true;
@@ -14,14 +13,12 @@ export class StoDatatableActionsComponent {
   //  break.
   @HostBinding('style.height.px')
   @Input()
-  height = 40;
-
+  height = 47;
 }
 
 @Component({
-    selector: 'sto-datatable-actions-left',
-    template: `
-    <ng-content></ng-content>`
+  selector: 'sto-datatable-actions-left',
+  template: ` <ng-content></ng-content>`,
 })
 export class StoDataTableActionsLeftComponent {
   @HostBinding('class.sto-mdl-table__actions__left')
@@ -29,12 +26,10 @@ export class StoDataTableActionsLeftComponent {
 }
 
 @Component({
-    selector: 'sto-datatable-actions-right',
-    template: `
-    <ng-content></ng-content>`
+  selector: 'sto-datatable-actions-right',
+  template: ` <ng-content></ng-content>`,
 })
 export class StoDataTableActionsRightComponent {
   @HostBinding('class.sto-mdl-table__actions__right')
   getClass = true;
 }
-

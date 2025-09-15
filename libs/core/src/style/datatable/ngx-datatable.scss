@@ -81,6 +81,9 @@
           --mat-form-field-container-height: 32px;
           margin: 0 4px;
           min-height: 0;
+          &:has(.mat-mdc-chip-set) {
+            --mat-form-field-container-vertical-padding: 3px;
+          }
         }
         .mat-mdc-form-field-subscript-wrapper {
           display: none;

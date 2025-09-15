@@ -222,6 +222,10 @@ html body {
   box-sizing: content-box; // To override erroneous styling from ngx-datatable
 }
 
+.mat-mdc-chip.mat-mdc-standard-chip {
+  --mat-chip-container-height: 23px;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
