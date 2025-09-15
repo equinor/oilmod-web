@@ -80,8 +80,13 @@
   .sto-datatable {
     background-color: $background-color;
     color: $color;
+    [role='table'] {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
     .sto-form__field {
-      width: calc(100% - 4px);
+      // width: calc(100% - 4px);
       min-height: auto;
       --mat-form-field-container-vertical-padding: 8px;
       .mat-mdc-form-field-flex {
@@ -94,6 +99,9 @@
         display: none;
       }
     }
+    .datatable-body {
+      flex: 1;
+    }
     .datatable-body,
     .datatable-header {
       mat-icon {
@@ -102,7 +110,7 @@
     }
 
     .mat-mdc-checkbox {
-      --mat-checkbox-state-layer-size: 35px;
+      --mat-checkbox-state-layer-size: 25px;
     }
     .datatable-header {
       border-bottom: 1px solid $border-color;

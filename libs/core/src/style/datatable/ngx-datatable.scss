@@ -5,6 +5,12 @@
   border-radius: 2px;
   margin-bottom: 4px;
 
+  [role='table'] {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
   .datatable-header {
     .datatable-header-cell {
       padding: 16px 8px 4px 8px;
@@ -52,13 +58,14 @@
   }
 
   .datatable-body {
+    flex: 1;
     .datatable-body-cell-label {
       line-height: 20px;
     }
 
     .datatable-body-row {
       .datatable-body-cell {
-        --mat-checkbox-state-layer-size: 35px;
+        --mat-checkbox-state-layer-size: 25px;
         padding: 8px;
         vertical-align: top;
         border-top: 0;
