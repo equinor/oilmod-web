@@ -1,5 +1,4 @@
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   Preference,
   PreferenceManagerComponent,
@@ -16,7 +15,6 @@ const meta: Meta = {
     moduleMetadata({
       imports: [
         PreferenceManagerComponent,
-        BrowserAnimationsModule,
         StoFilterPanelModule,
         ReactiveFormsModule,
       ],

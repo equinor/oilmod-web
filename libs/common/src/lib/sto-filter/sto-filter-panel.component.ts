@@ -5,16 +5,19 @@ import {
   ChangeDetectorRef,
   Component,
   Directive,
-  HostBinding,
+  ElementRef,
   Input,
   OnInit,
-  ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
+  booleanAttribute,
   forwardRef,
   inject,
   input,
+  model,
   output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {
@@ -22,11 +25,7 @@ import {
   MatChipOption,
   MatChipRemove,
 } from '@angular/material/chips';
-import {
-  MatExpansionPanel,
-  MatExpansionPanelHeader,
-  MatExpansionPanelTitle,
-} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
 import { FilterForm, FilterList } from './filter';
 
@@ -37,10 +36,8 @@ import { FilterForm, FilterList } from './filter';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./sto-filter-panel.component.scss'],
   imports: [
-    MatExpansionPanel,
+    MatExpansionModule,
     NgClass,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
     MatChipListbox,
     MatChipOption,
     MatIcon,
@@ -59,26 +56,15 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   /**
    * If the filter panel should be expandable. Default true.
    */
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input()
-  expandable = true;
+  expandable = input(true, { transform: booleanAttribute });
   /**
    * If the filter panel should be expanded by default. Default false.
    */
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  expanded: boolean;
+  expanded = model(false);
   /**
    * List of active filters.
    */
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input()
-  filterList: FilterList[];
+  filterList = input<FilterList[]>([]);
   /**
    * Emits {isExpanded: boolean, contentHeight: number } where
    * isExpanded is true if the panel opens and false if not.
@@ -96,12 +82,12 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   /**
    * Buttons and actions on the left side of the separator if both table and filter actions is present.
    */
-  @ViewChild('tableActions') contentWrapper: { nativeElement: HTMLElement };
+  contentWrapper = viewChild('tableActions', { read: ElementRef<HTMLElement> });
   /**
    * Buttons and actions on the right side of the separator if both table and filter actions is present.
    */
-  @ViewChild('filterActions') contentWrapper2: { nativeElement: HTMLElement };
-  @ViewChild('filterForm') filterForm: { nativeElement: HTMLElement };
+  filterActions = viewChild('filterActions', { read: ElementRef<HTMLElement> });
+  filterForm = viewChild('filterForm', { read: ElementRef<HTMLElement> });
   // TODO: Skipped for migration because:
   //  Your application code writes to the input. This prevents migration.
   @Input()
@@ -117,22 +103,14 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private _contentHeight: number;
-
-  get contentHeight(): number {
-    return this._contentHeight;
-  }
-
-  set contentHeight(contentHeight: number) {
-    this._contentHeight = contentHeight;
-  }
+  private contentHeight = signal(0);
 
   public toggle() {
-    this.expanded = !this.expanded;
+    this.expanded.set(!this.expanded());
     this.setContentHeight();
     this.toggled.emit({
-      isExpanded: this.expanded,
-      contentHeight: this.contentHeight,
+      isExpanded: this.expanded(),
+      contentHeight: this.contentHeight(),
     });
   }
 
@@ -140,12 +118,8 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
     console.warn(
       `StoFilterPanel should not be used in future applications, and will be removed in a future release.`,
     );
-    if (this.expandable) {
-      if (this.expanded === undefined) {
-        this.expanded = true;
-      }
-    } else {
-      this.expanded = false;
+    if (!this.expandable()) {
+      this.expanded.set(false);
     }
 
     this.needSeperator();
@@ -158,9 +132,9 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
 
   public needSeperator() {
     this.hasSeperator = false;
-    if (this.contentWrapper && this.contentWrapper2) {
-      const el1 = this.contentWrapper.nativeElement;
-      const el2 = this.contentWrapper2.nativeElement;
+    if (this.contentWrapper() && this.filterActions()) {
+      const el1 = this.contentWrapper()?.nativeElement;
+      const el2 = this.filterActions()?.nativeElement;
       if (el1.children && el2.children) {
         if (el1.children.length > 0 && el2.children.length > 0) {
           const hasActionButtons = el1.children[0].children.length > 0;
@@ -185,10 +159,10 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   }
 
   private setContentHeight() {
-    const element = this.filterForm.nativeElement;
+    const element = this.filterForm()?.nativeElement;
     if (element) {
       const contentArea = element.parentElement;
-      this.contentHeight = contentArea?.offsetHeight || 0;
+      this.contentHeight.set(contentArea?.offsetHeight || 0);
     }
   }
 }
@@ -198,25 +172,20 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
  *
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
-@Directive({
-   
-  selector: 'sto-filter-title',
-  standalone: true,
-})
+@Directive({ selector: 'sto-filter-title' })
 export class StoFilterTitle {}
 
-@Directive({ selector: 'sto-filter-table-actions', standalone: true })
-export class StoFilterTableActions {
-  @HostBinding('class.sto-filter-table-actions')
-  className = true;
-}
+@Directive({
+  selector: 'sto-filter-table-actions',
+  host: { class: 'sto-filter-table-actions' },
+})
+export class StoFilterTableActions {}
 
-@Directive({ selector: 'sto-filter-actions', standalone: true })
+@Directive({ selector: 'sto-filter-actions' })
 export class StoFilterActions {}
 
 @Component({
   selector: 'sto-filter-actions-bar',
-  standalone: true,
   template: `
     <ng-content></ng-content>
     @if (expandable()) {
@@ -231,29 +200,14 @@ export class StoFilterActions {}
     }
   `,
   imports: [MatIconButton, MatIcon],
+  host: {
+    class: 'sto-filter-actions-bar',
+  },
 })
- 
 export class StoFilterActionsBar {
-  @HostBinding('class.sto-filter-actions')
-  hasClass = true;
   readonly expandable = input<boolean>();
   // eslint-disable-next-line @angular-eslint/no-output-native
   readonly toggle = output<void>();
 
-  private _expanded: boolean;
-
-  get expanded(): boolean {
-    return this._expanded;
-  }
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input() set expanded(expanded: boolean) {
-    this._expanded = expanded;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onChange(event: unknown) {
-    // console.log($event);
-  }
+  expanded = input(false, { transform: booleanAttribute });
 }

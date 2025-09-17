@@ -7,13 +7,13 @@
   <ng-content select="sto-datatable-actions"></ng-content>
   @if (
     (!responsive || (responsive && !smallScreen)) &&
-    columnGroups &&
-    this.scrollbarH
+    columnGroups() &&
+    this.scrollbarH()
   ) {
     <sto-datatable-header-group
       [columns]="columns"
-      [groups]="columnGroups"
-      [height]="headerHeight"
+      [groups]="columnGroups()"
+      [height]="headerHeight()"
       [transform]="scrollLeft"
       [width]="width"
     ></sto-datatable-header-group>
@@ -27,15 +27,15 @@
     [activeSort]="activeSort"
     [columns]="columns"
     [groups]="groups()"
-    [headerHeight]="headerHeight"
+    [headerHeight]="headerHeight()"
     [offset]="bodyHeight && rowTotalHeight > bodyHeight ? 12 : 0"
-    [resizeable]="resizeable && scrollbarH"
+    [resizeable]="resizeable && scrollbarH()"
     [responsive]="responsive"
-    [rowHeight]="rowHeight"
+    [rowHeight]="rowHeight()"
     [rows]="rows"
     [scrollLeft]="scrollLeft"
     [smallScreen]="smallScreen"
-    [sortable]="sortable"
+    [sortable]="sortable()"
     [width]="width"
   ></sto-datatable-header>
   @if (loading()) {
@@ -64,34 +64,34 @@
     [responsiveView]="responsiveView()"
     [responsive]="responsive"
     [rowClass]="rowClass()"
-    [rowHeight]="rowHeight"
+    [rowHeight]="rowHeight()"
     [rows]="rows"
-    [scrollLeft]="scrollbarH && footerRow ? scrollLeft : null"
-    [scrollbarH]="footerRow ? false : scrollbarH"
+    [scrollLeft]="scrollbarH() && footerRow ? scrollLeft : null"
+    [scrollbarH]="footerRow ? false : scrollbarH()"
     [selectable]="!!select.observers.length"
-    [selected]="selected"
-    [selectionMode]="selectionMode"
+    [selected]="selected()"
+    [selectionMode]="selectionMode()"
     [smallView]="smallScreen"
     [trackBy]="trackBy()"
-    [virtualScroll]="virtualScroll"
-    [width]="scrollbarH ? columnTotalWidth + 'px' : 'auto'"
+    [virtualScroll]="virtualScroll()"
+    [width]="scrollbarH() ? columnTotalWidth + 'px' : 'auto'"
   ></sto-datatable-body>
   @if (footerRow && (!responsive || (responsive && !smallScreen))) {
     <div
       (scroll)="scrollBodyAndHeader($event)"
       [style.overflowX]="'auto'"
       [style.overflowY]="'hidden'"
-      [style.width]="'calc(100% - ' + body.verticalScrollOffset + 'px)'"
+      [style.width]="'calc(100% - ' + body.verticalScrollOffset() + 'px)'"
       class="sto-mdl-table__footer"
     >
       @for (row of footerRow; track row; let i = $index) {
         <div
           [class.sto-mdl-table__row--scroll-offset]="
-            scrollbarH &&
+            scrollbarH() &&
             !!bodyHeight &&
-            (rows?.length || 1) * rowHeight > bodyHeight
+            (rows?.length || 1) * rowHeight() > bodyHeight
           "
-          [style.height]="rowHeight + 'px'"
+          [style.height.px]="rowHeight()"
           [style.min-width]="width"
           [style.overflowY]="'hidden'"
           class="sto-mdl-table__footer__row"

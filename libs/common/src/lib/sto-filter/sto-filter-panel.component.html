@@ -1,8 +1,7 @@
 <mat-expansion-panel
-  [disabled]="true"
-  [expanded]="expanded"
+  [expanded]="expanded()"
   #panel
-  [hideToggle]="true"
+  hideToggle="true"
   [ngClass]="{ 'sto-filter': true }"
 >
   <mat-expansion-panel-header
@@ -11,12 +10,12 @@
   >
     <mat-panel-title>
       <ng-content select="sto-filter-title"></ng-content>
-      @if (filterList) {
+      @if (filterList()) {
         <mat-chip-listbox
           [style.opacity]="panel.expanded ? 0 : 1"
           style="margin-left: 16px"
         >
-          @for (f of filterList; track f.index) {
+          @for (f of filterList(); track f.index) {
             <mat-chip-option
               (removed)="_clearFilter(f.key, f.index)"
               [removable]="true"
@@ -36,11 +35,10 @@
     </span>
 
     <span class="content-wrapper" #filterActions>
-      @if (expandable) {
+      @if (expandable()) {
         <sto-filter-actions-bar
-          #contentWrapper2
-          [expanded]="expanded"
-          [expandable]="expandable"
+          [expanded]="expanded()"
+          [expandable]="expandable()"
           (toggle)="toggle()"
         >
           <ng-content select="sto-filter-actions"></ng-content>

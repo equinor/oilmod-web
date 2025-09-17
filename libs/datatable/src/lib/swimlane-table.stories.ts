@@ -1,7 +1,6 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoDatatableModule } from '@ngx-stoui/datatable';
 import { NgxDatatableModule } from '@ngx-stoui/swimlane-datatable';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -16,7 +15,6 @@ const meta: Meta<any> = {
       imports: [
         StoDatatableModule,
         MatButtonModule,
-        BrowserAnimationsModule,
         MatPaginatorModule,
         MatCardModule,
         NgxDatatableModule,

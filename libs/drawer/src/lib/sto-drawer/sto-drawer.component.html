@@ -1,34 +1,41 @@
 <div
   [ngClass]="position + ' ' + cssClass()"
-  [style.width]="width"
-  [style.top]="padding()"
-  [style.zIndex]="position === 'left' ? 60 : 58"
+  [style.width]="width()"
+  [style.top.px]="padding()"
+  [style.zIndex]="position() === 'left' ? 60 : 58"
   [style.right]="offset()"
-  [@drawerAnimations]="slideInOut"
-  class="sto-drawer">
-  <div class="sto-drawer__header__wrapper"
-    [style.display]="headerChild ? 'inherit' : 'none'"
-    #header>
-    <ng-content select="sto-drawer-header">
-    </ng-content>
+  [@drawerAnimations]="slideInOut()"
+  class="sto-drawer"
+>
+  <div
+    class="sto-drawer__header__wrapper"
+    [style.display]="headerChild() ? 'inherit' : 'none'"
+    #header
+  >
+    <ng-content select="sto-drawer-header"> </ng-content>
   </div>
-  <div [class.navigation]="!header"
+  <div
+    [class.navigation]="!header"
     [style.height]="height"
-    class="sto-drawer__content">
+    class="sto-drawer__content"
+  >
     <ng-content></ng-content>
   </div>
 
-  <div class="sto-drawer__footer"
-    [style.display]="footer ? 'inherit' : 'none'"
-    #footerEl>
+  <div
+    class="sto-drawer__footer"
+    [style.display]="footer() ? 'inherit' : 'none'"
+    #footerEl
+  >
     <ng-content select="sto-drawer-footer"></ng-content>
   </div>
-
 </div>
 
-@if (open && animation() && backdrop()) {
-  <div @overlay
+@if (open() && animation() && backdrop()) {
+  <div
+    @overlay
     class="sto-drawer__overlay"
     [style.left]="0"
-  (click)="closeDrawer()"></div>
+    (click)="closeDrawer()"
+  ></div>
 }

@@ -1,22 +1,24 @@
 import { AsyncPipe, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ContentChild,
+  contentChild,
   ElementRef,
   EventEmitter,
   HostBinding,
   inject,
   Input,
   input,
+  model,
   NgZone,
   OnDestroy,
   Output,
   output,
   TemplateRef,
-  ViewChild,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
@@ -49,6 +51,11 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'sto-datatable ngx-datatable',
+    '[class.horizontal-scroll]': 'scrollbarH()',
+    '[class.sortable]': 'sortable()',
+    '[class.autosize]': 'autoSize()',
+    '[class.virtual-scroll]': 'virtualScroll()',
+    '[class.mat-elevation-z3]': 'elevation()',
   },
   imports: [
     StoDatatableHeaderGroupComponent,
@@ -68,59 +75,24 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   private zone = inject(NgZone);
 
   readonly groups = input<Array<Group>>([]);
-  @ViewChild(StoDatatableBodyComponent)
-  body: StoDatatableBodyComponent<T>;
-  @ContentChild(StoDatatableActionsComponent)
-  actions: StoDatatableActionsComponent;
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  rowHeight = 36;
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('class.horizontal-scroll')
-  @Input()
-  scrollbarH: boolean;
+  body = viewChild.required(StoDatatableBodyComponent<T>);
+  actions = contentChild(StoDatatableActionsComponent);
+  rowHeight = input(36);
+  scrollbarH = input<boolean>(false);
   readonly emptyMessage = input(`No records in set`);
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  headerHeight = 24;
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  selectionMode: SelectionModes = SelectionModes.Click;
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @HostBinding('class.sortable')
-  @Input()
-  sortable: boolean;
+  headerHeight = input(24);
+  selectionMode = input<SelectionModes>(SelectionModes.Click);
+  sortable = input<boolean>(true);
   readonly disableRipple = input<boolean>();
   ColumnDisplay = ColumnDisplay;
   readonly loading = input<boolean>();
   public height$: Observable<number>;
   public rowTotalHeight: number;
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @HostBinding('class.autosize')
-  @Input()
-  autoSize: boolean;
+  autoSize = input(false, { transform: booleanAttribute });
   readonly autoSizeOffset = input(0);
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  preserveSort: boolean;
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  selected: T;
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('class.virtual-scroll')
-  @Input()
-  virtualScroll = true;
+  preserveSort = input(false, { transform: booleanAttribute });
+  selected = model<T>();
+  virtualScroll = input(true);
   // TODO: Skipped for migration because:
   //  Your application code writes to the input. This prevents migration.
   @Input()
@@ -131,17 +103,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   @HostBinding('class.responsive')
   public smallScreen = false;
   readonly rowClass = input<rowClassFn>();
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('class.mat-elevation-z3')
-  @Input()
-  elevation = true;
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input()
-  columnGroups: ColumnGroup[];
+  elevation = input(true);
+  columnGroups = input<ColumnGroup[]>([]);
 
   // TODO: Cannot migrate because:
   // Your application code relies on internal rxjs only implementation details
@@ -170,7 +133,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   set activeSort(sort: Sort | null) {
     this._activeSort = sort;
-    if (this.preserveSort && sort) {
+    if (this.preserveSort() && sort) {
       try {
         localStorage.setItem(this.sortKey, JSON.stringify(sort));
       } catch {
@@ -193,7 +156,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   }
 
   get bodyHeight(): number {
-    if (!this.height || !this.body) {
+    if (!this.height || !this.body()) {
       return 0;
     }
     const hasHeader =
@@ -203,23 +166,23 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
       (!this.responsive || (this.responsive && !this.smallScreen));
     const hasHeaderGroup =
       (!this.responsive || (this.responsive && !this.smallScreen)) &&
-      this.columnGroups;
-    const headerOffset = hasHeader ? this.headerHeight : 0;
-    const actionsHeight = this.actions ? this.actions.height : 0;
+      this.columnGroups();
+    const headerOffset = hasHeader ? this.headerHeight() : 0;
+    const actionsHeight = this.actions() ? this.actions()!.height() : 0;
     let footerOffset = 0;
     if (hasFooter && this.footerRow instanceof Array) {
-      footerOffset = this.rowHeight * this.footerRow.length;
+      footerOffset = this.rowHeight() * this.footerRow.length;
     } else if (hasFooter) {
-      footerOffset = this.rowHeight;
+      footerOffset = this.rowHeight();
     }
-    const groupOffset = hasHeaderGroup ? this.headerHeight : 0;
+    const groupOffset = hasHeaderGroup ? this.headerHeight() : 0;
     return (
       this.height - headerOffset - footerOffset - groupOffset - actionsHeight
     );
   }
 
   get width() {
-    if (this.scrollbarH && this.columns) {
+    if (this.scrollbarH() && this.columns) {
       const widthOffset =
         this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
       return `${this.columnTotalWidth + widthOffset}px`;
@@ -238,7 +201,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
 
   set height(height: number) {
     this._height = height;
-    if (!this.autoSize) {
+    if (!this.autoSize()) {
       this.height$ = of(height);
     }
   }
@@ -255,12 +218,12 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   set rows(rows: T[]) {
     this._rows = rows;
 
-    this.rowTotalHeight = (rows || []).length * this.rowHeight;
+    this.rowTotalHeight = (rows || []).length * this.rowHeight();
 
     if (rows && rows.length > 0) {
       this._internalRows = [...(rows || [])];
       const externalSort = this.externalSort();
-      if (!this.preserveSort && !externalSort) {
+      if (!this.preserveSort() && !externalSort) {
         this.activeSort = null;
       }
 
@@ -357,7 +320,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   });
 
   rowClick(row: T, index: number, event: MouseEvent) {
-    this.selected = row;
+    this.selected.set(row);
     this.select.emit({ row, index, event });
   }
 
@@ -366,12 +329,12 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   }
 
   ngAfterViewInit() {
-    if (this.resizeable && !this.scrollbarH) {
+    if (this.resizeable && !this.scrollbarH()) {
       console.warn(
         `Datatable: Not allowed to have resizeable columns without horizontal scroll. Set [scrollbarH]="true"`,
       );
     }
-    if (this.autoSize) {
+    if (this.autoSize()) {
       this.setAutoSize();
     }
     if (this.responsive && !this.responsiveView()) {
@@ -400,7 +363,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   }
 
   public scrollTo(item: T | number, behaviour: ScrollBehavior = 'smooth') {
-    if (this.body.vScroller) {
+    if (this.body().vScroller()) {
       if (typeof item === 'number') {
         this.scrollToIndex(item, behaviour);
       } else {
@@ -459,8 +422,8 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   }
 
   private scrollToIndex(index: number, behaviour: ScrollBehavior) {
-    if (this.body.vScroller) {
-      this.body.vScroller.scrollToIndex(index, behaviour);
+    if (this.body().vScroller()) {
+      this.body().vScroller()?.scrollToIndex(index, behaviour);
     }
   }
 
@@ -477,7 +440,7 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
           top -
           16 -
           this.autoSizeOffset() -
-          (this.actions ? 6 : 0),
+          (this.actions() ? 6 : 0),
       ),
       tap((height) => (this.height = height)),
     );

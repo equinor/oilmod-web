@@ -14,7 +14,6 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormFieldDirective, StoFormModule } from '@ngx-stoui/form';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -30,7 +29,6 @@ const meta: Meta<any> = {
         MatInputModule,
         StoFormModule,
         MatSelectModule,
-        BrowserAnimationsModule,
         MatCardModule,
         TextFieldModule,
         ReactiveFormsModule,

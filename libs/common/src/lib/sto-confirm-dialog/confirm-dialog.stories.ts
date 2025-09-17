@@ -1,6 +1,5 @@
 import { Component, NgModule, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // @ts-ignore
 import { ConfirmModule, ConfirmService } from '@ngx-stoui/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -31,12 +30,7 @@ const meta: Meta<ConfirmDemoComponent> = {
   title: 'common/Confirm Service',
   decorators: [
     moduleMetadata({
-      imports: [
-        ConfirmModule,
-        ConfirmerModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-      ],
+      imports: [ConfirmModule, ConfirmerModule, MatButtonModule],
       declarations: [],
     }),
   ],

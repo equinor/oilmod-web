@@ -5,22 +5,22 @@
     class="sto-mdl-table__header"
     role="rowgroup"
   >
-    @if (groups && groups.length > 0) {
+    @if (groups() && groups().length > 0) {
       <div
         [class.sto-mdl-table__row--scroll-offset]="
           !!bodyHeight() && (rows()?.length || 1) * rowHeight() > bodyHeight()
         "
         [style.display]="columnMode() === ColumnDisplay.Flex ? 'flex' : 'block'"
-        [style.height]="headerHeight + 'px'"
+        [style.height.px]="headerHeight()"
         [style.min-width]="tempWidth || width()"
         [style.overflow]="'hidden'"
         [style.transform]="scrollLeft()"
         class="sto-mdl-table__header__row sto-mdl-table__header__group__row"
         role="row"
       >
-        @for (group of groups; track group; let i = $index) {
+        @for (group of groups(); track group; let i = $index) {
           <div
-            [style.flex]="group | getGroupFlex: columns"
+            [style.flex]="group | getGroupFlex: columns()"
             class="sto-mdl-table__header__row__cell sto-mdl-table__header__group__row__cell"
             role="columnheader"
           >
@@ -39,9 +39,9 @@
       [class.sto-mdl-table__row--scroll-offset]="
         !!bodyHeight() && (rows()?.length || 1) * rowHeight() > bodyHeight()
       "
-      [matSortDisabled]="!sortable"
+      [matSortDisabled]="!sortable()"
       [style.display]="columnMode() === ColumnDisplay.Flex ? 'flex' : 'block'"
-      [style.height]="headerHeight + 'px'"
+      [style.height.px]="headerHeight()"
       [style.min-width]="tempWidth || width()"
       [style.overflow]="'hidden'"
       [style.transform]="scrollLeft()"
@@ -50,7 +50,7 @@
       role="row"
     >
       @for (
-        column of columns;
+        column of columns();
         track trackColumnsFn(i, column);
         let i = $index
       ) {
@@ -60,7 +60,7 @@
             headerContextMenu.emit({ event: $event, column: column })
           "
           [class.sto-mdl-table__header__row__cell--sortable]="
-            sortable && !column.disableSort
+            sortable() && !column.disableSort
           "
           [ngClass]="column.headerClass | exec: column"
           [ngStyle]="column | columnStyle: columnMode()"
@@ -99,13 +99,13 @@
               (cdkDragMoved)="onResize($event)"
               (click)="$event.stopPropagation()"
               [cdkDragData]="column"
-              [style.height.px]="headerHeight"
+              [style.height.px]="headerHeight()"
               cdkDrag
               cdkDragLockAxis="x"
               class="col-resizer"
             >
               <div
-                [style.height.px]="headerHeight"
+                [style.height.px]="headerHeight()"
                 class="col-resizer__drag"
               ></div>
             </div>

@@ -3,7 +3,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'; // @ts-ignore
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   StoFilterPanelComponent,
   StoFilterPanelModule,
@@ -12,7 +11,6 @@ import { StoDirectivesModule } from '@ngx-stoui/core';
 import { StoFormModule } from '@ngx-stoui/form';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { action } from 'storybook/actions';
 
 const meta: Meta<StoFilterPanelComponent & { title?: string }> = {
   title: 'common/Filter Panel',
@@ -21,7 +19,6 @@ const meta: Meta<StoFilterPanelComponent & { title?: string }> = {
     moduleMetadata({
       imports: [
         StoFilterPanelModule,
-        BrowserAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
@@ -44,12 +41,9 @@ const meta: Meta<StoFilterPanelComponent & { title?: string }> = {
 };
 export default meta;
 
-type StoryType = StoryObj<
-  StoFilterPanelComponent & { title?: string; toggled?: () => void }
->;
+type StoryType = StoryObj<StoFilterPanelComponent & { title?: string }>;
 export const FilterPanel: StoryType = {
   args: {
-    toggled: action('Toggled') as any,
     expanded: true,
     expandable: true,
     title: 'Filter title',
@@ -60,8 +54,7 @@ export const FilterPanel: StoryType = {
     template: `
       <sto-filter-panel class="sto-form"
                         [expandable]="expandable"
-                        [expanded]="expanded"
-                        (toggled)="toggled()">
+                        [expanded]="expanded">
           <sto-filter-title>{{ title }}</sto-filter-title>
           <sto-filter-table-actions>
               <button mat-icon-button>

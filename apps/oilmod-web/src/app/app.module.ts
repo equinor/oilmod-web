@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { StoAppHeaderComponent } from '@ngx-stoui/common';
-import { NavigationComponent } from './components/navigation.component';
 import { RouterModule, Routes } from '@angular/router';
+import { StoAppHeaderComponent } from '@ngx-stoui/common';
+import { AppComponent } from './app.component';
 import { routes as commonRoutes } from './components/common/routes';
 import { routes as formRoutes } from './components/form/routes';
+import { NavigationComponent } from './components/navigation.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 
 const routes: Routes = [
@@ -54,7 +53,6 @@ const routes: Routes = [
     StoAppHeaderComponent,
     NavigationComponent,
     RouterModule.forRoot(routes),
-    BrowserAnimationsModule,
     HighlightModule,
   ],
   providers: [

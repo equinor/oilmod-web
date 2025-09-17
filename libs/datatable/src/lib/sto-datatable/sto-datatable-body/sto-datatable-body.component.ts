@@ -8,12 +8,15 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
   OnDestroy,
   TemplateRef,
   ViewChild,
+  booleanAttribute,
+  effect,
   input,
   output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Column, ColumnDisplay } from '../columns';
@@ -42,92 +45,67 @@ import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datat
 export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   implements OnDestroy, AfterViewInit
 {
-  @ViewChild('scrollViewport', { read: ElementRef })
-  scrollElement: ElementRef<HTMLElement>;
+  scrollElement = viewChild('scrollViewport', {
+    read: ElementRef<HTMLElement>,
+  });
   readonly responsive = input<boolean>();
   readonly disableRipple = input<boolean>(false);
   readonly smallView = input<boolean>();
   readonly responsiveView = input<TemplateRef<unknown>>();
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  height: number | null;
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  rows: Array<T>;
+  height = input<number>(500);
+  rows = input<Array<T>>([]);
   readonly selectable = input<boolean>();
   readonly width = input<string>();
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  rowHeight: number;
+  rowHeight = input<number>(28);
   readonly selected = input<T>();
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  columns: Column[];
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  virtualScroll: boolean;
+  columns = input<Column[]>([]);
+  virtualScroll = input(true, { transform: booleanAttribute });
   readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
   readonly rowClass = input<rowClassFn>();
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  selectionMode: SelectionModes;
+  selectionMode = input<SelectionModes>(SelectionModes.DoubleClick);
   readonly scrollLeft = input<string | null>();
   readonly hasFooter = input<boolean>();
   readonly rowSelected = output<RowSelection<T>>();
   readonly rowContextMenu = output<RowContextMenu<T>>();
   readonly activate = output<RowActivation<T>>();
   readonly scrollHeader = output<Event>();
-  @ViewChild(CdkVirtualScrollViewport)
-  vScroller: CdkVirtualScrollViewport;
-  @ViewChild('scroller')
-  scroller: ElementRef<HTMLDivElement>;
+  vScroller = viewChild(CdkVirtualScrollViewport);
+  scroller = viewChild.required<ElementRef<HTMLDivElement>>('scroller');
   public horizontalScrollActive: boolean;
-  public verticalScrollOffset = 0;
+  public verticalScrollOffset = signal(0);
   private destroyed$ = new Subject<boolean>();
   // Using ReturnType<typeof setTimeout> works for both browser (number) and Node/JSDOM (Timeout) environments
   private timeout: ReturnType<typeof setTimeout> | undefined;
   private resizeObserver: ResizeObserver;
 
-  private _scrollbarH: boolean;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get scrollbarH(): boolean {
-    return this._scrollbarH;
-  }
-
-  set scrollbarH(scrollbarH: boolean) {
-    this._scrollbarH = scrollbarH;
+  scrollbarH = input<boolean>(false);
+  onScrollbarHChange = effect(() => {
+    // Triggers
+    const scrollbarH = this.scrollbarH();
+    const vScroll = this.virtualScroll();
+    const vScroller = this.vScroller();
+    // Actions
     this.horizontalScrollActive = false;
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
-    if (scrollbarH && this.virtualScroll && this.vScroller) {
+    if (scrollbarH && vScroll && vScroller) {
       this.virtHorzScrollPosition();
     } else if (scrollbarH) {
       this.horzScrollPosition();
     }
     requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
-  }
+  });
 
   @HostListener('window:resize', ['$event'])
   onresize() {
-    if (!this.vScroller) {
+    if (!this.vScroller()) {
       return;
     }
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
-    this.timeout = setTimeout(() => {
-      this.vScroller.ngOnInit();
-    }, 100);
+    this.timeout = setTimeout(() => this.vScroller()?.ngOnInit(), 100);
   }
 
   readonly trackBy = input((index: number, item: T) => {
@@ -151,9 +129,9 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   }
 
   ngAfterViewInit() {
-    if (this.scrollbarH && this.virtualScroll) {
+    if (this.scrollbarH() && this.virtualScroll()) {
       this.virtHorzScrollPosition();
-    } else if (this.scrollbarH) {
+    } else if (this.scrollbarH()) {
       this.horzScrollPosition();
     }
   }
@@ -162,7 +140,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
     event: KeyboardEvent | MouseEvent,
     activationData: RowSelection<T>,
   ) {
-    if (event.type === this.selectionMode) {
+    if (event.type === this.selectionMode()) {
       this.rowSelected.emit(activationData);
       const el = event.target as HTMLElement;
       const ignoreRe =
@@ -208,10 +186,10 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   }
 
   private horzScrollPosition() {
-    if (!this.scroller) {
+    if (!this.scroller()) {
       return;
     }
-    const elRef = this.scroller.nativeElement;
+    const elRef = this.scroller().nativeElement;
     const cb: ResizeObserverCallback = (entries) => {
       if (!this.hasFooter()) {
         return;
@@ -220,8 +198,8 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
         const t = entry.target as HTMLElement;
         const el = t;
         const currentScale = el.style.transform;
-        const notScaled = this.rows.length * this.rowHeight;
-        this.verticalScrollOffset = t.scrollHeight > t.offsetHeight ? 14 : 0;
+        const notScaled = this.rows().length * this.rowHeight();
+        this.verticalScrollOffset.set(t.scrollHeight > t.offsetHeight ? 14 : 0);
         if (t.scrollWidth > t.offsetWidth) {
           this.horizontalScrollActive = true;
           const strScale = /\d+/.exec(currentScale || '');
@@ -230,7 +208,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
           }
           const numericScale = Number(strScale[0]);
           if (numericScale === notScaled) {
-            const newScaleValue = notScaled + this.rowHeight;
+            const newScaleValue = notScaled + this.rowHeight();
             el.style.transform = `scaleY(${newScaleValue}`;
           }
         } else {
@@ -251,7 +229,9 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   }
 
   private virtHorzScrollPosition() {
-    const elRef = this.vScroller.elementRef.nativeElement;
+    const elRef = this.vScroller()?.elementRef.nativeElement;
+    if (!elRef) return;
+
     const cb: ResizeObserverCallback = (entries) => {
       if (!this.hasFooter()) {
         return;
@@ -262,8 +242,8 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
           '.cdk-virtual-scroll-spacer',
         ) as HTMLDivElement;
         const currentScale = el.style.transform;
-        const notScaled = this.rows.length * this.rowHeight;
-        this.verticalScrollOffset = t.scrollHeight > t.offsetHeight ? 14 : 0;
+        const notScaled = this.rows().length * this.rowHeight();
+        this.verticalScrollOffset.set(t.scrollHeight > t.offsetHeight ? 14 : 0);
         if (t.scrollWidth > t.offsetWidth) {
           this.horizontalScrollActive = true;
           const strScale = /\d+/.exec(currentScale || '');
@@ -272,7 +252,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
           }
           const numericScale = Number(strScale[0]);
           if (numericScale === notScaled) {
-            const newScaleValue = notScaled + this.rowHeight;
+            const newScaleValue = notScaled + this.rowHeight();
             el.style.transform = `scaleY(${newScaleValue}`;
           }
         } else {
