@@ -1,7 +1,6 @@
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   SlideToggleComponent,
   SlideToggleModule,
@@ -20,7 +19,6 @@ const meta: Meta<SlideToggleComponent> = {
         SlideToggleModule,
         MatFormFieldModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule,
         MatCardModule,
         StoFormModule,
       ],
@@ -60,11 +58,11 @@ export const Usage: StoryObj<SlideToggleComponent> = {
   <br>
   <mat-form-field stoFormField floatLabel="always">
     <mat-label>Slide toggle</mat-label>
-    <sto-slide-toggle 
-      (toggled)="toggled($event)" 
-      [color]="color" 
-      [readonly]="readonly" 
-      [formControl]="ctrl" 
+    <sto-slide-toggle
+      (toggled)="toggled($event)"
+      [color]="color"
+      [readonly]="readonly"
+      [formControl]="ctrl"
       (ngModelChange)="valueChange($event)">
     </sto-slide-toggle>
   </mat-form-field>

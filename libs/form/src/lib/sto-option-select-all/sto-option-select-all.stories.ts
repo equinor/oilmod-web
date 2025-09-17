@@ -3,7 +3,6 @@ import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   StoFormModule,
   StoOptionSelectAllComponent,
@@ -23,7 +22,6 @@ const meta: Meta<StoOptionSelectAllComponent> = {
         StoFormModule,
         MatFormFieldModule,
         MatSelectModule,
-        BrowserAnimationsModule,
         CommonModule,
         MatCardModule,
       ],

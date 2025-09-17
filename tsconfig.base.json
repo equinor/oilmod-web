@@ -9,13 +9,18 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "target": "es2015",
     "module": "esnext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "es2022",
+    "useDefineForClassFields": false,
     "paths": {
       "@ngx-stoui/common": ["libs/common/src/index.ts"],
       "@ngx-stoui/core": ["libs/core/src/index.ts"],
@@ -27,5 +32,11 @@
       "@ngx-stoui/testing": ["libs/testing/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp"],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "preserveSymlinks": true,
+    "strictTemplates": true
+  }
 }

@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   StoBreadcrumbsComponent,
@@ -23,7 +22,6 @@ const meta: Meta<StoBreadcrumbsComponent> = {
         MatButtonModule,
         MatMenuModule,
         MatIconModule,
-        BrowserAnimationsModule,
       ],
     }),
   ],

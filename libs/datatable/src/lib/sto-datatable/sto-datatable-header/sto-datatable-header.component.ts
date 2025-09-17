@@ -3,12 +3,12 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   QueryList,
-  ViewChild,
   ViewChildren,
+  computed,
   input,
   output,
+  viewChild,
 } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { ColumnStylePipe } from '../column-style.pipe';
@@ -40,37 +40,22 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
 export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   readonly responsive = input<boolean>();
   readonly smallScreen = input<boolean>();
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  headerHeight: number;
+  headerHeight = input<number>(0);
   readonly resizeable = input<boolean>();
   readonly width = input<string>();
   readonly offset = input<number>(0);
   readonly scrollLeft = input<string>('');
 
   // Can be used to generate sticky columns at a later stage.
-  get offsetLeft() {
-    return this.scrollLeft().replace('-', '');
-  }
+  offsetLeft = computed(() => this.scrollLeft().replace('-', ''));
 
   readonly bodyHeight = input<number>(0);
   readonly rows = input<T[]>([]);
   readonly rowHeight = input<number>(0);
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  columns: Column[];
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  sortable: boolean;
+  columns = input<Column[]>([]);
+  sortable = input<boolean>(false);
   readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input()
-  groups: Array<Group>;
+  groups = input<Array<Group>>([]);
 
   ColumnDisplay = ColumnDisplay;
   public tempWidth: string | null;
@@ -88,8 +73,8 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   readonly sort = output<Sort>();
   readonly activeSort = input<Sort | null>(null);
 
-  @ViewChild(MatSort) private matSort: MatSort;
-  @ViewChildren(MatSortHeader) private sortHeaders: QueryList<MatSortHeader>;
+  private matSort = viewChild(MatSort);
+  private sortHeaders = ViewChildren(MatSortHeader);
 
   public trackColumnsFn(index: number, item: Column) {
     return item.$$id;
@@ -115,7 +100,7 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
       flexBasis = cell.clientWidth;
     }
     flexBasis = flexBasis < 80 ? 80 : flexBasis;
-    const columns = this.columns.map((c) => {
+    const columns = this.columns().map((c) => {
       if (c.prop === col.prop) {
         return {
           ...c,
@@ -132,23 +117,14 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
 
   public _onResize(column: Column, flexBasis: number): void {
     const width = 0;
-    const colIndex = this.columns.indexOf(column);
+    const colIndex = this.columns().indexOf(column);
     this.headerWidthMap[colIndex] = flexBasis;
-    /*    const cols = this.columns
-          .map(c => {
-            if ( c === column ) {
-              c.flexBasis = flexBasis;
-            }
-            width = width + c.flexBasis;
-            return c;
-          });*/
     this.tempWidth = this.offset() + width + 'px';
-    // this.columns = [...cols];
   }
 
   onResizeEnd(col: Column, flexBasis: number) {
     // this.onResize(column, flexBasis);
-    const columns = this.columns.map((c) => {
+    const columns = this.columns().map((c) => {
       if (c === col) {
         return {
           ...c,
@@ -167,12 +143,12 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   }
 
   onHeaderCellClick(id: string) {
-    if (!this.sortable) {
+    if (!this.sortable()) {
       return;
     }
-    const header = this.sortHeaders?.find((h) => h.id === id);
-    if (header && this.matSort) {
-      this.matSort.sort(header);
+    const header = this.sortHeaders()?.find((h: MatSortHeader) => h.id === id);
+    if (header && this.matSort()) {
+      this.matSort()?.sort(header);
     }
   }
 }

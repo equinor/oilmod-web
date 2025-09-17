@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   StoFormModule,
   StoSelectFilterComponent,
@@ -21,7 +20,6 @@ const meta: Meta<StoSelectFilterComponent> = {
         StoFormModule,
         MatFormFieldModule,
         MatSelectModule,
-        BrowserAnimationsModule,
         CommonModule,
         MatCardModule,
       ],

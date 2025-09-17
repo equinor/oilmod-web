@@ -137,7 +137,11 @@ $border-radius: 4px;
     &.sto-form__field--readonly,
     &.sto-form__field--disabled {
       --mat-form-field-filled-container-color: var(--bg-default);
+      --mat-form-field-filled-disabled-container-color: var(--bg-default);
       cursor: default;
+      .mat-mdc-text-field-wrapper {
+        border: 1px solid var(--bg-medium);
+      }
     }
     &.sto-form__field--disabled {
       cursor: default;

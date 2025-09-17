@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoDirectivesModule } from '@ngx-stoui/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -13,7 +12,6 @@ const meta: Meta = {
   decorators: [
     moduleMetadata({
       imports: [
-        BrowserAnimationsModule,
         CommonModule,
         StoDirectivesModule,
         MatCardModule,

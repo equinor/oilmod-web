@@ -31,6 +31,13 @@
     &__actions {
       border-bottom: 1px solid $border-color;
     }
+    &__header__row,
+    &__body__row {
+      gap: 0 2px;
+      &__cell:first-child {
+        padding-left: 8px;
+      }
+    }
 
     &__header__row {
       border-bottom: 1px solid $border-color;

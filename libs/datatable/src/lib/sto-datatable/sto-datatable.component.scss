@@ -39,6 +39,14 @@ $content-height: 20px;
     }
   }
 
+  &__header__row,
+  &__body__row {
+    gap: 0 2px;
+    &__cell:first-child {
+      padding-left: 10px;
+    }
+  }
+
   &__header {
     &__row {
       display: flex;

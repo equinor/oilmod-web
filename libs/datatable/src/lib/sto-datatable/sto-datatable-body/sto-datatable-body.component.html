@@ -1,11 +1,11 @@
-@if (virtualScroll) {
+@if (virtualScroll()) {
   <cdk-virtual-scroll-viewport
     #scrollViewport
     (scroll)="scrollHeader.emit($event)"
     [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
     [class.sto-mdl-table__body--selectable]="selectable()"
-    [itemSize]="!smallView() || !responsive() ? rowHeight : 80"
-    [style.height.px]="height || 500"
+    [itemSize]="!smallView() || !responsive() ? rowHeight() : 80"
+    [style.height.px]="height() || 500"
     class="sto-mdl-table__body"
     role="rowgroup"
   >
@@ -36,14 +36,14 @@
       "
       (rowContextMenu)="rowContextMenu.emit($event)"
       *cdkVirtualFor="
-        let row of rows;
+        let row of rows();
         templateCacheSize: 0;
         let i = index;
         let last = last;
         trackBy: trackBy()
       "
       [columnMode]="columnMode()"
-      [columns]="columns"
+      [columns]="columns()"
       [compressedView]="smallView() && responsive()"
       [isSelected]="selected() === row"
       [matRippleDisabled]="disableRipple()"
@@ -52,7 +52,7 @@
       [rowClass]="rowClass()"
       [rowIndex]="i"
       [row]="row"
-      [style.height]="(!smallView() || !responsive() ? rowHeight : 80) + 'px'"
+      [style.height]="(!smallView() || !responsive() ? rowHeight() : 80) + 'px'"
       [style.min-width]="width()"
       [style.overflow]="disableRipple() ? 'visible' : 'hidden'"
       [style.transform]="scrollLeft()"
@@ -61,28 +61,28 @@
       role="row"
     >
     </sto-datatable-body-row>
-    @if (scrollbarH && hasFooter()) {
+    @if (scrollbarH() && hasFooter()) {
       <sto-datatable-body-row
-        [style.height.px]="rowHeight"
+        [style.height.px]="rowHeight()"
       ></sto-datatable-body-row>
     }
   </cdk-virtual-scroll-viewport>
 }
 
-@if (!virtualScroll) {
+@if (!virtualScroll()) {
   <div
     #scroller
     (scroll)="scrollHeader.emit($event)"
-    [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
+    [class.sto-mdl-table__body--scrollbar-h]="scrollbarH()"
     [class.sto-mdl-table__body--selectable]="selectable()"
-    [style.height]="height ? height + 'px' : 'auto'"
+    [style.height]="height() ? height() + 'px' : 'auto'"
     [style.padding-bottom.px]="
-      horizontalScrollActive && hasFooter() ? rowHeight : 0
+      horizontalScrollActive && hasFooter() ? rowHeight() : 0
     "
     class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
     role="rowgroup"
   >
-    @for (row of rows; track trackBy()(i, row); let i = $index) {
+    @for (row of rows(); track trackBy()(i, row); let i = $index) {
       <sto-datatable-body-row
         #rowEl
         (click)="
@@ -109,14 +109,16 @@
           })
         "
         (rowContextMenu)="rowContextMenu.emit($event)"
-        [columns]="columns"
+        [columns]="columns()"
         [compressedView]="smallView() && responsive()"
         [isSelected]="selected() === row"
         [responsiveView]="responsiveView()"
         [rowClass]="rowClass()"
         [rowIndex]="i"
         [row]="row"
-        [style.height]="(!smallView() || !responsive() ? rowHeight : 80) + 'px'"
+        [style.height]="
+          (!smallView() || !responsive() ? rowHeight() : 80) + 'px'
+        "
         [style.min-width]="width()"
         [tabindex]="0"
         role="row"

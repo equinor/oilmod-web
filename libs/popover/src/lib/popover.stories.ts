@@ -1,5 +1,4 @@
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { action } from 'storybook/actions';
@@ -35,7 +34,6 @@ const meta: Meta<PopoverComponent & Record<string, unknown>> = {
   decorators: [
     moduleMetadata({
       imports: [
-        BrowserAnimationsModule,
         PopoverDirective,
         PopoverComponent,
         PopoverTitleComponent,

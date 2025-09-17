@@ -3,7 +3,6 @@ import { Component, Injectable, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoAppHeaderModule } from '@ngx-stoui/common';
 import {
@@ -44,7 +43,6 @@ const meta: Meta<any> = {
         StoAppHeaderModule,
         MatIconModule,
         MatButtonModule,
-        BrowserAnimationsModule,
         RouterTestingModule.withRoutes([
           { path: '**', component: WrapperComponent },
         ]),

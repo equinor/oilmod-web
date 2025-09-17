@@ -7,15 +7,17 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  HostBinding,
   HostListener,
-  Input,
-  OnInit,
-  ViewChild,
   ViewEncapsulation,
+  booleanAttribute,
+  computed,
+  contentChild,
   inject,
   input,
+  model,
+  numberAttribute,
   output,
+  viewChild,
 } from '@angular/core';
 import { Key } from '@ngx-stoui/core';
 import { drawerAnimations } from '../animation';
@@ -33,8 +35,13 @@ import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: drawerAnimations,
   imports: [NgClass],
+  host: {
+    '[style.width]': 'width()',
+    '[style.height.vh]': '100',
+    '[class.open]': 'open()',
+  },
 })
-export class StoDrawerComponent implements OnInit, AfterViewInit {
+export class StoDrawerComponent implements AfterViewInit {
   private el = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
 
@@ -44,20 +51,18 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    * Used for multiple drawers where the offset would be the widht of the allready opened drawer.
    * Default 0.
    */
-  readonly offset = input('0');
+  readonly offset = input(0, { transform: numberAttribute });
   /**
    * Offset (space) between the viewPanel top and the drawer in pixels.
    * Binds to the top style property.
    * Default 0.
    */
-  readonly padding = input('0px');
+  readonly padding = input(0, { transform: numberAttribute });
   /**
    * Position of the drawer as a string
    * Left or right. Default right.
    */
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input() position: 'left' | 'right';
+  readonly position = input<'left' | 'right'>('left');
   /**
    * Additional css class(es) as a string e.g 'sto-drawer--xmas'.
    */
@@ -72,20 +77,12 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   readonly ignoreEscKey = input(false);
   /**
-   * The width of the drawer in as a string (pixels: '600px', presentage: '33%', or viewPort:'30vw')
+   * The width of the drawer in as a string (pixels: '600px', percentage: '33%', or viewPort:'30vw')
    * Default '25vw'
    */
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @Input()
-  @HostBinding('style.width')
-  width = '300px';
-  // I don't see what harm this can do, the drawer should always be full height..
-  @HostBinding('style.height.vh')
-  h = 100;
-  readonly animation = input<boolean>();
-  readonly backdrop = input<boolean>();
+  width = input('300px');
+  readonly animation = input(true, { transform: booleanAttribute });
+  readonly backdrop = input(false, { transform: booleanAttribute });
   /**
    * Emits true if opened, false if closed.
    *  {EventEmitter<boolean>}
@@ -110,38 +107,35 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
    */
   readonly submit = output();
   public height = '100%';
-  @ViewChild('header') headerRef: ElementRef;
-  @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
-  footer: ElementRef<HTMLElement>;
-  @ContentChild(StoDrawerHeaderComponent, { read: ElementRef })
-  headerChild: ElementRef<HTMLElement>;
+  headerRef = viewChild<ElementRef>('header');
+  // @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
+  // footer: ElementRef<HTMLElement>;
+  // @ContentChild(StoDrawerHeaderComponent, { read: ElementRef })
+  // headerChild: ElementRef<HTMLElement>;
+  footer = contentChild(StoDrawerFooterComponent, {
+    read: ElementRef,
+    descendants: true,
+  });
+  headerChild = contentChild(StoDrawerHeaderComponent, {
+    read: ElementRef,
+    descendants: true,
+  });
 
-  // @HostBinding('@drawerAnimations')
-  get slideInOut() {
+  slideInOut = computed(() => {
     if (!this.animation()) {
-      return this.open ? 'openImmediate' : `closedImmediate-${this.position}`;
+      return this.open()
+        ? 'openImmediate'
+        : `closedImmediate-${this.position()}`;
     }
-    return this.open ? `open-${this.position}` : `closed-${this.position}`;
-  }
-
-  private _open: boolean;
+    return this.open()
+      ? `open-${this.position()}`
+      : `closed-${this.position()}`;
+  });
 
   /**
    * If the drawer is opened.
    */
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  @HostBinding('class.open')
-  get open(): boolean {
-    return this._open;
-  }
-
-  set open(open: boolean) {
-    this._open = open;
-    this.onOpen.emit(open);
-    this.cdr.detectChanges();
-  }
+  open = model(false);
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -159,9 +153,9 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
 
   public toggle(emit = true) {
     if (emit) {
-      this.onToggle.emit(!this.open);
+      this.onToggle.emit(!this.open());
     }
-    if (!this.open) {
+    if (!this.open()) {
       this.openDrawer(emit);
     } else {
       this.closeDrawer(emit);
@@ -169,7 +163,7 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   }
 
   public closeDrawer(emit = true) {
-    this.open = false;
+    this.open.set(false);
     this.cdr.detectChanges();
     if (emit) {
       this.onClose.emit(true);
@@ -177,15 +171,9 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   }
 
   public openDrawer(emit = true) {
-    this.open = true;
+    this.open.set(true);
     if (emit) {
       this.onOpen.emit(true);
-    }
-  }
-
-  ngOnInit() {
-    if (!this.position) {
-      this.position = 'left';
     }
   }
 
@@ -236,14 +224,14 @@ export class StoDrawerComponent implements OnInit, AfterViewInit {
   }
 
   private resizeContent() {
-    if (this.open) {
-      const hasFooter = this.footer;
+    if (this.open()) {
+      const hasFooter = this.footer() != null;
       const totalHeight: number = this.el?.nativeElement.offsetHeight;
       let footerHeight = 0;
 
-      const headerHeight = this.headerRef?.nativeElement.offsetHeight;
+      const headerHeight = this.headerRef()?.nativeElement.offsetHeight ?? 0;
       if (hasFooter) {
-        footerHeight = this.footer?.nativeElement.offsetHeight;
+        footerHeight = this.footer()!.nativeElement?.offsetHeight ?? 0;
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
     }

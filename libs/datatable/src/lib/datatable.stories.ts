@@ -1,7 +1,6 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   StoDatatableComponent,
   StoDatatableModule,
@@ -19,7 +18,6 @@ const meta: Meta<StoDatatableComponent<Record<string, unknown>>> = {
       imports: [
         StoDatatableModule,
         MatButtonModule,
-        BrowserAnimationsModule,
         MatPaginatorModule,
         MatCardModule,
       ],

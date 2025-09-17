@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
@@ -9,7 +9,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { By } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilterForm, FilterList } from './filter';
@@ -81,7 +80,6 @@ describe('StoFilterPanelComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
-        BrowserAnimationsModule,
         MatExpansionModule,
         MatIconModule,
         MatButtonModule,

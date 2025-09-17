@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 
@@ -83,7 +82,6 @@ const meta: Meta = {
         MatTabsModule,
         MatDialogModule,
         CommonModule,
-        BrowserAnimationsModule,
         MatButtonModule,
         MatIconModule,
         DialogDemoComponent,

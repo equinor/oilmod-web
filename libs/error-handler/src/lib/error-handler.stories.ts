@@ -1,4 +1,3 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '@ngx-stoui/error-handler';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -8,7 +7,7 @@ const meta: Meta = {
   title: 'Error Handling/Error Handling',
   decorators: [
     moduleMetadata({
-      imports: [ErrorHandlerModule, WrapperModule, BrowserAnimationsModule],
+      imports: [ErrorHandlerModule, WrapperModule],
     }),
   ],
 };

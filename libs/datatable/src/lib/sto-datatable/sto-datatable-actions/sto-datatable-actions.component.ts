@@ -1,35 +1,28 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'sto-datatable-actions',
   templateUrl: './sto-datatable-actions.component.html',
   styleUrls: ['./sto-datatable-actions.component.scss'],
+  host: {
+    class: 'sto-mdl-table__actions',
+    '[style.height.px]': 'height()',
+  },
 })
 export class StoDatatableActionsComponent {
-  @HostBinding('class.sto-mdl-table__actions')
-  getClass = true;
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('style.height.px')
-  @Input()
-  height = 47;
+  height = input(47);
 }
 
 @Component({
   selector: 'sto-datatable-actions-left',
   template: ` <ng-content></ng-content>`,
+  host: { class: 'class.sto-mdl-table__actions__left' },
 })
-export class StoDataTableActionsLeftComponent {
-  @HostBinding('class.sto-mdl-table__actions__left')
-  getClass = true;
-}
+export class StoDataTableActionsLeftComponent {}
 
 @Component({
   selector: 'sto-datatable-actions-right',
   template: ` <ng-content></ng-content>`,
+  host: { class: 'class.sto-mdl-table__actions__right' },
 })
-export class StoDataTableActionsRightComponent {
-  @HostBinding('class.sto-mdl-table__actions__right')
-  getClass = true;
-}
+export class StoDataTableActionsRightComponent {}

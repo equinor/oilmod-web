@@ -1,5 +1,4 @@
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   StoActionFooterComponent,
   StoActionFooterModule,
@@ -13,11 +12,7 @@ const meta: Meta<StoActionFooterComponent> = {
   component: StoActionFooterComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        StoActionFooterModule,
-        MatButtonModule,
-        BrowserAnimationsModule,
-      ],
+      imports: [StoActionFooterModule, MatButtonModule],
     }),
   ],
   parameters: {},

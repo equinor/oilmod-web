@@ -1,7 +1,6 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   StoDrawerComponent,
   StoDrawerFooterComponent,
@@ -22,7 +21,6 @@ const meta: Meta<StoDrawerComponent> = {
         StoDrawerHeaderComponent,
         MatIconModule,
         MatButtonModule,
-        BrowserAnimationsModule,
         MatCardModule,
       ],
     }),
