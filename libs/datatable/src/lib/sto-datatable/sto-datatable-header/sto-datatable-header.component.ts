@@ -3,12 +3,11 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  QueryList,
-  ViewChildren,
   computed,
   input,
   output,
   viewChild,
+  viewChildren,
 } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { ColumnStylePipe } from '../column-style.pipe';
@@ -74,7 +73,7 @@ export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
   readonly activeSort = input<Sort | null>(null);
 
   private matSort = viewChild(MatSort);
-  private sortHeaders = ViewChildren(MatSortHeader);
+  private sortHeaders = viewChildren(MatSortHeader);
 
   public trackColumnsFn(index: number, item: Column) {
     return item.$$id;

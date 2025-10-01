@@ -59,9 +59,10 @@ describe('StoDatatableHeaderComponent', () => {
 function createComponent() {
   fixture = TestBed.createComponent(StoDatatableHeaderComponent);
   comp = fixture.componentInstance;
-  comp.columns = columns;
-  comp.sortable = true;
-  comp.headerHeight = 36;
+  const compRef = fixture.componentRef;
+  compRef.setInput('columns', columns);
+  compRef.setInput('sortable', true);
+  compRef.setInput('headerHeight', 36);
 
   fixture.detectChanges();
 
