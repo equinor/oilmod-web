@@ -107,16 +107,16 @@ describe('StoFilterPanelComponent', () => {
   });
 
   it('should hide when toggle button is closed', () => {
-    // initial state should be collapsed (expanded=false)
-    expect(page.stoFilterPanel.expanded()).toBeFalsy();
-    // open
+    // initial state should be expanded (expanded=true)
+    expect(page.stoFilterPanel._expanded()).toBeTruthy();
+    // close
     page.toggleButton.click();
     wrapFixture.detectChanges();
-    expect(page.stoFilterPanel.expanded()).toBeTruthy();
-    // close again
+    expect(page.stoFilterPanel._expanded()).toBeFalsy();
+    // open again
     page.toggleButton.click();
     wrapFixture.detectChanges();
-    expect(page.stoFilterPanel.expanded()).toBeFalsy();
+    expect(page.stoFilterPanel._expanded()).toBeTruthy();
   });
 
   it('should render a mat-button', () => {
@@ -127,7 +127,7 @@ describe('StoFilterPanelComponent', () => {
     const wrap = wrapFixture.componentInstance;
     wrap.form.get('field')?.setValue('A value!');
     wrapFixture.detectChanges();
-    page.stoFilterPanel.expanded.set(false);
+    page.stoFilterPanel._expanded.set(false);
     wrapFixture.detectChanges();
     const chips = wrapFixture.debugElement.query(By.directive(MatChipListbox));
     expect(chips).toBeDefined();
