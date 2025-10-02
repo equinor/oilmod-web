@@ -1,5 +1,5 @@
 <mat-expansion-panel
-  [expanded]="expanded()"
+  [expanded]="_expanded()"
   #panel
   hideToggle="true"
   [ngClass]="{ 'sto-filter': true }"
@@ -37,7 +37,7 @@
     <span class="content-wrapper" #filterActions>
       @if (expandable()) {
         <sto-filter-actions-bar
-          [expanded]="expanded()"
+          [expanded]="_expanded()"
           [expandable]="expandable()"
           (toggle)="toggle()"
         >

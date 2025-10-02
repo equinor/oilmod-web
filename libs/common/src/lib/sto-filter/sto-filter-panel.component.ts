@@ -14,7 +14,7 @@ import {
   forwardRef,
   inject,
   input,
-  model,
+  linkedSignal,
   output,
   signal,
   viewChild,
@@ -58,9 +58,14 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
    */
   expandable = input(true, { transform: booleanAttribute });
   /**
-   * If the filter panel should be expanded by default. Default false.
+   * If the filter panel should be expanded by default. Default true.
    */
-  expanded = model(false);
+  expanded = input(true);
+  _expanded = linkedSignal(() => {
+    console.log('Set expanded', this.expanded());
+    return this.expanded() != undefined ? this.expanded() : true;
+  });
+
   /**
    * List of active filters.
    */
@@ -106,12 +111,15 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
   private contentHeight = signal(0);
 
   public toggle() {
-    this.expanded.set(!this.expanded());
+    const expanded = !this._expanded();
+    this._expanded.set(expanded);
+    this.cdr.markForCheck();
     this.setContentHeight();
     this.toggled.emit({
-      isExpanded: this.expanded(),
+      isExpanded: expanded,
       contentHeight: this.contentHeight(),
     });
+    console.log('Toggle expanded', expanded, this._expanded());
   }
 
   ngOnInit() {
@@ -119,7 +127,7 @@ export class StoFilterPanelComponent implements OnInit, AfterViewInit {
       `StoFilterPanel should not be used in future applications, and will be removed in a future release.`,
     );
     if (!this.expandable()) {
-      this.expanded.set(false);
+      this._expanded.set(false);
     }
 
     this.needSeperator();
