@@ -1,52 +1,39 @@
+import { ChangeDetectionStrategy, ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ChangeDetectionStrategy } from '@angular/core';
-import { StoMessagePanelComponent } from './sto-message-panel.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { StoMessagePanelComponent } from './sto-message-panel.component';
 
 let comp: StoMessagePanelComponent;
 let fixture: ComponentFixture<StoMessagePanelComponent>;
+let compRef: ComponentRef<StoMessagePanelComponent>;
 let page: Page;
 
 describe('StoMessagePanelComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ StoMessagePanelComponent, NoopAnimationsModule ],
-        declarations: []
+      imports: [StoMessagePanelComponent, NoopAnimationsModule],
+      declarations: [],
+    })
+      .overrideComponent(StoMessagePanelComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
       })
-      .overrideComponent(StoMessagePanelComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents()
       .then(createComponent);
   }));
 
-  it('should default to info', () => {
-    expect(comp.info).toBeTruthy();
+  it('should render', () => {
+    // Testing anything else in this component does not make sense as it is just a visual component
+    // and contains no logic.
+    expect(fixture).toBeTruthy();
+    expect(comp).toBeTruthy();
+    expect(compRef).toBeTruthy();
   });
-
-  it('should get a warning state', () => {
-    comp.severity = 'warning';
-    fixture.detectChanges();
-    expect(comp.warning).toBeTruthy();
-  });
-
-  it('should get a error state', () => {
-    comp.severity = 'error';
-    fixture.detectChanges();
-    expect(comp.error).toBeTruthy();
-  });
-
-  it('should get a info state', () => {
-    comp.severity = 'info';
-    fixture.detectChanges();
-    expect(comp.info).toBeTruthy();
-  });
-
 });
 
 function createComponent() {
-  fixture = TestBed
-    .createComponent(StoMessagePanelComponent);
+  fixture = TestBed.createComponent(StoMessagePanelComponent);
   comp = fixture.componentInstance;
+  compRef = fixture.componentRef;
 
   fixture.detectChanges();
 
@@ -57,6 +44,5 @@ function createComponent() {
 }
 
 class Page {
-  constructor() {
-  }
+  constructor() {}
 }

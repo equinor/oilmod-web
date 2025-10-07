@@ -10,7 +10,6 @@ import {
   HostListener,
   OnDestroy,
   TemplateRef,
-  ViewChild,
   booleanAttribute,
   effect,
   input,
@@ -22,7 +21,7 @@ import { Subject } from 'rxjs';
 import { Column, ColumnDisplay } from '../columns';
 import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { rowClassFn } from '../models';
-import { SelectionModes } from '../selection-modes';
+import { SelectionModes, SelectionModesEnum } from '../selection-modes';
 
 import { MatRipple } from '@angular/material/core';
 import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datatable-body-row.component';
@@ -42,7 +41,7 @@ import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datat
     MatRipple,
   ],
 })
-export class StoDatatableBodyComponent<T extends Record<string, unknown>>
+export class StoDatatableBodyComponent<T extends object>
   implements OnDestroy, AfterViewInit
 {
   scrollElement = viewChild('scrollViewport', {
@@ -62,7 +61,7 @@ export class StoDatatableBodyComponent<T extends Record<string, unknown>>
   virtualScroll = input(true, { transform: booleanAttribute });
   readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
   readonly rowClass = input<rowClassFn>();
-  selectionMode = input<SelectionModes>(SelectionModes.DoubleClick);
+  selectionMode = input<SelectionModes>(SelectionModesEnum.DoubleClick);
   readonly scrollLeft = input<string | null>();
   readonly hasFooter = input<boolean>();
   readonly rowSelected = output<RowSelection<T>>();

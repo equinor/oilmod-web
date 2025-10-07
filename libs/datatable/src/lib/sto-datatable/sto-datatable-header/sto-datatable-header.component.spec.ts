@@ -9,8 +9,8 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
 import { StoDatatableHeaderComponent } from './sto-datatable-header.component';
 import { StoDatatableResizeDirective } from './sto-datatable-resize.directive';
 
-let comp: StoDatatableHeaderComponent<unknown>;
-let fixture: ComponentFixture<StoDatatableHeaderComponent<unknown>>;
+let comp: StoDatatableHeaderComponent<object>;
+let fixture: ComponentFixture<StoDatatableHeaderComponent<object>>;
 let page: Page;
 
 describe('StoDatatableHeaderComponent', () => {

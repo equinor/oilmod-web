@@ -1,29 +1,31 @@
-import { AsyncPipe, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
-  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   contentChild,
+  effect,
   ElementRef,
   EventEmitter,
-  HostBinding,
   inject,
   Input,
   input,
+  linkedSignal,
   model,
-  NgZone,
   OnDestroy,
   Output,
   output,
+  signal,
   TemplateRef,
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Sort } from '@angular/material/sort';
-import { fromEvent, Observable, of, Subject } from 'rxjs';
-import { debounceTime, map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, map, startWith, takeUntil } from 'rxjs/operators';
 import { ColumnStylePipe } from './column-style.pipe';
 import { Column, ColumnDisplay, ColumnGroup, Group } from './columns';
 import {
@@ -34,7 +36,7 @@ import {
 } from './events';
 import { rowClassFn } from './models';
 import { observeWidth } from './observer';
-import { SelectionModes } from './selection-modes';
+import { SelectionModes, SelectionModesEnum } from './selection-modes';
 import { StoDatatableActionsComponent } from './sto-datatable-actions/sto-datatable-actions.component';
 import { StoDatatableBodyComponent } from './sto-datatable-body/sto-datatable-body.component';
 import { StoDatatableHeaderGroupComponent } from './sto-datatable-header-group/sto-datatable-header-group.component';
@@ -49,6 +51,14 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    StoDatatableHeaderGroupComponent,
+    StoDatatableHeaderComponent,
+    StoDatatableBodyComponent,
+    NgStyle,
+    NgTemplateOutlet,
+    ColumnStylePipe,
+  ],
   host: {
     class: 'sto-datatable ngx-datatable',
     '[class.horizontal-scroll]': 'scrollbarH()',
@@ -56,55 +66,47 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
     '[class.autosize]': 'autoSize()',
     '[class.virtual-scroll]': 'virtualScroll()',
     '[class.mat-elevation-z3]': 'elevation()',
+    '[class.responsive]': 'smallScreen()',
+    '[class.resizeable]': 'resizeable()',
   },
-  imports: [
-    StoDatatableHeaderGroupComponent,
-    StoDatatableHeaderComponent,
-    StoDatatableBodyComponent,
-    NgStyle,
-    NgTemplateOutlet,
-    AsyncPipe,
-    ColumnStylePipe,
-  ],
 })
-export class StoDatatableComponent<T extends Record<string, unknown>>
+export class StoDatatableComponent<T extends object>
   implements AfterViewInit, OnDestroy
 {
   private elRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
-  private zone = inject(NgZone);
 
   readonly groups = input<Array<Group>>([]);
-  body = viewChild.required(StoDatatableBodyComponent<T>);
-  actions = contentChild(StoDatatableActionsComponent);
-  rowHeight = input(36);
-  scrollbarH = input<boolean>(false);
-  readonly emptyMessage = input(`No records in set`);
-  headerHeight = input(24);
-  selectionMode = input<SelectionModes>(SelectionModes.Click);
-  sortable = input<boolean>(true);
-  readonly disableRipple = input<boolean>();
-  ColumnDisplay = ColumnDisplay;
-  readonly loading = input<boolean>();
-  public height$: Observable<number>;
-  public rowTotalHeight: number;
-  autoSize = input(false, { transform: booleanAttribute });
-  readonly autoSizeOffset = input(0);
-  preserveSort = input(false, { transform: booleanAttribute });
-  selected = model<T>();
-  virtualScroll = input(true);
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  responsive: boolean;
+  readonly rowHeight = input<number>(36);
+  readonly headerHeight = input<number>(24);
+  readonly scrollbarH = input<boolean>(false);
+  readonly selectionMode = input<SelectionModes>(SelectionModesEnum.Click);
+  readonly sortable = input<boolean>(true);
+  readonly height = input<number>();
+  readonly autoSize = input<boolean>(false);
+  readonly virtualScroll = input<boolean>(true);
+  readonly elevation = input<boolean>(true);
+  readonly columnGroups = input<ColumnGroup[]>([]);
+  readonly preserveSort = input<boolean>(false);
+  readonly autoSizeOffset = input<number>(0);
   readonly responsiveView = input<TemplateRef<unknown>>();
-  readonly responsiveBreakPoint = input(400);
+  readonly responsiveBreakPoint = input<number>(400);
   readonly externalSort = input<boolean>();
-  @HostBinding('class.responsive')
-  public smallScreen = false;
+  readonly emptyMessage = input<string>(`No records in set`);
+  readonly disableRipple = input<boolean>(false);
+  readonly loading = input<boolean>(false);
   readonly rowClass = input<rowClassFn>();
-  elevation = input(true);
-  columnGroups = input<ColumnGroup[]>([]);
+  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
+  readonly resizeable = input<boolean>(false);
+  readonly responsive = input<boolean>(false);
+  _responsive = linkedSignal(() => this.responsive());
+
+  readonly body = viewChild.required(StoDatatableBodyComponent<T>);
+  readonly actions = contentChild(StoDatatableActionsComponent);
+  ColumnDisplay = ColumnDisplay;
+  public rowTotalHeight: number;
+  selected = model<T>();
+  public smallScreen = signal(false);
 
   // TODO: Cannot migrate because:
   // Your application code relies on internal rxjs only implementation details
@@ -115,58 +117,63 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   readonly rowContextMenu = output<RowContextMenu<T>>();
   readonly headerContextMenu = output<HeaderContextMenu>();
   readonly rowActivate = output<RowActivation<T>>();
-  readonly sortChanged = output<{
-    sort: Sort;
-    column: Column;
-  }>();
-  public columnTotalWidth: number;
+  readonly sortChanged = output<{ sort: Sort; column: Column }>();
   public scrollLeft = 'translate3d(0px, 0px, 0px)';
   public scrollNum: number;
   private destroyed$ = new Subject();
-  private _internalRows: T[];
   private resizeTimeout: number | undefined;
+
   private sortKey = `${window?.location?.hostname}_${window?.location?.pathname}_sort`;
-
-  get activeSort() {
-    return this._activeSort;
-  }
-
-  set activeSort(sort: Sort | null) {
-    this._activeSort = sort;
-    if (this.preserveSort() && sort) {
+  activeSort = linkedSignal<Sort | null>(() => {
+    let sort;
+    if (this.preserveSort()) {
+      const sortStr = localStorage.getItem(this.sortKey);
       try {
-        localStorage.setItem(this.sortKey, JSON.stringify(sort));
+        sort = sortStr ? JSON.parse(sortStr) : null;
       } catch {
         /*em all*/
       }
     }
-  }
-
-  private _activeSort: Sort | null;
-
-  constructor() {
-    try {
-      const sortStr = localStorage.getItem(this.sortKey);
-      if (sortStr) {
-        this._activeSort = JSON.parse(sortStr);
-      }
-    } catch {
-      /*em all*/
+    return sort;
+  });
+  private onActiveSortChange = effect(() => {
+    if (this.preserveSort() && this.activeSort()) {
+      localStorage.setItem(this.sortKey, JSON.stringify(this.activeSort()));
     }
-  }
+  });
 
-  get bodyHeight(): number {
-    if (!this.height || !this.body()) {
-      return 0;
-    }
+  readonly _height = computed<number>(
+    () => (this.autoSize() ? this._calcHeight() : this.height()) || 0,
+  );
+  private _calcHeight = toSignal(
+    fromEvent(window, 'resize').pipe(
+      startWith(null),
+      debounceTime(20), // ~1 animation frame
+      map(() =>
+        (this.elRef.nativeElement as HTMLElement).getBoundingClientRect(),
+      ),
+      map((rect) => rect.top),
+      map(
+        (top) =>
+          window.innerHeight -
+          top -
+          20 -
+          this.autoSizeOffset() -
+          (this.actions() ? 6 : 0),
+      ),
+    ),
+  );
+  readonly bodyHeight = computed<number>(() => {
+    if (!this._height() || !this.body()) return 0;
+
     const hasHeader =
-      !this.responsive || (this.responsive && !this.smallScreen);
+      !this._responsive() || (this._responsive() && !this.smallScreen());
     const hasFooter =
       this.footerRow &&
-      (!this.responsive || (this.responsive && !this.smallScreen));
+      (!this._responsive() || (this._responsive() && !this.smallScreen()));
     const hasHeaderGroup =
-      (!this.responsive || (this.responsive && !this.smallScreen)) &&
-      this.columnGroups();
+      (!this._responsive() || (this._responsive() && !this.smallScreen())) &&
+      this.columnGroups()?.length;
     const headerOffset = hasHeader ? this.headerHeight() : 0;
     const actionsHeight = this.actions() ? this.actions()!.height() : 0;
     let footerOffset = 0;
@@ -177,36 +184,21 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     }
     const groupOffset = hasHeaderGroup ? this.headerHeight() : 0;
     return (
-      this.height - headerOffset - footerOffset - groupOffset - actionsHeight
+      this._height() - headerOffset - footerOffset - groupOffset - actionsHeight
     );
-  }
+  });
 
-  get width() {
-    if (this.scrollbarH() && this.columns) {
+  width = computed(() => {
+    if (this.scrollbarH() && this._columns()) {
       const widthOffset =
-        this.bodyHeight && this.rowTotalHeight > this.bodyHeight ? 12 : 0;
-      return `${this.columnTotalWidth + widthOffset}px`;
+        this.bodyHeight() && this.rowTotalHeight > this.bodyHeight() ? 12 : 0;
+      return `${this.columnTotalWidth() + widthOffset}px`;
     }
     return 'auto';
-  }
-
-  private _height: number;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get height() {
-    return this._height;
-  }
-
-  set height(height: number) {
-    this._height = height;
-    if (!this.autoSize()) {
-      this.height$ = of(height);
-    }
-  }
+  });
 
   private _rows: T[];
+  private _internalRows: T[];
 
   get rows() {
     return this._internalRows;
@@ -224,15 +216,15 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
       this._internalRows = [...(rows || [])];
       const externalSort = this.externalSort();
       if (!this.preserveSort() && !externalSort) {
-        this.activeSort = null;
+        this.activeSort.set(null);
       }
 
-      if (this.activeSort && !externalSort) {
-        const column = (this.columns || []).find(
-          (col) => col.$$id === this.activeSort?.active,
+      if (this.activeSort() && !externalSort) {
+        const column = (this._columns() || []).find(
+          (col) => col.$$id === this.activeSort()?.active,
         );
-        if (column) {
-          this.sort(this.activeSort);
+        if (column && this.activeSort()) {
+          this.sort(this.activeSort() as Sort);
         }
       }
     } else {
@@ -259,63 +251,26 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     this._footerRow = row;
   }
 
-  private _columnMode: ColumnDisplay;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get columnMode(): ColumnDisplay {
-    return this._columnMode || ColumnDisplay.Flex;
-  }
-
-  set columnMode(columnMode: ColumnDisplay) {
-    this._columnMode = columnMode;
-  }
-
-  private _columns: Column[];
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get columns(): Column[] {
-    return this._columns;
-  }
-
-  set columns(columns: Column[]) {
-    if (columns) {
-      this._columns = columns.map((column, index) => ({
-        ...column,
-        $$id: btoa(`${column.prop}${column.name}${index}`),
-        flexShrink: this.resizeable ? 0 : column.flexShrink,
-        flexGrow: this.resizeable ? 0 : column.flexGrow,
-      }));
-      this.columnTotalWidth = columns
-        .map((c) => c.flexBasis || 80)
-        .reduce((a, b) => a + b, 0);
-      if (this._activeSort) {
-        this.sort(this._activeSort);
-      }
+  readonly columns = input<Column[]>([]);
+  public _columns = linkedSignal<Column[]>(() => {
+    if (this.columns() == null || this.columns().length === 0) {
+      return [];
     }
-  }
+    const columns = this.columns().map((column, index) => ({
+      ...column,
+      $$id: btoa(`${column.prop}${column.name}${index}`),
+      flexShrink: this.resizeable() ? 0 : column.flexShrink,
+      flexGrow: this.resizeable() ? 0 : column.flexGrow,
+    }));
+    return columns;
+  });
+  public columnTotalWidth = computed(() =>
+    this._columns()
+      .map((c) => c.flexBasis || 80)
+      .reduce((a, b) => a + b, 0),
+  );
 
-  private _resizeable: boolean;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @HostBinding('class.resizeable')
-  @Input()
-  get resizeable(): boolean {
-    return this._resizeable;
-  }
-
-  set resizeable(resizeable: boolean) {
-    this._resizeable = resizeable;
-    if (resizeable && this._columns) {
-      this.columns = this._columns;
-    }
-  }
-
-  readonly trackBy = input((index: number, item: T) => {
+  readonly trackBy = input((index: number) => {
     return index;
   });
 
@@ -329,28 +284,22 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   }
 
   ngAfterViewInit() {
-    if (this.resizeable && !this.scrollbarH()) {
+    if (this.resizeable() && !this.scrollbarH()) {
       console.warn(
         `Datatable: Not allowed to have resizeable columns without horizontal scroll. Set [scrollbarH]="true"`,
       );
     }
-    if (this.autoSize()) {
-      this.setAutoSize();
-    }
-    if (this.responsive && !this.responsiveView()) {
+    if (this.responsive() && !this.responsiveView()) {
       console.error(
         'Responsive mode set to true, but no view passed in. Please pass in responsiveView (templateRef)',
       );
-      this.responsive = false;
-    } else if (this.responsive) {
+      this._responsive.set(false);
+    } else if (this._responsive()) {
       observeWidth(this.elRef.nativeElement)
         .pipe(takeUntil(this.destroyed$))
-        .subscribe((width) => {
-          this.zone.run(() => {
-            this.smallScreen = width < this.responsiveBreakPoint();
-            this.cdr.markForCheck();
-          });
-        });
+        .subscribe((width) =>
+          this.smallScreen.set(width < this.responsiveBreakPoint()),
+        );
     }
   }
 
@@ -389,11 +338,11 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
   sort(sort: Sort) {
     if (!sort.active || sort.direction === '') {
       this._internalRows = [...(this._rows || [])];
-      this.activeSort = null;
+      this.activeSort.set(null);
       return;
     }
-    this.activeSort = sort;
-    const column = this.columns.find((c) => c.$$id === sort.active);
+    this.activeSort.set(sort);
+    const column = this._columns().find((c) => c.$$id === sort.active);
     if (!column) {
       return;
     }
@@ -410,13 +359,15 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     this.cdr.markForCheck();
   }
 
-  onResize({ columns, column }: { columns: Column[]; column: Column }) {
-    this.columns = [...columns].map((c) => {
-      // Disallow grow/shrink if resizing
-      c.flexGrow = 0;
-      c.flexShrink = 0;
-      return c;
-    });
+  onResize({ column }: { columns: Column[]; column: Column }) {
+    this._columns.set(
+      [...this._columns()].map((c) => {
+        // Disallow grow/shrink if resizing
+        c.flexGrow = 0;
+        c.flexShrink = 0;
+        return c;
+      }),
+    );
 
     this.resized.emit(column);
   }
@@ -427,40 +378,16 @@ export class StoDatatableComponent<T extends Record<string, unknown>>
     }
   }
 
-  private setAutoSize() {
-    const el = this.elRef.nativeElement as HTMLElement;
-    this.height$ = fromEvent(window, 'resize').pipe(
-      startWith(null),
-      debounceTime(20), // ~1 animation frame
-      map(() => el.getBoundingClientRect()),
-      map((rect) => rect.top),
-      map(
-        (top) =>
-          window.innerHeight -
-          top -
-          16 -
-          this.autoSizeOffset() -
-          (this.actions() ? 6 : 0),
-      ),
-      tap((height) => (this.height = height)),
-    );
-  }
-
   private defaultSortFn(a: T, b: T, col: Column) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const aValue = a[col.prop];
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const bValue = b[col.prop];
+    const key = col.prop as keyof T;
+    const aValue = (a as T)[key];
+    const bValue = (b as T)[key];
     if (aValue === null || aValue === undefined) {
       return -1;
     }
     if (bValue === null || bValue === undefined) {
       return 1;
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
   }
 }

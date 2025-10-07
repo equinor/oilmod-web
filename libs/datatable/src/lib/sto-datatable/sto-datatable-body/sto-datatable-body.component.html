@@ -2,7 +2,7 @@
   <cdk-virtual-scroll-viewport
     #scrollViewport
     (scroll)="scrollHeader.emit($event)"
-    [class.sto-mdl-table__body--scrollbar-h]="scrollbarH"
+    [class.sto-mdl-table__body--scrollbar-h]="scrollbarH()"
     [class.sto-mdl-table__body--selectable]="selectable()"
     [itemSize]="!smallView() || !responsive() ? rowHeight() : 80"
     [style.height.px]="height() || 500"
@@ -11,6 +11,13 @@
   >
     <sto-datatable-body-row
       #rowEl
+      *cdkVirtualFor="
+        let row of rows();
+        templateCacheSize: 0;
+        let i = index;
+        let last = last;
+        trackBy: trackBy()
+      "
       (click)="
         selectRow($event, {
           index: i,
@@ -35,13 +42,6 @@
         })
       "
       (rowContextMenu)="rowContextMenu.emit($event)"
-      *cdkVirtualFor="
-        let row of rows();
-        templateCacheSize: 0;
-        let i = index;
-        let last = last;
-        trackBy: trackBy()
-      "
       [columnMode]="columnMode()"
       [columns]="columns()"
       [compressedView]="smallView() && responsive()"

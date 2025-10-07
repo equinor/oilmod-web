@@ -36,7 +36,7 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
     GetGroupFlexPipe,
   ],
 })
-export class StoDatatableHeaderComponent<T = Record<string, unknown>> {
+export class StoDatatableHeaderComponent<T extends object> {
   readonly responsive = input<boolean>();
   readonly smallScreen = input<boolean>();
   headerHeight = input<number>(0);

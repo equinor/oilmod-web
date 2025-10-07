@@ -13,14 +13,12 @@ import { MaterialModule } from '@ngx-stoui/testing';
 import { columns, rows } from '../../../testing/utils';
 import { ColumnStylePipe } from '../column-style.pipe';
 import { ExecPipe } from '../exec.pipe';
-import { SelectionModes } from '../selection-modes';
+import { SelectionModesEnum } from '../selection-modes';
 import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datatable-body-row.component';
 import { StoDatatableBodyComponent } from './sto-datatable-body.component';
 
-let comp: StoDatatableBodyComponent<Record<string, unknown>>;
-let fixture: ComponentFixture<
-  StoDatatableBodyComponent<Record<string, unknown>>
->;
+let comp: StoDatatableBodyComponent<object>;
+let fixture: ComponentFixture<StoDatatableBodyComponent<object>>;
 let wrapFixture: ComponentFixture<WrapperComponent>;
 let page: Page;
 
@@ -99,7 +97,7 @@ function createComponent() {
   compRef.setInput('height', 500);
   compRef.setInput('rowHeight', 36);
   compRef.setInput('virtualScroll', true);
-  compRef.setInput('selectionMode', SelectionModes.Click);
+  compRef.setInput('selectionMode', SelectionModesEnum.Click);
 
   fixture.detectChanges();
 

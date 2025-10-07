@@ -1,4 +1,5 @@
-export enum SelectionModes {
+export enum SelectionModesEnum {
   Click = 'click',
-  DoubleClick = 'dblclick'
+  DoubleClick = 'dblclick',
 }
+export type SelectionModes = `${SelectionModesEnum}`;

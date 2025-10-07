@@ -7,7 +7,7 @@ export class Column {
   flexGrow?: number;
   flexBasis?: number;
   flexShrink?: number;
-  sortable ? = false;
+  sortable? = false;
   headerTemplate?: TemplateRef<unknown>;
   cellTemplate?: TemplateRef<unknown>;
   footerTemplate?: TemplateRef<unknown>;
@@ -34,8 +34,12 @@ export class ColumnGroup {
 
 export enum ColumnDisplay {
   Flex = 'flex',
-  Force = 'force'
+  Force = 'force',
 }
 
-type ClassFunction = <T, U>(value: T, row: U, column: Column) => string | string[];
+type ClassFunction = <T, U>(
+  value: T,
+  row: U,
+  column: Column,
+) => string | string[];
 type SortFunction = <T>(a: T, b: T, column: Column) => number;

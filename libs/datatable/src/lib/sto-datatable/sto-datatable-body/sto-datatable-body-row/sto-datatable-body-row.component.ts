@@ -5,10 +5,10 @@ import {
   Component,
   DoCheck,
   ElementRef,
-  HostBinding,
   KeyValueDiffer,
   KeyValueDiffers,
   TemplateRef,
+  computed,
   inject,
   input,
   output,
@@ -24,24 +24,43 @@ import { rowClassFn } from '../../models';
   styleUrls: ['./sto-datatable-body-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-body-row',
+    '[class]': 'cssClassStr()',
   },
   imports: [NgTemplateOutlet, NgClass, NgStyle, ExecPipe, ColumnStylePipe],
 })
-export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
-  implements DoCheck
-{
+export class StoDatatableBodyRowComponent<T extends object> implements DoCheck {
   private differs = inject(KeyValueDiffers);
   private cdr = inject(ChangeDetectorRef);
   private elRef = inject(ElementRef);
 
   readonly responsiveView = input<TemplateRef<unknown>>();
-  readonly row = input<T>({} as T);
+  readonly row = input<T>();
   readonly columns = input<Column[]>();
   readonly compressedView = input<boolean>();
   readonly rowIndex = input<number>(0);
-  readonly rowClass = input<rowClassFn>();
   readonly isSelected = input<boolean>();
+  readonly rowClass = input<rowClassFn>();
+  readonly cssClassStr = computed(() => {
+    const rowClassFn = this.rowClass();
+    const cls = [
+      'datatable-body-row',
+      'sto-mdl-table__body__row',
+      ...(this.isSelected() ? ['sto-mdl-table__body__row--selected'] : []),
+      ...(this.compressedView()
+        ? ['sto-mdl-table__body__row--compressed']
+        : []),
+    ];
+    if (rowClassFn) {
+      if (typeof rowClassFn === 'function') {
+        cls.push(rowClassFn(this.row()));
+      } else if (typeof rowClassFn === 'object' && !!rowClassFn) {
+        cls.push(Object.values(rowClassFn).join(' '));
+      } else if (typeof rowClassFn === 'string') {
+        cls.push(rowClassFn);
+      }
+    }
+    return cls.join(' ');
+  });
   readonly rowContextMenu = output<{
     event: MouseEvent | KeyboardEvent;
     column: Column;
@@ -52,34 +71,7 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
 
   public element: HTMLDivElement;
 
-  @HostBinding('class')
-  get cssClass() {
-    let cls = 'sto-mdl-table__body__row';
-    if (this.isSelected()) {
-      cls += ' sto-mdl-table__body__row--selected';
-    }
-
-    const rowClass = this.rowClass();
-    if (rowClass) {
-      let userClass = ' ';
-      if (typeof rowClass === 'function') {
-        userClass += rowClass(this.row());
-      } else if (typeof rowClass === 'object' && !!rowClass) {
-        userClass += Object.values(rowClass).join(' ');
-      } else if (typeof rowClass === 'string') {
-        userClass += rowClass;
-      }
-      cls += userClass;
-    }
-
-    if (this.compressedView()) {
-      cls += ' sto-mdl-table__body__row--compressed';
-    }
-
-    return cls;
-  }
-
-  private rowDiffer: KeyValueDiffer<unknown, unknown>;
+  private rowDiffer: KeyValueDiffer<string, unknown>;
   public trackColumn = (index: number, column: Column) => {
     return column.$$id ?? column.prop;
   };
@@ -87,13 +79,23 @@ export class StoDatatableBodyRowComponent<T extends Record<string, unknown>>
   constructor() {
     const differs = this.differs;
 
-    this.rowDiffer = differs.find({}).create();
+    this.rowDiffer = differs.find({}).create<string, unknown>();
     this.element = this.elRef.nativeElement as HTMLDivElement;
   }
 
   ngDoCheck() {
-    if (this.rowDiffer.diff(this.row())) {
+    const r = this.row();
+    // Cast to an indexable record for differ purposes only.
+    if (r != null && this.rowDiffer.diff(r as Record<string, unknown>)) {
       this.cdr.detectChanges();
     }
+  }
+
+  // Helper to safely get a value for dynamic column.prop access without requiring T to be indexable
+  public cellValue(row: T | undefined, prop: string): unknown {
+    if (!row) return undefined;
+    // Access through intermediate unknown then indexable record to avoid lint 'any'
+    const rec = row as unknown as Record<string, unknown>;
+    return rec[prop];
   }
 }

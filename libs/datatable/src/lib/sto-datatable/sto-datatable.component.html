@@ -1,42 +1,42 @@
 <div
-  [class.sto-mdl-table--force-width]="columnMode === ColumnDisplay.Force"
-  [style.height.px]="height$ | async"
+  [class.sto-mdl-table--force-width]="columnMode() === ColumnDisplay.Force"
+  [style.height.px]="_height()"
   class="sto-mdl-table"
   role="table"
 >
   <ng-content select="sto-datatable-actions"></ng-content>
   @if (
-    (!responsive || (responsive && !smallScreen)) &&
-    columnGroups() &&
+    (!_responsive() || (_responsive() && !smallScreen())) &&
+    columnGroups()?.length &&
     this.scrollbarH()
   ) {
     <sto-datatable-header-group
-      [columns]="columns"
+      [columns]="_columns()"
       [groups]="columnGroups()"
       [height]="headerHeight()"
       [transform]="scrollLeft"
-      [width]="width"
+      [width]="width()"
     ></sto-datatable-header-group>
   }
   <sto-datatable-header
     (headerContextMenu)="headerContextMenu.emit($event)"
     (resized)="onResize($event)"
     (sort)="sort($event)"
-    [bodyHeight]="bodyHeight"
-    [columnMode]="columnMode"
-    [activeSort]="activeSort"
-    [columns]="columns"
+    [bodyHeight]="bodyHeight()"
+    [columnMode]="columnMode()"
+    [activeSort]="activeSort()"
+    [columns]="_columns()"
     [groups]="groups()"
     [headerHeight]="headerHeight()"
-    [offset]="bodyHeight && rowTotalHeight > bodyHeight ? 12 : 0"
-    [resizeable]="resizeable && scrollbarH()"
-    [responsive]="responsive"
+    [offset]="bodyHeight() && rowTotalHeight > bodyHeight() ? 12 : 0"
+    [resizeable]="resizeable() && scrollbarH()"
+    [responsive]="_responsive()"
     [rowHeight]="rowHeight()"
     [rows]="rows"
     [scrollLeft]="scrollLeft"
-    [smallScreen]="smallScreen"
+    [smallScreen]="smallScreen()"
     [sortable]="sortable()"
-    [width]="width"
+    [width]="width()"
   ></sto-datatable-header>
   @if (loading()) {
     <div class="sto-mdl-table__progress-bar" role="progressbar">
@@ -56,13 +56,13 @@
     (rowContextMenu)="rowContextMenu.emit($event)"
     (rowSelected)="select.emit($event)"
     (scrollHeader)="setHeaderScroll($event)"
-    [columnMode]="columnMode"
-    [columns]="columns"
+    [columnMode]="columnMode()"
+    [columns]="_columns()"
     [disableRipple]="disableRipple() || select.observers.length === 0"
     [hasFooter]="!!footerRow"
-    [height]="bodyHeight"
+    [height]="bodyHeight()"
     [responsiveView]="responsiveView()"
-    [responsive]="responsive"
+    [responsive]="_responsive()"
     [rowClass]="rowClass()"
     [rowHeight]="rowHeight()"
     [rows]="rows"
@@ -71,12 +71,12 @@
     [selectable]="!!select.observers.length"
     [selected]="selected()"
     [selectionMode]="selectionMode()"
-    [smallView]="smallScreen"
+    [smallView]="smallScreen()"
     [trackBy]="trackBy()"
     [virtualScroll]="virtualScroll()"
     [width]="scrollbarH() ? columnTotalWidth + 'px' : 'auto'"
   ></sto-datatable-body>
-  @if (footerRow && (!responsive || (responsive && !smallScreen))) {
+  @if (footerRow && (!_responsive() || (_responsive() && !smallScreen()))) {
     <div
       (scroll)="scrollBodyAndHeader($event)"
       [style.overflowX]="'auto'"
@@ -88,17 +88,17 @@
         <div
           [class.sto-mdl-table__row--scroll-offset]="
             scrollbarH() &&
-            !!bodyHeight &&
-            (rows?.length || 1) * rowHeight() > bodyHeight
+            !!bodyHeight() &&
+            (rows?.length || 1) * rowHeight() > bodyHeight()
           "
           [style.height.px]="rowHeight()"
-          [style.min-width]="width"
+          [style.min-width]="width()"
           [style.overflowY]="'hidden'"
           class="sto-mdl-table__footer__row"
         >
-          @for (column of columns; track trackColumnsFn($index, column)) {
+          @for (column of _columns(); track trackColumnsFn($index, column)) {
             <div
-              [ngStyle]="column | columnStyle: columnMode"
+              [ngStyle]="column | columnStyle: columnMode()"
               class="sto-mdl-table__footer__row__cell"
             >
               @if (!column.footerTemplate) {
