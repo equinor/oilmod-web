@@ -1,6 +1,6 @@
 {
   "name": "oilmod-web-nx",
-  "version": "20.0.10",
+  "version": "20.0.12",
   "license": "MIT",
   "scripts": {
     "nx": "nx",

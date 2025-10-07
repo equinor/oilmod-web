@@ -142,8 +142,10 @@ export class StoDatatableComponent<T extends object>
     }
   });
 
-  readonly _height = computed<number>(
-    () => (this.autoSize() ? this._calcHeight() : this.height()) || 0,
+  readonly _height = computed<string>(
+    () =>
+      (this.autoSize() ? `${this._calcHeight()}px` : `${this.height()}px`) ||
+      'auto',
   );
   private _calcHeight = toSignal(
     fromEvent(window, 'resize').pipe(
@@ -184,7 +186,11 @@ export class StoDatatableComponent<T extends object>
     }
     const groupOffset = hasHeaderGroup ? this.headerHeight() : 0;
     return (
-      this._height() - headerOffset - footerOffset - groupOffset - actionsHeight
+      Number(this._height().replace('px', '').replace('auto', '0')) -
+      headerOffset -
+      footerOffset -
+      groupOffset -
+      actionsHeight
     );
   });
 

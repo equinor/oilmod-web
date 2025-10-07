@@ -8,10 +8,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome against localhost",
-      "pathMapping": {
-        "/g/": "${workspaceFolder}"
-      },
-      "url": "http://localhost:4200/g/",
+      "url": "http://localhost:4200/",
       "webRoot": "${workspaceFolder}"
     }
   ]
