@@ -17,7 +17,8 @@
       }
     }
 
-    &__field--disabled {
+    &__field--disabled,
+    &__field--readonly {
       color: $disabled-color;
 
       .mat-mdc-form-field-flex {
@@ -125,7 +126,8 @@ $border-radius: 4px;
 
     &.mat-focused {
       @extend %sto-form__field--focused;
-      &.sto-form__field--disabled {
+      &.sto-form__field--disabled,
+      &.sto-form__field--readonly {
         .mat-form-field-underline {
           .mat-form-field-ripple {
             display: none;
@@ -142,9 +144,6 @@ $border-radius: 4px;
       .mat-mdc-text-field-wrapper {
         border: 1px solid var(--bg-medium);
       }
-    }
-    &.sto-form__field--disabled {
-      cursor: default;
       .mat-input-element {
         cursor: default;
       }

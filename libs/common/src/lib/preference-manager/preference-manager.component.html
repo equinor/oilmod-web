@@ -5,6 +5,7 @@
   [matMenuTriggerFor]="menu"
   #trigger="matMenuTrigger"
   [matMenuTriggerData]="{ preferences: preferences }"
+  (click)="$event.stopPropagation()"
 >
   {{
     (preferences | activePreference: activePreferenceId)?.name || placeholder

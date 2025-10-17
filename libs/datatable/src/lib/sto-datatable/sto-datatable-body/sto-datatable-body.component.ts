@@ -69,7 +69,7 @@ export class StoDatatableBodyComponent<T extends object>
   readonly activate = output<RowActivation<T>>();
   readonly scrollHeader = output<Event>();
   vScroller = viewChild(CdkVirtualScrollViewport);
-  scroller = viewChild.required<ElementRef<HTMLDivElement>>('scroller');
+  scroller = viewChild<ElementRef<HTMLDivElement>>('scroller');
   public horizontalScrollActive: boolean;
   public verticalScrollOffset = signal(0);
   private destroyed$ = new Subject<boolean>();
@@ -188,7 +188,7 @@ export class StoDatatableBodyComponent<T extends object>
     if (!this.scroller()) {
       return;
     }
-    const elRef = this.scroller().nativeElement;
+    const elRef = this.scroller()!.nativeElement;
     const cb: ResizeObserverCallback = (entries) => {
       if (!this.hasFooter()) {
         return;
