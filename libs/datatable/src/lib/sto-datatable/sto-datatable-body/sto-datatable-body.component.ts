@@ -5,31 +5,33 @@ import {
 } from '@angular/cdk/scrolling';
 import {
   AfterViewInit,
+  booleanAttribute,
   Component,
+  computed,
+  DestroyRef,
+  effect,
   ElementRef,
   HostListener,
-  OnDestroy,
-  TemplateRef,
-  booleanAttribute,
-  effect,
+  inject,
   input,
   output,
   signal,
+  TemplateRef,
   viewChild,
 } from '@angular/core';
-import { Subject } from 'rxjs';
 import { Column, ColumnDisplay } from '../columns';
 import { RowActivation, RowContextMenu, RowSelection } from '../events';
 import { rowClassFn } from '../models';
 import { SelectionModes, SelectionModesEnum } from '../selection-modes';
 
 import { MatRipple } from '@angular/material/core';
+import { StoRowWidthHelper } from '../../sto-row-width.helper';
 import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datatable-body-row.component';
 
 @Component({
   selector: 'sto-datatable-body',
   templateUrl: './sto-datatable-body.component.html',
-  styleUrls: ['./sto-datatable-body.component.scss'],
+  styleUrl: './sto-datatable-body.component.scss',
   host: {
     class: 'datatable-body',
   },
@@ -42,98 +44,142 @@ import { StoDatatableBodyRowComponent } from './sto-datatable-body-row/sto-datat
   ],
 })
 export class StoDatatableBodyComponent<T extends object>
-  implements OnDestroy, AfterViewInit
+  implements AfterViewInit
 {
-  scrollElement = viewChild('scrollViewport', {
+  // Dependency injection
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly rowWidthHelper = inject(StoRowWidthHelper);
+  private readonly el = inject(ElementRef);
+
+  // Static regex patterns for performance
+  private static readonly IGNORE_ELEMENT_REGEX =
+    /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
+
+  // Inputs - Configuration
+  readonly columns = input<Column[]>([]);
+  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
+  readonly disableRipple = input<boolean>(false);
+  readonly hasFooter = input<boolean>();
+  readonly height = input<number>(500);
+  readonly responsive = input<boolean>();
+  readonly responsiveView = input<TemplateRef<unknown>>();
+  readonly rowClass = input<rowClassFn>();
+  readonly rowHeight = input<number>(28);
+  readonly rows = input<Array<T>>([]);
+  readonly scrollbarH = input<boolean>(false);
+  readonly scrollLeft = input<string | null>();
+  readonly selectable = input<boolean>();
+  readonly selected = input<T>();
+  readonly selectionMode = input<SelectionModes>(
+    SelectionModesEnum.DoubleClick,
+  );
+  readonly smallView = input<boolean>();
+  readonly trackBy = input((index: number, item: T) => index);
+  readonly virtualScroll = input(true, { transform: booleanAttribute });
+  readonly width = input<string>();
+
+  // Outputs - Events
+  readonly activate = output<RowActivation<T>>();
+  readonly rowContextMenu = output<RowContextMenu<T>>();
+  readonly rowSelected = output<RowSelection<T>>();
+  readonly scrollHeader = output<Event>();
+
+  // View children
+  readonly scrollElement = viewChild('scrollViewport', {
     read: ElementRef<HTMLElement>,
   });
-  readonly responsive = input<boolean>();
-  readonly disableRipple = input<boolean>(false);
-  readonly smallView = input<boolean>();
-  readonly responsiveView = input<TemplateRef<unknown>>();
-  height = input<number>(500);
-  rows = input<Array<T>>([]);
-  readonly selectable = input<boolean>();
-  readonly width = input<string>();
-  rowHeight = input<number>(28);
-  readonly selected = input<T>();
-  columns = input<Column[]>([]);
-  virtualScroll = input(true, { transform: booleanAttribute });
-  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
-  readonly rowClass = input<rowClassFn>();
-  selectionMode = input<SelectionModes>(SelectionModesEnum.DoubleClick);
-  readonly scrollLeft = input<string | null>();
-  readonly hasFooter = input<boolean>();
-  readonly rowSelected = output<RowSelection<T>>();
-  readonly rowContextMenu = output<RowContextMenu<T>>();
-  readonly activate = output<RowActivation<T>>();
-  readonly scrollHeader = output<Event>();
-  vScroller = viewChild(CdkVirtualScrollViewport);
-  scroller = viewChild<ElementRef<HTMLDivElement>>('scroller');
-  public horizontalScrollActive: boolean;
-  public verticalScrollOffset = signal(0);
-  private destroyed$ = new Subject<boolean>();
-  // Using ReturnType<typeof setTimeout> works for both browser (number) and Node/JSDOM (Timeout) environments
+  readonly scroller = viewChild<ElementRef<HTMLDivElement>>('scroller');
+  readonly vScroller = viewChild(CdkVirtualScrollViewport);
+
+  // Public signals for template binding
+  readonly horizontalScrollActive = signal(false);
+  readonly verticalScrollOffset = signal(0);
+
+  // Computed signals
+  private readonly notScaledHeight = computed(
+    () => this.rows().length * this.rowHeight(),
+  );
+
+  // Private state
   private timeout: ReturnType<typeof setTimeout> | undefined;
-  private resizeObserver: ResizeObserver;
+  private resizeObserver?: ResizeObserver;
 
-  scrollbarH = input<boolean>(false);
-  onScrollbarHChange = effect(() => {
-    // Triggers
-    const scrollbarH = this.scrollbarH();
-    const vScroll = this.virtualScroll();
-    const vScroller = this.vScroller();
-    // Actions
-    this.horizontalScrollActive = false;
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
-    if (scrollbarH && vScroll && vScroller) {
-      this.virtHorzScrollPosition();
-    } else if (scrollbarH) {
-      this.horzScrollPosition();
-    }
-    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
-  });
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+      }
+    });
 
-  @HostListener('window:resize', ['$event'])
-  onresize() {
-    if (!this.vScroller()) {
-      return;
-    }
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    this.timeout = setTimeout(() => this.vScroller()?.ngOnInit(), 100);
+    // Effect to check viewport size when rows change
+    effect(() => {
+      const rows = this.rows();
+      const vScroller = this.vScroller();
+      this.checkViewportSize();
+    });
   }
 
-  readonly trackBy = input((index: number, item: T) => {
-    return index;
-  });
-  _rowClass = (row: T) => {
-    let userDefinedClass = '';
-    const rowClass = this.rowClass();
-    if (rowClass) {
-      userDefinedClass = rowClass.bind(this)(row);
-    }
-    return `${userDefinedClass} sto-mdl-table__body__row`;
-  };
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
-  }
-
+  // Lifecycle hooks
   ngAfterViewInit() {
     if (this.scrollbarH() && this.virtualScroll()) {
       this.virtHorzScrollPosition();
     } else if (this.scrollbarH()) {
       this.horzScrollPosition();
     }
+
+    // Force virtual scroller to check viewport size after initialization
+    this.checkViewportSize();
   }
+
+  private checkViewportSize() {
+    if (this.virtualScroll()) {
+      const vScroller = this.vScroller();
+      if (vScroller) {
+        setTimeout(() => {
+          vScroller.checkViewportSize();
+        }, 0);
+      }
+    }
+  }
+
+  @HostListener('window:resize')
+  onresize() {
+    // Get real width of a body row
+    const rowEl = this.el.nativeElement.querySelector('.datatable-body-row');
+    if (!rowEl) return;
+    this.rowWidthHelper.currentRowWidth.set(
+      rowEl.getBoundingClientRect().width,
+    );
+
+    // Trigger virtual scroll recalculation
+    const vScroller = this.vScroller();
+    if (!vScroller) return;
+
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    this.timeout = setTimeout(() => vScroller.ngOnInit(), 100);
+  }
+
+  // Public methods
+  _rowClass = (row: T) => {
+    const rowClass = this.rowClass();
+    if (!rowClass) return 'sto-mdl-table__body__row';
+
+    let userDefinedClass = '';
+    if (typeof rowClass === 'function') {
+      userDefinedClass = rowClass(row);
+    } else if (typeof rowClass === 'string') {
+      userDefinedClass = rowClass;
+    }
+
+    return userDefinedClass
+      ? `${userDefinedClass} sto-mdl-table__body__row`
+      : 'sto-mdl-table__body__row';
+  };
 
   selectRow(
     event: KeyboardEvent | MouseEvent,
@@ -142,10 +188,10 @@ export class StoDatatableBodyComponent<T extends object>
     if (event.type === this.selectionMode()) {
       this.rowSelected.emit(activationData);
       const el = event.target as HTMLElement;
-      const ignoreRe =
-        /.*mat-select.*|.*mat-option.*|.*mat-input.*|.*mat-form.*/i;
       const elTag = el.tagName.toLowerCase();
-      const isIgnoredEl = ignoreRe.test(el.className) || elTag === 'input';
+      const isIgnoredEl =
+        StoDatatableBodyComponent.IGNORE_ELEMENT_REGEX.test(el.className) ||
+        elTag === 'input';
       if (!isIgnoredEl) {
         activationData.rowEl?.focus();
       }
@@ -185,89 +231,74 @@ export class StoDatatableBodyComponent<T extends object>
   }
 
   private horzScrollPosition() {
-    if (!this.scroller()) {
-      return;
-    }
-    const elRef = this.scroller()!.nativeElement;
-    const cb: ResizeObserverCallback = (entries) => {
-      if (!this.hasFooter()) {
-        return;
-      }
-      for (const entry of entries) {
-        const t = entry.target as HTMLElement;
-        const el = t;
-        const currentScale = el.style.transform;
-        const notScaled = this.rows().length * this.rowHeight();
-        this.verticalScrollOffset.set(t.scrollHeight > t.offsetHeight ? 14 : 0);
-        if (t.scrollWidth > t.offsetWidth) {
-          this.horizontalScrollActive = true;
-          const strScale = /\d+/.exec(currentScale || '');
-          if (!strScale) {
-            return;
-          }
-          const numericScale = Number(strScale[0]);
-          if (numericScale === notScaled) {
-            const newScaleValue = notScaled + this.rowHeight();
-            el.style.transform = `scaleY(${newScaleValue}`;
-          }
-        } else {
-          this.horizontalScrollActive = false;
-          const strScale = /\d+/.exec(currentScale || '');
-          if (!strScale) {
-            return;
-          }
-          const numericScale = Number(strScale[0]);
-          if (numericScale !== notScaled) {
-            el.style.transform = `scaleY(${notScaled}`;
-          }
-        }
-      }
-    };
-    this.resizeObserver = new ResizeObserver(cb);
-    this.resizeObserver.observe(elRef);
+    const scrollerEl = this.scroller()?.nativeElement;
+    if (!scrollerEl) return;
+
+    this.setupResizeObserver(scrollerEl, scrollerEl);
   }
 
   private virtHorzScrollPosition() {
     const elRef = this.vScroller()?.elementRef.nativeElement;
     if (!elRef) return;
 
+    const spacerEl = elRef.querySelector(
+      '.cdk-virtual-scroll-spacer',
+    ) as HTMLDivElement;
+    if (!spacerEl) return;
+
+    this.setupResizeObserver(elRef, spacerEl);
+  }
+
+  /**
+   * Sets up ResizeObserver to handle horizontal scrollbar and vertical scroll offset
+   * @param observeEl - Element to observe for size changes
+   * @param scaleEl - Element whose transform will be scaled
+   */
+  private setupResizeObserver(observeEl: HTMLElement, scaleEl: HTMLElement) {
     const cb: ResizeObserverCallback = (entries) => {
-      if (!this.hasFooter()) {
-        return;
-      }
-      for (const entry of entries) {
-        const t = entry.target as HTMLElement;
-        const el = t.querySelector(
-          '.cdk-virtual-scroll-spacer',
-        ) as HTMLDivElement;
-        const currentScale = el.style.transform;
-        const notScaled = this.rows().length * this.rowHeight();
-        this.verticalScrollOffset.set(t.scrollHeight > t.offsetHeight ? 14 : 0);
-        if (t.scrollWidth > t.offsetWidth) {
-          this.horizontalScrollActive = true;
-          const strScale = /\d+/.exec(currentScale || '');
-          if (!strScale) {
-            return;
-          }
-          const numericScale = Number(strScale[0]);
-          if (numericScale === notScaled) {
-            const newScaleValue = notScaled + this.rowHeight();
-            el.style.transform = `scaleY(${newScaleValue}`;
-          }
-        } else {
-          this.horizontalScrollActive = false;
-          const strScale = /\d+/.exec(currentScale || '');
-          if (!strScale) {
-            return;
-          }
-          const numericScale = Number(strScale[0]);
-          if (numericScale !== notScaled) {
-            el.style.transform = `scaleY(${notScaled}`;
-          }
-        }
-      }
+      if (!this.hasFooter() || entries.length === 0) return;
+
+      // Only process the first entry to avoid redundant calculations
+      const target = entries[0].target as HTMLElement;
+      this.updateScrollState(target, scaleEl);
     };
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
     this.resizeObserver = new ResizeObserver(cb);
-    this.resizeObserver.observe(elRef);
+    this.resizeObserver.observe(observeEl);
+  }
+
+  private static readonly SCALE_REGEX = /scaleY\((\d+)/;
+
+  /**
+   * Updates scroll state and adjusts element scaling for horizontal scrollbar
+   */
+  private updateScrollState(target: HTMLElement, scaleEl: HTMLElement) {
+    const hasVerticalScroll = target.scrollHeight > target.offsetHeight;
+    const hasHorizontalScroll = target.scrollWidth > target.offsetWidth;
+    const notScaled = this.notScaledHeight();
+
+    // Update vertical scroll offset for footer positioning
+    this.verticalScrollOffset.set(hasVerticalScroll ? 14 : 0);
+    this.horizontalScrollActive.set(hasHorizontalScroll);
+
+    // Extract current scale value using cached regex
+    const currentScale = scaleEl.style.transform;
+    const scaleMatch = StoDatatableBodyComponent.SCALE_REGEX.exec(
+      currentScale || '',
+    );
+    if (!scaleMatch) return;
+
+    const currentScaleValue = Number(scaleMatch[1]);
+    const targetScale = hasHorizontalScroll
+      ? notScaled + this.rowHeight()
+      : notScaled;
+
+    // Only update if scale needs to change
+    if (currentScaleValue !== targetScale) {
+      scaleEl.style.transform = `scaleY(${targetScale}`;
+    }
   }
 }

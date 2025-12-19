@@ -1,8 +1,6 @@
-<div class="sto-breadcrumb__home"
-  (click)="itemClick($event, home())">
+<div class="sto-breadcrumb__home" (click)="itemClick($event, home())">
   @if (iconConfig.svgIcon) {
-    <mat-icon class="sto-breadcrumb__home__icon"
-      [svgIcon]="iconConfig.svgIcon">
+    <mat-icon class="sto-breadcrumb__home__icon" [svgIcon]="iconConfig.svgIcon">
     </mat-icon>
   }
   @if (!iconConfig.svgIcon) {
@@ -11,39 +9,41 @@
     </mat-icon>
   }
   @if (iconConfig.text) {
-    <span class="sto-breadcrumb__home__title"
-    >{{iconConfig.text}}</span>
+    <span class="sto-breadcrumb__home__title">{{ iconConfig.text }}</span>
   }
 </div>
-<div class="sto-breadcrumb__list"
-  [title]="title"
-  style="position: relative">
-  @for (item of model; track item; let index = $index; let last = $last) {
+<div class="sto-breadcrumb__list" [title]="title()" style="position: relative">
+  @for (item of model(); track item; let index = $index; let last = $last) {
     @if (item.url) {
-      <a class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
+      <a
+        class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
         [href]="item.url"
-        [title]="item.label">
-        {{ item.label}}
-      </a>
-    }
-    @if (!item.url && item.segment) {
-      <a class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
-        [routerLink]="item.segment"
-        [title]="item.label">
-        {{ item.label}}
-      </a>
-    }
-    @if (!item.url && !item.segment) {
-      <a class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
         [title]="item.label"
-        (click)="itemClick($event, item)">
-        {{ item.label}}
+      >
+        {{ item.label }}
       </a>
+    } @else {
+      @if (item.segment) {
+        <a
+          class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
+          [routerLink]="item.segment"
+          [title]="item.label"
+        >
+          {{ item.label }}
+        </a>
+      }
+      @if (!item.segment) {
+        <a
+          class="sto-breadcrumb__list__item sto-breadcrumb__list__item__link"
+          [title]="item.label"
+          (click)="itemClick($event, item)"
+        >
+          {{ item.label }}
+        </a>
+      }
     }
     @if (!last) {
-      <span class="separator"
-        > /
-      </span>
+      <span class="separator"> / </span>
     }
   }
 </div>

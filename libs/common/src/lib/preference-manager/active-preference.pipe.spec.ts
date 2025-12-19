@@ -1,16 +1,16 @@
 import { ActivePreferencePipe } from './active-preference.pipe';
-import { Preference } from './preference';
+import { Preference, createPreference } from './preference';
 
 describe('ActivePreferencePipe', () => {
   let prefs: Preference[];
 
   beforeEach(() => {
-    const first = new Preference('ident');
-    const second = new Preference('ident');
+    const first = createPreference('ident');
+    const second = createPreference('ident');
     first.id = '1';
     second.id = '2';
     second.default = true;
-    prefs = [ first, second ];
+    prefs = [first, second];
   });
 
   it('create an instance', () => {
@@ -21,7 +21,7 @@ describe('ActivePreferencePipe', () => {
   it('should return the selected preference', () => {
     const pipe = new ActivePreferencePipe();
     const activeId = '1';
-    expect(pipe.transform(prefs, activeId)).toBe(prefs[ 0 ]);
+    expect(pipe.transform(prefs, activeId)).toBe(prefs[0]);
   });
 
   it('should return null if no id', () => {

@@ -15,68 +15,34 @@
   box-sizing: border-box;
   align-items: center;
   z-index: 1;
-  .mat-mdc-checkbox {
-    margin-left: calc(
-      0px - (var(--mat-checkbox-state-layer-size, 40px) - 18px) / 2
-    );
+
+  &__checkbox {
+    margin-right: 8px;
+    pointer-events: none;
   }
-  .sto-form__field {
-    height: 48px;
-    .mat-mdc-form-field-flex {
-      padding: 2px 16px;
-      height: 48px;
-      border-radius: 0;
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-      .mat-form-field-prefix {
-        margin-right: 16px;
-      }
+
+  &__select-all {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-form-field-underline {
-      width: 100%;
-      left: 0;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-      .mat-form-field-underline .mat-form-field-ripple {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-    }
-    &.mat-focused {
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-      .mat-form-field-underline .mat-form-field-ripple {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
+
+    mat-checkbox {
+      margin-right: 12px;
+      pointer-events: none;
     }
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .sto-form__field .mat-input-wrapper,
-  .sto-form__field .mat-form-field-wrapper {
-    margin: 0;
+
+  &__select-all-text {
+    flex: 1;
+    line-height: 48px;
   }
 }
-
-.sto-select-filter {
-  &__select-all {
-    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    &.mat-mdc-option {
-      padding: 24px 16px;
-    }
-    &__checkbox {
-      width: 100%;
-      /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
-      .mat-checkbox-inner-container {
-        margin-right: 16px;
-      }
-      /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
-      .mat-checkbox-layout,
-      .mat-checkbox-label {
-        width: 100%;
-      }
-    }
-  }
+.sto-form__field.sto-form__field--without-placeholder .mat-mdc-form-field-flex {
+  height: 38px;
 }

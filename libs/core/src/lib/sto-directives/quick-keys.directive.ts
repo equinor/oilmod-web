@@ -9,7 +9,6 @@ import { Key } from '../abstract-and-interfaces/keyPress.enum';
 
 @Directive({
   selector: '[stoQuickKeys]',
-  standalone: true,
 })
 export class QuickKeysDirective {
   readonly quickKeys = input<unknown>();

@@ -1,0 +1,278 @@
+@use '@angular/material' as mat;
+
+// =============================================================================
+// Datatable Theme Mixin (Colors & Visual Styles)
+// =============================================================================
+@mixin sto-datatable-theme() {
+  // ---------------------------------------------------------------------------
+  // Shared Base Styles
+  // ---------------------------------------------------------------------------
+  .sto-mdl-table,
+  .sto-datatable {
+    background-color: var(--mat-table-background-color, transparent);
+    color: var(--mat-table-row-item-label-text-color, var(--text));
+  }
+
+  // ---------------------------------------------------------------------------
+  // MDL Table
+  // ---------------------------------------------------------------------------
+  .sto-mdl-table {
+    .mat-icon-button {
+      color: var(--text-secondary);
+
+      &:hover {
+        color: var(--text);
+      }
+    }
+
+    &__actions {
+      border-bottom: 1px solid var(--divider);
+    }
+
+    &__header__row,
+    &__body__row {
+      gap: 0 2px;
+    }
+
+    &__header__row {
+      border-bottom: var(--mat-table-row-item-outline-width, 1px) solid
+        var(--mat-table-row-item-outline-color, var(--divider));
+      background-color: var(--bg-light);
+
+      &__cell {
+        color: var(--mat-table-header-headline-color, var(--text));
+
+        &__resize-handle span {
+          background: var(--divider);
+        }
+
+        &--sortable:hover {
+          background-color: var(--bg-hover);
+        }
+      }
+    }
+
+    &__body__row {
+      border-bottom: var(--mat-table-row-item-outline-width, 1px) solid
+        var(--mat-table-row-item-outline-color, var(--divider));
+
+      &--selected {
+        background-color: var(--primary-hover-alt);
+      }
+
+      &:not(&--selected):hover,
+      &:not(&--selected):focus {
+        background-color: var(--bg-hover);
+      }
+    }
+
+    &__footer__row {
+      border-bottom: var(--mat-table-row-item-outline-width, 1px) solid
+        var(--mat-table-row-item-outline-color, var(--divider));
+      border-top: var(--mat-table-row-item-outline-width, 1px) solid
+        var(--mat-table-row-item-outline-color, var(--divider));
+      background: var(--bg-app);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // NGX Datatable
+  // ---------------------------------------------------------------------------
+  .sto-datatable {
+    font-feature-settings: 'tnum', 'lnum';
+
+    // Header & Body shared icon styling
+    .datatable-header,
+    .datatable-body {
+      mat-icon {
+        color: var(--text-secondary);
+      }
+    }
+
+    // Header
+    .datatable-header {
+      background: var(--bg-light);
+      border-bottom: var(--mat-table-row-item-outline-width, 1px) solid
+        var(--mat-table-row-item-outline-color, var(--divider));
+
+      .datatable-header-cell {
+        color: var(--mat-table-header-headline-color, var(--text));
+      }
+
+      .datatable-header-column-group .datatable-header-cell {
+        border-left: var(--mat-table-row-item-outline-width, 1px) solid
+          var(--mat-table-row-item-outline-color, var(--divider));
+      }
+    }
+
+    // Body
+    .datatable-body {
+      .progress-linear .container {
+        background-color: var(--accent-highlight);
+
+        .bar {
+          background-color: var(--primary-resting);
+        }
+      }
+
+      .datatable-body-row {
+        color: var(--mat-table-row-item-label-text-color, var(--text));
+        border-bottom: var(--mat-table-row-item-outline-width, 1px) solid
+          var(--mat-table-row-item-outline-color, var(--divider));
+
+        &.active {
+          background-color: var(--primary-hover-alt);
+        }
+
+        &:not(.active) {
+          &:hover {
+            background-color: var(--bg-hover);
+
+            .datatable-row-left,
+            .datatable-row-right,
+            .datatable-row-center {
+              background-color: var(--bg-hover);
+            }
+          }
+
+          &:not(:hover) {
+            .datatable-row-left,
+            .datatable-row-right,
+            .datatable-row-center {
+              background-color: transparent;
+            }
+          }
+
+          &:focus .datatable-row-group {
+            &.datatable-row-left,
+            &.datatable-row-right,
+            &.datatable-row-center {
+              background-color: var(--primary-hover-alt) !important;
+            }
+          }
+        }
+
+        .mat-mdc-icon-button {
+          --mat-icon-button-state-layer-size: 28px;
+        }
+      }
+    }
+
+    // Footer
+    .datatable-footer {
+      overflow: hidden;
+
+      .datatable-pager {
+        a {
+          color: var(--primary-resting);
+          padding: 0 2px;
+          text-decoration: none;
+
+          &:hover {
+            background: var(--bg-hover);
+          }
+        }
+
+        .pager li.pages {
+          margin: 0 2px;
+
+          &.active {
+            background: var(--primary-hover-alt);
+          }
+
+          &.disabled a {
+            color: var(--divider);
+          }
+        }
+      }
+    }
+  }
+}
+
+// =============================================================================
+// Datatable Typography Mixin (Font Styles)
+// =============================================================================
+@mixin apply-datatable-styles() {
+  // ---------------------------------------------------------------------------
+  // Shared Typography
+  // ---------------------------------------------------------------------------
+  .sto-mdl-table,
+  .sto-datatable {
+    font-feature-settings: 'tnum', 'lnum';
+  }
+
+  // ---------------------------------------------------------------------------
+  // MDL Table Typography
+  // ---------------------------------------------------------------------------
+  .sto-mdl-table {
+    font-family: var(
+      --mat-table-row-item-label-text-font,
+      var(--mat-sys-body-font, 'Equinor, Roboto, sans-serif')
+    );
+    font-size: var(
+      --mat-table-row-item-label-text-size,
+      var(--mat-sys-body-medium-size, 13px)
+    );
+    font-weight: var(
+      --mat-table-row-item-label-text-weight,
+      var(--mat-sys-body-medium-weight, 400)
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // NGX Datatable Typography
+  // ---------------------------------------------------------------------------
+  .sto-datatable {
+    .datatable-header {
+      font-family: var(
+        --mat-table-header-headline-font,
+        var(--mat-sys-body-font, 'Equinor, Roboto, sans-serif')
+      );
+      font-size: var(
+        --mat-table-header-headline-size,
+        var(--mat-sys-body-medium-size, 13px)
+      );
+      font-weight: var(
+        --mat-table-header-headline-weight,
+        var(--mat-sys-body-medium-weight, 400)
+      );
+    }
+
+    .datatable-body {
+      font-family: var(
+        --mat-table-row-item-label-text-font,
+        var(--mat-sys-body-font, 'Equinor, Roboto, sans-serif')
+      );
+      font-size: var(
+        --mat-table-row-item-label-text-size,
+        var(--mat-sys-body-medium-size, 13px)
+      );
+      font-weight: var(
+        --mat-table-row-item-label-text-weight,
+        var(--mat-sys-body-medium-weight, 400)
+      );
+    }
+
+    .datatable-footer {
+      font-family: var(
+        --mat-table-footer-supporting-text-font,
+        var(--mat-sys-body-font, 'Equinor, Roboto, sans-serif')
+      );
+      font-size: var(
+        --mat-table-footer-supporting-text-size,
+        var(--mat-sys-body-medium-size, 13px)
+      );
+      font-weight: var(
+        --mat-table-footer-supporting-text-weight,
+        var(--mat-sys-body-medium-weight, 400)
+      );
+
+      .pager li a[role='button'] {
+        line-height: var(
+          --mat-table-footer-supporting-text-size,
+          var(--mat-sys-body-medium-size, 13px)
+        );
+      }
+    }
+  }
+}

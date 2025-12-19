@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/common",
-  "version": "20.1.7",
+  "version": "21.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,8 +21,8 @@
     "equinor"
   ],
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0"
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0"
   },
   "dependencies": {
     "tslib": "^2.4.0"

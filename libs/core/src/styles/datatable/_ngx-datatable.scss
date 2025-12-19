@@ -1,0 +1,593 @@
+// Datatable Component Styles
+@use './ngx-datatable-compact';
+@use './ngx-datatable-form';
+
+// =============================================================================
+// Icon Size Configuration
+// =============================================================================
+$datatable-icon-size: 24px !default;
+$datatable-icon-size-compact: 16px !default;
+
+// =============================================================================
+// Main Datatable Container
+// =============================================================================
+.sto-datatable {
+  border-radius: 2px;
+  margin-bottom: 4px;
+  display: block;
+
+  // ---------------------------------------------------------------------------
+  // Selection State
+  // ---------------------------------------------------------------------------
+  &.single-selection .sto-mdl-table__body__row {
+    cursor: pointer;
+  }
+}
+
+// =============================================================================
+// MDL Table Structure (Inner [role="table"] Container)
+// =============================================================================
+.sto-mdl-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+  overflow: hidden;
+
+  // Allow progress bar to overflow when loading
+  &:has(.sto-mdl-table__progress-bar) {
+    padding-top: 5px;
+    margin-top: -5px;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Actions Section
+  // ---------------------------------------------------------------------------
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__left {
+      display: flex;
+      flex: 1 1 auto;
+    }
+
+    &__right {
+      display: flex;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Progress Bar
+  // ---------------------------------------------------------------------------
+  &__progress-bar {
+    display: block;
+    position: sticky;
+    width: 100%;
+    height: 5px;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+
+    &__container {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 5px;
+      transform: translate(0, 0) scale(1, 1);
+
+      &__bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 5px;
+        transition: transform 0.2s linear;
+        animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Empty State
+  // ---------------------------------------------------------------------------
+  &__body--empty {
+    margin: 8px;
+    display: flex;
+    place-content: center;
+    font-size: 1.1rem;
+    height: 50px;
+    text-align: left;
+    padding: 8px;
+  }
+
+  &__body--no-vscroll {
+    overflow-y: auto;
+  }
+
+  &__body--scrollbar-h {
+    .cdk-virtual-scroll-content-wrapper {
+      width: fit-content;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Header (sto-datatable-header component)
+  // ---------------------------------------------------------------------------
+  .datatable-header {
+    .datatable-header-inner {
+      height: 100%;
+      .datatable-row-center {
+        place-items: end;
+        font-weight: bold;
+      }
+    }
+
+    .sto-mdl-table__header__row {
+      .sto-mdl-table__header__row__cell {
+        --mat-checkbox-state-layer-size: 25px;
+        padding: 8px;
+        &:first-child {
+          padding-left: 10px;
+        }
+      }
+    }
+
+    .datatable-header-cell {
+      --mat-checkbox-state-layer-size: 25px;
+      padding: 16px 8px 4px 8px;
+      line-height: var(--mat-table-header-headline-line-height, 1.538);
+      font-weight: var(--mat-table-header-headline-weight, 400);
+      vertical-align: baseline;
+      user-select: none;
+      position: relative;
+
+      &:has(.mat-mdc-checkbox) {
+        padding: 4px 8px 0 8px;
+      }
+
+      &.dragging .resize-handle {
+        border-right: none;
+      }
+
+      &.sto-datatable__header--dense {
+        padding-top: 8px;
+      }
+
+      &.sto-datatable__header--empty {
+        color: transparent;
+      }
+
+      .datatable-header-cell-wrapper {
+        position: relative;
+      }
+
+      .mat-mdc-select {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0.9rem;
+      }
+
+      .draggable::after {
+        content: ' ';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        height: 60px;
+        width: 60px;
+        border-radius: 100%;
+        opacity: 1;
+        filter: none;
+        transform: scale(0);
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      .sort-btn {
+        line-height: 0;
+        vertical-align: bottom;
+      }
+
+      .mat-icon.mat-icon-sort {
+        line-height: 13px;
+        height: 13px;
+      }
+    }
+
+    .datatable-header-column-group .datatable-header-cell {
+      &.sto-datatable__header-group {
+        border-bottom: 0;
+
+        &--empty {
+          color: transparent;
+        }
+
+        &--center {
+          text-align: center;
+        }
+
+        &__border--hide-left {
+          border-left: 0;
+        }
+
+        &__border--hide-right {
+          border-right: 0;
+        }
+      }
+    }
+
+    .resize-handle {
+      border-right: solid 1px #eee;
+    }
+
+    .mat-input-infix {
+      padding: 4px 0;
+    }
+
+    .mat-form-field {
+      font-size: 13px;
+      margin-top: -4px;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Body (sto-datatable-body component)
+  // ---------------------------------------------------------------------------
+  .datatable-body {
+    flex: 1;
+    transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    .datatable-body-cell-label {
+      line-height: var(--mat-table-row-item-label-text-line-height, 1.538);
+
+      > * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .datatable-body-row .datatable-body-cell {
+      --mat-checkbox-state-layer-size: 25px;
+      padding: 8px;
+      vertical-align: top;
+      border-top: 0;
+      transition:
+        width 0.3s ease,
+        box-shadow 250ms linear;
+
+      &:first-child {
+        padding-left: 10px;
+      }
+
+      .mat-mdc-form-field {
+        --mat-form-field-container-vertical-padding: 6px;
+        --mat-form-field-container-height: 32px;
+        min-height: 0;
+
+        &:has(.mat-mdc-chip-set) {
+          --mat-form-field-container-vertical-padding: 3px;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Footer (mat-paginator component or custom footer)
+  // ---------------------------------------------------------------------------
+  .datatable-footer {
+    .page-count {
+      line-height: var(--mat-table-footer-container-height, 50px);
+      height: var(--mat-table-footer-container-height, 50px);
+      padding: 0 1.2rem;
+    }
+  }
+
+  &__footer {
+    &--selectable &__row {
+      cursor: pointer;
+    }
+
+    &__row {
+      display: flex;
+      position: relative;
+      align-items: center;
+      outline: none;
+
+      &__cell {
+        flex: 1 0 50px;
+        min-width: 0;
+        overflow: hidden;
+        text-align: left;
+        position: relative;
+        vertical-align: middle;
+        box-sizing: border-box;
+        transition: flex-basis 100ms linear;
+
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Header Row Styles (shared with body)
+  // ---------------------------------------------------------------------------
+  &__header__row__cell:first-child,
+  &__body__row &__body__row__cell:first-child {
+    padding-left: 10px;
+  }
+
+  &__header {
+    &__row {
+      display: flex;
+      align-items: center;
+
+      &__cell {
+        height: 100%;
+        font-weight: 400;
+        flex: 1 0 50px;
+        min-width: 0;
+        overflow: hidden;
+        text-align: left;
+        position: relative;
+        vertical-align: bottom;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+
+        &__content {
+          flex: 1 1 auto;
+        }
+
+        &__resize-handle {
+          flex: 0 0 9px;
+          visibility: hidden;
+          cursor: col-resize;
+          position: relative;
+        }
+
+        &:hover &__resize-handle {
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  &__header-group {
+    &__cell {
+      position: absolute;
+      overflow: hidden;
+    }
+  }
+
+  &__body {
+    &--selectable &__row {
+      cursor: pointer;
+    }
+
+    &__row {
+      display: flex;
+      position: relative;
+      align-items: center;
+      outline: none;
+
+      &__cell {
+        flex: 1 0 50px;
+        min-width: 0;
+        overflow: hidden;
+        text-align: left;
+        position: relative;
+        vertical-align: middle;
+        box-sizing: border-box;
+        transition: flex-basis 100ms linear;
+
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Special Row States (legacy ngx-datatable compatibility)
+  // ---------------------------------------------------------------------------
+  .empty-row {
+    margin: 2rem 8px;
+    display: flex;
+    place-content: center;
+    font-size: 1.1rem;
+    height: 50px;
+    text-align: left;
+    padding: 8px;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  .loading-row {
+    text-align: left;
+    padding: 8px;
+    vertical-align: top;
+    border-top: 0;
+  }
+}
+
+// =============================================================================
+// Column Modifiers
+// =============================================================================
+.sto-datatable__column {
+  &--number {
+    text-align: right;
+  }
+
+  &--expandable {
+    .icon-wrapper {
+      display: inline-block;
+
+      .mat-icon {
+        margin-top: -5px;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// Datatable Wrapper
+// =============================================================================
+.sto-datatable-wrapper {
+  border-radius: 2px;
+
+  .sto-panel-content {
+    border-radius: 2px;
+  }
+}
+
+// =============================================================================
+// Footer Summary Row
+// =============================================================================
+.datatable-footer-summary-row {
+  :hover {
+    background-color: transparent;
+  }
+}
+
+// =============================================================================
+// Sortable Elements
+// =============================================================================
+span.sortable {
+  cursor: pointer;
+}
+
+// =============================================================================
+// Icon System
+// =============================================================================
+[data-icon]::before {
+  font-family: 'Material Icons' !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  font-size: 24px;
+  line-height: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^='datatable-icon-']::before,
+[class*=' datatable-icon-']::before {
+  font-family: 'Material Icons' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Datatable Icons
+.datatable-icon-filter::before {
+  content: 'filter_list';
+}
+.datatable-icon-collapse::before {
+  content: 'expand_less';
+}
+.datatable-icon-expand::before {
+  content: 'expand_more';
+}
+.datatable-icon-close::before {
+  content: 'close';
+}
+.datatable-icon-up::before {
+  content: 'arrow_drop_up';
+}
+.datatable-icon-down::before {
+  content: 'arrow_drop_down';
+}
+.datatable-icon-sort::before {
+  content: 'sort_by_alpha';
+}
+.datatable-icon-done::before {
+  content: 'done';
+}
+.datatable-icon-done-all::before {
+  content: 'done_all';
+}
+.datatable-icon-search::before {
+  content: 'search';
+}
+.datatable-icon-pin::before {
+  content: 'push_pin';
+}
+.datatable-icon-add::before {
+  content: 'add';
+}
+.datatable-icon-left::before {
+  content: 'keyboard_arrow_left';
+}
+.datatable-icon-right::before {
+  content: 'keyboard_arrow_right';
+}
+.datatable-icon-skip::before {
+  content: 'skip_next';
+}
+.datatable-icon-prev::before {
+  content: 'skip_previous';
+}
+
+// Header filter selection
+.cdk-overlay-container .mat-mdc-select-panel {
+  padding: 0;
+}
+
+// =============================================================================
+// Card Integration
+// =============================================================================
+.sto-card.sto-card--table {
+  sto-datatable {
+    margin: 0 -8px;
+
+    .sto-mdl-table__header__row__cell,
+    .sto-mdl-table__body__row__cell,
+    .sto-mdl-table__footer__row__cell {
+      &:first-of-type {
+        margin-left: 8px;
+      }
+
+      &:last-of-type {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// Animations
+// =============================================================================
+@keyframes query {
+  0% {
+    opacity: 1;
+    transform: translateX(35%) scale(0.3, 1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0, 1);
+  }
+}

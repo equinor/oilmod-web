@@ -1,0 +1,53 @@
+// Utility Classes and Mixins
+
+// CSS Grid System
+// Responsive by default - auto-fits as many columns as space allows (min 200px each)
+// Use column count modifiers (--1 through --12) to override with fixed layouts
+.sto-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  &__col {
+    min-height: 24px;
+    overflow: hidden;
+
+    &--spacer {
+      display: none;
+    }
+    &--2 {
+      grid-column: span 2;
+    }
+    &--3 {
+      grid-column: span 3;
+    }
+    &--4 {
+      grid-column: span 4;
+    }
+  }
+
+  // Fixed column layouts - override responsive behavior
+  &--1 {
+    grid-template-columns: 1fr;
+  }
+  &--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  &--6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  &--12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+// Legacy alias - deprecated, use .sto-grid instead
+.sto-f-grid {
+  @extend .sto-grid;
+}

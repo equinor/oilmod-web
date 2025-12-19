@@ -29,7 +29,7 @@ export const StoGrid: StoryObj = {
   render: (args) => ({
     props: { ...args },
     template: `<mat-card class="sto-card">
-<div style="background: white;" stoGrid [maxWidth]="1000" [breakpoints]="breakpoints">
+<div style="background: white;" stoGrid [maxWidth]="1000">
 <div stoGridColumn style="background: lightblue;">1 (col)</div>
 <div stoGridColumn style="background: lightblue;">2 (col)</div>
 <div stoGridColumn style="background: lightblue;">3 (col)</div>

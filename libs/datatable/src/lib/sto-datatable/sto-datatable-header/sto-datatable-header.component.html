@@ -1,20 +1,21 @@
-@if (!responsive() || (responsive() && !smallScreen())) {
+@if (!responsive() || !smallScreen()) {
   <div
-    [style.overflow-y]="'hidden'"
-    [style.overflowX]="'hidden'"
     class="sto-mdl-table__header"
     role="rowgroup"
+    style="overflow: hidden; position: relative"
+    [style.height.px]="headerHeight()"
   >
-    @if (groups() && groups().length > 0) {
+    @if (groups().length) {
       <div
         [class.sto-mdl-table__row--scroll-offset]="
-          !!bodyHeight() && (rows()?.length || 1) * rowHeight() > bodyHeight()
+          bodyHeight() > 0 && (rows().length || 1) * rowHeight() > bodyHeight()
         "
         [style.display]="columnMode() === ColumnDisplay.Flex ? 'flex' : 'block'"
         [style.height.px]="headerHeight()"
+        [style.width.px]="currentRowWidth()"
         [style.min-width]="tempWidth || width()"
-        [style.overflow]="'hidden'"
         [style.transform]="scrollLeft()"
+        style="overflow: hidden; position: absolute"
         class="sto-mdl-table__header__row sto-mdl-table__header__group__row"
         role="row"
       >
@@ -25,7 +26,7 @@
             role="columnheader"
           >
             <span class="sto-mdl-table__header__row__cell__content">{{
-              group.name || ''
+              group.name
             }}</span>
           </div>
         }
@@ -37,21 +38,22 @@
       [matSortDirection]="activeSort()?.direction ?? ''"
       (matSortChange)="sortColumn($event)"
       [class.sto-mdl-table__row--scroll-offset]="
-        !!bodyHeight() && (rows()?.length || 1) * rowHeight() > bodyHeight()
+        bodyHeight() > 0 && (rows().length || 1) * rowHeight() > bodyHeight()
       "
       [matSortDisabled]="!sortable()"
       [style.display]="columnMode() === ColumnDisplay.Flex ? 'flex' : 'block'"
       [style.height.px]="headerHeight()"
+      [style.width.px]="currentRowWidth()"
       [style.min-width]="tempWidth || width()"
-      [style.overflow]="'hidden'"
       [style.transform]="scrollLeft()"
+      style="overflow: hidden; position: absolute"
       class="sto-mdl-table__header__row"
       matSort
       role="row"
     >
       @for (
         column of columns();
-        track trackColumnsFn(i, column);
+        track trackColumnsFn($index, column);
         let i = $index
       ) {
         <div
@@ -76,20 +78,18 @@
             class="sto-mdl-table__header__row__cell__label"
             role="columnheader"
           >
-            @if (!column.headerTemplate) {
-              <span
-                [title]="column.name"
-                class="sto-mdl-table__header__row__cell__content"
-                >{{ column.name || '' }}</span
-              >
-            }
             @if (column.headerTemplate) {
               <ng-template
-                #headerTemplate
-                [ngTemplateOutletContext]="{ column: column }"
+                [ngTemplateOutletContext]="{ column }"
                 [ngTemplateOutlet]="column.headerTemplate"
               >
               </ng-template>
+            } @else {
+              <span
+                [title]="column.name"
+                class="sto-mdl-table__header__row__cell__content"
+                >{{ column.name }}</span
+              >
             }
           </div>
           <span class="spacer"></span>
@@ -104,10 +104,7 @@
               cdkDragLockAxis="x"
               class="col-resizer"
             >
-              <div
-                [style.height.px]="headerHeight()"
-                class="col-resizer__drag"
-              ></div>
+              <div class="col-resizer__drag"></div>
             </div>
           }
         </div>

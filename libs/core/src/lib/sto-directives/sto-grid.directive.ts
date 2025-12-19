@@ -1,99 +1,34 @@
-import { AfterViewInit, ContentChildren, Directive, ElementRef, HostBinding, Input, OnDestroy, QueryList, inject, input } from '@angular/core';
-
-interface BreakpointConfig {
-  2: number;
-  4: number;
-}
-
-const getClass = (width: number, small = 400, large = 800) => {
-  let cols = 1;
-  if ( width > small ) {
-    cols += 1;
-  }
-  if ( width > large ) {
-    cols += 2;
-  }
-  return `sto-f-grid--${cols}`;
-};
-
-const ALL_GRIDS = [ 'sto-f-grid--1', 'sto-f-grid--2', 'sto-f-grid--4', 'sto-f-grid--6' ];
+import { Directive, input } from '@angular/core';
 
 @Directive({
   selector: '[stoGridSpacer]',
-  standalone: true
+  host: {
+    class: 'sto-grid__col sto-grid__col--spacer',
+  },
 })
-export class StoGridSpacerDirective {
-  @HostBinding('class.sto-f-grid__col')
-  @HostBinding('class.sto-f-grid__col--spacer')
-  useClass = true;
-}
+export class StoGridSpacerDirective {}
 
 @Directive({
   selector: '[stoGridColumn]',
-  standalone: true
+  host: {
+    class: 'sto-grid__col',
+    '[class.sto-grid__col--2]': 'stoGridColumnDouble()',
+  },
 })
 export class StoGridColumnDirective {
-  @HostBinding('class.sto-f-grid__col')
-  useClass = true;
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('class.sto-f-grid__col--2')
-  @Input()
-  stoGridColumnDouble: boolean;
-
+  readonly stoGridColumnDouble = input(false);
 }
 
 @Directive({
   selector: '[stoGrid]',
   exportAs: 'stoGrid',
-  standalone: true
+  host: {
+    class: 'sto-grid',
+    '[style.max-width.px]': 'maxWidth()',
+    '[style.min-width.px]': 'minWidth()',
+  },
 })
-export class StoGridDirective implements AfterViewInit, OnDestroy {
-  private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
-
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('style.max-width.px')
-  @Input()
-  maxWidth = 1000;
-  // TODO: Skipped for migration because:
-  //  This input is used in combination with `@HostBinding` and migrating would
-  //  break.
-  @HostBinding('style.min-width.px')
-  @Input()
-  minWidth = 250;
-  @HostBinding('class.sto-f-grid')
-  baseClass = true;
-  @ContentChildren(StoGridColumnDirective, { read: ElementRef })
-  columns: QueryList<ElementRef<HTMLElement>>;
-  readonly breakpoints = input<BreakpointConfig>();
-
-  private observer: ResizeObserver;
-
-  ngAfterViewInit() {
-    const el = this.elRef.nativeElement as HTMLElement;
-    this.observer = new ResizeObserver(entries => {
-      for ( const entry of entries ) {
-        const cr = entry.contentRect;
-        const { width } = cr;
-        const breakpoints = this.breakpoints() || { 2: 400, 4: 800 };
-        const gridType = getClass(width, breakpoints[ 2 ], breakpoints[ 4 ]);
-        if ( !el.classList.contains(gridType) ) {
-          el.classList.remove(...ALL_GRIDS);
-          el.classList.add(gridType);
-        }
-      }
-    });
-    this.observer.observe(this.elRef.nativeElement);
-  }
-
-  ngOnDestroy() {
-    if ( this.observer ) {
-      this.observer.disconnect();
-    }
-  }
-
+export class StoGridDirective {
+  readonly maxWidth = input(1000);
+  readonly minWidth = input(250);
 }
-

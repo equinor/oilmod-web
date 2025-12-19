@@ -1,324 +1,278 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-
 import {
   ChangeDetectionStrategy,
   Component,
-  DoCheck,
+  DestroyRef,
   ElementRef,
-  HostBinding,
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
   ViewEncapsulation,
+  booleanAttribute,
+  computed,
+  effect,
   inject,
+  input,
+  signal,
+  viewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ControlValueAccessor,
-  FormBuilder,
   FormControl,
   FormGroup,
-  FormGroupDirective,
   NgControl,
-  NgForm,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { NumberInputDirective } from '../number-input.directive';
-import { NumberInputPipe } from '../number-input.pipe';
 
-class NumberUnit {
+interface NumberUnit {
   value: number | string | null;
   unit: string | null;
 }
 
-type NumberUnitForm = {
+interface NumberUnitForm {
   value: FormControl<number | string | null>;
   unit: FormControl<string | null>;
-};
+}
 
 @Component({
   selector: 'sto-number-unit-input',
   templateUrl: './number-unit-input.component.html',
-  styleUrls: ['./number-unit-input.component.scss'],
+  styleUrl: './number-unit-input.component.scss',
   providers: [
     { provide: MatFormFieldControl, useExisting: NumberUnitInputComponent },
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NumberInputDirective, ReactiveFormsModule, MatSelectModule],
+  host: {
+    '[id]': 'id',
+    '[attr.aria-describedby]': 'describedBy()',
+    '[class.floating]': '_shouldLabelFloat()',
+  },
 })
 export class NumberUnitInputComponent
   extends FormFieldBase
   implements
-    DoCheck,
     OnInit,
     OnDestroy,
     ControlValueAccessor,
     MatFormFieldControl<NumberUnit>
 {
+  // Injected dependencies
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly fb = inject(NonNullableFormBuilder);
   ngControl: NgControl;
-  private fm = inject(FocusMonitor);
-  private fb = inject(FormBuilder);
 
+  // Signals for inputs
+  readonly unitOptional = input<boolean, unknown>(true, {
+    transform: booleanAttribute,
+  });
+  readonly unitClearText = input<string>('(none)');
+  readonly list = input<{ value: unknown; title?: string }[]>([]);
+  readonly fractionSize = input<number>(3);
+  readonly unitPlaceholder = input<string>('');
+  @Input() placeholder: string = '';
+
+  // State signals
+  private readonly _disabled = signal(false);
+  private readonly _readonly = signal(false);
+  private readonly _required = signal(false);
+  private readonly _rawValue = signal<NumberUnit | null>(null);
+
+  // View children (signal queries)
+  readonly select = viewChild(MatSelect);
+  readonly input = viewChild.required<ElementRef<HTMLInputElement>>('input');
+  readonly numberInputDirective = viewChild.required(NumberInputDirective);
+
+  // Form field interface
   static nextId = 0;
-  stateChanges = new Subject<void>();
-  public form: FormGroup<NumberUnitForm>;
-  readonly autofilled: boolean;
-  controlType = 'number-unit-input';
-  @ViewChild(MatSelect)
-  select?: MatSelect;
-  @ViewChild('input')
-  input: ElementRef<HTMLInputElement>;
-  @ViewChild(NumberInputDirective)
-  numberInputDirective: NumberInputDirective;
-  errorState: boolean;
-  // TODO: Skipped for migration because:
-  //  Class of this input is referenced in the signature of another class.
-  @Input()
-  unitOptional = true;
-  // TODO: Skipped for migration because:
-  //  Class of this input is referenced in the signature of another class.
-  @Input()
-  unitClearText = '(none)';
-  public focused: boolean;
-  @HostBinding()
-  id = `value-unit-input-${NumberUnitInputComponent.nextId++}`;
-  @HostBinding('attr.aria-describedby') describedBy = '';
-  public sub = new Subscription();
-  private numberFormatterPipe = new NumberInputPipe();
+  readonly id = `value-unit-input-${NumberUnitInputComponent.nextId++}`;
+  readonly stateChanges = new Subject<void>();
+  readonly controlType = 'number-unit-input';
+  readonly autofilled = false;
+  readonly describedBy = signal('');
+  errorState = false;
 
-  constructor() {
-    super();
-    const fm = this.fm;
+  // Form group
+  readonly form: FormGroup<NumberUnitForm> = this.fb.group<NumberUnitForm>({
+    value: this.fb.control(null),
+    unit: this.fb.control(null),
+  });
 
-    this.form = this.fb.group<NumberUnitForm>({
-      value: this.fb.control(null),
-      unit: this.fb.control(null),
-    });
-    if (this.ngControl != null) {
-      this.ngControl.valueAccessor = this;
-    }
-    fm.monitor(this.elRef.nativeElement, true).subscribe((origin) => {
-      this.focused = !!origin;
-      this.stateChanges.next();
-    });
+  // Focus state
+  private readonly _focused = signal(false);
+
+  // Computed derived state
+  private readonly _empty = computed(() => {
+    const value = this._rawValue();
+    return !value?.value && !value?.unit;
+  });
+
+  protected readonly _shouldLabelFloat = computed(
+    () => this.focused || !this._empty(),
+  );
+
+  // Interface compatibility getters
+  get focused(): boolean {
+    return this._focused();
   }
 
-  private _disabled = false;
+  get empty(): boolean {
+    return this._empty();
+  }
 
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
+  get shouldLabelFloat(): boolean {
+    return this._shouldLabelFloat();
+  }
+
+  // Getters/setters for compatibility
   get disabled(): boolean {
-    return this._disabled;
+    return this._disabled();
   }
-
-  set disabled(disable: boolean) {
-    this._disabled = coerceBooleanProperty(disable);
+  set disabled(value: boolean) {
+    this._disabled.set(value);
     const opts = { onlySelf: true, emitEvent: false };
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    disable ? this.form.disable(opts) : this.form.enable(opts);
-    // disable ? this.form.get('unit').disable(opts) : this.form.get('unit').enable(opts);
-    // disable ? this.form.get('value').disable(opts) : this.form.get('value').enable(opts);
+    value ? this.form.disable(opts) : this.form.enable(opts);
     this.stateChanges.next();
   }
 
-  private _readonly = false;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
   get readonly(): boolean {
-    return this._readonly;
+    return this._readonly();
   }
-
   set readonly(value: boolean) {
-    this._readonly = coerceBooleanProperty(value);
+    this._readonly.set(value);
     const opts = { onlySelf: true, emitEvent: false };
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     value
       ? this.form.get('unit')?.disable(opts)
       : this.form.get('unit')?.enable(opts);
     this.stateChanges.next();
   }
 
-  private _list: { value: unknown; title?: string }[] = [];
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get list() {
-    return this._list;
+  get required(): boolean {
+    return this._required();
   }
-
-  set list(value) {
-    this._list = value;
+  set required(value: boolean) {
+    this._required.set(value);
     this.stateChanges.next();
   }
-
-  private _fractionSize: number;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get fractionSize() {
-    return this._fractionSize || 3;
-  }
-
-  set fractionSize(fractionSize) {
-    this._fractionSize = fractionSize;
-    this.stateChanges.next();
-  }
-
-  get empty() {
-    const n = this.form.value;
-    return !n.value && !n.unit;
-  }
-
-  private _placeholder: string;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get placeholder() {
-    return this._placeholder || '';
-  }
-
-  set placeholder(plh) {
-    this._placeholder = plh;
-    this.stateChanges.next();
-  }
-
-  private _unitPlaceholder: string;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get unitPlaceholder() {
-    return this._unitPlaceholder || '';
-  }
-
-  set unitPlaceholder(plh) {
-    this._unitPlaceholder = plh;
-    this.stateChanges.next();
-  }
-
-  private _required = false;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get required() {
-    return this._required;
-  }
-
-  set required(req) {
-    this._required = coerceBooleanProperty(req);
-    this.stateChanges.next();
-  }
-
-  @HostBinding('class.floating')
-  get shouldLabelFloat() {
-    return this.focused || !this.empty;
-  }
-
-  private _value: NumberUnit | null;
 
   get value(): NumberUnit | null {
-    return this._value;
+    return this._rawValue();
   }
-
   set value(value: NumberUnit | null) {
-    if (value) {
-      const parsedValue = this.numberFormatterPipe.transform(
-        value.value,
-        this.fractionSize,
-      );
-      this._value = { ...value, value: parsedValue };
-    } else {
-      this._value = value;
-    }
-    this.form.patchValue(this._value || {}, { emitEvent: false });
+    this._rawValue.set(value);
+    this.form.patchValue(value || {}, { emitEvent: false });
+    // Manually trigger formatting on the input directive
+    this.numberInputDirective()?.onBlur();
     this.stateChanges.next();
   }
 
-  ngDoCheck(): void {
-    if (this.ngControl) {
-      this.updateErrorState();
-    }
-  }
+  constructor() {
+    super();
 
-  ngOnInit(): void {
-    const sub = this.form.valueChanges.subscribe((value) => {
-      const valueAsString = value.value as string;
-      let numberValue: number | null = parseFloat(
-        this.numberFormatterPipe.parse(valueAsString, this.fractionSize),
-      );
-      numberValue = !isNaN(numberValue) ? numberValue : null;
+    // Set up CVA
+    if (this.ngControl != null) {
+      this.ngControl.valueAccessor = this;
+    }
+
+    // Form value changes
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
+      const numberValue = this.parseNumberValue(value.value as string);
       this.onChange({ ...value, value: numberValue });
     });
 
-    this.sub.add(
-      this.stateChanges.pipe(debounceTime(50)).subscribe(() => {
-        this.numberInputDirective?.setDisplayValue(this.readonly);
-      }),
-    );
-    this.sub.add(sub);
-    if (this.ngControl && this.ngControl.statusChanges) {
-      this.sub.add(
-        this.ngControl.statusChanges.subscribe(() => this.updateErrorState()),
-      );
+    // Update display value when readonly changes
+    effect(() => {
+      const readonly = this._readonly();
+      const directive = this.numberInputDirective();
+      if (directive) {
+        directive.setDisplayValue(readonly);
+        // After toggling readonly, reformat the value
+        if (!readonly) {
+          directive.onBlur();
+        }
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    // Update error state on status changes
+    if (this.ngControl) {
+      this.updateErrorState();
+    }
+    if (this.ngControl?.statusChanges) {
+      this.ngControl.statusChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => this.updateErrorState());
     }
   }
 
   ngOnDestroy(): void {
     this.stateChanges.complete();
-    this.fm.stopMonitoring(this.elRef.nativeElement);
-    this.sub.unsubscribe();
   }
 
-  onContainerClick(event: MouseEvent) {
-    const rect = this.input.nativeElement.getBoundingClientRect();
+  // Focus/blur handlers
+  onFocus(): void {
+    this._focused.set(true);
+    this.stateChanges.next();
+  }
+
+  onBlur(): void {
+    this._focused.set(false);
+    this.stateChanges.next();
+  }
+
+  onContainerClick(event: MouseEvent): void {
+    const input = this.input();
+    const rect = input.nativeElement.getBoundingClientRect();
     const isInputFocus = rect.right >= event.clientX;
     if (isInputFocus) {
-      this.elRef.nativeElement.querySelector('input')?.focus();
+      input.nativeElement.focus();
     } else {
-      this.select?.focus();
-      this.select?.open();
+      const select = this.select();
+      select?.focus();
+      select?.open();
     }
   }
 
-  setDescribedByIds(ids: string[]) {
-    this.describedBy = ids.join(' ');
+  setDescribedByIds(ids: string[]): void {
+    this.describedBy.set(ids.join(' '));
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  // ControlValueAccessor implementation
   onChange = (_: unknown) => {};
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {};
 
   writeValue(value: NumberUnit | null): void {
     this.value = value;
   }
 
-  registerOnChange(fn: never): void {
+  registerOnChange(fn: (value: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: never): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-}
 
-// {eslint-plugin,eslint-plugin-template,template-parser}@^14.0.0
+  // Helper method for number parsing
+  private parseNumberValue(valueAsString: string | null): number | null {
+    if (!valueAsString) return null;
+    // The directive already handles parsing, we just convert comma-formatted string to number
+    const stringValue = String(valueAsString)
+      .replace(/\s/g, '')
+      .replace(',', '.');
+    const parsed = parseFloat(stringValue);
+    return isNaN(parsed) ? null : parsed;
+  }
+}

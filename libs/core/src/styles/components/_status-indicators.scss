@@ -1,0 +1,167 @@
+// Status Indicators Component Styles
+// Uses CSS variables to let Angular Material apply the styles
+
+// Helper mixin to generate color class styles
+@mixin color-class(
+  $class-name,
+  $color-resting,
+  $color-contrast,
+  $color-text,
+  $color-highlight: $color-resting,
+  $color-highlight-contrast: $color-contrast
+) {
+  .#{$class-name} {
+    // Message Panel
+    --message-panel-bg: var(#{$color-highlight});
+    --message-panel-color: var(#{$color-contrast});
+    --message-panel-border: var(#{$color-resting});
+    --message-panel-icon: var(#{$color-resting});
+
+    // Ripple color mix (50/50 blend of resting and contrast colors)
+    --ripple-color-mix: rgba(
+      from
+        color-mix(
+          in srgb,
+          var(#{$color-resting}) 50%,
+          var(#{$color-contrast}) 50%
+        )
+        r g b / 0.12
+    );
+
+    --mat-sys-primary: var(#{$color-resting});
+    --mat-sys-primary-container: var(#{$color-resting});
+    --mat-sys-on-primary: var(#{$color-contrast});
+    --mat-sys-on-primary-container: var(#{$color-contrast});
+
+    // Checkbox
+    --mat-pseudo-checkbox-full-selected-icon-color: var(#{$color-resting});
+    --mat-pseudo-checkbox-full-selected-checkmark-color: var(
+      #{$color-contrast}
+    );
+
+    // Toggle button
+    --mat-slide-toggle-selected-handle-color: var(--mat-sys-on-primary);
+    --mat-slide-toggle-selected-hover-handle-color: var(--mat-sys-on-primary);
+    --mat-slide-toggle-selected-focus-handle-color: var(--mat-sys-on-primary);
+    --mat-slide-toggle-selected-pressed-handle-color: var(--mat-sys-on-primary);
+    --mat-slide-toggle-selected-track-color: var(#{$color-resting});
+    --mat-slide-toggle-selected-hover-track-color: var(#{$color-resting});
+    --mat-slide-toggle-selected-focus-track-color: var(#{$color-resting});
+    --mat-slide-toggle-selected-pressed-track-color: var(#{$color-resting});
+
+    // Button CSS variables - resting state
+    --mat-button-filled-container-color: var(#{$color-resting});
+    --mat-button-filled-label-text-color: var(#{$color-contrast});
+    --mat-button-outlined-outline-color: var(#{$color-resting});
+    --mat-button-outlined-label-text-color: var(#{$color-resting});
+    --mat-button-text-label-text-color: var(#{$color-resting});
+    --mat-button-protected-container-color: var(#{$color-resting});
+    --mat-button-protected-label-text-color: var(#{$color-contrast});
+    --mat-icon-button-icon-color: var(#{$color-resting});
+    --mat-fab-small-container-color: var(#{$color-resting});
+    --mat-fab-small-foreground-color: var(#{$color-contrast});
+    --mat-fab-container-color: var(#{$color-resting});
+    --mat-fab-foreground-color: var(#{$color-contrast});
+
+    // Button CSS variables - hover/interaction states
+    --mat-button-filled-hover-container-color: var(#{$color-resting});
+    --mat-button-filled-hover-label-text-color: var(#{$color-contrast});
+    --mat-button-filled-state-layer-color: var(#{$color-resting});
+    --mat-button-filled-ripple-color: var(--ripple-color-mix);
+    --mat-button-outlined-hover-label-text-color: var(#{$color-resting});
+    --mat-button-outlined-state-layer-color: var(#{$color-resting});
+    --mat-button-outlined-ripple-color: var(--ripple-color-mix);
+    --mat-button-text-hover-label-text-color: var(#{$color-resting});
+    --mat-button-text-state-layer-color: var(#{$color-resting});
+    --mat-button-text-ripple-color: var(--ripple-color-mix);
+    --mat-button-protected-hover-container-color: var(#{$color-resting});
+    --mat-button-protected-hover-label-text-color: var(#{$color-contrast});
+    --mat-button-protected-state-layer-color: var(#{$color-resting});
+    --mat-button-protected-ripple-color: var(--ripple-color-mix);
+    --mat-icon-button-hover-icon-color: var(#{$color-resting});
+    --mat-icon-button-state-layer-color: var(#{$color-resting});
+    --mat-icon-button-ripple-color: var(--ripple-color-mix);
+
+    // Card title/subtitle text color
+    --mat-card-title-text-color: var(#{$color-resting});
+    --mat-card-subtitle-text-color: var(#{$color-resting});
+    .mat-mdc-card-title,
+    .mat-mdc-card-subtitle {
+      color: var(#{$color-resting});
+    }
+  }
+
+  // Text color for elements
+  .mat-hint.#{$class-name},
+  .mat-icon.#{$class-name},
+  span.#{$class-name},
+  p.#{$class-name},
+  h1.#{$class-name},
+  h2.#{$class-name},
+  h3.#{$class-name},
+  h4.#{$class-name},
+  h5.#{$class-name},
+  h6.#{$class-name} {
+    color: var(#{$color-text});
+  }
+
+  // Div background
+  div.#{$class-name} {
+    background-color: var(#{$color-highlight});
+    color: var(#{$color-highlight-contrast});
+  }
+}
+
+@mixin status-indicators() {
+  // Material standard colors
+  @include color-class(
+    'mat-primary',
+    --primary-resting,
+    --primary-contrast-resting,
+    --primary-text
+  );
+
+  @include color-class(
+    'mat-accent',
+    --accent-resting,
+    --accent-resting-contrast,
+    --accent-text
+  );
+
+  @include color-class(
+    'mat-warn',
+    --danger-resting,
+    --danger-resting-contrast,
+    --danger-text,
+    --danger-highlight,
+    --danger-highlight-contrast
+  );
+
+  // Custom status colors
+  @include color-class(
+    'mat-warning',
+    --warning-resting,
+    --warning-resting-contrast,
+    --warning-text,
+    --warning-highlight,
+    --warning-highlight-contrast
+  );
+
+  @include color-class(
+    'mat-success',
+    --success-resting,
+    --success-resting-contrast,
+    --success-text,
+    --success-highlight,
+    --success-highlight-contrast
+  );
+
+  @include color-class(
+    'mat-danger',
+    --danger-resting,
+    --danger-resting-contrast,
+    --danger-text,
+    --danger-highlight,
+    --danger-highlight-contrast
+  );
+}

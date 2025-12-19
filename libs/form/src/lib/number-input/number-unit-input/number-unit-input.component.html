@@ -1,34 +1,37 @@
-<div [formGroup]="form"
-  class="number-unit-input-container">
-  <input numberInput
+<div [formGroup]="form" class="number-unit-input-container">
+  <input
+    numberInput
     #input
     class="number-unit-input-element number-unit-input-value"
-    (blur)="onTouched()"
-    [fractionSize]="fractionSize"
-    [unit]="select?.triggerValue"
+    (focus)="onFocus()"
+    (blur)="onBlur(); onTouched()"
+    [fractionSize]="fractionSize()"
+    [unit]="select()?.triggerValue"
     [placeholder]="placeholder"
     [appendUnit]="readonly"
     [readonly]="readonly"
-    [tabindex]="(readonly || disabled) ? -1 : 0"
+    [tabindex]="readonly || disabled ? -1 : 0"
     type="text"
-    formControlName="value"/>
-    <mat-select formControlName="unit"
-      [class.cdk-visually-hidden]="readonly"
-      (blur)="onTouched()"
-      [placeholder]="unitPlaceholder"
-      class="number-unit-input-element number-unit-input-unit">
-      @if (form.get('unit')?.value && unitOptional) {
-        <mat-option
-          class="sto-option--clear"
-          [value]="null">{{ unitClearText }}
-        </mat-option>
-      }
-      @for (el of list; track el) {
-        <mat-option
-          [value]="el.value">
-          {{ el.title || el.value }}
-        </mat-option>
-      }
-    </mat-select>
-  </div>
-  <span class="number-unit-input-spacer"></span>
+    formControlName="value"
+  />
+  <mat-select
+    formControlName="unit"
+    [class.cdk-visually-hidden]="readonly"
+    (focus)="onFocus()"
+    (blur)="onBlur(); onTouched()"
+    [placeholder]="unitPlaceholder()"
+    class="number-unit-input-element number-unit-input-unit"
+  >
+    @if (form.get('unit')?.value && unitOptional()) {
+      <mat-option class="sto-option--clear" [value]="null"
+        >{{ unitClearText() }}
+      </mat-option>
+    }
+    @for (el of list(); track el) {
+      <mat-option [value]="el.value">
+        {{ el.title || el.value }}
+      </mat-option>
+    }
+  </mat-select>
+</div>
+<span class="number-unit-input-spacer"></span>

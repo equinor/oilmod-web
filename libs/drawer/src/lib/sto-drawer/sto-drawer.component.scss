@@ -1,24 +1,127 @@
 @use '@angular/material' as mat;
+@use 'sto-drawer-tabs.component';
 
 $header-height: 74px;
-$large-header-height: 24 * 4px;
-$footer-height: 16 * 4px;
-$header-size: 20px;
+$large-header-height: 96px;
+$footer-height: 64px;
 
 .sto-drawer {
-  height: 100vh;
+  @include mat.elevation(3);
+  position: fixed;
+  top: 0;
+  z-index: 30;
   display: flex;
   flex-direction: column;
+  width: 20%;
+  min-width: 260px;
+  height: 100vh;
+  padding-top: 0;
   background: var(--bg-card);
+  transition: right 400ms ease-in-out;
 
-  .sto-drawer__header__wrapper {
-    flex: 1 1 $header-height;
-    box-shadow: none;
+  &.right {
+    right: 0;
+    left: auto;
+    min-width: 450px;
   }
 
-  .sto-drawer__content {
+  &.left {
+    left: 0;
+    right: auto;
+  }
+
+  // ----------------------------------------
+  // Header
+  // ----------------------------------------
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+
+    &__title {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    &__suffix {
+      width: 100%;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    &__infix {
+      min-width: 56px;
+    }
+
+    &__wrapper {
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      height: $header-height;
+      padding: 0;
+      box-sizing: border-box;
+      white-space: nowrap;
+      background-color: var(--bg-card);
+      color: var(--text);
+      flex: 0 0 $header-height;
+    }
+
+    .sto-main-icon {
+      width: 40px;
+      height: 40px;
+      margin: 6px 0 0 16px;
+    }
+
+    button.mat-icon-button {
+      margin: 0 8px;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+
+  // ----------------------------------------
+  // Content
+  // ----------------------------------------
+  &__content {
     flex: 1 1 auto;
+    padding: 8px;
+    padding-top: 0;
     padding-bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--bg-card);
+    color: var(--text);
+
+    &.navigation {
+      height: 100%;
+    }
+  }
+
+  // ----------------------------------------
+  // Footer
+  // ----------------------------------------
+  &__footer {
+    flex: 0 0 $footer-height;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(#{$footer-height} - 16px);
+    padding: 8px;
+    border-top: 1px solid var(--divider);
+    background-color: var(--bg-card);
+    color: var(--text);
+
+    &__more {
+      float: right;
+    }
+
+    button {
+      text-transform: uppercase;
+    }
   }
 
   .drawer-footer {
@@ -28,118 +131,6 @@ $header-size: 20px;
     justify-content: flex-end;
     align-items: center;
     padding: 16px 8px;
-  }
-
-  &__content {
-    padding-top: 0;
-  }
-
-  padding-top: 0;
-
-  &__footer {
-    flex: 1 1 $footer-height;
-  }
-
-  transition: right 400ms ease-in-out;
-  @include mat.elevation(3);
-  position: fixed;
-  top: 0;
-  width: 20%;
-  min-width: 260px;
-
-  &.right {
-    min-width: 450px;
-  }
-
-  z-index: 30;
-
-  &.right {
-    left: auto;
-    right: 0;
-  }
-
-  &.left {
-    left: 0;
-    right: auto;
-  }
-
-  &__content {
-    padding: 2 * 4px;
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    &.navigation {
-      height: 100%;
-    }
-  }
-
-  &__footer {
-    @include mat.elevation(1);
-    bottom: 0;
-    left: 0;
-    padding: 2 * 4px;
-    width: 100%;
-
-    height: calc(#{$footer-height} - 4 * 4px);
-
-    button {
-      text-transform: uppercase;
-    }
-
-    &__more {
-      float: right;
-    }
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding-top: 16px;
-
-    .sto-main-icon {
-      height: 40px;
-      width: 40px;
-      margin: 6px 0 0 16px;
-    }
-
-    &__title {
-      margin: 0;
-      padding-left: 16px;
-    }
-
-    &__suffix {
-      width: 100%;
-      text-align: right;
-      min-width: 56px;
-      //color: $white-87;
-    }
-
-    &__infix {
-      min-width: 56px;
-
-      //color: $white;
-    }
-
-    button.mat-icon-button {
-      margin: 0 8px;
-      border: 0;
-      outline: none;
-      cursor: pointer;
-    }
-
-    &__wrapper {
-      @include mat.elevation(4);
-      z-index: 1;
-      padding: 0;
-      display: flex;
-      box-sizing: border-box;
-      width: 100%;
-      height: $header-height;
-      flex-direction: row;
-      align-items: center;
-      white-space: nowrap;
-    }
   }
 }
 
@@ -160,62 +151,9 @@ $header-size: 20px;
 .sto-drawer__overlay {
   position: fixed;
   top: 0;
-  height: 100vh;
-  width: 100vw;
   z-index: 40;
+  width: 100vw;
+  height: 100vh;
   opacity: 0.08;
-}
-
-@import 'sto-drawer-tabs.component';
-
-// Theme
-
-.sto-drawer__overlay {
   background: var(--bg-overlay);
-}
-
-.sto-drawer {
-  background-color: var(--bg-card);
-
-  &__footer {
-    border-top: 1px solid var(--divider);
-    background-color: var(--bg-card);
-    color: var(--text);
-  }
-
-  &__content {
-    background-color: var(--bg-card);
-    color: var(--text);
-  }
-
-  &__header {
-    &__wrapper {
-      background-color: var(--bg-card);
-      color: var(--text);
-    }
-  }
-
-  // @deprecated TODO remove in angular 14
-  .sto-slide-panel {
-    color: var(--text);
-    background-color: var(--bg-card);
-
-    .mat-list.sto-navigation {
-      .mat-list-item {
-        color: var(--text);
-
-        .mat-icon {
-          color: var(--text);
-        }
-
-        .sto-navigation__item__text {
-          color: var(--text);
-
-          a {
-            color: var(--primary-resting);
-          }
-        }
-      }
-    }
-  }
 }

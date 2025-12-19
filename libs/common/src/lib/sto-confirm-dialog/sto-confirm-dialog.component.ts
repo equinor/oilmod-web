@@ -1,10 +1,15 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
-
-import { CdkScrollable } from '@angular/cdk/scrolling';
+import { Component, Inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
-type Data = {
+interface ConfirmDialogData {
   title: string;
   message: string;
   showCancel?: boolean;
@@ -15,37 +20,40 @@ type Data = {
  * A confirm dialog that emits an observable.
  */
 @Component({
-    selector: 'sto-confirm',
-    template: `
+  selector: 'sto-confirm',
+  template: `
     @if (data.title) {
-      <h3
-      mat-dialog-title>{{ data.title }}</h3>
+      <h3 mat-dialog-title>{{ data.title }}</h3>
     }
     <div mat-dialog-content>
       <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions>
-      <button #ok
-        color="primary"
-        mat-flat-button
-      [mat-dialog-close]="true">{{ data.confirmText }}</button>
+      <button color="primary" matButton [mat-dialog-close]="true">
+        {{ data.confirmText }}
+      </button>
       @if (data.showCancel) {
-        <button #cancel
+        <button
           title="Cancel (esc)"
-          mat-button
-          [mat-dialog-close]="false">Cancel
+          matButton="filled"
+          [mat-dialog-close]="false"
+        >
+          Cancel
         </button>
       }
     </div>
-    `,
-    styleUrls: ['sto-confirm-dialog.component.scss'],
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatDialogClose]
+  `,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+  ],
 })
 export class ConfirmComponent {
-  data = inject<Data>(MAT_DIALOG_DATA);
-  dialogRef = inject<MatDialogRef<ConfirmComponent>>(MatDialogRef);
-
-  @ViewChild('ok')
-  ok: ElementRef<HTMLButtonElement>;
-
+  constructor(
+    @Inject(MAT_DIALOG_DATA) readonly data: ConfirmDialogData,
+    readonly dialogRef: MatDialogRef<ConfirmComponent>,
+  ) {}
 }

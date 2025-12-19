@@ -1,20 +1,35 @@
-import { Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
-import { HttpError } from '../http-error';
 import { CdkScrollable } from '@angular/cdk/scrolling';
+import { Component, Inject } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { HttpError } from '../http-error';
 
 import { MatButton } from '@angular/material/button';
 
 @Component({
-    selector: 'sto-dialog',
-    templateUrl: './dialog.component.html',
-    styleUrls: ['./dialog.component.scss'],
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatDialogClose]
+  selector: 'sto-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrl: './dialog.component.scss',
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+  ],
 })
 export class DialogComponent {
-  data = inject<HttpError>(MAT_DIALOG_DATA);
-  private ref = inject<MatDialogRef<DialogComponent>>(MatDialogRef);
-
+  constructor(
+    @Inject(MAT_DIALOG_DATA) readonly data: HttpError,
+    private ref: MatDialogRef<DialogComponent>,
+  ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleEvent(action: ((...args: any[]) => unknown) | unknown | undefined) {

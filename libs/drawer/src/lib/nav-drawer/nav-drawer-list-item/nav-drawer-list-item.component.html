@@ -1,29 +1,13 @@
-<ng-template #linkContent >
-  <span>
-    {{ navigationItem.label }}
-  </span>
-  @if (navigationItem.target && navigationItem.target === '_blank') {
+<a
+  [href]="navigationItem().link || null"
+  [routerLink]="navigationItem().route || null"
+  [attr.target]="navigationItem().target || null"
+  [class.disabled]="navigationItem().disabled"
+  routerLinkActive="active"
+  (click)="activate.emit(navigationItem())"
+>
+  <span>{{ navigationItem().label }}</span>
+  @if (navigationItem().target === '_blank') {
     <mat-icon>open_in_new</mat-icon>
   }
-</ng-template>
-
-@if (navigationItem.link) {
-  <a
-    [href]="navigationItem.link"
-    (click)="activate.emit(navigationItem)"
-    [class.disabled]="navigationItem.disabled"
-    [attr.target]="navigationItem.target || null"
-    [routerLinkActive]="'active'">
-    <ng-container *ngTemplateOutlet="linkContent"></ng-container>
-  </a>
-}
-@if (navigationItem.route) {
-  <a
-    [routerLink]="navigationItem.route"
-    [attr.target]="navigationItem.target || null"
-    (click)="activate.emit(navigationItem)"
-    [class.disabled]="navigationItem.disabled"
-    [routerLinkActive]="'active'">
-    <ng-container *ngTemplateOutlet="linkContent"></ng-container>
-  </a>
-}
+</a>

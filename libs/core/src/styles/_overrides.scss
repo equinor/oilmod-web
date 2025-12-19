@@ -1,0 +1,284 @@
+// Component Overrides and Layout Adjustments
+// This file contains component-specific fixes and layout adjustments
+// NOT theme colors (those are in _material-theme.scss via system variables)
+
+label {
+  max-width: 100%;
+}
+
+span.spacer {
+  flex-grow: 1;
+}
+
+body {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// Remove arrows from number inputs
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.7rem;
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+h3 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+h4 {
+  font-size: 1rem;
+}
+h5 {
+  font-size: 0.9rem;
+}
+h6 {
+  font-size: 0.8rem;
+}
+
+html body.mat-app-background {
+  background-color: var(--bg-app);
+  color: var(--text);
+  scrollbar-color: var(--primary-resting) var(--bg-card);
+
+  // Component-specific size/layout overrides
+  --mat-button-text-container-height: 46px;
+}
+
+// Progress bar colors (not fully covered by system variables)
+.mat-mdc-progress-bar {
+  --mat-progress-bar-active-indicator-color: var(--primary-resting);
+  --mat-progress-bar-track-color: var(--primary-hover-alt);
+}
+
+// Select panel styling
+.mat-mdc-select-panel {
+  padding: 0;
+}
+.mat-mdc-form-field-infix {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.mat-app-background .mat-mdc-option {
+  min-height: 36px;
+}
+
+// Disabled switch handle color
+.mdc-switch.mdc-switch--disabled {
+  --mat-slide-toggle-handle-surface-color: var(--bg-disabled);
+}
+
+// Button sizing adjustments
+.mat-mdc-button-base {
+  height: var(--mat-button-text-container-height);
+
+  &.mat-mdc-icon-button {
+    --mat-icon-button-padding: max(
+      0px,
+      calc(
+        calc(
+            var(--mat-icon-button-state-layer-size, 48px) - var(
+                --mat-icon-button-icon-size,
+                24px
+              )
+          ) /
+          2
+      )
+    );
+    padding: var(--mat-icon-button-padding);
+    line-height: calc(
+      var(--mat-icon-button-state-layer-size, 48px) - var(
+          --mat-icon-button-padding
+        )
+    );
+    .mat-icon {
+      height: calc(
+        var(--mat-icon-button-state-layer-size, 48px) -
+          (var(--mat-icon-button-padding) * 2)
+      );
+      width: calc(
+        var(--mat-icon-button-state-layer-size, 48px) -
+          (var(--mat-icon-button-padding) * 2)
+      );
+    }
+    .mat-mdc-focus-indicator,
+    .mat-mdc-button-touch-target {
+      width: var(--mat-icon-button-state-layer-size, 48px);
+      height: var(--mat-icon-button-state-layer-size, 48px);
+      margin: 2px;
+    }
+  }
+}
+
+// .mdc-switch--selected {
+//   .mdc-switch__handle::before,
+//   .mdc-switch__handle::after {
+//     border: 1px solid var(--primary-resting);
+//   }
+// }
+
+// Form field adjustments
+.mat-mdc-form-field {
+  vertical-align: top;
+  .mdc-text-field {
+    overflow: visible;
+    padding: 0;
+  }
+  // Hide required marker if field has no label
+  label:has(> mat-label:empty) > .mat-mdc-form-field-required-marker {
+    display: none;
+  }
+}
+.ngx-datatable .mat-mdc-checkbox .mdc-checkbox {
+  box-sizing: content-box; // To override erroneous styling from ngx-datatable
+}
+
+.mat-mdc-chip.mat-mdc-standard-chip {
+  --mat-chip-container-height: 23px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/**
+Below styles overrides Angular Material defaults
+ */
+
+.cdk-overlay-container {
+  z-index: 9999 !important; // !important, as it needs to override Angular Material styles
+}
+// CSS to avoid text-wrapping. In this case, "Toggle Filter Panel" tooltip
+.mat-tooltip.nowrap {
+  white-space: nowrap;
+}
+.mat-tooltip {
+  line-height: 13px;
+}
+
+.mat-menu-panel.large {
+  /**
+  ** Per https://material.io/guidelines/components/menus.html: width should be a multiple of 56
+  ** Without this width, the menu will be to slim, and crop the inner content
+  ** Default 280px
+   */
+  max-width: 336px;
+}
+
+.mat-mdc-menu-item[disabled] .mat-icon {
+  color: currentColor;
+}
+
+.sto-portal__footer,
+.sto-drawer__footer,
+.sto-toolbar-panel__actions,
+.sto-card__button-row {
+  button:first-of-type {
+    margin-left: 0;
+  }
+  button:last-of-type {
+    margin-right: 0;
+  }
+}
+
+button,
+a {
+  &.mat-button,
+  &.mat-raised-button {
+    min-width: 88px;
+    margin: 0 1 * 4px;
+    padding: 0 2 * 4px;
+  }
+  &.dense {
+    min-width: 72px;
+    line-height: 32px;
+    &.breadcrumbs__button {
+      margin-top: spacer(-1);
+      margin-right: 2 * 4px;
+    }
+  }
+}
+
+.mat-menu-content {
+  .mat-divider {
+    margin-top: 8px;
+    margin-bottom: 7px;
+  }
+}
+
+.mat-mdc-menu-item {
+  &.dense {
+    min-height: 36px; // !important;
+    height: 36px; // !important;
+    line-height: 36px; // !important;
+  }
+  .mat-icon {
+    height: 24px;
+    width: 24px;
+    font-size: 24px;
+  }
+  .mat-icon[svgIcon] {
+    height: 100%; // hack to align svg icons
+  }
+}
+
+sto-nav-drawer-item .mat-mdc-button > .mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+//GLI-902 Fixes in selectlist
+$selectPanelHeight: 36px;
+.mat-select-panel,
+.mat-autocomplete-panel {
+  border-radius: 4px;
+  .mat-option,
+  .mat-optgroup-label {
+    line-height: $selectPanelHeight;
+    height: $selectPanelHeight;
+  }
+  .mat-select-content {
+    .mat-option-pseudo-checkbox {
+      margin-right: 16px;
+    }
+
+    .mat-option,
+    .mat-optgroup-label {
+      line-height: $selectPanelHeight;
+      height: $selectPanelHeight;
+    }
+  }
+}
+
+.mat-button.selected {
+  .mat-button-focus-overlay {
+    opacity: 1;
+  }
+}
+
+mat-form-field {
+  max-width: 100%;
+}
+
+.mat-select-panel {
+  .mat-option:hover,
+  .mat-option:focus {
+    &:not(.mat-active) {
+      background: inherit;
+    }
+  }
+}

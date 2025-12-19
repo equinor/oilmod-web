@@ -10,16 +10,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { PopoverComponent } from './popover.component';
 
 @Component({
-    selector: 'sto-popover-footer',
-    imports: [MatDividerModule, MatButtonModule, MatIconModule],
-    template: `
+  selector: 'sto-popover-footer',
+  imports: [MatDividerModule, MatButtonModule, MatIconModule],
+  template: `
     <mat-divider></mat-divider>
     <div class="sto-popover-footer">
       <ng-content></ng-content>
     </div>
   `,
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopoverFooterComponent {
   public overlay = inject(PopoverComponent);

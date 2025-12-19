@@ -1,0 +1,12 @@
+// Dialog Component Styles
+@mixin dialog-theme() {
+  .sto-dialog .mat-dialog-container {
+    .mat-dialog-content {
+      border-top: solid 1px var(--divider);
+
+      &.scroll-lines {
+        border-bottom: solid 1px var(--divider);
+      }
+    }
+  }
+}

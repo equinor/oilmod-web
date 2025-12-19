@@ -1,4 +1,3 @@
-
 import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -15,7 +14,7 @@ let page: Page;
 
 @Component({
   selector: 'sto-spec-wrap',
-  template: ` <button (click)="confirm()" mat-button>Confirm</button>`,
+  template: ` <button (click)="confirm()" matButton="filled">Confirm</button>`,
   imports: [MatButtonModule, MatDialogModule, ConfirmModule],
 })
 class WrapperComponent {
@@ -38,14 +37,21 @@ describe('ConfirmComponent', () => {
   it('should open a confirmation dialog', (done: DoneCallback) => {
     expect(comp).toBeTruthy();
     const ev = new Event('click');
+    const subscription = comp.confirmSvc
+      .confirm('Confirm message')
+      .subscribe(() => {
+        // Dialog closed
+      });
     page.confirmBtn.dispatchEvent(ev);
     fixture.detectChanges();
-    expect(comp.confirmSvc.ref).toBeDefined();
-    // cleanup
-    comp.confirmSvc.ref?.close();
+    // Dialog is opened, verify by checking MatDialog openDialogs
+    expect(comp.confirmSvc['dialog'].openDialogs.length).toBeGreaterThan(0);
+    // cleanup - close all dialogs
+    comp.confirmSvc['dialog'].closeAll();
     fixture.detectChanges();
     setTimeout(() => {
-      expect(comp.confirmSvc.ref).toBeNull();
+      expect(comp.confirmSvc['dialog'].openDialogs.length).toBe(0);
+      subscription.unsubscribe();
       done();
     }, 300);
   });
@@ -58,7 +64,8 @@ describe('ConfirmComponent', () => {
       done();
     });
     fixture.detectChanges();
-    const confirmCmp = comp.confirmSvc.ref?.componentInstance;
+    const openDialog = comp.confirmSvc['dialog'].openDialogs[0];
+    const confirmCmp = openDialog?.componentInstance;
     confirmCmp?.dialogRef.close(true);
   });
 });

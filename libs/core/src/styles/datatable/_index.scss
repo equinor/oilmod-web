@@ -1,0 +1,10 @@
+// Datatable Styles Entry Point
+@forward '../components/datatable';
+@forward './ngx-datatable';
+@forward './ngx-datatable-compact';
+@forward './ngx-datatable-form';
+
+@use '../components/datatable';
+@use './ngx-datatable';
+@use './ngx-datatable-compact';
+@use './ngx-datatable-form';

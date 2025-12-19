@@ -15,7 +15,7 @@ const COLORS = ['primary', 'accent', 'warning', 'danger', 'success'];
 @Component({
   selector: 'sto-message-panel',
   templateUrl: './sto-message-panel.component.html',
-  styleUrls: ['./sto-message-panel.component.scss'],
+  styleUrl: './sto-message-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [MatIconModule, MatButtonModule],

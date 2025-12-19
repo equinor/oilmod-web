@@ -38,8 +38,7 @@ import { NgIf } from '@angular/common';
         {{control.value}}
       </mat-card>
     </sto-demo>\`,
-  standalone: true,
-  imports: [
+    imports: [
     DemoComponent,
     MatCardModule,
     FormFieldDirective,

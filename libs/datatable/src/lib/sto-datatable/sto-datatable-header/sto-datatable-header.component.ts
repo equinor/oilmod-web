@@ -4,12 +4,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   output,
   viewChild,
   viewChildren,
 } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
+import { StoRowWidthHelper } from '../../sto-row-width.helper';
 import { ColumnStylePipe } from '../column-style.pipe';
 import { Column, ColumnDisplay, Group } from '../columns';
 import { HeaderContextMenu } from '../events';
@@ -19,7 +21,7 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
 @Component({
   selector: 'sto-datatable-header',
   templateUrl: './sto-datatable-header.component.html',
-  styleUrls: ['./sto-datatable-header.component.scss'],
+  styleUrl: './sto-datatable-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'datatable-header',
@@ -37,117 +39,107 @@ import { GetGroupFlexPipe } from '../get-group-flex.pipe';
   ],
 })
 export class StoDatatableHeaderComponent<T extends object> {
+  private readonly rowWidthHelper = inject(StoRowWidthHelper);
+
+  // Display configuration
   readonly responsive = input<boolean>();
   readonly smallScreen = input<boolean>();
-  headerHeight = input<number>(0);
+  readonly headerHeight = input<number>(0);
   readonly resizeable = input<boolean>();
   readonly width = input<string>();
   readonly offset = input<number>(0);
   readonly scrollLeft = input<string>('');
-
-  // Can be used to generate sticky columns at a later stage.
-  offsetLeft = computed(() => this.scrollLeft().replace('-', ''));
-
   readonly bodyHeight = input<number>(0);
-  readonly rows = input<T[]>([]);
   readonly rowHeight = input<number>(0);
-  columns = input<Column[]>([]);
-  sortable = input<boolean>(false);
+
+  // Data configuration
+  readonly rows = input<T[]>([]);
+  readonly columns = input<Column[]>([]);
+  readonly groups = input<Group[]>([]);
+
+  // Feature flags
+  readonly sortable = input<boolean>(false);
   readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
-  groups = input<Array<Group>>([]);
-
-  ColumnDisplay = ColumnDisplay;
-  public tempWidth: string | null;
-
-  public headerWidthMap: Record<number, number> = {};
-
-  readonly resized = output<{
-    columns: Column[];
-    column: Column;
-  }>();
-
-  public sortDirection: 'asc' | 'desc' | null;
-
-  readonly headerContextMenu = output<HeaderContextMenu>();
-  readonly sort = output<Sort>();
   readonly activeSort = input<Sort | null>(null);
 
-  private matSort = viewChild(MatSort);
-  private sortHeaders = viewChildren(MatSortHeader);
+  // Outputs
+  readonly resized = output<{ columns: Column[]; column: Column }>();
+  readonly headerContextMenu = output<HeaderContextMenu>();
+  readonly sort = output<Sort>();
 
-  public trackColumnsFn(index: number, item: Column) {
-    return item.$$id;
-  }
+  // View queries
+  private readonly matSort = viewChild(MatSort);
+  private readonly sortHeaders = viewChildren(MatSortHeader);
 
-  onResize(event: CdkDragMove<Column>) {
-    const el = event.source.element.nativeElement;
-    const cell = el.parentElement as HTMLDivElement;
-    const distance = event.distance.x;
-    const def = event.source.data;
-    let flexBasis = (def.flexBasis ?? 80) + distance;
-    flexBasis = flexBasis < 80 ? 80 : flexBasis;
+  // Public properties for template
+  readonly ColumnDisplay = ColumnDisplay;
+  readonly offsetLeft = computed(() => {
+    const scroll = this.scrollLeft();
+    return scroll.startsWith('-') ? scroll.substring(1) : scroll;
+  });
+
+  currentRowWidth = this.rowWidthHelper.currentRowWidth;
+
+  // Temporary width for resize operations
+  tempWidth: string | null = null;
+
+  readonly trackColumnsFn = (
+    _index: number,
+    column: Column,
+  ): string | undefined => column.$$id;
+
+  onResize(event: CdkDragMove<Column>): void {
+    const cell = event.source.element.nativeElement
+      .parentElement as HTMLDivElement;
+    const column = event.source.data;
+
+    const flexBasis = (column.flexBasis ?? 80) + event.distance.x;
+
     cell.style.flexBasis = `${flexBasis}px`;
+    cell.style.minWidth = `${flexBasis}px`;
   }
 
-  onResizeComplete(event: CdkDragEnd<Column>) {
-    const distance = event.distance.x;
+  onResizeComplete(event: CdkDragEnd<Column>): void {
+    const MIN_COLUMN_WIDTH = 80;
     const col = event.source.data;
     const cell = event.source.element.nativeElement
       .parentElement as HTMLDivElement;
-    let flexBasis = (col.flexBasis ?? 80) + distance;
-    if (col.flexGrow || col.flexBasis) {
-      flexBasis = cell.clientWidth;
-    }
-    flexBasis = flexBasis < 80 ? 80 : flexBasis;
-    const columns = this.columns().map((c) => {
-      if (c.prop === col.prop) {
-        return {
-          ...c,
-          flexBasis,
-          flexGrow: 0,
-          flexShrink: 0,
-        };
-      }
-      return c;
-    });
-    const column = { ...col, flexBasis, flexGrow: 0, flexShrink: 0 };
-    this.resized.emit({ columns, column });
+
+    const flexBasis = Math.max(
+      col.flexGrow || col.flexBasis
+        ? cell.clientWidth
+        : (col.flexBasis ?? MIN_COLUMN_WIDTH) + event.distance.x,
+      MIN_COLUMN_WIDTH,
+    );
+
+    const updatedColumn = { ...col, flexBasis, flexGrow: 0, flexShrink: 0 };
+    const columns = this.columns().map((c) =>
+      c.prop === col.prop ? updatedColumn : c,
+    );
+
+    this.resized.emit({ columns, column: updatedColumn });
   }
 
-  public _onResize(column: Column, flexBasis: number): void {
-    const width = 0;
-    const colIndex = this.columns().indexOf(column);
-    this.headerWidthMap[colIndex] = flexBasis;
-    this.tempWidth = this.offset() + width + 'px';
-  }
+  onResizeEnd(col: Column, flexBasis: number): void {
+    const updatedColumn = { ...col, flexBasis };
+    const columns = this.columns().map((c) => (c === col ? updatedColumn : c));
 
-  onResizeEnd(col: Column, flexBasis: number) {
-    // this.onResize(column, flexBasis);
-    const columns = this.columns().map((c) => {
-      if (c === col) {
-        return {
-          ...c,
-          flexBasis,
-        };
-      }
-      return c;
-    });
     this.tempWidth = null;
-    const column = { ...col, flexBasis };
-    this.resized.emit({ columns, column });
+    this.resized.emit({ columns, column: updatedColumn });
   }
 
-  sortColumn(sortEvent: Sort) {
+  sortColumn(sortEvent: Sort): void {
     this.sort.emit(sortEvent);
   }
 
-  onHeaderCellClick(id: string) {
-    if (!this.sortable()) {
-      return;
-    }
-    const header = this.sortHeaders()?.find((h: MatSortHeader) => h.id === id);
-    if (header && this.matSort()) {
-      this.matSort()?.sort(header);
+  onHeaderCellClick(id: string): void {
+    if (!this.sortable()) return;
+
+    const header = this.sortHeaders()?.find((h) => h.id === id);
+    const sort = this.matSort();
+
+    if (header && sort) {
+      sort.sort(header);
     }
   }
 }

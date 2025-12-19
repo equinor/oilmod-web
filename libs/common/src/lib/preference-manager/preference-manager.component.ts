@@ -2,13 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
-  Input,
   QueryList,
-  ViewChild,
   ViewEncapsulation,
   input,
   output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import {
   MatMenu,
@@ -17,7 +16,7 @@ import {
   MatMenuTrigger,
 } from '@angular/material/menu';
 import { take } from 'rxjs/operators';
-import { Preference } from './preference';
+import { Preference, createPreference } from './preference';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,9 +28,12 @@ import { ActivePreferencePipe } from './active-preference.pipe';
 @Component({
   selector: 'sto-preference-manager',
   templateUrl: './preference-manager.component.html',
-  styleUrls: ['./preference-manager.component.scss'],
+  styleUrl: './preference-manager.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(click)': 'openMenu()',
+  },
   imports: [
     MatMenuModule,
     MatIconModule,
@@ -43,13 +45,10 @@ import { ActivePreferencePipe } from './active-preference.pipe';
   ],
 })
 export class PreferenceManagerComponent {
-  @ViewChild('nameTmpl')
-  nameTmpl: ElementRef<HTMLInputElement>;
   /**
    * List of the available preferences
    */
-  @Input()
-  preferences: Preference[] = [];
+  readonly preferences = input<Preference[]>([]);
   /**
    * The preference identifier (typically application area).
    * If missing, will be set to null
@@ -58,13 +57,11 @@ export class PreferenceManagerComponent {
   /**
    * ID of the selected preference
    */
-  @Input()
-  activePreferenceId: string;
+  readonly activePreferenceId = input<string>();
   /**
    * Whether to show a progress spinner besides the title
    */
-  @Input()
-  loadingIndicator: boolean;
+  readonly loadingIndicator = input<boolean>();
   /**
    * If the current preference has been modified
    */
@@ -72,8 +69,7 @@ export class PreferenceManagerComponent {
   /**
    * Text to display when no preference is selected
    */
-  @Input()
-  placeholder: string | null = 'No filter selected';
+  readonly placeholder = input<string | null>('No filter selected');
   /**
    * selectPreference emits whenever a preference is selected
    */
@@ -103,57 +99,58 @@ export class PreferenceManagerComponent {
   /**
    * @internal
    */
-  public editIndex: number | null;
-  public newPreference: Preference | null;
-  @ViewChild(MatMenuTrigger)
-  private trigger: MatMenuTrigger;
-  private changedPreference: Preference | null;
+  readonly editIndex = signal<number | null>(null);
+  readonly newPreference = signal<Preference | null>(null);
+  private readonly changedPreference = signal<Preference | null>(null);
+  readonly trigger = viewChild(MatMenuTrigger);
+  readonly nameTmpl = viewChild<ElementRef<HTMLInputElement>>('nameTmpl');
 
-  @HostListener('click')
   openMenu() {
-    this.trigger.openMenu();
+    this.trigger()?.openMenu();
   }
 
   /**
    * @internal
    */
   renamePreference(preference: Preference) {
-    this.newPreference = null;
-    this.editIndex = this.preferences.indexOf(preference);
-    this.changedPreference = { ...preference };
-    requestAnimationFrame(() => this.nameTmpl.nativeElement.focus());
+    this.newPreference.set(null);
+    this.editIndex.set(this.preferences().indexOf(preference));
+    this.changedPreference.set({ ...preference });
+    requestAnimationFrame(() => this.nameTmpl()?.nativeElement.focus());
   }
 
   /**
    * @internal
    */
   cancelRename() {
-    this.changedPreference = null;
-    this.editIndex = null;
+    this.changedPreference.set(null);
+    this.editIndex.set(null);
   }
 
   /**
    * @internal
    */
   saveRename() {
-    if (!this.changedPreference) {
+    const changed = this.changedPreference();
+    if (!changed) {
       return;
     }
-    const el = this.nameTmpl.nativeElement;
-    this.changedPreference.name = el.value;
-    this.editPreference.emit(this.changedPreference);
-    this.editIndex = null;
-    this.changedPreference = null;
+    const el = this.nameTmpl()?.nativeElement;
+    if (!el) {
+      return;
+    }
+    changed.name = el.value;
+    this.editPreference.emit(changed);
+    this.editIndex.set(null);
+    this.changedPreference.set(null);
   }
 
   /**
    * @internal
    */
   toggleDefault(preference: Preference) {
-    this.changedPreference = { ...preference };
-    this.changedPreference.default = true;
-    this.setDefaultPreference.emit(this.changedPreference);
-    this.changedPreference = null;
+    const changed = { ...preference, default: true };
+    this.setDefaultPreference.emit(changed);
   }
 
   /**
@@ -173,27 +170,31 @@ export class PreferenceManagerComponent {
 
   addPreference() {
     this.cancelRename();
-    this.newPreference = new Preference(this.identifierKey() || '');
+    this.newPreference.set(createPreference(this.identifierKey() || ''));
   }
 
   /**
    * @internal
    */
   saveNewPreference() {
-    if (!this.newPreference) {
+    const newPref = this.newPreference();
+    if (!newPref) {
       return;
     }
-    const el = this.nameTmpl.nativeElement;
-    this.newPreference.name = el.value;
-    this.addNewPreference.emit(this.newPreference);
-    this.newPreference = null;
+    const el = this.nameTmpl()?.nativeElement;
+    if (!el) {
+      return;
+    }
+    newPref.name = el.value;
+    this.addNewPreference.emit(newPref);
+    this.newPreference.set(null);
   }
 
   /**
    * @internal
    */
   cancelNewPreference() {
-    this.newPreference = null;
+    this.newPreference.set(null);
   }
 
   overwrite(pref: Preference) {

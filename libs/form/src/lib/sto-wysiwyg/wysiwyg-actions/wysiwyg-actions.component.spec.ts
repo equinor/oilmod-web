@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { WysiwygActionsComponent } from './wysiwyg-actions.component';
-import { MaterialModule } from '@ngx-stoui/testing';
-import { By } from '@angular/platform-browser';
-import { MatButtonToggle } from '@angular/material/button-toggle';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { MatButtonToggle } from '@angular/material/button-toggle';
+import { By } from '@angular/platform-browser';
+import { MaterialModule } from '@ngx-stoui/testing';
+import { WysiwygActionsComponent } from './wysiwyg-actions.component';
 
 describe('WysiwygActionsComponent', () => {
   let component: WysiwygActionsComponent;
@@ -13,18 +13,20 @@ describe('WysiwygActionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ MaterialModule, WysiwygActionsComponent ],
+      imports: [MaterialModule, WysiwygActionsComponent],
+    })
+      .overrideComponent(WysiwygActionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
       })
-      .overrideComponent(WysiwygActionsComponent, { set: { changeDetection: ChangeDetectionStrategy.Default } })
       .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WysiwygActionsComponent);
     component = fixture.componentInstance;
-    component.disabled = false;
+    fixture.componentRef.setInput('disabled', false);
     const de = fixture.debugElement.queryAll(By.directive(MatButtonToggle));
-    toggleButtons = de.map(d => d.componentInstance);
+    toggleButtons = de.map((d) => d.componentInstance);
     fixture.detectChanges();
   });
 
@@ -34,7 +36,9 @@ describe('WysiwygActionsComponent', () => {
 
   it('should emit a single string to apply formatting', () => {
     const spy = jest.spyOn(component.modifier, 'emit');
-    const buttonDe = fixture.debugElement.query(By.css('.sto-wysiwyg__editor__button'));
+    const buttonDe = fixture.debugElement.query(
+      By.css('.sto-wysiwyg__editor__button'),
+    );
     buttonDe.triggerEventHandler('click', { type: 'click' });
     fixture.detectChanges();
     expect(spy).toHaveBeenCalledWith('createLink');

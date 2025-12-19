@@ -9,7 +9,8 @@
     "build-lib": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/core/ng-package.json"
+        "project": "libs/core/ng-package.json",
+        "tsConfig": "libs/core/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
@@ -23,9 +24,13 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": ["build-lib"],
       "options": {
-        "commands": ["nx build-lib core", "nx post-build core"],
-        "parallel": false
+        "commands": [
+          "ts-node --project tools/tsconfig.tools.json tools/scripts/build-scss.ts",
+          "ts-node --project tools/tsconfig.tools.json tools/scripts/copy-assets.ts"
+        ],
+        "parallel": true
       }
     },
     "test": {
@@ -38,16 +43,6 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
-    },
-    "post-build": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "ts-node --project tools/tsconfig.tools.json tools/scripts/build-scss.ts",
-          "ts-node --project tools/tsconfig.tools.json tools/scripts/copy-assets.ts"
-        ],
-        "parallel": true
-      }
     },
     "publish": {
       "executor": "nx:run-commands",

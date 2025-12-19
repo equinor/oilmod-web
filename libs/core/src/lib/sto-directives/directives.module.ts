@@ -19,6 +19,7 @@ import { StoSelectTextOnFocusDirective } from './sto-select-text-on-focus.direct
  *     StoGridSpacerDirective
  *     MenuOverlayDirective
  *     ContextMenuDirective
+ *
  */
 import { NgModule } from '@angular/core';
 

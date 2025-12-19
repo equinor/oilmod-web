@@ -1,0 +1,59 @@
+@use '@angular/material' as mat;
+
+@mixin sto-filterpanel-theme() {
+  .sto-filter.mat-expansion-panel {
+    .mat-expansion-panel-header {
+      background-color: var(--bg-card);
+
+      &[aria-disabled='true'] {
+        color: var(--text);
+      }
+
+      .mat-icon-button,
+      .mat-button {
+        color: var(--text-secondary);
+
+        &:hover {
+          color: var(--text);
+        }
+      }
+
+      .mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
+        background-color: transparent;
+      }
+
+      .mat-button-toggle-standalone.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+        background-color: var(--primary-hover-alt);
+      }
+
+      &:not(.mat-expanded) {
+        border-bottom: solid 1px var(--divider);
+      }
+
+      &.mat-expanded:hover {
+        // Y THO? Looks shit.
+        //background-color: var(--bg-hover);
+        background-color: var(--bg-card);
+      }
+
+      &.mat-expanded:focus {
+        // Y THO? Looks shit.
+        //background-color: var(--primary-hover-alt);
+        background-color: var(--bg-card);
+      }
+    }
+
+    .separator {
+      background-color: var(--divider);
+    }
+  }
+}
+
+@mixin apply-filterpanel-styles() {
+  .filter-panel {
+    .filter-panel__expand-label {
+      font-size: var(--mat-sys-title-large-size, 20px);
+      line-height: var(--mat-sys-title-large-line-height, 28px);
+    }
+  }
+}

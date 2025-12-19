@@ -77,8 +77,8 @@ export const Usage: StoryType = {
   <div>This is content</div>
   <div>This is also content</div>
   <sto-popover-footer>
-    <button mat-flat-button color="primary" (click)="trigger.close(); onSave()">Save</button>
-    <button mat-button (click)="trigger.close(); onClose()">Close</button>
+    <button matButton color="primary" (click)="trigger.close(); onSave()">Save</button>
+    <button matButton="filled" (click)="trigger.close(); onClose()">Close</button>
   </sto-popover-footer>
 </sto-popover>
 `,
@@ -96,8 +96,8 @@ export const WithoutTitle: StoryType = {
   <div>This is content</div>
   <div>This is also content</div>
   <sto-popover-footer>
-    <button mat-flat-button color="primary" (click)="trigger.close()">Save</button>
-    <button mat-button (click)="trigger.close()">Close</button>
+    <button matButton color="primary" (click)="trigger.close()">Save</button>
+    <button matButton="filled" (click)="trigger.close()">Close</button>
   </sto-popover-footer>
 </sto-popover>
 `,

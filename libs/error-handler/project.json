@@ -9,7 +9,8 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/error-handler/ng-package.json"
+        "project": "libs/error-handler/ng-package.json",
+        "tsConfig": "libs/error-handler/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

@@ -1,4 +1,13 @@
 .sto-wysiwyg {
+  min-height: 100px;
+  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 2px;
+  padding: 4px 0 8px;
+  display: flex;
+  flex-direction: column;
+
   /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     line-height: 36px;
@@ -41,17 +50,6 @@
       }
     }
   }
-
-
-  min-height: 100px;
-  max-height: 100%;
-  overflow: hidden;
-  height: 100%;
-  border-radius: 2px;
-  padding: 4px 0 8px;
-  display: flex;
-  flex-direction: column;
-
   &__buttons {
     flex: 1 1 auto;
     display: flex;
@@ -67,8 +65,10 @@
   }
 
   &__editor {
-
-    transition: border-color 300ms ease, background-color 200ms ease, height 200ms ease;
+    transition:
+      border-color 300ms ease,
+      background-color 200ms ease,
+      height 200ms ease;
     border-radius: 2px;
     outline: none;
     margin-top: 4px;

@@ -1,0 +1,13 @@
+
+@mixin sto-number-input-theme() {
+  .mat-form-field.sto-form__field {
+    .sto-number-input {
+      color: var(--text);
+
+      &::placeholder {
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+

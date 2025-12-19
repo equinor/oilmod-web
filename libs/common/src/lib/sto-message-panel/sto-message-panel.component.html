@@ -5,10 +5,8 @@
   <ng-content></ng-content>
 </div>
 @if (dismissable()) {
-  <div
-    class="sto-message-panel__dismiss-wrapper mat__icon--clickable">
-    <button mat-icon-button
-      (click)="dismissed.emit()">
+  <div class="sto-message-panel__dismiss-wrapper mat__icon--clickable">
+    <button matIconButton (click)="dismissed.emit()">
       <mat-icon>close</mat-icon>
     </button>
   </div>

@@ -1,149 +1,177 @@
-$transition: width ease 250ms;
-$size: 64px;
-$height: 48px;
+// Variables for consistency
+$drawer-expanded-width: 316px;
+$drawer-collapsed-width: 4.3em;
+$button-height: var(--mat-button-text-container-height);
+$divider-border: 2px solid var(--divider);
+$list-item-height: 48px;
+
 .mat-mdc-menu-item.no-hover {
   font-weight: bold;
 }
 
 .sto-nav-drawer {
   position: fixed;
-  z-index: 50;
-  padding-top: 8px;
+  top: 5em;
   left: 0;
-  top: 0;
+  z-index: 50;
+  height: calc(100vh - 5em);
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  transition: width 250ms ease;
+  background-color: var(--bg-default);
+  border-right: 1px solid var(--divider);
+  --mat-button-text-label-text-color: var(--text);
+  --sto-active-menu-item-bg-color: var(--primary-fill-activated);
 
-  transition: $transition;
-
-  div.sto-nav-drawer-items {
+  .sto-nav-drawer-items {
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
-    overflow-x: hidden;
   }
 
   .expansion-button {
-    height: $height;
+    height: $button-height;
     padding-left: 8px;
-  }
-
-  .disabled {
-    cursor: not-allowed;
   }
 
   .logo {
     width: 100%;
-    padding-bottom: 8px;
-    padding-left: 20px;
+    padding: 0 0 8px 20px;
   }
 
-  div.sto-nav-drawer-items {
-    width: 100%;
+  // Shared icon styles for buttons and links
+  .mat-mdc-button .mat-icon,
+  button:not(.mat-mdc-button-disabled) .mat-icon,
+  a.mat-mdc-button .mat-icon {
+    color: inherit;
+    display: flex;
+    place-self: center;
+    margin: 0;
   }
 
-  &--collapsed {
-    width: $size;
-
-    .expansion-button {
-      padding-left: 4px;
+  // Anchor states
+  a,
+  .mdc-button {
+    color: var(--mat-button-text-label-text-color);
+    justify-content: flex-start;
+    &.active {
+      background-color: var(--sto-active-menu-item-bg-color);
+      position: relative;
     }
 
-    > div.sto-nav-drawer-items {
-      .sto-nav-drawer--collapsed__item {
-        height: $height - 1px;
-        border-bottom-style: solid;
-        border-bottom-width: 2px;
-        /*        display: flex;
-                justify-content: center;
-                align-items: center;*/
+    &.disabled {
+      pointer-events: none;
+      cursor: not-allowed;
+      --mat-button-text-label-text-color: var(--text-disabled);
+    }
+  }
 
-        .mat-button {
-          min-width: 64px;
-          width: 64px;
-          margin: 0;
-          height: $height - 1px;
-        }
+  // Collapsed state
+  &--collapsed {
+    width: $drawer-collapsed-width;
 
-        a.mat-button {
-          /*          display: flex;
-                    justify-content: center;
-                    align-items: center;*/
-        }
+    &__item {
+      height: $button-height;
+      border-bottom: 2px solid var(--divider);
+
+      .mat-mdc-button {
+        width: 100%;
+        min-width: auto;
+        height: 100%;
+        margin: 0;
+        padding-inline: 8px;
       }
     }
   }
 
+  // Expanded state
   &--expanded {
-    width: 316px;
-
-    .expansion-button {
-    }
+    width: $drawer-expanded-width;
 
     &__item {
       cursor: pointer;
-      width: 316px;
-      padding: 12px 24px;
+      width: 100%;
+      padding: 12px 16px;
       display: grid;
       grid-template-columns: 24px 1fr 24px;
-      grid-column-gap: 20px;
+      gap: 0 20px;
+      text-decoration: none;
+
+      &:hover {
+        background-color: var(--sto-active-menu-item-bg-color);
+      }
+
+      &.active {
+        font-weight: bold;
+      }
 
       &.divider-below {
-        border-bottom: 2px solid var(--divider);
+        border-bottom: $divider-border;
       }
 
       &.divider-above {
-        border-top: 2px solid var(--divider);
+        border-top: $divider-border;
+      }
+
+      &:not(.disabled) .mat-icon {
+        color: var(--text-secondary);
       }
     }
   }
 
+  // Nav drawer item component
   sto-nav-drawer-item {
     display: block;
-    line-height: 24px;
-    .mat-mdc-button {
-      --mat-button-text-container-height: 46px;
-    }
+    font-size: var(--mat-sys-title-medium-size, 1.231em);
+    line-height: var(--mat-sys-title-medium-line-height, 1.5);
   }
 
+  // Nav drawer list component
   sto-nav-drawer-list {
     display: flex;
     flex-direction: column;
     margin-left: 56px;
     overflow: hidden;
+  }
 
-    a {
-      text-decoration: none;
+  // Nav drawer list item component
+  sto-nav-drawer-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: $list-item-height;
+    border-left: 2px solid;
+    border-color: var(--bg-primary);
+    cursor: pointer;
+
+    &:not(.disabled):hover {
+      background-color: var(--sto-active-menu-item-bg-color);
     }
 
-    sto-nav-drawer-list-item {
+    a {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 48px;
-      border-left: 2px solid;
-      cursor: pointer;
+      align-items: center;
+      justify-content: space-between;
+      height: $list-item-height;
+      line-height: $list-item-height;
+      padding-right: 24px;
+      text-decoration: none;
 
-      a.active {
+      &.active {
         margin-left: -2px;
         font-weight: 700;
+        background-color: var(--sto-active-menu-item-bg-color);
+        border-left: 2px solid;
 
         span {
-          border-left-width: 2px;
-          border-left-style: solid;
+          color: var(--text-secondary);
         }
       }
 
-      a {
-        line-height: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-right: 24px;
-      }
-
-      a span {
+      span {
         line-height: 16px;
         padding-left: 14px;
       }
@@ -153,9 +181,7 @@ $height: 48px;
 
 .sto-drawer__overlay {
   position: fixed;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
+  inset: 0;
   z-index: 40;
   opacity: 0.08;
 }
@@ -163,16 +189,19 @@ $height: 48px;
 .sto-nav-drawer-menu + div {
   left: 48px !important;
 
-  a.mat-mdc-menu-item:not(.disabled):hover {
-    text-shadow: 0px 0px 1px black;
-  }
+  .mat-mdc-menu-item {
+    font-size: var(--mat-sys-title-medium-size, 1.231em);
 
-  a.mat-mdc-menu-item.disabled {
-    pointer-events: none;
+    &:not(.disabled):hover {
+      text-shadow: 0 0 1px black;
+    }
+
+    &.disabled {
+      pointer-events: none;
+    }
   }
 
   .mat-menu-content .mat-divider {
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
   }
 }

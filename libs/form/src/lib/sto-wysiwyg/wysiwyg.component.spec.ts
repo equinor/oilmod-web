@@ -6,18 +6,14 @@ import {
   DebugElement,
 } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { By, SafeHtml } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
 import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
 import { WysiwygComponent } from './wysiwyg.component';
 
-interface TestSafeHtml extends SafeHtml {
-  changingThisBreaksApplicationSecurity: string;
-  getTypeName: () => string;
-}
-
 @Component({
   selector: 'sto-wrap',
+  standalone: true,
   template: ` <sto-wysiwyg [formControl]="ctrl">
     <button id="submit">SaveButton</button>
   </sto-wysiwyg>`,
@@ -40,14 +36,15 @@ class WrapperComponent {
   }
 }
 
-document.execCommand = jest.fn();
-document.queryCommandState = jest.fn();
-
 describe('WysiwygComponent unit tests', () => {
   let component: WysiwygComponent;
   let fixture: ComponentFixture<WysiwygComponent>;
 
   beforeEach(waitForAsync(() => {
+    // Mock document methods
+    document.execCommand = jest.fn();
+    document.queryCommandState = jest.fn();
+
     TestBed.configureTestingModule({
       imports: [
         WysiwygComponent,
@@ -96,21 +93,19 @@ describe('WysiwygComponent unit tests', () => {
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
-  it('should set value to SafeHtml when writeValue is called', () => {
+  it('should set value signal when writeValue is called', () => {
     const html = `<h1>A Header</h1>`;
     component.writeValue(html);
-    const val = component.value as TestSafeHtml;
-    const el = document.createElement('div');
-    el.innerHTML = html;
-    expect(val.changingThisBreaksApplicationSecurity).toEqual(el.innerHTML);
+    expect(component['value']()).toEqual(html);
+    expect(component['sanitizedValue']()).toEqual(html);
   });
 
   it('should set the component as readonly when setDisabledState is called', () => {
-    expect(component.disabled).toBeFalsy();
+    expect(component['isDisabled']()).toBeFalsy();
     component.setDisabledState(true);
-    expect(component.disabled).toBeTruthy();
+    expect(component['isDisabled']()).toBeTruthy();
     component.setDisabledState(false);
-    expect(component.disabled).toBeFalsy();
+    expect(component['isDisabled']()).toBeFalsy();
   });
 });
 
@@ -146,10 +141,8 @@ describe('WysiwygComponent integration tests', () => {
   it('should update value from wrapper to wysiwyg', () => {
     wrapper.ctrl.setValue(`<h1>A title!</h1>`);
     fixture.detectChanges();
-    const val = page.wysiwyg.value as TestSafeHtml;
-    expect(val.changingThisBreaksApplicationSecurity).toEqual(
-      `<h1>A title!</h1>`,
-    );
+    expect(page.wysiwyg['value']()).toEqual(`<h1>A title!</h1>`);
+    expect(page.wysiwyg['sanitizedValue']()).toEqual(`<h1>A title!</h1>`);
   });
 
   it('should update value from wysiwyg to wrapper', () => {
@@ -161,14 +154,14 @@ describe('WysiwygComponent integration tests', () => {
 
   it('should toggle contenteditable attribute in editor when ctrl is disabled / enabled', () => {
     expect(page.editable.getAttribute('contenteditable')).toEqual('true');
-    expect(page.editor.readonly).toBeFalsy();
-    expect(page.wysiwyg.disabled).toBeFalsy();
+    expect(page.editor.readonly()).toBeFalsy();
+    expect(page.wysiwyg['isDisabled']()).toBeFalsy();
     const spy = jest.spyOn(page.wysiwyg, 'setDisabledState');
     wrapper.disable();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
-    expect(page.wysiwyg.disabled).toBeTruthy();
-    expect(page.editor.readonly).toBeTruthy();
+    expect(page.wysiwyg['isDisabled']()).toBeTruthy();
+    expect(page.editor.readonly()).toBeTruthy();
     expect(page.editable.getAttribute('contenteditable')).toEqual('false');
     wrapper.enable();
     fixture.detectChanges();

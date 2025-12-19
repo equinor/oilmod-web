@@ -5,31 +5,42 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   ViewEncapsulation,
+  computed,
+  effect,
+  inject,
   input,
-  output
+  output,
+  signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
-import { EXPANSION_PANEL_ANIMATION_TIMING } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { filter } from 'rxjs';
 import { NavDrawerListComponent } from '../nav-drawer-list/nav-drawer-list.component';
 import { Navigation } from '../navigation';
 
+/** Animation timing for expansion panel (removed in Angular Material 21) */
+const EXPANSION_PANEL_ANIMATION_TIMING = '225ms cubic-bezier(0.4,0.0,0.2,1)';
+
 @Component({
-    selector: 'sto-nav-drawer-item',
-    templateUrl: './nav-drawer-item.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
+  selector: 'sto-nav-drawer-item',
+  templateUrl: './nav-drawer-item.component.html',
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
     MatButtonModule,
     RouterLinkActive,
     MatIconModule,
@@ -37,50 +48,82 @@ import { Navigation } from '../navigation';
     MatMenuModule,
     MatDividerModule,
     NavDrawerListComponent,
-    MatRippleModule
-],
-    animations: [
-        /** Animation that rotates the indicator arrow. */
-        trigger('indicatorRotate', [
-            state('collapsed, void', style({ transform: 'rotate(0deg)' })),
-            state('expanded', style({ transform: 'rotate(180deg)' })),
-            transition('expanded <=> collapsed, void => collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
-        ]),
-        /** Animation that expands and collapses the panel content. */
-        trigger('bodyExpansion', [
-            state('collapsed, void', style({ height: '0px', visibility: 'hidden' })),
-            state('expanded', style({ height: '*', visibility: 'visible' })),
-            transition('expanded <=> collapsed, void => collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
-        ]),
-    ]
+    MatRippleModule,
+  ],
+  animations: [
+    trigger('indicatorRotate', [
+      state('collapsed, void', style({ transform: 'rotate(0deg)' })),
+      state('expanded', style({ transform: 'rotate(180deg)' })),
+      transition(
+        'expanded <=> collapsed, void => collapsed',
+        animate(EXPANSION_PANEL_ANIMATION_TIMING),
+      ),
+    ]),
+    trigger('bodyExpansion', [
+      state('collapsed, void', style({ height: '0px', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition(
+        'expanded <=> collapsed, void => collapsed',
+        animate(EXPANSION_PANEL_ANIMATION_TIMING),
+      ),
+    ]),
+  ],
 })
 export class NavDrawerItemComponent {
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input()
-  navigationItem: Navigation;
+  private readonly router = inject(Router);
+
+  readonly navigationItem = input.required<Navigation>();
   readonly collapsed = input<boolean>();
   readonly activate = output<Navigation>();
 
-  private _expansionState: 'collapsed' | 'expanded' = 'collapsed';
+  private readonly expansionState = signal<'collapsed' | 'expanded'>(
+    'collapsed',
+  );
 
-  public get expansionState() {
-    return this.collapsed() ? 'collapsed' : this._expansionState;
-  }
+  readonly currentExpansionState = computed(() =>
+    this.collapsed() ? 'collapsed' : this.expansionState(),
+  );
 
-  public set expansionState(state) {
-    this._expansionState = state;
-  }
+  routerEvents = toSignal(
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)),
+  );
 
-  toggleExpansionState() {
-    if (
-      !this.navigationItem.children ||
-      this.navigationItem.children.length === 0
-    ) {
+  readonly isChildRouteActive = computed(() => {
+    const item = this.navigationItem();
+    // Trigger recomputation when router events occur
+    this.routerEvents();
+
+    if (!item?.children?.length) {
+      return false;
+    }
+
+    return item.children.some((child) => {
+      if (!child.route) return false;
+
+      return this.router.isActive(this.router.createUrlTree(child.route), {
+        paths: 'subset',
+        queryParams: 'ignored',
+        fragment: 'ignored',
+        matrixParams: 'ignored',
+      });
+    });
+  });
+
+  // Auto expand if a child route is active
+  onChildRouteActivated = effect(() => {
+    if (this.isChildRouteActive() && !this.collapsed()) {
+      this.expansionState.set('expanded');
+    }
+  });
+
+  toggleExpansionState(): void {
+    const item = this.navigationItem();
+    if (!item?.children?.length) {
       return;
     }
-    this.expansionState =
-      this.expansionState === 'collapsed' ? 'expanded' : 'collapsed';
+
+    this.expansionState.update((state) =>
+      state === 'collapsed' ? 'expanded' : 'collapsed',
+    );
   }
 }

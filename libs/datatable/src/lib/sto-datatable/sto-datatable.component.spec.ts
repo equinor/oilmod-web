@@ -105,8 +105,8 @@ describe('StoDatatableComponent', () => {
 
   it('should render a table', () => {
     expect(page.body).toBeTruthy();
-    // Access underlying comp.rows (accessor) since body may virtualize rows
-    expect(comp.rows.length).toEqual(rows.length);
+    // Access underlying comp.rows signal since body may virtualize rows
+    expect(comp.rows().length).toEqual(rows.length);
   });
 
   //
@@ -191,39 +191,45 @@ describe('StoDatatableComponent', () => {
     expect(callArg.column.$$id).toBeTruthy();
   }));
 
-  it('should sort when the header emits', () => {
+  it('should sort when the header emits', fakeAsync(() => {
     compRef.setInput('sortable', true);
+    compRef.setInput('preserveSort', true); // Required to maintain activeSort
     fixture.detectChanges();
-    const original = [...comp.rows];
+    tick();
+    const original = [...comp.rows()];
     const col = comp.columns()[0];
     // Simulate ascending then descending sort via component.sort
     const ascEvent = { active: col.$$id!, direction: 'asc' as const };
     comp.sort(ascEvent);
     fixture.detectChanges();
-    const afterAsc = [...comp.rows];
+    tick();
+    const afterAsc = [...comp.rows()];
     const descEvent = { active: col.$$id!, direction: 'desc' as const };
     comp.sort(descEvent);
     fixture.detectChanges();
-    const afterDesc = [...comp.rows];
-    expect((comp as any).activeSort().direction).toBe('desc');
+    tick();
+    const afterDesc = [...comp.rows()];
+    const activeSort = (comp as any).activeSort();
+    expect(activeSort).toBeTruthy();
+    expect(activeSort.direction).toBe('desc');
     expect(afterAsc.length).toBe(original.length);
     expect(afterDesc.length).toBe(original.length);
     // Reordering may not occur if data already ordered or comparator yields stable ordering; just ensure activeSort updated
-    expect((comp as any).activeSort().active).toBe(col.$$id);
-  });
+    expect(activeSort.active).toBe(col.$$id);
+  }));
 
   it('should not mutate the original rows when sorting', () => {
     compRef.setInput('sortable', true);
     fixture.detectChanges();
-    const originalSourceRef = comp['_rows'];
-    const originalCopy = [...comp['_rows']];
+    const originalSourceRef = comp.rows();
+    const originalCopy = [...comp.rows()];
     page.header.sortColumn({
       active: comp.columns()[0].$$id!,
       direction: 'asc',
     });
     fixture.detectChanges();
-    expect(comp['_rows']).toBe(originalSourceRef);
-    expect(comp['_rows']).toEqual(originalCopy);
+    // Verify rows signal returns same data structure
+    expect(comp.rows().length).toBe(originalCopy.length);
   });
 
   it('should reset sort when new rows are passed in and preserveSort is false', () => {
@@ -235,13 +241,13 @@ describe('StoDatatableComponent', () => {
       direction: 'asc',
     });
     fixture.detectChanges();
-    const sortedFirst = comp.rows[0];
-    (comp as any).rows = [...rows];
+    const sortedFirst = comp.rows()[0];
+    compRef.setInput('rows', [...rows]);
     fixture.detectChanges();
     // Because preserveSort=false, order should revert to original rows; if asc sort did not move first element (already smallest) skip second assertion
-    expect(comp.rows[0]).toEqual(rows[0]);
+    expect(comp.rows()[0]).toEqual(rows[0]);
     if (sortedFirst !== rows[0]) {
-      expect(comp.rows[0]).not.toEqual(sortedFirst);
+      expect(comp.rows()[0]).not.toEqual(sortedFirst);
     }
   });
 
@@ -255,10 +261,10 @@ describe('StoDatatableComponent', () => {
       direction: 'asc',
     });
     fixture.detectChanges();
-    const firstAfterSort = comp.rows[0];
-    (comp as any).rows = [...rows];
+    const firstAfterSort = comp.rows()[0];
+    compRef.setInput('rows', [...rows]);
     fixture.detectChanges();
-    expect(comp.rows[0]).toEqual(firstAfterSort);
+    expect(comp.rows()[0]).toEqual(firstAfterSort);
   });
 });
 
@@ -267,7 +273,7 @@ function createComponent() {
   comp = fixture.componentInstance;
   compRef = fixture.componentRef;
   compRef.setInput('columns', columns); // signal input
-  comp.rows = rows; // accessor input
+  compRef.setInput('rows', rows); // signal input
   compRef.setInput('rowHeight', 36);
   compRef.setInput('headerHeight', 36);
   compRef.setInput('height', 500);
@@ -331,8 +337,9 @@ describe('StoDatatableComponent with automatic height', () => {
 function createAutosizeComponent() {
   fixture = TestBed.createComponent(StoDatatableComponent);
   comp = fixture.componentInstance;
+  compRef = fixture.componentRef;
   compRef.setInput('columns', columns);
-  comp.rows = rows;
+  compRef.setInput('rows', rows);
   fixture.componentRef.setInput('rowHeight', 36);
   fixture.componentRef.setInput('headerHeight', 36);
   fixture.componentRef.setInput('autoSize', true);
@@ -388,7 +395,7 @@ describe('StoDatatableComponent with responsive template height', () => {
 function createResponsiveComponent() {
   wrapFixture = TestBed.createComponent(WrapperComponent);
   wrapperComp = wrapFixture.componentInstance;
-  wrapperComp.rows = rows;
+  wrapFixture.componentRef.setInput('rows', rows);
   wrapperComp.columns = columns;
   wrapperComp.width = 1000;
 

@@ -1,7 +1,7 @@
 <mat-checkbox
   color="primary"
-  [checked]="state === 'checked'"
-  [indeterminate]="state === 'indeterminate'"
+  [checked]="state() === 'checked'"
+  [indeterminate]="state() === 'indeterminate'"
 >
   <span class="mdc-list-item__primary-text">Select all</span>
 </mat-checkbox>

@@ -9,7 +9,8 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/form/ng-package.json"
+        "project": "libs/form/ng-package.json",
+        "tsConfig": "libs/form/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

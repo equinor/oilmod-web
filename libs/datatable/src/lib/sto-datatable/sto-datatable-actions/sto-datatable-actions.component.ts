@@ -3,7 +3,7 @@ import { Component, input } from '@angular/core';
 @Component({
   selector: 'sto-datatable-actions',
   templateUrl: './sto-datatable-actions.component.html',
-  styleUrls: ['./sto-datatable-actions.component.scss'],
+  styleUrl: './sto-datatable-actions.component.scss',
   host: {
     class: 'sto-mdl-table__actions',
     '[style.height.px]': 'height()',

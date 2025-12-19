@@ -1,4 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { WysiwygEditorComponent } from './wysiwyg-editor.component';
 
@@ -16,9 +22,8 @@ describe('WysiwygEditorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-        imports: [ WysiwygEditorComponent ]
-      })
-      .compileComponents();
+      imports: [WysiwygEditorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -32,27 +37,27 @@ describe('WysiwygEditorComponent', () => {
   });
 
   it('should toggle the contenteditable attribute when readonly is true / falsy', () => {
-    const el = component.editor.nativeElement;
-    expect(component.readonly).toBeFalsy();
+    const el = component.editor().nativeElement;
+    expect(component.readonly()).toBeFalsy();
     expect(el.getAttribute('contentEditable')).toEqual('true');
-    component.readonly = true;
+    fixture.componentRef.setInput('readonly', true);
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('false');
-    ( component as any ).readonly = 'true';
-    expect(component.readonly).toBeTruthy();
+    fixture.componentRef.setInput('readonly', 'true');
+    expect(component.readonly()).toBeTruthy();
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('false');
-    ( component.readonly as unknown as null ) = null;
+    fixture.componentRef.setInput('readonly', null);
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('true');
-    ( component.readonly as unknown as undefined ) = undefined;
+    fixture.componentRef.setInput('readonly', undefined);
     fixture.detectChanges();
     expect(el.getAttribute('contentEditable')).toEqual('true');
   });
 
   it('should emit valueChanged when input event occurs', fakeAsync(() => {
     const ev = new TestEvent('input');
-    const el = component.editor.nativeElement;
+    const el = component.editor().nativeElement;
     el.innerHTML = '<h1>SomeStuff</h1>';
     const spy = jest.spyOn(component.valueChanged, 'emit');
     el.dispatchEvent(ev);

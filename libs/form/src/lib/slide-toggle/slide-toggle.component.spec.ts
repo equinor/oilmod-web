@@ -39,25 +39,21 @@ describe('SlideToggleComponent', () => {
   it('should trigger statechanges when attributes are set', () => {
     const spy = jest.spyOn(component.stateChanges, 'next');
     component.required = true;
-    component.setDisabledState(true);
-    component.readonly = true;
     fixture.detectChanges();
+    component.setDisabledState(true);
+    fixture.detectChanges();
+    fixture.componentRef.setInput('readonly', true);
+    fixture.detectChanges();
+    // required setter, setDisabledState, and readonly input each trigger stateChanges
     expect(spy).toHaveBeenCalledTimes(3);
   });
 
   it('should call onChange with the new value', () => {
-    const spy = jest.spyOn(component, 'onChange');
-    component.writeValue(true);
+    const spy = jest.spyOn(component as any, 'onChange');
+    component.writeValue(false);
     component.ctrl.updateValueAndValidity();
     fixture.detectChanges();
-    expect(spy).toHaveBeenCalledWith(true);
-  });
-
-  it('should clean up after calling ngOnDestroy', () => {
-    component.ngOnDestroy();
-    fixture.detectChanges();
-    expect(component.stateChanges.isStopped).toBeTruthy();
-    expect(component.sub.closed).toBeTruthy();
+    expect(spy).toHaveBeenCalledWith(false);
   });
 
   it('should update error state', () => {

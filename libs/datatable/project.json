@@ -9,7 +9,8 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/datatable/ng-package.json"
+        "project": "libs/datatable/ng-package.json",
+        "tsConfig": "libs/datatable/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

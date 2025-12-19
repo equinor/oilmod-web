@@ -1,153 +1,124 @@
+<!-- Collapsed state: icon-only view -->
 @if (collapsed()) {
-  <div class="sto-nav-drawer--collapsed__item"
-    >
-    @if (navigationItem.link && !navigationItem.children) {
-      <a mat-button
-        [title]="navigationItem.label"
-        [class.disabled]="navigationItem.disabled"
-        (click)="activate.emit(navigationItem)"
+  <div class="sto-nav-drawer--collapsed__item">
+    @if (!navigationItem().children) {
+      <!-- Simple navigation item -->
+      <a
+        matButton
+        [title]="navigationItem().label"
+        [class.disabled]="navigationItem().disabled"
+        [href]="navigationItem().link || null"
+        [routerLink]="navigationItem().route || null"
         routerLinkActive="active"
-        [href]="navigationItem.link"
-        >
-        @if (!navigationItem.svgIcon) {
-          <mat-icon>{{ navigationItem.icon }}</mat-icon>
-        }
-        @if (navigationItem.svgIcon) {
-          <mat-icon
-          [svgIcon]="navigationItem.icon"></mat-icon>
+        (click)="activate.emit(navigationItem())"
+      >
+        @if (navigationItem().svgIcon) {
+          <mat-icon [svgIcon]="navigationItem().icon"></mat-icon>
+        } @else {
+          <mat-icon>{{ navigationItem().icon }}</mat-icon>
         }
       </a>
-    }
-    @if (navigationItem.route && !navigationItem.children) {
-      <a mat-button
-        [title]="navigationItem.label"
-        [class.disabled]="navigationItem.disabled"
-        routerLinkActive="active"
-        (click)="activate.emit(navigationItem)"
-        [routerLink]="navigationItem.route"
-        >
-        @if (!navigationItem.svgIcon) {
-          <mat-icon>{{ navigationItem.icon }}</mat-icon>
-        }
-        @if (navigationItem.svgIcon) {
-          <mat-icon
-          [svgIcon]="navigationItem.icon"></mat-icon>
-        }
-      </a>
-    }
-    @if (navigationItem.children) {
-      <button mat-button
-        [title]="navigationItem.label"
+    } @else {
+      <!-- Parent item with children menu -->
+      <button
+        matButton
+        [title]="navigationItem().label"
         [matMenuTriggerFor]="menu"
-        [disabled]="navigationItem.disabled">
-        @if (!navigationItem.svgIcon) {
-          <mat-icon>{{ navigationItem.icon }}</mat-icon>
-        }
-        @if (navigationItem.svgIcon) {
-          <mat-icon
-          [svgIcon]="navigationItem.icon"></mat-icon>
+        [disabled]="navigationItem().disabled"
+        [class.active]="isChildRouteActive()"
+      >
+        @if (navigationItem().svgIcon) {
+          <mat-icon [svgIcon]="navigationItem().icon"></mat-icon>
+        } @else {
+          <mat-icon>{{ navigationItem().icon }}</mat-icon>
         }
       </button>
     }
-    <mat-menu #menu="matMenu"
+
+    <!-- Dropdown menu for parent items -->
+    <mat-menu
+      #menu="matMenu"
       xPosition="after"
       [overlapTrigger]="true"
-      backdropClass="sto-nav-drawer-menu">
-      @if (navigationItem.title) {
-        <span mat-menu-item
+      backdropClass="sto-nav-drawer-menu"
+    >
+      @if (navigationItem().title) {
+        <span
+          mat-menu-item
           class="no-hover"
           (click)="$event.stopPropagation()"
           [disableRipple]="true"
-        style="cursor: default;">{{ navigationItem.title }}</span>
-      }
-      @if (navigationItem.title) {
+          style="cursor: default"
+        >
+          {{ navigationItem().title }}
+        </span>
         <mat-divider></mat-divider>
       }
-      @for (item of navigationItem.children; track item) {
-        @if (item.route) {
-          <a [routerLink]="item.route"
-            (click)="activate.emit(navigationItem)"
-            [disabled]="item.disabled"
-            [class.disabled]="item.disabled"
-            routerLinkActive="active-menu-route"
-            mat-menu-item
-            >
-            {{ item.label }}
-          </a>
-        }
-        @if (item.link) {
-          <a [href]="item.link"
-            mat-menu-item
-            [attr.target]="item.target || null"
-            (click)="activate.emit(navigationItem)"
-            [disabled]="item.disabled"
-            [class.disabled]="item.disabled"
-            >
-            {{ item.label }}
-          </a>
-        }
+      @for (item of navigationItem().children; track item) {
+        <a
+          mat-menu-item
+          [href]="item.link || null"
+          [routerLink]="item.route || null"
+          [attr.target]="item.link ? item.target || null : null"
+          [disabled]="item.disabled"
+          [class.disabled]="item.disabled"
+          routerLinkActive="active-menu-route"
+          (click)="activate.emit(navigationItem())"
+        >
+          {{ item.label }}
+        </a>
       }
     </mat-menu>
   </div>
-}
-@if (!collapsed() && navigationItem.children) {
-  <div class="sto-nav-drawer--expanded__item"
-    [class.divider-below]="navigationItem.divider === 'below'"
-    [class.divider-above]="navigationItem.divider === 'above'"
-    [class.disabled]="navigationItem.disabled"
-    (click)="toggleExpansionState()">
-    @if (!navigationItem.svgIcon) {
-      <mat-icon>{{ navigationItem.icon }}</mat-icon>
-    }
-    @if (navigationItem.svgIcon) {
-      <mat-icon
-      [svgIcon]="navigationItem.icon"></mat-icon>
-    }
-    <a>{{ navigationItem.label }}</a>
-    <mat-icon [@indicatorRotate]="expansionState">expand_more</mat-icon>
-  </div>
-}
-@if (!collapsed() && !navigationItem.children && navigationItem.link) {
-  <a class="sto-nav-drawer--expanded__item"
-    [class.divider-below]="navigationItem.divider === 'below'"
-    [class.divider-above]="navigationItem.divider === 'above'"
-    [href]="navigationItem.link"
-    (click)="activate.emit(navigationItem)"
-    matRipple
-    [class.disabled]="navigationItem.disabled">
-    @if (!navigationItem.svgIcon) {
-      <mat-icon>{{ navigationItem.icon }}</mat-icon>
-    }
-    @if (navigationItem.svgIcon) {
-      <mat-icon
-      [svgIcon]="navigationItem.icon"></mat-icon>
-    }
-    <span>{{ navigationItem.label }}</span>
-  </a>
-}
-@if (!collapsed() && !navigationItem.children && navigationItem.route) {
-  <a class="sto-nav-drawer--expanded__item"
-    [class.divider-below]="navigationItem.divider === 'below'"
-    [class.divider-above]="navigationItem.divider === 'above'"
-    [routerLink]="navigationItem.route"
-    (click)="activate.emit(navigationItem)"
-    routerLinkActive="active"
-    matRipple
-    [class.disabled]="navigationItem.disabled">
-    @if (!navigationItem.svgIcon) {
-      <mat-icon>{{ navigationItem.icon }}</mat-icon>
-    }
-    @if (navigationItem.svgIcon) {
-      <mat-icon
-      [svgIcon]="navigationItem.icon"></mat-icon>
-    }
-    <span>{{ navigationItem.label }}</span>
-  </a>
-}
-@if (navigationItem.children) {
-  <sto-nav-drawer-list [@bodyExpansion]="expansionState"
-    (activate)="activate.emit(navigationItem)"
-  [navigationItems]="navigationItem.children"></sto-nav-drawer-list>
+} @else {
+  <!-- Expanded state: full width with labels -->
+  @if (!navigationItem().children) {
+    <!-- Simple navigation item -->
+    <a
+      class="sto-nav-drawer--expanded__item"
+      [class.divider-below]="navigationItem().divider === 'below'"
+      [class.divider-above]="navigationItem().divider === 'above'"
+      [class.disabled]="navigationItem().disabled"
+      [href]="navigationItem().link || null"
+      [routerLink]="navigationItem().route || null"
+      routerLinkActive="active"
+      matRipple
+      (click)="activate.emit(navigationItem())"
+    >
+      @if (navigationItem().svgIcon) {
+        <mat-icon [svgIcon]="navigationItem().icon"></mat-icon>
+      } @else {
+        <mat-icon>{{ navigationItem().icon }}</mat-icon>
+      }
+      <span>{{ navigationItem().label }}</span>
+    </a>
+  } @else {
+    <!-- Parent item with expandable children -->
+    <div
+      class="sto-nav-drawer--expanded__item"
+      [class.divider-below]="navigationItem().divider === 'below'"
+      [class.divider-above]="navigationItem().divider === 'above'"
+      [class.disabled]="navigationItem().disabled"
+      (click)="toggleExpansionState()"
+    >
+      @if (navigationItem().svgIcon) {
+        <mat-icon [svgIcon]="navigationItem().icon"></mat-icon>
+      } @else {
+        <mat-icon>{{ navigationItem().icon }}</mat-icon>
+      }
+      <a>{{ navigationItem().label }}</a>
+      <mat-icon [@indicatorRotate]="currentExpansionState()">
+        expand_more
+      </mat-icon>
+    </div>
+  }
 }
 
-
+<!-- Expandable children list (always in expanded drawer mode) -->
+@if (navigationItem().children) {
+  <sto-nav-drawer-list
+    [@bodyExpansion]="currentExpansionState()"
+    (activate)="activate.emit(navigationItem())"
+    [navigationItems]="navigationItem().children"
+  ></sto-nav-drawer-list>
+}

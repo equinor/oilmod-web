@@ -1,12 +1,12 @@
-<div class="sto-wysiwyg__editor"
-  (dragover)="$event.preventDefault(); $event.stopPropagation();"
+<div
+  class="sto-wysiwyg__editor"
+  (dragover)="$event.preventDefault(); $event.stopPropagation()"
   (drop)="onDrop($event)"
-  [class.sto-wysiwyg__editor--readonly]="readonly"
-  [innerHTML]="content()"
+  [class.sto-wysiwyg__editor--readonly]="readonly()"
   (paste)="onPaste($event)"
   #editor
-[attr.contenteditable]="!readonly"></div>
-@if (warning) {
-  <span class="error"
-  >{{ warning }}</span>
+  [attr.contenteditable]="!readonly()"
+></div>
+@if (warning()) {
+  <span class="error">{{ warning() }}</span>
 }

@@ -51,13 +51,13 @@ export const NormalUse: StoryType = {
 <mat-card class="sto-card"><p>Content in drawer</p></mat-card>
 
 <sto-drawer-footer>
-<button mat-button color="primary">Save</button>
+<button matButton="filled" color="primary">Save</button>
 </sto-drawer-footer>
 </sto-drawer>
 
 
 <mat-card class="sto-card sto-form">
-<button mat-raised-button>Open</button>
+<button matButton="elevated">Open</button>
 </mat-card>
 <mat-card class="sto-card sto-form">
 <mat-card-title class="sto-card__title">Content title</mat-card-title>

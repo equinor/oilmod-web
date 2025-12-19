@@ -10,13 +10,34 @@ import {
   StoFilterActionsBar,
   StoFilterPanelComponent,
   StoFilterTableActions,
-  StoFilterTitle
+  StoFilterTitle,
 } from './sto-filter-panel.component';
 import { MatChipsModule } from '@angular/material/chips';
 
+/**
+ * @deprecated StoFilterPanelComponent and related directives have been made standalone, and this module will be removed in a future release.
+ * Migrate to importing StoFilterPanelComponent and related directives directly.
+ */
 @NgModule({
-    imports: [CommonModule, MatExpansionModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatTooltipModule, MatChipsModule, StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterActionsBar, StoFilterTableActions],
-    exports: [StoFilterPanelComponent, StoFilterTitle, StoFilterActions, StoFilterTableActions]
+  imports: [
+    CommonModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatTooltipModule,
+    MatChipsModule,
+    StoFilterPanelComponent,
+    StoFilterTitle,
+    StoFilterActions,
+    StoFilterActionsBar,
+    StoFilterTableActions,
+  ],
+  exports: [
+    StoFilterPanelComponent,
+    StoFilterTitle,
+    StoFilterActions,
+    StoFilterTableActions,
+  ],
 })
-export class StoFilterPanelModule {
-}
+export class StoFilterPanelModule {}

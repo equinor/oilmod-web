@@ -5,6 +5,8 @@
     [class.sto-mdl-table__body--scrollbar-h]="scrollbarH()"
     [class.sto-mdl-table__body--selectable]="selectable()"
     [itemSize]="!smallView() || !responsive() ? rowHeight() : 80"
+    [minBufferPx]="rowHeight() * 5"
+    [maxBufferPx]="rowHeight() * 10"
     [style.height.px]="height() || 500"
     class="sto-mdl-table__body"
     role="rowgroup"
@@ -13,7 +15,6 @@
       #rowEl
       *cdkVirtualFor="
         let row of rows();
-        templateCacheSize: 0;
         let i = index;
         let last = last;
         trackBy: trackBy()
@@ -77,7 +78,7 @@
     [class.sto-mdl-table__body--selectable]="selectable()"
     [style.height]="height() ? height() + 'px' : 'auto'"
     [style.padding-bottom.px]="
-      horizontalScrollActive && hasFooter() ? rowHeight() : 0
+      horizontalScrollActive() && hasFooter() ? rowHeight() : 0
     "
     class="sto-mdl-table__body sto-mdl-table__body--no-vscroll"
     role="rowgroup"

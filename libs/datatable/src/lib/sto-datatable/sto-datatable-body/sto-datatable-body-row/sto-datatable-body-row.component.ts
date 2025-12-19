@@ -1,18 +1,17 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DoCheck,
   ElementRef,
-  KeyValueDiffer,
-  KeyValueDiffers,
+  Injector,
   TemplateRef,
+  afterNextRender,
   computed,
   inject,
   input,
   output,
 } from '@angular/core';
+import { StoRowWidthHelper } from '../../../sto-row-width.helper';
 import { ColumnStylePipe } from '../../column-style.pipe';
 import { Column, ColumnDisplay } from '../../columns';
 import { ExecPipe } from '../../exec.pipe';
@@ -21,17 +20,18 @@ import { rowClassFn } from '../../models';
 @Component({
   selector: 'sto-datatable-body-row',
   templateUrl: './sto-datatable-body-row.component.html',
-  styleUrls: ['./sto-datatable-body-row.component.scss'],
+  styleUrl: './sto-datatable-body-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'cssClassStr()',
   },
   imports: [NgTemplateOutlet, NgClass, NgStyle, ExecPipe, ColumnStylePipe],
 })
-export class StoDatatableBodyRowComponent<T extends object> implements DoCheck {
-  private differs = inject(KeyValueDiffers);
-  private cdr = inject(ChangeDetectorRef);
-  private elRef = inject(ElementRef);
+export class StoDatatableBodyRowComponent<T extends object> {
+  private readonly elRef = inject(ElementRef<HTMLDivElement>);
+  private readonly rowWidthHelper = inject(StoRowWidthHelper);
+  private readonly injector = inject(Injector);
+  private cellValueCache = new WeakMap<T, Map<string, unknown>>();
 
   readonly responsiveView = input<TemplateRef<unknown>>();
   readonly row = input<T>();
@@ -40,6 +40,8 @@ export class StoDatatableBodyRowComponent<T extends object> implements DoCheck {
   readonly rowIndex = input<number>(0);
   readonly isSelected = input<boolean>();
   readonly rowClass = input<rowClassFn>();
+  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
+
   readonly cssClassStr = computed(() => {
     const rowClassFn = this.rowClass();
     const cls = [
@@ -50,6 +52,7 @@ export class StoDatatableBodyRowComponent<T extends object> implements DoCheck {
         ? ['sto-mdl-table__body__row--compressed']
         : []),
     ];
+
     if (rowClassFn) {
       if (typeof rowClassFn === 'function') {
         cls.push(rowClassFn(this.row()));
@@ -59,43 +62,54 @@ export class StoDatatableBodyRowComponent<T extends object> implements DoCheck {
         cls.push(rowClassFn);
       }
     }
+
     return cls.join(' ');
   });
+
+  constructor() {
+    // Only run width calculation once for the first row, avoid running for every row instance
+    afterNextRender(
+      () => {
+        if (
+          this.rowWidthHelper.currentRowWidth() === 0 &&
+          this.rowIndex() === 0
+        ) {
+          const el = this.elRef.nativeElement;
+          this.rowWidthHelper.currentRowWidth.set(
+            el.getBoundingClientRect().width,
+          );
+        }
+      },
+      { injector: this.injector },
+    );
+  }
+
   readonly rowContextMenu = output<{
     event: MouseEvent | KeyboardEvent;
     column: Column;
     row: T;
     index: number;
   }>();
-  readonly columnMode = input<ColumnDisplay>(ColumnDisplay.Flex);
 
-  public element: HTMLDivElement;
+  readonly element = this.elRef.nativeElement;
 
-  private rowDiffer: KeyValueDiffer<string, unknown>;
-  public trackColumn = (index: number, column: Column) => {
-    return column.$$id ?? column.prop;
-  };
+  readonly trackColumn = (_index: number, column: Column) =>
+    column.$$id ?? column.prop;
 
-  constructor() {
-    const differs = this.differs;
-
-    this.rowDiffer = differs.find({}).create<string, unknown>();
-    this.element = this.elRef.nativeElement as HTMLDivElement;
-  }
-
-  ngDoCheck() {
-    const r = this.row();
-    // Cast to an indexable record for differ purposes only.
-    if (r != null && this.rowDiffer.diff(r as Record<string, unknown>)) {
-      this.cdr.detectChanges();
-    }
-  }
-
-  // Helper to safely get a value for dynamic column.prop access without requiring T to be indexable
-  public cellValue(row: T | undefined, prop: string): unknown {
+  // Helper to safely get a value for dynamic column.prop access with memoization
+  readonly cellValue = (row: T | undefined, prop: string): unknown => {
     if (!row) return undefined;
-    // Access through intermediate unknown then indexable record to avoid lint 'any'
-    const rec = row as unknown as Record<string, unknown>;
-    return rec[prop];
-  }
+
+    let propCache = this.cellValueCache.get(row);
+    if (!propCache) {
+      propCache = new Map<string, unknown>();
+      this.cellValueCache.set(row, propCache);
+    }
+
+    if (!propCache.has(prop)) {
+      propCache.set(prop, (row as Record<string, unknown>)[prop]);
+    }
+
+    return propCache.get(prop);
+  };
 }

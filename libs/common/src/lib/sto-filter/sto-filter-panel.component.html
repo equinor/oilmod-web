@@ -1,52 +1,64 @@
 <mat-expansion-panel
-  [expanded]="_expanded()"
+  [expanded]="expanded()"
   #panel
-  hideToggle="true"
-  [ngClass]="{ 'sto-filter': true }"
+  hideToggle
+  class="sto-filter"
+  (opened)="onPanelStateChange(true)"
+  (closed)="onPanelStateChange(false)"
 >
-  <mat-expansion-panel-header
-    [expandedHeight]="'40px'"
-    [collapsedHeight]="'40px'"
-  >
-    <mat-panel-title>
-      <ng-content select="sto-filter-title"></ng-content>
-      @if (filterList()) {
+  <mat-expansion-panel-header expandedHeight="40px" collapsedHeight="40px">
+    <mat-panel-title
+      (click)="expandable() && toggle(); $event.stopPropagation()"
+    >
+      <ng-content select="sto-filter-title" />
+      @if (filterList()?.length) {
         <mat-chip-listbox
           [style.opacity]="panel.expanded ? 0 : 1"
           style="margin-left: 16px"
+          (click)="$event.stopPropagation()"
         >
-          @for (f of filterList(); track f.index) {
+          @for (filter of filterList(); track filter.index) {
             <mat-chip-option
-              (removed)="_clearFilter(f.key, f.index)"
+              (removed)="_clearFilter(filter.key, filter.index)"
               [removable]="true"
               [selected]="true"
-              [value]="f.key"
+              [value]="filter.key"
               style="margin: 2px 4px"
             >
-              <span style="margin-bottom: -4px">{{ f.value }}</span>
+              <span style="margin-bottom: -4px">{{ filter.value }}</span>
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip-option>
           }
         </mat-chip-listbox>
       }
     </mat-panel-title>
-    <span class="content-wrapper" #tableActions>
-      <ng-content select="sto-filter-table-actions"> </ng-content>
+
+    <span
+      class="content-wrapper"
+      #tableActions
+      (click)="$event.stopPropagation()"
+    >
+      <ng-content select="sto-filter-table-actions" />
     </span>
 
-    <span class="content-wrapper" #filterActions>
+    <span
+      class="content-wrapper"
+      #filterActions
+      (click)="$event.stopPropagation()"
+    >
       @if (expandable()) {
         <sto-filter-actions-bar
           [expanded]="_expanded()"
           [expandable]="expandable()"
           (toggle)="toggle()"
         >
-          <ng-content select="sto-filter-actions"></ng-content>
+          <ng-content select="sto-filter-actions" />
         </sto-filter-actions-bar>
       }
     </span>
   </mat-expansion-panel-header>
+
   <div class="sto-filter-form" #filterForm>
-    <ng-content></ng-content>
+    <ng-content />
   </div>
 </mat-expansion-panel>

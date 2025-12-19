@@ -135,5 +135,8 @@
   },
   "parallel": 3,
   "useInferencePlugins": false,
-  "defaultBase": "master"
+  "defaultBase": "master",
+  "tui": {
+    "enabled": false
+  }
 }

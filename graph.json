@@ -1,0 +1,1654 @@
+{
+  "graph": {
+    "nodes": {
+      "oilmod-web-e2e": {
+        "name": "oilmod-web-e2e",
+        "type": "e2e",
+        "data": {
+          "root": "apps/oilmod-web-e2e",
+          "name": "oilmod-web-e2e",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "apps/oilmod-web-e2e/src",
+          "projectType": "application",
+          "tags": [],
+          "implicitDependencies": [
+            "oilmod-web"
+          ],
+          "targets": {
+            "e2e": {
+              "executor": "@nx/cypress:cypress",
+              "options": {
+                "cypressConfig": "apps/oilmod-web-e2e/cypress.json",
+                "devServerTarget": "oilmod-web:serve:development"
+              },
+              "configurations": {
+                "production": {
+                  "devServerTarget": "oilmod-web:serve:production"
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            }
+          }
+        }
+      },
+      "error-handler": {
+        "name": "error-handler",
+        "type": "lib",
+        "data": {
+          "root": "libs/error-handler",
+          "name": "error-handler",
+          "tags": [
+            "npm:public",
+            "npm:eds",
+            "npm:angular",
+            "npm:material",
+            "npm:equinor"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Common error-handling for Angular, based on EDS design styles",
+            "js": {
+              "packageName": "@ngx-stoui/error-handler",
+              "packageVersion": "20.2.0",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "options": {
+                "project": "libs/error-handler/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/error-handler/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/error-handler/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/error-handler"
+              ],
+              "options": {
+                "jestConfig": "libs/error-handler/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "publish": {
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "dist/libs/error-handler",
+                "commands": [
+                  "npm publish"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/error-handler/.storybook",
+                "browserTarget": "error-handler:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/error-handler",
+                "configDir": "libs/error-handler/.storybook",
+                "browserTarget": "error-handler:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/error-handler/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/error-handler/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      },
+      "oilmod-web": {
+        "name": "oilmod-web",
+        "type": "app",
+        "data": {
+          "root": "apps/oilmod-web",
+          "name": "oilmod-web",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "application",
+          "sourceRoot": "apps/oilmod-web/src",
+          "prefix": "oilmod-web-nx",
+          "tags": [],
+          "targets": {
+            "build": {
+              "executor": "@nx/angular:application",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/apps/oilmod-web",
+                "index": "apps/oilmod-web/src/index.html",
+                "browser": "apps/oilmod-web/src/main.ts",
+                "polyfills": [
+                  "apps/oilmod-web/src/polyfills.ts"
+                ],
+                "tsConfig": "apps/oilmod-web/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  "apps/oilmod-web/src/favicon.ico",
+                  "apps/oilmod-web/src/assets"
+                ],
+                "styles": [
+                  "apps/oilmod-web/src/styles.scss",
+                  "libs/core/src/ngx-stoui.scss"
+                ],
+                "scripts": []
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "500kb",
+                      "maximumError": "1.5mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "2kb",
+                      "maximumError": "4kb"
+                    }
+                  ],
+                  "fileReplacements": [
+                    {
+                      "replace": "apps/oilmod-web/src/environments/environment.ts",
+                      "with": "apps/oilmod-web/src/environments/environment.prod.ts"
+                    }
+                  ],
+                  "outputHashing": "all"
+                },
+                "development": {
+                  "optimization": false,
+                  "extractLicenses": false,
+                  "sourceMap": true,
+                  "namedChunks": true
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "executor": "@nx/angular:dev-server",
+              "configurations": {
+                "production": {
+                  "buildTarget": "oilmod-web:build:production"
+                },
+                "development": {
+                  "buildTarget": "oilmod-web:build:development"
+                }
+              },
+              "defaultConfiguration": "development",
+              "continuous": true,
+              "options": {},
+              "parallelism": true
+            },
+            "extract-i18n": {
+              "executor": "@angular-devkit/build-angular:extract-i18n",
+              "options": {
+                "buildTarget": "oilmod-web:build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/apps/oilmod-web"
+              ],
+              "options": {
+                "jestConfig": "apps/oilmod-web/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "apps/oilmod-web/.storybook",
+                "browserTarget": "oilmod-web:build",
+                "compodoc": false,
+                "styles": [
+                  "apps/oilmod-web/src/styles.scss",
+                  "libs/core/src/ngx-stoui.scss"
+                ],
+                "stylePreprocessorOptions": {
+                  "includePaths": [
+                    "node_modules",
+                    "libs/core/src/style"
+                  ]
+                }
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/oilmod-web",
+                "configDir": "apps/oilmod-web/.storybook",
+                "browserTarget": "oilmod-web:build",
+                "compodoc": false,
+                "styles": [
+                  "apps/oilmod-web/src/styles.scss",
+                  "libs/core/src/ngx-stoui.scss"
+                ],
+                "stylePreprocessorOptions": {
+                  "includePaths": [
+                    "node_modules",
+                    "libs/core/src/style"
+                  ]
+                }
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "build-all": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": [
+                  "nx build testing",
+                  "nx build core",
+                  "nx build form",
+                  "nx build common",
+                  "nx build datatable",
+                  "nx build drawer",
+                  "nx build error-handler",
+                  "for dir in ./dist/libs/* ; do cp license.md $dir/ ; done"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test-all": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": [
+                  "nx test core",
+                  "nx test form",
+                  "nx test common",
+                  "nx test datatable",
+                  "nx test drawer",
+                  "nx test error-handler"
+                ],
+                "parallel": true
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint-all": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": [
+                  "nx lint core --fix",
+                  "nx lint form --fix",
+                  "nx lint common --fix",
+                  "nx lint datatable --fix",
+                  "nx lint drawer --fix",
+                  "nx lint error-handler --fix"
+                ],
+                "parallel": true
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "datatable": {
+        "name": "datatable",
+        "type": "lib",
+        "data": {
+          "root": "libs/datatable",
+          "name": "datatable",
+          "tags": [
+            "npm:public",
+            "npm:eds",
+            "npm:angular",
+            "npm:material",
+            "npm:equinor"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Datatable with virtual scrolling for Angular, based on EDS design styles",
+            "js": {
+              "packageName": "@ngx-stoui/datatable",
+              "packageVersion": "20.2.0",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "options": {
+                "project": "libs/datatable/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/datatable/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/datatable/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/datatable"
+              ],
+              "options": {
+                "jestConfig": "libs/datatable/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "publish": {
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "dist/libs/datatable",
+                "commands": [
+                  "npm publish"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/datatable/.storybook",
+                "browserTarget": "datatable:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/datatable",
+                "configDir": "libs/datatable/.storybook",
+                "browserTarget": "datatable:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/datatable/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/datatable/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      },
+      "popover": {
+        "name": "popover",
+        "type": "lib",
+        "data": {
+          "root": "libs/popover",
+          "name": "popover",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@ngx-stoui/popover",
+              "packageVersion": "20.2.0",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "outputs": [
+                "{workspaceRoot}/dist/{projectRoot}"
+              ],
+              "options": {
+                "project": "libs/popover/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/popover/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/popover/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+              ],
+              "options": {
+                "jestConfig": "libs/popover/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/popover/.storybook",
+                "browserTarget": "popover:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/popover",
+                "configDir": "libs/popover/.storybook",
+                "browserTarget": "popover:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/popover/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/popover/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      },
+      "testing": {
+        "name": "testing",
+        "type": "lib",
+        "data": {
+          "root": "libs/testing",
+          "name": "testing",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@ngx-stoui/testing",
+              "packageVersion": "20.2.0",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:ng-packagr-lite",
+              "options": {
+                "project": "libs/testing/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/testing/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/testing/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/testing"
+              ],
+              "options": {
+                "jestConfig": "libs/testing/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/testing/src",
+          "prefix": "oilmod-web-nx",
+          "implicitDependencies": []
+        }
+      },
+      "common": {
+        "name": "common",
+        "type": "lib",
+        "data": {
+          "root": "libs/common",
+          "name": "common",
+          "tags": [
+            "npm:public",
+            "npm:eds",
+            "npm:angular",
+            "npm:material",
+            "npm:equinor"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Common utilities for Angular, based on EDS design styles",
+            "js": {
+              "packageName": "@ngx-stoui/common",
+              "packageVersion": "20.1.9",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "options": {
+                "project": "libs/common/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/common/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/common/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/common"
+              ],
+              "options": {
+                "jestConfig": "libs/common/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "publish": {
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "dist/libs/common",
+                "commands": [
+                  "npm publish"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/common/.storybook",
+                "browserTarget": "common:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/common",
+                "configDir": "libs/common/.storybook",
+                "browserTarget": "common:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/common/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/common/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      },
+      "drawer": {
+        "name": "drawer",
+        "type": "lib",
+        "data": {
+          "root": "libs/drawer",
+          "name": "drawer",
+          "tags": [
+            "npm:public",
+            "npm:eds",
+            "npm:angular",
+            "npm:material",
+            "npm:equinor"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Drawer for Angular, based on EDS design styles",
+            "js": {
+              "packageName": "@ngx-stoui/drawer",
+              "packageVersion": "20.2.0",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "options": {
+                "project": "libs/drawer/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/drawer/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/drawer/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/drawer"
+              ],
+              "options": {
+                "jestConfig": "libs/drawer/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "publish": {
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "dist/libs/drawer",
+                "commands": [
+                  "npm publish"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/drawer/.storybook",
+                "browserTarget": "drawer:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/drawer",
+                "configDir": "libs/drawer/.storybook",
+                "browserTarget": "drawer:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/drawer/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/drawer/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      },
+      "core": {
+        "name": "core",
+        "type": "lib",
+        "data": {
+          "root": "libs/core",
+          "name": "core",
+          "tags": [
+            "npm:public",
+            "npm:eds",
+            "npm:angular",
+            "npm:material",
+            "npm:equinor"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Core packages like styling, pipes and common directives for Angular, based on EDS design styles",
+            "js": {
+              "packageName": "@ngx-stoui/core",
+              "packageVersion": "20.2.0",
+              "packageExports": {
+                ".": {
+                  "default": "./index.js"
+                },
+                "./ngx-stoui.css": {
+                  "default": "./ngx-stoui.css"
+                },
+                "./ngx-datatable.css": {
+                  "default": "./ngx-datatable.css"
+                }
+              },
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "options": {
+                "project": "libs/core/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/core/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/core/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "build-scss": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": [
+                  "ts-node --project tools/tsconfig.tools.json tools/scripts/build-scss.ts",
+                  "ts-node --project tools/tsconfig.tools.json tools/scripts/copy-assets.ts"
+                ],
+                "parallel": true
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-all": {
+              "executor": "nx:run-commands",
+              "dependsOn": [
+                "build",
+                "build-scss"
+              ],
+              "options": {
+                "commands": [
+                  "echo Build complete with styles"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "watch": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": [
+                  "nx watch --projects=core -- nx run core:build-scss"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/core"
+              ],
+              "options": {
+                "jestConfig": "libs/core/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "publish": {
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "dist/libs/core",
+                "commands": [
+                  "npm publish"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/core/.storybook",
+                "browserTarget": "core:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/core",
+                "configDir": "libs/core/.storybook",
+                "browserTarget": "core:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/core/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/core/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      },
+      "form": {
+        "name": "form",
+        "type": "lib",
+        "data": {
+          "root": "libs/form",
+          "name": "form",
+          "tags": [
+            "npm:public",
+            "npm:eds",
+            "npm:angular",
+            "npm:material",
+            "npm:equinor"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "description": "Common form helpers for Angular, based on EDS design styles",
+            "js": {
+              "packageName": "@ngx-stoui/form",
+              "packageVersion": "20.2.0",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:package",
+              "options": {
+                "project": "libs/form/ng-package.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/form/tsconfig.lib.prod.json"
+                },
+                "development": {
+                  "tsConfig": "libs/form/tsconfig.lib.json"
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/libs/form"
+              ],
+              "options": {
+                "jestConfig": "libs/form/jest.config.ts",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/eslint.config.mjs"
+              ],
+              "cache": true
+            },
+            "publish": {
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "dist/libs/form",
+                "commands": [
+                  "npm publish"
+                ],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "@storybook/angular:start-storybook",
+              "options": {
+                "port": 4400,
+                "configDir": "libs/form/.storybook",
+                "browserTarget": "form:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "@storybook/angular:build-storybook",
+              "outputs": [
+                "{options.outputDir}"
+              ],
+              "options": {
+                "outputDir": "dist/storybook/form",
+                "configDir": "libs/form/.storybook",
+                "browserTarget": "form:build-storybook",
+                "compodoc": false
+              },
+              "configurations": {
+                "ci": {
+                  "quiet": true
+                }
+              },
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.storybook/**/*",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+              ],
+              "cache": true
+            },
+            "test-storybook": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "test-storybook -c libs/form/.storybook --url=http://localhost:4400"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "library",
+          "sourceRoot": "libs/form/src",
+          "prefix": "sto",
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "oilmod-web-e2e": [
+        {
+          "source": "oilmod-web-e2e",
+          "target": "oilmod-web",
+          "type": "implicit"
+        }
+      ],
+      "error-handler": [],
+      "oilmod-web": [
+        {
+          "source": "oilmod-web",
+          "target": "common",
+          "type": "static"
+        },
+        {
+          "source": "oilmod-web",
+          "target": "form",
+          "type": "static"
+        }
+      ],
+      "datatable": [
+        {
+          "source": "datatable",
+          "target": "core",
+          "type": "static"
+        },
+        {
+          "source": "datatable",
+          "target": "testing",
+          "type": "static"
+        }
+      ],
+      "popover": [],
+      "testing": [],
+      "common": [
+        {
+          "source": "common",
+          "target": "form",
+          "type": "static"
+        },
+        {
+          "source": "common",
+          "target": "testing",
+          "type": "static"
+        },
+        {
+          "source": "common",
+          "target": "core",
+          "type": "static"
+        }
+      ],
+      "drawer": [
+        {
+          "source": "drawer",
+          "target": "common",
+          "type": "static"
+        },
+        {
+          "source": "drawer",
+          "target": "core",
+          "type": "static"
+        }
+      ],
+      "core": [],
+      "form": [
+        {
+          "source": "form",
+          "target": "core",
+          "type": "static"
+        },
+        {
+          "source": "form",
+          "target": "testing",
+          "type": "static"
+        }
+      ]
+    }
+  }
+}

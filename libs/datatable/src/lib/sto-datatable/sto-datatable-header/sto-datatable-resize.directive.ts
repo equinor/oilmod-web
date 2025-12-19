@@ -1,81 +1,98 @@
 import {
-  AfterViewInit,
+  afterNextRender,
+  DestroyRef,
   Directive,
   ElementRef,
   HostListener,
   inject,
-  Input,
-  OnDestroy,
+  input,
   output,
+  signal,
 } from '@angular/core';
-import { fromEvent, ReplaySubject, Subject, Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { fromEvent, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { Column } from '../columns';
+
+const MIN_COLUMN_WIDTH = 40;
+const DEFAULT_FLEX_BASIS = 80;
 
 @Directive({
   selector: '[stoDatatableResize]',
   exportAs: 'stoDatatableResize',
+  standalone: true,
 })
-export class StoDatatableResizeDirective implements AfterViewInit, OnDestroy {
-  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+export class StoDatatableResizeDirective {
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input()
-  column: Column;
+  readonly column = input.required<Column>();
+
   // eslint-disable-next-line @angular-eslint/no-output-native
   readonly resize = output<number>();
   readonly resizeEnd = output<number>();
-  // @HostBinding('draggable')
-  // draggable = true;
-  private startOffset: number;
-  private initial: number;
-  private sub: Subscription;
-  public width$ = new ReplaySubject<number | null>();
-  private width: number;
-  private moveComplete$ = new Subject<boolean>();
+
+  // Public signal for width changes (can be consumed by components)
+  readonly width = signal<number | null>(null);
+
+  private startOffset = 0;
+  private initialWidth = 0;
+  private currentWidth = 0;
+  private readonly moveComplete$ = new Subject<void>();
+
+  constructor() {
+    // Add CSS class on next render to ensure DOM is ready
+    afterNextRender(() => {
+      this.el.nativeElement.classList.add(
+        'sto-mdl-table__header__row__cell__resize-handle',
+      );
+    });
+
+    // Auto-cleanup on destroy
+    this.destroyRef.onDestroy(() => {
+      this.moveComplete$.complete();
+    });
+  }
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
+  onMouseDown(event: MouseEvent): void {
     event.stopPropagation();
+
     this.startOffset = event.screenX;
-    this.initial = this.column.flexBasis || 80;
+    this.initialWidth = this.column().flexBasis ?? DEFAULT_FLEX_BASIS;
+
+    // Listen for mouse up (single event)
     fromEvent<MouseEvent>(document, 'mouseup')
-      .pipe(take(1))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => this.onMouseUp(ev));
+
+    // Listen for mouse move (until move complete)
     fromEvent<MouseEvent>(document, 'mousemove')
-      .pipe(takeUntil(this.moveComplete$))
+      .pipe(takeUntil(this.moveComplete$), takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => this.move(ev));
   }
 
-  onMouseUp(event: MouseEvent) {
-    event.stopPropagation();
-    this.moveComplete$.next(true);
-    this.width$.next(null);
-    this.resizeEnd.emit(this.width);
-  }
-
   @HostListener('contextmenu', ['$event'])
-  ctxMenu(event: MouseEvent) {
+  onContextMenu(event: MouseEvent): void {
     event.stopPropagation();
   }
 
-  private move(event: MouseEvent) {
-    const move = event.screenX - this.startOffset;
-    const width = this.initial + move < 40 ? 40 : this.initial + move;
-    this.width$.next(width);
-    this.width = width;
+  private onMouseUp(event: MouseEvent): void {
+    event.stopPropagation();
+    this.moveComplete$.next();
+    this.width.set(null);
+    this.resizeEnd.emit(this.currentWidth);
   }
 
-  ngAfterViewInit(): void {
-    this.el.nativeElement.classList.add(
-      'sto-mdl-table__header__row__cell__resize-handle',
+  private move(event: MouseEvent): void {
+    const moveDistance = event.screenX - this.startOffset;
+    const newWidth = Math.max(
+      MIN_COLUMN_WIDTH,
+      this.initialWidth + moveDistance,
     );
-  }
 
-  ngOnDestroy() {
-    this.moveComplete$.next(true);
-    this.moveComplete$.complete();
-    this.width$.complete();
+    this.currentWidth = newWidth;
+    this.width.set(newWidth);
+    this.resize.emit(newWidth);
   }
 }

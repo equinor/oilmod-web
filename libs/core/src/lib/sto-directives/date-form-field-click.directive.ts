@@ -20,7 +20,6 @@ import { takeUntil } from 'rxjs/operators';
  */
 @Directive({
   selector: '[stoDateFormFieldClick]',
-  standalone: true,
 })
 export class DateFormFieldClickDirective implements OnInit, OnDestroy {
   @ContentChildren(MatInput) inputs: QueryList<MatInput>;

@@ -1,11 +1,11 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'sto-drawer-header',
   template: ` <ng-content></ng-content>`,
-  styleUrls: ['./sto-drawer.component.scss'],
-  standalone: true,
+  styleUrl: './sto-drawer.component.scss',
+  host: {
+    class: 'sto-drawer__header',
+  },
 })
-export class StoDrawerHeaderComponent {
-  @HostBinding('class.sto-drawer__header') class = true;
-}
+export class StoDrawerHeaderComponent {}

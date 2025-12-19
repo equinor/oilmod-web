@@ -1,0 +1,22 @@
+
+@mixin sto-number-unit-input-theme() {
+  .mat-form-field.sto-form__field {
+    sto-number-unit-input {
+      .number-unit-input-spacer {
+        background: var(--divider);
+      }
+
+      .number-unit-input-element {
+        color: var(--text);
+
+        &::placeholder {
+          color: var(--text-secondary);
+        }
+      }
+    }
+  }
+  .mat-option.sto-option--clear {
+    color: var(--text-secondary);
+  }
+}
+

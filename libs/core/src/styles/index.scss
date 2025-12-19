@@ -1,0 +1,48 @@
+// Main Styles Entry Point
+// This file imports all necessary styles for the ngx-stoui library
+
+// Export modules for external use (must be first)
+@forward './tokens';
+@forward './material-theme';
+@forward './utilities';
+@forward './overrides';
+@forward './fonts/fonts';
+@forward './components';
+@forward './forms/form';
+@forward './datatable';
+
+// 1. Design Tokens and Variables
+@use './tokens';
+
+// 2. Material Theme Configuration (includes typography via M3 theme)
+@use './material-theme';
+
+// 3. Utilities and Helpers
+@use './utilities';
+
+// 4. Overrides
+@use './overrides';
+
+// 5. Font Loading
+@use './fonts/fonts';
+
+// 6. Component Styles
+@use './components' as components;
+
+// 7. Form Styles
+@use './forms/form' as form;
+
+// 8. Datatable Styles
+@use './datatable' as datatable;
+
+// Apply Material Theme (includes typography)
+@include material-theme.apply-material-theme();
+
+// Apply Component Styles
+@include components.apply-component-styles();
+
+// Apply Form Theme
+@include form.form-theme();
+
+// Apply Datatable Styles
+@include datatable.apply-datatable-styles();

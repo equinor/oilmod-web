@@ -1,37 +1,29 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef
-} from '@angular/material/dialog';
-import { Observable, ReplaySubject } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { ConfirmComponent } from './sto-confirm-dialog.component';
 
-const dialogConfig = new MatDialogConfig();
-dialogConfig.width = '560px';
-dialogConfig.panelClass = 'sto-dialog';
+const DEFAULT_DIALOG_CONFIG: MatDialogConfig = {
+  width: '560px',
+  panelClass: 'sto-dialog',
+};
 
 @Injectable()
 export class ConfirmService {
-  private dialog = inject(MatDialog);
+  private readonly dialog = inject(MatDialog);
 
-  public ref: MatDialogRef<ConfirmComponent> | null;
-
-  confirm(message: string, title = 'Confirm', confirmText = 'OK', showCancel = true, options = dialogConfig): Observable<boolean> {
-    this.ref = this.dialog.open(ConfirmComponent, {
+  confirm(
+    message: string,
+    title = 'Confirm',
+    confirmText = 'OK',
+    showCancel = true,
+    options: MatDialogConfig = DEFAULT_DIALOG_CONFIG,
+  ): Observable<boolean> {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
       ...options,
-      data: { message, title, confirmText, showCancel }
+      data: { message, title, confirmText, showCancel },
     });
 
-    const subject = new ReplaySubject<boolean>();
-
-    this.ref.afterClosed()
-      .subscribe(result => {
-        this.ref = null;
-        subject.next(result);
-        subject.complete();
-      });
-    return subject;
+    return dialogRef.afterClosed();
   }
-
 }

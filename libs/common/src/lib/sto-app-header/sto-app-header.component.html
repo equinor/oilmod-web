@@ -1,53 +1,46 @@
-<div class="sto-header" [class.sto-header--test-environment]="testEnvironment">
+<div
+  class="sto-header"
+  [class.sto-header--test-environment]="testEnvironment()"
+>
   <sto-breadcrumbs
-    [home]="homeBreadCrumbConfig"
-    [model]="breadCrumbs"
+    [home]="homeBreadCrumbConfig()"
+    [model]="breadCrumbs() ?? []"
   ></sto-breadcrumbs>
   <ng-content select=".sto-header__form"> </ng-content>
-  @if (testEnvironment && environmentName && (isSmall$ | async) === false) {
-    <div
-      class="sto-header__environment"
-      >
+  @if (testEnvironment() && environmentName() && !isSmall()) {
+    <div class="sto-header__environment">
       <div class="sto-header__environment--label">
-        {{ environmentName }}
+        {{ environmentName() }}
       </div>
     </div>
   }
   <span class="spacer"></span>
-  @if (isSmall$ | async) {
-    <button
-      mat-icon-button
-      class="small-toggle"
-      (click)="toggleMenu($event)"
-      >
+  @if (isSmall()) {
+    <button matIconButton class="small-toggle" (click)="toggleMenu($event)">
       <mat-icon>more_vert</mat-icon>
     </button>
   }
   <div
     class="sto-header__actions"
-    [class.sto-header__actions--small--open]="menuOpen"
-    [class.sto-header__actions--small]="isSmall$ | async"
-    >
+    [class.sto-header__actions--small--open]="menuOpen()"
+    [class.sto-header__actions--small]="isSmall()"
+  >
     <ng-content></ng-content>
-    <button mat-icon-button title="Accessibility" [matMenuTriggerFor]="menu">
+    <button matIconButton title="Accessibility" [matMenuTriggerFor]="menu">
       <mat-icon>accessibility</mat-icon>
     </button>
-    @if (userMenu) {
-      <button
-        mat-icon-button
-        title="Account"
-        [matMenuTriggerFor]="userMenu"
-        >
+    @if (userMenu()) {
+      <button matIconButton title="Account" [matMenuTriggerFor]="userMenu()!">
         <mat-icon>account_circle</mat-icon>
       </button>
     }
   </div>
 </div>
 
-<mat-menu #menu="matMenu" [yPosition]="(isSmall$ | async) ? 'above' : 'below'">
+<mat-menu #menu="matMenu" [yPosition]="isSmall() ? 'above' : 'below'">
   <button mat-menu-item class="dense" (click)="toggleTheme()">
-    <mat-icon>{{ (darkmode$ | async) ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
-    {{ (darkmode$ | async) ? 'Disable' : 'Enable' }} night mode
+    <mat-icon>{{ darkmode() ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+    {{ darkmode() ? 'Disable' : 'Enable' }} night mode
   </button>
   <button mat-menu-item class="dense" [matMenuTriggerFor]="fontMenu">
     <mat-icon>format_size</mat-icon>
@@ -60,7 +53,7 @@
     class="dense"
     style="--mat-menu-item-label-text-size: 10px"
     (click)="toggleTypography('sto-sm-typography')"
-    >
+  >
     Smaller
   </button>
   <button
@@ -68,7 +61,7 @@
     class="dense"
     style="--mat-menu-item-label-text-size: 13px"
     (click)="toggleTypography()"
-    >
+  >
     Regular
   </button>
   <button
@@ -76,7 +69,7 @@
     class="dense"
     style="--mat-menu-item-label-text-size: 16px"
     (click)="toggleTypography('sto-l-typography')"
-    >
+  >
     Larger
   </button>
 </mat-menu>

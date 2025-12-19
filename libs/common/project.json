@@ -9,7 +9,8 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/common/ng-package.json"
+        "project": "libs/common/ng-package.json",
+        "tsConfig": "libs/common/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

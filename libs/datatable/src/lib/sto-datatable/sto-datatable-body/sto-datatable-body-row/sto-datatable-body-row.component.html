@@ -1,13 +1,17 @@
-<!--<div>-->
 @if (compressedView()) {
   <ng-template
-    [ngTemplateOutletContext]="{ row: row() }"
     [ngTemplateOutlet]="responsiveView()"
-  >
-  </ng-template>
+    [ngTemplateOutletContext]="{ row: row() }"
+  />
 } @else {
   @for (column of columns(); track trackColumn($index, column)) {
     <div
+      class="sto-mdl-table__body__row__cell datatable-body-cell"
+      role="cell"
+      [ngClass]="
+        column.cellClass | exec: cellValue(row(), column.prop) : column : row()
+      "
+      [ngStyle]="column | columnStyle: columnMode()"
       (contextmenu)="
         rowContextMenu.emit({
           event: $event,
@@ -16,32 +20,22 @@
           index: rowIndex(),
         })
       "
-      [ngClass]="
-        column.cellClass | exec: cellValue(row(), column.prop) : column : row()
-      "
-      [ngStyle]="column | columnStyle: columnMode()"
-      class="sto-mdl-table__body__row__cell datatable-body-cell"
-      role="cell"
     >
-      @if (!column.cellTemplate) {
-        <span [title]="cellValue(row(), column.prop) || ''">{{
-          cellValue(row(), column.prop)
-        }}</span>
-      }
       @if (column.cellTemplate) {
         <ng-template
-          #cellTemplate
+          [ngTemplateOutlet]="column.cellTemplate"
           [ngTemplateOutletContext]="{
             row: row(),
             column: column,
             value: cellValue(row(), column.prop),
             index: rowIndex(),
           }"
-          [ngTemplateOutlet]="column.cellTemplate"
-        >
-        </ng-template>
+        />
+      } @else {
+        <span [title]="cellValue(row(), column.prop) || ''">
+          {{ cellValue(row(), column.prop) }}
+        </span>
       }
     </div>
   }
 }
-<!--</div>-->

@@ -1,123 +1,129 @@
 import {
-  AfterViewInit,
+  afterNextRender,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  computed,
+  DestroyRef,
   ElementRef,
   HostListener,
-  NgModule,
-  OnDestroy,
   inject,
+  input,
+  NgModule,
+  output,
+  signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPseudoCheckboxState } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'sto-option-select-all',
   templateUrl: './sto-option-select-all.component.html',
-  styleUrls: ['./sto-option-select-all.component.scss'],
+  styleUrl: './sto-option-select-all.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatCheckboxModule],
   host: {
     class: 'mat-option',
   },
 })
-export class StoOptionSelectAllComponent<T = unknown>
-  implements AfterViewInit, OnDestroy
-{
-  private matSelect = inject(MatSelect, { host: true, optional: true });
-  private cdr = inject(ChangeDetectorRef);
-  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+export class StoOptionSelectAllComponent<T = unknown> {
+  private readonly matSelect = inject(MatSelect, {
+    host: true,
+    optional: true,
+  });
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
-  state: MatPseudoCheckboxState = 'checked';
+  /** Optional MatSelect instance to use instead of injecting from host */
+  readonly matSelectInstance = input<MatSelect | null>(null);
 
-  private options: Array<unknown> = [];
-  private destroyed = new Subject<void>();
+  private readonly options = signal<T[]>([]);
+  private readonly value = signal<T[]>([]);
 
-  private _value: Array<T> = [];
+  /** Emits true when all options are selected, false otherwise */
+  readonly selectionChange = output<boolean>();
 
-  get value() {
-    return this._value;
-  }
+  readonly state = computed<MatPseudoCheckboxState>(() => {
+    const currentValue = this.value();
+    const allOptions = this.options();
 
-  set value(value: Array<T>) {
-    this._value = value ?? [];
-  }
-
-  ngAfterViewInit() {
-    if (!this.matSelect) {
-      this.el.nativeElement.style.display = 'none';
-      return;
+    if (this.areArraysEqual(currentValue, allOptions)) {
+      return 'checked';
     }
-    this.options = this.matSelect.options?.map((x) => x.value) ?? [];
-    this.matSelect.options?.changes
-      .pipe(takeUntil(this.destroyed))
-      .subscribe(() => {
-        this.options = this.matSelect?.options.map((x) => x.value) ?? [];
-        this.updateState();
-      });
+    return currentValue.length > 0 ? 'indeterminate' : 'unchecked';
+  });
 
-    if (this.matSelect.ngControl?.control) {
-      // Null-checked via isControl
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.value = this.matSelect.ngControl.control.value;
-      this.matSelect.ngControl.valueChanges
-        ?.pipe(takeUntil(this.destroyed))
-        .subscribe((res) => {
-          this.value = res;
-          this.updateState();
-        });
-    } else {
-      this.el.nativeElement.style.display = 'none';
-    }
-    // ExpressionChangedAfterItHasBeenCheckedError fix...
-    setTimeout(() => {
-      this.updateState();
+  constructor() {
+    afterNextRender(() => {
+      this.initializeComponent();
     });
   }
 
-  ngOnDestroy() {
-    this.destroyed.next();
-    this.destroyed.complete();
-  }
+  @HostListener('click', ['$event'])
+  onSelectAllClick(event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
 
-  @HostListener('click')
-  onSelectAllClick() {
-    if (this.state === 'checked') {
-      this.matSelect?.ngControl?.control?.setValue([]);
+    const select = this.matSelectInstance() ?? this.matSelect;
+    const control = select?.ngControl?.control;
+    if (!control) return;
+
+    const currentState = this.state();
+    if (currentState === 'checked' || currentState === 'indeterminate') {
+      control.setValue([]);
     } else {
-      this.matSelect?.ngControl?.control?.setValue(this.options);
+      control.setValue(this.options());
     }
   }
 
-  private updateState() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const areAllSelected = this.areArraysEqual(this.value, this.options);
-    if (areAllSelected) {
-      this.state = 'checked';
-    } else if (this.value.length > 0) {
-      this.state = 'indeterminate';
-    } else {
-      this.state = 'unchecked';
+  private initializeComponent() {
+    const select = this.matSelectInstance() ?? this.matSelect;
+    if (!select?.ngControl?.control) {
+      this.el.nativeElement.style.display = 'none';
+      return;
     }
-    this.cdr.markForCheck();
+
+    // Set initial value from form control
+    this.value.set(select.ngControl.control.value ?? []);
+
+    // Track value changes
+    select.ngControl.control.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((newValue) => {
+        this.value.set(newValue ?? []);
+
+        // Emit selection state change
+        const allSelected = this.areArraysEqual(newValue ?? [], this.options());
+        this.selectionChange.emit(allSelected);
+      });
+
+    // Initialize options after a brief delay to ensure they're rendered
+    setTimeout(() => {
+      this.updateOptions();
+    });
+
+    // Track option changes
+    select.options?.changes
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.updateOptions());
   }
 
-  private areArraysEqual(a: Array<T>, b: Array<T>) {
-    if (!a || !b) {
+  private updateOptions() {
+    const select = this.matSelectInstance() ?? this.matSelect;
+    const optionValues = select?.options?.map((x) => x.value) ?? [];
+    this.options.set(optionValues);
+  }
+
+  private areArraysEqual(a: T[], b: T[]): boolean {
+    if (!a || !b || a.length !== b.length) {
       return false;
     }
     return [...a].sort().join(',') === [...b].sort().join(',');
   }
 }
 
-@NgModule({
-  imports: [StoOptionSelectAllComponent],
-  exports: [StoOptionSelectAllComponent],
-})
-export class StoOptionSelectAllComponentModule {}
+/**
+ * @deprecated Use StoOptionSelectAllComponent directly instead.
+ */
+

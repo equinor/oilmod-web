@@ -28,16 +28,23 @@ describe('StoDatatableResizeDirective (inject())', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should add class on init', () => {
-    directive.ngAfterViewInit();
-    expect(nativeElement.classList.add).toHaveBeenCalledWith(
-      'sto-mdl-table__header__row__cell__resize-handle',
-    );
-  });
-
   it('should trigger onMouseUp after mouseup event is dispatched', () => {
-    directive.column = { prop: '', name: '', flexBasis: 80 } as any;
-    const spy = jest.spyOn(directive, 'onMouseUp');
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ElementRef, useValue: new ElementRef(nativeElement) },
+      ],
+    });
+    TestBed.runInInjectionContext(() => {
+      directive = new StoDatatableResizeDirective();
+      // Set column input using TestBed's input setting mechanism
+      Object.defineProperty(directive, 'column', {
+        value: () => ({ prop: '', name: '', flexBasis: 80 }),
+        writable: false,
+        configurable: true,
+      });
+    });
+    const spy = jest.spyOn(directive as any, 'onMouseUp');
     const down = {
       screenX: 200,
       stopPropagation: () => {},

@@ -1,0 +1,290 @@
+// Material 3 Theme Configuration
+@use '@angular/material' as mat;
+
+// Material 3 Theme Definition
+$sto-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      use-system-variables: true,
+    ),
+    typography: (
+      use-system-variables: true,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// Apply Material 3 theme with EDS-specific system variable overrides
+@mixin apply-material-theme() {
+  @include mat.core();
+
+  :root {
+    // Apply base theme to all components
+    @include mat.all-component-themes($sto-theme);
+
+    // Base font size (13px - Equinor standard)
+    --application-font: Equinor, Roboto, sans-serif;
+    font-size: 13px;
+    font-family: var(--application-font);
+
+    // Typography sizes
+    --mat-sys-body-large-font: var(--application-font);
+    --mat-sys-body-large-size: 1rem;
+    --mat-sys-body-large-line-height: 1.25; // 20px / 13px
+    --mat-sys-label-medium-font: var(--application-font);
+    --mat-sys-label-medium-size: 1.25rem;
+    --mat-sys-label-medium-line-height: 1.333; // 17px / 13px
+    --mat-sys-label-large-font: var(--application-font);
+    --mat-sys-label-large-size: 1.077rem;
+    --mat-sys-label-large-line-height: 1.714; // 24px / 14px
+    --mat-sys-headline-large-font: var(--application-font);
+    --mat-sys-headline-large-size: 2.154rem;
+    --mat-sys-headline-large-line-height: 1.571; // 44px / 28px
+    --mat-sys-headline-medium-font: var(--application-font);
+    --mat-sys-headline-medium-size: 1.846rem;
+    --mat-sys-headline-medium-line-height: 1.333; // 32px / 24px
+    --mat-sys-title-large-font: var(--application-font);
+    --mat-sys-title-large-size: 1.538rem;
+    --mat-sys-title-large-line-height: 1.4; // 28px / 20px
+    --mat-sys-title-medium-font: var(--application-font);
+    --mat-sys-title-medium-size: 1.231rem;
+    --mat-sys-title-medium-line-height: 1.5; // 24px / 16px
+
+    // Primary color mappings - Map to Equinor teal (#007079)
+    --mat-sys-primary: var(--primary-resting);
+    --mat-sys-on-primary: var(--primary-contrast-resting);
+    --mat-sys-primary-container: var(--primary-hover-alt);
+    --mat-sys-on-primary-container: var(--text);
+    --mat-sys-primary-fixed: var(--primary-hover-alt);
+    --mat-sys-on-primary-fixed: var(--text);
+
+    // Surface color mappings - Map to EDS backgrounds
+    --mat-sys-surface: var(--bg-card);
+    --mat-sys-surface-dim: var(--bg-medium);
+    --mat-sys-surface-bright: var(--bg-default);
+    --mat-sys-surface-container: var(--bg-card);
+    --mat-sys-surface-container-low: var(--bg-light);
+    --mat-sys-surface-container-lowest: var(--bg-default);
+    --mat-sys-surface-container-high: var(--bg-card);
+    --mat-sys-surface-container-highest: var(--bg-medium);
+    --mat-sys-on-surface: var(--text);
+    --mat-sys-on-surface-variant: var(--text-secondary);
+
+    // Outline color mappings - Map to EDS dividers/borders
+    --mat-sys-outline: var(--divider);
+    --mat-sys-outline-variant: var(--border-disabled);
+
+    // Error color mappings - Map to EDS danger colors
+    --mat-sys-error: var(--danger-resting);
+    --mat-sys-on-error: var(--danger-resting-contrast);
+    --mat-sys-error-container: var(--danger-highlight);
+    --mat-sys-on-error-container: var(--danger-text);
+
+    // Background mappings
+    --mat-sys-background: var(--bg-app);
+    --mat-sys-on-background: var(--text);
+
+    // State layer opacity (hover, focus, pressed states)
+    --mat-sys-hover-state-layer-opacity: 0.08;
+    --mat-sys-focus-state-layer-opacity: 0.12;
+    --mat-sys-pressed-state-layer-opacity: 0.12;
+
+    // Shape overrides - EDS uses minimal rounding (not M3's full pill shapes)
+    --mat-sys-corner-none: 0;
+    --mat-sys-corner-extra-small: 2px;
+    --mat-sys-corner-extra-small-top: 2px 2px 0 0;
+    --mat-sys-corner-small: 4px;
+    --mat-sys-corner-medium: 4px;
+    --mat-sys-corner-large: 8px;
+    --mat-sys-corner-large-end: 0 8px 8px 0;
+    --mat-sys-corner-large-top: 8px 8px 0 0;
+    --mat-sys-corner-extra-large: 30%;
+    --mat-sys-corner-extra-large-top: 8px 8px 0 0;
+    --mat-sys-corner-full: 9999px; // Override M3's 9999px pill shapes
+
+    // Component-specific overrides using Angular Material mixins
+    // prettier-ignore
+    @include mat.badge-overrides((
+      background-color: var(--primary-highlight),
+      container-overlap-offset: -1rem -0.9rem,
+      container-padding: 0.3rem,
+      container-shape: var(--mat-sys-corner-extra-large),
+      container-size: 1.8rem,
+      text-color: var(--primary-resting),
+    ));
+    // prettier-ignore
+    @include mat.button-overrides((
+      filled-container-shape: var(--mat-sys-corner-small),
+      outlined-container-shape: var(--mat-sys-corner-small),
+      protected-container-shape: var(--mat-sys-corner-small),
+      text-container-shape: var(--mat-sys-corner-small),
+      tonal-container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.fab-overrides((
+      container-shape: var(--mat-sys-corner-full),
+      extended-container-shape: var(--mat-sys-corner-small),
+      small-container-shape: var(--mat-sys-corner-full),
+    ));
+    // prettier-ignore
+    @include mat.icon-button-overrides((
+      container-shape: var(--mat-sys-corner-full),
+    ));
+    // prettier-ignore
+    @include mat.chips-overrides((
+      container-shape-radius: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.card-overrides((
+      elevated-container-color: var(--bg-card),
+      elevated-container-shape: var(--mat-sys-corner-small),
+      filled-container-color: var(--bg-card),
+      filled-container-shape: var(--mat-sys-corner-large),
+      outlined-container-shape: var(--mat-sys-corner-large),
+    ));
+    // prettier-ignore
+    @include mat.dialog-overrides((
+      container-shape: var(--mat-sys-corner-large),
+    ));
+    // prettier-ignore
+    @include mat.menu-overrides((
+      container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.select-overrides((
+      disabled-trigger-text-color: var(--text-disabled),
+      panel-background-color: var(--bg-card),
+      trigger-text-size: var(--mat-sys-body-small-size, 1em),
+    ));
+    // prettier-ignore
+    @include mat.autocomplete-overrides((
+      container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.snack-bar-overrides((
+      container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.tooltip-overrides((
+      supporting-text-color: var(--bg-card),
+      container-color: var(--text),
+      container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.expansion-overrides((
+      container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.datepicker-overrides((
+      calendar-container-elevation-shadow: var(--mat-select-container-elevation-shadow),
+      calendar-container-shape: var(--mat-sys-corner-small),
+    ));
+    // prettier-ignore
+    @include mat.table-overrides((
+      background-color: var(--bg-card),
+      footer-container-height: 50px,
+      footer-supporting-text-font: 'Equinor, Roboto, sans-serif',
+      footer-supporting-text-line-height: 1.538,
+      footer-supporting-text-size: 1em,
+      footer-supporting-text-weight: 400,
+      header-container-height: 40px,
+      header-headline-color: var(--text),
+      header-headline-font: 'Equinor, Roboto, sans-serif',
+      header-headline-line-height: 1.538,
+      header-headline-size: 1em,
+      header-headline-weight: 400,
+      row-item-container-height: 36px,
+      row-item-label-text-color: var(--text),
+      row-item-label-text-font: 'Equinor, Roboto, sans-serif',
+      row-item-label-text-line-height: 1.538,
+      row-item-label-text-size: 1em,
+      row-item-label-text-weight: 400,
+      row-item-outline-color: var(--divider),
+      row-item-outline-width: 1px,
+    ));
+    // prettier-ignore
+    @include mat.form-field-overrides((
+      container-height: 42px,
+      container-text-line-height: var(--mat-sys-body-medium-line-height, 1.538),
+      container-text-size: var(--mat-sys-body-medium-size, 1em),
+      container-vertical-padding: 6px,
+      disabled-input-text-placeholder-color: var(--text-disabled),
+      disabled-leading-icon-color: var(--icon-disabled),
+      disabled-select-arrow-color: var(--icon-disabled),
+      disabled-trailing-icon-color: var(--icon-disabled),
+      filled-active-indicator-color: var(--bg-medium),
+      filled-active-indicator-height: 1px,
+      filled-container-color: var(--bg-light),
+      filled-disabled-input-text-color: var(--text-disabled),
+      filled-disabled-label-text-color: var(--text-disabled),
+      filled-focus-active-indicator-height: 2px,
+      filled-hover-label-text-color: var(--text),
+      filled-label-text-color: var(--text-disabled),
+      filled-with-label-container-padding-bottom: 0px,
+      filled-with-label-container-padding-top: 16px,
+      hover-state-layer-opacity: 0,
+      subscript-text-line-height: 1.182,
+      subscript-text-size: 0.846em,
+    ));
+    // prettier-ignore
+    @include mat.slide-toggle-overrides((
+      selected-handle-color: var(--mat-sys-on-primary),
+      selected-hover-handle-color: var(--mat-sys-on-primary),
+      selected-focus-handle-color: var(--mat-sys-on-primary),
+      selected-pressed-handle-color: var(--mat-sys-on-primary),
+      selected-track-color: var(--mat-sys-primary),
+      selected-hover-track-color: var(--mat-sys-primary),
+      selected-focus-track-color: var(--mat-sys-primary),
+      selected-pressed-track-color: var(--mat-sys-primary),
+      selected-with-icon-handle-horizontal-margin: 0 18px,
+      track-height: 22px,
+      track-width: 38px,
+      unselected-with-icon-handle-horizontal-margin: 0px 2px,
+      with-icon-handle-size: 19px,
+    ));
+    // prettier-ignore
+    @include mat.progress-bar-overrides((
+      active-indicator-color: var(--primary-resting),
+      active-indicator-height: 4px,
+      track-color: var(--bg-app),
+      track-height: 4px,
+    ));
+  }
+
+  // Small typography scale (10px base - compact mode)
+  .sto-sm-typography {
+    font-size: 10px;
+    // All em values remain the same, just relative to 10px base
+  }
+
+  // Large typography scale (16px base - accessibility mode)
+  .sto-l-typography {
+    font-size: 16px;
+    // All em values remain the same, just relative to 16px base
+  }
+
+  @include mat.elevation-classes();
+
+  // Smooth transitions for theme switching
+  body,
+  .sto-header,
+  .mat-card {
+    transition: background-color 200ms ease;
+  }
+
+  // Material component-specific fixes
+  .mat-typography .mat-calendar-body-cell-content.mat-focus-indicator {
+    position: absolute !important;
+  }
+
+  .mat-datepicker-content .mat-mdc-button.mat-unthemed {
+    --mat-button-text-label-text-color: var(--text) !important;
+  }
+
+  .sto-select.mat-select-panel {
+    max-height: 265px;
+  }
+}

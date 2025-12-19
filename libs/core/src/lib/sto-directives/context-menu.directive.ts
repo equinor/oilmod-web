@@ -4,7 +4,6 @@ import { MenuOverlayDirective } from './menu-overlay.directive';
 
 @Directive({
   selector: '[stoContextMenu]',
-  standalone: true,
 })
 export class ContextMenuDirective {
   readonly menuTrigger = input.required<MatMenuTrigger>();

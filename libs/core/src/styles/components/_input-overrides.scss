@@ -1,0 +1,88 @@
+@use '@angular/material' as mat;
+
+@mixin sto-input-override-theme() {
+  $border-radius: 4px;
+
+  .sto-form__field,
+  .sto-form__field.mat-mdc-form-field {
+    .mat-mdc-form-field-flex {
+      // background-color: var(--bg-light);
+
+      .mat-mdc-form-field-infix {
+        //line-height: 14px; // TODO: Proper fix.
+      }
+      .mat-input {
+        color: var(--text);
+      }
+    }
+
+    &.sto-form__field--readonly,
+    &.sto-form__field--disabled {
+      .mat-mdc-form-field-flex {
+        background-color: transparent;
+
+        .mat-mdc-form-field-infix {
+          //line-height: 14px; // TODO: Proper fix.
+        }
+
+        .mat-select-value {
+          color: var(--text);
+        }
+      }
+    }
+
+    &.sto-form__field--readonly .mat-mdc-form-field-flex {
+      background-color: transparent;
+    }
+
+    .mat-mdc-form-field-flex:hover ~ .mat-form-field-underline {
+    }
+
+    &.mat-focused .mat-mdc-form-field-infix .mat-mdc-floating-label {
+      color: var(--text);
+    }
+
+    .mat-mdc-form-field-flex:hover {
+      .mat-mdc-form-field-icon-suffix > .mat-icon {
+        color: var(--text);
+      }
+    }
+
+    .mat-mdc-form-field-icon-suffix > .mat-icon {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+@mixin apply-input-overrides-styles() {
+  .sto-form-field,
+  .sto-form__field.mat-form-field {
+    font-size: var(--mat-form-field-container-text-size);
+    line-height: var(--mat-form-field-container-text-line-height);
+
+    .mat-select-trigger {
+      height: var(--mat-form-field-container-text-size);
+    }
+  }
+
+  .sto-form__field.mat-form-field-can-float.mat-form-field-should-float {
+    .mat-mdc-floating-label-wrapper {
+      top: -1.3em;
+    }
+
+    .mat-mdc-floating-label {
+      transform: translateY(-1em) perspective(100px) translateZ(0.001px) !important;
+      font-size: var(--mat-form-field-subscript-text-size);
+    }
+
+    .cdk-overlay-container .mat-option {
+      font-size: var(--mat-form-field-container-text-size);
+      line-height: var(--mat-form-field-container-text-line-height);
+    }
+  }
+
+  .mat-option,
+  .mat-option .mat-option-text {
+    font-size: var(--mat-form-field-container-text-size);
+  }
+}

@@ -1,0 +1,132 @@
+@use '@angular/material' as mat;
+
+@mixin sto-appheader-theme() {
+  .sto-header {
+    background-color: var(--bg-card) !important;
+    //color: var(--text) !important;
+    border-bottom-color: var(--divider);
+
+    &--test-environment {
+      border: 4px solid var(--warning-resting);
+    }
+
+    &__environment--label {
+      background: var(--warning-resting);
+    }
+
+    button {
+      color: var(--primary-resting);
+
+      &:focus {
+        background-color: var(--primary-hover-alt);
+      }
+
+      &:hover {
+        background-color: var(--primary-hover-alt);
+      }
+    }
+
+    &__actions--small {
+      background: var(--bg-card);
+    }
+  }
+
+  .sto-breadcrumb {
+    &__home {
+      color: var(--primary-resting);
+
+      &:hover {
+        color: var(--primary-resting);
+      }
+    }
+
+    &__list__item {
+      color: var(--primary-resting);
+
+      &:hover {
+        color: var(--primary-resting);
+      }
+    }
+
+    .separator {
+      color: var(--primary-resting);
+    }
+  }
+}
+
+@mixin apply-appheader-styles() {
+  // Default scale (64px height)
+  .app-wrapper {
+    margin: 64px auto 0;
+  }
+  .sto-header {
+    height: 64px;
+    font-size: var(--mat-sys-title-medium-size, 16px);
+    line-height: var(--mat-sys-title-medium-line-height, 24px);
+
+    .mat-icon {
+      font-size: var(--mat-sys-headline-medium-size, 24px);
+      line-height: var(--mat-sys-headline-medium-size, 24px);
+      width: var(--mat-sys-headline-medium-size, 24px);
+      height: var(--mat-sys-headline-medium-size, 24px);
+    }
+
+    &__environment {
+      height: 64px;
+      top: -4px;
+    }
+  }
+  .sto-breadcrumb {
+    font-size: var(--mat-sys-title-medium-size, 16px);
+    line-height: var(--mat-sys-title-medium-line-height, 24px);
+
+    .mat-icon {
+      font-size: var(--mat-sys-headline-medium-size, 24px);
+      line-height: var(--mat-sys-headline-medium-size, 24px);
+      width: var(--mat-sys-headline-medium-size, 24px);
+      height: var(--mat-sys-headline-medium-size, 24px);
+    }
+  }
+
+  // Small scale (48px height)
+  .sto-sm-typography {
+    .app-wrapper {
+      margin: 48px auto 0;
+    }
+    .sto-header {
+      height: 48px;
+
+      .mat-icon {
+        font-size: var(--mat-sys-headline-medium-size, 20px);
+        line-height: var(--mat-sys-headline-medium-size, 20px);
+        width: var(--mat-sys-headline-medium-size, 20px);
+        height: var(--mat-sys-headline-medium-size, 20px);
+      }
+
+      &__environment {
+        height: 48px;
+      }
+    }
+  }
+
+  // Large scale (80px height)
+  .sto-l-typography {
+    .app-wrapper {
+      margin: 80px auto 0;
+    }
+    .sto-header {
+      height: 80px;
+
+      .mat-icon {
+        font-size: var(--mat-sys-headline-medium-size, 28px);
+        line-height: var(--mat-sys-headline-medium-size, 28px);
+        width: var(--mat-sys-headline-medium-size, 28px);
+        height: var(--mat-sys-headline-medium-size, 28px);
+      }
+
+      &__environment {
+        height: 80px;
+      }
+    }
+  }
+}

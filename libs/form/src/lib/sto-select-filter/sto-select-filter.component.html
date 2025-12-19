@@ -1,51 +1,42 @@
-@if (isFilter) {
+@if (isFilter()) {
   <div class="sto-form" style="width: 100%">
     <mat-form-field
       class="sto-form__field sto-form__field--without-placeholder"
     >
-      @if (isMulti !== false) {
-        <span matPrefix>
+      @if (isMulti()) {
+        <div matPrefix (click)="onSelectAllClick($event)">
           <mat-checkbox
-            color="primary"
+            [checked]="checkboxState() === 'checked'"
+            [indeterminate]="checkboxState() === 'indeterminate'"
             class="sto-select-filter__checkbox"
-            #selectAll
-            [indeterminate]="indeterminate"
-            [formControl]="checkboxControl"
           >
           </mat-checkbox>
-        </span>
+        </div>
       }
       <input
         [formControl]="inputControl"
         #inputElement
         class="sto-select-filter__searchfield"
         autocomplete="off"
-        [placeholder]="'Search in list'"
+        placeholder="Search in list"
         matInput
       />
-      @if (inputControl.value?.length > 0) {
-        <mat-icon
-          class="mat__icon--clickable"
-          (click)="inputControl.reset()"
-          matSuffix
-          >close</mat-icon
-        >
-      }
-      @if (inputControl.value?.length <= 0) {
+      @if (inputControl.value && inputControl.value.length > 0) {
+        <mat-icon class="mat__icon--clickable" (click)="clear()" matSuffix>
+          close
+        </mat-icon>
+      } @else {
         <mat-icon matSuffix>search</mat-icon>
       }
     </mat-form-field>
   </div>
-} @else {
-  <div class="sto-select-filter__select-all mat-option">
+} @else if (isMulti()) {
+  <div class="sto-select-filter__select-all" (click)="onSelectAllClick($event)">
     <mat-checkbox
-      color="primary"
-      class="sto-select-filter__select-all__checkbox"
-      #selectAll
-      [indeterminate]="indeterminate"
-      [formControl]="checkboxControl"
+      [checked]="checkboxState() === 'checked'"
+      [indeterminate]="checkboxState() === 'indeterminate'"
     >
-      All
+      <span>Select all</span>
     </mat-checkbox>
   </div>
 }

@@ -1,0 +1,28 @@
+
+@mixin sto-daterange-theme() {
+  .sto-daterange {
+    background-color: var(--bg-card);
+
+    .sto-daterange__error--container {
+      background-color: var(--danger-resting);
+
+      .mat-icon {
+        color: var(--danger-resting-contrast);
+      }
+    }
+  }
+  .sto-daterange-wrapper {
+    input.date-input-element {
+      color: var(--text);
+    }
+
+    .sto-form__field.mat-focused .mat-mdc-form-field-icon-suffix .mat-icon {
+      color: var(--text-secondary);
+    }
+  }
+
+  .sto-date.sto-date__popout {
+    background: var(--bg-card);
+  }
+}
+

@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandler as AngularErrorHandler } from '@angular/core';
 import { HttpError } from './http-error';
 
 /**
  * Public interface for the error handler class.
  */
 export interface StoErrorHandler {
-  [ code: number ]: Handler;
+  [code: number]: Handler;
 
   getErrorText?: (err: HttpErrorResponse) => string;
 }
@@ -13,8 +14,9 @@ export interface StoErrorHandler {
 /**
  * Internal interface for our errorhandler.
  */
-export interface ErrorHandler extends StoErrorHandler {
+export interface ErrorHandler extends StoErrorHandler, AngularErrorHandler {
   handler: (err: HttpErrorResponse, handler?: Handler) => void;
+  handleError: (err: any) => void;
   defaultHandler: Handler;
 }
 
@@ -27,4 +29,3 @@ export interface ErrorLogger {
 
 // Expected signature for error handlers.
 export type Handler = (err: HttpErrorResponse) => HttpError;
-

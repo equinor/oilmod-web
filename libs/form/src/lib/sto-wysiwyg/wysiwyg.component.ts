@@ -1,22 +1,22 @@
 import {
-  AfterViewInit,
+  afterNextRender,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  computed,
+  DestroyRef,
   ElementRef,
-  forwardRef,
   inject,
-  Input,
-  NgZone,
-  OnDestroy,
+  input,
   SecurityContext,
-  ViewChild,
+  signal,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { fromEvent, merge, Subject } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 import { Modifiers, validCommands } from './modifiers';
 import { WysiwygActionsComponent } from './wysiwyg-actions/wysiwyg-actions.component';
 import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
@@ -24,117 +24,133 @@ import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.componen
 @Component({
   selector: 'sto-wysiwyg',
   templateUrl: './wysiwyg.component.html',
-  styleUrls: ['./wysiwyg.component.scss'],
+  styleUrl: './wysiwyg.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => WysiwygComponent),
+      useExisting: WysiwygComponent,
       multi: true,
     },
   ],
   imports: [WysiwygActionsComponent, WysiwygEditorComponent],
 })
-export class WysiwygComponent
-  implements AfterViewInit, OnDestroy, ControlValueAccessor
-{
-  private domSanitizer = inject(DomSanitizer);
-  private zone = inject(NgZone);
-  private cdr = inject(ChangeDetectorRef);
+export class WysiwygComponent implements ControlValueAccessor {
+  private readonly domSanitizer = inject(DomSanitizer);
+  private readonly destroyRef = inject(DestroyRef);
 
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  // eslint-disable-next-line @angular-eslint/no-input-rename -- preserving public API 'readonly' while property name differs
-  @Input('readonly')
-  disabled: boolean;
-  @ViewChild(WysiwygEditorComponent, { read: ElementRef })
-  editor: ElementRef<HTMLDivElement>;
-  public value: SafeHtml;
-  public active: string[] = [];
-  public onTouched: unknown;
-  private destroyed$ = new Subject<boolean>();
+  readonly readonly = input(false);
+  readonly editor = viewChild.required(WysiwygEditorComponent, {
+    read: ElementRef<HTMLDivElement>,
+  });
 
-  ngAfterViewInit() {
-    this.listenForSelectEvents();
-  }
+  private readonly disabledState = signal(false);
+  protected readonly isDisabled = computed(
+    () => this.readonly() || this.disabledState(),
+  );
 
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+  protected readonly value = signal<string>('');
+  protected readonly sanitizedValue = computed(() => {
+    const val = this.value();
+    if (!val) return '';
+    return this.domSanitizer.sanitize(SecurityContext.HTML, val) ?? '';
+  });
+  protected readonly active = signal<string[]>([]);
+
+  private onTouched = () => {};
+  private onChange = (_value: string) => {};
+
+  constructor() {
+    afterNextRender(() => {
+      this.setupSelectionTracking();
+    });
   }
 
   execute(method: string) {
     if (!validCommands.includes(method)) {
       return;
     }
-    const showUi = method === 'createLink';
-    if (showUi) {
+
+    if (method === 'createLink') {
       const url = window.prompt('url');
       if (url) {
         document.execCommand(method, false, url);
       }
+    } else if (method === 'insertImage') {
+      this.insertImage();
+      return;
     } else {
       document.execCommand(method, false, '');
     }
-    this.active = Modifiers.getActiveModifiers();
-    this.cdr.detectChanges();
+
+    this.updateActiveModifiers();
+  }
+
+  insertImage() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e: Event) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = `<img src="${event.target?.result}" style="max-height: 300px;" />`;
+          document.execCommand('insertHTML', false, img);
+          this.updateActiveModifiers();
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
   }
 
   onKeyDownHandleTab(event: KeyboardEvent) {
     if (event.key === 'Tab') {
       event.preventDefault();
-      let method: string;
-      if (event.shiftKey) {
-        method = 'outdent';
-      } else {
-        method = 'indent';
-      }
+      const method = event.shiftKey ? 'outdent' : 'indent';
       this.execute(method);
     }
   }
 
   writeValue(value: string): void {
-    if (value) {
-      const sanitized =
-        this.domSanitizer.sanitize(SecurityContext.HTML, value) ?? '';
-      this.value = this.domSanitizer.bypassSecurityTrustHtml(sanitized);
-      this.cdr.detectChanges();
-    }
+    this.value.set(value ?? '');
   }
 
-  propagateChange = (value: unknown) => {
-    console.log(value); // To remove eslint warning..
-  };
-
-  registerOnChange(fn: never): void {
-    this.propagateChange = fn;
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
   }
 
-  registerOnTouched(fn: unknown): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-    this.cdr.detectChanges();
+    this.disabledState.set(isDisabled);
   }
 
   valueChanged(value: string) {
-    this.propagateChange(value);
+    this.value.set(value);
+    this.onChange(value);
   }
 
-  private listenForSelectEvents() {
+  private setupSelectionTracking() {
+    const editorEl = this.editor().nativeElement;
+
     merge(
-      fromEvent(this.editor.nativeElement, 'mouseup'),
-      fromEvent<KeyboardEvent>(this.editor.nativeElement, 'keyup').pipe(
+      fromEvent(editorEl, 'mouseup'),
+      fromEvent<KeyboardEvent>(editorEl, 'keyup').pipe(
         filter((ev) => (ev.ctrlKey && ev.key === 'A') || /Arrow/.test(ev.key)),
       ),
     )
-      .pipe(debounceTime(200), takeUntil(this.destroyed$))
+      .pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.active = Modifiers.getActiveModifiers();
-        this.cdr.detectChanges();
+        this.updateActiveModifiers();
       });
+  }
+
+  private updateActiveModifiers() {
+    this.active.set(Modifiers.getActiveModifiers());
   }
 }

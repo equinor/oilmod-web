@@ -1,0 +1,83 @@
+@use '@angular/material' as mat;
+
+@mixin sto-message-panel-theme() {
+  .sto-message-panel {
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    display: flex;
+    border-radius: 2px;
+    padding: 12px;
+    position: relative;
+    font-weight: 500;
+    font-size: 13px;
+    z-index: 25;
+
+    // Colors defined in status-indicators
+    background-color: var(--message-panel-bg);
+    color: var(--message-panel-color);
+    border-color: var(--message-panel-border);
+
+    &--dismissable {
+      padding: 4px 12px;
+    }
+    &__content-wrapper {
+      align-items: center;
+    }
+    &__icon-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: auto;
+      flex-grow: 1;
+      min-width: 42px;
+      max-width: 42px;
+    }
+    &__content-wrapper {
+      padding-top: 2px;
+      flex-grow: 99;
+    }
+    &__dismiss-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: auto;
+      flex-grow: 1;
+      max-width: 42px;
+    }
+    &__sticky {
+      position: sticky;
+      &--bottom {
+        padding-top: 8px;
+        bottom: 0;
+      }
+      &--top {
+        top: 0;
+        padding-bottom: 8px;
+      }
+    }
+    .mat-icon {
+      color: var(--message-panel-icon);
+    }
+    ul {
+      margin: 0;
+      list-style: none;
+      padding: 0;
+    }
+    .sto-message-panel__content-wrapper {
+      display: flex;
+    }
+    .sto-message-panel__action-button {
+      height: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .sto-has-action-footer,
+  .sto-message-panel__pad--bottom {
+    .sto-message-panel__sticky--bottom {
+      bottom: 76px;
+      width: 100%;
+    }
+  }
+}

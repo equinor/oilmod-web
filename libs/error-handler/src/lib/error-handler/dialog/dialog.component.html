@@ -1,5 +1,4 @@
-<h3 style="font-weight: 500"
-  mat-dialog-title>
+<h3 style="font-weight: 500" mat-dialog-title>
   {{ data.title }}
 </h3>
 <mat-dialog-content>
@@ -7,15 +6,14 @@
 </mat-dialog-content>
 <mat-dialog-actions style="justify-content: flex-end">
   @if (!(data.actions || []).length) {
-    <button color="primary"
-      mat-button
-      mat-dialog-close>OK
-    </button>
+    <button color="primary" matButton="filled" mat-dialog-close>OK</button>
   }
   @for (a of data.actions; track a) {
-    <button color="primary"
-      mat-button
-      (click)="handleEvent(a.action || a.closeDialogData)">
+    <button
+      color="primary"
+      matButton="filled"
+      (click)="handleEvent(a.action || a.closeDialogData)"
+    >
       {{ a.label }}
     </button>
   }

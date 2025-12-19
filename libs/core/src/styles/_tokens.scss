@@ -1,0 +1,122 @@
+// Design Tokens - CSS Custom Properties
+// Single source of truth for all colors, spacing, and design values
+
+:root {
+  color-scheme: light dark;
+
+  // EDS (Equinor Design System) Base Colors
+  // Foreground colors (text, borders, dividers)
+  --eds-foreground-primary: light-dark(#3d3d3d, #ffffff);
+  --eds-foreground-secondary: light-dark(#565656, #dee5e7);
+  --eds-foreground-tertiary: light-dark(#6f6f6f, #9ca6ac);
+  --eds-foreground-disabled: light-dark(#bebebe, #637583);
+  --eds-foreground-divider: light-dark(#dcdcdc, #3e4f5c);
+
+  // Background colors
+  --eds-background-default: light-dark(#ffffff, #132634);
+  --eds-background-semi-transparent: light-dark(
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.16)
+  );
+  --eds-background-light: light-dark(#f7f7f7, #2e3f4d);
+  --eds-background-medium: light-dark(#dcdcdc, #243746);
+  --eds-background-info: light-dark(#d5eaf4, #d5eaf4);
+  --eds-background-warning: light-dark(#ffe7d6, rgba(255, 198, 122, 0.1));
+  --eds-background-danger: light-dark(#ffc1c1, rgba(255, 102, 112, 0.1));
+  --eds-background-scrim: light-dark(rgba(0, 0, 0, 0.4), #132634);
+  --eds-background-overlay: light-dark(rgba(0, 0, 0, 0.8), #2e3f4d);
+  --eds-background-disabled: light-dark(#eaeaea, #344450);
+  --eds-background-hover: light-dark(#eaeaea, #324d62);
+  --eds-background-focus: light-dark(#007079, #2e3f4d);
+
+  // Primary Colors
+  --primary-highlight: light-dark(#e6faec, #007079);
+  --primary-selected-hover: light-dark(#c3f3d2, #004f55);
+  --primary-resting: light-dark(#007079, #97cace);
+  --primary-hover: light-dark(#004f55, #ade2e6);
+  --primary-hover-alt: #deedee;
+  --primary-text: light-dark(#007079, #d5eaf4);
+  --primary-contrast-highlight: light-dark(rgba(0, 0, 0, 0.87), black);
+  --primary-contrast-resting: light-dark(white, black);
+  --primary-contrast-hover: light-dark(white, white);
+  --primary-fill-activated: light-dark(#e6faec, #243746);
+
+  // Accent Colors
+  --accent-highlight: light-dark(#d5eaf4, rgba(255, 255, 255, 0.1));
+  --accent-resting: light-dark(#243746, #dee5e7);
+  --accent-hover: light-dark(#18252f, #ffffff);
+  --accent-text: light-dark(#243746, #dee5e7);
+  --accent-toggle: light-dark(#243746, #d5eaf4);
+  --accent-highlight-contrast: light-dark(black, white);
+  --accent-resting-contrast: light-dark(white, black);
+  --accent-hover-contrast: light-dark(white, black);
+
+  // Status Colors - Warning
+  --warning-highlight: light-dark(#ffe7d6, rgba(255, 198, 122, 0.1));
+  --warning-resting: #ff9200;
+  --warning-hover: light-dark(#ad6200, #ffdaa8);
+  --warning-text: light-dark(#ad6200, #ffc67a);
+  --warning-highlight-contrast: light-dark(rgba(0, 0, 0, 0.87), black);
+  --warning-resting-contrast: light-dark(rgba(0, 0, 0, 0.87), black);
+  --warning-hover-contrast: light-dark(white, black);
+  --warning-text-contrast: light-dark(white, black);
+
+  // Status Colors - Success
+  --success-highlight: light-dark(#e6faec, rgba(161, 218, 160, 0.1));
+  --success-resting: #4bb748;
+  --success-hover: light-dark(#358132, #c1e7c1);
+  --success-text: light-dark(#358132, #a1daa0);
+  --success-highlight-contrast: black;
+  --success-resting-contrast: light-dark(black, white);
+  --success-hover-contrast: light-dark(white, black);
+
+  // Status Colors - Danger
+  --danger-highlight: light-dark(#ffc1c1, rgba(255, 102, 112, 0.1));
+  --danger-resting: #eb0000;
+  --danger-hover: light-dark(#b30d2f, #ff949b);
+  --danger-text: light-dark(#b30d2f, #ff6670);
+  --danger-highlight-contrast: light-dark(black, white);
+  --danger-resting-contrast: white;
+  --danger-hover-contrast: light-dark(white, black);
+
+  // Text Colors (using EDS base colors)
+  --text: var(--eds-foreground-primary);
+  --text-secondary: var(--eds-foreground-secondary);
+  --text-tertiary: var(--eds-foreground-tertiary);
+  --text-disabled: light-dark(
+    hsl(from #bebebe h s 48%),
+    hsl(from #bebebe h s 68%)
+  );
+  --icon-disabled: light-dark(
+    hsl(from #bebebe h s 68%),
+    hsl(from #bebebe h s 48%)
+  );
+  --border-disabled: var(--eds-foreground-disabled);
+  --divider: var(--eds-foreground-divider);
+
+  // Background Colors (using EDS base colors)
+  --bg-default: var(--eds-background-default);
+  --bg-app: light-dark(
+    var(--eds-background-light),
+    var(--eds-background-default)
+  );
+  --bg-card: light-dark(#ffffff, #243746);
+  --bg-semi-transparent: var(--eds-background-semi-transparent);
+  --bg-light: var(--eds-background-light);
+  --bg-medium: var(--eds-background-medium);
+  --bg-info: var(--eds-background-info);
+  --bg-warning: var(--eds-background-warning);
+  --bg-danger: var(--eds-background-danger);
+  --bg-scrim: var(--eds-background-scrim);
+  --bg-overlay: var(--eds-background-overlay);
+  --bg-disabled: var(--eds-background-disabled);
+  --bg-hover: var(--eds-background-hover);
+  --bg-focus: var(--eds-background-focus);
+
+  &:has(:not(.sto-dark-theme)) {
+    color-scheme: light;
+  }
+  &:has(.sto-dark-theme) {
+    color-scheme: dark;
+  }
+}

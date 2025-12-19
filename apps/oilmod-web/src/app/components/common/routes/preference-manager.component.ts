@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Preference, PreferenceManagerComponent as StoPreferenceManagerComponent, StoFilterPanelModule } from '@ngx-stoui/common';
+import { Preference, PreferenceManagerComponent as StoPreferenceManagerComponent } from '@ngx-stoui/common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { preferenceManagerComponentCode } from './preference-manager.component.code';
 import { HighlightModule } from 'ngx-highlightjs';
 import { DemoComponent } from '../../demo.component';
+import { StoFilterPanelComponent, StoFilterTitle } from '../../../../../../../libs/common/src/lib/sto-filter/sto-filter-panel.component';
 
 @Component({
     template: `
@@ -42,13 +43,14 @@ import { DemoComponent } from '../../demo.component';
 
   `,
     imports: [
-        StoFilterPanelModule,
-        StoPreferenceManagerComponent,
-        ReactiveFormsModule,
-        MatExpansionModule,
-        HighlightModule,
-        DemoComponent
-    ]
+    StoFilterPanelComponent,
+    StoFilterTitle,
+    StoPreferenceManagerComponent,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    HighlightModule,
+    DemoComponent
+]
 })
 export class PreferenceManagerComponent {
   preferenceManagerComponentCode = preferenceManagerComponentCode;

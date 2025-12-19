@@ -1,32 +1,25 @@
 import {
-  AfterViewInit,
+  afterNextRender,
   Component,
+  computed,
+  DestroyRef,
+  effect,
   ElementRef,
-  forwardRef,
-  HostBinding,
   inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
+  input,
+  output,
+  signal,
+  viewChild,
   ViewEncapsulation,
-  output
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  UntypedFormControl,
-} from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatPseudoCheckboxState } from '@angular/material/core';
 import {
   MatFormField,
-  MatLabel,
   MatPrefix,
   MatSuffix,
 } from '@angular/material/form-field';
@@ -34,198 +27,185 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 
 /**
- * Component used in mat-select's to filter out the values, and adds a Select all checkbox
- * @deprecated will be removed in v14 or v15, use {@link StoOptionSelectAllComponent}
+ * Component for filtering options in mat-select dropdowns with integrated select-all functionality.
  *
  * @example
- *
+ * ```typescript
  * public all = ["a", "b", "c"];
- * public filtered = [];
- * public selectAll(checked: boolean) {
- *  this.control.setValue(checked ? all : []);
- * }
+ * public filtered = all;
+ *
  * public filter(val: string) {
- *    this.filtered = all.filter(x => x === val);
+ *   this.filtered = this.all.filter(x => x.includes(val));
  * }
- * <mat-select [formControl]="control">
- *   <sto-select-filter (valueChanges)="filter($event)" (selectAll)="selectAll($event)"></sto-select-filter>
- *   <mat-option *ngFor="let v of filtered">{{ v }}</mat-option>
+ *
+ * public selectAll(checked: boolean) {
+ *   this.control.setValue(checked ? this.filtered : []);
+ * }
+ * ```
+ *
+ * ```html
+ * <mat-select [formControl]="control" [multiple]="true">
+ *   <sto-select-filter
+ *     [isFilter]="true"
+ *     [isMulti]="true"
+ *     (valueChanges)="filter($event)"
+ *     (selectAll)="selectAll($event)">
+ *   </sto-select-filter>
+ *   <mat-option *ngFor="let v of filtered" [value]="v">{{ v }}</mat-option>
  * </mat-select>
+ * ```
  */
 
 @Component({
   selector: 'sto-select-filter',
   templateUrl: './sto-select-filter.component.html',
-  styleUrls: ['./sto-select-filter.component.scss'],
+  styleUrl: './sto-select-filter.component.scss',
   encapsulation: ViewEncapsulation.None,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => StoSelectFilterComponent),
-      multi: true,
-    },
-  ],
+  host: {
+    class: 'sto-select-filter',
+  },
   imports: [
     MatFormField,
     MatPrefix,
-    MatCheckbox,
     FormsModule,
     ReactiveFormsModule,
-    MatLabel,
     MatInput,
     MatIcon,
     MatSuffix,
+    MatCheckbox,
   ],
 })
-export class StoSelectFilterComponent
-  implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor
-{
-  select = inject(MatSelect);
+export class StoSelectFilterComponent {
+  private readonly destroyRef = inject(DestroyRef);
+  readonly select = inject(MatSelect);
 
-  @HostBinding('class.sto-select-filter') cssClass = true;
-  @ViewChild('inputElement')
-  public inputElement: ElementRef<HTMLInputElement>;
-  public checkboxControl = new UntypedFormControl();
-  public inputControl = new UntypedFormControl();
-  public indeterminate: boolean;
-  /**
-   * Emits when selectAll checkbox changes
-   */
+  readonly inputElement =
+    viewChild<ElementRef<HTMLInputElement>>('inputElement');
+
+  readonly inputControl = new FormControl<string>('');
+
+  private readonly options = signal<unknown[]>([]);
+  private readonly selectedValue = signal<unknown[]>([]);
+
+  readonly checkboxState = computed<MatPseudoCheckboxState>(() => {
+    if (!this.isMulti()) return 'unchecked';
+
+    const selectedCount = this.selectedValue().filter((val) =>
+      this.options().includes(val),
+    ).length;
+    const totalCount = this.options().length;
+
+    if (selectedCount === totalCount && totalCount > 0) return 'checked';
+    if (selectedCount > 0) return 'indeterminate';
+    return 'unchecked';
+  });
+
+  /** Emits when the filter value changes */
+  readonly valueChanges = output<string>();
+
+  /** Emits when selectAll checkbox changes */
   readonly selectAll = output<boolean>();
-  /**
-   * Emits when the search value changes
-   */
-  readonly valueChanges = output<unknown>();
-  /**
-   * isMulti determines if select all is available
-   */
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input() isMulti: boolean;
-  /**
-   * isFilter determines if filtering is active
-   */
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input() isFilter: boolean;
-  /**
-   * automatically focus input element if it's empty
-   */
-  // TODO: Skipped for migration because:
-  //  Your application code writes to the input. This prevents migration.
-  @Input() focusIfNoValue: boolean;
-  private destroyed$ = new Subject();
 
-  private _value: unknown;
+  /** Determines if select all is available */
+  readonly isMulti = input(true);
 
-  get value(): unknown {
-    return this._value;
-  }
+  /** Determines if filtering is active */
+  readonly isFilter = input(true);
 
-  /**
-   * Initial value of the filter
-   */
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input() set value(value: unknown) {
-    this._value = value;
-    this.writeValue(value);
-  }
+  /** Automatically focus input element if it's empty */
+  readonly focusIfNoValue = input(true);
 
-  private _total: number;
+  /** Initial value of the filter */
+  readonly value = input<unknown>();
 
-  get total(): number {
-    return this._total;
-  }
+  /** @deprecated This input is no longer used. The component calculates the total automatically from available options. */
+  readonly total = input<number>();
 
-  /**
-   * Length of unfiltered Array
-   * @param total
-   */
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input() set total(total: number) {
-    this._total = total;
-  }
+  /** @deprecated This input is no longer used. The component calculates the selected count automatically from the form control value. */
+  readonly selected = input<number>();
 
-  private _selected: number;
+  constructor() {
+    afterNextRender(() => {
+      this.initializeSelectAllTracking();
+    });
 
-  get selected(): number {
-    return this._selected;
-  }
+    // Sync value input to filter control
+    effect(() => {
+      const val = this.value();
+      if (val !== undefined && val !== this.inputControl.value) {
+        this.inputControl.setValue(val as string, { emitEvent: false });
+      }
+    });
 
-  /**
-   * Determines the checkbox state. Can be checked, indeterminate or unchecked
-   * @param selected
-   */
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input() set selected(selected: number) {
-    if (this.total === selected) {
-      this.isChecked(true);
-      this.indeterminate = false;
-    } else if (selected > 0) {
-      this.indeterminate = true;
-      this.isChecked(false);
-    } else {
-      this.indeterminate = false;
-      this.isChecked(false);
-    }
-    this._selected = selected;
-  }
-
-  public isChecked(isChecked: boolean) {
-    this.checkboxControl.setValue(isChecked, { emitEvent: false });
-  }
-
-  writeValue(value: unknown) {
-    if (value || value === '') {
-      this.inputControl.setValue(value);
-    }
-  }
-
-  propagateChange = (value: unknown) => {
-    this.valueChanges.emit(value);
-  };
-
-  registerOnChange(fn: never): void {
-    this.propagateChange = fn;
-  }
-
-  // eslint-disable-next-line
-  registerOnTouched(fn: unknown): void {}
-
-  ngOnDestroy() {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
-  }
-
-  ngAfterViewInit(): void {
-    if (this.select) {
-      this.select.openedChange
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((open) => {
-          if (open && this.focusIfNoValue && this.isMulti) {
-            this.inputElement?.nativeElement.focus();
-          }
-        });
-    }
-  }
-
-  ngOnInit() {
-    this.checkboxControl.valueChanges
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((isChecked) => {
-        this.selectAll.emit(isChecked);
-      });
-
-    this.inputControl.valueChanges
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((value) => {
-        if (!value && this.focusIfNoValue) {
-          requestAnimationFrame(() => this.inputElement.nativeElement.focus());
+    // Focus input when select opens
+    this.select.openedChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((open) => {
+        if (open && this.focusIfNoValue() && this.isMulti()) {
+          requestAnimationFrame(() => {
+            this.inputElement()?.nativeElement.focus();
+          });
         }
-        this.propagateChange(value);
       });
+
+    // Emit filter changes
+    this.inputControl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        this.valueChanges.emit(value ?? '');
+      });
+  }
+
+  onSelectAllClick(event: MouseEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const control = this.select?.ngControl?.control;
+    if (!control) return;
+
+    const currentState = this.checkboxState();
+    if (currentState === 'checked' || currentState === 'indeterminate') {
+      control.setValue([]);
+      this.selectAll.emit(false);
+    } else {
+      control.setValue(this.options());
+      this.selectAll.emit(true);
+    }
+  }
+
+  private initializeSelectAllTracking(): void {
+    if (!this.isMulti() || !this.select?.ngControl?.control) {
+      return;
+    }
+
+    // Set initial value from form control
+    this.selectedValue.set(this.select.ngControl.control.value ?? []);
+
+    // Track value changes
+    this.select.ngControl.control.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((newValue) => {
+        this.selectedValue.set(newValue ?? []);
+      });
+
+    // Initialize options after a brief delay to ensure they're rendered
+    setTimeout(() => {
+      this.updateOptions();
+    });
+
+    // Track option changes
+    this.select.options?.changes
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.updateOptions());
+  }
+
+  private updateOptions(): void {
+    const optionValues = this.select?.options?.map((x) => x.value) ?? [];
+    this.options.set(optionValues);
+  }
+
+  /** Clears the filter input */
+  clear(): void {
+    this.inputControl.reset('');
   }
 }

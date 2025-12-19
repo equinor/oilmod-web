@@ -12,7 +12,7 @@ Content (HTML) that is inside the header of the drawer.
 <sto-drawer-header>
   <h3>Price</h3>
   <div class="sto-drawer__header__suffix">
-    <button type="button" mat-icon-button (click)="cancel()">
+    <button type="button" matIconButton (click)="cancel()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -26,8 +26,8 @@ Content (HTML) that is inside the header footer.
 ```html
 <sto-drawer-footer>
   <mat-progress-bar class="sto-progress-bar" mode="indeterminate" *ngIf="!hasData || (isLoading$ | async)"></mat-progress-bar>
-  <button mat-raised-button (click)="save()" color="primary">Save</button>
-  <button mat-button (click)="cancel(true)" color="primary">Cancel</button>
+  <button matButton="elevated" (click)="save()" color="primary">Save</button>
+  <button matButton="filled" (click)="cancel(true)" color="primary">Cancel</button>
 </sto-drawer-footer>
 ```
 

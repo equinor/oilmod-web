@@ -2,30 +2,27 @@ import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   computed,
   contentChild,
+  DestroyRef,
   effect,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
   input,
   linkedSignal,
   model,
-  OnDestroy,
-  Output,
   output,
   signal,
   TemplateRef,
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Sort } from '@angular/material/sort';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, map, startWith, takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { debounceTime, map, startWith } from 'rxjs/operators';
+import { StoRowWidthHelper } from '../sto-row-width.helper';
 import { ColumnStylePipe } from './column-style.pipe';
 import { Column, ColumnDisplay, ColumnGroup, Group } from './columns';
 import {
@@ -69,12 +66,11 @@ import { StoDatatableHeaderComponent } from './sto-datatable-header/sto-datatabl
     '[class.responsive]': 'smallScreen()',
     '[class.resizeable]': 'resizeable()',
   },
+  providers: [StoRowWidthHelper],
 })
-export class StoDatatableComponent<T extends object>
-  implements AfterViewInit, OnDestroy
-{
-  private elRef = inject(ElementRef);
-  private cdr = inject(ChangeDetectorRef);
+export class StoDatatableComponent<T extends object> implements AfterViewInit {
+  private readonly elRef = inject(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly groups = input<Array<Group>>([]);
   readonly rowHeight = input<number>(36);
@@ -103,24 +99,20 @@ export class StoDatatableComponent<T extends object>
 
   readonly body = viewChild.required(StoDatatableBodyComponent<T>);
   readonly actions = contentChild(StoDatatableActionsComponent);
-  ColumnDisplay = ColumnDisplay;
-  public rowTotalHeight: number;
-  selected = model<T>();
-  public smallScreen = signal(false);
+  readonly ColumnDisplay = ColumnDisplay;
 
-  // TODO: Cannot migrate because:
-  // Your application code relies on internal rxjs only implementation details
-  @Output()
-  // eslint-disable-next-line @angular-eslint/no-output-native -- keeping legacy public API '(select)' output
-  select = new EventEmitter<RowSelection<T>>();
+  selected = model<T>();
+  readonly smallScreen = signal(false);
+  readonly scrollLeft = signal('translate3d(0px, 0px, 0px)');
+
+  // Outputs
+  readonly select = output<RowSelection<T>>();
   readonly resized = output<Column>();
   readonly rowContextMenu = output<RowContextMenu<T>>();
   readonly headerContextMenu = output<HeaderContextMenu>();
   readonly rowActivate = output<RowActivation<T>>();
   readonly sortChanged = output<{ sort: Sort; column: Column }>();
-  public scrollLeft = 'translate3d(0px, 0px, 0px)';
-  public scrollNum: number;
-  private destroyed$ = new Subject();
+
   private resizeTimeout: number | undefined;
 
   private sortKey = `${window?.location?.hostname}_${window?.location?.pathname}_sort`;
@@ -147,10 +139,10 @@ export class StoDatatableComponent<T extends object>
       (this.autoSize() ? `${this._calcHeight()}px` : `${this.height()}px`) ||
       'auto',
   );
-  private _calcHeight = toSignal(
+  private readonly _calcHeight = toSignal(
     fromEvent(window, 'resize').pipe(
       startWith(null),
-      debounceTime(20), // ~1 animation frame
+      debounceTime(100), // Increased to reduce expensive getBoundingClientRect calls
       map(() =>
         (this.elRef.nativeElement as HTMLElement).getBoundingClientRect(),
       ),
@@ -163,6 +155,7 @@ export class StoDatatableComponent<T extends object>
           this.autoSizeOffset() -
           (this.actions() ? 6 : 0),
       ),
+      takeUntilDestroyed(this.destroyRef),
     ),
   );
   readonly bodyHeight = computed<number>(() => {
@@ -170,107 +163,105 @@ export class StoDatatableComponent<T extends object>
 
     const hasHeader =
       !this._responsive() || (this._responsive() && !this.smallScreen());
+    const footerRows = this._footerRows();
     const hasFooter =
-      this.footerRow &&
+      footerRows &&
       (!this._responsive() || (this._responsive() && !this.smallScreen()));
     const hasHeaderGroup =
       (!this._responsive() || (this._responsive() && !this.smallScreen())) &&
       this.columnGroups()?.length;
     const headerOffset = hasHeader ? this.headerHeight() : 0;
     const actionsHeight = this.actions() ? this.actions()!.height() : 0;
-    let footerOffset = 0;
-    if (hasFooter && this.footerRow instanceof Array) {
-      footerOffset = this.rowHeight() * this.footerRow.length;
-    } else if (hasFooter) {
-      footerOffset = this.rowHeight();
-    }
+    const footerOffset = hasFooter ? this.rowHeight() * footerRows.length : 0;
     const groupOffset = hasHeaderGroup ? this.headerHeight() : 0;
+
+    // Optimize string parsing - avoid double replace
+    const heightStr = this._height();
+    const heightValue = heightStr === 'auto' ? 0 : parseFloat(heightStr);
+
     return (
-      Number(this._height().replace('px', '').replace('auto', '0')) -
-      headerOffset -
-      footerOffset -
-      groupOffset -
-      actionsHeight
+      heightValue - headerOffset - footerOffset - groupOffset - actionsHeight
     );
   });
 
   width = computed(() => {
     if (this.scrollbarH() && this._columns()) {
       const widthOffset =
-        this.bodyHeight() && this.rowTotalHeight > this.bodyHeight() ? 12 : 0;
+        this.bodyHeight() && this.rowTotalHeight() > this.bodyHeight() ? 12 : 0;
       return `${this.columnTotalWidth() + widthOffset}px`;
     }
     return 'auto';
   });
 
-  private _rows: T[];
-  private _internalRows: T[];
+  // Rows management with signals
+  readonly rows = input<T[]>([]);
+  readonly footerRow = input<T | T[]>();
 
-  get rows() {
-    return this._internalRows;
-  }
+  private readonly _sortedRows = signal<T[]>([]);
 
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  set rows(rows: T[]) {
-    this._rows = rows;
+  readonly rowTotalHeight = computed(
+    () => (this.rows()?.length || 0) * this.rowHeight(),
+  );
 
-    this.rowTotalHeight = (rows || []).length * this.rowHeight();
+  readonly _internalRows = computed(() => {
+    const currentSort = this.activeSort();
+    if (!currentSort || currentSort.direction === '' || this.externalSort()) {
+      return this.rows() || [];
+    }
+    return this._sortedRows() || [];
+  });
 
-    if (rows && rows.length > 0) {
-      this._internalRows = [...(rows || [])];
-      const externalSort = this.externalSort();
-      if (!this.preserveSort() && !externalSort) {
-        this.activeSort.set(null);
-      }
+  readonly _footerRows = computed(() => {
+    const footer = this.footerRow();
+    if (!footer || typeof footer !== 'object') {
+      return undefined;
+    }
+    return Array.isArray(footer) ? footer : [footer];
+  });
 
-      if (this.activeSort() && !externalSort) {
-        const column = (this._columns() || []).find(
-          (col) => col.$$id === this.activeSort()?.active,
-        );
-        if (column && this.activeSort()) {
-          this.sort(this.activeSort() as Sort);
-        }
+  // Effect to handle initial sorting when rows change
+  private onRowsChange = effect(() => {
+    const rows = this.rows();
+    const currentSort = this.activeSort();
+
+    if (!rows || rows.length === 0) {
+      this._sortedRows.set([]);
+      return;
+    }
+
+    const externalSort = this.externalSort();
+    if (!this.preserveSort() && !externalSort) {
+      this.activeSort.set(null);
+    }
+
+    if (currentSort && !externalSort) {
+      const column = this._columns().find(
+        (col) => col.$$id === currentSort.active,
+      );
+      if (column) {
+        this.performSort(currentSort);
       }
     } else {
-      this._internalRows = [];
+      this._sortedRows.set([...rows]);
     }
-  }
-
-  private _footerRow: T;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input('footerRow')
-  get footerRow() {
-    if (this._footerRow && typeof this._footerRow === 'object') {
-      if (this._footerRow instanceof Array) {
-        return this._footerRow;
-      }
-      return [this._footerRow];
-    }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  set footerRow(row: any) {
-    this._footerRow = row;
-  }
+  });
 
   readonly columns = input<Column[]>([]);
-  public _columns = linkedSignal<Column[]>(() => {
-    if (this.columns() == null || this.columns().length === 0) {
+  readonly _columns = linkedSignal<Column[]>(() => {
+    const cols = this.columns();
+    if (cols == null || cols.length === 0) {
       return [];
     }
-    const columns = this.columns().map((column, index) => ({
+    const isResizeable = this.resizeable();
+    // Cache column transformations to avoid recreating objects
+    return cols.map((column, index) => ({
       ...column,
       $$id: btoa(`${column.prop}${column.name}${index}`),
-      flexShrink: this.resizeable() ? 0 : column.flexShrink,
-      flexGrow: this.resizeable() ? 0 : column.flexGrow,
+      flexShrink: isResizeable ? 0 : column.flexShrink,
+      flexGrow: isResizeable ? 0 : column.flexGrow,
     }));
-    return columns;
   });
-  public columnTotalWidth = computed(() =>
+  readonly columnTotalWidth = computed(() =>
     this._columns()
       .map((c) => c.flexBasis || 80)
       .reduce((a, b) => a + b, 0),
@@ -302,19 +293,17 @@ export class StoDatatableComponent<T extends object>
       this._responsive.set(false);
     } else if (this._responsive()) {
       observeWidth(this.elRef.nativeElement)
-        .pipe(takeUntil(this.destroyed$))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((width) =>
           this.smallScreen.set(width < this.responsiveBreakPoint()),
         );
     }
-  }
 
-  ngOnDestroy(): void {
-    if (this.resizeTimeout) {
-      clearTimeout(this.resizeTimeout);
-    }
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    this.destroyRef.onDestroy(() => {
+      if (this.resizeTimeout) {
+        clearTimeout(this.resizeTimeout);
+      }
+    });
   }
 
   public scrollTo(item: T | number, behaviour: ScrollBehavior = 'smooth') {
@@ -322,7 +311,7 @@ export class StoDatatableComponent<T extends object>
       if (typeof item === 'number') {
         this.scrollToIndex(item, behaviour);
       } else {
-        const index = this.rows.indexOf(item);
+        const index = this._internalRows().indexOf(item);
         if (index >= 0) {
           this.scrollToIndex(index, behaviour);
         }
@@ -332,19 +321,28 @@ export class StoDatatableComponent<T extends object>
 
   setHeaderScroll(event: Event) {
     const left = (event.target as HTMLElement).scrollLeft;
-    this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
-    this.cdr.detectChanges();
+    // Optimize: avoid template literal when value is 0
+    this.scrollLeft.set(
+      left === 0
+        ? 'translate3d(0px, 0px, 0px)'
+        : `translate3d(-${left}px, 0px, 0px)`,
+    );
   }
 
   scrollBodyAndHeader(event: Event) {
     const left = (event.target as HTMLElement).scrollLeft;
-    this.scrollLeft = `translate3d(-${left}px, 0px, 0px)`;
+    // Optimize: avoid template literal when value is 0
+    this.scrollLeft.set(
+      left === 0
+        ? 'translate3d(0px, 0px, 0px)'
+        : `translate3d(-${left}px, 0px, 0px)`,
+    );
   }
 
   sort(sort: Sort) {
     if (!sort.active || sort.direction === '') {
-      this._internalRows = [...(this._rows || [])];
       this.activeSort.set(null);
+      this._sortedRows.set([...this.rows()]);
       return;
     }
     this.activeSort.set(sort);
@@ -356,24 +354,33 @@ export class StoDatatableComponent<T extends object>
       this.sortChanged.emit({ sort, column });
       return;
     }
-    const fn = column.sortFn || this.defaultSortFn;
-    this._internalRows = [...(this._rows || [])].sort((a, b) => {
-      const n = fn(a, b, column);
-      return n * (sort.direction === 'asc' ? 1 : -1);
-    });
-    this.cdr.detectChanges();
-    this.cdr.markForCheck();
+    this.performSort(sort);
   }
 
-  onResize({ column }: { columns: Column[]; column: Column }) {
-    this._columns.set(
-      [...this._columns()].map((c) => {
-        // Disallow grow/shrink if resizing
-        c.flexGrow = 0;
-        c.flexShrink = 0;
-        return c;
-      }),
+  private performSort(sort: Sort) {
+    const column = this._columns().find((c) => c.$$id === sort.active);
+    if (!column) return;
+
+    const fn = column.sortFn || this.defaultSortFn;
+    const rows = this.rows();
+    const multiplier = sort.direction === 'asc' ? 1 : -1;
+
+    // Use Array.from to avoid defensive copy when we know we'll mutate
+    const sorted = Array.from(rows).sort(
+      (a, b) => fn(a, b, column) * multiplier,
     );
+    this._sortedRows.set(sorted);
+  }
+
+  onResize({ columns, column }: { columns: Column[]; column: Column }) {
+    // Directly update _columns with the resized values from the header component
+    const currentCols = this._columns();
+    const updated = currentCols.map((c) =>
+      c.prop === column.prop
+        ? { ...c, flexBasis: column.flexBasis, flexGrow: 0, flexShrink: 0 }
+        : { ...c, flexGrow: 0, flexShrink: 0 },
+    );
+    this._columns.set(updated);
 
     this.resized.emit(column);
   }

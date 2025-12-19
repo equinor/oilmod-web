@@ -1,0 +1,157 @@
+// Datatable Compact Mode Styles
+// =============================================================================
+
+$row-height: 24px;
+// Icon height uses shared compact size from _ngx-datatable.scss
+$icon-height: 16px;
+
+// =============================================================================
+// Compact Mode Container
+// =============================================================================
+.sto-compact {
+  // ---------------------------------------------------------------------------
+  // Shared Datatable Styles (Overview & Drawer contexts)
+  // ---------------------------------------------------------------------------
+  .imo-overview,
+  .sto-drawer--compact {
+    .sto-datatable,
+    .sto-datatable.inside-card {
+      // Header
+      .datatable-header {
+        .datatable-header-cell {
+          padding: 4px 8px;
+
+          .column-group-header-icon {
+            max-width: 8px;
+            margin-right: 8px;
+            flex-grow: 1;
+
+            .mat-icon {
+              height: 12px;
+              line-height: 12px;
+            }
+          }
+          .mat-mdc-select {
+            top: 0.3rem;
+          }
+
+          &.sto-datatable__header-column--withunit {
+            .sto-datatable__header-column__unit {
+              margin-right: -3px; // Adjustment for whitespace
+              font-size: 10px;
+              position: static;
+
+              &::before {
+                content: '(';
+              }
+
+              &::after {
+                content: ')';
+              }
+            }
+          }
+        }
+      }
+
+      // Body
+      .datatable-body {
+        .progress-linear {
+          height: 3px;
+          margin: -3px 0 0 0;
+
+          .container {
+            height: 3px;
+
+            .bar {
+              height: 3px;
+            }
+          }
+        }
+
+        .datatable-body-row {
+          .datatable-body-cell {
+            padding: 2px 8px;
+
+            &.date-cell {
+              padding: 0;
+
+              small {
+                display: none;
+              }
+            }
+
+            .datatable-body-cell-label {
+              .mat-icon-button {
+                margin-left: 0;
+                height: $row-height;
+                width: $row-height;
+                line-height: $row-height;
+              }
+            }
+          }
+        }
+      }
+
+      // Global icon sizing
+      .mat-icon {
+        height: $icon-height;
+        width: $icon-height;
+        font-size: $icon-height;
+        line-height: $icon-height;
+      }
+    }
+
+    sto-datatable-fixed-row-wrapper {
+      margin-top: 8px;
+    }
+
+    .date-status-cell {
+      .month-label {
+        line-height: 20px;
+        position: absolute;
+        left: 2px;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Overview-specific Editable Column Styles
+  // ---------------------------------------------------------------------------
+  .imo-overview .sto-datatable .datatable-body .datatable-body-row {
+    .datatable-body-cell.sto-datatable__column--editable
+      .datatable-body-cell-label {
+      .mat-form-field-prefix {
+        height: 19px;
+        width: 19px;
+
+        button.mat-icon-button {
+          font-size: 18px;
+          height: 18px;
+          width: 18px;
+          line-height: 18px;
+        }
+
+        .mat-icon {
+          font-size: 16px;
+          height: 16px;
+          width: 16px;
+          line-height: 16px;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Global Compact Datatable Styles
+  // ---------------------------------------------------------------------------
+  .sto-datatable {
+    .datatable-body .datatable-body-cell-label .date-status-cell {
+      line-height: $row-height;
+    }
+
+    .datatable-footer .datatable-footer-inner {
+      font-size: 11px;
+      line-height: 13px;
+    }
+  }
+}

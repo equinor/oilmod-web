@@ -3,12 +3,15 @@
   "compilerOptions": {
     "sourceMap": false,
     "outDir": "../../dist/out-tsc",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "types": ["cypress", "node"],
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true
   },
   "include": ["src/**/*.ts", "src/**/*.js"],
   "angularCompilerOptions": {

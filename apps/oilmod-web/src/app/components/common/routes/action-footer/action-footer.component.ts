@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { DemoComponent } from '../../../demo.component';
-import { StoActionFooterComponent } from '@ngx-stoui/common';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { StoActionFooterComponent } from '@ngx-stoui/common';
+import { DemoComponent } from '../../../demo.component';
 
 const code = `import { Component } from '@angular/core';
 import { DemoComponent } from '../../../demo.component';
@@ -28,8 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
   \`,
-  standalone: true,
-  imports: [
+    imports: [
     DemoComponent,
     DemoComponent,
     StoActionFooterComponent,
@@ -45,35 +44,28 @@ export class ActionFooterDemoComponent {
 `;
 
 @Component({
-    template: `
+  template: `
     <sto-demo [code]="code">
-      <mat-checkbox [checked]="loading"
-                    (change)="loading = $event.checked">Loading indicator
+      <mat-checkbox [checked]="loading" (change)="loading = $event.checked"
+        >Loading indicator
       </mat-checkbox>
-      <mat-checkbox [checked]="addClass"
-                    (change)="addClass = $event.checked">Add body-overflow class
+      <mat-checkbox [checked]="addClass" (change)="addClass = $event.checked"
+        >Add body-overflow class
       </mat-checkbox>
 
-      <sto-action-footer [isLoading]="loading"
-                         [shouldAddClass]="addClass">
-        <button color="primary"
-                mat-flat-button>Save
-        </button>
-        <button color="primary"
-                mat-button>Reset
-        </button>
+      <sto-action-footer [isLoading]="loading" [shouldAddClass]="addClass">
+        <button color="primary" mat-flat-button>Save</button>
+        <button color="primary" mat-button>Reset</button>
       </sto-action-footer>
     </sto-demo>
-
-
   `,
-    imports: [
-        DemoComponent,
-        DemoComponent,
-        StoActionFooterComponent,
-        MatCheckboxModule,
-        MatButtonModule
-    ]
+  imports: [
+    DemoComponent,
+    DemoComponent,
+    StoActionFooterComponent,
+    MatCheckboxModule,
+    MatButtonModule,
+  ],
 })
 export class ActionFooterDemoComponent {
   public loading: boolean;

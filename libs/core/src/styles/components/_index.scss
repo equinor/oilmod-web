@@ -1,0 +1,36 @@
+// Component Styles Index
+// Import all component-specific styles
+
+@use './action-footer';
+@use './appheader';
+@use './datatable';
+@use './daterange';
+@use './dialog';
+@use './drawer';
+@use './filterpanel';
+// @use './input-overrides';
+@use './message-panel';
+@use './number-input';
+@use './number-unit-input';
+@use './preference-manager';
+@use './select-filter';
+@use './status-indicators';
+@use './wysiwyg';
+
+// Apply all component themes
+@mixin apply-component-styles() {
+  @include action-footer.sto-action-footer-theme();
+  @include appheader.sto-appheader-theme();
+  @include datatable.sto-datatable-theme();
+  @include daterange.sto-daterange-theme();
+  @include dialog.dialog-theme();
+  @include filterpanel.sto-filterpanel-theme();
+  // @include input-overrides.sto-input-override-theme();
+  @include message-panel.sto-message-panel-theme();
+  @include number-input.sto-number-input-theme();
+  @include number-unit-input.sto-number-unit-input-theme();
+  @include preference-manager.preference-manager-theme();
+  @include select-filter.sto-input-override-theme();
+  @include status-indicators.status-indicators();
+  @include wysiwyg.wysiwyg-theme();
+}

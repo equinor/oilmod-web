@@ -1,0 +1,36 @@
+
+@mixin preference-manager-theme() {
+  sto-preference-manager {
+    .filter-title {
+      small {
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  .mat-menu-panel.preference-manager-list {
+    .preference-manager-list-item {
+      &:hover:not(.selected) {
+        background-color: var(
+          --bg-hover
+        ) !important; // Angular material has super strict rules we need to override.
+      }
+
+      &.selected {
+        background-color: var(--primary-hover-alt) !important;
+      }
+
+      .preference-manager-list-item-title {
+        small {
+          color: var(--text-secondary);
+        }
+      }
+    }
+
+    .preference-manager-list-footer {
+      border-top: 1px solid var(--divider);
+      background: var(--bg-hover);
+    }
+  }
+}
+

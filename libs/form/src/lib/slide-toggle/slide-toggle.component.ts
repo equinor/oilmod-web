@@ -1,19 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  effect,
   ElementRef,
-  HostBinding,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
   inject,
+  Input,
+  input,
   output,
+  signal,
+  viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ControlValueAccessor,
   FormControl,
@@ -26,9 +27,9 @@ import {
   MatSlideToggle,
   MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 
-export class StoSlideToggleChange {
+export interface StoSlideToggleChange {
   source: SlideToggleComponent;
   checked: boolean;
 }
@@ -36,122 +37,97 @@ export class StoSlideToggleChange {
 @Component({
   selector: 'sto-slide-toggle',
   templateUrl: './slide-toggle.component.html',
-  styleUrls: ['./slide-toggle.component.scss'],
+  styleUrl: './slide-toggle.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: MatFormFieldControl, useExisting: SlideToggleComponent },
   ],
   imports: [MatSlideToggleModule, ReactiveFormsModule],
+  host: {
+    '[id]': 'id',
+    '[attr.aria-describedby]': 'describedBy',
+    '[class.floating]': 'shouldLabelFloat',
+  },
 })
 export class SlideToggleComponent
-  implements
-    OnInit,
-    OnDestroy,
-    ControlValueAccessor,
-    MatFormFieldControl<boolean>
+  implements ControlValueAccessor, MatFormFieldControl<boolean>
 {
-  ngControl = inject(NgControl, { optional: true, self: true });
-  private fm = inject(FocusMonitor);
-  private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  readonly ngControl = inject(NgControl, { optional: true, self: true });
+  private readonly fm = inject(FocusMonitor);
+  private readonly elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
-  static nextId = 0;
-  stateChanges = new Subject<void>();
-  focused: boolean;
-  autofilled: boolean;
-  controlType = 'number-input';
-  ctrl = new FormControl<boolean | null>(null);
-  public sub = new Subscription();
-  @HostBinding()
-  id = `value-unit-input-${SlideToggleComponent.nextId++}`;
-  @HostBinding('attr.aria-describedby')
+  private static nextId = 0;
+  readonly stateChanges = new Subject<void>();
+  readonly controlType = 'slide-toggle';
+  readonly ctrl = new FormControl<boolean | null>(null);
+
+  readonly id = `sto-slide-toggle-${SlideToggleComponent.nextId++}`;
   describedBy = '';
-  @ViewChild(MatSlideToggle)
-  slideToggle: MatSlideToggle;
+
+  readonly slideToggle = viewChild.required(MatSlideToggle);
+
+  // Internal signals for reactive state
+  private readonly _focused = signal(false);
+  private readonly _errorState = signal(false);
+  private _disabled = signal(false);
+  private _required = signal(false);
+  private _value = signal<boolean | null>(null);
+
+  // Signal inputs (not part of MatFormFieldControl interface) - must be public for template binding
+  readonly _readonly = input(false, {
+    transform: booleanAttribute,
+    alias: 'readonly',
+  });
+  readonly color = input<ThemePalette>('primary');
+
+  // Outputs
   readonly toggled = output<StoSlideToggleChange>();
-  placeholder: string; // Required by material control, but not used.
-  // TODO: Skipped for migration because:
-  //  Class of this input is referenced in the signature of another class.
-  @Input()
-  model: unknown;
 
-  constructor() {
-    const fm = this.fm;
-    const elRef = this.elRef;
+  // MatFormFieldControl requirements
+  placeholder = '';
+  autofilled = false;
 
-    if (this.ngControl != null) {
-      this.ngControl.valueAccessor = this;
-    }
-    fm.monitor(elRef.nativeElement, true).subscribe((origin) => {
-      this.focused = !!origin;
-      this.stateChanges.next();
-    });
-  }
-
-  @HostBinding('class.floating')
-  get shouldLabelFloat() {
-    return this.focused || !this.empty;
-  }
-
-  private _errorState: boolean;
-
-  get errorState() {
-    return this._errorState;
-  }
-
-  set errorState(errorState) {
-    this._errorState = errorState;
-    this.stateChanges.next();
-  }
-
-  private _disabled = false;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(value: boolean) {
-    this._disabled = coerceBooleanProperty(value);
-    const opts = { onlySelf: true, emitEvent: false };
-    if (this._disabled != this.ctrl.disabled) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      this._disabled ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
-    }
-    this.stateChanges.next();
-  }
-
-  private _color: ThemePalette;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get color(): ThemePalette {
-    return this._color || 'primary';
-  }
-
-  set color(color) {
-    this._color = color || 'primary';
-    this.stateChanges.next();
-  }
-
-  private _readonly = false;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
+  // Expose readonly as a property for FormFieldDirective compatibility
   get readonly(): boolean {
-    return this._readonly;
+    return this._readonly();
   }
 
-  set readonly(value: boolean) {
-    this._readonly = coerceBooleanProperty(value);
-    const opts = { onlySelf: true, emitEvent: false };
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    value ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
-    this.stateChanges.next();
+  get focused(): boolean {
+    return this._focused();
+  }
+
+  get errorState(): boolean {
+    return this._errorState();
+  }
+
+  @Input({ transform: booleanAttribute })
+  get disabled(): boolean {
+    return this._disabled();
+  }
+  set disabled(value: boolean) {
+    this._disabled.set(value);
+  }
+
+  @Input({ transform: booleanAttribute })
+  get required(): boolean {
+    return this._required();
+  }
+  set required(value: boolean) {
+    this._required.set(value);
+  }
+
+  @Input()
+  get value(): boolean | null {
+    return this._value();
+  }
+  set value(val: boolean | null) {
+    this._value.set(val);
+  }
+
+  get shouldLabelFloat() {
+    return this._focused() || !this.empty;
   }
 
   get empty() {
@@ -159,64 +135,72 @@ export class SlideToggleComponent
     return value === null || value === undefined;
   }
 
-  private _required = false;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get required() {
-    return this._required;
-  }
-
-  set required(req) {
-    this._required = coerceBooleanProperty(req);
-    this.stateChanges.next();
-  }
-
-  private _value: boolean | null;
-
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input()
-  get value() {
-    return this._value;
-  }
-
-  set value(value) {
-    this._value = value;
-    if (value !== this.ctrl.value) {
-      this.ctrl.setValue(value, { emitEvent: false });
+  constructor() {
+    // Setup CVA
+    if (this.ngControl != null) {
+      this.ngControl.valueAccessor = this;
     }
-    this.stateChanges.next();
-  }
 
-  ngOnInit(): void {
-    const sub = this.ctrl.valueChanges.subscribe((value) => {
-      const event = new StoSlideToggleChange();
-      event.checked = value ?? false;
-      event.source = this;
-      this.toggled.emit(event);
-      this.onChange(value);
+    // Monitor focus
+    this.fm
+      .monitor(this.elRef.nativeElement, true)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((origin) => {
+        this._focused.set(!!origin);
+        this.stateChanges.next();
+      });
+
+    // Handle value changes
+    this.ctrl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        this._value.set(value);
+        this.toggled.emit({
+          checked: value ?? false,
+          source: this,
+        });
+        this.onChange(value);
+      });
+
+    // Monitor validation state
+    if (this.ngControl?.statusChanges) {
+      this.ngControl.statusChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((state) => {
+          this._errorState.set(state === 'INVALID');
+          this.stateChanges.next();
+        });
+    }
+
+    // Sync state changes and form control state
+    effect(() => {
+      const isDisabled = this._disabled();
+      const isReadonly = this._readonly();
+      const newValue = this._value();
+
+      // Track required and color for state changes
+      this._required();
+      this.color();
+
+      // Sync disabled/readonly to internal form control
+      const shouldDisable = isDisabled || isReadonly;
+      const opts = { onlySelf: true, emitEvent: false };
+      if (shouldDisable !== this.ctrl.disabled) {
+        shouldDisable ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
+      }
+
+      // Sync value to internal form control
+      if (newValue !== this.ctrl.value) {
+        this.ctrl.setValue(newValue, { emitEvent: false });
+      }
+
+      this.stateChanges.next();
     });
-    this.sub.add(sub);
-    if (this.ngControl && this.ngControl.statusChanges) {
-      this.sub.add(
-        this.ngControl.statusChanges.subscribe(
-          (state) => (this.errorState = state === 'INVALID'),
-        ),
-      );
-    }
   }
 
-  ngOnDestroy(): void {
-    this.stateChanges.complete();
-    this.fm.stopMonitoring(this.elRef.nativeElement);
-    this.sub.unsubscribe();
-  }
-
-  onContainerClick(event: MouseEvent): void {
-    if (!this.disabled && !this.readonly) {
-      this.slideToggle.focus();
+  onContainerClick(): void {
+    if (!this._disabled() && !this._readonly()) {
+      this.slideToggle()?.focus();
       this.ctrl.setValue(!this.ctrl.value);
     }
   }
@@ -225,20 +209,19 @@ export class SlideToggleComponent
     this.describedBy = ids.join(' ');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange = (_: unknown) => {};
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onTouched = () => {};
+  // ControlValueAccessor implementation
+  private onChange: (value: boolean | null) => void = () => {};
+  private onTouched = () => {};
 
   writeValue(value: boolean): void {
-    this.value = value;
+    this._value.set(value);
   }
 
-  registerOnChange(fn: never): void {
+  registerOnChange(fn: (value: boolean | null) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: never): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

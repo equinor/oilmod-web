@@ -15,9 +15,9 @@ import { CUSTOM_ERROR_HANDLER, ERROR_LOGGER } from './error-handler/token';
 @Component({
   selector: 'sto-next-wrapper',
   template: `
-    <button mat-button (click)="overRide(404)">Overridden 404</button>
+    <button matButton="filled" (click)="overRide(404)">Overridden 404</button>
     @for (s of errors; track s) {
-      <button mat-button (click)="showError(s)">
+      <button matButton="filled" (click)="showError(s)">
         {{ s }} {{ s === 401 ? '(App Override)' : '' }}
       </button>
     }

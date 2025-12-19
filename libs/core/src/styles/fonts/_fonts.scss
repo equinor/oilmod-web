@@ -1,0 +1,12 @@
+// Font Face Declarations
+// CRITICAL: These @import statements MUST be at the top of the compiled CSS
+@import url('https://cdn.eds.equinor.com/font/equinor-font.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Material+Icons+Outlined');
+
+// Ensure fonts are applied globally
+html,
+body {
+  font-family: var(--application-font);
+}

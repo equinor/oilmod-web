@@ -14,7 +14,7 @@
       [columns]="_columns()"
       [groups]="columnGroups()"
       [height]="headerHeight()"
-      [transform]="scrollLeft"
+      [transform]="scrollLeft()"
       [width]="width()"
     ></sto-datatable-header-group>
   }
@@ -28,12 +28,12 @@
     [columns]="_columns()"
     [groups]="groups()"
     [headerHeight]="headerHeight()"
-    [offset]="bodyHeight() && rowTotalHeight > bodyHeight() ? 12 : 0"
+    [offset]="bodyHeight() && rowTotalHeight() > bodyHeight() ? 12 : 0"
     [resizeable]="resizeable() && scrollbarH()"
     [responsive]="_responsive()"
     [rowHeight]="rowHeight()"
-    [rows]="rows"
-    [scrollLeft]="scrollLeft"
+    [rows]="_internalRows()"
+    [scrollLeft]="scrollLeft()"
     [smallScreen]="smallScreen()"
     [sortable]="sortable()"
     [width]="width()"
@@ -45,7 +45,7 @@
       </div>
     </div>
   }
-  @if (!rows || rows.length === 0) {
+  @if (!_internalRows() || _internalRows().length === 0) {
     <div class="sto-mdl-table__body--empty">
       {{ emptyMessage() }}
     </div>
@@ -58,25 +58,25 @@
     (scrollHeader)="setHeaderScroll($event)"
     [columnMode]="columnMode()"
     [columns]="_columns()"
-    [disableRipple]="disableRipple() || select.observers.length === 0"
-    [hasFooter]="!!footerRow"
+    [disableRipple]="disableRipple()"
+    [hasFooter]="!!_footerRows()"
     [height]="bodyHeight()"
     [responsiveView]="responsiveView()"
     [responsive]="_responsive()"
     [rowClass]="rowClass()"
     [rowHeight]="rowHeight()"
-    [rows]="rows"
-    [scrollLeft]="scrollbarH() && footerRow ? scrollLeft : null"
-    [scrollbarH]="footerRow ? false : scrollbarH()"
-    [selectable]="!!select.observers.length"
+    [rows]="_internalRows()"
+    [scrollLeft]="scrollbarH() && _footerRows() ? scrollLeft() : null"
+    [scrollbarH]="_footerRows() ? false : scrollbarH()"
+    [selectable]="true"
     [selected]="selected()"
     [selectionMode]="selectionMode()"
     [smallView]="smallScreen()"
     [trackBy]="trackBy()"
     [virtualScroll]="virtualScroll()"
-    [width]="scrollbarH() ? columnTotalWidth + 'px' : 'auto'"
+    [width]="width()"
   ></sto-datatable-body>
-  @if (footerRow && (!_responsive() || (_responsive() && !smallScreen()))) {
+  @if (_footerRows() && (!_responsive() || (_responsive() && !smallScreen()))) {
     <div
       (scroll)="scrollBodyAndHeader($event)"
       [style.overflowX]="'auto'"
@@ -84,12 +84,12 @@
       [style.width]="'calc(100% - ' + body.verticalScrollOffset() + 'px)'"
       class="sto-mdl-table__footer"
     >
-      @for (row of footerRow; track row; let i = $index) {
+      @for (row of _footerRows(); track row; let i = $index) {
         <div
           [class.sto-mdl-table__row--scroll-offset]="
             scrollbarH() &&
             !!bodyHeight() &&
-            (rows?.length || 1) * rowHeight() > bodyHeight()
+            (_internalRows().length || 1) * rowHeight() > bodyHeight()
           "
           [style.height.px]="rowHeight()"
           [style.min-width]="width()"
@@ -103,7 +103,7 @@
             >
               @if (!column.footerTemplate) {
                 <span>
-                  {{ row[column.prop] }}
+                  {{ $any(row)[column.prop] }}
                 </span>
               }
               @if (column.footerTemplate) {
@@ -111,7 +111,7 @@
                   #footerTemplate
                   [ngTemplateOutletContext]="{
                     column: column,
-                    value: row[column.prop],
+                    value: $any(row)[column.prop],
                     index: i,
                   }"
                   [ngTemplateOutlet]="column.footerTemplate"

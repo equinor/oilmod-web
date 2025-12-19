@@ -9,7 +9,8 @@
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
       "options": {
-        "project": "libs/testing/ng-package.json"
+        "project": "libs/testing/ng-package.json",
+        "tsConfig": "libs/testing/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

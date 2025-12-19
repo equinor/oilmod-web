@@ -50,7 +50,7 @@ const svg = ``;
       <ng-content select="[stoPopoverFooter]"></ng-content>
     </div>
   </ng-template>`,
-  styleUrls: ['./popover.component.scss'],
+  styleUrl: './popover.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

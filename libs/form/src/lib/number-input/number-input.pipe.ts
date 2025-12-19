@@ -1,103 +1,139 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 const PADDING = '000000000';
+const INVALID_CHARS_REGEX = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
 
 @Pipe({
   name: 'numberInput',
-  standalone: true
+  standalone: true,
 })
 export class NumberInputPipe implements PipeTransform {
+  private readonly DECIMAL_SEPARATOR = ',';
+  private readonly THOUSANDS_SEPARATOR = ' ';
 
-  private DECIMAL_SEPARATOR = ',';
-  private THOUSANDS_SEPARATOR = ' ';
-
-  transform(value: number | string | null, fractionSize = 5, dynamicFractionSize = false): string {
-    if ( !value && value !== 0 ) {
+  transform(
+    value: number | string | null,
+    fractionSize = 5,
+    dynamicFractionSize = false,
+  ): string {
+    if (!value && value !== 0) {
       return '';
     }
-    value = value + '';
-    // eslint-disable-next-line
-    const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
-    value = value.replace(re, '');
 
-    value = value.replace('.', this.DECIMAL_SEPARATOR);
-    const [ integerSplit, fractionSplit = '' ] = value.split(this.DECIMAL_SEPARATOR);
-    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
-    if ( integer === null ) {
+    const cleaned = this.cleanValue(String(value));
+    const [integerSplit, fractionSplit = ''] = cleaned.split(
+      this.DECIMAL_SEPARATOR,
+    );
+    const { integer, fraction } = this.handleIntegerAndFractions(
+      integerSplit,
+      fractionSplit,
+      fractionSize,
+      dynamicFractionSize,
+    );
+
+    if (integer === null) {
       return '';
     }
-    if ( dynamicFractionSize ) {
-      fraction = fraction ? this.DECIMAL_SEPARATOR + ( fraction ) : '';
-    } else {
-      fraction = fractionSize > 0
-        ? this.DECIMAL_SEPARATOR + ( fraction + PADDING ).substring(0, fractionSize)
-        : '';
-    }
 
-    integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+    const formattedInteger = integer.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      this.THOUSANDS_SEPARATOR,
+    );
+    const formattedFraction = this.formatFraction(
+      fraction,
+      fractionSize,
+      dynamicFractionSize,
+      this.DECIMAL_SEPARATOR,
+    );
 
-
-    return integer + fraction;
+    return formattedInteger + formattedFraction;
   }
 
   parse(value: string, fractionSize = 5, dynamicFractionSize = false): string {
-    value = value + '';
-    // eslint-disable-next-line
-    const re = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
-    value = value.replace(re, '');
-    value = value.replace('.', this.DECIMAL_SEPARATOR);
-    // eslint-disable-next-line prefer-const
-    let [ integerSplit, fractionSplit = '' ] = ( value || '' ).split(this.DECIMAL_SEPARATOR);
+    const cleaned = this.cleanValue(String(value));
+    const [integerSplit, fractionSplit = ''] = cleaned.split(
+      this.DECIMAL_SEPARATOR,
+    );
+    const cleanedInteger = integerSplit.replace(
+      new RegExp(this.THOUSANDS_SEPARATOR, 'g'),
+      '',
+    );
+    const { integer, fraction } = this.handleIntegerAndFractions(
+      cleanedInteger,
+      fractionSplit,
+      fractionSize,
+      dynamicFractionSize,
+    );
 
-    integerSplit = integerSplit.replace(new RegExp(this.THOUSANDS_SEPARATOR, 'g'), '');
-    // eslint-disable-next-line prefer-const
-    let { integer, fraction } = this.handleIntegerAndFractions(integerSplit, fractionSplit, fractionSize, dynamicFractionSize);
-
-    if ( dynamicFractionSize ) {
-      fraction = fraction ? `.${fraction}` : '';
-    } else {
-      fraction = fractionSize > 0
-        ? '.' + ( fraction + PADDING ).substring(0, fractionSize)
-        : '';
-    }
-
-
-    if ( !integer ) {
+    if (!integer) {
       return '';
     }
-    return integer + fraction;
+
+    const formattedFraction = this.formatFraction(
+      fraction,
+      fractionSize,
+      dynamicFractionSize,
+      '.',
+    );
+    return integer + formattedFraction;
   }
 
-  private handleIntegerAndFractions(integer: string, fraction: string, fractionSize: number, dynamicFractionSize = false) {
+  private cleanValue(value: string): string {
+    return value
+      .replace(INVALID_CHARS_REGEX, '')
+      .replace('.', this.DECIMAL_SEPARATOR);
+  }
+
+  private formatFraction(
+    fraction: string,
+    fractionSize: number,
+    dynamicFractionSize: boolean,
+    separator: string,
+  ): string {
+    if (dynamicFractionSize) {
+      return fraction ? separator + fraction : '';
+    }
+    return fractionSize > 0
+      ? separator + (fraction + PADDING).substring(0, fractionSize)
+      : '';
+  }
+
+  private handleIntegerAndFractions(
+    integer: string,
+    fraction: string,
+    fractionSize: number,
+    dynamicFractionSize = false,
+  ) {
     const negative = integer.startsWith('-');
-    if ( ( integer === '' && fraction === '' ) || integer === 'NaN' ) {
+
+    if ((integer === '' && fraction === '') || integer === 'NaN') {
       return { integer: null, fraction: null };
-    } else if ( integer === '' ) {
-      integer = '0';
-    } else if ( integer.includes('-') ) {
-      if ( integer === '-' ) {
-        integer = '-0';
-      } else {
-        integer = '-' + parseInt(integer, 10) * -1; // To handle -0.123
-      }
-    } else {
-      integer = parseInt(integer, 10) + '';
     }
 
-    if ( fraction.length > fractionSize && !dynamicFractionSize ) {
-      const number = parseFloat('0.' + fraction);
+    if (integer === '') {
+      integer = '0';
+    } else if (integer === '-') {
+      integer = '-0';
+    } else if (integer.includes('-')) {
+      integer = String(-1 * parseInt(integer, 10)); // To handle -0.123
+    } else {
+      integer = String(parseInt(integer, 10));
+    }
+
+    if (fraction.length > fractionSize && !dynamicFractionSize) {
+      const number = parseFloat(`0.${fraction}`);
       const exp = Math.pow(10, fractionSize);
       const rounded = Math.round(number * exp) / exp;
-      if ( rounded === 1 ) {
+
+      if (rounded === 1) {
         const addValue = negative ? -1 : 1;
-        integer = ( parseInt(integer || '0', 10) + addValue ) + '';
+        integer = String(parseInt(integer || '0', 10) + addValue);
         fraction = '';
       } else {
-        fraction = ( rounded + '' ).split('.')[ 1 ] || '';
+        fraction = String(rounded).split('.')[1] || '';
       }
     }
 
     return { integer, fraction };
   }
-
 }

@@ -9,7 +9,8 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/drawer/ng-package.json"
+        "project": "libs/drawer/ng-package.json",
+        "tsConfig": "libs/drawer/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

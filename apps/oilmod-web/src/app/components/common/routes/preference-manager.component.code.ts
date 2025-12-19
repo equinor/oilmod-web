@@ -27,8 +27,7 @@ export const preferenceManagerComponentCode = `@Component({
                             (setDefaultPreference)="onSetDefault($event)"
                             [activePreferenceId]="activePreferenceId"
                             [preferences]="preferences"></sto-preference-manager>\`,
-  standalone: true,
-  imports: [
+    imports: [
     StoFilterPanelModule,
     StoPreferenceManagerComponent,
     ReactiveFormsModule

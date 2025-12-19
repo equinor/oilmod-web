@@ -1,0 +1,29 @@
+
+$form-field-bg: rgba(#6687b8, 0.1);
+
+@mixin wysiwyg-theme() {
+  .sto-wysiwyg {
+    &__actions {
+      border-bottom: 1px solid var(--divider);
+
+      .divider {
+        border-left: 1px solid var(--divider);
+      }
+    }
+
+    &__editor {
+      &:focus {
+        border-bottom: 2px solid var(--primary-resting);
+      }
+
+      border-bottom: 2px solid var(--divider);
+      background: $form-field-bg;
+
+      &--readonly {
+        background: transparent;
+        border: none;
+      }
+    }
+  }
+}
+

@@ -9,4 +9,4 @@ export * from './lib/sto-datatable/models';
 export * from './lib/sto-datatable/sto-datatable-actions/sto-datatable-actions.component';
 export * from './lib/sto-datatable/sto-datatable-header/sto-datatable-resize.directive';
 export * from './lib/sto-datatable/sto-datatable.component';
-export * from './lib/sto-datatable/sto-datatable.module';
+

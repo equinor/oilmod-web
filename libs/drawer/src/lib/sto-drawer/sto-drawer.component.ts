@@ -1,25 +1,23 @@
 /* eslint-disable @angular-eslint/no-output-native,@angular-eslint/no-output-on-prefix */
 import { NgClass } from '@angular/common';
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ElementRef,
-  HostListener,
-  ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
   computed,
   contentChild,
+  effect,
+  ElementRef,
+  HostListener,
   inject,
   input,
   model,
   numberAttribute,
   output,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
-import { Key } from '@ngx-stoui/core';
 import { drawerAnimations } from '../animation';
 import { StoDrawerFooterComponent } from './sto-drawer-footer.component';
 import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
@@ -30,7 +28,7 @@ import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
 @Component({
   selector: 'sto-drawer',
   templateUrl: './sto-drawer.component.html',
-  styleUrls: ['./sto-drawer.component.scss'],
+  styleUrl: './sto-drawer.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: drawerAnimations,
@@ -41,9 +39,8 @@ import { StoDrawerHeaderComponent } from './sto-drawer-header.component';
     '[class.open]': 'open()',
   },
 })
-export class StoDrawerComponent implements AfterViewInit {
-  private el = inject(ElementRef);
-  private cdr = inject(ChangeDetectorRef);
+export class StoDrawerComponent {
+  private readonly el = inject(ElementRef);
 
   /**
    * Offset (space) between the viewPanel right and the drawer in pixels
@@ -107,21 +104,17 @@ export class StoDrawerComponent implements AfterViewInit {
    */
   readonly submit = output();
   public height = '100%';
-  headerRef = viewChild<ElementRef>('header');
-  // @ContentChild(StoDrawerFooterComponent, { read: ElementRef })
-  // footer: ElementRef<HTMLElement>;
-  // @ContentChild(StoDrawerHeaderComponent, { read: ElementRef })
-  // headerChild: ElementRef<HTMLElement>;
-  footer = contentChild(StoDrawerFooterComponent, {
+  readonly headerRef = viewChild<ElementRef>('header');
+  readonly footer = contentChild(StoDrawerFooterComponent, {
     read: ElementRef,
     descendants: true,
   });
-  headerChild = contentChild(StoDrawerHeaderComponent, {
+  readonly headerChild = contentChild(StoDrawerHeaderComponent, {
     read: ElementRef,
     descendants: true,
   });
 
-  slideInOut = computed(() => {
+  readonly slideInOut = computed(() => {
     if (!this.animation()) {
       return this.open()
         ? 'openImmediate'
@@ -135,18 +128,44 @@ export class StoDrawerComponent implements AfterViewInit {
   /**
    * If the drawer is opened.
    */
-  open = model(false);
+  readonly open = model(false);
+
+  constructor() {
+    // Resize content when drawer opens or relevant properties change
+    effect(() => {
+      if (this.open()) {
+        this.resizeContent();
+      }
+    });
+
+    // Initial resize after render
+    afterNextRender(() => {
+      this.resizeContent();
+    });
+  }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.ctrlKey || event.altKey || event.shiftKey) {
-      this.testKeyCombos(event);
-    } else {
-      this.testSingleKeys(event);
+    const path = event.composedPath() as HTMLElement[];
+    const isInsideDrawer = path.includes(this.el.nativeElement);
+
+    // Handle Ctrl+Enter for submit
+    if (event.ctrlKey && event.key === 'Enter' && isInsideDrawer) {
+      this.submit.emit();
+      return;
+    }
+
+    // Handle Escape key for cancel/close
+    if (event.key === 'Escape' && !this.ignoreEscKey()) {
+      const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
+      if (isNotInsideAMenu) {
+        this.closeDrawer();
+        this.cancel.emit();
+      }
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onWindowResize() {
     this.resizeContent();
   }
@@ -164,7 +183,6 @@ export class StoDrawerComponent implements AfterViewInit {
 
   public closeDrawer(emit = true) {
     this.open.set(false);
-    this.cdr.detectChanges();
     if (emit) {
       this.onClose.emit(true);
     }
@@ -174,33 +192,6 @@ export class StoDrawerComponent implements AfterViewInit {
     this.open.set(true);
     if (emit) {
       this.onOpen.emit(true);
-    }
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => this.resizeContent());
-  }
-
-  private testKeyCombos(ev: KeyboardEvent) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const path: HTMLElement[] = (ev as any).path;
-    // Test to ensure we have focus inside the drawer
-    if (!(path && path.includes(this.el.nativeElement))) {
-      return;
-    }
-    if (ev.ctrlKey && ev.keyCode === Key.Enter) {
-      this.submit.emit();
-    }
-  }
-
-  private testSingleKeys(ev: KeyboardEvent) {
-    if (ev.keyCode !== Key.Escape || this.ignoreEscKey()) {
-      return;
-    }
-    const isNotInsideAMenu = !this.isAnActiveOverlayPresent();
-    if (isNotInsideAMenu) {
-      this.closeDrawer();
-      this.cancel.emit();
     }
   }
 
@@ -231,7 +222,7 @@ export class StoDrawerComponent implements AfterViewInit {
 
       const headerHeight = this.headerRef()?.nativeElement.offsetHeight ?? 0;
       if (hasFooter) {
-        footerHeight = this.footer()!.nativeElement?.offsetHeight ?? 0;
+        footerHeight = this.footer()?.nativeElement?.offsetHeight ?? 0;
       }
       this.height = `${totalHeight - footerHeight - headerHeight}px`;
     }

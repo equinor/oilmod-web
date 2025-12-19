@@ -10,7 +10,7 @@ export class Modifiers {
     m.underline = document.queryCommandState('underline');
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return Object.keys(m).filter((k) => m[ k ]);
+    return Object.keys(m).filter((k) => m[k]);
   }
 }
 
@@ -22,4 +22,5 @@ export const validCommands = [
   'insertUnorderedList',
   'insertOrderedList',
   'removeFormat',
+  'insertImage',
 ];

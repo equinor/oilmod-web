@@ -37,99 +37,122 @@ const meta: Meta<StoAppHeaderComponent & { title?: string }> = {
     }),
   ],
   argTypes: {},
-  parameters: {},
+  parameters: {
+    docs: {
+      story: {
+        inline: false,
+        iframeHeight: 400,
+      },
+    },
+  },
+  render: (args) => ({
+    props: args,
+    styles: ['::ng-deep body .sto-header { left: 0; width: 100% !important; }'],
+  }),
 };
 export default meta;
 
 type StoryType = StoryObj<StoAppHeaderComponent & { title?: string }>;
 
-export const AppHeader: StoryType = {
+export const Default: StoryType = {
   args: {
-    title: 'Usage',
-    breadCrumbs: [{ label: 'Root' }, { label: 'SubModule' }],
+    breadCrumbs: [{ label: 'Home' }, { label: 'Dashboard' }],
   },
   render: (args) => ({
     props: args,
-    template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="testEnvironment"></sto-app-header>`,
+    template: `<sto-app-header [breadCrumbs]="breadCrumbs"></sto-app-header>`,
   }),
 };
 
-export const AsTestEnvironment: StoryType = {
-  render: (args) => ({
-    props: {
-      ...args,
-      environmentName: 'Systemtest',
-      testEnvironment: true,
-      breadCrumbs: [{ label: 'Root' }, { label: 'SubModule' }],
-    },
-    template: `<sto-app-header [breadCrumbs]="breadCrumbs" [environmentName]="environmentName" [testEnvironment]="true"></sto-app-header>`,
-  }),
-};
-
-export const WithUserMenu: StoryType = {
+export const WithAllFeatures: StoryType = {
   render: (args) => ({
     props: {
       ...args,
       breadCrumbs: [
-        { label: 'Root', command: action('Root clicked'), segment: '' },
+        { label: 'Home', command: action('Home clicked'), segment: '' },
         {
-          label: 'SubModule',
-          command: action('SubModule clicked'),
-          segment: 'submodule',
+          label: 'Workspace',
+          command: action('Workspace clicked'),
+          segment: 'workspace',
         },
-        {
-          label: 'Third level!',
-          command: action('Third clicked'),
-          segment: 'third',
-        },
+        { label: 'Settings', segment: 'settings' },
       ],
-      environmentName: 'Systemtest',
-      homeConfig: { command: action('Home clicked') },
+      homeConfig: { command: action('Home icon clicked') },
+      environmentName: 'Development',
       testEnvironment: true,
     },
-    styles: ['::ng-deep body .sto-header { left: 0; width: 100% !important; }'],
     template: `
-<sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [homeBreadCrumbConfig]="homeConfig">
-<button mat-icon-button><mat-icon>home</mat-icon></button>
-</sto-app-header>
-<mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
-`,
-  }),
-};
-
-export const WithForm: StoryType = {
-  render: (args) => ({
-    props: {
-      ...args,
-      breadCrumbs: [
-        { label: 'Root', command: action('Root clicked'), segment: '' },
-        {
-          label: 'SubModule',
-          command: action('SubModule clicked'),
-          segment: 'submodule',
-        },
-        {
-          label: 'Third level!',
-          command: action('Third clicked'),
-          segment: 'third',
-        },
-      ],
-      environmentName: 'Systemtest',
-      homeConfig: { command: action('Home clicked') },
-      testEnvironment: true,
-    },
-    styles: ['::ng-deep body .sto-header { left: 0; width: 100% !important; }'],
-    template: `
-<sto-app-header [userMenu]="menu" [breadCrumbs]="breadCrumbs" [homeBreadCrumbConfig]="homeConfig">
+<sto-app-header
+  [breadCrumbs]="breadCrumbs"
+  [homeBreadCrumbConfig]="homeConfig"
+  [userMenu]="userMenu"
+  [environmentName]="environmentName"
+  [testEnvironment]="testEnvironment">
   <div class="sto-header__form">
-    <mat-form-field stoFormField floatLabel="never" style="width: 600px">
+    <mat-form-field stoFormField floatLabel="never" style="width: 400px">
       <mat-icon matPrefix>search</mat-icon>
       <mat-label>Search</mat-label>
       <input matInput>
     </mat-form-field>
   </div>
+  <button matIconButton title="Notifications"><mat-icon>notifications</mat-icon></button>
+  <button matIconButton title="Help"><mat-icon>help_outline</mat-icon></button>
 </sto-app-header>
-<mat-menu #menu="matMenu"><button mat-menu-item><mat-icon>settings</mat-icon>User Name</button></mat-menu>
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item><mat-icon>person</mat-icon>John Doe</button>
+  <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
+  <button mat-menu-item><mat-icon>logout</mat-icon>Sign Out</button>
+</mat-menu>
+`,
+  }),
+};
+
+export const Accessibility: StoryType = {
+  args: {
+    breadCrumbs: [{ label: 'Accessibility Demo' }],
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+<div style="padding: 20px; margin-top: 80px;">
+  <h2>Built-in Accessibility Features</h2>
+  <p>Click the accessibility icon (♿) to toggle dark mode and adjust font size.</p>
+  <p>These features are automatically included in every app header instance.</p>
+</div>
+<sto-app-header [breadCrumbs]="breadCrumbs"></sto-app-header>
+`,
+  }),
+};
+
+export const Responsive: StoryType = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+      breadCrumbs: [{ label: 'Home' }, { label: 'Products' }],
+      environmentName: 'Mobile',
+      testEnvironment: true,
+    },
+    template: `
+<div style="padding: 20px; margin-top: 80px;">
+  <h3>Responsive Behavior</h3>
+  <p>On screens &lt; 500px wide, actions collapse into a menu (⋮)</p>
+</div>
+<sto-app-header
+  [userMenu]="menu"
+  [breadCrumbs]="breadCrumbs"
+  [testEnvironment]="testEnvironment"
+  [environmentName]="environmentName">
+  <button matIconButton title="Notifications"><mat-icon>notifications</mat-icon></button>
+  <button matIconButton title="Help"><mat-icon>help</mat-icon></button>
+</sto-app-header>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item><mat-icon>account_circle</mat-icon>User</button>
+</mat-menu>
 `,
   }),
 };

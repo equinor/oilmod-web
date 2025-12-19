@@ -27,18 +27,17 @@ let page: Page;
 
 @Component({
   selector: 'sto-spec-wrap',
-  standalone: true,
   template: ` <div style="background: white">
     <sto-filter-panel [expandable]="true" [filterList]="filter$ | async">
       <sto-filter-title>Filter Title</sto-filter-title>
       <sto-filter-table-actions>
-        <button mat-button>
+        <button matButton="filled">
           New
           <mat-icon>add</mat-icon>
         </button>
       </sto-filter-table-actions>
       <sto-filter-actions>
-        <button mat-icon-button>
+        <button matIconButton>
           <mat-icon>refresh</mat-icon>
         </button>
       </sto-filter-actions>
@@ -119,7 +118,7 @@ describe('StoFilterPanelComponent', () => {
     expect(page.stoFilterPanel._expanded()).toBeTruthy();
   });
 
-  it('should render a mat-button', () => {
+  it('should render a matButton="filled"', () => {
     expect(page.newButton).toBeTruthy();
   });
 
@@ -138,6 +137,8 @@ function createComponent() {
   fixture = TestBed.createComponent(StoFilterPanelComponent);
   wrapFixture = TestBed.createComponent(WrapperComponent);
   comp = fixture.componentInstance;
+  // Set filterList to empty array to avoid null reference
+  fixture.componentRef.setInput('filterList', []);
 
   fixture.detectChanges();
   wrapFixture.detectChanges();

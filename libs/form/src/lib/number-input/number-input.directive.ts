@@ -1,52 +1,40 @@
-/* eslint-disable no-empty */
-import { Directive, ElementRef, HostListener, inject, input } from '@angular/core';
-import { Key } from '@ngx-stoui/core';
+import {
+  afterNextRender,
+  Directive,
+  ElementRef,
+  HostListener,
+  inject,
+  Injector,
+  input,
+} from '@angular/core';
 import { NumberInputPipe } from './number-input.pipe';
 
-
 @Directive({
-// eslint-disable-next-line @angular-eslint/directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[numberInput]',
-  standalone: true
+  standalone: true,
+  providers: [NumberInputPipe],
 })
 export class NumberInputDirective {
-  private elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef<HTMLInputElement>);
+  private readonly injector = inject(Injector);
+  private readonly numberFormatPipe = inject(NumberInputPipe);
 
   readonly unit = input<string>();
   readonly appendUnit = input<boolean>();
   readonly fractionSize = input(5);
   readonly dynamicFractionSize = input<boolean>();
-  private _el: HTMLInputElement;
-  private numberFormatPipe = new NumberInputPipe();
-  /**
-   * List of keys ignored, to work as default.
-   *  {Key[]}
-   */
-  private ignoredKeys = [
-    Key.Dash,
-    Key.Backspace,
-    Key.Delete,
-    Key.Home,
-    Key.LeftArrow,
-    Key.RightArrow,
-    Key.End,
-    Key.Tab,
-    Key.Subtract
-  ];
 
-
-  constructor() {
-    this._el = this.elementRef.nativeElement;
-  }
+  private readonly el = this.elementRef.nativeElement;
 
   public setDisplayValue(readonly: boolean) {
-    const val = ( this._el.value || '' ).replace(` ${this.unit()}`, '');
+    const val = (this.el.value || '').replace(` ${this.unit()}`, '');
     const unit = this.unit();
-    if ( unit ) {
-      if ( readonly ) {
-        this._el.value = val + ` ${unit}`;
+    if (unit) {
+      if (readonly) {
+        this.el.value = val + ` ${unit}`;
       } else {
-        this._el.value = val;
+        this.el.value = val;
       }
     }
   }
@@ -58,22 +46,25 @@ export class NumberInputDirective {
    * @param e event
    * @param clipboardData
    */
-  @HostListener('paste', [ '$event', '$event.clipboardData' ])
+  @HostListener('paste', ['$event', '$event.clipboardData'])
   onPaste(e: Event, clipboardData: DataTransfer | null) {
-    if ( this._el.readOnly || this._el.disabled || !clipboardData ) {
+    if (this.el.readOnly || this.el.disabled || !clipboardData) {
       return;
     }
     e.preventDefault();
     let pasted = clipboardData.getData('text') || '';
     pasted = pasted.replace('—', '-'); // long dash, sometime used in Excel and Word
     pasted = this.handleMixedCommasAndDecimals(pasted);
-    let parsedValue = this.numberFormatPipe.parse(pasted, this.fractionSize(), this.dynamicFractionSize());
+    let parsedValue = this.numberFormatPipe.parse(
+      pasted,
+      this.fractionSize(),
+      this.dynamicFractionSize(),
+    );
 
-    if ( !this.hasInvalidValues(parsedValue) ) {
-
+    if (!this.hasInvalidValues(parsedValue)) {
       parsedValue = parsedValue.replace('.', ',');
-      this._el.value = parsedValue;
-      this._el.dispatchEvent(new Event('input'));
+      this.el.value = parsedValue;
+      this.el.dispatchEvent(new Event('input'));
     }
   }
 
@@ -83,46 +74,61 @@ export class NumberInputDirective {
    * Handles hash, allows copy,pase,cut and select all.
    * @param e
    */
-  @HostListener('keydown', [ '$event' ])
+  @HostListener('keydown', ['$event'])
   onKeyPress(e: KeyboardEvent) {
-    if ( this._el.readOnly || this._el.disabled ) {
+    if (this.el.readOnly || this.el.disabled) {
       return;
     }
-    if ( [ Key.Enter ].includes(e.which) ) {
-      this._el.blur();
+    if (e.key === 'Enter') {
+      this.el.blur();
     }
-    if ( this.isNumberKeypress(e) ) {
-      // do nothing
-    } else if ( [ Key.Period, Key.Comma, Key.DecimalPoint ].includes(e.which) ) {
+    if (this.isNumberKeypress(e)) {
+      // Valid number input - allow it
+      return;
+    } else if (['.', ','].includes(e.key)) {
       this.handlePeriodDelimiter(e);
-    } else if ( [ Key.Dash, Key.Subtract ].includes(e.which) ) {
+    } else if (['-'].includes(e.key)) {
       this.handleDash(e);
-    } else if ( [ Key.UpArrow, Key.DownArrow ].includes(e.which) ) {
+    } else if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
       this.handleKeyUpAndDown(e);
-    } else if ( this.ignoredKeys.indexOf(e.which) !== -1 ) {
-    } else if ( this.isCopyPaste(e) || this.isCtrlA(e) ) {
+    } else if (this.isNavigationKey(e)) {
+      // Navigation keys - allow them
+      return;
+    } else if (this.isCopyPaste(e) || this.isCtrlA(e)) {
+      // Clipboard operations - allow them
+      return;
     } else {
       e.preventDefault();
     }
   }
 
-  @HostListener('focus', [ '$event' ])
+  @HostListener('focus', ['$event'])
   onFocus($event: FocusEvent) {
-    if ( this._el.readOnly || this._el.disabled ) {
+    if (this.el.readOnly || this.el.disabled) {
       return;
     }
     const target = $event.target as HTMLInputElement;
     const value = target.value;
-    this._el.value = ( this.numberFormatPipe.parse(value, this.fractionSize(), this.dynamicFractionSize()) + '' ).replace('.', ',');
-    this._el.select();
+    this.el.value = (
+      this.numberFormatPipe.parse(
+        value,
+        this.fractionSize(),
+        this.dynamicFractionSize(),
+      ) + ''
+    ).replace('.', ',');
+    this.el.select();
   }
 
-  @HostListener('blur', [ '$event.target.value' ])
-  onBlur(value: number) {
-    if ( this._el.readOnly || this._el.disabled ) {
+  @HostListener('blur')
+  onBlur() {
+    if (this.el.readOnly || this.el.disabled) {
       return;
     }
-    this._el.value = this.numberFormatPipe.transform(value, this.fractionSize(), this.dynamicFractionSize());
+    this.el.value = this.numberFormatPipe.transform(
+      this.el.value,
+      this.fractionSize(),
+      this.dynamicFractionSize(),
+    );
   }
 
   /**
@@ -134,9 +140,9 @@ export class NumberInputDirective {
     let str = orgStr + '';
     str = str.replace(',', '.');
     const array = str.split('.');
-    if ( array.length > 1 ) {
+    if (array.length > 1) {
       const prefix = array.slice(0, array.length - 1).join('');
-      str = prefix + '.' + array[ array.length - 1 ];
+      str = prefix + '.' + array[array.length - 1];
     } else {
       str = orgStr;
     }
@@ -149,9 +155,11 @@ export class NumberInputDirective {
    * {boolean}
    */
   private hasInvalidValues(parsedValue: string) {
-    return parsedValue.includes('NaN')
-      || parsedValue.includes('undefined')
-      || parsedValue.includes('null');
+    return (
+      parsedValue.includes('NaN') ||
+      parsedValue.includes('undefined') ||
+      parsedValue.includes('null')
+    );
   }
 
   /**
@@ -161,27 +169,38 @@ export class NumberInputDirective {
    */
   private handlePeriodDelimiter(e: KeyboardEvent) {
     let selectionIncludesPeriod = false;
-    if ( !e.target ) {
+    if (!e.target) {
       return;
     }
     const target = e.target as HTMLInputElement;
-    if ( target.selectionStart !== target.selectionEnd && this._el.value && this._el.value.length > 0 ) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const selection = this._el.value.substring(target.selectionStart, target.selectionEnd);
+    if (
+      target.selectionStart !== null &&
+      target.selectionEnd !== null &&
+      target.selectionStart !== target.selectionEnd &&
+      this.el.value &&
+      this.el.value.length > 0
+    ) {
+      const selection = this.el.value.substring(
+        target.selectionStart,
+        target.selectionEnd,
+      );
       selectionIncludesPeriod = selection.includes(',');
     }
 
-    if ( this._el.value.includes(',') && !selectionIncludesPeriod ) {
+    if (this.el.value.includes(',') && !selectionIncludesPeriod) {
       e.preventDefault();
-    } else if ( e.which === Key.Period ) {
-      setTimeout(() => {
-        const target = e.target as HTMLInputElement;
-        const caretPosition = target.selectionStart;
-        this._el.value = this._el.value.replace('.', ',');
-        this._el.setSelectionRange(caretPosition, caretPosition);
-
-      }, 0);
+    } else if (e.key === '.') {
+      afterNextRender(
+        () => {
+          const target = e.target as HTMLInputElement;
+          const caretPosition = target.selectionStart;
+          this.el.value = this.el.value.replace('.', ',');
+          if (caretPosition !== null) {
+            this.el.setSelectionRange(caretPosition, caretPosition);
+          }
+        },
+        { injector: this.injector },
+      );
     }
   }
 
@@ -190,15 +209,16 @@ export class NumberInputDirective {
    * @param e
    * {boolean}
    */
-  private hasSelectedAllText(e: KeyboardEvent) {
+  private hasSelectedAllText(e: KeyboardEvent): boolean {
     const target = e.target as HTMLInputElement;
-    if ( !target ) {
-      return;
+    if (
+      !target ||
+      target.selectionStart === null ||
+      target.selectionEnd === null
+    ) {
+      return false;
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return target.selectionEnd - target.selectionStart === this._el.value.length;
-
+    return target.selectionEnd - target.selectionStart === this.el.value.length;
   }
 
   /**
@@ -206,14 +226,18 @@ export class NumberInputDirective {
    * @param e
    */
   private handleDash(e: KeyboardEvent) {
-    if ( !e.target ) {
+    if (!e.target) {
       return;
     }
-    if ( this.hasSelectedAllText(e) ) {
-    } else if ( !this._el.value.includes('-') && ( e.target as HTMLInputElement ).selectionStart === 0 ) {
-    } else {
-      e.preventDefault();
+    const target = e.target as HTMLInputElement;
+    // Allow dash if all text is selected or if cursor is at start and no dash exists
+    if (
+      this.hasSelectedAllText(e) ||
+      (!this.el.value.includes('-') && target.selectionStart === 0)
+    ) {
+      return;
     }
+    e.preventDefault();
   }
 
   /**
@@ -221,8 +245,10 @@ export class NumberInputDirective {
    * @param e
    * {boolean}
    */
-  private isCopyPaste(e: KeyboardEvent) {
-    return ( e.ctrlKey || e.metaKey ) && ( e.which === Key.C || e.which === Key.V || e.which === Key.X );
+  private isCopyPaste(e: KeyboardEvent): boolean {
+    return (
+      (e.ctrlKey || e.metaKey) && ['c', 'v', 'x'].includes(e.key.toLowerCase())
+    );
   }
 
   /**
@@ -230,8 +256,8 @@ export class NumberInputDirective {
    * @param e
    * {boolean}
    */
-  private isCtrlA(e: KeyboardEvent) {
-    return ( e.ctrlKey || e.metaKey ) && ( e.which === Key.A );
+  private isCtrlA(e: KeyboardEvent): boolean {
+    return (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a';
   }
 
   /**
@@ -239,8 +265,25 @@ export class NumberInputDirective {
    * @param e
    * {boolean}
    */
-  private isNumberKeypress(e: KeyboardEvent) {
-    return ( e.keyCode >= 48 && e.keyCode <= 57 ) || ( e.keyCode >= 96 && e.keyCode <= 105 );
+  private isNumberKeypress(e: KeyboardEvent): boolean {
+    return /^[0-9]$/.test(e.key);
+  }
+
+  /**
+   * Is a navigation or editing key (arrows, backspace, delete, etc.)
+   * @param e
+   */
+  private isNavigationKey(e: KeyboardEvent): boolean {
+    const navKeys = [
+      'Backspace',
+      'Delete',
+      'Home',
+      'End',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+    ];
+    return navKeys.includes(e.key);
   }
 
   /**
@@ -248,28 +291,28 @@ export class NumberInputDirective {
    * @param e
    */
   private handleKeyUpAndDown(e: KeyboardEvent) {
-    if ( this._el.readOnly || this._el.disabled ) {
+    if (this.el.readOnly || this.el.disabled) {
       return;
     }
-    const value = this._el.value;
-    const addition = e.which === Key.UpArrow ? 1 : -1;
-    // eslint-disable-next-line prefer-const
-    let [ integerSplit = '', fractionSplit = '' ] = ( value || '' ).split(',');
+    const value = this.el.value;
+    const addition = e.key === 'ArrowUp' ? 1 : -1;
+    let [integerSplit = '', fractionSplit = ''] = (value || '').split(',');
     integerSplit = integerSplit.replace(' ', '');
-    if ( integerSplit.length === 0 ) {
+    if (integerSplit.length === 0) {
       integerSplit = '0';
     }
     const currentValue = parseInt(integerSplit, 10);
 
-    setTimeout(() => {
-      if ( fractionSplit.length > 0 ) {
-        this._el.value = ( ( currentValue + addition ) + ',' + fractionSplit );
-      } else {
-        this._el.value = ( currentValue + addition ) + '';
-      }
-      this._el.dispatchEvent(new Event('input'));
-    }, 0);
-
+    afterNextRender(
+      () => {
+        if (fractionSplit.length > 0) {
+          this.el.value = currentValue + addition + ',' + fractionSplit;
+        } else {
+          this.el.value = currentValue + addition + '';
+        }
+        this.el.dispatchEvent(new Event('input'));
+      },
+      { injector: this.injector },
+    );
   }
-
 }
