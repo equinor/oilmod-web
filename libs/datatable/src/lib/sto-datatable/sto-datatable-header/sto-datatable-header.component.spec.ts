@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatSortModule } from '@angular/material/sort';
 import { By } from '@angular/platform-browser';
+import { StoRowWidthHelper } from '../../sto-row-width.helper';
 import { columns } from '../../../testing/utils';
 import { ColumnStylePipe } from '../column-style.pipe';
 import { ExecPipe } from '../exec.pipe';
@@ -24,6 +25,7 @@ describe('StoDatatableHeaderComponent', () => {
         ColumnStylePipe,
         GetGroupFlexPipe,
       ],
+      providers: [StoRowWidthHelper],
     })
       .overrideComponent(StoDatatableHeaderComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

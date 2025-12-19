@@ -9,6 +9,7 @@
     "build:watch": "nx watch --all -- nx run %NX_PROJECT_NAME%:build",
     "build:styles": "ts-node --project tools/tsconfig.tools.json tools/scripts/build-scss.ts",
     "test": "nx run-many --target=test --all --silent",
+    "test:all": "nx run-many --target=test --all --silent",
     "lint": "nx run-many --target=lint --all",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",

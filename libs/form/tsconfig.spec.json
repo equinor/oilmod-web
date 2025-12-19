@@ -2,12 +2,13 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "types": [
       "jest",
-      "node",
-      "dom",
-      "es2020"
+      "node"
     ]
   },
   "files": [

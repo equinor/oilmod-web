@@ -9,7 +9,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
-import { FormFieldDirective, StoSelectFilterModule } from '@ngx-stoui/form';
+import { FormFieldDirective } from '@ngx-stoui/form';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { Subject } from 'rxjs';
 import { StoSelectFilterComponent } from './sto-select-filter.component';
@@ -30,10 +30,9 @@ describe('StoSelectFilterComponent', () => {
         CommonModule,
         MaterialModule,
         ReactiveFormsModule,
-        StoSelectFilterModule,
+        StoSelectFilterComponent,
         FormFieldDirective,
       ],
-      declarations: [],
       providers: [{ provide: MatSelect, useValue: mockSelect }],
     })
       .compileComponents()

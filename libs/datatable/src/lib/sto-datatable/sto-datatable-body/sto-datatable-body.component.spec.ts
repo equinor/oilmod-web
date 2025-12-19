@@ -10,6 +10,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '@ngx-stoui/testing';
+import { StoRowWidthHelper } from '../../sto-row-width.helper';
 import { columns, rows } from '../../../testing/utils';
 import { ColumnStylePipe } from '../column-style.pipe';
 import { ExecPipe } from '../exec.pipe';
@@ -42,6 +43,7 @@ describe('StoDatatableBodyComponent', () => {
         ExecPipe,
         ColumnStylePipe,
       ],
+      providers: [StoRowWidthHelper],
     })
       .overrideComponent(StoDatatableBodyComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
