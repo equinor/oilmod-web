@@ -1,6 +1,6 @@
 {
   "name": "@ngx-stoui/form",
-  "version": "21.0.0",
+  "version": "21.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/equinor/oilmod-web"
@@ -21,8 +21,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0"
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0"
   },
   "dependencies": {
     "tslib": "^2.4.0"
