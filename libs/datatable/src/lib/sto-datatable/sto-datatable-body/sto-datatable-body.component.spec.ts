@@ -10,8 +10,8 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '@ngx-stoui/testing';
-import { StoRowWidthHelper } from '../../sto-row-width.helper';
 import { columns, rows } from '../../../testing/utils';
+import { StoRowWidthHelper } from '../../sto-row-width.helper';
 import { ColumnStylePipe } from '../column-style.pipe';
 import { ExecPipe } from '../exec.pipe';
 import { SelectionModesEnum } from '../selection-modes';

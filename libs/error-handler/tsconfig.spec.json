@@ -6,21 +6,9 @@
     "moduleResolution": "node16",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "types": [
-      "jest",
-      "node"
-    ]
+    "types": ["jest", "node"]
   },
-  "files": [
-    "src/test-setup.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/*.d.ts",
-    "jest.config.ts"
-  ],
-  "exclude": [
-    "**/test.ts"
-  ]
+  "files": ["src/test-setup.ts"],
+  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "jest.config.ts"],
+  "exclude": ["**/test.ts"]
 }
