@@ -1,20 +1,13 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import js from '@eslint/js';
 import baseConfig from '../../eslint.config.mjs';
-
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended,
-});
+import cypress from 'eslint-plugin-cypress/flat';
 
 export default [
   {
     ignores: ['**/dist'],
   },
   ...baseConfig,
-  ...compat.extends('plugin:cypress/recommended'),
+  cypress.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     // Override or add rules here

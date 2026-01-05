@@ -76,10 +76,12 @@ export class SlideToggleComponent
   private _value = signal<boolean | null>(null);
 
   // Signal inputs (not part of MatFormFieldControl interface) - must be public for template binding
+  /* eslint-disable @angular-eslint/no-input-rename */
   readonly _readonly = input(false, {
     transform: booleanAttribute,
     alias: 'readonly',
   });
+  /* eslint-enable @angular-eslint/no-input-rename */
   readonly color = input<ThemePalette>('primary');
 
   // Outputs
@@ -186,7 +188,11 @@ export class SlideToggleComponent
       const shouldDisable = isDisabled || isReadonly;
       const opts = { onlySelf: true, emitEvent: false };
       if (shouldDisable !== this.ctrl.disabled) {
-        shouldDisable ? this.ctrl.disable(opts) : this.ctrl.enable(opts);
+        if (shouldDisable) {
+          this.ctrl.disable(opts);
+        } else {
+          this.ctrl.enable(opts);
+        }
       }
 
       // Sync value to internal form control
@@ -210,7 +216,9 @@ export class SlideToggleComponent
   }
 
   // ControlValueAccessor implementation
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange: (value: boolean | null) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched = () => {};
 
   writeValue(value: boolean): void {

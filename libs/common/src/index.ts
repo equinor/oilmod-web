@@ -12,6 +12,7 @@ export * from './lib/sto-app-header/sto-app-header.component';
 export * from './lib/sto-app-header/sto-app-header.module';
 export * from './lib/sto-breadcrumbs/breadcrumb';
 export * from './lib/sto-breadcrumbs/sto-breadcrumbs.component';
+export * from './lib/sto-breadcrumbs/sto-breadcrumbs.module';
 export * from './lib/sto-confirm-dialog/sto-confirm-dialog.component';
 export * from './lib/sto-confirm-dialog/sto-confirm-dialog.module';
 export * from './lib/sto-confirm-dialog/sto-confirm-dialog.service';

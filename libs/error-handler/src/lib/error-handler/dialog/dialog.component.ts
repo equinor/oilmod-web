@@ -1,5 +1,5 @@
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -26,10 +26,8 @@ import { MatButton } from '@angular/material/button';
   ],
 })
 export class DialogComponent {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) readonly data: HttpError,
-    private ref: MatDialogRef<DialogComponent>,
-  ) {}
+  readonly data = inject<HttpError>(MAT_DIALOG_DATA);
+  private readonly ref = inject(MatDialogRef<DialogComponent>);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleEvent(action: ((...args: any[]) => unknown) | unknown | undefined) {

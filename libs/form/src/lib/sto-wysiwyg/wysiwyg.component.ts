@@ -58,7 +58,9 @@ export class WysiwygComponent implements ControlValueAccessor {
   });
   protected readonly active = signal<string[]>([]);
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   private onChange = (_value: string) => {};
 
   constructor() {

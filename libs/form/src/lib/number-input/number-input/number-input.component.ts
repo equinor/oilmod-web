@@ -52,6 +52,8 @@ export class NumberInputComponent
   private readonly _autofilled = signal(false);
 
   // Signal inputs with transforms - must be public for template binding
+  // These aliases are required for MatFormFieldControl interface compatibility
+  /* eslint-disable @angular-eslint/no-input-rename */
   readonly _disabled = input(false, {
     transform: booleanAttribute,
     alias: 'disabled',
@@ -68,6 +70,7 @@ export class NumberInputComponent
   readonly dynamicFractionSize = input(false, { transform: booleanAttribute });
   readonly _placeholder = input('', { alias: 'placeholder' });
   readonly _tabIndex = input(0, { alias: 'tabIndex' });
+  /* eslint-enable @angular-eslint/no-input-rename */
   readonly valueModel = model<number | null>(null, { alias: 'value' });
 
   // MatFormFieldControl interface implementation (primitive getters)
@@ -100,8 +103,9 @@ export class NumberInputComponent
   }
 
   private readonly _empty = computed(() => {
-    const value = this.ctrl.value;
-    return !(value && value !== 0);
+    // Use valueModel for reactivity instead of ctrl.value
+    const value = this.valueModel();
+    return value == null || (typeof value === 'number' && isNaN(value));
   });
 
   get empty(): boolean {
@@ -157,15 +161,25 @@ export class NumberInputComponent
       this.setDisabledState(this._disabled());
     });
 
-    // Trigger state changes when inputs change
-    effect(() => {
-      this._readonly();
-      this.fractionSize();
-      this._placeholder();
-      this._tabIndex();
-      this._required();
-      this.stateChanges.next();
-    });
+    // Sync valueModel changes to internal ctrl (for [value] binding)
+    // Also triggers stateChanges for all reactive inputs
+    effect(
+      () => {
+        const externalValue = this.valueModel();
+        // Sync the external value to ctrl - the ctrl displays the actual value
+        this.ctrl.setValue(externalValue, { emitEvent: false });
+
+        // Track all reactive inputs that should trigger stateChanges
+        this._readonly();
+        this.fractionSize();
+        this._placeholder();
+        this._tabIndex();
+        this._required();
+
+        this.stateChanges.next();
+      },
+      { allowSignalWrites: true },
+    );
   }
 
   // Public accessor for value (ControlValueAccessor interface)
@@ -207,7 +221,9 @@ export class NumberInputComponent
   }
 
   // ControlValueAccessor implementation
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   onChange = (_: number | null) => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {};
 
   writeValue(value: number | null): void {

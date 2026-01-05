@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 const PADDING = '000000000';
-const INVALID_CHARS_REGEX = /[\^¨~`´_:;!"#¤%&/()=@£$€{\[]/g;
+const INVALID_CHARS_REGEX = /[\^¨~`´_:;!"#¤%&/()=@£$€{[]/g;
 
 @Pipe({
   name: 'numberInput',

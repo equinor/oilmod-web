@@ -77,7 +77,7 @@ export class NumberUnitInputComponent
   readonly list = input<{ value: unknown; title?: string }[]>([]);
   readonly fractionSize = input<number>(3);
   readonly unitPlaceholder = input<string>('');
-  @Input() placeholder: string = '';
+  @Input() placeholder = '';
 
   // State signals
   private readonly _disabled = signal(false);
@@ -138,7 +138,11 @@ export class NumberUnitInputComponent
   set disabled(value: boolean) {
     this._disabled.set(value);
     const opts = { onlySelf: true, emitEvent: false };
-    value ? this.form.disable(opts) : this.form.enable(opts);
+    if (value) {
+      this.form.disable(opts);
+    } else {
+      this.form.enable(opts);
+    }
     this.stateChanges.next();
   }
 
@@ -148,9 +152,11 @@ export class NumberUnitInputComponent
   set readonly(value: boolean) {
     this._readonly.set(value);
     const opts = { onlySelf: true, emitEvent: false };
-    value
-      ? this.form.get('unit')?.disable(opts)
-      : this.form.get('unit')?.enable(opts);
+    if (value) {
+      this.form.get('unit')?.disable(opts);
+    } else {
+      this.form.get('unit')?.enable(opts);
+    }
     this.stateChanges.next();
   }
 
@@ -246,7 +252,9 @@ export class NumberUnitInputComponent
   }
 
   // ControlValueAccessor implementation
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   onChange = (_: unknown) => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onTouched = () => {};
 
   writeValue(value: NumberUnit | null): void {

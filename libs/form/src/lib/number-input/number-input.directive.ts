@@ -296,6 +296,7 @@ export class NumberInputDirective {
     }
     const value = this.el.value;
     const addition = e.key === 'ArrowUp' ? 1 : -1;
+    // eslint-disable-next-line prefer-const -- fractionSplit never reassigned but can't use mixed let/const in destructuring
     let [integerSplit = '', fractionSplit = ''] = (value || '').split(',');
     integerSplit = integerSplit.replace(' ', '');
     if (integerSplit.length === 0) {

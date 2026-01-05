@@ -9,6 +9,7 @@ export * from './lib/sto-drawer/sto-drawer.component';
 export * from './lib/sto-drawer/sto-drawer.module';
 
 export * from './lib/nav-drawer/nav-drawer.component';
+export * from './lib/nav-drawer/nav-drawer.module';
 export * from './lib/nav-drawer/navigation';
 
 export * from './lib/nav-drawer/nav-drawer-item/nav-drawer-item.component';

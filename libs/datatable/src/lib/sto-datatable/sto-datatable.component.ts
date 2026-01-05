@@ -106,6 +106,7 @@ export class StoDatatableComponent<T extends object> implements AfterViewInit {
   readonly scrollLeft = signal('translate3d(0px, 0px, 0px)');
 
   // Outputs
+  // eslint-disable-next-line @angular-eslint/no-output-native
   readonly select = output<RowSelection<T>>();
   readonly resized = output<Column>();
   readonly rowContextMenu = output<RowContextMenu<T>>();
