@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import {
   NavigationEnd,
+  Route,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -83,6 +84,50 @@ export class NavDrawerItemComponent {
   readonly currentExpansionState = computed(() =>
     this.collapsed() ? 'collapsed' : this.expansionState(),
   );
+
+  /**
+   * Determines if the route should use exact matching for routerLinkActive.
+   * Reads the route config's pathMatch property - if 'full', uses exact matching.
+   * This prevents routes like '/' from being marked active on all child routes
+   * when configured with pathMatch: 'full'.
+   */
+  readonly routerLinkActiveOptions = computed(() => {
+    const route = this.navigationItem().route;
+    if (!route) return { exact: false };
+
+    // Get the resolved URL path
+    const urlTree = this.router.createUrlTree(route);
+    const url = this.router.serializeUrl(urlTree);
+
+    // Find the matching route config and check its pathMatch
+    const routeConfig = this.findRouteConfig(url);
+
+    return { exact: routeConfig?.pathMatch === 'full' };
+  });
+
+  /**
+   * Finds the route config for a given URL path by searching the router config.
+   */
+  private findRouteConfig(url: string): Route | undefined {
+    const normalizedPath = url === '/' ? '' : url.replace(/^\//, '');
+
+    // Search top-level routes
+    const topLevel = this.router.config.find((r) => r.path === normalizedPath);
+    if (topLevel) return topLevel;
+
+    // Search nested routes (one level deep for common cases)
+    for (const route of this.router.config) {
+      if (route.children) {
+        const child = route.children.find((r) => {
+          const fullPath = route.path ? `${route.path}/${r.path}` : r.path;
+          return fullPath === normalizedPath;
+        });
+        if (child) return child;
+      }
+    }
+
+    return undefined;
+  }
 
   routerEvents = toSignal(
     this.router.events.pipe(filter((e) => e instanceof NavigationEnd)),

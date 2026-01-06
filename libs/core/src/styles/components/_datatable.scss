@@ -82,12 +82,12 @@
     font-feature-settings: 'tnum', 'lnum';
 
     // Header & Body shared icon styling
-    .datatable-header,
-    .datatable-body {
-      mat-icon {
-        color: var(--text-secondary);
-      }
-    }
+    // .datatable-header,
+    // .datatable-body {
+    //   mat-icon {
+    //     color: var(--text-secondary);
+    //   }
+    // }
 
     // Header
     .datatable-header {

@@ -10,6 +10,7 @@
         [href]="navigationItem().link || null"
         [routerLink]="navigationItem().route || null"
         routerLinkActive="active"
+        [routerLinkActiveOptions]="routerLinkActiveOptions()"
         (click)="activate.emit(navigationItem())"
       >
         @if (navigationItem().svgIcon) {
@@ -82,6 +83,7 @@
       [href]="navigationItem().link || null"
       [routerLink]="navigationItem().route || null"
       routerLinkActive="active"
+      [routerLinkActiveOptions]="routerLinkActiveOptions()"
       matRipple
       (click)="activate.emit(navigationItem())"
     >

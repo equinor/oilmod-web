@@ -27,13 +27,12 @@ $sto-theme: mat.define-theme(
 
     // Base font size (13px - Equinor standard)
     --application-font: Equinor, Roboto, sans-serif;
-    font-size: 13px;
-    font-family: var(--application-font);
 
     // Typography sizes
     --mat-sys-body-large-font: var(--application-font);
+    --mat-sys-body-large-weight: 400;
     --mat-sys-body-large-size: 1rem;
-    --mat-sys-body-large-line-height: 1.25; // 20px / 13px
+    --mat-sys-body-large-line-height: 1.55; // 20px / 13px
     --mat-sys-label-medium-font: var(--application-font);
     --mat-sys-label-medium-size: 1.25rem;
     --mat-sys-label-medium-line-height: 1.333; // 17px / 13px
@@ -256,13 +255,18 @@ $sto-theme: mat.define-theme(
 
   // Small typography scale (10px base - compact mode)
   .sto-sm-typography {
+    font: 400 10px / 20px var(--application-font);
     font-size: 10px;
+    // All em values remain the same, just relative to 10px base
+  }
+  .sto-m-typography {
+    font: 400 13px / 24px var(--application-font);
     // All em values remain the same, just relative to 10px base
   }
 
   // Large typography scale (16px base - accessibility mode)
   .sto-l-typography {
-    font-size: 16px;
+    font: 400 16px / 28px var(--application-font);
     // All em values remain the same, just relative to 16px base
   }
 

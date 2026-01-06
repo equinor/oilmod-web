@@ -18,7 +18,7 @@ type CommonNavigation = {
    * link is used for external links to different applications (reports or other micro-frontends)
    */
   link?: string;
-}
+};
 
 export type Navigation = CommonNavigation & {
   /**
@@ -41,12 +41,11 @@ export type Navigation = CommonNavigation & {
    * divider
    */
   divider?: Divider;
-}
+};
 
 export type NavigationChild = CommonNavigation & {
   /**
    * target is used for external links to determine how to open (new tab/window etc)
    */
   target?: string;
-}
-
+};

@@ -5,8 +5,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 50px auto 50px;
-
+  grid-template-rows: auto 1fr auto;
 
   .sto-popover-title {
     display: flex;
@@ -24,12 +23,10 @@
   }
 
   .sto-popover-footer {
-    height: 41px;
     display: flex;
     align-items: flex-end;
   }
 }
-
 
 .sto-popover-arrow {
   position: absolute;

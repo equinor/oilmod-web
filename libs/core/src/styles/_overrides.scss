@@ -10,6 +10,11 @@ span.spacer {
   flex-grow: 1;
 }
 
+html,
+body {
+  font: 400 13px / 24px var(--application-font);
+}
+
 body {
   margin-left: 0;
   margin-right: 0;
@@ -27,24 +32,47 @@ input::-webkit-inner-spin-button {
 }
 
 h1 {
-  font-size: 1.7rem;
+  --mat-sys-body-large-size: 1.7rem;
+  --mat-sys-body-large-line-height: 1.4;
+  --mat-sys-body-large-weight: 400;
+  font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
+    var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h2 {
-  font-size: 1.5rem;
-  font-weight: normal;
+  --mat-sys-body-large-size: 1.6rem;
+  --mat-sys-body-large-line-height: 1.4;
+  --mat-sys-body-large-weight: 400;
+  font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
+    var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h3 {
-  font-size: 1.2rem;
+  --mat-sys-body-large-size: 1.53846rem;
+  --mat-sys-body-large-line-height: 1.4;
+  --mat-sys-body-large-weight: 400;
+  font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
+    var(--mat-sys-body-large-line-height) var(--application-font);
   margin: 0;
 }
 h4 {
-  font-size: 1rem;
+  --mat-sys-body-large-size: 1.23077rem;
+  --mat-sys-body-large-line-height: 1.4;
+  --mat-sys-body-large-weight: 400;
+  font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
+    var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h5 {
-  font-size: 0.9rem;
+  --mat-sys-body-large-size: 0.9rem;
+  --mat-sys-body-large-line-height: 1;
+  --mat-sys-body-large-weight: 400;
+  font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
+    var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h6 {
-  font-size: 0.8rem;
+  --mat-sys-body-large-size: 0.8rem;
+  --mat-sys-body-large-line-height: 1.25;
+  --mat-sys-body-large-weight: 400;
+  font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
+    var(--mat-sys-body-large-line-height) var(--application-font);
 }
 
 html body.mat-app-background {

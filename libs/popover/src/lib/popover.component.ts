@@ -25,8 +25,6 @@ const svg = ``;
     (backdropClick)="trigger().close()"
     [cdkConnectedOverlayHasBackdrop]="hasBackdrop()"
     [cdkConnectedOverlayPositions]="positions"
-    [cdkConnectedOverlayWidth]="width()"
-    [cdkConnectedOverlayHeight]="height()"
     [cdkConnectedOverlayMinWidth]="minWidth()"
     [cdkConnectedOverlayMinHeight]="minHeight()"
     [cdkConnectedOverlayBackdropClass]="backdropClass()"
@@ -68,8 +66,6 @@ export class PopoverComponent {
 
   readonly backdropClick = output<void>();
   readonly trigger = input.required<PopoverDirective>();
-  readonly width = input<number | string>(0);
-  readonly height = input<number | string>(0);
   readonly minWidth = input<number | string>('200px');
   readonly minHeight = input<number | string>('100px');
   readonly backdropClass = input<string | string[]>(['sto-popover-backdrop']);
