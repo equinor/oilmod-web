@@ -17,6 +17,7 @@ export * from './lib/sto-form/sto-form.module';
 
 export * from './lib/sto-form/token';
 export * from './lib/sto-option-select-all/sto-option-select-all.component';
+export * from './lib/sto-option-select-all/sto-option-select-all.module';
 export * from './lib/sto-select-filter/sto-select-filter.component';
 export * from './lib/sto-select-filter/sto-select-filter.module';
 

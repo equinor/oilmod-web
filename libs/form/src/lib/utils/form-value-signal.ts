@@ -17,10 +17,22 @@ export interface FormValueSignalOptions {
  * Creates a signal from a form's valueChanges.
  * Works whether `form` is a signal or a plain property.
  *
+ * Supports required input signals - the signal will emit `null` initially
+ * until the input becomes available, then emit the form value.
+ *
  * @param formOrSignal - The form control, group, or array (or a signal containing one)
  * @param options - Configuration options
  * @param options.includeDisabled - Whether to include disabled fields (default: true)
  * @returns A signal containing the form value
+ *
+ * @example
+ * // With a plain FormControl
+ * readonly formValue = toFormValueSignal(this.myForm);
+ *
+ * @example
+ * // With an input signal (including required inputs)
+ * readonly ctrl = input.required<FormControl<string>>();
+ * readonly ctrlValue = toFormValueSignal(this.ctrl);
  */
 export function toFormValueSignal<T extends AbstractControl>(
   formOrSignal: T | Signal<T | null | undefined>,
@@ -76,7 +88,15 @@ export function toFormValueSignal<T extends AbstractControl>(
     };
   });
 
-  const form = formSignal();
+  // For signal inputs (functions), we can't access the value synchronously
+  // because required inputs throw NG0950 before they're initialized.
+  // Use null as initial value and let the effect emit the real value.
+  if (isSignalLike) {
+    return toSignal(valueChanges$, { initialValue: null as any });
+  }
+
+  // For plain form controls, we can safely compute the initial value
+  const form = formOrSignal as T;
   const isFormControl = form instanceof FormControl;
   const initialValue = form
     ? ((includeDisabled ? form.getRawValue?.() : form.value) ??
