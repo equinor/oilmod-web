@@ -1,13 +1,26 @@
-<a
-  [href]="navigationItem().link || null"
-  [routerLink]="navigationItem().route || null"
-  [attr.target]="navigationItem().target || null"
-  [class.disabled]="navigationItem().disabled"
-  routerLinkActive="active"
-  (click)="activate.emit(navigationItem())"
->
-  <span>{{ navigationItem().label }}</span>
-  @if (navigationItem().target === '_blank') {
-    <mat-icon>open_in_new</mat-icon>
-  }
-</a>
+<!-- External link (href) - when link is provided -->
+@if (navigationItem().link) {
+  <a
+    [href]="navigationItem().link"
+    [attr.target]="navigationItem().target || null"
+    [class.disabled]="navigationItem().disabled"
+    (click)="activate.emit(navigationItem())"
+  >
+    <span>{{ navigationItem().label }}</span>
+    @if (navigationItem().target === '_blank') {
+      <mat-icon>open_in_new</mat-icon>
+    }
+  </a>
+}
+
+<!-- Internal route (routerLink) - when route is provided -->
+@if (navigationItem().route) {
+  <a
+    [routerLink]="navigationItem().route"
+    [class.disabled]="navigationItem().disabled"
+    routerLinkActive="active"
+    (click)="activate.emit(navigationItem())"
+  >
+    <span>{{ navigationItem().label }}</span>
+  </a>
+}
