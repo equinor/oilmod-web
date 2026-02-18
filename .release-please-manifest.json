@@ -1,9 +1,9 @@
 {
-  "libs/core": "21.0.4",
-  "libs/common": "21.0.4",
-  "libs/datatable": "21.0.2",
-  "libs/drawer": "21.0.6",
-  "libs/error-handler": "21.0.2",
-  "libs/form": "21.0.5",
-  "libs/popover": "21.0.2"
+  "libs/core": "21.0.5",
+  "libs/common": "21.0.5",
+  "libs/datatable": "21.0.3",
+  "libs/drawer": "21.0.7",
+  "libs/error-handler": "21.1.0",
+  "libs/form": "21.0.6",
+  "libs/popover": "21.0.3"
 }
