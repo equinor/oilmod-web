@@ -31,10 +31,10 @@
     "storybook": "nx run oilmod-web:storybook",
     "storybook:build": "nx run oilmod-web:build-storybook",
     "clean": "rm -rf .angular .cache && bun run nx reset",
-    "yalc:publish": "bash -c 'for dir in dist/libs/*; do cd \"$dir\" && yalc publish && cd -; done'",
-    "yalc:push": "bash -c '[ -f dist/libs/core/fesm2022/ngx-stoui-core.mjs ] && for dir in dist/libs/*; do cd \"$dir\" && yalc push --sig && cd -; done || echo \"Build in progress, skipping push...\"'",
-    "yalc:watch": "chokidar \"dist/libs/*/fesm2022/*.mjs\" --debounce 8000 --polling -c \"bun run yalc:push\"",
-    "dev": "NX_TUI=false bun run build && bun run yalc:push && concurrently -n build,yalc -c blue,green \"bun run build:watch\" \"bun run yalc:watch\""
+    "link:publish": "bash -c 'for dir in dist/libs/*; do cd \"$dir\" && yalc publish && cd -; done'",
+    "link:push": "bash -c '[ -f dist/libs/core/fesm2022/ngx-stoui-core.mjs ] && for dir in dist/libs/*; do cd \"$dir\" && yalc push --sig && cd -; done || echo \"Build in progress, skipping push...\"'",
+    "link:watch": "chokidar \"dist/libs/*/fesm2022/*.mjs\" --debounce 8000 --polling -c \"bun run link:push\"",
+    "dev": "NX_TUI=false bun run build && bun run link:push && concurrently -n build,yalc -c blue,green \"bun run build:watch\" \"bun run link:watch\""
   },
   "private": true,
   "dependencies": {
