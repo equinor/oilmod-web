@@ -1,6 +1,7 @@
 // Datatable Component Styles
 @use './ngx-datatable-compact';
 @use './ngx-datatable-form';
+@use './progress-bar' as pb;
 
 // =============================================================================
 // Icon Size Configuration
@@ -68,34 +69,7 @@ $datatable-icon-size-compact: 16px !default;
   // Progress Bar
   // ---------------------------------------------------------------------------
   &__progress-bar {
-    display: block;
-    position: sticky;
-    width: 100%;
-    height: 5px;
-    padding: 0;
-    margin: 0;
-    top: 0;
-    left: 0;
-
-    &__container {
-      display: block;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      height: 5px;
-      transform: translate(0, 0) scale(1, 1);
-
-      &__bar {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 5px;
-        transition: transform 0.2s linear;
-        animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
-      }
-    }
+    @include pb.progress-bar($bem: true);
   }
 
   // ---------------------------------------------------------------------------

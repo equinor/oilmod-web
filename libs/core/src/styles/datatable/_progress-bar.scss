@@ -1,0 +1,59 @@
+// =============================================================================
+// Progress Bar Mixin
+// =============================================================================
+// Shared progress bar styles for both:
+// - @ngx-stoui/datatable wrapper (.sto-mdl-table__progress-bar)
+// - Raw @swimlane/ngx-datatable (.progress-linear)
+// =============================================================================
+
+/// Progress bar with all styles included (structure + theme)
+/// @param {Boolean} $bem - Use BEM selectors (&__container) vs plain (.container)
+@mixin progress-bar($bem: false) {
+  display: block;
+  position: sticky;
+  width: 100%;
+  height: 5px;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  @if $bem {
+    &__container {
+      @include _container();
+      &__bar {
+        @include _bar();
+      }
+    }
+  } @else {
+    .container {
+      @include _container();
+      .bar {
+        @include _bar();
+      }
+    }
+  }
+}
+
+@mixin _container() {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 5px;
+  transform: translate(0, 0) scale(1, 1);
+  background-color: var(--accent-highlight, rgb(170, 209, 249));
+}
+
+@mixin _bar() {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  transition: transform 0.2s linear;
+  animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
+  background-color: var(--primary-resting, rgb(16, 108, 200));
+}

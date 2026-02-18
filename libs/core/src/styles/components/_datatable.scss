@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@use '../datatable/progress-bar' as pb;
 
 // =============================================================================
 // Datatable Theme Mixin (Colors & Visual Styles)
@@ -107,12 +108,8 @@
 
     // Body
     .datatable-body {
-      .progress-linear .container {
-        background-color: var(--accent-highlight);
-
-        .bar {
-          background-color: var(--primary-resting);
-        }
+      .progress-linear {
+        @include pb.progress-bar();
       }
 
       .datatable-body-row {
