@@ -48,8 +48,7 @@ export class NumberFormatPipe implements PipeTransform {
       value = parseFloat(this.toFixed(value, numberOfDecimals));
     }
     // Turn negative numbers back, but only if value is not -0
-     
-    if (isNegativeNumber && value < 0) {
+    if (isNegativeNumber && value !== 0) {
       value = value * -1;
     }
     const localized = this.prettyPrintValue(
