@@ -218,14 +218,14 @@ jobs:
           manifest-file: .release-please-manifest.json
 
   # ============================================
-  # PUBLISH: Build all libs then publish released ones
+  # PUBLISH: One job per package (parallel)
   # ============================================
-  publish:
+  publish-core:
     needs: [release-please]
     if: |
       always() && !cancelled() && (
-        needs.release-please.outputs.releases_created == 'true' ||
-        github.event_name == 'workflow_dispatch'
+        needs.release-please.outputs.core_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_core == true && github.ref == 'refs/heads/master')
       )
     runs-on: ubuntu-latest
     environment: NPM
@@ -234,59 +234,208 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-
-      - name: Cache Bun dependencies
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
+          restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/core to npm
+        run: cd dist/libs/core && npm publish --provenance --access public
 
-      - name: Install dependencies
-        run: bun install
+  publish-common:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.common_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_common == true && github.ref == 'refs/heads/master')
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/common to npm
+        run: cd dist/libs/common && npm publish --provenance --access public
 
-      - name: Build all libraries
-        run: bun run build
+  publish-error-handler:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.error_handler_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_error_handler == true && github.ref == 'refs/heads/master')
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/error-handler to npm
+        run: cd dist/libs/error-handler && npm publish --provenance --access public
 
-      # Publish in dependency order: core → common/error-handler/testing → downstream
-      # Publish in dependency order: core → common/error-handler/testing → downstream
-      - name: Publish @ngx-stoui/core
-        if: needs.release-please.outputs.core_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_core)
-        run: cd dist/libs/core && npm publish --provenance
+  publish-datatable:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.datatable_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_datatable == true && github.ref == 'refs/heads/master')
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/datatable to npm
+        run: cd dist/libs/datatable && npm publish --provenance --access public
 
-      - name: Publish @ngx-stoui/common
-        if: needs.release-please.outputs.common_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_common)
-        run: cd dist/libs/common && npm publish --provenance
+  publish-drawer:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.drawer_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_drawer == true && github.ref == 'refs/heads/master')
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/drawer to npm
+        run: cd dist/libs/drawer && npm publish --provenance --access public
 
-      - name: Publish @ngx-stoui/error-handler
-        if: needs.release-please.outputs.error_handler_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_error_handler)
-        run: cd dist/libs/error-handler && npm publish --provenance
+  publish-form:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.form_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_form == true && github.ref == 'refs/heads/master')
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/form to npm
+        run: cd dist/libs/form && npm publish --provenance --access public
 
-      - name: Publish @ngx-stoui/datatable
-        if: needs.release-please.outputs.datatable_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_datatable)
-        run: cd dist/libs/datatable && npm publish --provenance
-
-      - name: Publish @ngx-stoui/drawer
-        if: needs.release-please.outputs.drawer_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_drawer)
-        run: cd dist/libs/drawer && npm publish --provenance
-
-      - name: Publish @ngx-stoui/form
-        if: needs.release-please.outputs.form_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_form)
-        run: cd dist/libs/form && npm publish --provenance
-
-      - name: Publish @ngx-stoui/popover
-        if: needs.release-please.outputs.popover_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_popover)
-        run: cd dist/libs/popover && npm publish --provenance
+  publish-popover:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.popover_release_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish_popover == true && github.ref == 'refs/heads/master')
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: bun install
+      - run: bun run build
+      - name: Publish @ngx-stoui/popover to npm
+        run: cd dist/libs/popover && npm publish --provenance --access public
 
   # ============================================
   # STORYBOOK: Deploy on release or manual trigger
