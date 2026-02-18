@@ -85,6 +85,7 @@ export function toFormValueSignal<T extends AbstractControl>(
         )
         .subscribe({
           next: (v) => sub.next(v),
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           error: () => {}, // Ignore errors from destroyed forms
         });
     });

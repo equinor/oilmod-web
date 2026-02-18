@@ -120,7 +120,7 @@ jobs:
         run: bun install
 
       - name: Run linter
-        run: bun run lint
+        run: bun run lint --quiet
 
   test:
     needs: setup
