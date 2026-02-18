@@ -173,7 +173,7 @@
       "
       mat-menu-item
     >
-      Set as default
+      {{ preference.default ? 'Remove default' : 'Set as default' }}
     </button>
     <button
       class="dense"

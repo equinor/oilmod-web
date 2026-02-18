@@ -65,7 +65,7 @@ export class PreferenceManagerComponent {
   /**
    * If the current preference has been modified
    */
-  readonly dirty = input<boolean>();
+  readonly dirty = input<boolean>(false);
   /**
    * Text to display when no preference is selected
    */
@@ -149,7 +149,7 @@ export class PreferenceManagerComponent {
    * @internal
    */
   toggleDefault(preference: Preference) {
-    const changed = { ...preference, default: true };
+    const changed = { ...preference, default: !preference.default };
     this.setDefaultPreference.emit(changed);
   }
 

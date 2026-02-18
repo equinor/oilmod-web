@@ -160,10 +160,20 @@ describe('PreferenceManagerComponent', () => {
     component.overwrite(pref);
   });
 
-  it('should emit setDefaultPreference output with default set to true', (done) => {
-    const pref = preferences[0];
+  it('should emit setDefaultPreference output with default toggled to true when preference is not default', (done) => {
+    const pref = preferences[0]; // Not default
     component.setDefaultPreference.subscribe((p: Preference) => {
       expect(p.default).toBe(true);
+      expect(p.name).toBe(pref.name);
+      done();
+    });
+    component.toggleDefault(pref);
+  });
+
+  it('should emit setDefaultPreference output with default toggled to false when preference is default', (done) => {
+    const pref = preferences[1]; // Already default
+    component.setDefaultPreference.subscribe((p: Preference) => {
+      expect(p.default).toBe(false);
       expect(p.name).toBe(pref.name);
       done();
     });
