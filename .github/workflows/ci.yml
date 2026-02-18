@@ -1,0 +1,340 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+      - "release-please--*"
+  workflow_dispatch:
+    inputs:
+      publish_core:
+        description: "Publish @ngx-stoui/core"
+        required: false
+        type: boolean
+        default: false
+      publish_common:
+        description: "Publish @ngx-stoui/common"
+        required: false
+        type: boolean
+        default: false
+      publish_datatable:
+        description: "Publish @ngx-stoui/datatable"
+        required: false
+        type: boolean
+        default: false
+      publish_drawer:
+        description: "Publish @ngx-stoui/drawer"
+        required: false
+        type: boolean
+        default: false
+      publish_error_handler:
+        description: "Publish @ngx-stoui/error-handler"
+        required: false
+        type: boolean
+        default: false
+      publish_form:
+        description: "Publish @ngx-stoui/form"
+        required: false
+        type: boolean
+        default: false
+      publish_popover:
+        description: "Publish @ngx-stoui/popover"
+        required: false
+        type: boolean
+        default: false
+      publish_testing:
+        description: "Publish @ngx-stoui/testing"
+        required: false
+        type: boolean
+        default: false
+      deploy_storybook:
+        description: "Deploy Storybook"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # ============================================
+  # SETUP: Detect release-please merge commits
+  # ============================================
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      is_release_merge: ${{ steps.check.outputs.is_release_merge }}
+      should_validate: ${{ steps.check.outputs.should_validate }}
+    steps:
+      - id: check
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          IS_RELEASE_MERGE="false"
+          SHOULD_VALIDATE="false"
+
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/master" ]]; then
+            if [[ "$COMMIT_MSG" == "chore(main): release"* ]] || [[ "$COMMIT_MSG" == "chore(master): release"* ]] || [[ "$COMMIT_MSG" == "chore: release"* ]]; then
+              IS_RELEASE_MERGE="true"
+              echo "🚀 Detected release-please merge commit - skipping test/build"
+            fi
+          fi
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            SHOULD_VALIDATE="true"
+          elif [[ "${{ github.ref }}" == refs/heads/release-please--* ]]; then
+            SHOULD_VALIDATE="true"
+          elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/master" && "$IS_RELEASE_MERGE" == "false" ]]; then
+            SHOULD_VALIDATE="true"
+          fi
+
+          echo "is_release_merge=$IS_RELEASE_MERGE" >> $GITHUB_OUTPUT
+          echo "should_validate=$SHOULD_VALIDATE" >> $GITHUB_OUTPUT
+
+  # ============================================
+  # VALIDATION: Lint, Test, and Build run in parallel
+  # ============================================
+  lint:
+    needs: setup
+    if: needs.setup.outputs.should_validate == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run linter
+        run: bun run lint:all
+
+  test:
+    needs: setup
+    if: needs.setup.outputs.should_validate == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run tests
+        run: bun run test:all
+
+  build:
+    needs: setup
+    if: needs.setup.outputs.should_validate == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build all libraries
+        run: bun run build
+
+  # ============================================
+  # RELEASE PLEASE
+  # ============================================
+  release-please:
+    needs: [setup, lint, test, build]
+    if: |
+      always() && !cancelled() &&
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/master' && (
+        needs.setup.outputs.is_release_merge == 'true' ||
+        (needs.lint.result == 'success' && needs.test.result == 'success' && needs.build.result == 'success')
+      ))
+    runs-on: ubuntu-latest
+    outputs:
+      # Core
+      core_release_created: ${{ steps.release.outputs['libs/core--release_created'] }}
+      core_version: ${{ steps.release.outputs['libs/core--version'] }}
+      # Common
+      common_release_created: ${{ steps.release.outputs['libs/common--release_created'] }}
+      common_version: ${{ steps.release.outputs['libs/common--version'] }}
+      # Datatable
+      datatable_release_created: ${{ steps.release.outputs['libs/datatable--release_created'] }}
+      datatable_version: ${{ steps.release.outputs['libs/datatable--version'] }}
+      # Drawer
+      drawer_release_created: ${{ steps.release.outputs['libs/drawer--release_created'] }}
+      drawer_version: ${{ steps.release.outputs['libs/drawer--version'] }}
+      # Error Handler
+      error_handler_release_created: ${{ steps.release.outputs['libs/error-handler--release_created'] }}
+      error_handler_version: ${{ steps.release.outputs['libs/error-handler--version'] }}
+      # Form
+      form_release_created: ${{ steps.release.outputs['libs/form--release_created'] }}
+      form_version: ${{ steps.release.outputs['libs/form--version'] }}
+      # Popover
+      popover_release_created: ${{ steps.release.outputs['libs/popover--release_created'] }}
+      popover_version: ${{ steps.release.outputs['libs/popover--version'] }}
+      # Testing
+      testing_release_created: ${{ steps.release.outputs['libs/testing--release_created'] }}
+      testing_version: ${{ steps.release.outputs['libs/testing--version'] }}
+      # Any release
+      releases_created: ${{ steps.release.outputs.releases_created }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        if: github.event_name == 'push'
+        id: release
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # ============================================
+  # PUBLISH: Build all libs then publish released ones
+  # ============================================
+  publish:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.releases_created == 'true' ||
+        github.event_name == 'workflow_dispatch'
+      )
+    runs-on: ubuntu-latest
+    environment: NPM
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build all libraries
+        run: bun run build
+
+      # Publish in dependency order: core → common/error-handler/testing → downstream
+      # Publish in dependency order: core → common/error-handler/testing → downstream
+      - name: Publish @ngx-stoui/core
+        if: needs.release-please.outputs.core_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_core)
+        run: cd dist/libs/core && npm publish --provenance
+
+      - name: Publish @ngx-stoui/common
+        if: needs.release-please.outputs.common_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_common)
+        run: cd dist/libs/common && npm publish --provenance
+
+      - name: Publish @ngx-stoui/error-handler
+        if: needs.release-please.outputs.error_handler_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_error_handler)
+        run: cd dist/libs/error-handler && npm publish --provenance
+
+      - name: Publish @ngx-stoui/testing
+        if: needs.release-please.outputs.testing_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_testing)
+        run: cd dist/libs/testing && npm publish --provenance
+
+      - name: Publish @ngx-stoui/datatable
+        if: needs.release-please.outputs.datatable_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_datatable)
+        run: cd dist/libs/datatable && npm publish --provenance
+
+      - name: Publish @ngx-stoui/drawer
+        if: needs.release-please.outputs.drawer_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_drawer)
+        run: cd dist/libs/drawer && npm publish --provenance
+
+      - name: Publish @ngx-stoui/form
+        if: needs.release-please.outputs.form_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_form)
+        run: cd dist/libs/form && npm publish --provenance
+
+      - name: Publish @ngx-stoui/popover
+        if: needs.release-please.outputs.popover_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_popover)
+        run: cd dist/libs/popover && npm publish --provenance
+
+  # ============================================
+  # STORYBOOK: Deploy on release or manual trigger
+  # ============================================
+  deploy-storybook:
+    needs: [release-please]
+    if: |
+      always() && !cancelled() && (
+        needs.release-please.outputs.releases_created == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.deploy_storybook == true)
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build Storybook
+        run: bun run storybook:build
+
+      - uses: kheiakiyama/install-azcopy-action@v1
+        with:
+          version: "v10"
+
+      - name: Deploy to Azure Blob Storage
+        run: azcopy_v10 copy './dist/storybook/oilmod-web/*' 'https://topstorybook.blob.core.windows.net/$web/${{ secrets.SAS }}' --recursive

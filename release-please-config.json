@@ -1,0 +1,62 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "node",
+  "packages": {
+    "libs/core": {
+      "release-type": "node",
+      "component": "core",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/common": {
+      "release-type": "node",
+      "component": "common",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/datatable": {
+      "release-type": "node",
+      "component": "datatable",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/drawer": {
+      "release-type": "node",
+      "component": "drawer",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/error-handler": {
+      "release-type": "node",
+      "component": "error-handler",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/form": {
+      "release-type": "node",
+      "component": "form",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/popover": {
+      "release-type": "node",
+      "component": "popover",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "libs/testing": {
+      "release-type": "node",
+      "component": "testing",
+      "changelog-path": "CHANGELOG.md"
+    }
+  },
+  "changelog-sections": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "perf", "section": "Performance Improvements" },
+    { "type": "revert", "section": "Reverts" },
+    { "type": "docs", "section": "Documentation", "hidden": true },
+    { "type": "style", "section": "Styles", "hidden": true },
+    { "type": "chore", "section": "Miscellaneous", "hidden": true },
+    { "type": "refactor", "section": "Code Refactoring", "hidden": true },
+    { "type": "test", "section": "Tests", "hidden": true },
+    { "type": "build", "section": "Build System", "hidden": true },
+    { "type": "ci", "section": "CI/CD", "hidden": true }
+  ],
+  "separate-pull-requests": false,
+  "include-component-in-tag": true,
+  "include-v-in-tag": false
+}
