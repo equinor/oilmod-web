@@ -1,8 +1,8 @@
 import { effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { merge, Observable, startWith, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { merge, Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 export interface FormValueSignalOptions {
   /**
@@ -11,6 +11,28 @@ export interface FormValueSignalOptions {
    * - `false`: Uses `value` to include only enabled fields
    */
   includeDisabled?: boolean;
+}
+
+/** Safely read a signal, returning null if it throws (e.g., NG0950 for required inputs) */
+function safeRead<T>(sig: Signal<T>): T | null {
+  try {
+    return sig();
+  } catch {
+    return null;
+  }
+}
+
+/** Safely get form value with fallback */
+function getFormValue(
+  form: AbstractControl | null | undefined,
+  includeDisabled: boolean,
+): unknown {
+  if (!form) return null;
+  try {
+    return includeDisabled ? form.getRawValue() : form.value;
+  } catch {
+    return form instanceof FormControl ? null : {};
+  }
 }
 
 /**
@@ -39,73 +61,44 @@ export function toFormValueSignal<T extends AbstractControl>(
   options?: FormValueSignalOptions,
 ): Signal<T extends AbstractControl<infer V> ? V : unknown> {
   const { includeDisabled = true } = options ?? {};
-
-  // Check if it's a signal-like object (includes both Signal and InputSignal)
   const isSignalLike = typeof formOrSignal === 'function';
-  const formSignal: Signal<T | null | undefined> = isSignalLike
+  const formSignal = isSignalLike
     ? (formOrSignal as Signal<T | null | undefined>)
     : signal(formOrSignal as T);
 
   const valueChanges$ = new Observable<unknown>((sub) => {
     let innerSub: Subscription | undefined;
 
-    const watch = () => {
-      const form = formSignal();
+    const stop = effect(() => {
+      const form = safeRead(formSignal);
       innerSub?.unsubscribe();
 
-      if (form) {
-        const isFormControl = form instanceof FormControl;
-        const defaultValue = isFormControl ? null : {};
-
-        // Get the appropriate value based on includeDisabled option
-        const getCurrentValue = () =>
-          includeDisabled ? form.getRawValue() : form.value;
-
-        // Subscribe to both valueChanges and statusChanges to catch all updates
-        // valueChanges only emits when enabled fields change
-        // statusChanges emits when any field changes (including disabled ones)
-        const changes$ = merge(form.valueChanges, form.statusChanges).pipe(
-          startWith(null), // emit current value first
-          map(() => getCurrentValue() ?? defaultValue),
-        );
-
-        innerSub = changes$.subscribe((value) => {
-          sub.next(value);
-        });
-      } else {
-        // no form yet → emit null for FormControl, {} for FormGroup/FormArray
+      if (!form) {
         sub.next(null);
+        return;
       }
-    };
 
-    // re-run whenever formSignal changes
-    const stop = effect(watch);
+      innerSub = merge(form.valueChanges, form.statusChanges)
+        .pipe(
+          startWith(null),
+          map(() => getFormValue(form, includeDisabled)),
+        )
+        .subscribe({
+          next: (v) => sub.next(v),
+          error: () => {}, // Ignore errors from destroyed forms
+        });
+    });
 
-    // Cleanup on destroy
     return () => {
       innerSub?.unsubscribe();
       stop.destroy();
     };
   });
 
-  // For signal inputs (functions), we can't access the value synchronously
-  // because required inputs throw NG0950 before they're initialized.
-  // Use null as initial value and let the effect emit the real value.
-  if (isSignalLike) {
-    return toSignal(valueChanges$, { initialValue: null as any });
-  }
-
-  // For plain form controls, we can safely compute the initial value
-  const form = formOrSignal as T;
-  const isFormControl = form instanceof FormControl;
-  const initialValue = form
-    ? ((includeDisabled ? form.getRawValue?.() : form.value) ??
-      (isFormControl ? null : {}))
-    : isFormControl
-      ? null
-      : {};
-
-  return toSignal(valueChanges$, {
-    initialValue,
-  });
+  const initialValue = isSignalLike
+    ? null
+    : getFormValue(formOrSignal as T, includeDisabled);
+  return toSignal(valueChanges$, { initialValue }) as Signal<
+    T extends AbstractControl<infer V> ? V : unknown
+  >;
 }

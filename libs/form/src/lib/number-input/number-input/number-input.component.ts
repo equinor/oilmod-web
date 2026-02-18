@@ -1,10 +1,13 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ViewEncapsulation,
   booleanAttribute,
   computed,
   effect,
+  inject,
   input,
   model,
   numberAttribute,
@@ -16,10 +19,11 @@ import {
   ControlValueAccessor,
   FormControl,
   ReactiveFormsModule,
+  TouchedChangeEvent,
 } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { filter, startWith } from 'rxjs/operators';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { NumberInputDirective } from '../number-input.directive';
 
@@ -41,11 +45,13 @@ import { NumberInputDirective } from '../number-input.directive';
 })
 export class NumberInputComponent
   extends FormFieldBase
-  implements ControlValueAccessor, MatFormFieldControl<number>
+  implements ControlValueAccessor, MatFormFieldControl<number>, AfterViewInit
 {
   static nextId = 0;
   readonly stateChanges = new Subject<void>();
   readonly ctrl = new FormControl<string | number | null>(null);
+
+  private readonly destroyRef = inject(DestroyRef);
 
   // Private signals
   private readonly _focused = signal(false);
@@ -193,6 +199,24 @@ export class NumberInputComponent
 
   ngOnDestroy(): void {
     this.stateChanges.complete();
+  }
+
+  ngAfterViewInit(): void {
+    // Monitor ngControl touch state changes (for programmatic markAllAsTouched)
+    // Must be done in ngAfterViewInit because ngControl.control is null in constructor
+    if (this.ngControl?.control?.events) {
+      const subscription = this.ngControl.control.events
+        .pipe(
+          filter(
+            (event): event is TouchedChangeEvent =>
+              event instanceof TouchedChangeEvent,
+          ),
+        )
+        .subscribe(() => {
+          this.updateErrorState();
+        });
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    }
   }
 
   // Focus/blur handlers
