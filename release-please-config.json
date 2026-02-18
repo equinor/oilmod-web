@@ -36,11 +36,6 @@
       "release-type": "node",
       "component": "popover",
       "changelog-path": "CHANGELOG.md"
-    },
-    "libs/testing": {
-      "release-type": "node",
-      "component": "testing",
-      "changelog-path": "CHANGELOG.md"
     }
   },
   "changelog-sections": [

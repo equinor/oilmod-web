@@ -45,11 +45,6 @@ on:
         required: false
         type: boolean
         default: false
-      publish_testing:
-        description: "Publish @ngx-stoui/testing"
-        required: false
-        type: boolean
-        default: false
       deploy_storybook:
         description: "Deploy Storybook"
         required: false
@@ -212,9 +207,6 @@ jobs:
       # Popover
       popover_release_created: ${{ steps.release.outputs['libs/popover--release_created'] }}
       popover_version: ${{ steps.release.outputs['libs/popover--version'] }}
-      # Testing
-      testing_release_created: ${{ steps.release.outputs['libs/testing--release_created'] }}
-      testing_version: ${{ steps.release.outputs['libs/testing--version'] }}
       # Any release
       releases_created: ${{ steps.release.outputs.releases_created }}
     steps:
@@ -279,10 +271,6 @@ jobs:
       - name: Publish @ngx-stoui/error-handler
         if: needs.release-please.outputs.error_handler_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_error_handler)
         run: cd dist/libs/error-handler && npm publish --provenance
-
-      - name: Publish @ngx-stoui/testing
-        if: needs.release-please.outputs.testing_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_testing)
-        run: cd dist/libs/testing && npm publish --provenance
 
       - name: Publish @ngx-stoui/datatable
         if: needs.release-please.outputs.datatable_release_created == 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_datatable)
