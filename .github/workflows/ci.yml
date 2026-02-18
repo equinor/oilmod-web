@@ -280,7 +280,7 @@ jobs:
       - run: bun install
       - run: bun run build
       - name: Publish @ngx-stoui/common to npm
-        run: cd dist/libs/common && npm publish --provenance --access public
+        run: cd dist/libs/common && npm publish --provenance --access public --loglevel verbose
 
   publish-error-handler:
     needs: [release-please]
