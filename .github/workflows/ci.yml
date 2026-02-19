@@ -244,7 +244,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
@@ -275,12 +275,12 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
       - name: Publish @ngx-stoui/common to npm
-        run: cd dist/libs/common && npm publish --provenance --access public --loglevel verbose
+        run: cd dist/libs/common && npm publish --provenance --access public
 
   publish-error-handler:
     needs: [release-please]
@@ -306,7 +306,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
@@ -337,7 +337,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
@@ -368,7 +368,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
@@ -399,7 +399,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
@@ -430,7 +430,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: bun install
       - run: bun run build
