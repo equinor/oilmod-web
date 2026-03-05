@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.7](https://github.com/equinor/oilmod-web/compare/form-21.0.6...form-21.0.7) (2026-03-05)
+
+
+### Bug Fixes
+
+* **form:** move statusChanges subscription to ngAfterViewInit in NumberInputComponent ([0851d09](https://github.com/equinor/oilmod-web/commit/0851d09c0d7315166d2c0f55a01d675202c76a61))
+
 ## [21.0.6](https://github.com/equinor/oilmod-web/compare/form-21.0.5...form-21.0.6) (2026-02-18)
 
 
