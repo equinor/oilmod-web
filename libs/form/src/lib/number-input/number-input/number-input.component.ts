@@ -153,15 +153,6 @@ export class NumberInputComponent
       this.ngModelChange.emit(numericValue);
     });
 
-    // Monitor ngControl status changes
-    if (this.ngControl?.statusChanges) {
-      this.ngControl.statusChanges
-        .pipe(startWith(this.ngControl.status), takeUntilDestroyed())
-        .subscribe(() => {
-          this.updateErrorState();
-        });
-    }
-
     // React to disabled input changes
     effect(() => {
       this.setDisabledState(this._disabled());
@@ -202,6 +193,18 @@ export class NumberInputComponent
   }
 
   ngAfterViewInit(): void {
+    // Must be done in ngAfterViewInit because ngControl.control is null in constructor
+    if (this.ngControl?.statusChanges) {
+      this.ngControl.statusChanges
+        .pipe(
+          startWith(this.ngControl.status),
+          takeUntilDestroyed(this.destroyRef),
+        )
+        .subscribe(() => {
+          this.updateErrorState();
+        });
+    }
+
     // Monitor ngControl touch state changes (for programmatic markAllAsTouched)
     // Must be done in ngAfterViewInit because ngControl.control is null in constructor
     if (this.ngControl?.control?.events) {
