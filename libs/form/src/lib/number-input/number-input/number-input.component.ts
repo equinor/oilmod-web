@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  DoCheck,
   ViewEncapsulation,
   booleanAttribute,
   computed,
@@ -45,7 +46,7 @@ import { NumberInputDirective } from '../number-input.directive';
 })
 export class NumberInputComponent
   extends FormFieldBase
-  implements ControlValueAccessor, MatFormFieldControl<number>, AfterViewInit
+  implements ControlValueAccessor, MatFormFieldControl<number>, AfterViewInit, DoCheck
 {
   static nextId = 0;
   readonly stateChanges = new Subject<void>();
@@ -190,6 +191,15 @@ export class NumberInputComponent
 
   ngOnDestroy(): void {
     this.stateChanges.complete();
+  }
+
+  ngDoCheck(): void {
+    // Re-evaluate error state on every change detection cycle to handle cases
+    // not covered by subscriptions (e.g. formGroup rebinding, parent form changes).
+    // This mirrors Angular Material's MatInput pattern.
+    if (this.ngControl) {
+      this.updateErrorState();
+    }
   }
 
   ngAfterViewInit(): void {

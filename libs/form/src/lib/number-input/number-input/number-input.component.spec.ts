@@ -7,6 +7,12 @@ import { NumberInputDirective } from '../number-input.directive';
 import { NumberInputPipe } from '../number-input.pipe';
 import { NumberInputComponent } from './number-input.component';
 
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormFieldDirective } from '../../sto-form/form-field.directive';
+
 const ngControl = {
   statusChanges: new Subject(),
 };
@@ -117,4 +123,98 @@ describe('NumberInputComponent', () => {
       fixture.detectChanges();
     });
   }
+});
+
+@Component({
+  template: `
+    <form [formGroup]="form">
+      <mat-form-field stoFormField>
+        <sto-number-input required formControlName="amount" [fractionSize]="2"></sto-number-input>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+    </form>
+  `,
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    NumberInputComponent,
+    FormFieldDirective,
+  ],
+})
+class TestHostComponent {
+  form = new FormGroup({
+    amount: new FormControl<number | null>(null, Validators.required),
+  });
+}
+
+describe('NumberInputComponent (integration with formControlName)', () => {
+  let fixture: ComponentFixture<TestHostComponent>;
+  let host: TestHostComponent;
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, TestHostComponent],
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(TestHostComponent);
+        host = fixture.componentInstance;
+        fixture.detectChanges();
+      });
+  }));
+
+  it('should create the host component', () => {
+    expect(host).toBeTruthy();
+  });
+
+  it('should set errorState=true after markAllAsTouched on parent form', () => {
+    const numberInput = fixture.debugElement.query(
+      (el) => el.componentInstance instanceof NumberInputComponent,
+    ).componentInstance as NumberInputComponent;
+
+    expect(numberInput.errorState).toBe(false);
+
+    host.form.markAllAsTouched();
+    fixture.detectChanges();
+
+    expect(numberInput.errorState).toBe(true);
+  });
+
+  it('should clear errorState after setting a valid value', () => {
+    const numberInput = fixture.debugElement.query(
+      (el) => el.componentInstance instanceof NumberInputComponent,
+    ).componentInstance as NumberInputComponent;
+
+    host.form.markAllAsTouched();
+    fixture.detectChanges();
+    expect(numberInput.errorState).toBe(true);
+
+    host.form.controls.amount.setValue(42);
+    fixture.detectChanges();
+
+    expect(numberInput.errorState).toBe(false);
+  });
+
+  it('should update errorState after formGroup is swapped to a new instance', () => {
+    const numberInput = fixture.debugElement.query(
+      (el) => el.componentInstance instanceof NumberInputComponent,
+    ).componentInstance as NumberInputComponent;
+
+    // Start with a valid form so errorState is false
+    host.form.controls.amount.setValue(10);
+    fixture.detectChanges();
+    expect(numberInput.errorState).toBe(false);
+
+    // Swap out the entire FormGroup to a new instance with an empty required control
+    host.form = new FormGroup({
+      amount: new FormControl<number | null>(null, Validators.required),
+    });
+    fixture.detectChanges();
+
+    // Mark the NEW form as all touched (simulating Save button)
+    host.form.markAllAsTouched();
+    fixture.detectChanges();
+
+    expect(numberInput.errorState).toBe(true);
+  });
 });
