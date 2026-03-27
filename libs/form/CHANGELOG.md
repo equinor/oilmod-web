@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.8](https://github.com/equinor/oilmod-web/compare/form-21.0.7...form-21.0.8) (2026-03-27)
+
+
+### Bug Fixes
+
+* **number-input:** implement DoCheck lifecycle to update error state on changes ([3184fef](https://github.com/equinor/oilmod-web/commit/3184fef860b00ba30b7593ad814057b2d37cdfb9))
+
 ## [21.0.7](https://github.com/equinor/oilmod-web/compare/form-21.0.6...form-21.0.7) (2026-03-05)
 
 
