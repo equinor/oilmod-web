@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.9](https://github.com/equinor/oilmod-web/compare/form-21.0.8...form-21.0.9) (2026-04-08)
+
+
+### Bug Fixes
+
+* **form:** preserve cursor position in number-input during editing ([d3439a5](https://github.com/equinor/oilmod-web/commit/d3439a56c78e69e8d98eada8381b6b7dffb31474))
+
 ## [21.0.8](https://github.com/equinor/oilmod-web/compare/form-21.0.7...form-21.0.8) (2026-03-27)
 
 
