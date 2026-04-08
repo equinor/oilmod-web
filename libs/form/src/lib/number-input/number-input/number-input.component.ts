@@ -46,7 +46,11 @@ import { NumberInputDirective } from '../number-input.directive';
 })
 export class NumberInputComponent
   extends FormFieldBase
-  implements ControlValueAccessor, MatFormFieldControl<number>, AfterViewInit, DoCheck
+  implements
+    ControlValueAccessor,
+    MatFormFieldControl<number>,
+    AfterViewInit,
+    DoCheck
 {
   static nextId = 0;
   readonly stateChanges = new Subject<void>();
@@ -164,8 +168,12 @@ export class NumberInputComponent
     effect(
       () => {
         const externalValue = this.valueModel();
-        // Sync the external value to ctrl - the ctrl displays the actual value
-        this.ctrl.setValue(externalValue, { emitEvent: false });
+        // Only sync external value to ctrl when not focused.
+        // When focused, the ctrl already has the correct display value from user input;
+        // calling setValue would reset the cursor position to the end.
+        if (!this._focused()) {
+          this.ctrl.setValue(externalValue, { emitEvent: false });
+        }
 
         // Track all reactive inputs that should trigger stateChanges
         this._readonly();
