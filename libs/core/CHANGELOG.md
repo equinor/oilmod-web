@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.6](https://github.com/equinor/oilmod-web/compare/core-21.0.5...core-21.0.6) (2026-04-09)
+
+
+### Bug Fixes
+
+* aded toolbox theme styling to core ([2bd018b](https://github.com/equinor/oilmod-web/commit/2bd018be18ad2d3b1230ffd96f9f4ac0b9646cc7))
+
 ## [21.0.5](https://github.com/equinor/oilmod-web/compare/core-21.0.4...core-21.0.5) (2026-02-18)
 
 
