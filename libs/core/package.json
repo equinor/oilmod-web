@@ -37,6 +37,9 @@
     },
     "./ngx-datatable.css": {
       "default": "./ngx-datatable.css"
+    },
+    "./toolbox-grid.css": {
+      "default": "./toolbox-grid.css"
     }
   }
 }

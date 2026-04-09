@@ -21,6 +21,10 @@ const files = [
     input: './libs/core/src/styles/datatable/_ngx-datatable.scss',
     output: path.join(out, 'ngx-datatable.css'),
   },
+  {
+    input: './libs/core/src/styles/toolbox-grid/_toolbox-grid.scss',
+    output: path.join(out, 'toolbox-grid.css'),
+  },
 ];
 
 async function buildAll(): Promise<void> {

@@ -1,0 +1,789 @@
+/**
+ * EDS (Equinor Design System) Theme for @toolbox-web/grid
+ *
+ * This theme uses CSS custom properties to style the toolbox grid
+ * to match the visual appearance of @equinor/eds-data-grid-react.
+ *
+ * Supports both light and dark modes using the light-dark() CSS function.
+ * Uses EDS CSS variables (--eds_*) when available (Roma) with light-dark()
+ * fallbacks for apps that don't expose EDS tokens (Angular/cargo-tracker).
+ * Dark mode activates when body.sto-dark-theme is present.
+ *
+ * Reference: https://eds.equinor.com/
+ * Toolbox Grid Theming: https://toolboxjs.com/?path=/docs/grid-theming--docs
+ *
+ * Requires @toolbox-web/grid v1.3.1+ for full CSS variable support.
+ *
+ * Usage:
+ *   In angular.json / project.json styles array:
+ *     "@ngx-stoui/core/toolbox-grid.css"
+ */
+
+/**
+ * EDS Theme for Toolbox Grid
+ * Override the grid's CSS variables to match EDS design tokens
+ *
+ * NOTE: As of v1.3.1, the grid copies theme classes (like .eds-theme) to
+ * filter panels rendered in document.body, so these variables cascade properly.
+ */
+tbw-grid,
+.tbw-filter-panel {
+  /* ========== Typography ========== */
+  --tbw-font-family: Equinor, sans-serif;
+  --tbw-font-size: 0.875rem; /* 14px */
+  --tbw-font-size-header: 0.875rem;
+  --tbw-font-weight-header: 700;
+
+  /* ========== Core Colors ========== */
+  --tbw-color-bg: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #132634)
+  );
+  --tbw-color-fg: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --tbw-color-fg-muted: var(
+    --eds_text_static_icons__tertiary,
+    light-dark(#6f6f6f, #9ca6ac)
+  );
+  --tbw-color-panel-bg: var(
+    --eds_ui_background__light,
+    light-dark(#f7f7f7, #2e3f4d)
+  );
+
+  /* ========== Borders ========== */
+  --tbw-color-border: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-color-border-strong: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-row-divider: 1px solid
+    var(--eds_ui_background__medium, light-dark(#dcdcdc, #3e4f5c));
+  --tbw-color-border-cell: transparent;
+  --tbw-color-border-header: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-border-radius: var(--eds_shape_button_border_radius, 4px);
+  --tbw-selection-border-style: dashed;
+  --tbw-selection-border-width: 1px;
+
+  /* ========== Header ========== */
+  --tbw-color-header-bg: var(
+    --eds_interactive_table__header__fill_resting,
+    light-dark(#f7f7f7, #2e3f4d)
+  );
+  --tbw-color-header-fg: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --tbw-header-text-transform: none;
+  --tbw-header-letter-spacing: normal;
+
+  /* ========== Row & Cell States ========== */
+  --tbw-color-row-alt: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #132634)
+  );
+  --tbw-color-row-hover: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --tbw-color-selection: var(
+    --eds_interactive_primary__selected_highlight,
+    light-dark(#e6faec, #007079)
+  );
+  --tbw-color-active-row-bg: var(
+    --eds_interactive_table__cell__fill_activated,
+    light-dark(#e6faec, #243746)
+  );
+  --tbw-editing-row-outline-width: 1px;
+
+  /* ========== Interactive/Accent ========== */
+  --tbw-color-accent: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  --tbw-color-accent-fg: var(
+    --eds_text_static_icons__primary_white,
+    light-dark(#ffffff, #000000)
+  );
+
+  /* ========== Dimensions ========== */
+  --tbw-row-height: var(--eds_clickbound_default__base, 38px);
+  --tbw-header-height: var(--eds_clickbound_default__base, 38px);
+  --tbw-cell-padding: 0 var(--eds_spacing_medium, 8px);
+  --tbw-cell-padding-header: 0 var(--eds_spacing_medium, 8px);
+  --tbw-button-padding: 0.375rem 0.625rem;
+
+  /* ========== Focus Styling ========== */
+  --tbw-focus-outline: 0.5px dotted
+    var(--eds_interactive_focus, light-dark(#007079, #97cace));
+  --tbw-focus-outline-offset: -1px;
+
+  /* ========== Resize Handle ========== */
+  --tbw-resize-handle-color: transparent;
+  --tbw-resize-handle-color-hover: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+
+  /* ========== Sort Indicator ========== */
+  --tbw-sort-indicator-color: var(
+    --eds_text_static_icons__tertiary,
+    light-dark(#6f6f6f, #9ca6ac)
+  );
+  --tbw-sort-indicator-active-color: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  /* ========== Display Control (v1.5.0+) ========== */
+  /* Hide filter button and sort indicator by default, show on hover/active */
+  --tbw-filter-btn-display: none;
+  --tbw-sort-indicator-display: none;
+
+  /* ========== Shadows ========== */
+  --tbw-color-shadow: light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+
+  /* ========== Filter Panel ========== */
+  --tbw-filter-panel-bg: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #132634)
+  );
+  --tbw-filter-panel-fg: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --tbw-filter-panel-border: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-filter-panel-radius: var(--eds_shape_button_border_radius, 4px);
+  --tbw-filter-panel-shadow: light-dark(
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.4)
+  );
+  --tbw-filter-input-bg: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #132634)
+  );
+  --tbw-filter-input-border: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-filter-input-radius: var(--eds_shape_button_border_radius, 4px);
+  --tbw-filter-input-focus: var(
+    --eds_interactive_focus,
+    light-dark(#007079, #97cace)
+  );
+  --tbw-filter-accent: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  --tbw-filter-accent-fg: var(
+    --eds_text_static_icons__primary_white,
+    light-dark(#ffffff, #000000)
+  );
+  --tbw-filter-hover: var(
+    --eds_ui_background__light,
+    light-dark(#f7f7f7, #2e3f4d)
+  );
+  --tbw-filter-muted: var(
+    --eds_text_static_icons__tertiary,
+    light-dark(#6f6f6f, #9ca6ac)
+  );
+  --tbw-filter-divider: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-filter-active-color: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+
+  /* ========== Filter Button Styling (v1.3.1+) ========== */
+  --tbw-filter-btn-padding: 8px 16px;
+  --tbw-filter-btn-font-weight: 500;
+  --tbw-filter-btn-min-height: var(--eds_clickbound_default__base, 48px);
+  --tbw-filter-search-padding: 6px 8px;
+  --tbw-filter-item-height: 36px; /* Virtualization height - matches EDS touch target */
+
+  /* ========== Panel Layout ========== */
+  --tbw-panel-padding: var(--eds_spacing_medium_small, 12px);
+  --tbw-panel-gap: var(--eds_spacing_small, 8px);
+  --tbw-animation-duration: 150ms;
+}
+
+.tbw-context-menu {
+  /* ========== Context Menu ========== */
+  --tbw-context-menu-bg: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #132634)
+  );
+  --tbw-context-menu-fg: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --tbw-context-menu-border: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-context-menu-hover: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --tbw-context-menu-danger: var(--eds_interactive_danger__resting, #eb0000);
+  --tbw-context-menu-muted: var(
+    --eds_text_static_icons__tertiary,
+    light-dark(#6f6f6f, #9ca6ac)
+  );
+  --tbw-context-menu-font-size: 0.873rem;
+  --tbw-context-menu-font-family: Equinor, sans-serif;
+  --tbw-context-menu-icon-size: 1.2rem;
+  --tbw-context-menu-item-padding: 8px 16px;
+  --tbw-context-menu-item-gap: 8px;
+  --tbw-context-menu-radius: var(--eds_shape_button_border_radius, 4px);
+  --tbw-context-menu-shadow: 0 2px 8px
+    light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.3));
+  .tbw-context-menu-shortcut kbd {
+    background: var(--eds_ui_background__light, light-dark(#f7f7f7, #2e3f4d));
+    border: 1px solid
+      var(--eds_ui_background__medium, light-dark(#dcdcdc, #3e4f5c));
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Equinor Mono', 'Consolas', 'Courier New', monospace;
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+}
+
+.tbw-overlay-panel {
+  /* ========== Overlay Panel (BaseOverlayEditor) ========== */
+  --tbw-overlay-bg: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #132634)
+  );
+  --tbw-overlay-border: var(
+    --eds_ui_background__medium,
+    light-dark(#dcdcdc, #3e4f5c)
+  );
+  --tbw-overlay-shadow: 0 4px 12px
+    light-dark(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4));
+  color: var(--eds_text_static_icons__default, light-dark(#3d3d3d, #ffffff));
+}
+
+/**
+ * EDS Compact Mode
+ * Apply with: <tbw-grid class="eds-theme eds-compact">
+ */
+tbw-grid.eds-compact,
+.eds-compact tbw-grid {
+  --tbw-row-height: 18px;
+  --tbw-header-height: 23px;
+}
+
+/**
+ * Additional styling that can't be done with variables alone
+ */
+
+/* Toolbar content slot alignment */
+tbw-grid .tbw-toolbar-content-slot {
+  display: flex;
+  place-items: center;
+}
+
+/** For numeric cells, header and data should be right aligned */
+tbw-grid .cell[data-type='number'] {
+  text-align: right;
+}
+
+tbw-grid [part='cell'],
+tbw-grid .data-grid-row .cell {
+  font-weight: 500; /* Match EDS medium weight for body cells */
+  height: var(--tbw-row-height); /* toolbox grid only sets min-height */
+
+  /* When cell is in edit mode */
+  &.editing {
+    padding: 2px 1px;
+    position: relative;
+  }
+
+  /* Editor host container - provides visual boundary for all editor types */
+  & .tbw-editor-host {
+    border: 1px solid
+      var(--eds_ui_background__medium, light-dark(#dcdcdc, #3e4f5c));
+    background: var(--eds_ui_background__default, light-dark(#ffffff, #243746));
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: var(--tbw-cell-padding, 0 6px);
+    &:has(.mat-form-field-invalid) {
+      border-color: var(--tbw-invalid-border-color);
+    }
+    &:focus-within {
+      box-shadow: inset 0 -2px 0 0
+        var(--eds_interactive_primary__resting, light-dark(#007079, #97cace));
+      outline: none;
+    }
+
+    /* Make Angular/framework component hosts transparent for flex layout.
+       Uses :where() for zero additional specificity so component :host styles
+       (e.g. display: block on date-editor) can override.
+       Excludes native form elements — they MUST keep their box to render.
+       Also excludes custom editor components that need their own box model
+       (e.g. autocomplete editors that use CDK overlay positioning). */
+    &
+      > :where(
+        :not(input, select, textarea, [contenteditable], .tbw-editor-box)
+      ) {
+      display: contents;
+    }
+
+    /* Custom editor components — need a real box for CDK overlay positioning */
+    & > .tbw-editor-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Simple inputs (not wrapped in mat-form-field) */
+    & > input[type='text'],
+    & > input[type='number'] {
+      border: none;
+      background: transparent;
+      font: inherit;
+      color: inherit;
+      padding: 0 4px;
+      outline: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Native select element (built-in select editor) */
+    & > select {
+      appearance: base-select;
+      border: none;
+      background: transparent;
+      font: inherit;
+      color: inherit;
+      padding: 0 4px;
+      outline: none;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      place-items: center;
+
+      &::picker(select) {
+        appearance: base-select;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 0;
+        overscroll-behavior: contain;
+        box-shadow:
+          0 2px 4px -1px rgba(0, 0, 0, 0.2),
+          0 4px 5px 0 rgba(0, 0, 0, 0.14),
+          0 1px 10px 0 rgba(0, 0, 0, 0.12);
+      }
+
+      option {
+        font: inherit;
+        padding: 8px 16px;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        border-radius: 0;
+
+        &:hover {
+          background-color: light-dark(
+            rgba(0, 0, 0, 0.04),
+            rgba(255, 255, 255, 0.08)
+          );
+        }
+
+        &:checked {
+          background-color: light-dark(
+            rgba(0, 112, 121, 0.12),
+            rgba(151, 202, 206, 0.2)
+          );
+          color: inherit;
+        }
+      }
+    }
+  }
+  &.cell-focus {
+    background: rgba(from var(--tbw-color-accent) r g b / 8%);
+  }
+}
+
+.tbw-filter-btn .material-icons-outlined {
+  font-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+/**
+ * EDS Underline Input Style for Filter Panel Inputs
+ * Applies to search, range, and date inputs within filter panels
+ */
+.tbw-filter-panel {
+  max-width: none;
+  max-height: none;
+  /* EDS underline input style - requires direct CSS (no variables available for box-shadow/height) */
+  & .tbw-filter-search-input,
+  & .tbw-filter-range-input,
+  & .tbw-filter-date-input {
+    height: var(--tbw-row-height);
+    border: none;
+    border-radius: 0;
+    box-shadow: inset 0px -1px 0px 0px
+      var(--eds_text_static_icons__tertiary, light-dark(#6f6f6f, #9ca6ac));
+    background: var(--eds_ui_background__light, light-dark(#f7f7f7, #2e3f4d));
+    outline: 1px solid transparent;
+    outline-offset: 0px;
+  }
+
+  /* EDS-styled checkboxes (Material-like) */
+  & .tbw-filter-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid
+      var(--eds_text_static_icons__tertiary, light-dark(#6f6f6f, #9ca6ac));
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition:
+      background-color 150ms,
+      border-color 150ms;
+
+    &:checked {
+      background-color: var(
+        --eds_interactive_primary__resting,
+        light-dark(#007079, #97cace)
+      );
+      border-color: var(
+        --eds_interactive_primary__resting,
+        light-dark(#007079, #97cace)
+      );
+    }
+
+    &:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: solid
+        var(
+          --eds_text_static_icons__primary_white,
+          light-dark(#ffffff, #000000)
+        );
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    /* Indeterminate state (Select All partial) */
+    &:indeterminate {
+      background-color: var(
+        --eds_interactive_primary__resting,
+        light-dark(#007079, #97cace)
+      );
+      border-color: var(
+        --eds_interactive_primary__resting,
+        light-dark(#007079, #97cace)
+      );
+    }
+
+    &:indeterminate::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 6px;
+      width: 10px;
+      height: 2px;
+      background: var(
+        --eds_text_static_icons__primary_white,
+        light-dark(#ffffff, #000000)
+      );
+    }
+
+    &:hover {
+      border-color: var(
+        --eds_interactive_primary__hover,
+        light-dark(#004f55, #ade2e6)
+      );
+    }
+
+    &:focus-visible {
+      outline: 2px solid
+        var(--eds_interactive_focus, light-dark(#007079, #97cace));
+      outline-offset: 2px;
+    }
+  }
+
+  & .tbw-filter-value-item {
+    gap: 8px;
+  }
+}
+
+/**
+ * Default Toolbox Filter Panel - EDS Overrides
+ *
+ * Most styling is now handled by CSS variables (v1.3.1+):
+ * - --tbw-filter-btn-padding: 8px 16px
+ * - --tbw-filter-btn-font-weight: 500
+ * - --tbw-filter-btn-min-height: 48px
+ * - --tbw-filter-search-padding: 6px 8px
+ * - --tbw-filter-item-height: 36px
+ *
+ * Below are additional EDS-specific input styling tweaks.
+ */
+.tbw-filter-search-input,
+.tbw-filter-panel .tbw-filter-search-input {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 1.5em;
+  min-height: 36px;
+  box-sizing: border-box;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background: var(--eds_ui_background__light, light-dark(#f7f7f7, #2e3f4d));
+}
+
+/**
+ * Angular Material Editor Theming
+ *
+ * Strip Material styling from editors inside the grid.
+ * The .tbw-editor-host provides the visual container (border + background),
+ * so Material components inside should be transparent/minimal.
+ */
+tbw-grid {
+  --mat-checkbox-state-layer-size: 20px;
+  /* Make form fields transparent - container provides styling */
+  --mdc-filled-text-field-container-color: transparent;
+  --mdc-filled-text-field-active-indicator-color: transparent;
+  --mdc-filled-text-field-hover-active-indicator-color: transparent;
+  --mdc-filled-text-field-focus-active-indicator-color: transparent;
+
+  /* Outlined variant - also transparent */
+  --mdc-outlined-text-field-outline-color: transparent;
+  --mdc-outlined-text-field-focus-outline-color: transparent;
+  --mdc-outlined-text-field-hover-outline-color: transparent;
+
+  & .mat-mdc-icon-button.mat-mdc-button-base {
+    --mdc-icon-button-state-layer-size: 28px;
+    --mat-icon-button-state-layer-size: 28px;
+  }
+
+  /* Strip mat-form-field completely inside editors */
+  & .tbw-editor-host {
+    /* Form field should fill the host */
+    & .mat-mdc-form-field {
+      width: 100%;
+      height: 100%;
+
+      /* Remove ALL visual chrome and ensure vertical centering */
+      & .mat-mdc-text-field-wrapper {
+        padding: 0 4px;
+        background: transparent;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Flex container for input area */
+      & .mat-mdc-form-field-flex {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Hide the focus overlay tint */
+      & .mat-mdc-form-field-focus-overlay {
+        display: none;
+      }
+
+      /* Hide the underline ripple */
+      & .mdc-line-ripple {
+        display: none;
+      }
+
+      /* Make infix fill available space and center content */
+      & .mat-mdc-form-field-infix {
+        padding: 0;
+        min-height: unset;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        border: 0; /* Remove top border used for label spacing */
+      }
+
+      /* Input styling - center text vertically */
+      & input.mat-mdc-input-element {
+        height: auto;
+        line-height: normal;
+      }
+
+      /* Select trigger - center text vertically */
+      & .mat-mdc-select {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      & .mat-mdc-select-trigger {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      & .mat-mdc-select-value {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    /* Hide subscript wrapper completely */
+    & .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    /* Checkbox centering */
+    & .editor-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    & .mat-mdc-option.mdc-list-item {
+      background: var(
+        --mat-autocomplete-background-color,
+        var(--mat-sys-surface-container)
+      );
+    }
+  }
+}
+
+/**
+ * Context Menu Icon Styling
+ *
+ * The context menu is appended to document.body (outside tbw-grid).
+ * CSS variables are copied from tbw-grid at render time.
+ * Material Icons inside context menu icons need font-size override.
+ */
+.tbw-context-menu-icon .material-icons {
+  font-size: var(--tbw-context-menu-icon-size, 20px);
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.tbw-context-menu-item.danger .tbw-context-menu-icon .material-icons {
+  color: inherit;
+}
+
+/**
+ * CDK Overlay Panel Theming
+ *
+ * Autocomplete and select panels render in the CDK overlay container (document.body).
+ * We apply EDS theming at the overlay level for consistency.
+ */
+.cdk-overlay-container {
+  /* Option panel shared styling */
+  --mat-option-label-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-option-hover-state-layer-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-option-focus-state-layer-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-option-selected-state-layer-color: var(
+    --eds_interactive_primary__selected_highlight,
+    light-dark(#e6faec, #007079)
+  );
+  --mat-option-selected-state-label-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-option-label-text-font: Equinor, sans-serif;
+  --mat-option-label-text-size: 0.875rem;
+
+  /* Autocomplete panel */
+  --mat-autocomplete-background-color: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #243746)
+  );
+
+  /* Select panel */
+  --mat-select-panel-background-color: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #243746)
+  );
+
+  /* Datepicker overlay */
+  --mat-datepicker-calendar-date-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-datepicker-calendar-date-hover-state-background-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-datepicker-calendar-date-focus-state-background-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-datepicker-calendar-date-selected-state-background-color: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  --mat-datepicker-calendar-date-selected-state-text-color: var(
+    --eds_text_static_icons__primary_white,
+    light-dark(#ffffff, #000000)
+  );
+  --mat-datepicker-calendar-date-today-outline-color: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  --mat-datepicker-calendar-container-background-color: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #243746)
+  );
+  --mat-datepicker-calendar-header-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-datepicker-calendar-body-label-text-color: var(
+    --eds_text_static_icons__tertiary,
+    light-dark(#6f6f6f, #9ca6ac)
+  );
+  --mat-datepicker-calendar-text-font: Equinor, sans-serif;
+}
+
+/* Dark mode: switch color-scheme when sto-dark-theme is active */
+body.sto-dark-theme {
+  tbw-grid,
+  .tbw-filter-panel,
+  .cdk-overlay-container,
+  .tbw-context-menu,
+  .tbw-overlay-panel {
+    color-scheme: dark;
+  }
+}

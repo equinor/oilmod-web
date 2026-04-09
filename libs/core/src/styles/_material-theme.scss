@@ -251,6 +251,11 @@ $sto-theme: mat.define-theme(
       track-color: var(--bg-app),
       track-height: 4px,
     ));
+    @include mat.slider-overrides(
+      (
+        label-label-text-size: 0.6rem,
+      )
+    );
   }
 
   // Small typography scale (10px base - compact mode)
@@ -260,8 +265,8 @@ $sto-theme: mat.define-theme(
     // All em values remain the same, just relative to 10px base
   }
   .sto-m-typography {
-    font: 400 13px / 24px var(--application-font);
-    // All em values remain the same, just relative to 10px base
+    font: 400 13px / 20px var(--application-font);
+    // All em values remain the same, just relative to 13px base
   }
 
   // Large typography scale (16px base - accessibility mode)

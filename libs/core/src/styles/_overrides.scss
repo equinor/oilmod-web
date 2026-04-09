@@ -12,10 +12,11 @@ span.spacer {
 
 html,
 body {
-  font: 400 13px / 24px var(--application-font);
+  font-family: var(--application-font);
 }
 
 body {
+  font: 400 13px / 20px var(--application-font);
   margin-left: 0;
   margin-right: 0;
 }
