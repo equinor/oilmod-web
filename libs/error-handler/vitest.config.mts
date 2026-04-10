@@ -7,6 +7,11 @@ export default defineConfig({
   plugins: [angular(), tsconfigPaths()],
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/libs/error-handler',
+  server: {
+    fs: {
+      allow: ['../..'],
+    },
+  },
   test: {
     name: 'error-handler',
     watch: false,

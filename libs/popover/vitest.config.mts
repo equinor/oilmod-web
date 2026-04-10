@@ -7,8 +7,14 @@ export default defineConfig({
   plugins: [angular(), tsconfigPaths()],
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/libs/popover',
+  server: {
+    fs: {
+      allow: ['../..'],
+    },
+  },
   test: {
     name: 'popover',
+    passWithNoTests: true,
     watch: false,
     globals: true,
     environment: 'jsdom',

@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { firstValueFrom } from 'rxjs';
 // Import only the minimal material modules to avoid pulling BrowserModule twice via large aggregated testing module.
 import { ConfirmModule } from './sto-confirm-dialog.module';
 import { ConfirmService } from './sto-confirm-dialog.service';
@@ -28,10 +30,15 @@ describe('ConfirmComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [WrapperComponent],
+      providers: [provideNoopAnimations()],
     })
       .compileComponents()
       .then(createComponent);
   }));
+
+  afterEach(() => {
+    comp.confirmSvc['dialog'].closeAll();
+  });
 
   it('should open a confirmation dialog', (done) => {
     expect(comp).toBeTruthy();
@@ -55,17 +62,19 @@ describe('ConfirmComponent', () => {
     }, 300);
   });
 
-  it('should open a confirmation dialog and return a value', (done: DoneCallback) => {
+  it('should open a confirmation dialog and return a value', async () => {
     const ref = comp.confirmSvc.confirm('Can you confirm this?');
     fixture.detectChanges();
-    ref.subscribe((res) => {
-      expect(res).toBeTruthy();
-      done();
-    });
-    fixture.detectChanges();
+
+    const resultPromise = firstValueFrom(ref);
+
     const openDialog = comp.confirmSvc['dialog'].openDialogs[0];
     const confirmCmp = openDialog?.componentInstance;
     confirmCmp?.dialogRef.close(true);
+    fixture.detectChanges();
+
+    const result = await resultPromise;
+    expect(result).toBe(true);
   });
 });
 

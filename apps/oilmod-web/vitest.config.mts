@@ -7,6 +7,11 @@ export default defineConfig({
   plugins: [angular(), tsconfigPaths()],
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/apps/oilmod-web',
+  server: {
+    fs: {
+      allow: ['../..'],
+    },
+  },
   test: {
     name: 'oilmod-web',
     watch: false,

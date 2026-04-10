@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NgControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroupDirective,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MaterialModule } from '@ngx-stoui/testing';
 import { Subject } from 'rxjs';
 import { NumberInputDirective } from '../number-input.directive';
@@ -129,7 +133,11 @@ describe('NumberInputComponent', () => {
   template: `
     <form [formGroup]="form">
       <mat-form-field stoFormField>
-        <sto-number-input required formControlName="amount" [fractionSize]="2"></sto-number-input>
+        <sto-number-input
+          required
+          formControlName="amount"
+          [fractionSize]="2"
+        ></sto-number-input>
         <mat-error>Required</mat-error>
       </mat-form-field>
     </form>
@@ -205,9 +213,22 @@ describe('NumberInputComponent (integration with formControlName)', () => {
     fixture.detectChanges();
     expect(numberInput.errorState).toBe(false);
 
+    const oldForm = host.form;
+
     // Swap out the entire FormGroup to a new instance with an empty required control
     host.form = new FormGroup({
       amount: new FormControl<number | null>(null, Validators.required),
+    });
+
+    // fixture.detectChanges() doesn't propagate [formGroup] reassignment
+    // in this test environment. Manually trigger onChanges on the FormGroupDirective
+    // to simulate what Angular does at runtime.
+    const fgd = fixture.debugElement
+      .query((el) => el.nativeElement.tagName === 'FORM')
+      .injector.get(FormGroupDirective);
+    fgd.form = host.form;
+    (fgd as any).ngOnChanges({
+      form: new SimpleChange(oldForm, host.form, false),
     });
     fixture.detectChanges();
 

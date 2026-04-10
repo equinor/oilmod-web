@@ -4,6 +4,7 @@ import {
   Component,
   DestroyRef,
   DoCheck,
+  OnDestroy,
   ViewEncapsulation,
   booleanAttribute,
   computed,
@@ -17,13 +18,14 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormControl,
   ReactiveFormsModule,
   TouchedChangeEvent,
 } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { NumberInputDirective } from '../number-input.directive';
@@ -50,7 +52,8 @@ export class NumberInputComponent
     ControlValueAccessor,
     MatFormFieldControl<number>,
     AfterViewInit,
-    DoCheck
+    DoCheck,
+    OnDestroy
 {
   static nextId = 0;
   readonly stateChanges = new Subject<void>();
@@ -61,6 +64,10 @@ export class NumberInputComponent
   // Private signals
   private readonly _focused = signal(false);
   private readonly _autofilled = signal(false);
+
+  // Track the form control to detect form group swaps
+  private _registeredControl: AbstractControl | null = null;
+  private _controlEventsSubscription: Subscription | null = null;
 
   // Signal inputs with transforms - must be public for template binding
   // These aliases are required for MatFormFieldControl interface compatibility
@@ -198,14 +205,19 @@ export class NumberInputComponent
   }
 
   ngOnDestroy(): void {
+    this._controlEventsSubscription?.unsubscribe();
     this.stateChanges.complete();
   }
 
   ngDoCheck(): void {
-    // Re-evaluate error state on every change detection cycle to handle cases
-    // not covered by subscriptions (e.g. formGroup rebinding, parent form changes).
-    // This mirrors Angular Material's MatInput pattern.
     if (this.ngControl) {
+      // Detect when the underlying form control changes (e.g. formGroup is swapped)
+      // and re-subscribe to the new control's events.
+      // Resolve from parent form group since ngControl.control can be stale.
+      const currentControl = this._resolveControl();
+      if (currentControl !== this._registeredControl) {
+        this._registerControlEvents(currentControl);
+      }
       this.updateErrorState();
     }
   }
@@ -223,10 +235,23 @@ export class NumberInputComponent
         });
     }
 
-    // Monitor ngControl touch state changes (for programmatic markAllAsTouched)
-    // Must be done in ngAfterViewInit because ngControl.control is null in constructor
-    if (this.ngControl?.control?.events) {
-      const subscription = this.ngControl.control.events
+    // Initial registration of control events for touch state monitoring
+    if (this.ngControl?.control) {
+      this._registerControlEvents(this.ngControl.control);
+    }
+  }
+
+  /**
+   * Subscribe to a form control's events for touch state monitoring.
+   * Called on initial setup and whenever the underlying control changes (e.g. formGroup swap).
+   */
+  private _registerControlEvents(control: AbstractControl | null): void {
+    this._controlEventsSubscription?.unsubscribe();
+    this._controlEventsSubscription = null;
+    this._registeredControl = control;
+
+    if (control?.events) {
+      this._controlEventsSubscription = control.events
         .pipe(
           filter(
             (event): event is TouchedChangeEvent =>
@@ -236,8 +261,18 @@ export class NumberInputComponent
         .subscribe(() => {
           this.updateErrorState();
         });
-      this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
+  }
+
+  /**
+   * Resolve the current form control from the parent form group,
+   * because ngControl.control can become stale after a formGroup swap.
+   */
+  private _resolveControl(): AbstractControl | null {
+    if (this._parentFormGroup?.form && this.ngControl?.name != null) {
+      return this._parentFormGroup.form.get(String(this.ngControl.name));
+    }
+    return this.ngControl?.control ?? null;
   }
 
   // Focus/blur handlers
@@ -273,6 +308,13 @@ export class NumberInputComponent
 
   writeValue(value: number | null): void {
     this.valueModel.set(value);
+
+    // When the parent formGroup is swapped, Angular calls writeValue during rebinding.
+    // Detect the control change and re-subscribe to the new control's events.
+    const currentControl = this._resolveControl();
+    if (currentControl && currentControl !== this._registeredControl) {
+      this._registerControlEvents(currentControl);
+    }
   }
 
   registerOnChange(fn: (value: number | null) => void): void {
