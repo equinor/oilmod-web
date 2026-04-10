@@ -1,10 +1,4 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WysiwygEditorComponent } from './wysiwyg-editor.component';
 
@@ -55,15 +49,15 @@ describe('WysiwygEditorComponent', () => {
     expect(el.getAttribute('contentEditable')).toEqual('true');
   });
 
-  it('should emit valueChanged when input event occurs', fakeAsync(() => {
+  it('should emit valueChanged when input event occurs', async () => {
     const ev = new TestEvent('input');
     const el = component.editor().nativeElement;
     el.innerHTML = '<h1>SomeStuff</h1>';
-    const spy = jest.spyOn(component.valueChanged, 'emit');
+    const spy = vi.spyOn(component.valueChanged, 'emit');
     el.dispatchEvent(ev);
-    tick(320);
+    await new Promise((resolve) => setTimeout(resolve, 350));
     expect(spy).toHaveBeenCalledWith('<h1>SomeStuff</h1>');
-  }));
+  });
 
   // Broken in jsdom
   /*  it('should show a warning if pasted html contains an image tag', () => {
@@ -75,7 +69,7 @@ describe('WysiwygEditorComponent', () => {
       sel?.removeAllRanges();
       sel?.addRange(range);
 
-      const spy = jest.spyOn(component, 'onPaste');
+      const spy = vi.spyOn(component, 'onPaste');
       const paste = `<h1>Heading</h1><div><img src="An Image"></div><p>Some text</p>`;
       const pasteData = new DataTransfer();
       pasteData.setData('text/html', paste);

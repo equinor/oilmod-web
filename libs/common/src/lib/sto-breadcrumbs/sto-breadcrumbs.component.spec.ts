@@ -28,7 +28,7 @@ describe('StoBreadcrumbsComponent', () => {
   });
 
   it('should trigger the command of a clicked item', () => {
-    jest.spyOn(breadCrumbs[0], 'command');
+    vi.spyOn(breadCrumbs[0], 'command');
     page.elements[0].dispatchEvent(new Event('click'));
     fixture.detectChanges();
     expect(breadCrumbs[0].command).toHaveBeenCalled();

@@ -48,19 +48,19 @@ describe('ErrorHandlerService', () => {
   it('should call the correct error handler', () => {
     const service: ErrorHandlerService = TestBed.inject(ErrorHandlerService);
     // @ts-ignore
-    let spy = jest.spyOn(service, 400);
+    let spy = vi.spyOn(service, 400);
     service.handler(getError(400));
     expect(spy).toHaveBeenCalled();
     // @ts-ignore
-    spy = jest.spyOn(service, 403);
+    spy = vi.spyOn(service, 403);
     service.handler(getError(403));
     expect(spy).toHaveBeenCalled();
     // @ts-ignore
-    spy = jest.spyOn(service, 500);
+    spy = vi.spyOn(service, 500);
     service.handler(getError(500));
     expect(spy).toHaveBeenCalled();
     // @ts-ignore
-    spy = jest.spyOn(service, 'defaultHandler');
+    spy = vi.spyOn(service, 'defaultHandler');
     service.handler(getError(428));
     expect(spy).toHaveBeenCalled();
   });
@@ -69,7 +69,7 @@ describe('ErrorHandlerService', () => {
     const handler = {
       handler: (err: HttpErrorResponse) => new HttpError(err),
     };
-    const spy = jest.spyOn(handler, 'handler');
+    const spy = vi.spyOn(handler, 'handler');
     const service: ErrorHandlerService = TestBed.inject(ErrorHandlerService);
     service.handler(getError(401), handler.handler);
     expect(spy).toHaveBeenCalled();
@@ -78,7 +78,7 @@ describe('ErrorHandlerService', () => {
   it('should use the injected handler', () => {
     const service: ErrorHandlerService = TestBed.inject(ErrorHandlerService);
     const custom = TestBed.inject(CUSTOM_ERROR_HANDLER) as any;
-    const spy = jest.spyOn(custom, '401');
+    const spy = vi.spyOn(custom, '401');
     service.handler(getError(401));
     expect(spy).toHaveBeenCalled();
   });
@@ -86,7 +86,7 @@ describe('ErrorHandlerService', () => {
   it('should call the injected logger', () => {
     const service: ErrorHandlerService = TestBed.inject(ErrorHandlerService);
     const logger: Logger = TestBed.inject(ERROR_LOGGER);
-    const spy = jest.spyOn(logger, 'log');
+    const spy = vi.spyOn(logger, 'log');
     service.handler(getError(400));
     expect(spy).toHaveBeenCalled();
   });

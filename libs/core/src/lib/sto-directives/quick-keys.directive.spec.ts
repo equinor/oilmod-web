@@ -50,7 +50,7 @@ describe('QuickKeysDirective', () => {
   });
 
   it('should react on ctrl+enter', () => {
-    const spy = jest.spyOn(comp, 'submit');
+    const spy = vi.spyOn(comp, 'submit');
     const event = new KeyboardEvent('keyup', {
       ctrlKey: true,
       keyCode: Key.Enter,
@@ -61,7 +61,7 @@ describe('QuickKeysDirective', () => {
   });
 
   it('should react on escape', () => {
-    const spy = jest.spyOn(comp, 'cancel');
+    const spy = vi.spyOn(comp, 'cancel');
     const event = new KeyboardEvent('keyup', { keyCode: Key.Escape });
     const el = fixture.debugElement.query(By.css('input'));
     el.nativeElement.dispatchEvent(event);

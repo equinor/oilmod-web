@@ -81,10 +81,10 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/apps/oilmod-web"],
       "options": {
-        "jestConfig": "apps/oilmod-web/jest.config.ts"
+        "config": "apps/oilmod-web/vitest.config.mts"
       }
     },
     "storybook": {

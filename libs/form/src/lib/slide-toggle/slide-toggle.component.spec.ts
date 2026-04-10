@@ -37,7 +37,7 @@ describe('SlideToggleComponent', () => {
   });
 
   it('should trigger statechanges when attributes are set', () => {
-    const spy = jest.spyOn(component.stateChanges, 'next');
+    const spy = vi.spyOn(component.stateChanges, 'next');
     component.required = true;
     fixture.detectChanges();
     component.setDisabledState(true);
@@ -49,7 +49,7 @@ describe('SlideToggleComponent', () => {
   });
 
   it('should call onChange with the new value', () => {
-    const spy = jest.spyOn(component as any, 'onChange');
+    const spy = vi.spyOn(component as any, 'onChange');
     component.writeValue(false);
     component.ctrl.updateValueAndValidity();
     fixture.detectChanges();

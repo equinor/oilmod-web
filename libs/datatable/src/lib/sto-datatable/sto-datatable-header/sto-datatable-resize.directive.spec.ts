@@ -9,7 +9,7 @@ describe('StoDatatableResizeDirective (inject())', () => {
   beforeEach(() => {
     nativeElement = {
       classList: {
-        add: jest.fn(),
+        add: vi.fn(),
         contains: (cls: string) =>
           cls === 'sto-mdl-table__header__row__cell__resize-handle',
       },
@@ -44,7 +44,7 @@ describe('StoDatatableResizeDirective (inject())', () => {
         configurable: true,
       });
     });
-    const spy = jest.spyOn(directive as any, 'onMouseUp');
+    const spy = vi.spyOn(directive as any, 'onMouseUp');
     const down = {
       screenX: 200,
       stopPropagation: () => {},

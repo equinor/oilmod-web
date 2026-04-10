@@ -23,10 +23,10 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/libs/datatable"],
       "options": {
-        "jestConfig": "libs/datatable/jest.config.ts"
+        "config": "libs/datatable/vitest.config.mts"
       }
     },
     "lint": {

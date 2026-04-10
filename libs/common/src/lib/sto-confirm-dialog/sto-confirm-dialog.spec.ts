@@ -6,7 +6,6 @@ import { By } from '@angular/platform-browser';
 // Import only the minimal material modules to avoid pulling BrowserModule twice via large aggregated testing module.
 import { ConfirmModule } from './sto-confirm-dialog.module';
 import { ConfirmService } from './sto-confirm-dialog.service';
-import DoneCallback = jest.DoneCallback;
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
@@ -34,7 +33,7 @@ describe('ConfirmComponent', () => {
       .then(createComponent);
   }));
 
-  it('should open a confirmation dialog', (done: DoneCallback) => {
+  it('should open a confirmation dialog', (done) => {
     expect(comp).toBeTruthy();
     const ev = new Event('click');
     const subscription = comp.confirmSvc

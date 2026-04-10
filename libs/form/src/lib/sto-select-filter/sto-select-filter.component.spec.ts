@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
@@ -56,7 +50,7 @@ describe('StoSelectFilterComponent', () => {
     expect(focusedEl).toBeTruthy();
   });
 
-  it.skip('should have focus inputElement when its value is set to empty', fakeAsync(() => {
+  it.skip('should have focus inputElement when its value is set to empty', () => {
     // Skip: afterNextRender doesn't execute in test environment
     fixture.componentRef.setInput('isFilter', true);
     fixture.componentRef.setInput('focusIfNoValue', true);
@@ -65,16 +59,15 @@ describe('StoSelectFilterComponent', () => {
     expect(focusedEl).toBeNull();
     fixture.componentRef.setInput('value', '');
     fixture.detectChanges();
-    tick(100); // Wait for requestAnimationFrame
     focusedEl = fixture.debugElement.query(By.css(':focus'));
     // Focus is applied via afterNextRender
     expect(focusedEl).toBeTruthy();
-  }));
+  });
 
   it('should emit valueChanges when filter input is changed', () => {
     fixture.componentRef.setInput('isFilter', true);
     fixture.detectChanges();
-    const emitSpy = jest.spyOn(comp.valueChanges, 'emit');
+    const emitSpy = vi.spyOn(comp.valueChanges, 'emit');
     comp.inputControl.setValue('test');
     fixture.detectChanges();
     expect(emitSpy).toHaveBeenCalledWith('test');

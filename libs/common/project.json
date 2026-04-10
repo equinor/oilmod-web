@@ -23,10 +23,10 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/libs/common"],
       "options": {
-        "jestConfig": "libs/common/jest.config.ts"
+        "config": "libs/common/vitest.config.mts"
       }
     },
     "lint": {

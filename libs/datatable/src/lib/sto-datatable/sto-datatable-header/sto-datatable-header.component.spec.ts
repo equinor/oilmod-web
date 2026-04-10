@@ -39,7 +39,7 @@ describe('StoDatatableHeaderComponent', () => {
   });
 
   it('should emit sort when cell is clicked', () => {
-    jest.spyOn(comp.sort, 'emit');
+    vi.spyOn(comp.sort, 'emit');
     page.firstCell.click();
     fixture.detectChanges();
     expect(comp.sort.emit).toHaveBeenCalled();
@@ -50,7 +50,7 @@ describe('StoDatatableHeaderComponent', () => {
   });
 
   it('should emit headerContextMenu when context menu is triggered', () => {
-    jest.spyOn(comp.headerContextMenu, 'emit');
+    vi.spyOn(comp.headerContextMenu, 'emit');
     const ev = new Event('contextmenu');
     page.firstCell.dispatchEvent(ev);
     fixture.detectChanges();

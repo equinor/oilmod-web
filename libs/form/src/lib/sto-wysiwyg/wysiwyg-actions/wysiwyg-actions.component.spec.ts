@@ -35,7 +35,7 @@ describe('WysiwygActionsComponent', () => {
   });
 
   it('should emit a single string to apply formatting', () => {
-    const spy = jest.spyOn(component.modifier, 'emit');
+    const spy = vi.spyOn(component.modifier, 'emit');
     const buttonDe = fixture.debugElement.query(
       By.css('.sto-wysiwyg__editor__button'),
     );

@@ -9,6 +9,5 @@
     "compilationMode": "partial"
   },
   "exclude": [
-    "jest.config.ts"
   ]
 }

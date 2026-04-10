@@ -69,7 +69,7 @@
         "dotenv-webpack": "8.1.1",
         "eslint": "9.39.4",
         "eslint-config-prettier": "10.1.8",
-        "eslint-plugin-cypress": "5.4.0",
+        "eslint-plugin-cypress": "^6.3.0",
         "eslint-plugin-storybook": "10.3.4",
         "glob": "11.1.0",
         "highlight.js": "11.11.1",
@@ -2019,7 +2019,7 @@
 
     "eslint-config-prettier": ["eslint-config-prettier@10.1.8", "", { "peerDependencies": { "eslint": ">=7.0.0" }, "bin": "bin/cli.js" }, "sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w=="],
 
-    "eslint-plugin-cypress": ["eslint-plugin-cypress@5.4.0", "", { "dependencies": { "globals": "^17.3.0" }, "peerDependencies": { "eslint": ">=9" } }, "sha512-XAQYuzMpLWJdFRQorPO3GDx4XHqI362qr1/XIp0N6SNTAa8lyzmpTA26qNRc99I53NnqX9l0SHwbHXX7TAKIkg=="],
+    "eslint-plugin-cypress": ["eslint-plugin-cypress@6.3.0", "", { "dependencies": { "globals": "^17.4.0" }, "peerDependencies": { "eslint": ">=9" } }, "sha512-4M3vgcMYgStgrYJn2uRtyWlAAJsY88//ctDJfBoQE2VtUWuBQ90W1Uiyar8MLQN2Ii52ZsEuzA3OBrnEW8Me/g=="],
 
     "eslint-plugin-storybook": ["eslint-plugin-storybook@10.3.4", "", { "dependencies": { "@typescript-eslint/utils": "^8.48.0" }, "peerDependencies": { "eslint": ">=8", "storybook": "^10.3.4" } }, "sha512-6jRb9ucYWKRkbuxpN+83YA3wAWuKn6rp+OVXivy0FPa82v8eciHG8OidbznmzrfcRJYkNWUb7GrPjG/rf4Vqaw=="],
 

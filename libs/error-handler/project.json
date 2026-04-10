@@ -23,10 +23,10 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/libs/error-handler"],
       "options": {
-        "jestConfig": "libs/error-handler/jest.config.ts"
+        "config": "libs/error-handler/vitest.config.mts"
       }
     },
     "lint": {

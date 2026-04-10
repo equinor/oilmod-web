@@ -42,8 +42,8 @@ describe('WysiwygComponent unit tests', () => {
 
   beforeEach(waitForAsync(() => {
     // Mock document methods
-    document.execCommand = jest.fn();
-    document.queryCommandState = jest.fn();
+    document.execCommand = vi.fn();
+    document.queryCommandState = vi.fn();
 
     TestBed.configureTestingModule({
       imports: [
@@ -65,7 +65,7 @@ describe('WysiwygComponent unit tests', () => {
   });
 
   it('should only call execCommand when execute is called with a known method', () => {
-    const spy = jest.spyOn(document, 'execCommand');
+    const spy = vi.spyOn(document, 'execCommand');
     component.execute('bold');
     expect(spy).toHaveBeenCalled();
     component.execute('formatDocument');
@@ -73,7 +73,7 @@ describe('WysiwygComponent unit tests', () => {
   });
 
   it('should execute [in|out]dent when onKeyDownHandleTab is called with tab', () => {
-    const spy = jest.spyOn(component, 'execute');
+    const spy = vi.spyOn(component, 'execute');
 
     const ev = {
       key: 'Tab',
@@ -156,7 +156,7 @@ describe('WysiwygComponent integration tests', () => {
     expect(page.editable.getAttribute('contenteditable')).toEqual('true');
     expect(page.editor.readonly()).toBeFalsy();
     expect(page.wysiwyg['isDisabled']()).toBeFalsy();
-    const spy = jest.spyOn(page.wysiwyg, 'setDisabledState');
+    const spy = vi.spyOn(page.wysiwyg, 'setDisabledState');
     wrapper.disable();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
