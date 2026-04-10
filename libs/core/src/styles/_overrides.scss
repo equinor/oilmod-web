@@ -33,21 +33,21 @@ input::-webkit-inner-spin-button {
 }
 
 h1 {
-  --mat-sys-body-large-size: 1.7rem;
+  --mat-sys-body-large-size: calc(var(--sto-base-font-size, 13px) * 1.7);
   --mat-sys-body-large-line-height: 1.4;
   --mat-sys-body-large-weight: 400;
   font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
     var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h2 {
-  --mat-sys-body-large-size: 1.6rem;
+  --mat-sys-body-large-size: calc(var(--sto-base-font-size, 13px) * 1.6);
   --mat-sys-body-large-line-height: 1.4;
   --mat-sys-body-large-weight: 400;
   font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
     var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h3 {
-  --mat-sys-body-large-size: 1.53846rem;
+  --mat-sys-body-large-size: calc(var(--sto-base-font-size, 13px) * 1.53846);
   --mat-sys-body-large-line-height: 1.4;
   --mat-sys-body-large-weight: 400;
   font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
@@ -55,21 +55,21 @@ h3 {
   margin: 0;
 }
 h4 {
-  --mat-sys-body-large-size: 1.23077rem;
+  --mat-sys-body-large-size: calc(var(--sto-base-font-size, 13px) * 1.23077);
   --mat-sys-body-large-line-height: 1.4;
   --mat-sys-body-large-weight: 400;
   font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
     var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h5 {
-  --mat-sys-body-large-size: 0.9rem;
+  --mat-sys-body-large-size: calc(var(--sto-base-font-size, 13px) * 0.9);
   --mat-sys-body-large-line-height: 1;
   --mat-sys-body-large-weight: 400;
   font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /
     var(--mat-sys-body-large-line-height) var(--application-font);
 }
 h6 {
-  --mat-sys-body-large-size: 0.8rem;
+  --mat-sys-body-large-size: calc(var(--sto-base-font-size, 13px) * 0.8);
   --mat-sys-body-large-line-height: 1.25;
   --mat-sys-body-large-weight: 400;
   font: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) /

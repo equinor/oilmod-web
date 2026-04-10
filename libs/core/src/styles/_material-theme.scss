@@ -26,30 +26,55 @@ $sto-theme: mat.define-theme(
     @include mat.all-component-themes($sto-theme);
 
     // Base font size (13px - Equinor standard)
+    // This variable is the single scaling anchor for all typography.
+    // Typography classes (sto-sm/m/l-typography) override it on body
+    // so all Material component font sizes scale with the accessibility menu.
+    --sto-base-font-size: 13px;
     --application-font: Equinor, Roboto, sans-serif;
 
-    // Typography sizes
+    // Typography sizes — all derived from --sto-base-font-size so they
+    // respond to accessibility scaling classes on body.
     --mat-sys-body-large-font: var(--application-font);
     --mat-sys-body-large-weight: 400;
-    --mat-sys-body-large-size: 1rem;
+    --mat-sys-body-large-size: var(--sto-base-font-size); // 13px
     --mat-sys-body-large-line-height: 1.55; // 20px / 13px
+    --mat-sys-body-medium-font: var(--application-font);
+    --mat-sys-body-medium-weight: 400;
+    --mat-sys-body-medium-size: var(--sto-base-font-size); // 13px
+    --mat-sys-body-medium-line-height: 1.538; // 20px / 13px
+    --mat-sys-body-small-font: var(--application-font);
+    --mat-sys-body-small-weight: 400;
+    --mat-sys-body-small-size: calc(var(--sto-base-font-size) * 0.846); // ~11px
+    --mat-sys-body-small-line-height: 1.45; // 16px / 11px
     --mat-sys-label-medium-font: var(--application-font);
-    --mat-sys-label-medium-size: 1.25rem;
+    --mat-sys-label-medium-size: calc(
+      var(--sto-base-font-size) * 1.25
+    ); // ~16px
     --mat-sys-label-medium-line-height: 1.333; // 17px / 13px
     --mat-sys-label-large-font: var(--application-font);
-    --mat-sys-label-large-size: 1.077rem;
+    --mat-sys-label-large-size: calc(
+      var(--sto-base-font-size) * 1.077
+    ); // ~14px
     --mat-sys-label-large-line-height: 1.714; // 24px / 14px
     --mat-sys-headline-large-font: var(--application-font);
-    --mat-sys-headline-large-size: 2.154rem;
+    --mat-sys-headline-large-size: calc(
+      var(--sto-base-font-size) * 2.154
+    ); // ~28px
     --mat-sys-headline-large-line-height: 1.571; // 44px / 28px
     --mat-sys-headline-medium-font: var(--application-font);
-    --mat-sys-headline-medium-size: 1.846rem;
+    --mat-sys-headline-medium-size: calc(
+      var(--sto-base-font-size) * 1.846
+    ); // ~24px
     --mat-sys-headline-medium-line-height: 1.333; // 32px / 24px
     --mat-sys-title-large-font: var(--application-font);
-    --mat-sys-title-large-size: 1.538rem;
+    --mat-sys-title-large-size: calc(
+      var(--sto-base-font-size) * 1.538
+    ); // ~20px
     --mat-sys-title-large-line-height: 1.4; // 28px / 20px
     --mat-sys-title-medium-font: var(--application-font);
-    --mat-sys-title-medium-size: 1.231rem;
+    --mat-sys-title-medium-size: calc(
+      var(--sto-base-font-size) * 1.231
+    ); // ~16px
     --mat-sys-title-medium-line-height: 1.5; // 24px / 16px
 
     // Primary color mappings - Map to Equinor teal (#007079)
@@ -156,7 +181,6 @@ $sto-theme: mat.define-theme(
     @include mat.select-overrides((
       disabled-trigger-text-color: var(--text-disabled),
       panel-background-color: var(--bg-card),
-      trigger-text-size: var(--mat-sys-body-small-size, 1em),
     ));
     // prettier-ignore
     @include mat.autocomplete-overrides((
@@ -206,9 +230,7 @@ $sto-theme: mat.define-theme(
     ));
     // prettier-ignore
     @include mat.form-field-overrides((
-      container-height: 42px,
-      container-text-line-height: var(--mat-sys-body-medium-line-height, 1.538),
-      container-text-size: var(--mat-sys-body-medium-size, 1em),
+      container-text-line-height: 1.538,
       container-vertical-padding: 6px,
       disabled-input-text-placeholder-color: var(--text-disabled),
       disabled-leading-icon-color: var(--icon-disabled),
@@ -226,7 +248,6 @@ $sto-theme: mat.define-theme(
       filled-with-label-container-padding-top: 16px,
       hover-state-layer-opacity: 0,
       subscript-text-line-height: 1.182,
-      subscript-text-size: 0.846em,
     ));
     // prettier-ignore
     @include mat.slide-toggle-overrides((
@@ -253,26 +274,92 @@ $sto-theme: mat.define-theme(
     ));
     @include mat.slider-overrides(
       (
-        label-label-text-size: 0.6rem,
+        label-label-text-size: calc(var(--sto-base-font-size) * 0.6),
       )
     );
+
+    // Reset component-level font-size tokens to `initial` (the guaranteed-
+    // invalid value for custom properties).  This forces Material's own CSS
+    // to fall through to the --mat-sys-* system-variable fallbacks, which
+    // the typography scaling classes (.sto-sm/m/l-typography) override on
+    // <body>.  Without this, the component tokens are resolved once at :root
+    // level and baked to a fixed px value that never responds to scaling.
+    --mat-form-field-container-text-size: initial;
+    --mat-form-field-filled-label-text-size: initial;
+    --mat-form-field-outlined-label-text-size: initial;
+    --mat-form-field-subscript-text-size: initial;
+    --mat-select-trigger-text-size: initial;
+    --mat-expansion-container-text-size: initial;
+    --mat-expansion-header-text-size: initial;
+    --mat-option-label-text-size: initial;
+    --mat-slide-toggle-label-text-size: initial;
+    --mat-checkbox-label-text-size: initial;
+    --mat-button-text-label-text-size: initial;
+    --mat-button-filled-label-text-size: initial;
+    --mat-button-protected-label-text-size: initial;
+    --mat-button-outlined-label-text-size: initial;
+    --mat-button-tonal-label-text-size: initial;
+    --mat-button-toggle-label-text-size: initial;
+    --mat-menu-item-label-text-size: initial;
+    --mat-slider-label-label-text-size: initial;
+    // Reset form field height so typography classes can scale it
+    --mat-form-field-container-height: initial;
+    --mat-form-field-filled-with-label-container-padding-top: initial;
   }
 
   // Small typography scale (10px base - compact mode)
   .sto-sm-typography {
     font: 400 10px / 20px var(--application-font);
-    font-size: 10px;
-    // All em values remain the same, just relative to 10px base
+    --sto-base-font-size: 10px;
+    // Re-set Material system typography variables so components scale
+    --mat-sys-body-large-size: 10px;
+    --mat-sys-body-medium-size: 10px;
+    --mat-sys-body-small-size: calc(10px * 0.846);
+    --mat-sys-label-large-size: calc(10px * 1.077);
+    --mat-sys-label-medium-size: calc(10px * 1.25);
+    --mat-sys-title-large-size: calc(10px * 1.538);
+    --mat-sys-title-medium-size: calc(10px * 1.231);
+    --mat-sys-headline-large-size: calc(10px * 2.154);
+    --mat-sys-headline-medium-size: calc(10px * 1.846);
+    // Scale form field dimensions
+    --mat-form-field-container-height: calc(10px * 3.23);
+    --mat-form-field-filled-with-label-container-padding-top: calc(10px * 1.23);
   }
   .sto-m-typography {
     font: 400 13px / 20px var(--application-font);
-    // All em values remain the same, just relative to 13px base
+    --sto-base-font-size: 13px;
+    // Re-set Material system typography variables so components scale
+    --mat-sys-body-large-size: 13px;
+    --mat-sys-body-medium-size: 13px;
+    --mat-sys-body-small-size: calc(13px * 0.846);
+    --mat-sys-label-large-size: calc(13px * 1.077);
+    --mat-sys-label-medium-size: calc(13px * 1.25);
+    --mat-sys-title-large-size: calc(13px * 1.538);
+    --mat-sys-title-medium-size: calc(13px * 1.231);
+    --mat-sys-headline-large-size: calc(13px * 2.154);
+    --mat-sys-headline-medium-size: calc(13px * 1.846);
+    // Scale form field dimensions (42px / 13px ≈ 3.23, 16px / 13px ≈ 1.23)
+    --mat-form-field-container-height: calc(13px * 3.23);
+    --mat-form-field-filled-with-label-container-padding-top: calc(13px * 1.23);
   }
 
   // Large typography scale (16px base - accessibility mode)
   .sto-l-typography {
     font: 400 16px / 28px var(--application-font);
-    // All em values remain the same, just relative to 16px base
+    --sto-base-font-size: 16px;
+    // Re-set Material system typography variables so components scale
+    --mat-sys-body-large-size: 16px;
+    --mat-sys-body-medium-size: 16px;
+    --mat-sys-body-small-size: calc(16px * 0.846);
+    --mat-sys-label-large-size: calc(16px * 1.077);
+    --mat-sys-label-medium-size: calc(16px * 1.25);
+    --mat-sys-title-large-size: calc(16px * 1.538);
+    --mat-sys-title-medium-size: calc(16px * 1.231);
+    --mat-sys-headline-large-size: calc(16px * 2.154);
+    --mat-sys-headline-medium-size: calc(16px * 1.846);
+    // Scale form field dimensions
+    --mat-form-field-container-height: calc(16px * 3.23);
+    --mat-form-field-filled-with-label-container-padding-top: calc(16px * 1.23);
   }
 
   @include mat.elevation-classes();
@@ -296,4 +383,92 @@ $sto-theme: mat.define-theme(
   .sto-select.mat-select-panel {
     max-height: 265px;
   }
+}
+
+/**
+ * CDK Overlay Theming
+ *
+ * Autocomplete, select, and datepicker panels render in the CDK
+ * overlay container at document.body level. EDS token overrides
+ * ensure consistent styling outside the component tree.
+ */
+.cdk-overlay-container {
+  /* Option panels */
+  --mat-option-label-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-option-hover-state-layer-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-option-focus-state-layer-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-option-selected-state-layer-color: var(
+    --eds_interactive_primary__selected_highlight,
+    light-dark(#e6faec, #007079)
+  );
+  --mat-option-selected-state-label-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-option-label-text-font: Equinor, sans-serif;
+  --mat-option-label-text-size: 0.875rem;
+
+  /* Autocomplete */
+  --mat-autocomplete-background-color: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #243746)
+  );
+
+  /* Select */
+  --mat-select-panel-background-color: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #243746)
+  );
+
+  /* Datepicker */
+  --mat-datepicker-calendar-date-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-datepicker-calendar-date-hover-state-background-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-datepicker-calendar-date-focus-state-background-color: var(
+    --eds_interactive_table__cell__fill_hover,
+    light-dark(#eaeaea, #324d62)
+  );
+  --mat-datepicker-calendar-date-selected-state-background-color: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  --mat-datepicker-calendar-date-selected-state-text-color: var(
+    --eds_text_static_icons__primary_white,
+    light-dark(#ffffff, #000000)
+  );
+  --mat-datepicker-calendar-date-today-outline-color: var(
+    --eds_interactive_primary__resting,
+    light-dark(#007079, #97cace)
+  );
+  --mat-datepicker-calendar-container-background-color: var(
+    --eds_ui_background__default,
+    light-dark(#ffffff, #243746)
+  );
+  --mat-datepicker-calendar-header-text-color: var(
+    --eds_text_static_icons__default,
+    light-dark(#3d3d3d, #ffffff)
+  );
+  --mat-datepicker-calendar-body-label-text-color: var(
+    --eds_text_static_icons__tertiary,
+    light-dark(#6f6f6f, #9ca6ac)
+  );
+  --mat-datepicker-calendar-text-font: Equinor, sans-serif;
+}
+
+body.sto-dark-theme .cdk-overlay-container {
+  color-scheme: dark;
 }
