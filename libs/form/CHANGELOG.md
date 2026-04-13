@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.11](https://github.com/equinor/oilmod-web/compare/form-21.0.10...form-21.0.11) (2026-04-13)
+
+
+### Bug Fixes
+
+* **number-input:** integrate NumberInputPipe for value formatting in display ([9208ad9](https://github.com/equinor/oilmod-web/commit/9208ad9e248cc0d5c4c5b0358c7a0d6152e4923e))
+
 ## [21.0.10](https://github.com/equinor/oilmod-web/compare/form-21.0.9...form-21.0.10) (2026-04-10)
 
 
