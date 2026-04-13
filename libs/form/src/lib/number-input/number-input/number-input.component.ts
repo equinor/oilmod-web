@@ -29,6 +29,7 @@ import { Subject, Subscription } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
 import { FormFieldBase } from '../../sto-form/form-field.base';
 import { NumberInputDirective } from '../number-input.directive';
+import { NumberInputPipe } from '../number-input.pipe';
 
 @Component({
   selector: 'sto-number-input',
@@ -60,6 +61,7 @@ export class NumberInputComponent
   readonly ctrl = new FormControl<string | number | null>(null);
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly displayPipe = new NumberInputPipe();
 
   // Private signals
   private readonly _focused = signal(false);
@@ -179,7 +181,14 @@ export class NumberInputComponent
         // When focused, the ctrl already has the correct display value from user input;
         // calling setValue would reset the cursor position to the end.
         if (!this._focused()) {
-          this.ctrl.setValue(externalValue, { emitEvent: false });
+          // Format the value using NumberInputPipe so the display shows
+          // proper decimal separators, thousand separators, and decimal padding.
+          const formatted = this.displayPipe.transform(
+            externalValue,
+            this.fractionSize(),
+            this.dynamicFractionSize(),
+          );
+          this.ctrl.setValue(formatted, { emitEvent: false });
         }
 
         // Track all reactive inputs that should trigger stateChanges
