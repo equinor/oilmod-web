@@ -15,6 +15,7 @@ import { DateRange, MatDateRangeInput } from '@angular/material/datepicker';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
+import { merge } from 'rxjs';
 import { HIDE_FORM_FIELD_TITLE } from './token';
 
 @Directive({
@@ -24,6 +25,8 @@ import { HIDE_FORM_FIELD_TITLE } from './token';
   host: {
     '[title]':
       '(hideFormFieldTitle || disableFormFieldTitle()) ? null : displayTitle()',
+    '[style.pointer-events]':
+      '(isFieldDisabled() || isFieldReadOnly()) && displayTitle() ? "auto" : null',
     class: 'sto-form__field',
     '[class.sto-form__field--readonly]': 'isFieldReadOnly()',
     '[class.sto-form__field--disabled]': 'isFieldDisabled()',
@@ -70,11 +73,26 @@ export class FormFieldDirective {
       this._isFieldDisabled.set(control.disabled ?? false);
       this._fieldName.set(this.getInputName(control));
 
-      // Subscribe to state changes to keep signals updated
-      const subscription = control.stateChanges.subscribe(() => {
+      const titleEnabled =
+        !this.hideFormFieldTitle && !this.disableFormFieldTitle();
+
+      // Subscribe to state changes AND ngControl value changes. stateChanges
+      // covers most cases (focus, disabled, etc.) but doesn't always fire
+      // synchronously on programmatic FormControl.patchValue/setValue, so we
+      // also listen to valueChanges directly when an ngControl is present.
+      const ngControlValueChanges = control.ngControl?.valueChanges;
+      const stateOrValue$ = ngControlValueChanges
+        ? merge(control.stateChanges, ngControlValueChanges)
+        : control.stateChanges;
+      const subscription = stateOrValue$.subscribe(() => {
         untracked(() => {
           this._isFieldReadOnly.set(this.isReadOnly(control));
           this._isFieldDisabled.set(control.disabled ?? false);
+          // Refresh the auto-computed title whenever the control's value or
+          // state changes (e.g. when a form is patched asynchronously).
+          if (titleEnabled) {
+            this.updateTitle(control);
+          }
         });
       });
 
@@ -83,8 +101,8 @@ export class FormFieldDirective {
         this.setAutocompleteOff(control);
       }
 
-      // Update title
-      if (!this.hideFormFieldTitle && !this.disableFormFieldTitle()) {
+      // Initial title update
+      if (titleEnabled) {
         this.updateTitle(control);
       }
 
@@ -162,6 +180,8 @@ export class FormFieldDirective {
   private formatValue(value: unknown): string {
     if (typeof value === 'string') {
       return value;
+    } else if (typeof value === 'number') {
+      return String(value);
     } else if (Array.isArray(value)) {
       return value.join(', ');
     } else if (value instanceof Date) {
