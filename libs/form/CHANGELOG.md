@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.12](https://github.com/equinor/oilmod-web/compare/form-21.0.11...form-21.0.12) (2026-04-20)
+
+
+### Bug Fixes
+
+* **form:** refresh stoFormField auto-title when control value changes ([5603088](https://github.com/equinor/oilmod-web/commit/5603088eb71be003016d12380ac5fc0fc83a7e02))
+
 ## [21.0.11](https://github.com/equinor/oilmod-web/compare/form-21.0.10...form-21.0.11) (2026-04-13)
 
 
