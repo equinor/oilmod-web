@@ -69,6 +69,47 @@ Specialized instructions and skills cover specific topics — they load automati
 - **Library publishing** → see `library-architecture.instructions.md` (auto-loads for libs/)
 - **Creating components** → use the `component-development` skill (on-demand)
 - **Build/publish/yalc** → use the `build-and-publish` skill (on-demand)
+- **Post-task review** → use the `retrospective` skill (on-demand)
+
+## Knowledge Base
+
+The `.github/knowledge/` folder contains the externalized mental model for
+this codebase — descriptive notes about how subsystems work, what they own,
+their invariants, design decisions, and known tensions. Files use a strict
+schema (OWNS / READS FROM / WRITES TO / INVARIANT / FLOW / TENSION /
+DECIDED) — see any existing knowledge file for the format.
+
+| File                                             | Domain    | When to read                                                                                                                                   |
+| ------------------------------------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| [knowledge/workspace.md](knowledge/workspace.md) | workspace | Editing build/release/CI config, `nx.json`, `release-please-config.json`, root scripts, yalc, tooling                                          |
+| [knowledge/theming.md](knowledge/theming.md)     | theming   | Editing any `.scss` under `libs/core/src/styles/` or consuming theme tokens; M3 + EDS coexistence                                              |
+| [knowledge/core.md](knowledge/core.md)           | core      | Editing directives/pipes in `libs/core/` or anything in `@ngx-stoui/core` TS surface                                                           |
+| [knowledge/common.md](knowledge/common.md)       | common    | Editing `libs/common/` (action footer, app header, breadcrumbs, confirm dialog, filter base, message panel, preference manager, theme service) |
+| [knowledge/datatable.md](knowledge/datatable.md) | datatable | Editing `libs/datatable/` (sto-datatable + body/header/header-group/actions, columns, sort, virtual scroll)                                    |
+| [knowledge/form.md](knowledge/form.md)           | form      | Editing `libs/form/` (number input, slide toggle, select-filter, select-all, WYSIWYG, FormFieldDirective, form utils)                          |
+| [knowledge/drawer.md](knowledge/drawer.md)       | drawer    | Editing `libs/drawer/` (sto-drawer + slots, nav-drawer, animations)                                                                            |
+| [knowledge/popover.md](knowledge/popover.md)     | popover   | Editing `libs/popover/` (CDK overlay anchor pattern)                                                                                           |
+
+> **Knowledge files — read before editing, write after learning:**
+>
+> - **Read gate:** Before editing any file in `libs/**` or `apps/**`, or
+>   making a non-trivial change anywhere, you MUST first read the knowledge
+>   files that cover the affected domain. This rebuilds the mental model —
+>   state ownership, invariants, design rationale — so you can spot when a
+>   proposed change contradicts an earlier `DECIDED` entry and push back
+>   rather than silently regress it. Trivial edits (typos, comments,
+>   formatting) are exempt.
+> - **Write gate:** During or after any task, if you discover a new
+>   invariant, state-ownership fact, data-flow edge, design decision, or
+>   tension that is not already in a knowledge file, you MUST add it to the
+>   correct file using the structured notation (OWNS / READS FROM /
+>   WRITES TO / INVARIANT / FLOW / TENSION / DECIDED). These files are your
+>   externalized mental model — if you don't write it down, the next session
+>   will rediscover it from scratch.
+> - **Rule of thumb:** If the user argues for a change that contradicts a
+>   `DECIDED` entry, cite the entry and ask them to justify overriding it
+>   before implementing. Past decisions have context; don't silently reverse
+>   them.
 
 ## Commit Conventions
 
