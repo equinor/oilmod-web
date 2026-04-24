@@ -450,7 +450,11 @@ span.sortable {
 // =============================================================================
 // Icon System
 // =============================================================================
-[data-icon]::before {
+// Scoped to `ngx-datatable` so the rule does not leak into other components
+// that also use the `data-icon` attribute (e.g. `tbw-grid` from the Toolbox
+// Grid uses `data-icon="sort-none"` for its sort indicators and was rendering
+// the literal text in Material Icons font instead of the intended glyph).
+ngx-datatable [data-icon]::before {
   font-family: 'Material Icons' !important;
   content: attr(data-icon);
   font-style: normal !important;
