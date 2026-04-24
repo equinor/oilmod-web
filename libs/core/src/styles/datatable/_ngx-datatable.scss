@@ -454,17 +454,20 @@ span.sortable {
 // that also use the `data-icon` attribute (e.g. `tbw-grid` from the Toolbox
 // Grid uses `data-icon="sort-none"` for its sort indicators and was rendering
 // the literal text in Material Icons font instead of the intended glyph).
-ngx-datatable [data-icon]::before {
-  font-family: 'Material Icons' !important;
-  content: attr(data-icon);
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  font-size: 24px;
-  line-height: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.sto-datatable,
+.sto-mdl-table {
+  [data-icon]::before {
+    font-family: 'Material Icons' !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    font-size: 24px;
+    line-height: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 [class^='datatable-icon-']::before,
