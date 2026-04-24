@@ -1,5 +1,13 @@
 # Changelog
 
+## [21.0.8](https://github.com/equinor/oilmod-web/compare/core-21.0.7...core-21.0.8) (2026-04-24)
+
+
+### Bug Fixes
+
+* scoping leaked global rule bleeding into every `[data-icon]` ([d46033a](https://github.com/equinor/oilmod-web/commit/d46033a442c90e21ac635f92f38d7d6965bb0f69))
+* selector was too narrow. ([9814927](https://github.com/equinor/oilmod-web/commit/98149271f906a23dc0f8dbdf3d451e5acb1bdc6f))
+
 ## [21.0.7](https://github.com/equinor/oilmod-web/compare/core-21.0.6...core-21.0.7) (2026-04-10)
 
 
