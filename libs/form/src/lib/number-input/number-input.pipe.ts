@@ -115,7 +115,10 @@ export class NumberInputPipe implements PipeTransform {
     } else if (integer === '-') {
       integer = '-0';
     } else if (integer.includes('-')) {
-      integer = String(-1 * parseInt(integer, 10)); // To handle -0.123
+      // Preserve the negative sign — `parseInt` strips the sign for '-0'
+      // and prior logic accidentally flipped the sign for any other negative
+      // integer (e.g. '-21' became '21').
+      integer = `-${Math.abs(parseInt(integer, 10))}`;
     } else {
       integer = String(parseInt(integer, 10));
     }
