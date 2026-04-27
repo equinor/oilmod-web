@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.13](https://github.com/equinor/oilmod-web/compare/form-21.0.12...form-21.0.13) (2026-04-24)
+
+
+### Bug Fixes
+
+* **form:** preserve negative sign in NumberInputPipe for negative integers ([885f25c](https://github.com/equinor/oilmod-web/commit/885f25c4855e9b5edeb64898a129cc0aa9ee3a32))
+
 ## [21.0.12](https://github.com/equinor/oilmod-web/compare/form-21.0.11...form-21.0.12) (2026-04-20)
 
 
