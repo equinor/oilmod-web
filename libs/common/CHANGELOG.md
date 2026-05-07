@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.7](https://github.com/equinor/oilmod-web/compare/common-21.0.6...common-21.0.7) (2026-05-07)
+
+
+### Bug Fixes
+
+* **common:** restore FilterForm chip serializer and fix init-time crash ([39b7d12](https://github.com/equinor/oilmod-web/commit/39b7d125337ed5b9837e8d74223416c29714c9cd))
+
 ## [21.0.6](https://github.com/equinor/oilmod-web/compare/common-21.0.5...common-21.0.6) (2026-04-10)
 
 
