@@ -5,12 +5,14 @@ import {
   effect,
   inject,
   input,
-  linkedSignal,
   output,
+  signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { toFormValueSignal } from '@ngx-stoui/form';
 import { OperatorFunction } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 export interface FilterList {
   key: string;
@@ -24,9 +26,9 @@ export interface FilterList {
  * It also allows you to have filter chips in your filter title with a base implementation (only needs a formConfig & serializer fn)
  */
 @Directive()
-export abstract class FilterForm<T extends Record<string, unknown>>
-  implements OnInit
-{
+export abstract class FilterForm<
+  T extends Record<string, unknown>,
+> implements OnInit {
   private readonly fb = inject(UntypedFormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -43,13 +45,17 @@ export abstract class FilterForm<T extends Record<string, unknown>>
 
   // Form group
   public form!: UntypedFormGroup;
-  private formValue = toFormValueSignal(this.form);
+  // Wrap the form in a signal so toFormValueSignal can lazily attach to it
+  // once ngOnInit constructs it. Without the wrapper, the field-init runs
+  // during super() with `this.form === undefined`, which throws inside
+  // toFormValueSignal and aborts the rest of the field initializers
+  // (leaving `filter` undefined and breaking the template).
+  private readonly formSig = signal<UntypedFormGroup | null>(null);
+  private readonly formValue = toFormValueSignal(this.formSig);
 
-  // Chip value as signal. See {@link FilterList}
-  public readonly filter = linkedSignal<FilterList[]>(() => {
-    // Sync signal updates
-    return this.formValue() || [];
-  });
+  // Chip value as signal. See {@link FilterList}. Populated in ngOnInit
+  // after the form and the (abstract) `serializer` are available.
+  public readonly filter = signal<FilterList[]>([]);
 
   constructor() {
     // React to value input changes and reset form
@@ -62,14 +68,26 @@ export abstract class FilterForm<T extends Record<string, unknown>>
 
     // Emit filter changes
     effect(() => {
-      const formValue = this.formValue() as T;
-      this.filterChanged.emit(formValue);
+      const formValue = this.formValue();
+      if (formValue != null) {
+        this.filterChanged.emit(formValue as T);
+      }
     });
   }
 
   ngOnInit() {
     this.form = this.fb.group(this.formConfig);
     this.form.reset(this.value() || {});
+    this.formSig.set(this.form);
+
+    // Wire chip array via the subclass-provided serializer.
+    this.form.valueChanges
+      .pipe(
+        startWith(this.form.value),
+        this.serializer,
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((chips) => this.filter.set(chips));
   }
 
   /**
