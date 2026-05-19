@@ -248,6 +248,7 @@ $sto-theme: mat.define-theme(
       filled-with-label-container-padding-top: 16px,
       hover-state-layer-opacity: 0,
       subscript-text-line-height: 1.182,
+      subscript-text-size: var(--mat-sys-body-small-size),
     ));
     // prettier-ignore
     @include mat.slide-toggle-overrides((
@@ -287,7 +288,12 @@ $sto-theme: mat.define-theme(
     --mat-form-field-container-text-size: initial;
     --mat-form-field-filled-label-text-size: initial;
     --mat-form-field-outlined-label-text-size: initial;
-    --mat-form-field-subscript-text-size: initial;
+    // NOTE: --mat-form-field-subscript-text-size is NOT reset to `initial`
+    // here. Material's hint/error CSS does not chain it to a --mat-sys-*
+    // fallback, so `initial` resolves to no value and the hint text
+    // inherits the body font-size (too large). It is set explicitly in
+    // mat.form-field-overrides(...) above to var(--mat-sys-body-small-size),
+    // which the typography classes already scale per accessibility setting.
     --mat-select-trigger-text-size: initial;
     --mat-expansion-container-text-size: initial;
     --mat-expansion-header-text-size: initial;
