@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.9](https://github.com/equinor/oilmod-web/compare/core-21.0.8...core-21.0.9) (2026-05-19)
+
+
+### Bug Fixes
+
+* **theme:** adjust subscript text size for form fields to improve accessibility ([e2896f6](https://github.com/equinor/oilmod-web/commit/e2896f61326f1426aa5f128a1cdc5474adcc9b3a))
+
 ## [21.0.8](https://github.com/equinor/oilmod-web/compare/core-21.0.7...core-21.0.8) (2026-04-24)
 
 
