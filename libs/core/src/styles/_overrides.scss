@@ -95,6 +95,16 @@ html body.mat-app-background {
 .mat-mdc-select-panel {
   padding: 0;
 }
+
+// Angular CDK 21 renders `mat-mdc-autocomplete-panel` / `mat-mdc-select-panel`
+// inside `.cdk-overlay-popover` (new popover API) instead of teleporting them
+// into `.cdk-overlay-container`. When the trigger is a narrow grid editor the
+// panel inherits that narrow box and clips long options. Force the panel to
+// expand to its widest option regardless of which overlay wrapper hosts it.
+.mat-mdc-autocomplete-panel,
+.mat-mdc-select-panel {
+  min-width: max-content;
+}
 .mat-mdc-form-field-infix {
   display: flex;
   flex-direction: column-reverse;

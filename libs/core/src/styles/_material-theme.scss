@@ -394,11 +394,15 @@ $sto-theme: mat.define-theme(
 /**
  * CDK Overlay Theming
  *
- * Autocomplete, select, and datepicker panels render in the CDK
- * overlay container at document.body level. EDS token overrides
- * ensure consistent styling outside the component tree.
+ * Autocomplete, select, and datepicker panels render in CDK
+ * overlays. Historically they teleported into `.cdk-overlay-container`
+ * at <body>, but Angular CDK 21 introduced the popover API and now
+ * nests autocomplete / select panels in `.cdk-overlay-popover`
+ * adjacent to the trigger. Apply EDS token overrides to both wrappers
+ * so panels stay themed regardless of which overlay strategy CDK picks.
  */
-.cdk-overlay-container {
+.cdk-overlay-container,
+.cdk-overlay-popover {
   /* Option panels */
   --mat-option-label-text-color: var(
     --eds_text_static_icons__default,
@@ -475,6 +479,7 @@ $sto-theme: mat.define-theme(
   --mat-datepicker-calendar-text-font: Equinor, sans-serif;
 }
 
-body.sto-dark-theme .cdk-overlay-container {
+body.sto-dark-theme .cdk-overlay-container,
+body.sto-dark-theme .cdk-overlay-popover {
   color-scheme: dark;
 }
