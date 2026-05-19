@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.10](https://github.com/equinor/oilmod-web/compare/core-21.0.9...core-21.0.10) (2026-05-19)
+
+
+### Bug Fixes
+
+* **core:** restore overlay panel theming for Angular CDK 21 popover API ([289a649](https://github.com/equinor/oilmod-web/commit/289a649ee271b6d6db285146a59417c28c35a1b1))
+
 ## [21.0.9](https://github.com/equinor/oilmod-web/compare/core-21.0.8...core-21.0.9) (2026-05-19)
 
 
