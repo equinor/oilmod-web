@@ -58,21 +58,53 @@ export abstract class FilterForm<
   public readonly filter = signal<FilterList[]>([]);
 
   constructor() {
-    // React to value input changes and reset form
+    // React to value input changes and reset form.
+    //
+    // Guarded by a structural equality check: parent state-management
+    // typically returns a NEW object reference on every cycle (NgRx
+    // selectors, computed signals etc.), even when the values are
+    // unchanged. Without the guard, `value()` updates → reset → form
+    // valueChanges → `formValue()` updates → effect below emits →
+    // parent dispatches → new `value()` reference → reset → ...
+    // Angular 21 treats this as NG0103 (infinite change detection).
     effect(() => {
       const val = this.value();
-      if (val && this.form) {
+      if (val && this.form && !this.valuesEqual(val, this.form.value as T)) {
         this.form.reset(val);
       }
     });
 
-    // Emit filter changes
+    // Emit filter changes — same guard: don't re-emit a value the
+    // parent already gave us (closes the loop on the other side, in
+    // case the parent doesn't dedupe before dispatching).
     effect(() => {
       const formValue = this.formValue();
-      if (formValue != null) {
+      if (
+        formValue != null &&
+        !this.valuesEqual(formValue as T, this.value() as T)
+      ) {
         this.filterChanged.emit(formValue as T);
       }
     });
+  }
+
+  /**
+   * Structural equality for filter values. JSON.stringify is sufficient
+   * for the simple plain-object shapes filters carry (primitives, dates
+   * already serialized, small arrays). Key order is the form-config
+   * order on both sides, so it's stable.
+   */
+  private valuesEqual(
+    a: T | null | undefined,
+    b: T | null | undefined,
+  ): boolean {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    try {
+      return JSON.stringify(a) === JSON.stringify(b);
+    } catch {
+      return false;
+    }
   }
 
   ngOnInit() {
