@@ -125,7 +125,9 @@
     'mat-accent',
     --accent-resting,
     --accent-resting-contrast,
-    --accent-text
+    --accent-text,
+    --accent-highlight,
+    --accent-highlight-contrast
   );
 
   @include color-class(
