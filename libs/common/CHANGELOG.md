@@ -1,5 +1,13 @@
 # Changelog
 
+## [21.0.8](https://github.com/equinor/oilmod-web/compare/common-21.0.7...common-21.0.8) (2026-05-21)
+
+
+### Bug Fixes
+
+* **common:** guard FilterForm against NG0103 feedback loop on Angular 21 ([05e1a4e](https://github.com/equinor/oilmod-web/commit/05e1a4e10593c08c4a5282c57ccbb51db59f3d1b))
+* **theme:** adjust styles for preference manager and badge component for better alignment and appearance ([30dac8f](https://github.com/equinor/oilmod-web/commit/30dac8f4df0b28a8d9addf009b698504aad070b4))
+
 ## [21.0.7](https://github.com/equinor/oilmod-web/compare/common-21.0.6...common-21.0.7) (2026-05-07)
 
 

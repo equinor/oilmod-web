@@ -1,5 +1,13 @@
 # Changelog
 
+## [21.0.11](https://github.com/equinor/oilmod-web/compare/core-21.0.10...core-21.0.11) (2026-05-21)
+
+
+### Bug Fixes
+
+* **theme:** add accent highlight colors to status indicators for improved styling ([6d0c8bd](https://github.com/equinor/oilmod-web/commit/6d0c8bdf8f3296599e405e03472a0bca816af715))
+* **theme:** adjust styles for preference manager and badge component for better alignment and appearance ([30dac8f](https://github.com/equinor/oilmod-web/commit/30dac8f4df0b28a8d9addf009b698504aad070b4))
+
 ## [21.0.10](https://github.com/equinor/oilmod-web/compare/core-21.0.9...core-21.0.10) (2026-05-19)
 
 
