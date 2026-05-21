@@ -130,13 +130,17 @@ $sto-theme: mat.define-theme(
     --mat-sys-corner-full: 9999px; // Override M3's 9999px pill shapes
 
     // Component-specific overrides using Angular Material mixins
+    // Badge: keep a circular shape regardless of the
+    // --mat-sys-corner-extra-large token (which other M3 components
+    // intentionally render as a 30% rounded square). The badge container
+    // is square, so 50% guarantees a circle at any size.
     // prettier-ignore
     @include mat.badge-overrides((
       background-color: var(--primary-highlight),
       container-overlap-offset: -1rem -0.9rem,
       container-padding: 0.3rem,
-      container-shape: var(--mat-sys-corner-extra-large),
-      container-size: 1.8rem,
+      container-shape: 50%,
+      container-size: 1.5rem,
       text-color: var(--primary-resting),
     ));
     // prettier-ignore

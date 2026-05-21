@@ -25,6 +25,10 @@ sto-preference-manager {
 .mat-mdc-menu-panel.preference-manager-list {
   width: 350px;
   min-height: 61px;
+  // Force a white-ish surface background regardless of the host app's
+  // `--mat-sys-surface-container` token (Material 3 defaults the menu
+  // panel to `surface-container` which renders as light grey).
+  --mat-menu-container-color: var(--mat-sys-surface, #fff);
 
   .preference-manager-list-item {
     padding: 0 8px;
@@ -44,6 +48,11 @@ sto-preference-manager {
       line-height: 32px;
 
       .mat-mdc-form-field {
+        // Collapse Material 21's default 56px container height so the
+        // inline rename input fits the 32px-tall menu row and stays
+        // vertically centered next to the action icons.
+        --mat-form-field-container-height: 32px;
+        --mat-form-field-container-vertical-padding: 0;
         min-height: 32px;
         height: 32px;
         .mat-mdc-text-field-wrapper {
@@ -52,8 +61,10 @@ sto-preference-manager {
             padding: 8px;
             .mat-mdc-form-field-infix {
               width: auto;
+              min-height: 0;
               border-top: 0;
               padding-top: 0;
+              padding-bottom: 0;
             }
           }
         }
