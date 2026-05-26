@@ -596,7 +596,33 @@ tbw-grid {
 }
 
 /* ================================================================
- * 6. Dark Mode
+ * 6. Empty State Overlay
+ *
+ * The grid's empty overlay (.tbw-empty-overlay) is absolutely
+ * positioned inside .rows-container. When the grid host is sized
+ * by content (no explicit height) and there are zero rows, the
+ * rows-container collapses to height 0 — leaving the overlay
+ * with no space and stacking the column header directly on top
+ * of the pinned/aggregation footer.
+ *
+ * Reserve a sensible minimum height for the rows area whenever
+ * the empty overlay is present, so the message has room to render
+ * and the header / footer separate visually.
+ * ================================================================ */
+tbw-grid {
+  & .rows-container:has(> .tbw-empty-overlay) {
+    min-height: var(--tbw-empty-min-height, 120px);
+  }
+
+  & .tbw-empty-overlay {
+    min-height: var(--tbw-empty-min-height, 120px);
+    color: var(--_fg-muted);
+    font-size: var(--tbw-font-size);
+  }
+}
+
+/* ================================================================
+ * 7. Dark Mode
  * ================================================================ */
 body.sto-dark-theme {
   tbw-grid,
