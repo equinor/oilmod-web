@@ -1,15 +1,43 @@
 /**
  * EDS (Equinor Design System) Theme for @toolbox-web/grid
  *
- * Styles the toolbox grid to match Equinor's design system.
- * Supports light/dark modes via the light-dark() CSS function.
- * Uses EDS CSS variables (--eds_*) when available, with light-dark() fallbacks.
+ * Styles the toolbox grid to match Equinor's design system. Shared by
+ * Angular consumers (cargo-tracker-apps via `@ngx-stoui/core/toolbox-grid.css`)
+ * and React consumers (planning Roma app).
+ *
+ * Both `<tbw-grid>` (web component) and `<div data-tbw-grid>` are supported
+ * so React apps that don't import the web component can still opt in to the
+ * theme by stamping the attribute on a wrapper.
+ *
+ * Supports light/dark modes via the light-dark() CSS function. Consumers that
+ * don't support dark mode (e.g. Roma) can opt out with `color-scheme: light only`
+ * on their root.
+ *
+ * In-cell editor coexistence:
+ *   - Angular: Material form fields (`.mat-mdc-*`) — chrome is stripped so the
+ *     surrounding `.tbw-editor-host` paints the visual boundary.
+ *   - React/EDS: native EDS `<DatePicker>` / `<Autocomplete>` wrapped with
+ *     `.tbw-eds-date-editor` / `.tbw-eds-autocomplete-editor` marker classes.
  *
  * Reference: https://eds.equinor.com/
  * Grid Theming: https://toolboxjs.com/?path=/docs/grid-theming--docs
  * Requires @toolbox-web/grid v1.3.1+
  *
- * Usage: "@ngx-stoui/core/toolbox-grid.css" in project.json styles array
+ * Usage:
+ *   Angular: "@ngx-stoui/core/toolbox-grid.css" in project.json styles array
+ *   React:   import the compiled css, or @use this partial in a Sass entry
+ *
+ * Sections:
+ *   1. Theme Variables
+ *   2. Grid Styles (cells, editors, Material stripping, anchors, Typography reset)
+ *   3. Pinned cells & sticky group rows
+ *   4. Filter Panel
+ *   5. Context Menu
+ *   6. Overlay Panel
+ *   7. EDS in-cell editors (DatePicker / Autocomplete)
+ *   8. Empty State Overlay
+ *   9. Opt-ins (compact mode, thin header)
+ *  10. Dark Mode
  */
 
 /* ================================================================
@@ -22,6 +50,7 @@
  * rendered in document.body, so these variables cascade properly.
  * ================================================================ */
 tbw-grid,
+[data-tbw-grid],
 .tbw-filter-panel {
   /* --- EDS Token Aliases (cascade to all children) --- */
   --_bg: var(--eds_ui_background__default, light-dark(#ffffff, #132634));
@@ -52,6 +81,7 @@ tbw-grid,
   --tbw-font-size: var(--sto-base-font-size, 13px);
   --tbw-font-size-header: var(--sto-base-font-size, 13px);
   --tbw-font-weight-header: 700;
+  --tbw-aggregation-font-size: 0.9em;
 
   /* --- Colors --- */
   --tbw-color-bg: var(--_bg);
@@ -108,9 +138,16 @@ tbw-grid,
   --tbw-cell-padding-header: 0 var(--eds_spacing_medium, 8px);
   --tbw-button-padding: 0.375rem 0.625rem;
 
-  /* --- Focus --- */
+  /* --- Focus ---
+     `--tbw-focus-outline` paints the focus ring; the grid applies
+     `--tbw-focus-background` as the cell tint when a cell has focus. Use an
+     alpha-blended accent so the grid's own `.cell-focus` rule produces the
+     soft tint we want — no element-targeting needed. Pinned cells need a
+     pre-composited override (see section 3) because alpha over a sticky
+     opaque panel-bg would bleed scrolling content through. */
   --tbw-focus-outline: 0.5px dotted var(--_focus);
   --tbw-focus-outline-offset: -1px;
+  --tbw-focus-background: rgba(from var(--_accent) r g b / 8%);
 
   /* --- Resize Handle --- */
   --tbw-resize-handle-color: transparent;
@@ -134,9 +171,12 @@ tbw-grid,
     rgba(0, 0, 0, 0.15),
     rgba(0, 0, 0, 0.4)
   );
-  --tbw-filter-input-bg: var(--_bg);
-  --tbw-filter-input-border: var(--_border);
-  --tbw-filter-input-radius: var(--_radius);
+  /* Filter inputs: EDS underline style. Strip the grid's default border
+     and radius via variables; the underline box-shadow itself (no variable)
+     is applied in section 4. */
+  --tbw-filter-input-bg: var(--_surface);
+  --tbw-filter-input-border: none;
+  --tbw-filter-input-radius: 0;
   --tbw-filter-input-focus: var(--_focus);
   --tbw-filter-accent: var(--_accent);
   --tbw-filter-accent-fg: var(--_accent-fg);
@@ -161,16 +201,13 @@ tbw-grid,
 /* ================================================================
  * 2. Grid Styles
  *
- * All tbw-grid-scoped rules: compact mode, cell styling,
- * editor hosts, and Angular Material overrides.
+ * All grid-scoped rules: cell styling, editor hosts, anchors,
+ * Typography reset, and Angular Material overrides.
+ *
+ * Compact mode and thin-header opt-ins live in section 9.
  * ================================================================ */
-tbw-grid {
-  /* --- Compact Mode --- */
-  &.eds-compact {
-    --tbw-row-height: calc(var(--sto-base-font-size, 13px) * 1.385);
-    --tbw-header-height: calc(var(--sto-base-font-size, 13px) * 1.769);
-  }
-
+tbw-grid,
+[data-tbw-grid] {
   /* --- Angular Material overrides for in-grid editors --- */
   --mat-checkbox-state-layer-size: 20px;
   --mdc-filled-text-field-container-color: transparent;
@@ -204,33 +241,78 @@ tbw-grid {
     line-height: 1em;
   }
 
+  /* Anchor tags rendered inside cells (e.g. deep-link cells) should read
+     in the same color as plain text cells. Browser UA / EDS `Typography`
+     would otherwise paint them blue/teal. Underline is preserved
+     (we only override `color`). */
+  & .cell a {
+    color: var(--_fg);
+  }
+
   /* --- Numeric alignment --- */
   & .cell[data-type='number'] {
     text-align: right;
   }
 
-  /* --- Data cell styling & editor host --- */
+  /* --- Data cell styling & editor host ---
+     The grid already paints `height: var(--tbw-row-height)` and
+     `background: var(--tbw-focus-background)` on focused cells from its own
+     base layer, so we only add what the grid doesn't expose as a variable:
+     `font-weight` on cells, the sticky-cell focus override, and editor-host
+     chrome (which lives on our `.tbw-editor-host` wrapper, not on a built-in
+     grid class). */
   & [part='cell'],
   & .data-grid-row .cell {
     font-weight: 500;
-    height: var(--tbw-row-height);
+
+    /* Neutralize EDS `<Typography>` when used inside custom cell renderers.
+       Typography defaults to its own color, weight, `<p>` margin, and
+       a `1.429em` line-height, all of which break the grid's uniform
+       row appearance.
+
+       `!important` is required: EDS ships a global rule with an ID
+       selector (specificity 1,1,0) that wins over any class-based
+       chain. The third-party rule is itself a hardcoded-ID hack;
+       overriding with `!important` is the correct counter and stays
+       scoped to elements inside a grid cell. */
+    & [class*='Typography__StyledTypography'] {
+      color: inherit !important;
+      font-family: inherit !important;
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+      letter-spacing: inherit !important;
+    }
 
     &.editing {
       padding: 2px 1px;
       position: relative;
     }
 
-    &.cell-focus {
-      background: rgba(from var(--tbw-color-accent) r g b / 8%);
+    /* Pinned cell focus tint.
+
+       The grid's own `.cell-focus` rule already paints
+       `--tbw-focus-background` (set in section 1 to an alpha-blended
+       accent) on any focused cell. On a sticky cell the rows behind
+       would scroll through that translucent tint as the user pans
+       horizontally, so we pre-composite the same 8% accent onto the
+       pinned-cell `--tbw-color-panel-bg` to keep the result fully opaque.
+       This is the only place we still target `.cell-focus` directly
+       — `color-mix` needs the panel-bg as a second color, which a
+       single variable can't express. */
+    &.cell-focus.sticky-left,
+    &.cell-focus.sticky-right {
+      background: color-mix(
+        in srgb,
+        var(--_accent) 8%,
+        var(--tbw-color-panel-bg)
+      );
     }
 
     /* Editor host — visual boundary for all editor types */
     & .tbw-editor-host {
       border: 1px solid var(--_border);
-      background: var(
-        --eds_ui_background__default,
-        light-dark(#ffffff, #243746)
-      );
+      background: var(--tbw-color-bg);
       display: flex;
       align-items: center;
       width: 100%;
@@ -245,6 +327,14 @@ tbw-grid {
       &:focus-within {
         box-shadow: inset 0 -2px 0 0 var(--_accent);
         outline: none;
+      }
+
+      /* Editors that bring their own full-bleed input (e.g. EDS DatePicker /
+         Autocomplete) opt out of the host's padding so they can stretch
+         to fill the cell. See section 7. */
+      &:has(.tbw-eds-date-editor),
+      &:has(.tbw-eds-autocomplete-editor) {
+        padding: 0;
       }
 
       /* Framework component hosts: transparent for flex layout.
@@ -370,8 +460,13 @@ tbw-grid {
       }
 
       & input.mat-mdc-input-element {
+        /* `line-height: normal` is browser/font-dependent (≈ 1.2-1.5) which
+           inflates the `1lh + 2 * padding` floor used by `.cell.editing`
+           and pushes the editing row past `--tbw-row-height`. Locking it
+           to 1 keeps the input the height of its font-size so the cell can
+           collapse to `--tbw-row-height` in compact mode. */
         height: auto;
-        line-height: normal;
+        line-height: 1;
       }
 
       & .mat-mdc-select {
@@ -410,30 +505,132 @@ tbw-grid {
       );
     }
   }
-}
 
-/* Compact mode when applied from a parent element */
-.eds-compact tbw-grid {
-  --tbw-row-height: calc(var(--sto-base-font-size, 13px) * 1.385);
-  --tbw-header-height: calc(var(--sto-base-font-size, 13px) * 1.769);
+  /* ================================================================
+   * 3. Pinned cells & sticky group rows
+   * ================================================================ */
+
+  /* Row hover on pinned cells.
+
+     Pinned cells (`.sticky-left` / `.sticky-right`) carry an opaque
+     `--tbw-color-panel-bg` so non-sticky content scrolling behind
+     them can't bleed through. That opaque fill also masks the row's
+     `:hover` tint, making pinned columns visually disconnected from
+     the rest of the row. Repaint them with the row-hover color to
+     restore continuity. Wrapped in `@media (hover: hover)` to mirror
+     the grid's own row-hover rule and avoid sticky tap-state flicker
+     on touch devices. */
+  @media (hover: hover) {
+    & .data-grid-row:hover > .cell.sticky-left,
+    & .data-grid-row:hover > .cell.sticky-right {
+      background: var(--tbw-color-row-hover);
+    }
+
+    /* Hover + focus on a pinned cell: keep the focus tint visible by
+       flattening the same 8% accent over the row-hover color. */
+    & .data-grid-row:hover > .cell.cell-focus.sticky-left,
+    & .data-grid-row:hover > .cell.cell-focus.sticky-right {
+      background: color-mix(
+        in srgb,
+        var(--tbw-color-accent) 8%,
+        var(--tbw-color-row-hover)
+      );
+    }
+  }
+
+  /* Sticky group-row chrome.
+
+     The grouping-rows feature renders a full-width banner row for each
+     group boundary: a `.data-grid-row.group-row` whose only child is a
+     single `.cell.group-full` (spanning `grid-column: 1 / -1`) containing
+     `.group-toggle`, `.group-label`, `.group-count`, and optional
+     `.group-aggregates`. On a horizontally-scrollable grid the cell is
+     as wide as the row, so when the user scrolls right the entire chrome
+     slides off the left edge.
+
+     Approach: shrink the cell to its content width and pin it to the left
+     with `position: sticky; left: 0`. The chrome children keep their
+     inline flow — we never touch them individually, so new chrome
+     elements in a future grid version "just work".
+
+     Two things move from the cell up to the row:
+       1. Background — the cell no longer spans the row, so the row paints
+          the banner tint.
+       2. Full-row span override — the cell still has `grid-column: 1 / -1`
+          from the grid runtime; `width: max-content !important` shrinks
+          the rendered box while leaving the grid-track placement intact.
+
+     Why we override `overflow: hidden` on the cell:
+     @toolbox-web/grid sets `overflow: hidden` on every `.cell` to clip
+     content. Per the CSS Position spec, that establishes a scroll
+     container, which traps the cell's own sticky positioning inside the
+     (non-scrolling) cell box. `overflow: visible` lets the sticky context
+     bubble up past the row, past `.rows-viewport` (`overflow: clip` —
+     non-scrollable), all the way to `.tbw-scroll-area` (the actual
+     horizontal scroller) where sticky engages. */
+  & .data-grid-row.group-row {
+    background: var(
+      --tbw-color-header-bg,
+      var(--tbw-color-panel-bg, transparent)
+    );
+
+    & > .cell.group-full {
+      overflow: visible;
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      width: max-content !important;
+      max-width: 100%;
+      background: transparent;
+    }
+
+    & .group-count {
+      padding: 0 0.5rem;
+    }
+  }
+
+  /* Sticky aggregation (footer) row.
+
+     The bottom aggregation row (`.tbw-footer > .tbw-aggregation-rows >
+     .tbw-aggregation-row > .tbw-aggregation-cell.tbw-aggregation-cell-full`)
+     has the same shape as a group row: a full-width cell that spans the
+     entire scrollable area (`grid-column: 1 / -1`, width = scrollWidth).
+     When the user scrolls horizontally the totals/label slide off the
+     left edge.
+
+     Same fix as `.group-row > .cell.group-full`: shrink the cell to its
+     content width, pin it to the left with `position: sticky; left: 0`,
+     and override the grid's `overflow: hidden` so the sticky context can
+     bubble up past the row to the scroll container.
+
+     `.tbw-footer` itself is already `position: sticky; bottom: 0` from
+     the grid runtime — we only need to handle horizontal stickiness. */
+  & .tbw-aggregation-row > .tbw-aggregation-cell-full {
+    overflow: visible;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    width: max-content !important;
+    max-width: 100%;
+    background: transparent;
+  }
 }
 
 /* ================================================================
- * 3. Filter Panel Styles
+ * 4. Filter Panel Styles
  * ================================================================ */
 .tbw-filter-panel {
   max-width: none;
   max-height: none;
 
-  /* EDS underline inputs */
+  /* EDS underline inputs — the bg/border/radius are stripped via
+     `--tbw-filter-input-*` variables in section 1. The underline
+     `box-shadow` and height have no variable equivalent. */
   & .tbw-filter-search-input,
   & .tbw-filter-range-input,
   & .tbw-filter-date-input {
     height: var(--tbw-row-height);
-    border: none;
-    border-radius: 0;
     box-shadow: inset 0px -1px 0px 0px var(--_fg-muted);
-    background: var(--_surface);
     outline: 1px solid transparent;
     outline-offset: 0px;
   }
@@ -520,7 +717,7 @@ tbw-grid {
 }
 
 /* ================================================================
- * 4. Context Menu
+ * 5. Context Menu
  *
  * Appended to document.body (outside tbw-grid).
  * CSS variables are copied from tbw-grid at render time.
@@ -579,7 +776,7 @@ tbw-grid {
 }
 
 /* ================================================================
- * 5. Overlay Panel (BaseOverlayEditor)
+ * 6. Overlay Panel (BaseOverlayEditor)
  * ================================================================ */
 .tbw-overlay-panel {
   --tbw-overlay-bg: var(
@@ -596,7 +793,118 @@ tbw-grid {
 }
 
 /* ================================================================
- * 6. Empty State Overlay
+ * 7. EDS in-cell editors — DatePicker and Autocomplete
+ *
+ * Marker classes:
+ *   `.tbw-eds-date-editor`         — wrapper around EDS <DatePicker>
+ *   `.tbw-eds-autocomplete-editor` — wrapper around EDS <Autocomplete>
+ *
+ * Used by React consumers that render EDS form components inside grid
+ * cell editors (typically inside `<EdsProvider density="compact">`).
+ * EDS wraps each field in an InputWrapper with a label and helper
+ * area — none of which we want inside a row-height cell. We strip the
+ * chrome, hide the label/helper for sighted users (kept for screen
+ * readers), and stretch the inner field stack to fill the cell.
+ *
+ * Popover positioning fix (applies to both):
+ * EDS uses the native popover API (`popover="manual"`) + floating-ui
+ * to place the calendar / options dropdown. Inline EDS sets
+ * `position: absolute` with viewport-anchored top/left from the
+ * trigger's getBoundingClientRect. That works in plain DOM, but
+ * `tbw-grid` virtualises rows with `transform` which creates a
+ * containing block. Once the popover enters the browser top-layer
+ * (`.showPopover()`), the spec says its containing block is the
+ * viewport — but floating-ui's inset values assume the regular
+ * containing-block cascade. The two coordinate systems mismatch and
+ * the popover renders off-screen.
+ *
+ * Forcing `position: fixed` aligns the popover's containing block
+ * with floating-ui's viewport math. The inset reset overrides the
+ * browser's default `[popover]:popover-open { inset: 0 }` rule that
+ * would otherwise stretch the popover full-viewport.
+ *
+ * Harmless when EDS is absent (Angular consumers don't ship these
+ * markers), so safe to include in the shared theme.
+ * ================================================================ */
+
+/* Shared chrome-stripping + popover-positioning rules. Applied to both
+   editor wrappers via @extend so the rules stay co-located with their
+   shared docstring above. */
+%tbw-eds-cell-editor {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+
+  /* Hide the visually-rendered EDS label/helper, keep them for a11y. */
+  label,
+  [class*='HelperText'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Calendar / options dropdown popover — see header for rationale. */
+  [popover] {
+    position: fixed !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: max-content !important;
+    margin: 0 !important;
+  }
+}
+
+.tbw-eds-date-editor {
+  @extend %tbw-eds-cell-editor;
+
+  /* Stretch the EDS field stack to fill the cell vertically and strip
+     its own background/box-shadow underline since the surrounding
+     `.tbw-editor-host:focus-within` already provides the focus indicator.
+     `!important` beats EDS's ID-scoped rule (specificity 1,1,0).
+     NOTE: do not use `> div` — the calendar popover is also a direct
+     child once `popover="manual"` opens it, and forcing it to 100%
+     height stretches it to the full viewport and breaks auto-flip. */
+  [class*='InputWrapper__Container'],
+  [class*='FieldWrapper'] {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  [class*='FieldWrapper'] {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.tbw-eds-autocomplete-editor {
+  @extend %tbw-eds-cell-editor;
+
+  /* Stretch EDS field stack to fill the cell vertically and strip its
+     own background/underline since the editor host owns the focus ring. */
+  [class*='InputWrapper__Container'],
+  [class*='Container'] {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  [class*='Container'] {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+
+/* ================================================================
+ * 8. Empty State Overlay
  *
  * The grid's empty overlay (.tbw-empty-overlay) is absolutely
  * positioned inside .rows-container. When the grid host is sized
@@ -609,7 +917,8 @@ tbw-grid {
  * the empty overlay is present, so the message has room to render
  * and the header / footer separate visually.
  * ================================================================ */
-tbw-grid {
+tbw-grid,
+[data-tbw-grid] {
   & .rows-container:has(> .tbw-empty-overlay) {
     min-height: var(--tbw-empty-min-height, 120px);
   }
@@ -617,15 +926,101 @@ tbw-grid {
   & .tbw-empty-overlay {
     min-height: var(--tbw-empty-min-height, 120px);
     color: var(--_fg-muted);
-    font-size: var(--tbw-font-size);
   }
 }
 
 /* ================================================================
- * 7. Dark Mode
+ * 9. Opt-ins (compact mode, thin header)
+ * ================================================================ */
+
+/* Compact mode — triggers when `.eds-compact` is on the grid itself
+   (`<tbw-grid class="eds-compact">`) or on any ancestor (e.g. a wrapping
+   section that toggles density for everything inside). */
+tbw-grid.eds-compact,
+[data-tbw-grid].eds-compact,
+.eds-compact tbw-grid,
+.eds-compact [data-tbw-grid] {
+  /* Multipliers are tuned against the 13px EDS base:
+       row    13 * 1.111 ≈ 14.4px (works once in-cell mat-icons and chip
+                                   padding are constrained — see section 2)
+       header 13 * 1.4   ≈ 18.2px
+     Apps with a larger base (e.g. 18px) get proportionally bigger:
+       18 * 1.111 ≈ 20px / 18 * 1.4 ≈ 25px. */
+  --tbw-row-height: calc(var(--sto-base-font-size, 13px) * 1.111);
+  --tbw-header-height: calc(var(--sto-base-font-size, 13px) * 1.4);
+
+  /* In-cell Material icons.
+     Angular Material renders `<mat-icon>` as `<span class="mat-icon">` at a
+     hardcoded 24x24. Since `.data-grid-row` is `display: grid` and the row
+     track grows to fit the tallest cell content, a 24px icon would inflate
+     every row past `--tbw-row-height`. Constrain in-cell icons to the cell
+     font-size so they fit the compact row track.
+
+     Sizing trick: `font-size: 1em` keeps the glyph at the cell font-size
+     (13px default), then `width/height: 1em` resolves against the icon's
+     own font-size — producing a 13x13 box. Only applied under `.eds-compact`
+     so non-compact grids keep Material's standard 24px icons. */
+  & .cell .mat-icon,
+  & .cell mat-icon {
+    font-size: 1em;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+  }
+
+  /* In-cell editor density.
+     Active editors (`.cell.editing > .tbw-editor-host`) host Angular
+     Material form-fields. Even with all chrome stripped (see section 2),
+     a Material input renders at ~35px tall because of its intrinsic
+     padding/min-height — which then ratchets the grid's row-height
+     measurement upward and shrinks the visible-row count for every
+     other row.
+
+     In compact mode we constrain the editor to the compact row height
+     so editing a row no longer changes the row's painted height. */
+  & .cell.editing {
+    /* Eliminate the `1lh + 2 * padding` floor inherited from the base
+       `.cell.editing` rule — the active cell follows row-height only. */
+    min-height: var(--tbw-row-height);
+
+    & .tbw-editor-host,
+    & .tbw-editor-host .mat-mdc-form-field,
+    & .tbw-editor-host .mat-mdc-text-field-wrapper,
+    & .tbw-editor-host .mat-mdc-form-field-flex,
+    & .tbw-editor-host .mat-mdc-form-field-infix {
+      min-height: 0;
+      height: 100%;
+    }
+
+    & .tbw-editor-host input.mat-mdc-input-element,
+    & .tbw-editor-host .mat-mdc-select-trigger {
+      height: var(--tbw-row-height);
+      min-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      line-height: 1;
+    }
+  }
+}
+
+/* Thin header — for grids that are sub-sections inside a larger page
+   (e.g. a field-split table) where a full-height header competes
+   visually with surrounding form headings.
+
+   Apply with: <div class="tbw-thin-header"><tbw-grid ... /></div> */
+.tbw-thin-header tbw-grid,
+.tbw-thin-header [data-tbw-grid] {
+  --tbw-header-height: 28px;
+  --tbw-font-weight-header: 500;
+  --tbw-font-size-header: 0.75rem;
+}
+
+/* ================================================================
+ * 10. Dark Mode
  * ================================================================ */
 body.sto-dark-theme {
   tbw-grid,
+  [data-tbw-grid],
   .tbw-filter-panel,
   .tbw-context-menu,
   .tbw-overlay-panel {
