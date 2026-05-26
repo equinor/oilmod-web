@@ -1,5 +1,13 @@
 # Changelog
 
+## [21.0.12](https://github.com/equinor/oilmod-web/compare/core-21.0.11...core-21.0.12) (2026-05-26)
+
+
+### Bug Fixes
+
+* **core:** reserve min-height for tbw-grid empty overlay ([da7d754](https://github.com/equinor/oilmod-web/commit/da7d754b379e700bcfba9f014e4a4b5abec88a8d))
+* **theme:** enhance toolbox grid styles for better compatibility and usability across Angular and React applications ([fdd77d9](https://github.com/equinor/oilmod-web/commit/fdd77d94e6b64e31ddc2adfe3640642e8390df0c))
+
 ## [21.0.11](https://github.com/equinor/oilmod-web/compare/core-21.0.10...core-21.0.11) (2026-05-21)
 
 
