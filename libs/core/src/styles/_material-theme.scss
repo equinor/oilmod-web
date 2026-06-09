@@ -163,7 +163,11 @@ $sto-theme: mat.define-theme(
     ));
     // prettier-ignore
     @include mat.chips-overrides((
+      container-height: 23px,
       container-shape-radius: var(--mat-sys-corner-small),
+      label-text-line-height: var(--mat-sys-label-medium-line-height),
+      label-text-color: var(--text),
+      trailing-action-color: var(--text)
     ));
     // prettier-ignore
     @include mat.card-overrides((

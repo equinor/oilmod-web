@@ -926,6 +926,27 @@ tbw-grid,
   & .tbw-empty-overlay {
     min-height: var(--tbw-empty-min-height, 120px);
     color: var(--_fg-muted);
+    /* Keep it pinned to the visible viewport */
+    position: sticky;
+    left: 0;
+    top: 0;
+
+    /* Restrict size to the container's visible area */
+    width: 100%;
+    height: 100%;
+    max-width: 100vw; /* Ensures it doesn't exceed screen width */
+
+    /* Center the content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Ensure it doesn't block interactions if needed */
+    pointer-events: none;
+  }
+
+  & .tbw-empty-message {
+    pointer-events: auto; /* Re-enable clicks for the message itself */
   }
 }
 
