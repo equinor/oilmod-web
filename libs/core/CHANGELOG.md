@@ -1,5 +1,13 @@
 # Changelog
 
+## [21.0.13](https://github.com/equinor/oilmod-web/compare/core-21.0.12...core-21.0.13) (2026-06-09)
+
+
+### Bug Fixes
+
+* invalid token ([9e19079](https://github.com/equinor/oilmod-web/commit/9e190793c72b9f16efb562892dea7d4d9f45e8b1))
+* style improvements ([ace9478](https://github.com/equinor/oilmod-web/commit/ace94786d3e70a0a4d4a6e06821b0426f046b288))
+
 ## [21.0.12](https://github.com/equinor/oilmod-web/compare/core-21.0.11...core-21.0.12) (2026-05-26)
 
 
