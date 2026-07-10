@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.14](https://github.com/equinor/oilmod-web/compare/core-21.0.13...core-21.0.14) (2026-07-10)
+
+
+### Bug Fixes
+
+* **core:** tighten toolbox-grid compact mode to 11px font + integer 15px rows for crisp borders. ([92221e7](https://github.com/equinor/oilmod-web/commit/92221e71990ee14c5c03c84de251479f716b2869))
+
 ## [21.0.13](https://github.com/equinor/oilmod-web/compare/core-21.0.12...core-21.0.13) (2026-06-09)
 
 
