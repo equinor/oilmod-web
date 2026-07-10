@@ -43,6 +43,15 @@ EDS (Equinor Design System) tokens layered onto Angular Material 3 via system-va
 - INVARIANT: form-field `--mat-form-field-*-text-size` tokens are explicitly reset to `initial` so Material falls through to `--mat-sys-*` system variables — without this reset, component tokens are resolved once and never react to scale changes
 - INVARIANT: scale class MUST be applied to `<body>` (or `:root`) so descendants inherit the rescaled `--sto-base-font-size`
 - DECIDED: 13 px Equinor base font is the locked default; sm/l are accessibility opt-ins (typically driven by `StoThemeService` user preference — see [common.md](common.md))
+
+## toolbox-grid-compact
+
+- OWNS: `.eds-compact` density block for `@toolbox-web/grid` — [libs/core/src/styles/toolbox-grid/\_toolbox-grid.scss](libs/core/src/styles/toolbox-grid/_toolbox-grid.scss) (published as `@ngx-stoui/core/toolbox-grid.css`)
+- INVARIANT: compact metrics scale from `--sto-base-font-size` so they honour the sm/m/l typography classes. Ratios off the 13px Regular base: font `× 0.846` (→11px), row `× 1.154` (→15px), header `× 1.538` (→20px). At sm(10px)→8/12px, l(16px)→14/18px.
+- INVARIANT: the row/header heights MUST be whole px. A `.cell`'s intrinsic content height is `≈ line-height + ~3.5px`; the rendered row is `max(--tbw-row-height, that floor)`. A fractional value renders sub-pixel rows, so the 1px row dividers land on fractional device rows and **drop out inconsistently** (the old `calc(13px * 1.111) ≈ 14.44px` did exactly this). Lowering only the font does NOT fix it — the height must be integer.
+- DECIDED: heights use the native CSS `round(<proportional>, 1px)` function, NOT a Sass round or a hard-coded px. Because the arg holds `var(--sto-base-font-size)`, Sass can't fold it at build time — it emits `calc(round(...))` and the browser evaluates it at **runtime**, so switching typography class restyles the grid live (verified: sm/m/l → 12/15/18px rows, all integer & crisp). Requires Dart Sass ≥1.65 (repo is on 1.100) + a browser with CSS `round()` (Chrome 112 / Safari 15.4 / Firefox 118).
+- GOTCHA: prefer native CSS sizing functions (`calc`/`round`/`clamp`/`min`/`max`) over Sass math here so values react to runtime `var()` changes; a Sass-computed px would freeze at build time and ignore the accessibility scale.
+
 - TENSION: any ad-hoc `font-size` override outside the three scale classes breaks form-field proportions because heights depend on the calc chain
 
 ## overrides

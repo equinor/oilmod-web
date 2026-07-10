@@ -7,6 +7,9 @@
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  // Establish a containment context so @container queries on children can
+  // respond to this grid's own width rather than the viewport.
+  container-type: inline-size;
 
   &__col {
     min-height: 24px;
@@ -44,6 +47,17 @@
   }
   &--12 {
     grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+// When the grid is narrower than the 2-column threshold (2×200px + 1×8px gap
+// = 408px), auto-fit creates only 1 explicit column. Force multi-span columns
+// to span 1 so they don't overflow into implicit tracks with sub-200px widths.
+@container (max-width: 407px) {
+  .sto-grid__col--2,
+  .sto-grid__col--3,
+  .sto-grid__col--4 {
+    grid-column: span 1;
   }
 }
 
