@@ -42,7 +42,7 @@
     "@angular/build": "21.2.14",
     "@angular/cdk": "21.2.14",
     "@angular/common": "21.2.16",
-    "@angular/compiler": "21.2.16",
+    "@angular/compiler": "22.0.0",
     "@angular/core": "21.2.16",
     "@angular/forms": "21.2.16",
     "@angular/material": "21.2.14",
